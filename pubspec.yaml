@@ -1,0 +1,116 @@
+name: fitween
+description: fitween
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.3 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  firebase_core: ^2.1.1
+  cloud_firestore: ^4.0.3
+  firebase_storage: ^11.0.3
+  google_sign_in: ^5.4.0
+  get: ^4.6.5
+  cupertino_icons: ^1.0.2
+  image_picker: ^0.8.5+3
+  flutter_screenutil: ^5.5.3+2
+  intl: ^0.17.0
+  pull_to_refresh: ^2.0.0
+  material_tag_editor: ^0.1.2
+  percent_indicator: ^4.2.2
+  carousel_slider: ^4.1.1
+  flutter_svg: ^1.1.1+1
+  animated_flip_counter: ^0.2.4
+  lottie: ^2.1.0
+  syncfusion_flutter_calendar: ^20.2.40
+  dotted_border: ^2.0.0+2
+  firebase_auth: ^4.1.0
+  bottom_sheet_bar: ^2.3.1
+  flutter_polygon: ^0.3.0+2
+  firebase_messaging: ^14.0.3
+  firebase_in_app_messaging: ^0.7.0+3
+  flutter_local_notifications: ^12.0.3
+  dots_indicator: ^2.1.0
+  flutter_shake_animated: ^0.0.5
+  numberpicker: ^2.1.1
+  sign_in_with_apple: ^4.1.0
+  flutter_secure_storage: ^7.0.1
+  health: ^4.1.1
+  permission_handler: ^10.0.0
+  rive: ^0.9.1
+  parallax_animation: ^0.0.3
+  animated_text_kit: ^4.2.2
+  text_scroll: ^0.1.0
+  basic_utils: ^5.4.0
+  flutter_animate: ^2.0.0
+  ntp: ^2.0.0
+  dio: ^4.0.6
+  super_banners: ^0.0.1
+  native_exif: ^0.4.0
+  geocoding: ^2.0.5
+  geolocator: ^9.0.1
+#  webview_flutter: ^4.0.1
+  in_app_review: ^2.0.6
+  path_provider: ^2.0.8
+  camera: ^0.9.4+5
+  image: ^3.1.0
+  tflite_flutter: ^0.9.0
+  tflite_flutter_helper: ^0.3.1
+
+dependency_overrides:
+  firebase_core_platform_interface: 4.5.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/model/lite-model_movenet_singlepose_lightning_3.tflite
+    - assets/image/logo/
+    - assets/image/level/distance/
+    - assets/image/level/height/
+    - assets/image/record/
+    - assets/image/record/height/
+    - assets/image/record/distance/
+    - assets/image/widget/bottom_bar/
+    - assets/image/widget/dialog/
+    - assets/image/challenge/default/
+    - assets/image/challenge/complete/
+    - assets/image/challenge/focus/
+    - assets/image/badge/
+    - assets/image/page/login/
+    - assets/image/page/onboarding/
+    - assets/image/page/timer/
+    - assets/image/page/home/
+    - assets/image/page/input/
+    - assets/image/page/challenge/
+    - assets/image/page/edit_goal/
+    - assets/image/page/workout/
+    - assets/image/icon/selected/
+    - assets/image/icon/unselected/
+    - assets/json/lottie/
+    - assets/json/data/
+    - assets/json/data/level/
+    - assets/image/page/register/
+    - assets/rive/input/
+
+  fonts:
+    - family: BMJUA
+      fonts:
+        - asset: assets/font/BMJUA/BMJUA_ttf.ttf
+
+    - family: Pretendard
+      fonts:
+        - asset: assets/font/Pretendard/Pretendard-Bold.otf

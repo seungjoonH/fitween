@@ -1,0 +1,20 @@
+[
+  {
+    "index": 0,
+    "name": "스쿼트",
+    "description": "허벅지가 무릎과 수평이 될 때까지 앉았다 섰다 하는 동작을 반복하는 운동으로 하체 운동 중 가장 기본이다. 등 하부, 엉덩이, 허벅지, 종아리 근육을 훈련해 하체 근육 발달에 효과적이다.",
+    "imageUrl": "assets/image/exercise/squat.svg"
+  },
+  {
+    "index": 1,
+    "name": "푸쉬업",
+    "description": "사람이 아무런 도구 없이도 할 수 있는 순수 맨몸 운동 중 하나이며, 자신의 몸을 팔로 밀어내야 하기 때문에 꽤나 근력이 붙는다.",
+    "imageUrl": "assets/image/exercise/push_up.svg"
+  },
+  {
+    "index": 2,
+    "name": "턱걸이",
+    "description": "철봉을 손으로 잡고 당겨 턱을 철봉 위까지 끌어 올리는 운동이다. 등근육을 발달시키기 위해서는 반드시 필요하다.",
+    "imageUrl": "assets/image/exercise/pull_up.svg"
+  }
+]

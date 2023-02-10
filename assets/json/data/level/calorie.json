@@ -1,0 +1,289 @@
+[
+  {
+    "id": 3000000,
+    "title": "Lv. 0",
+    "amount": 0,
+    "description": "더 높은 칼로리 레벨에 도달해보세요!",
+    "activate": true
+  },
+  {
+    "id": 3000001,
+    "title": "Lv. 1",
+    "amount": 100,
+    "description": "1레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000002,
+    "title": "Lv. 2",
+    "amount": 300,
+    "description": "2레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000003,
+    "title": "Lv. 3",
+    "amount": 600,
+    "description": "3레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000004,
+    "title": "Lv. 4",
+    "amount": 1000,
+    "description": "4레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000005,
+    "title": "Lv. 5",
+    "amount": 1500,
+    "description": "5레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000006,
+    "title": "Lv. 6",
+    "amount": 2100,
+    "description": "6레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000007,
+    "title": "Lv. 7",
+    "amount": 2800,
+    "description": "7레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000008,
+    "title": "Lv. 8",
+    "amount": 3600,
+    "description": "8레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000009,
+    "title": "Lv. 9",
+    "amount": 4500,
+    "description": "9레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000010,
+    "title": "Lv. 10",
+    "amount": 5500,
+    "description": "10레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000011,
+    "title": "Lv. 11",
+    "amount": 6600,
+    "description": "11레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000012,
+    "title": "Lv. 12",
+    "amount": 7800,
+    "description": "12레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000013,
+    "title": "Lv. 13",
+    "amount": 9100,
+    "description": "13레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000014,
+    "title": "Lv. 14",
+    "amount": 10500,
+    "description": "14레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000015,
+    "title": "Lv. 15",
+    "amount": 12000,
+    "description": "15레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000016,
+    "title": "Lv. 16",
+    "amount": 13600,
+    "description": "16레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000017,
+    "title": "Lv. 17",
+    "amount": 15300,
+    "description": "17레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000018,
+    "title": "Lv. 18",
+    "amount": 17100,
+    "description": "18레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000019,
+    "title": "Lv. 19",
+    "amount": 19000,
+    "description": "19레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000020,
+    "title": "Lv. 20",
+    "amount": 21000,
+    "description": "20레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000021,
+    "title": "Lv. 21",
+    "amount": 23100,
+    "description": "21레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000022,
+    "title": "Lv. 22",
+    "amount": 25300,
+    "description": "22레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000023,
+    "title": "Lv. 23",
+    "amount": 27600,
+    "description": "23레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000024,
+    "title": "Lv. 24",
+    "amount": 30000,
+    "description": "24레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000025,
+    "title": "Lv. 25",
+    "amount": 32500,
+    "description": "25레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000026,
+    "title": "Lv. 26",
+    "amount": 35100,
+    "description": "26레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000027,
+    "title": "Lv. 27",
+    "amount": 37800,
+    "description": "27레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000028,
+    "title": "Lv. 28",
+    "amount": 40600,
+    "description": "28레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000029,
+    "title": "Lv. 29",
+    "amount": 43500,
+    "description": "29레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000030,
+    "title": "Lv. 30",
+    "amount": 46500,
+    "description": "30레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000031,
+    "title": "Lv. 31",
+    "amount": 49600,
+    "description": "31레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000032,
+    "title": "Lv. 32",
+    "amount": 52800,
+    "description": "32레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000033,
+    "title": "Lv. 33",
+    "amount": 56100,
+    "description": "33레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000034,
+    "title": "Lv. 34",
+    "amount": 59500,
+    "description": "34레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000035,
+    "title": "Lv. 35",
+    "amount": 63000,
+    "description": "35레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000036,
+    "title": "Lv. 36",
+    "amount": 66600,
+    "description": "36레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000037,
+    "title": "Lv. 37",
+    "amount": 70300,
+    "description": "37레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000038,
+    "title": "Lv. 38",
+    "amount": 74100,
+    "description": "38레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000039,
+    "title": "Lv. 39",
+    "amount": 78000,
+    "description": "39레벨 달성",
+    "activate": true
+  },
+  {
+    "id": 3000040,
+    "title": "Lv. 40",
+    "amount": 82000,
+    "description": "40레벨 달성",
+    "activate": true
+  }
+]
