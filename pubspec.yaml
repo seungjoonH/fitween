@@ -97,6 +97,7 @@ flutter:
     - assets/image/page/timer/
     - assets/image/page/home/
     - assets/image/page/home/rotation/
+    - assets/image/page/home/ranking/
     - assets/image/page/input/
     - assets/image/page/challenge/
     - assets/image/page/edit_goal/

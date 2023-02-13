@@ -146,6 +146,7 @@ class _FCardState extends State<FCard> {
                   const Icon(Icons.arrow_forward_ios, color: FTheme.lightGrey),
                 ],
               ),
+              const SizedBox(height: 10.0),
               widget.child,
             ],
           ),

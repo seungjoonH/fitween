@@ -5,6 +5,7 @@ import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/page/home.dart';
 import 'package:fitween/view/page/home/widget.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
+import 'package:fitween/view/widget/widget/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:fitween/view/widget/widget/bottom_bar.dart';
 import 'package:flutter_gif/flutter_gif.dart';
@@ -41,19 +42,24 @@ class HomePage extends StatelessWidget {
       body: Column(
         children: [
           RotateCarousel(),
-          Padding(
-            padding: const EdgeInsets.all(28.0),
-            child: Column(
-              children: [
-                RankingCard(),
-                SizedBox(height: 20.0),
-                RecordCard(),
-              ],
+          Expanded(
+            child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Padding(
+                padding: const EdgeInsets.all(28.0),
+                child: Column(
+                  children: [
+                    RankingCard(),
+                    SizedBox(height: 20.0),
+                    RecordCard(),
+                  ],
+                ),
+              ),
             ),
           ),
         ],
       ),
+      bottomNavigationBar: FBottomNavigationBar(),
     );
   }
 }
-

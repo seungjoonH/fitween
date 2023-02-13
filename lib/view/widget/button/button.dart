@@ -6,6 +6,106 @@ import 'package:fitween/view/widget/widget/icon.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 
+class FButton extends StatefulWidget {
+  FButton({
+    Key? key,
+    this.text,
+    this.child,
+    this.onPressed,
+    this.fill = true,
+    EdgeInsets? padding,
+    this.constraints,
+    Color? backgroundColor,
+    Color? textColor,
+    this.stretch = false,
+    this.multiple = false,
+    this.border = true,
+    this.height,
+  }) : assert(
+  text == null || child == null,
+  ), padding = padding ?? EdgeInsets.symmetric(
+    horizontal: 20.0.w, vertical: 10.0.h,
+  ), backgroundColor = backgroundColor ?? FTheme.black,
+        textColor = textColor ?? (fill ? FTheme.white : FTheme.black),
+        super(key: key);
+
+  final String? text;
+  final Widget? child;
+  final VoidCallback? onPressed;
+  final bool fill;
+  final EdgeInsets padding;
+  final BoxConstraints? constraints;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final bool stretch;
+  final bool multiple;
+  final bool border;
+  final double? height;
+
+  @override
+  State<FButton> createState() => _FButtonState();
+}
+
+class _FButtonState extends State<FButton> {
+  late Function(TapDownDetails) onTapDown;
+  late Function(TapUpDetails) onTapUp;
+
+  double scale = 1.0;
+  Duration duration = const Duration(milliseconds: 100);
+
+  @override
+  void initState() {
+    onTapDown = (_) {
+      if (widget.onPressed == null) return;
+      setState(() => scale = .9);
+    };
+    onTapUp = (_) async {
+      if (widget.onPressed == null) return;
+      widget.onPressed!();
+      await Future.delayed(duration, () {
+        setState(() => scale = 1.0);
+      });
+    };
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Widget content = AnimatedScale(
+      scale: scale,
+      duration: duration,
+      child: GestureDetector(
+        onTapDown: onTapDown,
+        onTapUp: onTapUp,
+        child: Container(
+          height: widget.height?.h,
+          padding: widget.padding,
+          constraints: widget.multiple ? null : widget.constraints ?? BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+          ),
+          decoration: BoxDecoration(
+            color: widget.fill ? widget.backgroundColor : Colors.transparent,
+            border: widget.border
+                ? Border.all(color: FTheme.black, width: .5)
+                : const Border(),
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (widget.stretch) const Expanded(child: SizedBox()),
+              widget.child ?? FText(widget.text!, color: widget.textColor, style: textTheme.titleMedium),
+              if (widget.stretch) const Expanded(child: SizedBox()),
+            ],
+          ),
+        ),
+      ),
+    );
+    return widget.multiple ? Expanded(child: content) : content;
+  }
+}
+
+
 /// class
 class PButton extends StatelessWidget {
   PButton({
@@ -174,7 +274,7 @@ class PIconButton extends StatelessWidget {
   }) : backgroundColor = backgroundColor ?? const Color(0xFFD6BDAC),
         super(key: key);
 
-  final PIcon icon;
+  final FIcon icon;
   final VoidCallback onPressed;
   final Color? backgroundColor;
 

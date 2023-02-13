@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-enum PIcons {
+enum FIcons {
+  home,
+  friends,
+  challenge,
+  seeMore,
+  ///
   homeHouse,
   pencil,
   star;
@@ -13,16 +18,17 @@ enum PIcons {
       '${StringUtils.camelCaseToLowerUnderscore(name)}.svg';
   String assetPath(bool selected) =>
       '$filePath${selected ? '' : 'un'}selected/$fileName';
+  String get label => ['Home', 'Friends', 'Challenge', 'See More'][index];
 }
 
-class PIcon extends StatelessWidget {
-  const PIcon(this.icons, {
+class FIcon extends StatelessWidget {
+  const FIcon(this.icons, {
     Key? key,
     this.selected = false,
     this.size = 36.0,
   }) : super(key: key);
 
-  final PIcons icons;
+  final FIcons icons;
   final bool selected;
   final double size;
 

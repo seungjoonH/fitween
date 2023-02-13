@@ -1,6 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitween/developer.dart';
+import 'package:fitween/view/page/login/login.dart';
 import 'package:flutter/services.dart';
 import 'package:fitween/firebase_options.dart';
 import 'package:fitween/global/date.dart';
@@ -86,8 +87,8 @@ class _FitweenState extends State<Fitween> {
             //   backgroundColor: FTheme.darkColorScheme.background,
             // ),
           ),
-          home: const DeveloperPage(),
-          // home: const LoginPage(),
+          // home: const DeveloperPage(),
+          home: const LoginPage(),
           getPages: PRoute.getPages,
         );
       },

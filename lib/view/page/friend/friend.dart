@@ -32,15 +32,8 @@ class FTab extends StatelessWidget {
 }
 
 
-class FriendPage extends StatefulWidget {
+class FriendPage extends StatelessWidget {
   const FriendPage({Key? key}) : super(key: key);
-
-  @override
-  State<FriendPage> createState() => _FriendPageState();
-}
-
-class _FriendPageState extends State<FriendPage> with TickerProviderStateMixin {
-  late TabController tabCont;
 
   @override
   Widget build(BuildContext context) {

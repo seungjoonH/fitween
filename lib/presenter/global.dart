@@ -43,6 +43,28 @@ import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 
+class GlobalP extends GetxController {
+  int navIndex = 0;
+
+  void navigate(int index) async {
+    final homeP = Get.find<HomeP>();
+
+    switch (index) {
+      case 0:
+        if (navIndex == index) { homeP.init(); }
+        else { homeP.init(); }
+        break;
+      case 1: break;
+      case 2: break;
+      case 3: break;
+    }
+
+    navIndex = index;
+
+    update();
+  }
+}
+
 class GlobalPresenter extends GetxController {
   static const String effectAsset =
       'assets/image/widget/dialog/badge_effect.png';
@@ -60,7 +82,6 @@ class GlobalPresenter extends GetxController {
         if (navIndex == index) { homeP.init(); }
         else { HomePresenter.toHome(); }
         break;
-      // case 1: openBottomBar(); break;
       case 1: WorkoutGuide.toWorkoutGuide(); break;
       case 2:
         if (navIndex == index) { challengeMain.init(); }
@@ -356,6 +377,8 @@ class GlobalPresenter extends GetxController {
     Get.put(CameraPresenter());
     Get.put(PainterPresenter());
     Get.put(WorkoutMain());
+
+    Get.put(GlobalP());
 
     Get.put(HomeP());
     Get.put(FriendP());

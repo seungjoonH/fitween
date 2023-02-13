@@ -17,7 +17,7 @@ class DeveloperPage extends StatelessWidget {
               onPressed: HomeP.toHome,
               text: 'Home',
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             PButton(
               onPressed: FriendP.toFriend,
               text: 'Friend',

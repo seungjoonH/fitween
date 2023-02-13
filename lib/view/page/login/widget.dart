@@ -31,7 +31,7 @@ class SignInButton extends StatelessWidget {
       LoginType.apple: FTheme.white,
     };
 
-    return PButton(
+    return FButton(
       onPressed: () async {
         if (!await AuthPresenter.versionCheck()) {
         LoginPresenter.showVersionInvalidDialog();
