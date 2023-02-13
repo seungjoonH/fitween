@@ -15,7 +15,7 @@ class MyRecordMainPage extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: PTheme.waterLight,
+      backgroundColor: FTheme.waterLight,
       appBar: const PAppBar(color: Colors.transparent),
       body: MyRecordDetailView(type: type),
     );

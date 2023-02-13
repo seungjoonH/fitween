@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fitween/developer.dart';
 import 'package:flutter/services.dart';
 import 'package:fitween/firebase_options.dart';
 import 'package:fitween/global/date.dart';
@@ -12,7 +13,6 @@ import 'package:fitween/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:fitween/view/page/login/login.dart';
 
 const version = 'ver 0.0';
 String get versionNumber => version.replaceAll('ver ', '');
@@ -34,10 +34,10 @@ class Fitween extends StatefulWidget {
   const Fitween({Key? key}) : super(key: key);
 
   @override
-  State<Fitween> createState() => _PistachioState();
+  State<Fitween> createState() => _FitweenState();
 }
 
-class _PistachioState extends State<Fitween> {
+class _FitweenState extends State<Fitween> {
 
   @override
   void initState() {
@@ -68,28 +68,26 @@ class _PistachioState extends State<Fitween> {
       builder: (context, child) {
         return GetMaterialApp(
           enableLog: false,
-          title: 'Pistachio',
+          title: 'Fitween',
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.light,
           theme: ThemeData(
-            colorScheme: PTheme.lightColorScheme,
-            textTheme: PTheme.textTheme,
-            scaffoldBackgroundColor: PTheme.lightColorScheme.background,
-            appBarTheme: AppBarTheme(
-              backgroundColor: PTheme.lightColorScheme.background,
-            ),
+            colorScheme: FTheme.lightColorScheme,
+            textTheme: FTheme.textTheme,
+            scaffoldBackgroundColor: FTheme.background,
+            appBarTheme: const AppBarTheme(backgroundColor: FTheme.background),
           ),
           darkTheme: ThemeData(
             useMaterial3: true,
-            colorScheme: PTheme.darkColorScheme,
-            textTheme: PTheme.textTheme,
-            scaffoldBackgroundColor: PTheme.darkColorScheme.background,
-            appBarTheme: AppBarTheme(
-              backgroundColor: PTheme.darkColorScheme.background,
-            ),
+            // colorScheme: FTheme.darkColorScheme,
+            // textTheme: FTheme.textTheme,
+            // scaffoldBackgroundColor: FTheme.darkColorScheme.background,
+            // appBarTheme: AppBarTheme(
+            //   backgroundColor: FTheme.darkColorScheme.background,
+            // ),
           ),
-          // home: const DeveloperPage(),
-          home: const LoginPage(),
+          home: const DeveloperPage(),
+          // home: const LoginPage(),
           getPages: PRoute.getPages,
         );
       },

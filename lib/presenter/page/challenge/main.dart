@@ -33,7 +33,7 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
   /// attributes
   late TabController tabCont;
   List<Widget> tabs = ['이달의 챌린지', '내 챌린지']
-      .map((title) => PText(title)).toList();
+      .map((title) => FText(title)).toList();
   bool codeInvalid = false;
   String? codeHintText = '';
 
@@ -67,7 +67,7 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              PText('참여할 챌린지 코드를 입력하세요'),
+              FText('참여할 챌린지 코드를 입력하세요'),
               SizedBox(height: 10.0.h),
               GetBuilder<ChallengeMain>(
                 builder: (controller) {
@@ -76,7 +76,7 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
                     invalid: controller.codeInvalid,
                     hintText: controller.codeHintText ?? 'ABC1234',
                     hintColor: controller.codeHintText == null
-                        ? PTheme.grey : PTheme.colorB,
+                        ? FTheme.grey : FTheme.colorB,
                   );
                 }
               ),

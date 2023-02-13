@@ -8,8 +8,8 @@ import 'package:fitween/global/theme.dart';
 class LoadingPresenter extends GetxController {
   /// attributes
   bool loading = false;
-  Color mainColor = PTheme.black;
-  Color color = PTheme.black;
+  Color mainColor = FTheme.black;
+  Color color = FTheme.black;
   Timer? timer;
 
   /// methods

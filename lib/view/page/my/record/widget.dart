@@ -101,14 +101,14 @@ class MyRecordDetailView extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      PTexts(['${loggedUser.nickname}', '님은'],
-                        colors: const [PTheme.colorD, PTheme.black],
+                      FTexts(['${loggedUser.nickname}', '님은'],
+                        colors: const [FTheme.colorD, FTheme.black],
                         style: textTheme.headlineMedium,
                       ),
-                      PTexts([
+                      FTexts([
                         '총 ', '${loggedUser.getAmounts(type).round()}${type.unitAlt}',
                         '${eulReul(type.unitAlt)} ${type.did}',
-                      ], colors: [PTheme.black, type.color, PTheme.black],
+                      ], colors: [FTheme.black, type.color, FTheme.black],
                         style: textTheme.headlineMedium,
                         space: false,
                       ),
@@ -128,7 +128,7 @@ class MyRecordDetailView extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  PText('현재 내 위치', style: textTheme.headlineSmall),
+                  FText('현재 내 위치', style: textTheme.headlineSmall),
                   SizedBox(height: 10.0.h),
                   TextScroll(
                     current.title ?? '',
@@ -138,14 +138,14 @@ class MyRecordDetailView extends StatelessWidget {
                       fontWeight: FontWeight.normal,
                       shadows: const [Shadow(
                         blurRadius: 20.0,
-                        color: PTheme.white,
+                        color: FTheme.white,
                       )],
                     )),
                   ),
                 ],
               ),
               SingleChildScrollView(
-                child: PText('${current.description}',
+                child: FText('${current.description}',
                   style: textTheme.titleMedium,
                   maxLines: 6,
                 ),

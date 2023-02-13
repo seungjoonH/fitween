@@ -50,7 +50,7 @@ class ChallengeTabBar extends StatelessWidget {
         return TabBar(
           controller: challengeMain.tabCont,
           tabs: challengeMain.tabs,
-          indicatorColor: PTheme.black,
+          indicatorColor: FTheme.black,
           indicatorSize: TabBarIndicatorSize.label,
           indicatorWeight: 1.5,
           labelPadding: const EdgeInsets.all(5.0),
@@ -120,8 +120,8 @@ class ChallengeCardView extends StatelessWidget {
             ChallengeMain.refreshCont.loadComplete();
           },
           header: const MaterialClassicHeader(
-            color: PTheme.black,
-            backgroundColor: PTheme.surface,
+            color: FTheme.black,
+            backgroundColor: FTheme.surface,
           ),
           child: ListView.separated(
             itemCount: ChallengePresenter.orderedChallenges.length,
@@ -156,7 +156,7 @@ class ChallengeCard extends StatelessWidget {
         Stack(
           children: [
             PCard(
-              color: PTheme.background,
+              color: FTheme.background,
               padding: EdgeInsets.zero,
               child: Column(
                 children: [
@@ -168,13 +168,13 @@ class ChallengeCard extends StatelessWidget {
                   //   child: Container(height: 200.0),
                   // ),
                   if (challenge.locked)
-                  Container(height: 230.0.h, color: PTheme.lightGrey)
+                  Container(height: 230.0.h, color: FTheme.lightGrey)
                   else Image.asset(
                     challenge.imageUrls['default'],
                     // height: 230.0.h,
                     fit: BoxFit.fitWidth,
                   ),
-                  Divider(height: 1.0.h, color: PTheme.black, thickness: 1.5),
+                  Divider(height: 1.0.h, color: FTheme.black, thickness: 1.5),
                   Padding(
                     padding: EdgeInsets.all(20.0.r),
                     child: Column(
@@ -188,7 +188,7 @@ class ChallengeCard extends StatelessWidget {
                               children: [
                                 SizedBox(
                                   height: 80.0.h,
-                                  child: PText(challenge.title ?? '',
+                                  child: FText(challenge.title ?? '',
                                     style: textTheme.headlineMedium,
                                     maxLines: 2,
                                   ),
@@ -196,9 +196,9 @@ class ChallengeCard extends StatelessWidget {
                                 SizedBox(height: 20.0.h),
                                 SizedBox(
                                   height: 20.0.h,
-                                  child: PText('${today.month}월의 챌린지',
+                                  child: FText('${today.month}월의 챌린지',
                                     style: textTheme.labelLarge,
-                                    color: PTheme.grey,
+                                    color: FTheme.grey,
                                   ),
                                 ),
                               ],
@@ -213,10 +213,10 @@ class ChallengeCard extends StatelessWidget {
                         SizedBox(height: 20.0.h),
                         SizedBox(
                           height: 30.0.h,
-                          child: PText(
+                          child: FText(
                             challenge.descriptions['sub']!,
                             style: textTheme.titleSmall,
-                            color: PTheme.black,
+                            color: FTheme.black,
                             maxLines: 2,
                           ),
                         ),
@@ -242,9 +242,9 @@ class ChallengeCard extends StatelessWidget {
             if (challenge.locked)
             Positioned.fill(
               child: Container(
-                color: PTheme.black.withOpacity(.5),
+                color: FTheme.black.withOpacity(.5),
                 child: const Icon(Icons.lock,
-                  color: PTheme.black,
+                  color: FTheme.black,
                   size: 70.0,
                 ),
               ),
@@ -260,7 +260,7 @@ class ChallengeCard extends StatelessWidget {
 class ChallengeCardViewLoading extends StatelessWidget {
   const ChallengeCardViewLoading({
     Key? key,
-    this.color = PTheme.black,
+    this.color = FTheme.black,
   }) : super(key: key);
 
   final Color color;
@@ -278,7 +278,7 @@ class ChallengeCardViewLoading extends StatelessWidget {
 
 class ChallengeCardLoading extends StatelessWidget {
   const ChallengeCardLoading({
-    Key? key, this.color = PTheme.black,
+    Key? key, this.color = FTheme.black,
   }) : super(key: key);
 
   final Color color;
@@ -291,7 +291,7 @@ class ChallengeCardLoading extends StatelessWidget {
 
     return PCard(
       borderType: BorderType.none,
-      color: PTheme.background,
+      color: FTheme.background,
       padding: EdgeInsets.zero,
       child: Column(
         children: [
@@ -361,7 +361,7 @@ class MyPartyListView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: PCard(
-              color: PTheme.surface,
+              color: FTheme.surface,
               padding: EdgeInsets.zero,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -370,12 +370,12 @@ class MyPartyListView extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                       horizontal: 30.0.w, vertical: 150.0.h,
                     ),
-                    child: PText('챌린지가 없습니다',
+                    child: FText('챌린지가 없습니다',
                       style: textTheme.displaySmall,
                     ),
                   ),
                   const Divider(
-                    color: PTheme.black,
+                    color: FTheme.black,
                     thickness: 1.5,
                     height: 0.0,
                   ),
@@ -460,7 +460,7 @@ class MyPartyListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Color> orderedColors = [PTheme.grey, ...PTheme.orderedColors];
+    List<Color> orderedColors = [FTheme.grey, ...FTheme.orderedColors];
     int index = min(max((party.remainDays ~/ 4) + 1, 0), 4);
 
     return Stack(
@@ -473,7 +473,7 @@ class MyPartyListTile extends StatelessWidget {
             child: Container(
               height: 80.0.h,
               decoration: BoxDecoration(
-                border: Border.all(color: PTheme.black, width: 1.5),
+                border: Border.all(color: FTheme.black, width: 1.5),
               ),
               child: Row(
                 children: [
@@ -489,7 +489,7 @@ class MyPartyListTile extends StatelessWidget {
                   const VerticalDivider(
                     width: 1.5,
                     thickness: 1.5,
-                    color: PTheme.black,
+                    color: FTheme.black,
                   ),
                   Expanded(
                     child: Padding(
@@ -501,7 +501,7 @@ class MyPartyListTile extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              PText(party.challenge!.title!.replaceAll('\n', ' '),
+                              FText(party.challenge!.title!.replaceAll('\n', ' '),
                                 style: textTheme.bodyLarge,
                               ),
                               Container(
@@ -512,7 +512,7 @@ class MyPartyListTile extends StatelessWidget {
                                   color: orderedColors[index].withOpacity(.6),
                                   borderRadius: BorderRadius.circular(6.0.r),
                                 ),
-                                child: PText(party.dDay),
+                                child: FText(party.dDay),
                               ),
                             ],
                           ),
@@ -524,13 +524,13 @@ class MyPartyListTile extends StatelessWidget {
                                   children: [
                                     const Icon(Icons.people_alt, size: 14.0),
                                     const SizedBox(width: 10.0),
-                                    PText('${party.members.length}/${
+                                    FText('${party.members.length}/${
                                       party.level['maxMember']
                                     }'),
                                   ],
                                 ),
                               ),
-                              Expanded(child: PText('난이도 : ${party.difficulty.kr}')),
+                              Expanded(child: FText('난이도 : ${party.difficulty.kr}')),
                             ],
                           ),
                         ],
@@ -550,7 +550,7 @@ class MyPartyListTile extends StatelessWidget {
         Positioned.fill(
           child: Container(
             alignment: Alignment.center,
-            color: PTheme.black.withOpacity(.2),
+            color: FTheme.black.withOpacity(.2),
           ),
         ),
         if (party.complete)
@@ -561,14 +561,14 @@ class MyPartyListTile extends StatelessWidget {
             decoration: BoxDecoration(
               border: Border.all(
                 color: party.complete
-                    ? PTheme.colorB
-                    : PTheme.black,
+                    ? FTheme.colorB
+                    : FTheme.black,
                 width: 2.0,
               ),
             ),
-            child: PText(
+            child: FText(
               party.complete ? ' 완 료 ' : ' 실 패 ',
-              color: party.complete ? PTheme.colorB : PTheme.black,
+              color: party.complete ? FTheme.colorB : FTheme.black,
               style: textTheme.headlineLarge,
             ),
           ),

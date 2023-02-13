@@ -12,7 +12,7 @@
 //     required VoidCallback onPressed,
 //   }) => ElevatedButton(
 //     style: ElevatedButton.styleFrom(
-//       primary: PTheme.black,
+//       primary: FTheme.black,
 //       side: BorderSide(width: 1.0, color: colorScheme.outline),
 //       shape: RoundedRectangleBorder(
 //         borderRadius: BorderRadius.circular(10.0),
@@ -20,7 +20,7 @@
 //     ),
 //     onPressed: onPressed,
 //     child: Text(text,
-//       style: const TextStyle(color: PTheme.white),
+//       style: const TextStyle(color: FTheme.white),
 //     ),
 //   );
 //

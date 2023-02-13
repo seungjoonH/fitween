@@ -40,7 +40,8 @@ class CameraPresenter extends GetxController {
 
     if (Platform.isIOS) {
       cameraController = CameraController(
-        descriptions![direction], ResolutionPreset.medium,
+        descriptions![direction], ResolutionPreset.high,
+        enableAudio: false,
       );
     }
     await cameraController!.initialize();

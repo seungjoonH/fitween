@@ -8,7 +8,7 @@ class LoginPresenter {
   static void showVersionInvalidDialog() {
     showPDialog(
       title: '버전 미호환',
-      content: PText(
+      content: FText(
         '$versionNumber 버전은 더 이상 지원하지 않습니다.\n최신버전으로 업데이트 해주세요.',
         maxLines: 2,
       ),

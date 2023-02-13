@@ -26,8 +26,8 @@ class PButton extends StatelessWidget {
   text == null || child == null,
   ), padding = padding ?? EdgeInsets.symmetric(
     horizontal: 20.0.w, vertical: 10.0.h,
-  ), backgroundColor = backgroundColor ?? PTheme.black,
-    textColor = textColor ?? (fill ? PTheme.white : PTheme.black),
+  ), backgroundColor = backgroundColor ?? FTheme.black,
+    textColor = textColor ?? (fill ? FTheme.white : FTheme.black),
     super(key: key);
 
   final String? text;
@@ -58,14 +58,14 @@ class PButton extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             border: border
-                ? Border.all(color: PTheme.black, width: 1.5)
+                ? Border.all(color: FTheme.black, width: 1.5)
                 : const Border(),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               if (stretch) const Expanded(child: SizedBox()),
-              child ?? PText(text!, color: textColor, style: textTheme.titleMedium),
+              child ?? FText(text!, color: textColor, style: textTheme.titleMedium),
               if (stretch) const Expanded(child: SizedBox()),
             ],
           ),
@@ -94,14 +94,14 @@ class PDirectButton extends StatelessWidget {
         padding: const EdgeInsets.all(2.0),
         decoration: const BoxDecoration(
           border: Border(
-            bottom: BorderSide(color: PTheme.black),
+            bottom: BorderSide(color: FTheme.black),
           ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            PText(text,
+            FText(text,
               style: const TextStyle(fontSize: 13.0),
             ),
             const Icon(Icons.arrow_forward_ios, size: 15.0),
@@ -155,7 +155,7 @@ class PCircledButton extends StatelessWidget {
           width: size.r,
           height: size.r,
           decoration: BoxDecoration(
-            color: PTheme.white.withOpacity(.3),
+            color: FTheme.white.withOpacity(.3),
             borderRadius: radius,
           ),
         ),
@@ -195,8 +195,8 @@ class PIconButton extends StatelessWidget {
   }
 }
 
-class PTextButton extends StatelessWidget {
-  const PTextButton({
+class FTextButton extends StatelessWidget {
+  const FTextButton({
     Key? key,
     required this.onPressed,
     required this.text,
@@ -207,7 +207,7 @@ class PTextButton extends StatelessWidget {
     ),
     this.leading,
     this.action,
-  }) : color = color ?? PTheme.black,  super(key: key);
+  }) : color = color ?? FTheme.black,  super(key: key);
 
   final VoidCallback onPressed;
   final String text;
@@ -230,7 +230,7 @@ class PTextButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               if (leading != null) leading!,
-              PText(text, style: style, color: color),
+              FText(text, style: style, color: color),
               if (action != null) action!,
             ],
           ),

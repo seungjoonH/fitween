@@ -16,7 +16,7 @@ class DeveloperInfoPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            PText('문의: fitween.pistachio@gmail.com'),
+            FText('문의: fitween.pistachio@gmail.com'),
           ],
         ),
       ),

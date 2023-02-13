@@ -11,16 +11,16 @@ TextTheme textTheme = Theme.of(Get.context!).textTheme;
 ColorScheme colorScheme = Theme.of(Get.context!).colorScheme;
 
 /// class
-class PTheme {
+class FTheme {
   /// colors
   // simple
   static const Color black = Color(0xFF1F1F1F);
-  static const Color lightGrey = Color(0xFFD9D9D9);
-  static const Color grey = Color(0xFF73796E);
+  static const Color lightGrey = Color(0xFFB4B4B4);
+  static const Color grey = Color(0xFF494D45);
   static const Color white = Color(0xFFFDFDFD);
-  static const Color bar = Color(0xFFECCFC0);
-  static const Color surface = Color(0xFFFFF4F1);
-  static const Color background = Color(0xFFF4E9E7);
+  static const Color bar = lightGrey;
+  static const Color surface = white;
+  static const Color background = Color(0xFFF4F4F4);
   static const Color outline = Color(0xFF73796E);
 
   static const Color waterLight = Color(0xFF21CBE4);
@@ -30,10 +30,10 @@ class PTheme {
   static const Color sun = Color(0xFFFFD600);
   static const Color moon = Color(0xFFF0F5E3);
 
-  static const Color colorA = Color(0xFF59A86B);
-  static const Color colorB = Color(0xFFE45B47);
-  static const Color colorC = Color(0xFF71A3EE);
-  static const Color colorD = Color(0xFFE5953E);
+  static const Color colorA = Color(0xFF50CDC4);
+  static const Color colorB = Color(0xFFFB656A);
+  static const Color colorC = Color(0xFF29A9FA);
+  static const Color colorD = Color(0xFFFFB164);
   static List<Color> get mainColors => [colorA, colorB, colorC, colorD];
   static List<Color> get orderedColors => [colorB, colorD, colorA, colorC];
 

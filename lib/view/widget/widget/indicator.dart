@@ -9,9 +9,9 @@ class PCircularPercentIndicator extends StatelessWidget {
     Key? key,
     required this.percent,
     required this.color,
-    this.textColor = PTheme.black,
-    this.borderColor = PTheme.black,
-    this.backgroundColor = PTheme.background,
+    this.textColor = FTheme.black,
+    this.borderColor = FTheme.black,
+    this.backgroundColor = FTheme.background,
     this.radius = 55.0,
     this.lineWidth = 16.0,
     this.centerText = '',
@@ -60,7 +60,7 @@ class PCircularPercentIndicator extends StatelessWidget {
             animationDuration: duration,
             onAnimationEnd: onAnimationEnd,
             curve: Curves.easeInOut,
-            center: PText(centerText,
+            center: FText(centerText,
               color: textColor,
               style: textTheme.titleLarge,
               borderWidth: 1.0,
@@ -96,10 +96,10 @@ class PCircularProgressIndicator extends StatelessWidget {
       alignment: Alignment.center,
       children: const [
         CircularProgressIndicator(
-          color: PTheme.colorA,
+          color: FTheme.colorA,
         ),
         // Container(
-        //   color: PTheme.black.withOpacity(.3),
+        //   color: FTheme.black.withOpacity(.3),
         // ),
       ],
     ) : Container();

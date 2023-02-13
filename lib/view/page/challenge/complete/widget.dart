@@ -50,31 +50,31 @@ class ChallengePartyCompleteView extends StatelessWidget {
                   width: double.infinity,
                   padding: EdgeInsets.symmetric(horizontal: 36.0.w),
                   child: PCard(
-                    color: PTheme.background,
+                    color: FTheme.background,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        PText('${party.challenge!.title!}\n완료!',
+                        FText('${party.challenge!.title!}\n완료!',
                           align: TextAlign.center,
                           style: textTheme.headlineLarge,
-                          color: PTheme.black,
+                          color: FTheme.black,
                           maxLines: 3,
                         ),
                         const SizedBox(height: 20.0),
-                        PText(
+                        FText(
                           '난이도: ${party.difficulty.kr}',
                           align: TextAlign.center,
                           style: textTheme.labelLarge,
-                          color: PTheme.black,
+                          color: FTheme.black,
                           maxLines: 10,
                         ),
                         const SizedBox(height: 30.0),
-                        PText(
+                        FText(
                           party.challenge!.descriptions['complete']!
                               .replaceAll('##', party.challenge!.word),
                           align: TextAlign.center,
                           style: textTheme.labelLarge,
-                          color: PTheme.black,
+                          color: FTheme.black,
                           maxLines: 10,
                         ),
                         const SizedBox(height: 10.0),

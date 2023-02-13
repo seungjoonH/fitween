@@ -31,7 +31,7 @@ class ChallengeCreateView extends StatelessWidget {
         List<String> descriptions = description.split('#');
         List<Color> colors = List.generate(
           descriptions.length, (index) => index % 2 == 0
-            ? PTheme.black : PTheme.colorB,
+            ? FTheme.black : FTheme.colorB,
         );
 
         int maxMember = challenge.levels[controller.difficulty.name]['maxMember'];
@@ -52,9 +52,9 @@ class ChallengeCreateView extends StatelessWidget {
                         SvgPicture.asset(
                           'assets/image/page/challenge/left_wing.svg',
                         ),
-                        PText('챌린지 난이도',
+                        FText('챌린지 난이도',
                           style: textTheme.titleLarge,
-                          color: PTheme.black,
+                          color: FTheme.black,
                         ),
                         SvgPicture.asset(
                           'assets/image/page/challenge/right_wing.svg',
@@ -87,13 +87,13 @@ class ChallengeCreateView extends StatelessWidget {
                                           decoration: ShapeDecoration(
                                             color: diff == controller.difficulty
                                                 ? Colors.transparent
-                                                : PTheme.black.withOpacity(.5),
+                                                : FTheme.black.withOpacity(.5),
                                             shape: PolygonBorder(
                                               sides: 6,
                                               side: BorderSide(
                                                 width: 4.0.r,
                                                 color: diff == controller.difficulty
-                                                    ? PTheme.colorB
+                                                    ? FTheme.colorB
                                                     : Colors.transparent,
                                               ),
                                             ),
@@ -103,11 +103,11 @@ class ChallengeCreateView extends StatelessWidget {
                                     ),
                                   ),
                                   const SizedBox(height: 20.0),
-                                  PText(diff.kr,
+                                  FText(diff.kr,
                                     style: textTheme.titleLarge,
                                     color: diff == controller.difficulty
-                                        ? PTheme.colorB
-                                        : PTheme.black,
+                                        ? FTheme.colorB
+                                        : FTheme.black,
                                   ),
                                 ],
                               ),
@@ -116,7 +116,7 @@ class ChallengeCreateView extends StatelessWidget {
                           if (!diff.active)
                           Positioned.fill(
                             child: Container(
-                              color: PTheme.black.withOpacity(.5),
+                              color: FTheme.black.withOpacity(.5),
                               child: Icon(Icons.lock, size: 30.0.r),
                             ),
                           ),
@@ -129,7 +129,7 @@ class ChallengeCreateView extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PText('권장 참여 인원 : $memberString명',
+                    FText('권장 참여 인원 : $memberString명',
                       style: textTheme.headlineSmall,
                     ),
                     SizedBox(height: 20.0.h),

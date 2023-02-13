@@ -8,6 +8,7 @@ import 'package:fitween/view/page/collection/main/main.dart';
 import 'package:fitween/view/page/developer_info/main.dart';
 import 'package:fitween/view/page/edit_goal/edit_goal.dart';
 import 'package:fitween/view/page/exercise/input/input.dart';
+import 'package:fitween/view/page/friend/friend.dart';
 import 'package:fitween/view/page/home/home.dart';
 import 'package:fitween/view/page/login/login.dart';
 import 'package:fitween/view/page/my/record/record.dart';
@@ -38,28 +39,30 @@ class PRoute {
   // 라우트 문자열, 페이지 매핑
   static Map<String, Widget> get pages => {
     '/home': const HomePage(),
-    '/login': const LoginPage(),
-    '/register': const RegisterPage(),
-    '/onboarding': const OnboardingPage(),
-    '/exercise/input': ExerciseInputPage(),
-    '/record/main': const RecordMainPage(),
-    '/record/detail': const RecordDetailPage(),
-    '/challenge/main': const ChallengeMainPage(),
-    '/challenge/detail': const ChallengeDetailPage(),
-    '/challenge/create': const ChallengeCreatePage(),
-    '/challenge/party/complete': const ChallengePartyCompletePage(),
-    '/challenge/party/main': const ChallengePartyMainPage(),
-    '/collection/main': const CollectionMainPage(),
-    '/my/main': const MyMainPage(),
-    '/my/record/main': const MyRecordMainPage(),
-    '/my/setting/main': const MySettingMainPage(),
-    '/my/setting/edit': const MySettingEditPage(),
-    '/quest': const QuestPage(),
-    '/editGoal': const EditGoalPage(),
-    '/releaseNote': const ReleaseNotePage(),
-    '/developerInfo': const DeveloperInfoPage(),
-    '/workout/main': const WorkoutMainPage(),
-    '/workout/guide': const WorkoutGuidePage(),
+    '/friend': const FriendPage(),
+    // '/login': const LoginPage(),
+    // '/register': const RegisterPage(),
+    // '/onboarding': const OnboardingPage(),
+    // '/exercise/input': ExerciseInputPage(),
+    // '/record/main': const RecordMainPage(),
+    // '/record/detail': const RecordDetailPage(),
+    // '/challenge/main': const ChallengeMainPage(),
+    // '/challenge/detail': const ChallengeDetailPage(),
+    // '/challenge/create': const ChallengeCreatePage(),
+    // '/challenge/party/complete': const ChallengePartyCompletePage(),
+    // '/challenge/party/main': const ChallengePartyMainPage(),
+    // '/collection/main': const CollectionMainPage(),
+    // '/my/main': const MyMainPage(),
+    // '/my/record/main': const MyRecordMainPage(),
+    // '/my/setting/main': const MySettingMainPage(),
+    // '/my/setting/edit': const MySettingEditPage(),
+    // '/quest': const QuestPage(),
+    // '/editGoal': const EditGoalPage(),
+    // '/releaseNote': const ReleaseNotePage(),
+    // '/developerInfo': const DeveloperInfoPage(),
+    // '/workout/main': const WorkoutMainPage(),
+    // '/workout/guide': const WorkoutGuidePage(),
+    // '/friend': const FriendPage(),
   };
 
   // 겟페이지 리스트

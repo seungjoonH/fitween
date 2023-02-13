@@ -50,14 +50,14 @@ class ChallengeCreate extends GetxController {
       content: Column(
         children: [
           Center(
-            child: PText(code,
+            child: FText(code,
               style: textTheme.titleLarge,
-              color: PTheme.colorB,
+              color: FTheme.colorB,
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(20.0),
-            child: PText('챌린지가 생성되었습니다.'),
+            child: FText('챌린지가 생성되었습니다.'),
           ),
         ],
       ),

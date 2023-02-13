@@ -60,7 +60,7 @@ class LimbPainter extends CustomPainter {
 
   Paint area = Paint()
     ..style = PaintingStyle.stroke
-    ..color = PTheme.colorB
+    ..color = FTheme.colorB
     ..strokeWidth = 5;
 
   List<Offset> pointsBlue  = [];

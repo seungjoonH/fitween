@@ -30,11 +30,11 @@ class MonthlyQuestView extends StatelessWidget {
           Padding(
             padding: EdgeInsets.all(16.0.r),
             child: PCard(
-              color: PTheme.white,
+              color: FTheme.white,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  PText(
+                  FText(
                     '${today.month}월의 목표',
                     style: textTheme.headlineSmall,
                   ),
@@ -62,7 +62,7 @@ class MonthlyQuestView extends StatelessWidget {
               ),
             ),
           ),
-          const Divider(thickness: 2.0, color: PTheme.black, height: 5.0),
+          const Divider(thickness: 2.0, color: FTheme.black, height: 5.0),
           Container(
             height: 500.0.h,
             padding: EdgeInsets.all(16.0.r),
@@ -72,13 +72,13 @@ class MonthlyQuestView extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    PText('이달의 목표',
+                    FText('이달의 목표',
                       style: textTheme.headlineSmall,
                     ),
-                    PText(
+                    FText(
                       '월간 목표 달성으로 자신의 한계에 도전해 보세요.\n이번 ${today.month}월의 목표를 달성하시면 특별 뱃지를 획득 하실 수 있습니다.',
                       style: textTheme.bodySmall,
-                      color: PTheme.outline,
+                      color: FTheme.outline,
                       maxLines: 3,
                     ),
                   ],
@@ -154,21 +154,21 @@ class QuestBadgePercentView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PTexts(['${toLocalString(goal)}${type.unit}', type.doIt],
-                  colors: [type.color, PTheme.black],
+                FTexts(['${toLocalString(goal)}${type.unit}', type.doIt],
+                  colors: [type.color, FTheme.black],
                   alignment: MainAxisAlignment.start,
                 ),
                 const SizedBox(height: 5.0),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: PTheme.black, width: 1.5),
+                    border: Border.all(color: FTheme.black, width: 1.5),
                   ),
                   child: LinearPercentIndicator(
                     padding: EdgeInsets.zero,
                     progressColor: type.color,
                     lineHeight: 30.0.h,
-                    backgroundColor: PTheme.bar,
-                    center: PText(
+                    backgroundColor: FTheme.bar,
+                    center: FText(
                       '${toLocalString(record)} / ${toLocalString(goal)} ${type.unit}',
                       style: textTheme.labelSmall,
                     ),

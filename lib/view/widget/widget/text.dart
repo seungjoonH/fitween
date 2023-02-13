@@ -5,20 +5,20 @@ import 'package:fitween/global/theme.dart';
 import 'package:flutter/material.dart';
 
 /// class
-class PText extends StatelessWidget {
-  PText(this.data, {
+class FText extends StatelessWidget {
+  FText(this.data, {
     Key? key,
     TextStyle? style,
-    this.color = PTheme.black,
+    this.color = FTheme.black,
     this.maxLines = 1,
     this.bold = false,
     this.italic = false,
     this.border = false,
     this.borderWidth = .8,
-    this.borderColor = PTheme.black,
+    this.borderColor = FTheme.black,
     this.align = TextAlign.left,
     this.shadows,
-  }) : style = style ?? PTheme.textTheme.bodyMedium, super(key: key);
+  }) : style = style ?? FTheme.textTheme.bodyMedium, super(key: key);
 
   final String data;
   final TextStyle? style;
@@ -73,8 +73,8 @@ class PText extends StatelessWidget {
   }
 }
 
-class PTexts extends StatelessWidget {
-  PTexts(this.texts, {
+class FTexts extends StatelessWidget {
+  FTexts(this.texts, {
     Key? key,
     required this.colors,
     TextStyle? style,
@@ -110,7 +110,7 @@ class PTexts extends StatelessWidget {
       children: List.generate(texts.length, (i) => Row(
         children: [
           if (i > 0 && space)
-          PText(' ',
+          FText(' ',
             style: style,
             bold: bold,
             italic: italic,
@@ -119,7 +119,7 @@ class PTexts extends StatelessWidget {
             maxLines: maxLines,
             shadows: shadows,
           ),
-          PText(texts[i],
+          FText(texts[i],
             color: colors[i],
             style: style,
             bold: bold,
@@ -140,7 +140,7 @@ class PInputField extends StatelessWidget {
     Key? key,
     required this.controller,
     this.hintText,
-    this.hintColor = PTheme.grey,
+    this.hintColor = FTheme.grey,
     this.invalid = false,
     this.keyboardType = TextInputType.text,
   }) : super(key: key);
@@ -159,7 +159,7 @@ class PInputField extends StatelessWidget {
       child: TextField(
         style: textTheme.bodyLarge,
         controller: controller,
-        cursorColor: PTheme.black,
+        cursorColor: FTheme.black,
         keyboardType: keyboardType,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
@@ -168,7 +168,7 @@ class PInputField extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(color: PTheme.black, width: 2.0),
+            borderSide: const BorderSide(color: FTheme.black, width: 2.0),
           ),
           hintText: hintText,
           hintStyle: textTheme.bodyLarge?.apply(color: hintColor),

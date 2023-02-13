@@ -50,7 +50,7 @@ class _MyProfileUpdateButtonWidgetState extends State<MyProfileUpdateButtonWidge
       children: [
         BadgeWidget(badge: BadgePresenter.getBadge(badgeId), size: 100.0),
         const SizedBox(height: 10.0),
-        PTextButton(
+        FTextButton(
           text: '뱃지 변경',
           onPressed: () async {
             if (await CollectionMain.toCollectionMain()) setState(() {});
@@ -98,10 +98,10 @@ class EditTextField extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PText(MySettingEdit.kr[editType]!, style: textTheme.headlineSmall),
+            FText(MySettingEdit.kr[editType]!, style: textTheme.headlineSmall),
             const SizedBox(height: 10.0),
             Material(
-              color: PTheme.white,
+              color: FTheme.white,
               borderRadius: BorderRadius.circular(10.0),
               child: InkWell(
                 onTap: () => MySettingEdit.toMySettingEdit(editType),
@@ -110,12 +110,12 @@ class EditTextField extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
-                    border: Border.all(color: PTheme.black),
+                    border: Border.all(color: FTheme.black),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: PText(value[editType]!,
+                  child: FText(value[editType]!,
                     style: textTheme.titleMedium,
-                    color: PTheme.grey,
+                    color: FTheme.grey,
                   ),
                 ),
               ),
@@ -150,7 +150,7 @@ class LogoutButton extends StatelessWidget {
     return PButton(
       onPressed: MySettingMain.logoutButtonPressed,
       fill: false, border: false,
-      child: PText('로그아웃', style: textTheme.titleLarge),
+      child: FText('로그아웃', style: textTheme.titleLarge),
     );
   }
 }
@@ -172,9 +172,9 @@ class AccountDeleteButton extends StatelessWidget {
         onTap: MySettingMain.accountDeleteButtonPressed,
         child: Padding(
           padding: const EdgeInsets.all(5.0),
-          child: PText('계정 탈퇴',
+          child: FText('계정 탈퇴',
             style: const TextStyle(fontFamily: 'Noto Sans KR'),
-            color: PTheme.grey,
+            color: FTheme.grey,
           ),
         ),
       ),

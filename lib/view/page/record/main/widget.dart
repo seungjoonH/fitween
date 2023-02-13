@@ -50,13 +50,13 @@ class RecordCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PText('오늘 ${type.done} ${type.kr}',
+                          FText('오늘 ${type.done} ${type.kr}',
                             style: textTheme.labelSmall,
                           ),
-                          PText(controller.tiers[type]!['current'].title,
+                          FText(controller.tiers[type]!['current'].title,
                             style: textTheme.bodyLarge,
                           ),
-                          PText('다음 단계 : ${controller.tiers[type]!['next'].title} 까지',
+                          FText('다음 단계 : ${controller.tiers[type]!['next'].title} 까지',
                             style: textTheme.labelSmall,
                           ),
                           Expanded(
@@ -65,7 +65,7 @@ class RecordCard extends StatelessWidget {
                               lineHeight: 12.0,
                               padding: EdgeInsets.zero,
                               barRadius: const Radius.circular(6.0),
-                              progressColor: PTheme.primary[40],
+                              progressColor: FTheme.primary[40],
                               animation: true,
                               animationDuration: 1000,
                               curve: Curves.easeInOut,

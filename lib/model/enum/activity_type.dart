@@ -10,7 +10,7 @@ enum ActivityType {
   // String get unitAlt => ['보', '층', 'kg', 'kcal'][index];
   // String get prefix => ['이동한', '오른', '들은', '감량한'][index];
   // String get verb => ['걸으세요', '오르세요', '들으세요', '감량하세요'][index];
-  // Color get color => [PTheme.colorB, PTheme.colorD, PTheme.colorC, PTheme.colorA][index];
+  // Color get color => [FTheme.colorB, FTheme.colorD, FTheme.colorC, FTheme.colorA][index];
   // String get asset => ['running.svg', 'stairs.svg', 'dumbbell.svg', 'lightning.svg'][index];
 
   calorie, distance, height, weight;
@@ -24,7 +24,7 @@ enum ActivityType {
   String get did => ['감량했어요', '걸었어요', '올랐어요', '들었어요'][index];
   String get and => ['감량했고', '걸었고', '올랐고', '들었고'][index];
   String get cause => ['감량해서', '걸어서', '올라서', '들어서'][index];
-  Color get color => [PTheme.colorA, PTheme.colorB, PTheme.colorC, PTheme.colorD][index];
+  Color get color => [FTheme.colorA, FTheme.colorB, FTheme.colorC, FTheme.colorD][index];
   String get asset => ['lightning.svg', 'running.svg', 'stairs.svg', 'dumbbell.svg'][index];
   bool get active => activeValues.contains(this);
 

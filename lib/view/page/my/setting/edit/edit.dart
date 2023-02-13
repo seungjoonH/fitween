@@ -33,7 +33,7 @@ class MySettingEditPage extends StatelessWidget {
               hintText: controller.hintText
                   ?? '${withEulReul(MySettingEdit.kr[editType]!)} 입력해주세요',
               hintColor: controller.hintText == null
-                  ? PTheme.grey : PTheme.colorB,
+                  ? FTheme.grey : FTheme.colorB,
             ),
           ),
         );

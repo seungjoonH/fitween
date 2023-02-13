@@ -72,9 +72,9 @@ class _LoginPageState extends State<LoginPage> {
           Positioned(
             right: 25.0.w,
             bottom: 15.0.h,
-            child: PText(
+            child: FText(
               version,
-              color: PTheme.grey,
+              color: FTheme.grey,
               style: textTheme.titleMedium,
             ),
           ),

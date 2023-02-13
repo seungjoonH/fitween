@@ -18,7 +18,7 @@ class CollectionWidget extends StatelessWidget {
     VoidCallback? onPressed,
     this.onLongPressed,
     this.size = 80.0,
-    this.color = PTheme.lightGrey,
+    this.color = FTheme.lightGrey,
     this.border = true,
   }) : onPressed = onPressed ?? (() => GlobalPresenter.showCollectionDialog(collection)),
         super(key: key);
@@ -40,7 +40,7 @@ class CollectionWidget extends StatelessWidget {
       side: BorderSide(
         width: (selected ? 4.5 : 1.5).r,
         color: collection == null && border
-            ? PTheme.black : Colors.transparent,
+            ? FTheme.black : Colors.transparent,
       ),
     );
 
@@ -63,7 +63,7 @@ class CollectionWidget extends StatelessWidget {
                     onTap: onPressed,
                     onLongPress: onLongPressed,
                     customBorder: side,
-                    splashColor: PTheme.black.withOpacity(.1),
+                    splashColor: FTheme.black.withOpacity(.1),
                     child: SizedBox(
                       width: (size + 3.0).r,
                       height: (size + 3.0).r,
@@ -73,23 +73,23 @@ class CollectionWidget extends StatelessWidget {
                 if (selected)
                 Container(
                   decoration: const BoxDecoration(
-                    color: PTheme.colorB,
+                    color: FTheme.colorB,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(Icons.check_circle_outline_rounded,
                     size: 40.0.r,
-                    color: PTheme.background,
+                    color: FTheme.background,
                   ),
                 ),
                 if (pressed)
                 Container(
                   decoration: const BoxDecoration(
-                    color: PTheme.grey,
+                    color: FTheme.grey,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(Icons.check_circle_outline_rounded,
                     size: 40.0.r,
-                    color: PTheme.white,
+                    color: FTheme.white,
                   ),
                 ),
               ],
@@ -98,7 +98,7 @@ class CollectionWidget extends StatelessWidget {
             Column(
               children: [
                 const SizedBox(height: 10.0),
-                PText(collection?.badge?.title ?? '',
+                FText(collection?.badge?.title ?? '',
                   maxLines: 1,
                   align: TextAlign.center,
                 ),
@@ -108,16 +108,16 @@ class CollectionWidget extends StatelessWidget {
                   height: 30.0.r,
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: PTheme.surface,
+                    color: FTheme.surface,
                     shape: BoxShape.circle,
                     border: Border.all(
                       color: border
-                          ? PTheme.black
+                          ? FTheme.black
                           : Colors.transparent,
                       width: 1.5,
                     ),
                   ),
-                  child: PText(
+                  child: FText(
                     '${collection?.dates.length ?? ''}',
                     border: true,
                   ),
@@ -139,7 +139,7 @@ class BadgeWidget extends StatelessWidget {
     this.detail = false,
     VoidCallback? onPressed,
     this.size = 80.0,
-    this.color = PTheme.lightGrey,
+    this.color = FTheme.lightGrey,
     this.border,
     this.completed = false,
     this.received = false,
@@ -173,7 +173,7 @@ class BadgeWidget extends StatelessWidget {
       side: BorderSide(
         width: 1.5.r,
         color: border == null
-            ? (badge == null ? PTheme.black : Colors.transparent)
+            ? (badge == null ? FTheme.black : Colors.transparent)
             : Colors.transparent,
       ),
     );
@@ -218,7 +218,7 @@ class BadgeWidget extends StatelessWidget {
                     Icon(
                       Icons.lock,
                       size: 40.0.r,
-                      color: PTheme.black,
+                      color: FTheme.black,
                     ),
                   ],
                 ),
@@ -234,7 +234,7 @@ class BadgeWidget extends StatelessWidget {
                   child: InkWell(
                     onTap: greyscale ? () {} : onPressed,
                     customBorder: side,
-                    splashColor: PTheme.black.withOpacity(.1),
+                    splashColor: FTheme.black.withOpacity(.1),
                     child: Container(
                       width: size.r,
                       height: size.r,
@@ -250,12 +250,12 @@ class BadgeWidget extends StatelessWidget {
             ),
             if (completed)
             Material(
-              color: PTheme.white.withOpacity(received ? .7 : .0),
+              color: FTheme.white.withOpacity(received ? .7 : .0),
               shape: side,
               child: InkWell(
                 onTap: onPressed,
                 customBorder: side,
-                splashColor: PTheme.black.withOpacity(.1),
+                splashColor: FTheme.black.withOpacity(.1),
                 child: Container(
                   width: size.r,
                   height: size.r,
@@ -269,21 +269,21 @@ class BadgeWidget extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 7.0),
                           decoration: BoxDecoration(
-                            border: Border.all(color: PTheme.colorB, width: 2.0),
+                            border: Border.all(color: FTheme.colorB, width: 2.0),
                           ),
-                          child: PText(' 완 료 ',
+                          child: FText(' 완 료 ',
                             style: textTheme.headlineMedium,
-                            color: PTheme.colorB,
+                            color: FTheme.colorB,
                           ),
                         ),
                       ) else Container(
                         padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 1.0),
                         decoration: BoxDecoration(
-                          color: PTheme.white,
+                          color: FTheme.white,
                           borderRadius: BorderRadius.circular(5.0),
-                          boxShadow: const [BoxShadow(color: PTheme.grey, blurRadius: 20.0)],
+                          boxShadow: const [BoxShadow(color: FTheme.grey, blurRadius: 20.0)],
                         ),
-                        child: PText('수령하기', style: textTheme.titleMedium, color: PTheme.black),
+                        child: FText('수령하기', style: textTheme.titleMedium, color: FTheme.black),
                       ),
                     ],
                   ),
@@ -296,7 +296,7 @@ class BadgeWidget extends StatelessWidget {
         Column(
           children: [
             const SizedBox(height: 10.0),
-            PText(badge?.title ?? '',
+            FText(badge?.title ?? '',
               maxLines: 1,
               align: TextAlign.center,
             ),

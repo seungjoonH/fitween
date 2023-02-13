@@ -1,3 +1,5 @@
+import 'package:fitween/view/widget/widget/text.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fitween/global/theme.dart';
@@ -9,10 +11,10 @@ class PCard extends StatelessWidget {
     required this.child,
     EdgeInsets? padding,
     this.onPressed,
-    this.color = PTheme.white,
+    this.color = FTheme.white,
     this.rounded = false,
     this.borderType = BorderType.all,
-    this.borderColor = PTheme.black,
+    this.borderColor = FTheme.black,
     this.borderWidth = 1.5,
   }) : padding = padding ?? EdgeInsets.all(20.0.r), super(key: key);
 
@@ -66,6 +68,87 @@ class PCard extends StatelessWidget {
             borderRadius: radius,
           ),
           child: child,
+        ),
+      ),
+    );
+  }
+}
+
+class FCard extends StatefulWidget {
+  const FCard({
+    Key? key,
+    this.title,
+    this.activateSeeMore = false,
+    required this.child,
+    this.backgroundColor = FTheme.white,
+    this.onPressed,
+  }) : super(key: key);
+
+  final String? title;
+  final bool activateSeeMore;
+  final Widget child;
+  final Color backgroundColor;
+  final VoidCallback? onPressed;
+
+  @override
+  State<FCard> createState() => _FCardState();
+}
+
+class _FCardState extends State<FCard> {
+  late Function(TapDownDetails) onTapDown;
+  late Function(TapUpDetails) onTapUp;
+
+  double scale = 1.0;
+  Duration duration = const Duration(milliseconds: 100);
+
+  @override
+  void initState() {
+    onTapDown = (_) {
+      if (widget.onPressed == null) return;
+      setState(() => scale = .9);
+    };
+    onTapUp = (_) async {
+      if (widget.onPressed == null) return;
+      widget.onPressed!();
+      await Future.delayed(duration, () {
+        setState(() => scale = 1.0);
+      });
+    };
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    BorderRadius radius = BorderRadius.circular(12.0);
+
+    return AnimatedScale(
+      scale: scale,
+      duration: duration,
+      child: GestureDetector(
+        onTapDown: onTapDown,
+        onTapUp: onTapUp,
+        child: Container(
+          padding: const EdgeInsets.all(20.0),
+          decoration: BoxDecoration(
+            color: widget.backgroundColor,
+            borderRadius: radius,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (widget.title != null)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FText(widget.title!, style: textTheme.titleLarge, color: FTheme.grey),
+                  if (widget.activateSeeMore)
+                  const Icon(Icons.arrow_forward_ios, color: FTheme.lightGrey),
+                ],
+              ),
+              widget.child,
+            ],
+          ),
         ),
       ),
     );

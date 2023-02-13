@@ -12,7 +12,7 @@ class PAppBar extends StatelessWidget implements PreferredSizeWidget {
   const PAppBar({
     Key? key,
     this.title = '',
-    this.color = PTheme.background,
+    this.color = FTheme.background,
     this.leading,
     this.actions,
   }) : super(key: key);
@@ -28,16 +28,16 @@ class PAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<GlobalPresenter>(
-        builder: (controller) {
-          return AppBar(
-            elevation: 0.0,
-            iconTheme: const IconThemeData(color: PTheme.black),
-            backgroundColor: color,
-            title: PText(title, style: textTheme.headlineMedium),
-            leading: leading,
-            actions: actions,
-          );
-        }
+      builder: (controller) {
+        return AppBar(
+          elevation: 0.0,
+          iconTheme: const IconThemeData(color: FTheme.black),
+          backgroundColor: color,
+          title: FText(title, style: textTheme.headlineMedium),
+          leading: leading,
+          actions: actions,
+        );
+      },
     );
   }
 }
@@ -54,7 +54,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       builder: (controller) {
         return AppBar(
           elevation: 0.0,
-          iconTheme: const IconThemeData(color: PTheme.white),
+          iconTheme: const IconThemeData(color: FTheme.white),
           title: const Align(
             alignment: Alignment.centerRight,
             child: MyNavigationButton(),
@@ -73,9 +73,9 @@ class MyNavigationButton extends StatelessWidget {
     BorderRadius radius = BorderRadius.circular(18.0);
 
     return Material(
-      color: PTheme.colorB,
+      color: FTheme.colorB,
       borderRadius: radius,
-      shadowColor: PTheme.grey,
+      shadowColor: FTheme.grey,
       child: InkWell(
         onTap: MyMain.toMyMain,
         borderRadius: radius,
@@ -85,7 +85,7 @@ class MyNavigationButton extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             border: Border.all(
-              color: PTheme.black,
+              color: FTheme.black,
               width: 1.5,
             ),
             borderRadius: radius,
@@ -94,9 +94,9 @@ class MyNavigationButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.person_outline, color: PTheme.white),
+              const Icon(Icons.person_outline, color: FTheme.white),
               const SizedBox(width: 5.0),
-              PText('마이 페이지', color: PTheme.white),
+              FText('마이 페이지', color: FTheme.white),
             ],
           ),
         ),
@@ -125,11 +125,11 @@ class CollectionMainAppBar extends StatelessWidget implements PreferredSizeWidge
 
         GetBuilder<CollectionMain>(
           builder: (controller) {
-            return PTextButton(
+            return FTextButton(
               onPressed: controller.toggleMode,
               text: controller.mode == PageMode.view ? '편집' : '완료',
               style: textTheme.titleMedium,
-              color: controller.mode == PageMode.view ? PTheme.black :  PTheme.colorB,
+              color: controller.mode == PageMode.view ? FTheme.black :  FTheme.colorB,
               padding: EdgeInsets.symmetric(horizontal: 16.0.w),
             );
           },
@@ -184,16 +184,16 @@ class MySettingMainAppBar extends StatelessWidget implements PreferredSizeWidget
         onPressed: GlobalPresenter.goBack,
       ),
       actions: [
-        PTextButton(
+        FTextButton(
           text: '앱 정보',
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          color: PTheme.grey,
+          color: FTheme.grey,
           onPressed: MySettingMain.showAppInfoDialog,
         ),
-        // PTextButton(
+        // FTextButton(
         //   text: version,
         //   padding: EdgeInsets.symmetric(horizontal: 20.0),
-        //   color: PTheme.grey,
+        //   color: FTheme.grey,
         //   onPressed: ReleaseNoteMain.toReleaseNoteMain,
         // ),
       ],

@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/page/friend.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -119,7 +120,7 @@ class GlobalPresenter extends GetxController {
           Container(
             padding: const EdgeInsets.all(10.0),
             alignment: Alignment.topLeft,
-            child: PText(badge.toAcquire, maxLines: 5),
+            child: FText(badge.toAcquire, maxLines: 5),
           ),
         ],
       ),
@@ -158,11 +159,11 @@ class GlobalPresenter extends GetxController {
                       height: 30.0.r,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: PTheme.white,
+                        color: FTheme.white,
                         shape: BoxShape.circle,
-                        border: Border.all(color: PTheme.black, width: 1.5),
+                        border: Border.all(color: FTheme.black, width: 1.5),
                       ),
-                      child: PText('${collection.dates.length}', border: true),
+                      child: FText('${collection.dates.length}', border: true),
                     ),
                   ],
                 ),
@@ -172,10 +173,10 @@ class GlobalPresenter extends GetxController {
                 constraints: const BoxConstraints(maxHeight: 70.0),
                 child: SingleChildScrollView(
                   child: Column(
-                    children: collection.dateList.map((date) => PText(
+                    children: collection.dateList.map((date) => FText(
                         dateToString('yyyy-MM-dd 획득!', date.toDate())!,
                         color: date == collection.dateList.last
-                            ? PTheme.colorB : PTheme.black,
+                            ? FTheme.colorB : FTheme.black,
                         bold: date == collection.dateList.last,
                       ),
                     ).toList().reversed.toList(),
@@ -189,7 +190,7 @@ class GlobalPresenter extends GetxController {
             padding: const EdgeInsets.all(10.0),
             alignment: Alignment.topLeft,
             constraints: const BoxConstraints(minHeight: 100.0),
-            child: PText(collection.badge!.description!, maxLines: 5),
+            child: FText(collection.badge!.description!, maxLines: 5),
           ),
         ],
       ),
@@ -247,7 +248,7 @@ class GlobalPresenter extends GetxController {
               ),
               Positioned(
                 top: .0,
-                child: PText(
+                child: FText(
                   '${firstAward ? '신규' : ''} 뱃지 획득!',
                   style: textTheme.headlineSmall,
                 ),
@@ -255,9 +256,9 @@ class GlobalPresenter extends GetxController {
               Positioned(
                 top: 40.0,
                 right: 20.0,
-                child: PText(
+                child: FText(
                   dateToString('yyyy-MM-dd', now)!,
-                  color: PTheme.colorB,
+                  color: FTheme.colorB,
                   align: TextAlign.end,
                 ),
               ),
@@ -265,12 +266,12 @@ class GlobalPresenter extends GetxController {
                 bottom: 20.0,
                 child: Column(
                   children: [
-                    PText(badge.title!,
+                    FText(badge.title!,
                       style: textTheme.titleLarge,
                       bold: true,
                     ),
                     const SizedBox(height: 5.0),
-                    PText(badge.description!,
+                    FText(badge.description!,
                       style: textTheme.bodyLarge,
                     ),
                   ],
@@ -302,14 +303,14 @@ class GlobalPresenter extends GetxController {
       content: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          selectedBadge == null ? PText('대표 컬렉션이 해제되었습니다.') : Column(
+          selectedBadge == null ? FText('대표 컬렉션이 해제되었습니다.') : Column(
             children: [
               BadgeWidget(badge: selectedBadge, size: 100.0.r),
               SizedBox(height: 20.0.h),
-              PText('대표 컬렉션이'),
-              PTexts(
+              FText('대표 컬렉션이'),
+              FTexts(
                 [selectedBadge.title!, '${roEuro(selectedBadge.title!)} 설정되었습니다.'],
-                colors: const [PTheme.colorB, PTheme.black],
+                colors: const [FTheme.colorB, FTheme.black],
                 space: false,
               )
             ],
@@ -355,5 +356,8 @@ class GlobalPresenter extends GetxController {
     Get.put(CameraPresenter());
     Get.put(PainterPresenter());
     Get.put(WorkoutMain());
+
+    Get.put(HomeP());
+    Get.put(FriendP());
   }
 }

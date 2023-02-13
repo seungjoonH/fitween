@@ -55,10 +55,10 @@ class FloatingMessageWidget extends StatelessWidget {
             height: 70.0.h,
             constraints: const BoxConstraints(maxWidth: 340.0),
             decoration: BoxDecoration(
-              color: PTheme.white.withOpacity(.6),
+              color: FTheme.white.withOpacity(.6),
               borderRadius: BorderRadius.circular(20.0),
             ),
-            child: PText(
+            child: FText(
               painterP.floatingMessage!,
               style: textTheme.headlineSmall,
             ),
@@ -82,7 +82,7 @@ class ExerciseCompleteButton extends StatelessWidget {
             height: 80.h,
             stretch: true,
             constraints: BoxConstraints(maxWidth: 300.0.w),
-            backgroundColor: PTheme.colorD,
+            backgroundColor: FTheme.colorD,
             onPressed: workoutMain.finishWorkout,
             child: Text('${workoutMain.count} 개로 운동 완료하기',
               style: textTheme.headlineSmall,
@@ -101,13 +101,13 @@ class WorkoutStateWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<PainterPresenter>(
       builder: (painterP) {
-        return PText(
+        return FText(
           painterP.stateText!,
           style: TextStyle(fontSize: 100.0.sp),
           color: {
-            'HIT!': PTheme.colorA,
-            'GO!': PTheme.colorB,
-            'READY': PTheme.colorC,
+            'HIT!': FTheme.colorA,
+            'GO!': FTheme.colorB,
+            'READY': FTheme.colorC,
           }[painterP.stateText],
         );
       }

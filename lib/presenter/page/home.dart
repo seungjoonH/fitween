@@ -1,5 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gif/flutter_gif.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/dialog.dart';
@@ -10,6 +12,57 @@ import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+class HomeP extends GetxController {
+
+  static void toHome() {
+    Get.offAllNamed('/home');
+  }
+
+  static Size screenSize = MediaQuery.of(Get.context!).size;
+
+  int rotationIndex = 0;
+  bool allowClick = true;
+  static String rotationAsset = 'assets/image/page/home/rotation/';
+  static late FlutterGifController gifCont;
+  String? _gifAsset;
+
+  String get pngAsset => '$rotationAsset${'rbo'[rotationIndex]}.png';
+  String? get gifAsset => _gifAsset == null ? null : '$rotationAsset$_gifAsset.gif';
+
+  void leftButtonPressed() async {
+    if (!allowClick) return;
+    allowClick = false;
+
+    _gifAsset = ['rto', 'btr', 'otb'][rotationIndex];
+    gifCont.reset();
+    gifCont.animateTo(48, duration: const Duration(milliseconds: 1500));
+    update();
+    await Future.delayed(const Duration(milliseconds: 1500), () {
+      _gifAsset = null;
+      rotationIndex = (rotationIndex - 1) % 3;
+      allowClick = true;
+      update();
+    });
+  }
+
+  void rightButtonPressed() async {
+    if (!allowClick) return;
+    allowClick = false;
+
+    _gifAsset = ['rtb', 'bto', 'otr'][rotationIndex];
+    gifCont.reset();
+    gifCont.animateTo(48, duration: const Duration(milliseconds: 1500));
+    update();
+    await Future.delayed(const Duration(milliseconds: 1500), () {
+      _gifAsset = null;
+      rotationIndex = (rotationIndex + 1) % 3;
+      allowClick = true;
+      update();
+    });
+  }
+
+}
 
 class HomePresenter extends GetxController {
   static final refreshCont = RefreshController();
@@ -24,7 +77,7 @@ class HomePresenter extends GetxController {
   static void showRouteEditGoalCheckDialog() {
     showPDialog(
       title: '목표 수정',
-      content: PText('목표 수정 페이지로 이동하시겠습니까?'),
+      content: FText('목표 수정 페이지로 이동하시겠습니까?'),
       type: DialogType.bi,
       leftPressed: Get.back,
       rightPressed: () {

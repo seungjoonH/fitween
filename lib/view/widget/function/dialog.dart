@@ -16,8 +16,8 @@ class DialogButtonData {
     Color? backgroundColor,
     required this.text,
     required this.onPressed,
-  }) : textColor = textColor ?? PTheme.white,
-        backgroundColor = backgroundColor ?? PTheme.black;
+  }) : textColor = textColor ?? FTheme.white,
+        backgroundColor = backgroundColor ?? FTheme.black;
 }
 
 void showPDialog({
@@ -134,7 +134,7 @@ class _PAlertDialogState extends State<PAlertDialog> {
         data = [
           DialogButtonData(widget.type,
             text: widget.buttonText ?? '확인',
-            backgroundColor: widget.color ?? PTheme.black,
+            backgroundColor: widget.color ?? FTheme.black,
             onPressed: widget.onPressed!,
           ),
         ]; break;
@@ -142,14 +142,14 @@ class _PAlertDialogState extends State<PAlertDialog> {
         data = [
           DialogButtonData(widget.type,
             text: widget.leftText ?? '취소',
-            textColor: widget.leftTextColor ?? PTheme.black,
-            backgroundColor: widget.leftBackgroundColor ?? PTheme.white,
+            textColor: widget.leftTextColor ?? FTheme.black,
+            backgroundColor: widget.leftBackgroundColor ?? FTheme.white,
             onPressed: widget.leftPressed!,
           ),
           DialogButtonData(widget.type,
             text: widget.rightText ?? '확인',
-            textColor: widget.rightTextColor ?? PTheme.white,
-            backgroundColor: widget.rightBackgroundColor ?? PTheme.black,
+            textColor: widget.rightTextColor ?? FTheme.white,
+            backgroundColor: widget.rightBackgroundColor ?? FTheme.black,
             onPressed: widget.rightPressed!,
           ),
         ]; break;
@@ -159,10 +159,10 @@ class _PAlertDialogState extends State<PAlertDialog> {
 
     return AlertDialog(
       shape: const RoundedRectangleBorder(
-        side: BorderSide(color: PTheme.black, width: 1.5),
+        side: BorderSide(color: FTheme.black, width: 1.5),
         borderRadius: BorderRadius.zero,
       ),
-      backgroundColor: PTheme.bar,
+      backgroundColor: FTheme.bar,
       title: Container(
         padding: widget.titlePadding,
         decoration: const BoxDecoration(
@@ -171,7 +171,7 @@ class _PAlertDialogState extends State<PAlertDialog> {
           ),
         ),
         child: Center(
-          child: PText(widget.title ?? '',
+          child: FText(widget.title ?? '',
             style: textTheme.headlineSmall,
             bold: true,
           ),
@@ -196,10 +196,10 @@ class _PAlertDialogState extends State<PAlertDialog> {
                   child: Container(
                     padding: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
-                      border: Border.all(color: PTheme.black),
+                      border: Border.all(color: FTheme.black),
                     ),
                     child: Center(
-                      child: PText(datum.text,
+                      child: FText(datum.text,
                         color: datum.textColor,
                         style: textTheme.labelLarge,
                       ),

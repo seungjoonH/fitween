@@ -104,7 +104,7 @@ class GoalNumberPicker extends StatefulWidget {
     this.itemHeight = 120.0,
     this.minValue = 0,
     this.maxValue = 100,
-    this.color = PTheme.black,
+    this.color = FTheme.black,
   }) : super(key: key);
 
   final ActivityType type;
@@ -147,7 +147,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
                 Icons.arrow_drop_up,
                 size: 40.0.r,
                 color: record.amount > widget.minValue
-                    ? PTheme.black
+                    ? FTheme.black
                     : Colors.transparent,
               ),
               onPressed: () {
@@ -173,7 +173,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
               value: record.amount.round(),
               minValue: widget.minValue,
               maxValue: widget.maxValue,
-              textStyle: widget.style?.apply(color: PTheme.grey),
+              textStyle: widget.style?.apply(color: FTheme.grey),
               selectedTextStyle: widget.style?.apply(color: widget.color),
             ),
             IconButton(
@@ -181,7 +181,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
                 Icons.arrow_drop_down,
                 size: 40.0.r,
                 color: record.amount < widget.maxValue
-                    ? PTheme.black
+                    ? FTheme.black
                     : Colors.transparent,
               ),
               onPressed: () {
@@ -220,29 +220,29 @@ class DistanceRecommendView extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            PTexts(
+            FTexts(
               ['$ageGroup', '대 ', controller.user.sex!.kr, ' 평균'],
               colors: const [
-                PTheme.colorA,
-                PTheme.black,
-                PTheme.colorA,
-                PTheme.black,
+                FTheme.colorA,
+                FTheme.black,
+                FTheme.colorA,
+                FTheme.black,
               ],
               alignment: MainAxisAlignment.start,
               space: false,
               style: textTheme.displaySmall,
             ),
-            PTexts(
+            FTexts(
               [
                 '매일',
                 '${recommendTimes.length == 1 ? recommendTimes[0] : recommendTimes.join('~')}',
                 '분',
               ],
-              colors: [PTheme.black, ActivityType.distance.color, PTheme.black],
+              colors: [FTheme.black, ActivityType.distance.color, FTheme.black],
               alignment: MainAxisAlignment.start,
               style: textTheme.displaySmall,
             ),
-            PText(
+            FText(
               '유산소 운동이\n적당해요',
               style: textTheme.displaySmall,
               maxLines: 2,
@@ -294,16 +294,16 @@ class DistanceGoalView extends StatelessWidget {
                 type: ActivityType.distance,
                 itemWidth: 200.0,
                 color: ActivityType.distance.color,
-                style: PTheme.largeText,
+                style: FTheme.largeText,
                 maxValue: 200,
               ),
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                PTexts(
+                FTexts(
                   ['하루 ', '$minute', '분이면'],
-                  colors: const [PTheme.black, PTheme.colorA, PTheme.black],
+                  colors: const [FTheme.black, FTheme.colorA, FTheme.black],
                   style: textTheme.displaySmall,
                   alignment: MainAxisAlignment.end,
                   space: false,
@@ -325,16 +325,16 @@ class DistanceGoalView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10.0),
-                    PText('(${unitDistance(distanceValue.step.round())}보)'),
+                    FText('(${unitDistance(distanceValue.step.round())}보)'),
                   ],
                 ),
-                PText(
+                FText(
                   '${eulReul(distanceTitle)} 정복할 수 있어요',
                   style: textTheme.displaySmall,
                 ),
-                PTexts(
+                FTexts(
                   ['* 약 ', '${toLocalString(step)}보 (${kilometer}km)'],
-                  colors: const [PTheme.grey, PTheme.colorB],
+                  colors: const [FTheme.grey, FTheme.colorB],
                   space: false,
                   alignment: MainAxisAlignment.end,
                 ),
@@ -356,12 +356,12 @@ class HeightRecommendView extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        PText('한 층을', style: textTheme.displaySmall, color: PTheme.colorA),
-        PText('오를 때마다', style: textTheme.displaySmall),
-        PText('건강 수명이', style: textTheme.displaySmall),
-        PTexts(
+        FText('한 층을', style: textTheme.displaySmall, color: FTheme.colorA),
+        FText('오를 때마다', style: textTheme.displaySmall),
+        FText('건강 수명이', style: textTheme.displaySmall),
+        FTexts(
           const ['1분 40초', '연장돼요'],
-          colors: [ActivityType.height.color, PTheme.black],
+          colors: [ActivityType.height.color, FTheme.black],
           style: textTheme.displaySmall,
           alignment: MainAxisAlignment.start,
         ),
@@ -406,15 +406,15 @@ class HeightGoalView extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PTexts(
+                FTexts(
                   ['하루', '${goal.amount.round()}', '층이면'],
                   colors: [
-                    PTheme.black,
+                    FTheme.black,
                     ActivityType.calorie.color,
-                    PTheme.black
+                    FTheme.black
                   ],
                   alignment: MainAxisAlignment.start,
-                  style: style(PTheme.black),
+                  style: style(FTheme.black),
                 ),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -429,14 +429,14 @@ class HeightGoalView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 10.0),
-                    PText('(${heightValue.amount.round()}층)'),
+                    FText('(${heightValue.amount.round()}층)'),
                   ],
                 ),
-                PText('을 정복할 수 있어요', style: textTheme.displaySmall),
+                FText('을 정복할 수 있어요', style: textTheme.displaySmall),
                 const SizedBox(height: 10.0),
-                PTexts(
+                FTexts(
                   ['* 수명 약', timeToString((100 * goal.amount).round()), '연장'],
-                  colors: [PTheme.grey, ActivityType.height.color, PTheme.grey],
+                  colors: [FTheme.grey, ActivityType.height.color, FTheme.grey],
                   alignment: MainAxisAlignment.start,
                 ),
               ],
@@ -448,7 +448,7 @@ class HeightGoalView extends StatelessWidget {
                 type: ActivityType.height,
                 itemWidth: 200.0,
                 color: ActivityType.height.color,
-                style: PTheme.largeText,
+                style: FTheme.largeText,
               ),
             ),
             const SizedBox(height: 100.0),
@@ -494,7 +494,7 @@ class CalorieCheckView extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PText('하루에', style: textTheme.headlineMedium),
+                FText('하루에', style: textTheme.headlineMedium),
                 Row(
                   children: [
                     Container(
@@ -507,7 +507,7 @@ class CalorieCheckView extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 7.0),
-                    PText(
+                    FText(
                       '만큼 걷고',
                       style: textTheme.headlineMedium,
                     ),
@@ -522,7 +522,7 @@ class CalorieCheckView extends StatelessWidget {
                       intervalSpaces: 5,
                     ),
                     const SizedBox(width: 7.0),
-                    PText(
+                    FText(
                       '만큼 오르면...',
                       style: textTheme.headlineMedium,
                     ),
@@ -534,19 +534,19 @@ class CalorieCheckView extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                PTexts(
+                FTexts(
                   ['총', '${goal.amount.round()} kcal', '를'],
                   colors: [
-                    PTheme.black,
+                    FTheme.black,
                     ActivityType.calorie.color,
-                    PTheme.black
+                    FTheme.black
                   ],
                   style: textTheme.displaySmall,
                   alignment: MainAxisAlignment.end,
                 ),
-                PText(
+                FText(
                   '소모할 수 있어요',
-                  color: PTheme.black,
+                  color: FTheme.black,
                   style: textTheme.displaySmall,
                 ),
               ],

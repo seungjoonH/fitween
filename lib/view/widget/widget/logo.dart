@@ -11,8 +11,8 @@ class PLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // return Center(child: SvgPicture.asset(asset));
-    return PText('Pistachio',
-      color: PTheme.white,
+    return FText('Fitween',
+      color: FTheme.white,
       border: true,
       borderWidth: 1.5,
       style: TextStyle(fontSize: 75.0.sp),

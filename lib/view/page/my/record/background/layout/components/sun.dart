@@ -106,7 +106,7 @@ class _SunAndMoonState extends State<_SunAndMoon>
           opacity: 1 - _controller.value,
           child: ColorFiltered(
             colorFilter: const ColorFilter.mode(
-              PTheme.moon,
+              FTheme.moon,
               BlendMode.srcATop,
             ),
             child: Image.asset('assets/image/record/sun_ellipse.png'),
@@ -168,7 +168,7 @@ class SunAndMoonReflection extends StatelessWidget {
             ? Image.asset('assets/image/record/sun_ellipse.png')
             : ColorFiltered(
                 colorFilter: const ColorFilter.mode(
-                  PTheme.moon,
+                  FTheme.moon,
                   BlendMode.srcATop,
                 ),
                 child: Image.asset('assets/image/record/sun_ellipse.png'),
@@ -186,7 +186,7 @@ class Sun extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
-        color: PTheme.sun,
+        color: FTheme.sun,
       ),
     );
   }
@@ -219,7 +219,7 @@ class MoonShape extends CustomPainter {
   final painter = Paint();
 
   MoonShape(this.fraction) {
-    painter.color = PTheme.moon;
+    painter.color = FTheme.moon;
   }
 
   final double fraction;

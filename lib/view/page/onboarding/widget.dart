@@ -51,7 +51,7 @@ class _CarouselViewState extends State<CarouselView> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      PText(messages[index],
+                      FText(messages[index],
                         maxLines: 3,
                         style: textTheme.headlineSmall,
                         align: TextAlign.center,
@@ -112,8 +112,8 @@ class CarouselIndicator extends StatelessWidget {
           dotsCount: count,
           position: controller.pageIndex.toDouble(),
           decorator: DotsDecorator(
-            color: PTheme.grey,
-            activeColor: PTheme.black,
+            color: FTheme.grey,
+            activeColor: FTheme.black,
             size: const Size(10.0, 10.0),
             activeSize: const Size(150.0, 10.0),
             activeShape: RoundedRectangleBorder(

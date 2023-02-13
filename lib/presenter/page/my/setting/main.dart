@@ -26,7 +26,7 @@ class MySettingMain extends GetxController {
       type: DialogType.bi,
       title: '계정 삭제',
       titlePadding: const EdgeInsets.all(20.0),
-      content: PText('정말 계정을 삭제하시겠습니까?'),
+      content: FText('정말 계정을 삭제하시겠습니까?'),
       contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
       rightText: '삭제',
       leftPressed: Get.back,
@@ -40,7 +40,7 @@ class MySettingMain extends GetxController {
       title: '앱 정보',
       content: Column(
         children: [
-          PTextButton(
+          FTextButton(
             text: '릴리즈 노트',
             style: textTheme.bodyLarge,
             onPressed: () {
@@ -52,9 +52,9 @@ class MySettingMain extends GetxController {
               vertical: 10.0,
             ),
           ),
-          PText(version, color: PTheme.grey),
+          FText(version, color: FTheme.grey),
           const SizedBox(height: 20.0),
-          PTextButton(
+          FTextButton(
             text: '개발자 정보',
             style: textTheme.bodyLarge,
             onPressed: () {},
@@ -63,7 +63,7 @@ class MySettingMain extends GetxController {
               vertical: 10.0,
             ),
           ),
-          PText('fitween.pistachio@gmail.com', color: PTheme.grey),
+          FText('fitween.pistachio@gmail.com', color: FTheme.grey),
         ],
       ),
       contentAlignment: CrossAxisAlignment.center,

@@ -122,6 +122,7 @@ class _WorkoutMainPageState extends State<WorkoutMainPage> {
           builder: (context, orientation) {
             PainterPresenter.setOrientation(orientation);
             return Scaffold(
+              extendBodyBehindAppBar: true,
               appBar: PAppBar(
                 title: '운동하기',
                 actions: [
@@ -133,13 +134,15 @@ class _WorkoutMainPageState extends State<WorkoutMainPage> {
                     icon: const Icon(Icons.camera_alt),
                   ),
                 ],
+                color: Colors.transparent,
               ),
               body: GetBuilder<PainterPresenter>(
                 builder: (painterP) {
                   return Column(
                     children: [
                       SizedBox(
-                        height: PainterPresenter.canvasSize.height,
+                        width: MediaQuery.of(context).size.width,
+                        height: MediaQuery.of(context).size.height,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
@@ -159,23 +162,23 @@ class _WorkoutMainPageState extends State<WorkoutMainPage> {
                           children: [
                             PCircledButton(
                               onPressed: painterP.initWorkout,
-                              backgroundColor: PTheme.lightGrey,
+                              backgroundColor: FTheme.lightGrey,
                               enabled: painterP.state == WorkoutState.workout,
-                              child: PText('취소', style: textTheme.titleLarge),
+                              child: FText('취소', style: textTheme.titleLarge),
                             ),
-                            PText(
+                            FText(
                               '${painterP.count} 개',
                               style: textTheme.headlineMedium,
                             ),
                             if (painterP.state == WorkoutState.workout)
                             PCircledButton(
                               onPressed: painterP.workout,
-                              backgroundColor: PTheme.colorA,
-                              child: PText('중지', style: textTheme.titleLarge),
+                              backgroundColor: FTheme.colorA,
+                              child: FText('중지', style: textTheme.titleLarge),
                             ) else PCircledButton(
                               onPressed: painterP.workout,
-                              backgroundColor: PTheme.colorB,
-                              child: PText('시작', style: textTheme.titleLarge),
+                              backgroundColor: FTheme.colorB,
+                              child: FText('시작', style: textTheme.titleLarge),
                             ),
                           ],
                         ),

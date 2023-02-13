@@ -29,13 +29,13 @@ class PBottomSheetBar extends StatelessWidget {
       controller: GlobalPresenter.barCont,
       borderRadiusExpanded: radius,
       isDismissable: false,
-      color: PTheme.white,
+      color: FTheme.white,
       expandedBuilder: (_) => Container(
         width: double.infinity,
         height: 350.0.h,
         decoration: BoxDecoration(
-          color: PTheme.white,
-          border: Border.all(color: PTheme.black, width: 1.5),
+          color: FTheme.white,
+          border: Border.all(color: FTheme.black, width: 1.5),
           borderRadius: radius,
         ),
         child: Column(
@@ -44,7 +44,7 @@ class PBottomSheetBar extends StatelessWidget {
               margin: const EdgeInsets.only(top: 10.0),
               width: 100.0, height: 7.0,
               decoration: BoxDecoration(
-                border: Border.all(color: PTheme.black, width: 1.5),
+                border: Border.all(color: FTheme.black, width: 1.5),
                 borderRadius: BorderRadius.circular(3.5),
               ),
             ),
@@ -53,11 +53,11 @@ class PBottomSheetBar extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  PText('일일 기록 입력하기', style: textTheme.headlineSmall),
+                  FText('일일 기록 입력하기', style: textTheme.headlineSmall),
                   SizedBox(height: 10.0.h),
                   Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color: PTheme.black, width: 1.5 * .5),
+                      border: Border.all(color: FTheme.black, width: 1.5 * .5),
                     ),
                     child: GridView(
                       shrinkWrap: true,
@@ -77,7 +77,7 @@ class PBottomSheetBar extends StatelessWidget {
       ),
       collapsed: const CollapsedBottomBar(),
       body: Container(
-        color: PTheme.background,
+        color: FTheme.background,
         child: body,
       ),
     );
@@ -94,7 +94,7 @@ class CollapsedBottomBar extends StatelessWidget {
       children: [
         Column(
           children: [
-            const Divider(height: 1.5, thickness: 1.5, color: PTheme.black),
+            const Divider(height: 1.5, thickness: 1.5, color: FTheme.black),
             const SizedBox(height: 3.0),
             SizedBox(
               width: double.infinity,
@@ -146,14 +146,14 @@ class RecordNavigateButton extends StatelessWidget {
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              border: Border.all(color: PTheme.black, width: 1.5 * .5),
+              border: Border.all(color: FTheme.black, width: 1.5 * .5),
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 SvgPicture.asset('$asset${type.name}.svg'),
                 SizedBox(height: 20.0.h),
-                PText(type.kr, style: textTheme.labelSmall),
+                FText(type.kr, style: textTheme.labelSmall),
               ],
             ),
           ),

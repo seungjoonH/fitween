@@ -42,7 +42,7 @@ class _MyMainViewState extends State<MyMainView> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PText('개인 누적 기록치', style: textTheme.headlineSmall),
+                FText('개인 누적 기록치', style: textTheme.headlineSmall),
                 const SizedBox(height: 20.0),
                 Column(
                   children: ActivityType.values.sublist(1, 3).map((type) {
@@ -82,7 +82,7 @@ class _MyMainViewState extends State<MyMainView> {
                                             'assets/image/level/${type.name}/${tier['current'].id}.png',
                                             width: 40.0.w,
                                           ),
-                                          PText(
+                                          FText(
                                             tier['current']?.title ?? '',
                                             maxLines: 2,
                                             style: textTheme.bodySmall,
@@ -98,7 +98,7 @@ class _MyMainViewState extends State<MyMainView> {
                                           Container(
                                             margin: const EdgeInsets.symmetric(horizontal: 20.0),
                                             decoration: BoxDecoration(
-                                              border: Border.all(color: PTheme.black, width: 1.5),
+                                              border: Border.all(color: FTheme.black, width: 1.5),
                                               borderRadius: BorderRadius.circular(20.0.r),
                                             ),
                                             child: LinearPercentIndicator(
@@ -113,9 +113,9 @@ class _MyMainViewState extends State<MyMainView> {
                                               curve: Curves.easeInOut,
                                             ),
                                           ),
-                                          PTexts(
+                                          FTexts(
                                             ['다음 단계까지', '$remainValue${type.unit}'],
-                                            colors: [PTheme.black, type.color],
+                                            colors: [FTheme.black, type.color],
                                             style: textTheme.bodyLarge,
                                           ),
                                         ],
@@ -123,7 +123,7 @@ class _MyMainViewState extends State<MyMainView> {
                                     ),
                                     SizedBox(
                                       width: 60.0,
-                                      child: PText(
+                                      child: FText(
                                         '${(100 * (tier['percent'] ?? 0)).round()}%',
                                         style: textTheme.headlineSmall,
                                       ),
@@ -138,12 +138,12 @@ class _MyMainViewState extends State<MyMainView> {
                             child: Stack(
                               children: [
                                 Container(
-                                  color: PTheme.surface,
+                                  color: FTheme.surface,
                                   alignment: Alignment.center,
                                   child: Icon(Icons.lock, size: 30.0.r),
                                 ),
                                 Container(
-                                  color: PTheme.black.withOpacity(.3),
+                                  color: FTheme.black.withOpacity(.3),
                                 ),
                               ],
                             ),
@@ -183,14 +183,14 @@ class MyProfileWidget extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                PText(
+                FText(
                   controller.loggedUser.nickname!,
                   style: textTheme.displaySmall,
                 ),
-                PText(
+                FText(
                   '${userHeight}cm | ${userWeight}kg',
                   style: textTheme.titleLarge,
-                  color: PTheme.grey,
+                  color: FTheme.grey,
                 ),
               ],
             ),

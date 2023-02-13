@@ -69,7 +69,7 @@ class Classifier {
     inputs = [inputImage.buffer];
 
     stopwatch.stop();
-    frameNo += 1;
+    frameNo++;
 
     stopwatch.reset();
   }

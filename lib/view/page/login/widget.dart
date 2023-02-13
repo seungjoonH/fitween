@@ -23,12 +23,12 @@ class SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const Map<LoginType, Color> backgroundColors = {
-      LoginType.google: PTheme.white,
-      LoginType.apple: PTheme.black,
+      LoginType.google: FTheme.white,
+      LoginType.apple: FTheme.black,
     };
     const Map<LoginType, Color> textColors = {
-      LoginType.google: PTheme.black,
-      LoginType.apple: PTheme.white,
+      LoginType.google: FTheme.black,
+      LoginType.apple: FTheme.white,
     };
 
     return PButton(
@@ -54,7 +54,7 @@ class SignInButton extends StatelessWidget {
               height: 23.0.r,
             ),
             SizedBox(width: 20.0.w),
-            PText(
+            FText(
               'Continue with ${toBeginningOfSentenceCase(type.name)}',
               style: textTheme.titleMedium,
               color: textColors[type],

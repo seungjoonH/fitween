@@ -24,7 +24,7 @@ class WorkoutGuidePage extends StatelessWidget {
           ))..add(Center(
             child: PButton(
               text: 'GO!',
-              backgroundColor: PTheme.colorD,
+              backgroundColor: FTheme.colorD,
               padding: const EdgeInsets.symmetric(
                 horizontal: 30.0, vertical: 20.0,
               ),
@@ -58,7 +58,7 @@ class GuideCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          PText('<무게 측정 방법>', style: textTheme.headlineSmall),
+          FText('<무게 측정 방법>', style: textTheme.headlineSmall),
           const SizedBox(height: 10.0),
           Image.asset(
             WorkoutGuide.getAsset(index),
@@ -75,10 +75,10 @@ class GuideCard extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(width: 1.5),
             ),
-            child: PText('${index + 1}'),
+            child: FText('${index + 1}'),
           ),
           const SizedBox(height: 20.0),
-          PText(WorkoutGuide.descriptions[index], maxLines: 2),
+          FText(WorkoutGuide.descriptions[index], maxLines: 2),
         ],
       ),
     );

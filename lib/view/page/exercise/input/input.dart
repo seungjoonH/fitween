@@ -133,14 +133,14 @@ class _ExerciseInputPageState extends State<ExerciseInputPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  PTexts(
+                  FTexts(
                     messages[type]!,
                     alignment: MainAxisAlignment.start,
-                    colors: [PTheme.black, type.color, PTheme.black],
+                    colors: [FTheme.black, type.color, FTheme.black],
                     style: textTheme.displaySmall,
                     space: false,
                   ),
-                  PText(
+                  FText(
                     '하쿠나님?',
                     style: textTheme.displaySmall,
                   ),
@@ -153,7 +153,7 @@ class _ExerciseInputPageState extends State<ExerciseInputPage> {
                   //       keyboardType: TextInputType.number,
                   //       invalid: controller.invalid,
                   //       hintColor: controller.hintText == null
-                  //           ? PTheme.grey : PTheme.colorB,
+                  //           ? FTheme.grey : FTheme.colorB,
                   //     );
                   //   }
                   // ),
@@ -168,9 +168,9 @@ class _ExerciseInputPageState extends State<ExerciseInputPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          PText(
+                          FText(
                             '현재 내 위치 기반으로 할래요!',
-                            color: PTheme.colorB,
+                            color: FTheme.colorB,
                             style: textTheme.titleMedium,
                           ),
                           SizedBox(
@@ -180,17 +180,17 @@ class _ExerciseInputPageState extends State<ExerciseInputPage> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Icon(Icons.my_location, color: PTheme.colorA,),
+                              Icon(Icons.my_location, color: FTheme.colorA,),
                               SizedBox(
                                 width: 10,
                               ),
-                              PText('내 위치:', color: PTheme.colorA, style: textTheme.titleMedium,),
+                              FText('내 위치:', color: FTheme.colorA, style: textTheme.titleMedium,),
                               SizedBox(
                                 width: 10,
                               ),
                               Container(
                                 width: 180,
-                                  child: PText(address, color: PTheme.black, style: textTheme.titleSmall, maxLines: 3,))
+                                  child: FText(address, color: FTheme.black, style: textTheme.titleSmall, maxLines: 3,))
                             ],
                           )
                         ],
@@ -201,11 +201,11 @@ class _ExerciseInputPageState extends State<ExerciseInputPage> {
                           rounded: true,
                           child: Column(
                             children: [
-                              PText(
+                              FText(
                                 '내 위치\n사진 업로드',
                                 maxLines: 2,
                                 style: textTheme.titleLarge,
-                                color: PTheme.colorC,
+                                color: FTheme.colorC,
                               ),
                               Image.asset('assets/image/page/input/streetView.png', width: 100,)
                             ],
@@ -219,19 +219,19 @@ class _ExerciseInputPageState extends State<ExerciseInputPage> {
                                 top:0,
                                 right: 0,
                                 child: CornerBanner(
-                                    bannerColor: PTheme.colorB,
+                                    bannerColor: FTheme.colorB,
                                     bannerPosition: CornerBannerPosition.topRight,
-                                    child: PText('Beta')),
+                                    child: FText('Beta')),
                               ),
                               Padding(
                                 padding: EdgeInsets.all(20.0.r),
                                 child: Column(
                                   children: [
-                                    PText(
+                                    FText(
                                       '내 주소\n인식하기',
                                       maxLines: 2,
                                       style: textTheme.titleLarge,
-                                      color: PTheme.colorC,
+                                      color: FTheme.colorC,
                                     ),
                                     Image.asset('assets/image/page/input/destinationView.png', width: 100,)
                                   ],
@@ -261,7 +261,7 @@ class _ExerciseInputPageState extends State<ExerciseInputPage> {
                     text: '선택 완료',
                     stretch: true,
                     backgroundColor: type.color,
-                    textColor: PTheme.black,
+                    textColor: FTheme.black,
                   );
                 },
               ),
