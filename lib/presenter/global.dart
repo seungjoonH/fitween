@@ -356,9 +356,8 @@ class GlobalPresenter extends GetxController {
     Get.put(PartyPresenter());
 
     Get.put(OnboardingPresenter());
-    Get.put(RegisterPresenter());
+    Get.put(RegisterP());
     Get.put(HomePresenter());
-    Get.put(RegisterPresenter());
     Get.put(NotificationPresenter());
 
     Get.put(ExerciseDetailSetting());

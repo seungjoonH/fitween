@@ -40,8 +40,8 @@ class PRoute {
   static Map<String, Widget> get pages => {
     '/home': const HomePage(),
     '/friend': const FriendPage(),
+    '/register': const RegisterPage(),
     // '/login': const LoginPage(),
-    // '/register': const RegisterPage(),
     // '/onboarding': const OnboardingPage(),
     // '/exercise/input': ExerciseInputPage(),
     // '/record/main': const RecordMainPage(),
