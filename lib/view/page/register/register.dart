@@ -15,7 +15,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
-      child: GetBuilder<RegisterPresenter>(
+      child: GetBuilder<RegisterP>(
         builder: (controller) {
           controller.setKeyboardVisible(MediaQuery.of(context).viewInsets.bottom != 0);
           return const Scaffold(

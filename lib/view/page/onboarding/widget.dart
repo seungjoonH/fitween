@@ -81,7 +81,7 @@ class _CarouselViewState extends State<CarouselView> {
                   CarouselIndicator(count: messages.length),
                   if (controller.visible)
                   PButton(
-                    onPressed: RegisterPresenter.toRegister,
+                    onPressed: RegisterP.toRegister,
                     text: '시작하기',
                     stretch: true,
                   ),

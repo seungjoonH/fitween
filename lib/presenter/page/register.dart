@@ -26,7 +26,7 @@ class Field {
 }
 
 /// class
-class RegisterPresenter extends GetxController {
+class RegisterP extends GetxController {
   int pageIndex = 0;
   bool invalid = false;
   List<bool> imageExistence = [false, false, false, true, true, true, true, true];
@@ -47,7 +47,7 @@ class RegisterPresenter extends GetxController {
   static final carouselCont = CarouselController();
 
   static void toRegister() {
-    final registerP = Get.find<RegisterPresenter>();
+    final registerP = Get.find<RegisterP>();
     registerP.init();
     Get.toNamed('/register');
   }

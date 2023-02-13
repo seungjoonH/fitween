@@ -47,7 +47,7 @@ class CarouselView extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
     String asset = 'assets/image/page/register/';
 
-    return GetBuilder<RegisterPresenter>(
+    return GetBuilder<RegisterP>(
       builder: (controller) {
         return Stack(
           children: [
@@ -74,7 +74,7 @@ class CarouselView extends StatelessWidget {
                     child: Container(
                       constraints: BoxConstraints(minWidth: screenSize.width),
                       child: CarouselSlider(
-                        carouselController: RegisterPresenter.carouselCont,
+                        carouselController: RegisterP.carouselCont,
                         items: carouselWidgets().map((widget) => Container(
                           padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           child: widget,
@@ -108,7 +108,7 @@ class UserInfoView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterPresenter>(
+    return GetBuilder<RegisterP>(
       builder: (controller) {
         return SingleChildScrollView(
           child: Column(
@@ -206,7 +206,7 @@ class SexSelectionButton extends StatelessWidget {
       Sex.female: '여자',
     };
 
-    return GetBuilder<RegisterPresenter>(
+    return GetBuilder<RegisterP>(
       builder: (controller) {
         return PButton(
           stretch: true,
@@ -233,7 +233,7 @@ class WeightHeightView extends StatelessWidget {
       '체중': Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          GetBuilder<RegisterPresenter>(
+          GetBuilder<RegisterP>(
             builder: (controller) {
               return NumberPicker(
                 onChanged: controller.setWeight,
@@ -251,7 +251,7 @@ class WeightHeightView extends StatelessWidget {
       '신장': Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          GetBuilder<RegisterPresenter>(
+          GetBuilder<RegisterP>(
             builder: (controller) {
               return NumberPicker(
                 onChanged: controller.setHeight,
@@ -352,7 +352,7 @@ class GoalNumberPicker extends StatefulWidget {
 class _GoalNumberPickerState extends State<GoalNumberPicker> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterPresenter>(
+    return GetBuilder<RegisterP>(
       builder: (controller) {
         Record record = controller.newcomer.getGoal(widget.type)!;
         record.convert(ExerciseUnit.minute);
@@ -461,7 +461,7 @@ class DistanceRecommendView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterPresenter>(
+    return GetBuilder<RegisterP>(
       builder: (controller) {
         int ageGroup =
             today.difference(controller.newcomer.dateOfBirth!).inDays;
@@ -517,7 +517,7 @@ class DistanceGoalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterPresenter>(
+    return GetBuilder<RegisterP>(
       builder: (controller) {
         DistanceRecord distance = controller.newcomer.getGoal(
           ActivityType.distance,
@@ -631,7 +631,7 @@ class HeightGoalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterPresenter>(
+    return GetBuilder<RegisterP>(
       builder: (controller) {
         HeightRecord goal = controller.newcomer.getGoal(
           ActivityType.height,
@@ -717,7 +717,7 @@ class WeightGoalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterPresenter>(
+    return GetBuilder<RegisterP>(
       builder: (controller) {
         HeightRecord goal = controller.newcomer.getGoal(
           ActivityType.height,
@@ -802,7 +802,7 @@ class CalorieCheckView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterPresenter>(
+    return GetBuilder<RegisterP>(
       builder: (controller) {
         CalorieRecord goal = controller.newcomer.getGoal(
           ActivityType.calorie,
@@ -895,7 +895,7 @@ class CarouselButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterPresenter>(
+    return GetBuilder<RegisterP>(
       builder: (controller) {
         bool lastPage = controller.pageIndex == CarouselView.widgetCount - 1;
 
