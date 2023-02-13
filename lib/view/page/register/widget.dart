@@ -115,7 +115,7 @@ class UserInfoView extends StatelessWidget {
             children: [
               Center(
                 child: FText(
-                  '보다 나은 서비스를 위해\n정보를 입력해주세요!',
+                  '정보 입력',
                   style: textTheme.headlineSmall,
                   color: FTheme.black,
                   maxLines: 2,
@@ -202,8 +202,8 @@ class SexSelectionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const Map<Sex, String> texts = {
-      Sex.male: '남자',
-      Sex.female: '여자',
+      Sex.male: '남성',
+      Sex.female: '여성',
     };
 
     return GetBuilder<RegisterP>(
@@ -272,7 +272,7 @@ class WeightHeightView extends StatelessWidget {
       children: [
         Center(
           child: FText(
-            '보다 나은 서비스를 위해\n정보를 입력해주세요!',
+            '정보 입력',
             style: textTheme.headlineSmall,
             color: FTheme.black,
             maxLines: 2,
