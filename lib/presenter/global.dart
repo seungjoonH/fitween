@@ -1,4 +1,6 @@
+import 'package:fitween/presenter/firebase/auth/auth.dart';
 import 'package:fitween/presenter/page/friend.dart';
+import 'package:fitween/presenter/page/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -52,11 +54,15 @@ class GlobalP extends GetxController {
     switch (index) {
       case 0:
         if (navIndex == index) { homeP.init(); }
-        else { homeP.init(); }
+        else { HomeP.toHome(); }
         break;
-      case 1: break;
+      case 1:
+        FriendP.toFriend();
+        break;
       case 2: break;
-      case 3: break;
+      case 3:
+        AuthPresenter.pLogout();
+        break;
     }
 
     navIndex = index;
@@ -355,7 +361,7 @@ class GlobalPresenter extends GetxController {
     Get.put(QuestPresenter());
     Get.put(PartyPresenter());
 
-    Get.put(OnboardingPresenter());
+    Get.put(OnboardingP());
     Get.put(RegisterP());
     Get.put(HomePresenter());
     Get.put(NotificationPresenter());

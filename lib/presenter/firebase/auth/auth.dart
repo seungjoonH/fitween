@@ -69,7 +69,7 @@ class AuthPresenter {
     // 신규 회원일 경우
     if (isNewcomer) {
       // 회원가입 페이지로 이동
-      OnboardingPresenter.toOnboarding();
+      OnboardingP.toOnboarding();
     }
 
     // 기존 회원일 경우

@@ -1,5 +1,6 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/view/page/friend/friend.dart';
+import 'package:fitween/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -72,6 +73,7 @@ class _TabScaffoldState extends State<TabScaffold> {
             children: widget.bodies,
           ),
         ),
+        bottomNavigationBar: FBottomNavigationBar(),
       ),
     );
   }

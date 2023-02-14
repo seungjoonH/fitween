@@ -15,7 +15,7 @@ class ChallengeCreatePage extends StatelessWidget {
     Challenge challenge = Get.arguments;
 
     return Scaffold(
-      appBar: const PAppBar(color: Colors.transparent),
+      appBar: const FAppBar(color: Colors.transparent),
       body: ChallengeCreateView(challenge: challenge),
     );
   }

@@ -8,16 +8,16 @@ import 'package:fitween/presenter/page/my/setting/main.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 
-class PAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const PAppBar({
+class FAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const FAppBar({
     Key? key,
-    this.title = '',
-    this.color = FTheme.background,
+    this.title,
+    this.color,
     this.leading,
     this.actions,
   }) : super(key: key);
 
-  final String title;
+  final String? title;
   final Color? color;
   final Widget? leading;
   final List<Widget>? actions;
@@ -33,7 +33,7 @@ class PAppBar extends StatelessWidget implements PreferredSizeWidget {
           elevation: 0.0,
           iconTheme: const IconThemeData(color: FTheme.black),
           backgroundColor: color,
-          title: FText(title, style: textTheme.headlineMedium),
+          title: FText(title ?? '', style: textTheme.headlineMedium),
           leading: leading,
           actions: actions,
         );
@@ -114,7 +114,7 @@ class CollectionMainAppBar extends StatelessWidget implements PreferredSizeWidge
 
   @override
   Widget build(BuildContext context) {
-    return const PAppBar(
+    return const FAppBar(
       title: '컬렉션',
       leading: IconButton(
         icon: Icon(Icons.arrow_back_ios),
@@ -156,7 +156,7 @@ class _MyMainAppBarState extends State<MyMainAppBar> {
   @override
   Widget build(BuildContext context) {
 
-    return PAppBar(title: '마이 페이지',
+    return FAppBar(title: '마이 페이지',
       actions: [
         IconButton(
           icon: const Icon(Icons.settings),
@@ -178,7 +178,7 @@ class MySettingMainAppBar extends StatelessWidget implements PreferredSizeWidget
 
   @override
   Widget build(BuildContext context) {
-    return const PAppBar(title: '설정',
+    return const FAppBar(title: '설정',
       leading: IconButton(
         icon: Icon(Icons.arrow_back_ios),
         onPressed: GlobalPresenter.goBack,

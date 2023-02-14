@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:fitween/presenter/page/onboarding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -29,7 +30,7 @@ class Field {
 class RegisterP extends GetxController {
   int pageIndex = 0;
   bool invalid = false;
-  List<bool> imageExistence = [false, false, false, true, true, true, true, true];
+  List<bool> imageExistence = [false, false, false, true, false, true, true, false];
   bool imageVisualize = false;
 
   Map<String, Field> fields = {
@@ -284,15 +285,19 @@ class RegisterP extends GetxController {
   void backPressed() {
     if (pageIndex == 0) {
       final userP = Get.find<UserPresenter>();
-      userP.logout();
-      init();
-      Get.offAllNamed('/login', arguments: true);
+      final onboardingP = Get.find<OnboardingP>();
+      userP.logout(); init();
+
+      onboardingP.init();
+      Get.offAllNamed('/login');
+      Get.toNamed('/onboarding', arguments: true);
     }
 
     carouselCont.previousPage(
       curve: transitionCurve,
       duration: transitionDuration,
     );
+
     slideBack();
     pageIndexDecrease();
   }

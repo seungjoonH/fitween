@@ -41,8 +41,8 @@ class PRoute {
     '/home': const HomePage(),
     '/friend': const FriendPage(),
     '/register': const RegisterPage(),
-    // '/login': const LoginPage(),
-    // '/onboarding': const OnboardingPage(),
+    '/login': const LoginPage(),
+    '/onboarding': const OnboardingPage(),
     // '/exercise/input': ExerciseInputPage(),
     // '/record/main': const RecordMainPage(),
     // '/record/detail': const RecordDetailPage(),
@@ -62,7 +62,6 @@ class PRoute {
     // '/developerInfo': const DeveloperInfoPage(),
     // '/workout/main': const WorkoutMainPage(),
     // '/workout/guide': const WorkoutGuidePage(),
-    // '/friend': const FriendPage(),
   };
 
   // 겟페이지 리스트

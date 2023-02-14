@@ -1,11 +1,11 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:get/get.dart';
 
-class OnboardingPresenter extends GetxController {
+class OnboardingP extends GetxController {
   static final carouselCont = CarouselController();
 
   static void toOnboarding() {
-    final onboardingP = Get.find<OnboardingPresenter>();
+    final onboardingP = Get.find<OnboardingP>();
     onboardingP.init();
     Get.toNamed('/onboarding');
   }

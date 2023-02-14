@@ -123,7 +123,7 @@ class _WorkoutMainPageState extends State<WorkoutMainPage> {
             PainterPresenter.setOrientation(orientation);
             return Scaffold(
               extendBodyBehindAppBar: true,
-              appBar: PAppBar(
+              appBar: FAppBar(
                 title: '운동하기',
                 actions: [
                   IconButton(

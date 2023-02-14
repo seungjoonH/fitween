@@ -15,7 +15,7 @@ class WorkoutGuidePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PAppBar(),
+      appBar: const FAppBar(),
       body: Center(
         child: CarouselSlider(
           items: List.generate(4, (index) => Padding(

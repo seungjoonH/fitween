@@ -124,7 +124,7 @@ class _ExerciseInputPageState extends State<ExerciseInputPage> {
     return GestureDetector(
       onTap: FocusScope.of(context).unfocus,
       child: Scaffold(
-        appBar: PAppBar(title: '${type.kr} 입력'),
+        appBar: FAppBar(title: '${type.kr} 입력'),
         body: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Column(

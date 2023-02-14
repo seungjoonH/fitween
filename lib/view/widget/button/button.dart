@@ -25,7 +25,7 @@ class FButton extends StatefulWidget {
   text == null || child == null,
   ), padding = padding ?? EdgeInsets.symmetric(
     horizontal: 20.0.w, vertical: 10.0.h,
-  ), backgroundColor = backgroundColor ?? FTheme.black,
+  ), backgroundColor = backgroundColor ?? FTheme.grey,
         textColor = textColor ?? (fill ? FTheme.white : FTheme.black),
         super(key: key);
 

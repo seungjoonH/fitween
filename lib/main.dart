@@ -76,7 +76,10 @@ class _FitweenState extends State<Fitween> {
             colorScheme: FTheme.lightColorScheme,
             textTheme: FTheme.textTheme,
             scaffoldBackgroundColor: FTheme.background,
-            appBarTheme: const AppBarTheme(backgroundColor: FTheme.background),
+            appBarTheme: AppBarTheme(
+              backgroundColor: Colors.transparent,
+              iconTheme: IconThemeData(color: FTheme.colorA),
+            ),
           ),
           darkTheme: ThemeData(
             useMaterial3: true,

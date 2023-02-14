@@ -8,7 +8,7 @@ class DeveloperInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const PAppBar(title: '개발자 정보'),
+      appBar: const FAppBar(title: '개발자 정보'),
       body: Container(
         alignment: Alignment.center,
         child: Column(

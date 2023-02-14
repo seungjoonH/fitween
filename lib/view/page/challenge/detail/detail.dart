@@ -16,7 +16,7 @@ class ChallengeDetailPage extends StatelessWidget {
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: const PAppBar(color: Colors.transparent),
+      appBar: const FAppBar(color: Colors.transparent),
       body: ChallengeDetailView(challenge: challenge),
     );
   }
