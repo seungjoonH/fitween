@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/page/challenge.dart';
 import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/presenter/page/home.dart';
 import 'package:fitween/presenter/page/register.dart';
@@ -29,6 +30,10 @@ class DeveloperPage extends StatelessWidget {
               text: 'Register',
             ),
             SizedBox(height: 20.0),
+            PButton(
+              onPressed: ChallengeP.toChallenge,
+              text: 'Challenge',
+            )
           ],
         ),
       ),
