@@ -44,4 +44,4 @@ app.*.map.json
 /android/app/release
 
 #ios Xcode Runner related
-.project.pbxproj
+ios/Runner.xcodeproj/project.pbxproj
