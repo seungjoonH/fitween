@@ -1,4 +1,5 @@
 /* 라우트 관련 */
+import 'package:fitween/view/page/challenge/challenge.dart';
 import 'package:fitween/view/page/challenge/create/create.dart';
 import 'package:fitween/view/page/challenge/main/main.dart';
 import 'package:fitween/view/page/challenge/detail/detail.dart';
@@ -41,6 +42,7 @@ class PRoute {
     '/home': const HomePage(),
     '/friend': const FriendPage(),
     '/register': const RegisterPage(),
+    '/challenge': const ChallengePage(),
     // '/login': const LoginPage(),
     // '/onboarding': const OnboardingPage(),
     // '/exercise/input': ExerciseInputPage(),
