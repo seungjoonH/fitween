@@ -8,13 +8,38 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class FriendPage extends StatelessWidget {
-  const FriendPage({Key? key}) : super(key: key);
+class FTab extends StatelessWidget {
+  const FTab(this.text, {
+    Key? key,
+    this.selected = false,
+  }) : super(key: key);
+
+  final String text;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: FText(
+        text,
+        style: textTheme.titleLarge,
+        color: selected
+            ? FTheme.grey
+            : FTheme.lightGrey,
+      ),
+    );
+  }
+}
+
+
+class ChallengePage extends StatelessWidget {
+  const ChallengePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TabScaffold(
-      tabs: const ['전체', '라이벌', '숨김'],
+      tabs: const ['월간', '업적', '타임어택'],
       bodies: [
         FCard(
           child: Column(
@@ -29,28 +54,30 @@ class FriendPage extends StatelessWidget {
                     ),
                   ),
                   IconButton(
-                      onPressed: (){},
-                      icon: const Icon(Icons.edit),
+                    onPressed: (){},
+                    icon: const Icon(Icons.edit),
                   )
                 ],
               ),
-              const FriendCard('슈비'),
-              const FriendCard('하쿠나'),
-              const FriendCard('영천'),
-              const FriendCard('유저'),
-              const FriendCard('복카이'),
             ],
           ),
         ),
         Container(),
-        Container(),
+        FCard(
+            child: Column(
+              children: [
+                Text(
+                  '타임어택!'
+                ),
+              ],
+            ))
       ],
     );
   }
 }
 
-class FriendCard extends StatelessWidget{
-  const FriendCard(this.name,{Key? key}) : super(key: key);
+class ChallengeCard extends StatelessWidget{
+  const ChallengeCard(this.name,{Key? key}) : super(key: key);
 
   final String name;
 
@@ -74,7 +101,7 @@ class FriendCard extends StatelessWidget{
         IconButton(
           onPressed: (){},
           icon: SvgPicture.asset(
-              'assets/image/icon/selected/visibility.svg',
+            'assets/image/icon/selected/visibility.svg',
             color: FTheme.black,
           ),
         ),

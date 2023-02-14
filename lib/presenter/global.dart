@@ -1,4 +1,5 @@
 import 'package:fitween/presenter/firebase/auth/auth.dart';
+import 'package:fitween/presenter/page/challenge.dart';
 import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/presenter/page/login.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +60,9 @@ class GlobalP extends GetxController {
       case 1:
         FriendP.toFriend();
         break;
-      case 2: break;
+      case 2:
+        ChallengeP.toChallenge();
+        break;
       case 3:
         AuthPresenter.pLogout();
         break;

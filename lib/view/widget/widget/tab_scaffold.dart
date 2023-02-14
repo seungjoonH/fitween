@@ -1,8 +1,33 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/view/page/friend/friend.dart';
 import 'package:fitween/view/widget/widget/bottom_bar.dart';
+import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class FTab extends StatelessWidget {
+  const FTab(this.text, {
+    Key? key,
+    this.selected = false,
+  }) : super(key: key);
+
+  final String text;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: FText(
+        text,
+        style: textTheme.titleLarge,
+        color: selected
+            ? FTheme.grey
+            : FTheme.lightGrey,
+      ),
+    );
+  }
+}
 
 class TabScaffold extends StatefulWidget {
   const TabScaffold({
@@ -35,7 +60,7 @@ class _TabScaffoldState extends State<TabScaffold> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                width: 240.0.w,
+                width: 270.0.w,
                 padding: const EdgeInsets.only(left: 30.0),
                 child: Stack(
                   alignment: Alignment.center,
@@ -58,8 +83,8 @@ class _TabScaffoldState extends State<TabScaffold> {
                       indicatorWeight: 3.0,
                       onTap: (index) => setState(() => _selectedIndex = index),
                       tabs: widget.tabs.map((text) => FTab(text,
-                        selected: widget.tabs[_selectedIndex] == text),
-                      ).toList(),
+                        selected: widget.tabs[_selectedIndex] == text,
+                      )).toList(),
                     ),
                   ],
                 ),
