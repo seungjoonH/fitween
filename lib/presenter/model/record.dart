@@ -39,7 +39,7 @@ abstract class Record {
     }
   }
 
-  double convert(ExerciseUnit unit) => amount;
+  double convert(ExerciseUnit? unit) => amount;
 }
 
 class CalorieRecord extends Record {
@@ -77,7 +77,7 @@ class DistanceRecord extends Record {
   });
 
   @override
-  double convert(ExerciseUnit unit) {
+  double convert(ExerciseUnit? unit) {
     assert(ExerciseUnit.distances.contains(unit));
 
     double velocity = Walking.velocity * .8
@@ -85,7 +85,7 @@ class DistanceRecord extends Record {
     const double kilometerPerStep = 0.00074;
 
     double value = amount;
-    int direction = unit.index - state!.index;
+    int direction = unit!.index - state!.index;
 
     switch(direction) {
       case -2:
@@ -140,7 +140,7 @@ class WeightRecord extends Record {
   });
 
   @override
-  double convert(ExerciseUnit unit) {
+  double convert(ExerciseUnit? unit) {
     assert(ExerciseUnit.weights.contains(unit));
 
     double value = amount;

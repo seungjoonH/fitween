@@ -1,5 +1,5 @@
 /* 뱃지 모델 구조 */
-class PBadge {
+class FBadge {
   /// static variables
   static const asset = 'assets/image/badge/';
 
@@ -14,9 +14,9 @@ class PBadge {
   String get toAcquire => description!.replaceAll('했습니다', '해보세요!');
 
   /// constructors
-  PBadge();
+  FBadge();
 
-  PBadge.fromJson(Map<String, dynamic> json) {
+  FBadge.fromJson(Map<String, dynamic> json) {
     fromJson(json);
   }
 

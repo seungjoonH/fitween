@@ -95,26 +95,23 @@ class FCard extends StatefulWidget {
 }
 
 class _FCardState extends State<FCard> {
-  late Function(TapDownDetails) onTapDown;
-  late Function(TapUpDetails) onTapUp;
+  Function(TapDownDetails)? onTapDown;
+  Function(TapUpDetails)? onTapUp;
 
   double scale = 1.0;
   Duration duration = const Duration(milliseconds: 100);
 
   @override
   void initState() {
-    onTapDown = (_) {
-      if (widget.onPressed == null) return;
+    onTapDown = widget.onPressed == null ? null : (_) {
       setState(() => scale = .9);
     };
-    onTapUp = (_) async {
-      if (widget.onPressed == null) return;
+    onTapUp = widget.onPressed == null ? null : (_) async {
       widget.onPressed!();
       await Future.delayed(duration, () {
         setState(() => scale = 1.0);
       });
     };
-
     super.initState();
   }
 
@@ -128,27 +125,34 @@ class _FCardState extends State<FCard> {
       child: GestureDetector(
         onTapDown: onTapDown,
         onTapUp: onTapUp,
-        child: Container(
-          padding: const EdgeInsets.all(20.0),
-          decoration: BoxDecoration(
-            color: widget.backgroundColor,
-            borderRadius: radius,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (widget.title != null)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  FText(widget.title!, style: textTheme.titleLarge, color: FTheme.grey),
-                  if (widget.activateSeeMore)
-                  const Icon(Icons.arrow_forward_ios, color: FTheme.lightGrey),
-                ],
-              ),
-              const SizedBox(height: 10.0),
-              widget.child,
-            ],
+        child: Material(
+          borderRadius: radius,
+          color: widget.backgroundColor,
+          child: Container(
+            padding: const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              borderRadius: radius,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (widget.title != null)
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FText(widget.title!, style: textTheme.titleLarge, color: FTheme.grey),
+                        if (widget.activateSeeMore)
+                          const Icon(Icons.arrow_forward_ios, color: FTheme.lightGrey),
+                      ],
+                    ),
+                    const SizedBox(height: 10.0),
+                  ],
+                ),
+                widget.child,
+              ],
+            ),
           ),
         ),
       ),

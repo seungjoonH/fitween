@@ -39,7 +39,7 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
 
   /// methods
   Future init() async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     final loadingP = Get.find<LoadingPresenter>();
 
     loadingP.loadStart();
@@ -92,8 +92,8 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
 
   // 파티 참가 버튼 클릭 시
   void partyJoinButtonPressed() async {
-    final userP = Get.find<UserPresenter>();
-    PUser user = userP.loggedUser;
+    final userP = Get.find<UserP>();
+    FUser user = userP.loggedUser;
 
     if (!await validate()) return;
     Party? party = await PartyPresenter.loadParty(codeCont.text);
@@ -113,7 +113,7 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
 
   // 파티 코드 입력 필드 유효성 검사
   Future<bool> validate() async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     String text = codeCont.text;
 
     Map<String, bool> conditions = {

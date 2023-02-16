@@ -30,7 +30,7 @@ class Field {
 class RegisterP extends GetxController {
   int pageIndex = 0;
   bool invalid = false;
-  List<bool> imageExistence = [false, false, false, true, false, true, true, false];
+  List<bool> imageExistence = [false, false, false, true, false, true, true, true, false];
   bool imageVisualize = false;
 
   Map<String, Field> fields = {
@@ -57,7 +57,7 @@ class RegisterP extends GetxController {
   // 컨트롤러를 모두 초기화
   void init() {
     for (var field in fields.values) { field.controller?.clear(); }
-    newcomer = PUser();
+    newcomer = FUser();
     pageIndex = 0;
   }
 
@@ -75,7 +75,7 @@ class RegisterP extends GetxController {
 
   /// attributes
   // 추가될 유저
-  PUser newcomer = PUser();
+  FUser newcomer = FUser();
   bool keyboardVisible = false;
 
   void setKeyboardVisible(bool value) {
@@ -113,7 +113,7 @@ class RegisterP extends GetxController {
   }
 
   void submitted() async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     newcomer.nickname = fields['nickname']!.controller.text;
     newcomer.dateOfBirth = stringToDate(fields['dateOfBirth']!.controller.text);
 
@@ -130,11 +130,12 @@ class RegisterP extends GetxController {
     init();
   }
 
-  void nicknameValidate() async {
+  Future nicknameValidate() async {
     Field nicknameField = fields['nickname']!;
     String text = nicknameField.controller.text;
 
     Map<String, bool> conditions = {
+      '별명이 중복됩니다': await UserP.duplicatedNickname(text),
       '두 글자 이상 입력해주세요': text.length < 2,
       '열 글자 이하 입력해주세요': text.length > 10,
       '자음 모음은 단독으로 포함될 수 없습니다': hasSeparatedConsonantOrVowel(text),
@@ -229,7 +230,7 @@ class RegisterP extends GetxController {
   void nextPressed() async {
     switch (pageIndex) {
       case 0:
-        nicknameValidate();
+        await nicknameValidate();
         dateOfBirthValidate();
         sexValidate();
         if (invalid) { invalid = false; return; }
@@ -249,28 +250,22 @@ class RegisterP extends GetxController {
       case 4: break;
       case 5:
         initGoal(Record.init(ActivityType.height, 10));
-        initGoal(Record.init(
-          ActivityType.weight,
-          100, ExerciseUnit.count,
-        ));
         break;
       case 6:
-        Record calorie = CalorieRecord(amount: 0);
-        DistanceRecord distance = newcomer.getGoal(ActivityType.distance) as DistanceRecord;
-        HeightRecord height = newcomer.getGoal(ActivityType.height) as HeightRecord;
-        WeightRecord weight = newcomer.getGoal(ActivityType.weight) as WeightRecord;
-        print(height.amount);
-        calorie.amount += CalorieRecord.from(ActivityType.distance, distance.minute);
-        print(CalorieRecord.from(ActivityType.distance, distance.minute));
-        calorie.amount += CalorieRecord.from(ActivityType.height, height.amount);
-        print(CalorieRecord.from(ActivityType.height, height.amount));
-        calorie.amount += CalorieRecord.from(ActivityType.weight, weight.count);
-        print(CalorieRecord.from(ActivityType.weight, weight.count));
-
-        newcomer.setGoal(ActivityType.calorie, calorie);
-        update();
+        // Record calorie = CalorieRecord(amount: 0);
+        // DistanceRecord distance = newcomer.getGoal(ActivityType.distance) as DistanceRecord;
+        // HeightRecord height = newcomer.getGoal(ActivityType.height) as HeightRecord;
+        // WeightRecord weight = newcomer.getGoal(ActivityType.weight) as WeightRecord;
+        // calorie.amount += CalorieRecord.from(ActivityType.distance, distance.minute);
+        // calorie.amount += CalorieRecord.from(ActivityType.height, height.amount);
+        // calorie.amount += CalorieRecord.from(ActivityType.weight, weight.count);
+        // newcomer.setGoal(ActivityType.calorie, calorie);
+        // update();
         break;
       case 7:
+        initGoal(Record.init(ActivityType.weight, 50, ExerciseUnit.count));
+        break;
+      case 8:
         submitted(); return;
     }
     carouselCont.nextPage(
@@ -284,7 +279,7 @@ class RegisterP extends GetxController {
   // 뒤로가기 버튼 클릭 트리거
   void backPressed() {
     if (pageIndex == 0) {
-      final userP = Get.find<UserPresenter>();
+      final userP = Get.find<UserP>();
       final onboardingP = Get.find<OnboardingP>();
       userP.logout(); init();
 

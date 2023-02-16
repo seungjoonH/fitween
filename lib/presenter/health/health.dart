@@ -44,7 +44,7 @@ class HealthPresenter {
         break;
       case TargetPlatform.iOS:
         hasPermission = await HealthFactory.hasPermissions(
-          types, permissions: readWrite,
+          types, permissions: read,
         ) ?? false;
         break;
       default: break;
@@ -56,7 +56,7 @@ class HealthPresenter {
     }
     // if (isAndroid) await HealthFactory.revokePermissions();
     approved = await health.requestAuthorization(
-      types, permissions: readWrite,
+      types, permissions: read,
     );
   }
 
@@ -67,7 +67,7 @@ class HealthPresenter {
     // 승인 시 헬스 데이터 가져와서 로컬에 저장
     if (!approved) return false;
 
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     int? fetchedSteps = await health.getTotalStepsInInterval(today, now);
     if (fetchedSteps == null || fetchedSteps == 0) return false;
     steps = fetchedSteps;
@@ -90,7 +90,7 @@ class HealthPresenter {
     if (!approved) return false;
 
     // 승인 시 헬스 데이터 가져와서 로컬에 저장
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
 
     flightsData = await health.getHealthDataFromTypes(today, now, flightType);
     if (flightsData.isEmpty) return false;

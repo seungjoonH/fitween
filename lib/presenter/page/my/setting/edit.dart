@@ -22,8 +22,8 @@ class MySettingEdit extends GetxController {
   /// static methods
   // 내 설정 수정 페이지
   static void toMySettingEdit(String editType) {
-    final userP = Get.find<UserPresenter>();
-    PUser user = userP.loggedUser;
+    final userP = Get.find<UserP>();
+    FUser user = userP.loggedUser;
 
     editConts['nickname']?.text = user.nickname!;
     editConts['height']?.text = '$userHeight';
@@ -88,8 +88,8 @@ class MySettingEdit extends GetxController {
 
   // 제출 시
   void submit(String editType) async {
-    final userP = Get.find<UserPresenter>();
-    PUser user = userP.loggedUser;
+    final userP = Get.find<UserP>();
+    FUser user = userP.loggedUser;
 
     if (!await validate(editType)) return;
 

@@ -11,7 +11,9 @@ enum FIcons {
   ///
   homeHouse,
   pencil,
-  star;
+  star,
+  swords,
+  visibility;
 
   static String filePath = 'assets/image/icon/';
   String get fileName =>

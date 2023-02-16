@@ -19,34 +19,34 @@ import 'package:fitween/presenter/model/user.dart';
 class BadgePresenter extends GetxController {
   /// static variables
   static String asset = 'assets/json/data/badges.json';
-  static List<PBadge> badges = [];
+  static List<FBadge> badges = [];
 
   /// static methods
   // json 파일 불러오기
   static Future importFile() async {
     String string = await rootBundle.loadString(asset);
     List<dynamic> list = jsonDecode(string);
-    badges = list.map((json) => PBadge.fromJson(json)).toList();
+    badges = list.map((json) => FBadge.fromJson(json)).toList();
   }
 
-  static List<PBadge> get availableBadges {
-    List<PBadge> badgeList = [...badges];
+  static List<FBadge> get availableBadges {
+    List<FBadge> badgeList = [...badges];
     badgeList.removeWhere((badge) => !badge.activate!);
     return badgeList;
   }
 
-  static List<PBadge> get notAcquiredBadges {
-    PUser user = Get.find<UserPresenter>().loggedUser;
-    List<PBadge> badgeList = [...availableBadges];
+  static List<FBadge> get notAcquiredBadges {
+    FUser user = Get.find<UserP>().loggedUser;
+    List<FBadge> badgeList = [...availableBadges];
     badgeList.removeWhere((badge) => user.hasCollection(badge.id!));
     return badgeList;
   }
 
   // 뱃지 아이디에 해당하는 뱃지 반환
-  static PBadge? getBadge(String? id) => badges
+  static FBadge? getBadge(String? id) => badges
       .firstWhereOrNull((badge) => badge.id == id);
 
-  static PBadge? getThisMonthQuestBadge(ActivityType type) {
+  static FBadge? getThisMonthQuestBadge(ActivityType type) {
     if (!type.active) return null;
     return getBadge('1040${type.index}${
       (today.month - 1).toString().padLeft(2, '0')}'
@@ -55,14 +55,14 @@ class BadgePresenter extends GetxController {
 
   // 일일 활동 완료 뱃지 획득
   static void awardDailyActivityCompleteBadge() async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     userP.awardBadge(BadgePresenter.getBadge('1000001')!, true, true);
   }
 
   static Future synchronizeBadges() async {
     final inAppReview = InAppReview.instance;
-    final userP = Get.find<UserPresenter>();
-    PUser user = userP.loggedUser;
+    final userP = Get.find<UserP>();
+    FUser user = userP.loggedUser;
 
     // 운영자 뱃지 지급
     if (AuthPresenter.developerUids.contains(user.uid)) {

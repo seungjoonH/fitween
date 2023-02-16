@@ -34,10 +34,10 @@ class SignInButton extends StatelessWidget {
     return FButton(
       onPressed: () async {
         if (!await AuthPresenter.versionCheck()) {
-        LoginPresenter.showVersionInvalidDialog();
-        return;
+          LoginPresenter.showVersionInvalidDialog();
+          return;
         }
-        AuthPresenter.pLogin(type);
+        AuthPresenter.fLogin(type);
       },
       backgroundColor: backgroundColors[type],
       child: Container(

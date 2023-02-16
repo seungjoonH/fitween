@@ -43,7 +43,7 @@ class MyProfileUpdateButtonWidget extends StatefulWidget {
 class _MyProfileUpdateButtonWidgetState extends State<MyProfileUpdateButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     String? badgeId = userP.loggedUser.badgeId;
 
     return Column(
@@ -87,7 +87,7 @@ class EditTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UserPresenter>(
+    return GetBuilder<UserP>(
       builder: (controller) {
         Map<String, String> value = {
           'nickname': controller.loggedUser.nickname!,

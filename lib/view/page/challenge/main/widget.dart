@@ -149,7 +149,7 @@ class ChallengeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
 
     return Column(
       children: [
@@ -323,7 +323,7 @@ class ChallengeCardLoading extends StatelessWidget {
                         ),
                       ],
                     ),
-                    BadgeWidget(size: 80.0.r, color: color, border: false),
+                    BadgeWidget(size: 80.0.r, color: color),
                   ],
                 ),
                 SizedBox(height: 20.0.h),
@@ -351,8 +351,8 @@ class MyPartyListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userP = Get.find<UserPresenter>();
-    PUser user = userP.loggedUser;
+    final userP = Get.find<UserP>();
+    FUser user = userP.loggedUser;
 
     return Stack(
       children: [

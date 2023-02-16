@@ -12,7 +12,7 @@ import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/model/enum/sex.dart';
 import 'package:fitween/presenter/model/record.dart';
 
-class PUser {
+class FUser {
   /// static methods
   // 무작위 코드 생성
   static String get randomCode {
@@ -44,9 +44,11 @@ class PUser {
   Map<String, dynamic> goals = {};
   Map<String, dynamic> inputRecords = {};
   Map<String, dynamic> records = {};
+  Map<String, dynamic> friendsData = {};
 
   // 의존 변수
   Map<String, Party> parties = {}; // partyIds 변수에 의존
+  List<FUser> friends = []; // friendUids 변수에 의존
 
   /// accessors & mutators
 
@@ -58,6 +60,10 @@ class PUser {
 
   set regDate(DateTime? date) => _regDate = toTimestamp(date);
   set dateOfBirth(DateTime? date) => _dateOfBirth = toTimestamp(date);
+
+  List<String> get friendUids => friendsData.keys.toList();
+  List<FUser> get rivals => friends.where((friend) => friendsData[friend.uid]['rival']).toList();
+  List<String> get rivalUids => rivals.map((user) => user.uid!).toList();
 
   // 대표 컬렉션
   Collection? get collection => collections
@@ -108,7 +114,7 @@ class PUser {
   }
 
   /// constructors
-  PUser() {
+  FUser() {
     weight = defaultWeight;
     height = defaultHeight;
     for (var type in ActivityType.activeValues) {
@@ -118,7 +124,7 @@ class PUser {
     }
   }
 
-  PUser.fromJson(Map<String, dynamic> json) {
+  FUser.fromJson(Map<String, dynamic> json) {
     fromJson(json);
   }
 
@@ -139,6 +145,7 @@ class PUser {
     goals = json['goals'] ?? {};
     inputRecords = json['inputRecords'] ?? {};
     records = json['records'] ?? {};
+    friendsData = json['friendsData'] ?? {};
   }
 
   Map<String, dynamic> toJson() {
@@ -158,6 +165,7 @@ class PUser {
     json['goals'] = goals;
     json['inputRecords'] = inputRecords;
     json['records'] = records;
+    json['friendsData'] = friendsData;
     return json;
   }
 
@@ -345,6 +353,14 @@ class PUser {
     double goal = goals[type.name];
     double value = getTodayAmounts(type);
     return goal <= value;
+  }
+
+  void toggleVisible(String uid) {
+    friendsData[uid]['visible'] = !friendsData[uid]['visible'];
+  }
+
+  void toggleRival(String uid) {
+    friendsData[uid]['rival'] = !friendsData[uid]['rival'];
   }
 
 

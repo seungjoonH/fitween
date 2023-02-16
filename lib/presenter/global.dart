@@ -1,7 +1,6 @@
 import 'package:fitween/presenter/firebase/auth/auth.dart';
 import 'package:fitween/presenter/page/challenge.dart';
 import 'package:fitween/presenter/page/friend.dart';
-import 'package:fitween/presenter/page/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -64,7 +63,7 @@ class GlobalP extends GetxController {
         ChallengeP.toChallenge();
         break;
       case 3:
-        AuthPresenter.pLogout();
+        AuthPresenter.fLogout();
         break;
     }
 
@@ -109,8 +108,8 @@ class GlobalPresenter extends GetxController {
 
   static void goBack() => Get.back(result: true);
 
-  static void showBadgeDialog(PBadge? badge) {
-    PUser user = Get.find<UserPresenter>().loggedUser;
+  static void showBadgeDialog(FBadge? badge) {
+    FUser user = Get.find<UserP>().loggedUser;
 
     if (badge == null) return;
 
@@ -162,7 +161,7 @@ class GlobalPresenter extends GetxController {
   static void showCollectionDialog(Collection? collection) {
     if (collection == null) return;
 
-    PUser user = Get.find<UserPresenter>().loggedUser;
+    FUser user = Get.find<UserP>().loggedUser;
     bool isMainBadge = user.badgeId! == collection.badgeId;
 
     showPDialog(
@@ -238,7 +237,7 @@ class GlobalPresenter extends GetxController {
   }
 
   static void showAwardedBadgeDialog(
-    PBadge badge,
+    FBadge badge,
     [bool firstAward = false]
   ) async {
     showPDialog(
@@ -316,7 +315,7 @@ class GlobalPresenter extends GetxController {
       leftPressed: () async {
         Get.back();
         await Future.delayed(const Duration(milliseconds: 200));
-        final userP = Get.find<UserPresenter>();
+        final userP = Get.find<UserP>();
         userP.setMainBadge(badge.id!);
       },
       rightPressed: Get.back,
@@ -326,7 +325,7 @@ class GlobalPresenter extends GetxController {
 
   // 대표 컬렉션 설정 팝업
   static void showCollectionSettingDialog(String badgeId) {
-    PBadge? selectedBadge = BadgePresenter.getBadge(badgeId);
+    FBadge? selectedBadge = BadgePresenter.getBadge(badgeId);
 
     showPDialog(
       title: '대표 컬렉션 변경',
@@ -357,7 +356,7 @@ class GlobalPresenter extends GetxController {
 
     Get.put(LoadingPresenter());
 
-    Get.put(UserPresenter());
+    Get.put(UserP());
     Get.put(ChallengePresenter());
     Get.put(BadgePresenter());
     Get.put(LevelPresenter());

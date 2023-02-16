@@ -31,7 +31,7 @@ class ExerciseInput extends GetxController {
 
   // 텍스트 입력 필드 값 유효 여부 반환
   Future<bool> validate(ActivityType type) async {
-    PUser user = Get.find<UserPresenter>().loggedUser;
+    FUser user = Get.find<UserP>().loggedUser;
     String text = inputCont.text;
 
     Map<ActivityType, int> limit = {
@@ -74,7 +74,7 @@ class ExerciseInput extends GetxController {
 
   // 완료 버튼 클릭 시
   Future completeButtonPressed(ActivityType type) async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     final homeP = Get.find<HomePresenter>();
 
     if (!await validate(type)) return;

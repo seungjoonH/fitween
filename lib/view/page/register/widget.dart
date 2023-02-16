@@ -37,7 +37,8 @@ class CarouselView extends StatelessWidget {
     DistanceGoalView(),
     HeightRecommendView(),
     HeightGoalView(),
-    // WeightGoalView(),
+    WeightRecommendView(),
+    WeightGoalView(),
     CalorieCheckView(),
   ];
 
@@ -47,6 +48,7 @@ class CarouselView extends StatelessWidget {
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     String asset = 'assets/image/page/register/';
+    const List<int> widthFitIndex = [5, 6];
 
     return GetBuilder<RegisterP>(
       builder: (controller) {
@@ -55,16 +57,16 @@ class CarouselView extends StatelessWidget {
             for (int i = 0; i < controller.imageExistence.length; i++)
             AnimatedPositioned(
               left: screenSize.width * (i - controller.pageIndex),
-              bottom: 100.0.h + (i == 3 ? 40.0.h : .0),
+              bottom: 100.0.h + (widthFitIndex.contains(i) ? .0 : 40.0.h),
               duration: const Duration(milliseconds: 350),
               curve: Curves.easeInOut,
               width: screenSize.width,
-              height: screenSize.height * (i == 3 ? .4 : .5),
+              height: screenSize.height * (widthFitIndex.contains(i) ? .5 : .4),
               child: controller.imageExistence[i]
                   ? SvgPicture.asset(
                 '${asset}carousel_${i.toString().padLeft(2, '0')}.svg',
                 alignment: Alignment.center,
-                fit: i == 3 ? BoxFit.contain : BoxFit.fitWidth,
+                fit: widthFitIndex.contains(i) ? BoxFit.fitWidth : BoxFit.contain,
               ) : Container(),
             ),
             Column(
@@ -345,17 +347,24 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
     return GetBuilder<RegisterP>(
       builder: (controller) {
         Record record = controller.newcomer.getGoal(widget.type)!;
-        record.convert(ExerciseUnit.minute);
+        record.convert({
+          ActivityType.distance: ExerciseUnit.minute,
+          ActivityType.weight: ExerciseUnit.count,
+        }[widget.type]);
 
         Record lessRecord = Record.init(
           widget.type,
-          max(record.amount - 1, widget.minValue.toDouble()),
-          ExerciseUnit.minute,
+          max(record.amount - 1, widget.minValue.toDouble()), {
+            ActivityType.distance: ExerciseUnit.minute,
+            ActivityType.weight: ExerciseUnit.count,
+          }[widget.type],
         );
         Record greaterRecord = Record.init(
           widget.type,
-          min(record.amount + 1, widget.maxValue.toDouble()),
-          ExerciseUnit.minute,
+          min(record.amount + 1, widget.maxValue.toDouble()),{
+            ActivityType.distance: ExerciseUnit.minute,
+            ActivityType.weight: ExerciseUnit.count,
+          }[widget.type],
         );
 
         return Column(
@@ -364,7 +373,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
             IconButton(
               icon: Icon(
                 Icons.arrow_drop_up,
-                size: 40.0.r,
+                size: 30.0.r,
                 color: record.amount > widget.minValue
                     ? FTheme.black
                     : Colors.transparent,
@@ -378,8 +387,10 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
               onChanged: (val) {
                 controller.newcomer.setGoal(
                   widget.type, Record.init(
-                    widget.type, val.toDouble(),
-                    ExerciseUnit.minute,
+                    widget.type, val.toDouble(), {
+                      ActivityType.distance: ExerciseUnit.minute,
+                      ActivityType.weight: ExerciseUnit.count,
+                    }[widget.type],
                   ),
                 );
                 controller.update();
@@ -396,7 +407,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
             IconButton(
               icon: Icon(
                 Icons.arrow_drop_down,
-                size: 40.0.r,
+                size: 30.0.r,
                 color: record.amount < widget.maxValue
                     ? FTheme.black
                     : Colors.transparent,
@@ -533,62 +544,65 @@ class DistanceGoalView extends StatelessWidget {
           pixelsPerSecond: Offset(50, 0),
         );
 
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        return Stack(
+          alignment: Alignment.center,
           children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              child: GoalNumberPicker(
-                type: ActivityType.distance,
-                itemWidth: 200.0,
-                color: ActivityType.distance.color,
-                style: FTheme.largeText,
-                maxValue: 200,
+            Positioned(
+              left: .0, top: 100.0.h,
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: GoalNumberPicker(
+                  type: ActivityType.distance,
+                  itemWidth: 200.0,
+                  color: ActivityType.distance.color,
+                  style: FTheme.largeText,
+                  maxValue: 200,
+                ),
               ),
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                FTexts(
-                  ['하루 ', '$minute', '분이면'],
-                  colors: const [FTheme.black, FTheme.colorA, FTheme.black],
-                  style: textTheme.displaySmall,
-                  alignment: MainAxisAlignment.end,
-                  space: false,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      constraints: BoxConstraints(maxWidth: 230.0.w),
-                      child: TextScroll(
-                        distanceTitle,
-                        style: textTheme.displaySmall?.merge(TextStyle(
-                          color: ActivityType.distance.color,
-                          fontWeight: FontWeight.normal,
-                        )),
-                        velocity: velocity,
-                        intervalSpaces: 5,
+            Positioned(
+              right: .0, bottom: 200.0.h,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  FTexts(
+                    ['하루 ', '$minute', '분이면'],
+                    colors: const [FTheme.black, FTheme.colorA, FTheme.black],
+                    style: textTheme.displaySmall,
+                    alignment: MainAxisAlignment.end,
+                    space: false,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 230.0.w),
+                        child: TextScroll(
+                          distanceTitle,
+                          style: textTheme.displaySmall?.merge(TextStyle(
+                            color: ActivityType.distance.color,
+                            fontWeight: FontWeight.normal,
+                          )),
+                          velocity: velocity,
+                          intervalSpaces: 5,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 10.0),
-                    FText('(${unitDistance(distanceValue.step.round())}보)'),
-                  ],
-                ),
-                FText(
-                  '${eulReul(distanceTitle)} 정복할 수 있어요',
-                  style: textTheme.displaySmall,
-                ),
-                FTexts(['* 약 ', '${toLocalString(step)}보 (${kilometer}km)'],
-                  colors: const [FTheme.grey, FTheme.colorB],
-                  space: false,
-                  alignment: MainAxisAlignment.end,
-                ),
-              ],
+                      const SizedBox(width: 10.0),
+                      FText('(${unitDistance(distanceValue.step.round())}보)'),
+                    ],
+                  ),
+                  FText('만큼 걸을 수 있어요',
+                    style: textTheme.displaySmall,
+                  ),
+                  FTexts(['* 약 ', '${toLocalString(step)}보 (${kilometer}km)'],
+                    colors: const [FTheme.grey, FTheme.colorB],
+                    space: false,
+                    alignment: MainAxisAlignment.end,
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 100.0),
           ],
         );
       },
@@ -648,48 +662,48 @@ class HeightGoalView extends StatelessWidget {
 
         const velocity = Velocity(pixelsPerSecond: Offset(50, 0));
 
-
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        return Stack(
+          alignment: Alignment.center,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 120.0.h),
-                FTexts(['하루', '${goal.amount.round()}', '층이면'],
-                  colors: [FTheme.black, ActivityType.calorie.color, FTheme.black],
-                  alignment: MainAxisAlignment.start,
-                  style: style(FTheme.black),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      constraints: BoxConstraints(maxWidth: 210.0.w),
-                      child: TextScroll(
-                        heightTitle,
-                        style: style(ActivityType.height.color),
-                        velocity: velocity,
-                        intervalSpaces: 5,
+            Positioned(
+              left: .0, top: 120.0.h,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FTexts(['하루', '${goal.amount.round()}', '층이면'],
+                    colors: [FTheme.black, ActivityType.calorie.color, FTheme.black],
+                    alignment: MainAxisAlignment.start,
+                    style: style(FTheme.black),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 210.0.w),
+                        child: TextScroll(
+                          heightTitle,
+                          style: style(ActivityType.height.color),
+                          velocity: velocity,
+                          intervalSpaces: 5,
+                        ),
                       ),
-                    ),
-                    const SizedBox(width: 10.0),
-                    FText('(${heightValue.amount.round()}층)'),
-                  ],
-                ),
-                FText('을 정복할 수 있어요', style: textTheme.displaySmall),
-                const SizedBox(height: 10.0),
-                FTexts(
-                  ['* 수명 약', timeToString((100 * goal.amount).round()), '연장'],
-                  colors: [FTheme.grey, ActivityType.height.color, FTheme.grey],
-                  alignment: MainAxisAlignment.start,
-                ),
-              ],
+                      const SizedBox(width: 10.0),
+                      FText('(${heightValue.amount.round()}층)'),
+                    ],
+                  ),
+                  FText('만큼 오를 수 있어요', style: textTheme.displaySmall),
+                  const SizedBox(height: 10.0),
+                  FTexts(
+                    ['* 수명 약', timeToString((100 * goal.amount).round()), '연장'],
+                    colors: [FTheme.grey, ActivityType.height.color, FTheme.grey],
+                    alignment: MainAxisAlignment.start,
+                  ),
+                ],
+              ),
             ),
-            const Expanded(child: SizedBox()),
-            Align(
-              alignment: Alignment.topRight,
+            Positioned(
+              bottom: 20.0.h,
+              right: .0,
               child: GoalNumberPicker(
                 type: ActivityType.height,
                 itemWidth: 200.0,
@@ -697,10 +711,34 @@ class HeightGoalView extends StatelessWidget {
                 style: FTheme.largeText,
               ),
             ),
-            SizedBox(height: 40.0.h),
           ],
         );
       },
+    );
+  }
+}
+
+
+class WeightRecommendView extends StatelessWidget {
+  const WeightRecommendView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Positioned(
+          left: .0, top: 130.0.h,
+          child: Column(
+            children: [
+              FText('무게 멘트', style: textTheme.displaySmall),
+              FText('무게 멘트', style: textTheme.displaySmall),
+              FText('무게 멘트', style: textTheme.displaySmall),
+              FText('무게 멘트', style: textTheme.displaySmall),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -713,77 +751,85 @@ class WeightGoalView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<RegisterP>(
       builder: (controller) {
-        HeightRecord goal = controller.newcomer.getGoal(
-          ActivityType.height,
-        ) as HeightRecord;
+        WeightRecord goal = controller.newcomer.getGoal(
+          ActivityType.weight,
+        ) as WeightRecord;
 
         Map<String, dynamic> tier = LevelPresenter.getTier(
-          ActivityType.height, goal,
+          ActivityType.weight, goal,
         );
 
-        String heightTitle = tier['current'].title;
-        HeightRecord heightValue = HeightRecord(
+        double count = goal.count;
+        double weight = goal.weight;
+
+        String weightTitle = tier['current'].title;
+        WeightRecord weightValue = WeightRecord(
           amount: tier['current'].amount.toDouble(),
-        );
-
-        TextStyle? style(Color color) => textTheme.displaySmall?.merge(
-          TextStyle(
-            color: color,
-            fontWeight: FontWeight.normal,
-          ),
+          state: ExerciseUnit.count,
         );
 
         const velocity = Velocity(pixelsPerSecond: Offset(50, 0));
 
-
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+        return Stack(
+          alignment: Alignment.center,
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FTexts(['하루', '${goal.amount.round()}', '층이면'],
-                  colors: [FTheme.black, ActivityType.calorie.color, FTheme.black],
-                  alignment: MainAxisAlignment.start,
-                  style: style(FTheme.black),
+            Positioned(
+              left: .0, top: 100.0.h,
+              child: Container(
+                alignment: Alignment.centerLeft,
+                child: GoalNumberPicker(
+                  type: ActivityType.weight,
+                  itemWidth: 200.0,
+                  color: ActivityType.weight.color,
+                  style: FTheme.largeText,
+                  maxValue: 200,
                 ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Container(
-                      constraints: BoxConstraints(maxWidth: 210.0.w),
-                      child: TextScroll(
-                        heightTitle,
-                        style: style(ActivityType.height.color),
-                        velocity: velocity,
-                        intervalSpaces: 5,
-                      ),
-                    ),
-                    const SizedBox(width: 10.0),
-                    FText('(${heightValue.amount.round()}층)'),
-                  ],
-                ),
-                FText('을 정복할 수 있어요', style: textTheme.displaySmall),
-                const SizedBox(height: 10.0),
-                FTexts(
-                  ['* 수명 약', timeToString((100 * goal.amount).round()), '연장'],
-                  colors: [FTheme.grey, ActivityType.height.color, FTheme.grey],
-                  alignment: MainAxisAlignment.start,
-                ),
-              ],
-            ),
-            const Expanded(child: SizedBox()),
-            Align(
-              alignment: Alignment.topRight,
-              child: GoalNumberPicker(
-                type: ActivityType.height,
-                itemWidth: 200.0,
-                color: ActivityType.height.color,
-                style: FTheme.largeText,
               ),
             ),
-            const SizedBox(height: 100.0),
+            Positioned(
+              right: .0, bottom: 200.0.h,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  FTexts(
+                    ['하루 ', toLocalString(count), '회면'],
+                    colors: const [FTheme.black, FTheme.colorA, FTheme.black],
+                    style: textTheme.displaySmall,
+                    alignment: MainAxisAlignment.end,
+                    space: false,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        constraints: BoxConstraints(maxWidth: 230.0.w),
+                        child: TextScroll(
+                          weightTitle,
+                          style: textTheme.displaySmall?.merge(TextStyle(
+                            color: ActivityType.weight.color,
+                            fontWeight: FontWeight.normal,
+                          )),
+                          velocity: velocity,
+                          intervalSpaces: 5,
+                        ),
+                      ),
+                      const SizedBox(width: 10.0),
+                      FText('(${unitDistance(weightValue.count.round())}회)'),
+                    ],
+                  ),
+                  FText(
+                    '만큼 들 수 있어요',
+                    style: textTheme.displaySmall,
+                  ),
+                  FTexts(['* 약 ', '${toLocalString(weight)} kg'],
+                    colors: const [FTheme.grey, FTheme.colorD],
+                    space: false,
+                    alignment: MainAxisAlignment.end,
+                  ),
+                ],
+              ),
+            ),
           ],
         );
       },

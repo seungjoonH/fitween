@@ -38,7 +38,7 @@ class ChallengeCreate extends GetxController {
 
   // 챌린지 생성 버튼 클릭 시
   void challengeCreateButtonPressed(Challenge challenge) async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     String code = await userP.createMyParty(challenge, difficulty);
     showChallengeCreatedDialog(code);
   }
@@ -64,7 +64,7 @@ class ChallengeCreate extends GetxController {
       type: DialogType.mono,
       onPressed: () {
         Get.back();
-        PUser user = Get.find<UserPresenter>().loggedUser;
+        FUser user = Get.find<UserP>().loggedUser;
         ChallengeMain.toChallengeMain();
         ChallengePartyMain.toChallengePartyMain(user.parties[code]!);
       },

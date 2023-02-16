@@ -21,7 +21,7 @@ class CollectionMain extends GetxController {
   /// methods
   // 초기화
   void init() {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     selectedBadgeId = userP.loggedUser.badgeId;
     mode = PageMode.view;
     update();
@@ -41,7 +41,7 @@ class CollectionMain extends GetxController {
 
   // 대표 컬렉션 설정
   void setMainBadge(Collection collection) {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
 
     if (selectedBadgeId == collection.badgeId) return;
     selectedBadgeId = collection.badgeId;

@@ -21,8 +21,8 @@ class Party {
   Timestamp? _endDate;
 
   // 의존 변수
-  PUser? leader; // leaderUid 에 의존
-  List<PUser> members = []; // records 에 의존
+  FUser? leader; // leaderUid 에 의존
+  List<FUser> members = []; // records 에 의존
 
   /// accessors & mutators
   DateTime? get startDate => _startDate?.toDate();
@@ -59,11 +59,11 @@ class Party {
   }
 
   int getRank(String uid) => ranks.indexWhere((rank) => rank.key == uid) + 1;
-  PUser getMember(String uid) => members.firstWhere((member) => member.uid == uid);
-  PUser getMemberByRank(int rank) => getMember(ranks[rank - 1].key);
-  PUser get winner => getMemberByRank(1);
+  FUser getMember(String uid) => members.firstWhere((member) => member.uid == uid);
+  FUser getMemberByRank(int rank) => getMember(ranks[rank - 1].key);
+  FUser get winner => getMemberByRank(1);
 
-  PBadge get badge => BadgePresenter.getBadge(level['collection'])!;
+  FBadge get badge => BadgePresenter.getBadge(level['collection'])!;
 
   /// constructors
   Party();
