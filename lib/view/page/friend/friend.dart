@@ -117,5 +117,4 @@ class FriendListTile extends StatelessWidget{
       ),
     );
   }
-
 }
