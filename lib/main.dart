@@ -1,5 +1,7 @@
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fitween/route.dart';
+import 'package:fitween/route.dart';
 import 'package:fitween/view/page/login/login.dart';
 import 'package:flutter/services.dart';
 import 'package:fitween/firebase_options.dart';
@@ -9,14 +11,14 @@ import 'package:fitween/presenter/firebase/auth/auth.dart';
 import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/import.dart';
 import 'package:fitween/presenter/widget/camera.dart';
-import 'package:fitween/route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 const version = 'ver 0.0';
 String get versionNumber => version.replaceAll('ver ', '');
-const releaseNoteUrl = 'https://trusted-robe-5cd.notion.site/ad4f1c130b7a45e5a86eac2cc71133d8';
+const releaseNoteUrl =
+    'https://trusted-robe-5cd.notion.site/ad4f1c130b7a45e5a86eac2cc71133d8';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +40,6 @@ class Fitween extends StatefulWidget {
 }
 
 class _FitweenState extends State<Fitween> {
-
   @override
   void initState() {
     super.initState();
