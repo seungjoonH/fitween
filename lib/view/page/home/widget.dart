@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fitween/presenter/page/record/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gif/flutter_gif.dart';
@@ -34,8 +35,6 @@ import 'package:fitween/view/widget/widget/indicator.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-
-
 class RotateCarousel extends StatefulWidget {
   const RotateCarousel({Key? key}) : super(key: key);
 
@@ -43,7 +42,8 @@ class RotateCarousel extends StatefulWidget {
   State<RotateCarousel> createState() => _RotateCarouselState();
 }
 
-class _RotateCarouselState extends State<RotateCarousel> with TickerProviderStateMixin {
+class _RotateCarouselState extends State<RotateCarousel>
+    with TickerProviderStateMixin {
   @override
   void initState() {
     HomeP.gifCont = FlutterGifController(vsync: this);
@@ -92,7 +92,8 @@ class _RotateCarouselState extends State<RotateCarousel> with TickerProviderStat
                 bottom: 150.0,
                 child: GestureDetector(
                   onTap: homeP.leftButtonPressed,
-                  child: SvgPicture.asset('assets/image/page/home/left_arrow.svg'),
+                  child:
+                      SvgPicture.asset('assets/image/page/home/left_arrow.svg'),
                 ),
               ),
               Positioned(
@@ -100,7 +101,8 @@ class _RotateCarouselState extends State<RotateCarousel> with TickerProviderStat
                 bottom: 150.0,
                 child: GestureDetector(
                   onTap: homeP.rightButtonPressed,
-                  child: SvgPicture.asset('assets/image/page/home/right_arrow.svg'),
+                  child: SvgPicture.asset(
+                      'assets/image/page/home/right_arrow.svg'),
                 ),
               ),
             ],
@@ -242,12 +244,13 @@ class RecordCard extends StatelessWidget {
     return FCard(
       title: '기록',
       activateSeeMore: true,
-      onPressed: () {},
+      onPressed: () {
+        CalendarMainP.toCalendarMain();
+      },
       child: Container(),
     );
   }
 }
-
 
 // class HomeView extends StatelessWidget {
 //   const HomeView({Key? key}) : super(key: key);
