@@ -35,8 +35,8 @@ class AuthPresenter {
   }
 
   // 로그인 형식에 따른 피트윈 로그인
-  static Future pLogin(LoginType type) async {
-    final userP = Get.find<UserPresenter>();
+  static Future fLogin(LoginType type) async {
+    final userP = Get.find<UserP>();
 
     UserCredential? userCredential;
     Map<String, dynamic>? json;
@@ -69,13 +69,13 @@ class AuthPresenter {
     // 신규 회원일 경우
     if (isNewcomer) {
       // 회원가입 페이지로 이동
-      OnboardingPresenter.toOnboarding();
+      OnboardingP.toOnboarding();
     }
 
     // 기존 회원일 경우
     else {
       // 파이어베이스 데이터로 로그인
-      PUser stranger = PUser.fromJson(json);
+      FUser stranger = FUser.fromJson(json);
       await userP.login(stranger);
       await storeLoginData(userP.data);
       await HomePresenter.toHome();
@@ -85,22 +85,22 @@ class AuthPresenter {
   }
 
   // 피트윈 로그아웃
-  static void pLogout() {
-    final userP = Get.find<UserPresenter>();
+  static void fLogout() {
+    final userP = Get.find<UserP>();
     Get.offAllNamed('/login');
     userP.logout();
     eliminateLoginData(userP.data);
   }
 
   // 피트윈 계정삭제
-  static void pDeleteAccount() {
-    final userP = Get.find<UserPresenter>();
+  static void fDeleteAccount() {
+    final userP = Get.find<UserP>();
     userP.delete();
-    pLogout();
+    fLogout();
   }
 
   static void loadLoginData() async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
 
     String? userInfo = await storage.read(key: 'login');
     bool beenLogged = userInfo != null;

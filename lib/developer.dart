@@ -1,5 +1,7 @@
+import 'package:fitween/presenter/page/challenge/main.dart';
 import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/presenter/page/home.dart';
+import 'package:fitween/presenter/page/register.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:flutter/material.dart';
 
@@ -17,11 +19,21 @@ class DeveloperPage extends StatelessWidget {
               onPressed: HomeP.toHome,
               text: 'Home',
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             PButton(
               onPressed: FriendP.toFriend,
               text: 'Friend',
             ),
+            SizedBox(height: 20.0),
+            PButton(
+              onPressed: RegisterP.toRegister,
+              text: 'Register',
+            ),
+            SizedBox(height: 20.0),
+            PButton(
+              onPressed: ChallengeMainP.toChallengeMain,
+              text: 'Challenge',
+            )
           ],
         ),
       ),

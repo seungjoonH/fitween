@@ -29,7 +29,7 @@ class MyRecordDetailView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    PUser loggedUser = Get.find<UserPresenter>().loggedUser;
+    FUser loggedUser = Get.find<UserP>().loggedUser;
     double amount = loggedUser.getAmounts(type);
     Record record = Record.init(type, amount, ExerciseUnit.step);
 

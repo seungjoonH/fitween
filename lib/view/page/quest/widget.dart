@@ -88,7 +88,7 @@ class MonthlyQuestView extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: ActivityType.activeValues.sublist(0, 3).map((type) {
-                      PBadge? badge;
+                      FBadge? badge;
                       () async {
                         badge = BadgePresenter.getBadge('1040${type.index}${
                           (today.month - 1).toString().padLeft(2, '0')}'
@@ -115,14 +115,14 @@ class QuestBadgePercentView extends StatelessWidget {
     required this.type,
   }) : super(key: key);
 
-  final PBadge badge;
+  final FBadge badge;
   final ActivityType type;
 
   @override
   Widget build(BuildContext context) {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
 
-    PUser user = Get.find<UserPresenter>().loggedUser;
+    FUser user = Get.find<UserP>().loggedUser;
     double record = user.getThisMonthAmounts(type);
     int goal = QuestPresenter.quests[type] ?? 1;
     if (type == ActivityType.weight) goal ~/= userWeight + 1;

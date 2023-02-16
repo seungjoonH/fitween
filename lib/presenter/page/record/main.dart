@@ -21,7 +21,7 @@ class CalendarMainP extends GetxController {
   /// methods
   //
   void loadTiers() {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
 
     for (ActivityType type in ActivityType.activeValues) {
       double amount = userP.loggedUser.getAmounts(type);
@@ -49,7 +49,7 @@ class RecordMain extends GetxController {
   /// methods
   //
   void loadTiers() {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
 
     for (ActivityType type in ActivityType.activeValues) {
       double amount = userP.loggedUser.getAmounts(type);

@@ -14,9 +14,10 @@ import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeP extends GetxController {
-
-  static void toHome() {
+  static void toHome() async {
+    final homeP = Get.find<HomeP>();
     Get.offAllNamed('/home');
+    await homeP.init();
   }
 
   static Size screenSize = MediaQuery.of(Get.context!).size;
@@ -29,6 +30,21 @@ class HomeP extends GetxController {
 
   String get pngAsset => '$rotationAsset${'rbo'[rotationIndex]}.png';
   String? get gifAsset => _gifAsset == null ? null : '$rotationAsset$_gifAsset.gif';
+
+  Future init() async {
+    final userP = Get.find<UserP>();
+    final loadingP = Get.find<LoadingPresenter>();
+
+    loadingP.loadStart();
+
+    await userP.load();
+    userP.clearRecords();
+    if (!await userP.fetchData()) await userP.load();
+
+    loadingP.loadEnd();
+
+    update();
+  }
 
   void leftButtonPressed() async {
     if (!allowClick) return;
@@ -89,7 +105,7 @@ class HomePresenter extends GetxController {
   bool isToday = true;
 
   Future init() async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     final loadingP = Get.find<LoadingPresenter>();
 
     isToday = true;

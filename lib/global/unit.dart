@@ -6,12 +6,12 @@ import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/page/register.dart';
 
 // 사용자의 체중
-int get userWeight => Get.find<UserPresenter>().loggedUser.weight
-    ?? Get.find<RegisterPresenter>().newcomer.weight ?? 0;
+int get userWeight => Get.find<UserP>().loggedUser.weight
+    ?? Get.find<RegisterP>().newcomer.weight ?? 0;
 
 // 사용자의 신장
-int get userHeight => Get.find<UserPresenter>().loggedUser.height
-    ?? Get.find<RegisterPresenter>().newcomer.height ?? 0;
+int get userHeight => Get.find<UserP>().loggedUser.height
+    ?? Get.find<RegisterP>().newcomer.height ?? 0;
 
 // 1분 간 소모 칼로리
 Map<ActivityType, double> get calories => {

@@ -140,7 +140,7 @@ class PInputField extends StatelessWidget {
     Key? key,
     required this.controller,
     this.hintText,
-    this.hintColor = FTheme.grey,
+    this.hintColor = FTheme.lightGrey,
     this.invalid = false,
     this.keyboardType = TextInputType.text,
   }) : super(key: key);
@@ -157,9 +157,9 @@ class PInputField extends StatelessWidget {
       autoPlay: invalid,
       shakeConstant: ShakeHorizontalConstant2(),
       child: TextField(
-        style: textTheme.bodyLarge,
+        style: textTheme.bodyLarge?.copyWith(color: FTheme.grey),
         controller: controller,
-        cursorColor: FTheme.black,
+        cursorColor: FTheme.grey,
         keyboardType: keyboardType,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
@@ -168,7 +168,7 @@ class PInputField extends StatelessWidget {
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(color: FTheme.black, width: 2.0),
+            borderSide: const BorderSide(color: FTheme.grey, width: 2.0),
           ),
           hintText: hintText,
           hintStyle: textTheme.bodyLarge?.apply(color: hintColor),

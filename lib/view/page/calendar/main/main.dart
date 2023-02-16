@@ -1,6 +1,6 @@
 import 'package:fitween/view/page/calendar/main/widget.dart';
-import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:flutter/material.dart';
+import '../../../widget/widget/app_bar.dart';
 
 class CalendarMainPage extends StatelessWidget {
   const CalendarMainPage({Key? key}) : super(key: key);
@@ -9,7 +9,7 @@ class CalendarMainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       backgroundColor: Colors.white,
-      appBar: PAppBar(title: '기록'),
+      appBar: FAppBar(title: '기록'),
       body: MyCalendarView(),
     );
   }

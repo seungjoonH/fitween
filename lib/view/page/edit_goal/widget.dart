@@ -223,22 +223,16 @@ class DistanceRecommendView extends StatelessWidget {
             FTexts(
               ['$ageGroup', '대 ', controller.user.sex!.kr, ' 평균'],
               colors: const [
-                FTheme.colorA,
-                FTheme.black,
-                FTheme.colorA,
-                FTheme.black,
+                FTheme.colorA, FTheme.black,
+                FTheme.colorA, FTheme.black,
               ],
               alignment: MainAxisAlignment.start,
               space: false,
               style: textTheme.displaySmall,
             ),
-            FTexts(
-              [
-                '매일',
-                '${recommendTimes.length == 1 ? recommendTimes[0] : recommendTimes.join('~')}',
-                '분',
-              ],
-              colors: [FTheme.black, ActivityType.distance.color, FTheme.black],
+            FTexts([
+              '매일', '${recommendTimes.length == 1 ? recommendTimes[0] : recommendTimes.join('~')}', '분',
+            ], colors: [FTheme.black, ActivityType.distance.color, FTheme.black],
               alignment: MainAxisAlignment.start,
               style: textTheme.displaySmall,
             ),

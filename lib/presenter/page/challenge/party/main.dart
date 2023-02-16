@@ -35,9 +35,9 @@ class ChallengePartyMain extends GetxController {
 
   // 초기화
   Future init(String id) async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     final loadingP = Get.find<LoadingPresenter>();
-    PUser user = userP.loggedUser;
+    FUser user = userP.loggedUser;
 
     loadingP.loadStart();
     loadedParty = await PartyPresenter.loadParty(id);
@@ -83,7 +83,7 @@ class ChallengePartyMain extends GetxController {
   }
 
   void complete() {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     loadedParty!.complete = true; update();
     Get.back();
     PartyPresenter.save(loadedParty!);

@@ -36,22 +36,22 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    const backgroundAsset = 'assets/image/page/login/background.svg';
+    // const backgroundAsset = 'assets/image/page/login/background.svg';
 
     return Scaffold(
       body: Stack(
         alignment: Alignment.center,
         children: [
-          AspectRatio(
-            aspectRatio: screenSize.aspectRatio,
-            child: AnimatedOpacity(
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.easeInOut,
-              opacity: backgroundOpacity,
-              child: SvgPicture.asset(backgroundAsset, fit: BoxFit.fill),
-            ),
-          ),
-          Positioned(top: 150.0.h, child: const PLogo()),
+          // AspectRatio(
+          //   aspectRatio: screenSize.aspectRatio,
+          //   child: AnimatedOpacity(
+          //     duration: const Duration(milliseconds: 500),
+          //     curve: Curves.easeInOut,
+          //     opacity: backgroundOpacity,
+          //     child: SvgPicture.asset(backgroundAsset, fit: BoxFit.fill),
+          //   ),
+          // ),
+          Positioned(top: 300.0.h, child: const FLogo()),
           Positioned(
             bottom: 130.0.h,
             child: AnimatedOpacity(

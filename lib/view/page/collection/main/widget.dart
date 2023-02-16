@@ -14,8 +14,8 @@ class CollectionMainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<CollectionMain>(
       builder: (controller) {
-        final userP = Get.find<UserPresenter>();
-        PUser user = userP.loggedUser;
+        final userP = Get.find<UserP>();
+        FUser user = userP.loggedUser;
         const collectionCounts = 200;
 
         List<Widget> collectionWidgets = user.orderedCollections.map((collection) {

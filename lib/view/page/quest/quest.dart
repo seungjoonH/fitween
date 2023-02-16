@@ -8,7 +8,7 @@ class QuestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: PAppBar(title: '월간 목표'),
+      appBar: FAppBar(title: '월간 목표'),
       body: MonthlyQuestView(),
     );
   }

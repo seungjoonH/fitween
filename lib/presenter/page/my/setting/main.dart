@@ -18,7 +18,7 @@ class MySettingMain extends GetxController {
   }
 
   // 로그아웃 버튼 클릭 시
-  static void logoutButtonPressed() => AuthPresenter.pLogout();
+  static void logoutButtonPressed() => AuthPresenter.fLogout();
 
   // 계정 삭제 버튼 클릭 시
   static void accountDeleteButtonPressed() {
@@ -30,7 +30,7 @@ class MySettingMain extends GetxController {
       contentPadding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 30.0),
       rightText: '삭제',
       leftPressed: Get.back,
-      rightPressed: AuthPresenter.pDeleteAccount,
+      rightPressed: AuthPresenter.fDeleteAccount,
       rightBackgroundColor: Colors.red,
     );
   }

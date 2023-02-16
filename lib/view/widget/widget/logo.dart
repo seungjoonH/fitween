@@ -2,6 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/view/widget/widget/text.dart';
+import 'package:flutter_svg/svg.dart';
+
+class FLogo extends StatelessWidget {
+  const FLogo({Key? key}) : super(key: key);
+
+  static const String asset = 'assets/image/logo/fitween.png';
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(asset, width: 350.0);
+  }
+}
 
 class PLogo extends StatelessWidget {
   const PLogo({Key? key}) : super(key: key);

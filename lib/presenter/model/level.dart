@@ -29,7 +29,10 @@ class LevelPresenter extends GetxController {
     Map<String, dynamic> result = {};
 
     List<Level> levelList = levels[type] ?? [];
-    record.convert(ExerciseUnit.kilometer);
+    record.convert({
+      ActivityType.distance: ExerciseUnit.kilometer,
+      ActivityType.weight: ExerciseUnit.count,
+    }[type]);
 
     for (int i = 0; i < levelList.length - 1; i++) {
       int current = levelList[i].amount!;

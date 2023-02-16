@@ -66,21 +66,30 @@ class _RotateCarouselState extends State<RotateCarousel>
             children: [
               Image.asset(
                 homeP.pngAsset,
-                height: HomeP.screenSize.height * .4,
+                height: HomeP.screenSize.height * .35,
                 fit: BoxFit.fitHeight,
               ),
               if (homeP.gifAsset != null)
-                GifImage(
-                  controller: HomeP.gifCont,
-                  height: HomeP.screenSize.height * .4,
-                  fit: BoxFit.fitHeight,
-                  image: AssetImage(
-                    homeP.gifAsset!,
+              Stack(
+                children: [
+                  GifImage(
+                    controller: HomeP.gifCont,
+                    height: HomeP.screenSize.height * .35,
+                    fit: BoxFit.fitHeight,
+                    image: AssetImage(homeP.gifAsset!),
                   ),
-                ),
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: FTheme.white.withOpacity(.09),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               Positioned(
-                left: HomeP.screenSize.width * .1,
-                bottom: 120.0,
+                left: HomeP.screenSize.width * .08,
+                bottom: 150.0,
                 child: GestureDetector(
                   onTap: homeP.leftButtonPressed,
                   child:
@@ -88,8 +97,8 @@ class _RotateCarouselState extends State<RotateCarousel>
                 ),
               ),
               Positioned(
-                right: HomeP.screenSize.width * .1,
-                bottom: 120.0,
+                right: HomeP.screenSize.width * .08,
+                bottom: 150.0,
                 child: GestureDetector(
                   onTap: homeP.rightButtonPressed,
                   child: SvgPicture.asset(
@@ -113,10 +122,119 @@ class RankingCard extends StatelessWidget {
       title: '랭킹',
       activateSeeMore: true,
       onPressed: () {},
-      child: Container(),
+      child: const RankingGraph(type: ActivityType.distance),
     );
   }
 }
+
+class RankingGraph extends StatelessWidget {
+  const RankingGraph({
+    Key? key,
+    required this.type,
+  }) : super(key: key);
+
+  final ActivityType type;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          RankingIndividualGraph(
+            type: type,
+            price: 2,
+            nickname: '영천',
+            percent: .56,
+          ),
+          SizedBox(height: 10.0),
+          RankingIndividualGraph(
+            type: type,
+            price: 3,
+            nickname: '하쿠나',
+            percent: .5,
+          ),
+          SizedBox(height: 10.0),
+          RankingIndividualGraph(
+            type: type,
+            price: 4,
+            nickname: '마타타',
+            percent: .2,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class RankingIndividualGraph extends StatelessWidget {
+  const RankingIndividualGraph({
+    Key? key,
+    required this.type,
+    required this.price,
+    required this.nickname,
+    required this.percent,
+  }) : super(key: key);
+
+  final ActivityType type;
+  final int price;
+  final String nickname;
+  final double percent;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          children: [
+            if (price < 4)
+            SvgPicture.asset(
+              'assets/image/page/home/ranking/$price.svg',
+              width: 18.0,
+            )
+            else Container(
+              width: 18.0,
+              height: 16.0,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: FTheme.grey,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: FText(
+                '$price',
+                color: FTheme.white,
+                style: textTheme.labelSmall,
+              ),
+            ),
+            const SizedBox(width: 5.0),
+            FText(nickname, color: FTheme.grey),
+          ],
+        ),
+        Row(
+          children: [
+            Expanded(
+              flex: (percent * 10000).round(),
+              child: Container(
+                height: 36.0,
+                decoration: const BoxDecoration(
+                  color: FTheme.lightGrey,
+                  borderRadius: BorderRadius.horizontal(
+                    right: Radius.circular(8.0),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 10000 * (1 - percent).round(),
+              child: Container(),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+
 
 class RecordCard extends StatelessWidget {
   const RecordCard({Key? key}) : super(key: key);
@@ -214,7 +332,7 @@ class RecordCard extends StatelessWidget {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     PUser user = Get.find<UserPresenter>().loggedUser;
+//     FUser user = Get.find<UserP>().loggedUser;
 //
 //     List<Widget> items = [
 //       const QuestRecommendCard(),
@@ -325,8 +443,8 @@ class RecordCard extends StatelessWidget {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     final userP = Get.find<UserPresenter>();
-//     PUser user = userP.loggedUser;
+//     final userP = Get.find<UserP>();
+//     FUser user = userP.loggedUser;
 //     double todayHeights = user.getTodayAmounts(ActivityType.height);
 //     double lifeExtension = 100 * todayHeights;
 //     String string = timeToString(lifeExtension.ceil());
@@ -418,7 +536,7 @@ class RecordCard extends StatelessWidget {
 //               FText('어제와 비교해서', style: textTheme.titleLarge),
 //               const SizedBox(height: 10.0),
 //               Expanded(
-//                 child: GetBuilder<UserPresenter>(
+//                 child: GetBuilder<UserP>(
 //                   builder: (controller) {
 //                     Map<ActivityType, double> diffs = {};
 //                     Map<ActivityType, List<String>> diffMessages = {};
@@ -508,7 +626,7 @@ class RecordCard extends StatelessWidget {
 //     ActivityType randomType = (
 //       ActivityType.activeValues.sublist(1, 3)..shuffle()
 //     ).first;
-//     PUser user = Get.find<UserPresenter>().loggedUser;
+//     FUser user = Get.find<UserP>().loggedUser;
 //     double amounts = user.getAmounts(randomType);
 //     Record record = Record.init(randomType, amounts, ExerciseUnit.step);
 //
@@ -699,8 +817,8 @@ class RecordCard extends StatelessWidget {
 //   Widget build(BuildContext context) {
 //     return GetBuilder<HomePresenter>(
 //       builder: (controller) {
-//         final userP = Get.find<UserPresenter>();
-//         PUser user = userP.loggedUser;
+//         final userP = Get.find<UserP>();
+//         FUser user = userP.loggedUser;
 //
 //         DateTime nextDate = date.add(const Duration(days: 1));
 //         DateTime startTime = date;
@@ -829,8 +947,8 @@ class RecordCard extends StatelessWidget {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     final userP = Get.find<UserPresenter>();
-//     PUser user = userP.loggedUser;
+//     final userP = Get.find<UserP>();
+//     FUser user = userP.loggedUser;
 //     const String directory = 'assets/image/page/home/';
 //
 //     Record record = Record.init(
@@ -932,8 +1050,8 @@ class RecordCard extends StatelessWidget {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     final userP = Get.find<UserPresenter>();
-//     PUser user = userP.loggedUser;
+//     final userP = Get.find<UserP>();
+//     FUser user = userP.loggedUser;
 //
 //     List<Widget> collectionWidgets =
 //         List.generate(3, (_) => CollectionWidget());

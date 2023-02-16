@@ -92,12 +92,14 @@ flutter:
     - assets/image/challenge/default/
     - assets/image/challenge/complete/
     - assets/image/challenge/focus/
+    - assets/image/challenge/timeAttack/
     - assets/image/badge/
     - assets/image/page/login/
     - assets/image/page/onboarding/
     - assets/image/page/timer/
     - assets/image/page/home/
     - assets/image/page/home/rotation/
+    - assets/image/page/home/ranking/
     - assets/image/page/input/
     - assets/image/page/challenge/
     - assets/image/page/edit_goal/

@@ -1,3 +1,7 @@
+import 'package:fitween/presenter/firebase/auth/auth.dart';
+import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera.dart';
+import 'package:fitween/presenter/page/challenge/time_attack/time_attack_friend.dart';
+import 'package:fitween/presenter/page/challenge/time_attack/time_attack_main.dart';
 import 'package:fitween/presenter/page/friend.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +30,6 @@ import 'package:fitween/presenter/model/party.dart';
 import 'package:fitween/presenter/model/quest.dart';
 import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/model/challenge.dart';
-import 'package:fitween/presenter/page/challenge/create.dart';
 import 'package:fitween/presenter/page/challenge/main.dart';
 import 'package:fitween/presenter/page/challenge/party/main.dart';
 import 'package:fitween/presenter/page/exercise/input.dart';
@@ -43,6 +46,37 @@ import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 
+class GlobalP extends GetxController {
+  int navIndex = 0;
+
+  void navigate(int index) async {
+    final homeP = Get.find<HomeP>();
+
+    switch (index) {
+      case 0:
+        if (navIndex == index) {
+          homeP.init();
+        } else {
+          HomeP.toHome();
+        }
+        break;
+      case 1:
+        FriendP.toFriend();
+        break;
+      case 2:
+        ChallengeMainP.toChallengeMain();
+        break;
+      case 3:
+        AuthPresenter.fLogout();
+        break;
+    }
+
+    navIndex = index;
+
+    update();
+  }
+}
+
 class GlobalPresenter extends GetxController {
   static const String effectAsset =
       'assets/image/widget/dialog/badge_effect.png';
@@ -53,7 +87,7 @@ class GlobalPresenter extends GetxController {
 
   void navigate(int index) async {
     final homeP = Get.find<HomePresenter>();
-    final challengeMain = Get.find<ChallengeMain>();
+    final challengeMain = Get.find<ChallengeMainP>();
 
     switch (index) {
       case 0:
@@ -63,7 +97,6 @@ class GlobalPresenter extends GetxController {
           HomePresenter.toHome();
         }
         break;
-      // case 1: openBottomBar(); break;
       case 1:
         WorkoutGuide.toWorkoutGuide();
         break;
@@ -71,7 +104,7 @@ class GlobalPresenter extends GetxController {
         if (navIndex == index) {
           challengeMain.init();
         } else {
-          ChallengeMain.toChallengeMain();
+          ChallengeMainP.toChallengeMain();
         }
         break;
     }
@@ -87,8 +120,8 @@ class GlobalPresenter extends GetxController {
 
   static void goBack() => Get.back(result: true);
 
-  static void showBadgeDialog(PBadge? badge) {
-    PUser user = Get.find<UserPresenter>().loggedUser;
+  static void showBadgeDialog(FBadge? badge) {
+    FUser user = Get.find<UserP>().loggedUser;
 
     if (badge == null) return;
 
@@ -140,7 +173,7 @@ class GlobalPresenter extends GetxController {
   static void showCollectionDialog(Collection? collection) {
     if (collection == null) return;
 
-    PUser user = Get.find<UserPresenter>().loggedUser;
+    FUser user = Get.find<UserP>().loggedUser;
     bool isMainBadge = user.badgeId! == collection.badgeId;
 
     showPDialog(
@@ -223,7 +256,7 @@ class GlobalPresenter extends GetxController {
     );
   }
 
-  static void showAwardedBadgeDialog(PBadge badge,
+  static void showAwardedBadgeDialog(FBadge badge,
       [bool firstAward = false]) async {
     showPDialog(
       titlePadding: EdgeInsets.zero,
@@ -302,7 +335,7 @@ class GlobalPresenter extends GetxController {
       leftPressed: () async {
         Get.back();
         await Future.delayed(const Duration(milliseconds: 200));
-        final userP = Get.find<UserPresenter>();
+        final userP = Get.find<UserP>();
         userP.setMainBadge(badge.id!);
       },
       rightPressed: Get.back,
@@ -311,7 +344,7 @@ class GlobalPresenter extends GetxController {
 
   // 대표 컬렉션 설정 팝업
   static void showCollectionSettingDialog(String badgeId) {
-    PBadge? selectedBadge = BadgePresenter.getBadge(badgeId);
+    FBadge? selectedBadge = BadgePresenter.getBadge(badgeId);
 
     showPDialog(
       title: '대표 컬렉션 변경',
@@ -347,17 +380,16 @@ class GlobalPresenter extends GetxController {
 
     Get.put(LoadingPresenter());
 
-    Get.put(UserPresenter());
+    Get.put(UserP());
     Get.put(ChallengePresenter());
     Get.put(BadgePresenter());
     Get.put(LevelPresenter());
     Get.put(QuestPresenter());
     Get.put(PartyPresenter());
 
-    Get.put(OnboardingPresenter());
-    Get.put(RegisterPresenter());
+    Get.put(OnboardingP());
+    Get.put(RegisterP());
     Get.put(HomePresenter());
-    Get.put(RegisterPresenter());
     Get.put(NotificationPresenter());
 
     Get.put(ExerciseDetailSetting());
@@ -368,8 +400,9 @@ class GlobalPresenter extends GetxController {
     Get.put(MyRecordMain());
     Get.put(MySettingMain());
     Get.put(MySettingEdit());
-    Get.put(ChallengeMain());
-    Get.put(ChallengeCreate());
+
+    Get.put(TimeAttackMainP());
+    // Get.put(ChallengeCreate());
     Get.put(ChallengePartyMain());
     Get.put(CollectionMain());
     Get.put(EditGoal());
@@ -377,7 +410,14 @@ class GlobalPresenter extends GetxController {
     Get.put(PainterPresenter());
     Get.put(WorkoutMain());
     Get.put(CalendarMainP());
+    Get.put(GlobalP());
     Get.put(HomeP());
     Get.put(FriendP());
+
+    //챌린지 페이지 Presenter
+    Get.put(ChallengeMainP());
+    Get.put(TimeAttackMainP());
+    Get.put(TimeAttackFriendP());
+    Get.put(TimeAttackCameraP());
   }
 }

@@ -11,6 +11,35 @@ import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/icon.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 
+class FBottomNavigationBar extends StatelessWidget {
+  const FBottomNavigationBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: const BorderRadius.vertical(top: Radius.circular(40.0)),
+      child: GetBuilder<GlobalP>(
+        builder: (globalP) {
+          return BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
+            backgroundColor: FTheme.white,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            currentIndex: globalP.navIndex,
+            onTap: globalP.navigate,
+            items: List.generate(4, (index) => BottomNavigationBarItem(
+              icon: FIcon(FIcons.values[index], selected: index == globalP.navIndex),
+              label: FIcons.values[index].label,
+            )),
+          );
+        },
+      ),
+    );
+  }
+}
+
+
+
 /* 커스텀 하단 바 위젯 */
 class PBottomSheetBar extends StatelessWidget {
   const PBottomSheetBar({Key? key, required this.body}) : super(key: key);
@@ -100,15 +129,15 @@ class CollapsedBottomBar extends StatelessWidget {
               width: double.infinity,
               child: GetBuilder<GlobalPresenter>(
                 builder: (controller) {
-                  List<PIcons> icons = [
-                    PIcons.homeHouse, PIcons.pencil, PIcons.star,
+                  List<FIcons> icons = [
+                    FIcons.homeHouse, FIcons.pencil, FIcons.star,
                   ];
 
                   return Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: List.generate(3, (index) => PIconButton(
-                      icon: PIcon(icons[index],
+                    children: List.generate(3, (index) => FIconButton(
+                      icon: FIcon(icons[index],
                         selected: index == controller.navIndex,
                       ),
                       onPressed: () => controller.navigate(index),
