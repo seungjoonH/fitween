@@ -88,5 +88,4 @@ class FriendCard extends StatelessWidget{
       ],
     );
   }
-
 }

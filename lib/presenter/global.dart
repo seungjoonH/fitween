@@ -1,7 +1,10 @@
 import 'package:fitween/presenter/firebase/auth/auth.dart';
-import 'package:fitween/presenter/page/challenge.dart';
+import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera.dart';
+import 'package:fitween/presenter/page/challenge/time_attack/time_attack_friend.dart';
+import 'package:fitween/presenter/page/challenge/time_attack/time_attack_main.dart';
 import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/presenter/page/login.dart';
+import 'package:fitween/view/page/challenge/time_attack/time_attack_camera/time_attack_camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -61,7 +64,7 @@ class GlobalP extends GetxController {
         FriendP.toFriend();
         break;
       case 2:
-        ChallengeP.toChallenge();
+        ChallengeMainP.toChallengeMain();
         break;
       case 3:
         AuthPresenter.pLogout();
@@ -84,7 +87,7 @@ class GlobalPresenter extends GetxController {
 
   void navigate(int index) async {
     final homeP = Get.find<HomePresenter>();
-    final challengeMain = Get.find<ChallengeMain>();
+    final challengeMain = Get.find<ChallengeMainP>();
 
     switch (index) {
       case 0:
@@ -94,7 +97,7 @@ class GlobalPresenter extends GetxController {
       case 1: WorkoutGuide.toWorkoutGuide(); break;
       case 2:
         if (navIndex == index) { challengeMain.init(); }
-        else { ChallengeMain.toChallengeMain(); }
+        else { ChallengeMainP.toChallengeMain(); }
         break;
     }
     navIndex = index == 1 ? navIndex : index;
@@ -377,8 +380,9 @@ class GlobalPresenter extends GetxController {
     Get.put(MyRecordMain());
     Get.put(MySettingMain());
     Get.put(MySettingEdit());
-    Get.put(ChallengeMain());
-    Get.put(ChallengeCreate());
+
+    Get.put(TimeAttackMainP());
+    // Get.put(ChallengeCreate());
     Get.put(ChallengePartyMain());
     Get.put(CollectionMain());
     Get.put(EditGoal());
@@ -390,5 +394,11 @@ class GlobalPresenter extends GetxController {
 
     Get.put(HomeP());
     Get.put(FriendP());
+
+    //챌린지 페이지 Presenter
+    Get.put(ChallengeMainP());
+    Get.put(TimeAttackMainP());
+    Get.put(TimeAttackFriendP());
+    Get.put(TimeAttackCameraP());
   }
 }

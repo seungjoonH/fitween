@@ -1,10 +1,13 @@
 /* 라우트 관련 */
-import 'package:fitween/view/page/challenge/challenge.dart';
 import 'package:fitween/view/page/challenge/create/create.dart';
 import 'package:fitween/view/page/challenge/main/main.dart';
 import 'package:fitween/view/page/challenge/detail/detail.dart';
 import 'package:fitween/view/page/challenge/complete/complete.dart';
+import 'package:fitween/view/page/challenge/main/widget.dart';
 import 'package:fitween/view/page/challenge/party/party.dart';
+import 'package:fitween/view/page/challenge/time_attack/time_attack_camera/time_attack_camera.dart';
+import 'package:fitween/view/page/challenge/time_attack/time_attack_friend/time_attack_friend.dart';
+import 'package:fitween/view/page/challenge/time_attack/time_attack_main/main.dart';
 import 'package:fitween/view/page/collection/main/main.dart';
 import 'package:fitween/view/page/developer_info/main.dart';
 import 'package:fitween/view/page/edit_goal/edit_goal.dart';
@@ -44,7 +47,10 @@ class PRoute {
     '/register': const RegisterPage(),
     '/login': const LoginPage(),
     '/onboarding': const OnboardingPage(),
-    '/challenge': const ChallengePage(),
+    '/challengeMain': const ChallengeMainPage(),
+    '/challenge/timeAttack/friend' : const TimeAttackFriendPage(),
+    '/challenge/timeAttack/main' : const TimeAttackMainPage(),
+    '/challenge/timeAttack/camera' : const TimeAttackCameraPage(),
     // '/login': const LoginPage(),
     // '/onboarding': const OnboardingPage(),
     // '/exercise/input': ExerciseInputPage(),
