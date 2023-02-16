@@ -16,6 +16,7 @@ class ImportPresenter extends GetxController {
     LevelPresenter.importFile(ActivityType.calorie);
     LevelPresenter.importFile(ActivityType.distance);
     LevelPresenter.importFile(ActivityType.height);
+    LevelPresenter.importFile(ActivityType.weight);
     QuestPresenter.importFile();
   }
 }

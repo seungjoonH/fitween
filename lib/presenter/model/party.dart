@@ -8,7 +8,7 @@ import 'package:fitween/presenter/model/user.dart';
 /// class
 // 파이어베이스 파티 관련
 class PartyPresenter extends GetxController {
-  final userP = Get.find<UserPresenter>();
+  final userP = Get.find<UserP>();
 
   List<Party> parties = [];
 
@@ -45,12 +45,12 @@ class PartyPresenter extends GetxController {
 
   // 파이어베이스에서 해당 파티의 멤버 리스트를 로드
   static Future loadMembers(Party party) async {
-    List<PUser> members = [];
+    List<FUser> members = [];
 
     for (var uid in party.memberUids) {
       var json = (await f.collection('users').doc(uid).get()).data();
       if (json == null) continue;
-      members.add(PUser.fromJson(json));
+      members.add(FUser.fromJson(json));
     }
     party.members = [...members];
   }
@@ -77,10 +77,10 @@ class PartyPresenter extends GetxController {
 
   static deletePartyIdFromUser(String id, List<String> uids) async {
     for (String uid in uids) {
-      PUser? user = await UserPresenter.loadUser(uid);
+      FUser? user = await UserP.loadUser(uid);
       if (user == null) continue;
       user.partyIds.remove(id);
-      UserPresenter.saveUser(user);
+      UserP.saveUser(user);
     }
   }
 

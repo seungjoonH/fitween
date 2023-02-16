@@ -24,7 +24,7 @@ class WorkoutMain extends GetxController {
   }
 
   void finishWorkout() async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     final homeP = Get.find<HomePresenter>();
 
     Record record = Record.init(

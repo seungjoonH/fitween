@@ -10,7 +10,7 @@ class Collection {
   String? badgeId;
 
   // 의존 변수
-  PBadge? badge; // badgeId 에 의존
+  FBadge? badge; // badgeId 에 의존
 
   set dates(List<DateTime?> dates) => dates.map((date) => toTimestamp(date)).toList();
   List<DateTime?> get dates => dateList.map((date) => date.toDate()).toList();

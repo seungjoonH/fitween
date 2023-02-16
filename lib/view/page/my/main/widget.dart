@@ -28,7 +28,7 @@ class MyMainView extends StatefulWidget {
 class _MyMainViewState extends State<MyMainView> {
   @override
   Widget build(BuildContext context) {
-    PUser loggedUser = Get.find<UserPresenter>().loggedUser;
+    FUser loggedUser = Get.find<UserP>().loggedUser;
 
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
@@ -168,7 +168,7 @@ class MyProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UserPresenter>(
+    return GetBuilder<UserP>(
       builder: (controller) {
         return Row(
           mainAxisSize: MainAxisSize.min,

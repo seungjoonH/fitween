@@ -43,15 +43,21 @@ class TabScaffold extends StatefulWidget {
   State<TabScaffold> createState() => _TabScaffoldState();
 }
 
-class _TabScaffoldState extends State<TabScaffold> {
+class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin {
+  late TabController _tabCont;
   int _selectedIndex = 0;
 
   @override
+  void initState() {
+    _tabCont = TabController(length: widget.tabs.length, vsync: this);
+    _tabCont.addListener(() => setState(() => _selectedIndex = _tabCont.index));
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-
-
     return DefaultTabController(
-      length: 3,
+      length: widget.tabs.length,
       child: Scaffold(
         appBar: AppBar(
           elevation: .0,
@@ -60,7 +66,7 @@ class _TabScaffoldState extends State<TabScaffold> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: Container(
-                width: 270.0.w,
+                width: 90.0.w * widget.tabs.length,
                 padding: const EdgeInsets.only(left: 30.0),
                 child: Stack(
                   alignment: Alignment.center,
@@ -78,6 +84,7 @@ class _TabScaffoldState extends State<TabScaffold> {
                       ),
                     ),
                     TabBar(
+                      controller: _tabCont,
                       labelPadding: EdgeInsets.zero,
                       indicatorColor: FTheme.grey,
                       indicatorWeight: 3.0,
@@ -92,13 +99,14 @@ class _TabScaffoldState extends State<TabScaffold> {
             ),
           ),
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: TabBarView(
-            children: widget.bodies,
-          ),
+        body: TabBarView(
+          controller: _tabCont,
+          children: widget.bodies.map((body) => Padding(
+            padding: const EdgeInsets.all(30.0),
+            child: body,
+          )).toList(),
         ),
-        bottomNavigationBar: FBottomNavigationBar(),
+        bottomNavigationBar: const FBottomNavigationBar(),
       ),
     );
   }

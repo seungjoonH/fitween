@@ -19,18 +19,29 @@ import 'package:fitween/presenter/model/record.dart';
 
 /// class
 // 사용자 객체 관련
-class UserPresenter extends GetxController {
+class UserP extends GetxController {
   /// static variables
 
   /// static methods
-  static Future<PUser?> loadUser(String uid) async {
+  static Future<FUser?> loadUser(String uid) async {
     var json = (await f.collection('users').doc(uid).get()).data();
     if (json == null) return null;
-    return PUser.fromJson(json);
+    return FUser.fromJson(json);
   }
 
-  static void saveUser(PUser user) async {
+  static void saveUser(FUser user) async {
     f.collection('users').doc(user.uid).set(user.toJson());
+  }
+
+  static Future<bool> duplicatedNickname(String nickname) async {
+    var jsonList = await f.collection('users').get();
+
+    for (var json in jsonList.docs) {
+      var data = json.data();
+      if (data['nickname'] == nickname) return true;
+    }
+
+    return false;
   }
 
   /// attributes
@@ -39,7 +50,7 @@ class UserPresenter extends GetxController {
   Map<String, dynamic> data = {};
 
   // 현재 로그인된 사용자
-  PUser loggedUser = PUser();
+  FUser loggedUser = FUser();
 
   // 로그인 여부
   bool get isLogged => loggedUser.uid != null;
@@ -48,23 +59,23 @@ class UserPresenter extends GetxController {
   /* 로그인 관련 */
   // 로그인
   // 매개변수로 받은 사용자 정보와 User Credential 정보를 병합하여 현재 로그인된 사용자자 최신화
-  Future login(PUser user) async {
+  Future login(FUser user) async {
     Map<String, dynamic> json = user.toJson();
     data.forEach((key, value) => json[key] = value);
-    loggedUser = PUser.fromJson(json);
+    loggedUser = FUser.fromJson(json);
     if (!await fetchData()) await load();
   }
 
   // 로그아웃
   // 현재 로그인된 사용자 정보 초기화
-  void logout() => loggedUser = PUser();
+  void logout() => loggedUser = FUser();
 
   /* 파이어베이스 관련 */
   // 파이어베이스에서 로드
   Future load() async {
     var json = (await f.collection('users').doc(loggedUser.uid).get()).data();
     if (json == null) return;
-    loggedUser = PUser.fromJson(json);
+    loggedUser = FUser.fromJson(json);
   }
 
   // 파이어베이스에 최신화
@@ -80,7 +91,7 @@ class UserPresenter extends GetxController {
   // 챌린지와 난이도에 따른 새로운 파티 생성, 해당 파티 코드 반환
   // 로그인된 사용자가 직접 파티를 생성하는 경우
   Future<String> createMyParty(Challenge challenge, Difficulty diff) async {
-    String code = PUser.randomCode;
+    String code = FUser.randomCode;
 
     Party newParty = Party.fromJson({
       'id': code,
@@ -152,7 +163,6 @@ class UserPresenter extends GetxController {
     await HealthPresenter.requestAuth();
     fetchCompleted &= await HealthPresenter.fetchStepData();
     if (isIOS) fetchCompleted &= await HealthPresenter.fetchFlightsData();
-    print(fetchCompleted);
 
     return fetchCompleted;
   }
@@ -285,7 +295,7 @@ class UserPresenter extends GetxController {
 
   // 로그인된 사용자에게 뱃지 수여
   void awardBadge(
-    PBadge badge, [
+    FBadge badge, [
       bool once = false,
       bool aDay = false,
     ]
@@ -319,6 +329,16 @@ class UserPresenter extends GetxController {
     }));
 
     save();
+    update();
+  }
+
+  Future loadFriends() async {
+    loggedUser.friends = [];
+    for (String uid in loggedUser.friendUids) {
+      FUser? user = await UserP.loadUser(uid);
+      if (user == null) return;
+      loggedUser.friends.add(user);
+    }
     update();
   }
 }

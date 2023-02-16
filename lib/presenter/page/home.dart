@@ -32,7 +32,7 @@ class HomeP extends GetxController {
   String? get gifAsset => _gifAsset == null ? null : '$rotationAsset$_gifAsset.gif';
 
   Future init() async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     final loadingP = Get.find<LoadingPresenter>();
 
     loadingP.loadStart();
@@ -105,7 +105,7 @@ class HomePresenter extends GetxController {
   bool isToday = true;
 
   Future init() async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     final loadingP = Get.find<LoadingPresenter>();
 
     isToday = true;

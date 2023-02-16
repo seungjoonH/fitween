@@ -136,7 +136,7 @@ class CollapsedBottomBar extends StatelessWidget {
                   return Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: List.generate(3, (index) => PIconButton(
+                    children: List.generate(3, (index) => FIconButton(
                       icon: FIcon(icons[index],
                         selected: index == controller.navIndex,
                       ),

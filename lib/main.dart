@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:fitween/developer.dart';
 import 'package:fitween/view/page/login/login.dart';
 import 'package:flutter/services.dart';
 import 'package:fitween/firebase_options.dart';
@@ -76,9 +75,9 @@ class _FitweenState extends State<Fitween> {
             colorScheme: FTheme.lightColorScheme,
             textTheme: FTheme.textTheme,
             scaffoldBackgroundColor: FTheme.background,
-            appBarTheme: AppBarTheme(
+            appBarTheme: const AppBarTheme(
               backgroundColor: Colors.transparent,
-              iconTheme: IconThemeData(color: FTheme.colorA),
+              iconTheme: IconThemeData(color: FTheme.grey),
             ),
           ),
           darkTheme: ThemeData(

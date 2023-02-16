@@ -7,6 +7,7 @@ import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/class/database/collection.dart';
 import 'package:fitween/presenter/global.dart';
 import 'package:fitween/view/widget/widget/text.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CollectionWidget extends StatelessWidget {
   CollectionWidget({
@@ -131,6 +132,67 @@ class CollectionWidget extends StatelessWidget {
   }
 }
 
+class FBadgeWidget extends StatefulWidget {
+  FBadgeWidget({
+    Key? key,
+    this.badge,
+    this.size = 45.0,
+    VoidCallback? onPressed,
+  }) : onPressed = onPressed ?? (() => GlobalPresenter.showBadgeDialog(badge)),
+        super(key: key);
+
+  final FBadge? badge;
+  final double size;
+  final VoidCallback? onPressed;
+
+  @override
+  State<FBadgeWidget> createState() => _FBadgeWidgetState();
+}
+
+class _FBadgeWidgetState extends State<FBadgeWidget> {
+  Function(TapDownDetails)? onTapDown;
+  Function(TapUpDetails)? onTapUp;
+
+  double scale = 1.0;
+  Duration duration = const Duration(milliseconds: 100);
+
+  @override
+  void initState() {
+    onTapDown = widget.onPressed == null ? null : (_) {
+      setState(() => scale = .9);
+    };
+    onTapUp = widget.onPressed == null ? null : (_) async {
+      widget.onPressed!();
+      await Future.delayed(duration, () {
+        setState(() => scale = 1.0);
+      });
+    };
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedScale(
+      scale: scale,
+      duration: duration,
+      child: GestureDetector(
+        onTapDown: onTapDown,
+        onTapUp: onTapUp,
+        child: Material(
+          color: FTheme.colorA,
+          borderRadius: BorderRadius.circular(widget.size / 2.25),
+          child: SizedBox(
+            width: widget.size.r,
+            height: widget.size.r,
+            child: widget.badge?.imageUrl! == null
+                ? SvgPicture.asset('void.svg')
+                : Image.asset(widget.badge!.imageUrl!),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class BadgeWidget extends StatelessWidget {
   BadgeWidget({
@@ -138,9 +200,8 @@ class BadgeWidget extends StatelessWidget {
     this.badge,
     this.detail = false,
     VoidCallback? onPressed,
-    this.size = 80.0,
+    this.size = 60.0,
     this.color = FTheme.lightGrey,
-    this.border,
     this.completed = false,
     this.received = false,
     this.greyscale = false,
@@ -148,12 +209,11 @@ class BadgeWidget extends StatelessWidget {
   }) : onPressed = onPressed ?? (() => GlobalPresenter.showBadgeDialog(badge)),
         super(key: key);
 
-  final PBadge? badge;
+  final FBadge? badge;
   final bool detail;
   final VoidCallback? onPressed;
   final double size;
   final Color color;
-  final bool? border;
   final bool completed;
   final bool received;
   final bool greyscale;
@@ -168,14 +228,8 @@ class BadgeWidget extends StatelessWidget {
       .0, .0, .0, .5, .0,
     ];
 
-    PolygonBorder side = PolygonBorder(
-      sides: 6,
-      side: BorderSide(
-        width: 1.5.r,
-        color: border == null
-            ? (badge == null ? FTheme.black : Colors.transparent)
-            : Colors.transparent,
-      ),
+    PolygonBorder side = const PolygonBorder(
+      sides: 6, borderRadius: 15.0,
     );
 
     return Column(

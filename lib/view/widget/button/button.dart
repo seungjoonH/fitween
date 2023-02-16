@@ -47,20 +47,18 @@ class FButton extends StatefulWidget {
 }
 
 class _FButtonState extends State<FButton> {
-  late Function(TapDownDetails) onTapDown;
-  late Function(TapUpDetails) onTapUp;
+  Function(TapDownDetails)? onTapDown;
+  Function(TapUpDetails)? onTapUp;
 
   double scale = 1.0;
   Duration duration = const Duration(milliseconds: 100);
 
   @override
   void initState() {
-    onTapDown = (_) {
-      if (widget.onPressed == null) return;
+    onTapDown = widget.onPressed == null ? null : (_) {
       setState(() => scale = .9);
     };
-    onTapUp = (_) async {
-      if (widget.onPressed == null) return;
+    onTapUp = widget.onPressed == null ? null : (_) async {
       widget.onPressed!();
       await Future.delayed(duration, () {
         setState(() => scale = 1.0);
@@ -264,15 +262,13 @@ class PCircledButton extends StatelessWidget {
   }
 }
 
-class PIconButton extends StatelessWidget {
-  const PIconButton({
+class FIconButton extends StatelessWidget {
+  const FIconButton({
     Key? key,
     required this.icon,
     required this.onPressed,
-    Color? backgroundColor,
-    Color? iconColor,
-  }) : backgroundColor = backgroundColor ?? const Color(0xFFD6BDAC),
-        super(key: key);
+    this.backgroundColor = Colors.transparent,
+  }) : super(key: key);
 
   final FIcon icon;
   final VoidCallback onPressed;

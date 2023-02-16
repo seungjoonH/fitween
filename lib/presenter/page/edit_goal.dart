@@ -18,7 +18,7 @@ class Field {
 
 /// class
 class EditGoal extends GetxController {
-  PUser user = PUser();
+  FUser user = FUser();
   int pageIndex = 0;
   bool keyboardVisible = false;
   List<bool> imageExistence = List.generate(5, (_) => true);
@@ -41,7 +41,7 @@ class EditGoal extends GetxController {
   /// static methods
   // 컨트롤러를 모두 초기화
   void init() {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     user = userP.loggedUser;
     pageIndex = 0;
   }
@@ -73,7 +73,7 @@ class EditGoal extends GetxController {
   }
 
   void submitted() async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     userP.update();
     userP.save();
     await HomePresenter.toHome();

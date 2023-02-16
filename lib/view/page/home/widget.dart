@@ -329,7 +329,7 @@ class RecordCard extends StatelessWidget {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     PUser user = Get.find<UserPresenter>().loggedUser;
+//     FUser user = Get.find<UserP>().loggedUser;
 //
 //     List<Widget> items = [
 //       const QuestRecommendCard(),
@@ -440,8 +440,8 @@ class RecordCard extends StatelessWidget {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     final userP = Get.find<UserPresenter>();
-//     PUser user = userP.loggedUser;
+//     final userP = Get.find<UserP>();
+//     FUser user = userP.loggedUser;
 //     double todayHeights = user.getTodayAmounts(ActivityType.height);
 //     double lifeExtension = 100 * todayHeights;
 //     String string = timeToString(lifeExtension.ceil());
@@ -533,7 +533,7 @@ class RecordCard extends StatelessWidget {
 //               FText('어제와 비교해서', style: textTheme.titleLarge),
 //               const SizedBox(height: 10.0),
 //               Expanded(
-//                 child: GetBuilder<UserPresenter>(
+//                 child: GetBuilder<UserP>(
 //                   builder: (controller) {
 //                     Map<ActivityType, double> diffs = {};
 //                     Map<ActivityType, List<String>> diffMessages = {};
@@ -623,7 +623,7 @@ class RecordCard extends StatelessWidget {
 //     ActivityType randomType = (
 //       ActivityType.activeValues.sublist(1, 3)..shuffle()
 //     ).first;
-//     PUser user = Get.find<UserPresenter>().loggedUser;
+//     FUser user = Get.find<UserP>().loggedUser;
 //     double amounts = user.getAmounts(randomType);
 //     Record record = Record.init(randomType, amounts, ExerciseUnit.step);
 //
@@ -814,8 +814,8 @@ class RecordCard extends StatelessWidget {
 //   Widget build(BuildContext context) {
 //     return GetBuilder<HomePresenter>(
 //       builder: (controller) {
-//         final userP = Get.find<UserPresenter>();
-//         PUser user = userP.loggedUser;
+//         final userP = Get.find<UserP>();
+//         FUser user = userP.loggedUser;
 //
 //         DateTime nextDate = date.add(const Duration(days: 1));
 //         DateTime startTime = date;
@@ -944,8 +944,8 @@ class RecordCard extends StatelessWidget {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     final userP = Get.find<UserPresenter>();
-//     PUser user = userP.loggedUser;
+//     final userP = Get.find<UserP>();
+//     FUser user = userP.loggedUser;
 //     const String directory = 'assets/image/page/home/';
 //
 //     Record record = Record.init(
@@ -1047,8 +1047,8 @@ class RecordCard extends StatelessWidget {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     final userP = Get.find<UserPresenter>();
-//     PUser user = userP.loggedUser;
+//     final userP = Get.find<UserP>();
+//     FUser user = userP.loggedUser;
 //
 //     List<Widget> collectionWidgets =
 //         List.generate(3, (_) => CollectionWidget());

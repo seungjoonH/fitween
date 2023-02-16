@@ -319,7 +319,7 @@ class RankWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     const String trophyAsset = 'assets/image/page/challenge/';
 
-    PUser loggedUser = Get.find<UserPresenter>().loggedUser;
+    FUser loggedUser = Get.find<UserP>().loggedUser;
     int myRank = party.getRank(loggedUser.uid!);
     double goal = party.challenge!.levels[party.difficulty.name]['goal'].toDouble();
     double totalRecords = party.records.values.reduce((a, b) => a + b).toDouble();
@@ -455,8 +455,8 @@ class RankWidget extends StatelessWidget {
           padding: EdgeInsets.zero,
           itemCount: party.records.length,
           itemBuilder: (context, index) {
-            PUser loggedUser = Get.find<UserPresenter>().loggedUser;
-            PUser user = party.getMemberByRank(index + 1);
+            FUser loggedUser = Get.find<UserP>().loggedUser;
+            FUser user = party.getMemberByRank(index + 1);
 
             return Container(
               height: 80.0.h,
@@ -515,7 +515,7 @@ class ChallengeBadgeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PUser user = Get.find<UserPresenter>().loggedUser;
+    FUser user = Get.find<UserP>().loggedUser;
 
     return GetBuilder<ChallengePartyMain>(
       builder: (controller) {

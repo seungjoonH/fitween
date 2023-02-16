@@ -22,7 +22,7 @@ class ChallengeMainP extends GetxController {
 
   /// methods
   Future init() async {
-    final userP = Get.find<UserPresenter>();
+    final userP = Get.find<UserP>();
     final loadingP = Get.find<LoadingPresenter>();
 
     loadingP.loadStart();
@@ -34,7 +34,6 @@ class ChallengeMainP extends GetxController {
 
     loadingP.loadEnd();
   }
-
 }
 
 // class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixin {
