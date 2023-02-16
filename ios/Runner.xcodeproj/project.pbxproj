@@ -195,7 +195,7 @@
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
-				60B548A3299624FD00C84718 /* BuildFile in Resources */,
+				60B548A3299624FD00C84718 /* (null) in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 				52115D61299BD80200CB4169 /* GoogleService-Info.plist in Resources */,
