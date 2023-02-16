@@ -64,6 +64,7 @@ dependencies:
   tflite_flutter_helper: ^0.3.1
   indexed: ^0.0.8
   flutter_gif: ^0.0.4
+  table_calendar: ^3.0.8
 
 dependency_overrides:
   firebase_core_platform_interface: 4.5.2
