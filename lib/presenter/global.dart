@@ -1,5 +1,6 @@
 import 'package:fitween/presenter/firebase/auth/auth.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera.dart';
+import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera_guide.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_friend.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_main.dart';
 import 'package:fitween/presenter/page/friend.dart';
@@ -92,7 +93,7 @@ class GlobalPresenter extends GetxController {
         if (navIndex == index) { homeP.init(); }
         else { HomePresenter.toHome(); }
         break;
-      case 1: WorkoutGuide.toWorkoutGuide(); break;
+      case 1: WorkoutGuide.toTimeAttackCameraGuide(); break;
       case 2:
         if (navIndex == index) { challengeMain.init(); }
         else { ChallengeMainP.toChallengeMain(); }
@@ -379,14 +380,15 @@ class GlobalPresenter extends GetxController {
     Get.put(MySettingMain());
     Get.put(MySettingEdit());
 
-    Get.put(TimeAttackMainP());
     // Get.put(ChallengeCreate());
     Get.put(ChallengePartyMain());
     Get.put(CollectionMain());
     Get.put(EditGoal());
+
+    //Camera Presenter
     Get.put(CameraPresenter());
     Get.put(PainterPresenter());
-    Get.put(WorkoutMain());
+    Get.put(TimeAttackCameraP());
 
     Get.put(GlobalP());
 

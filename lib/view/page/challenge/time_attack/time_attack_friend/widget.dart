@@ -18,11 +18,14 @@ class TimeAttackFriendPageView extends StatelessWidget {
           SizedBox(
             height: 20,
           ),
-          FText(
-            maxLines: 2,
-            '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
-            color: FTheme.grey,
-            style: FTheme.textTheme.titleLarge,
+          Padding(
+            padding: const EdgeInsets.only(left: 28.0, right: 28.0),
+            child: FText(
+              maxLines: 2,
+              '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
+              color: FTheme.grey,
+              style: FTheme.textTheme.titleMedium,
+            ),
           ),
           SizedBox(
             height: 50,

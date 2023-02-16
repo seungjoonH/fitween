@@ -10,7 +10,7 @@
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		52115D61299BD80200CB4169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52115D60299BD80200CB4169 /* GoogleService-Info.plist */; };
-		60B548A3299624FD00C84718 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		60B548A3299624FD00C84718 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		66671A2079590ABC34955B2C /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F466B90486F632F3D0637C /* Pods_Runner.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
