@@ -57,14 +57,22 @@ class GlobalPresenter extends GetxController {
 
     switch (index) {
       case 0:
-        if (navIndex == index) { homeP.init(); }
-        else { HomePresenter.toHome(); }
+        if (navIndex == index) {
+          homeP.init();
+        } else {
+          HomePresenter.toHome();
+        }
         break;
       // case 1: openBottomBar(); break;
-      case 1: WorkoutGuide.toWorkoutGuide(); break;
+      case 1:
+        WorkoutGuide.toWorkoutGuide();
+        break;
       case 2:
-        if (navIndex == index) { challengeMain.init(); }
-        else { ChallengeMain.toChallengeMain(); }
+        if (navIndex == index) {
+          challengeMain.init();
+        } else {
+          ChallengeMain.toChallengeMain();
+        }
         break;
     }
     navIndex = index == 1 ? navIndex : index;
@@ -84,8 +92,7 @@ class GlobalPresenter extends GetxController {
 
     if (badge == null) return;
 
-    bool have = user.collections
-        .map((col) => col.badgeId!).contains(badge.id);
+    bool have = user.collections.map((col) => col.badgeId!).contains(badge.id);
 
     if (have) {
       Collection collection = user.getCollectionsById(badge.id!)!;
@@ -110,7 +117,8 @@ class GlobalPresenter extends GetxController {
                   ),
                 ),
                 BadgeWidget(
-                  badge: badge, size: 80.0.r,
+                  badge: badge,
+                  size: 80.0.r,
                   onPressed: () {},
                 ),
               ],
@@ -173,13 +181,19 @@ class GlobalPresenter extends GetxController {
                 constraints: const BoxConstraints(maxHeight: 70.0),
                 child: SingleChildScrollView(
                   child: Column(
-                    children: collection.dateList.map((date) => FText(
-                        dateToString('yyyy-MM-dd 획득!', date.toDate())!,
-                        color: date == collection.dateList.last
-                            ? FTheme.colorB : FTheme.black,
-                        bold: date == collection.dateList.last,
-                      ),
-                    ).toList().reversed.toList(),
+                    children: collection.dateList
+                        .map(
+                          (date) => FText(
+                            dateToString('yyyy-MM-dd 획득!', date.toDate())!,
+                            color: date == collection.dateList.last
+                                ? FTheme.colorB
+                                : FTheme.black,
+                            bold: date == collection.dateList.last,
+                          ),
+                        )
+                        .toList()
+                        .reversed
+                        .toList(),
                   ),
                 ),
               ),
@@ -196,21 +210,21 @@ class GlobalPresenter extends GetxController {
       ),
       type: isMainBadge ? DialogType.mono : DialogType.bi,
       leftText: isMainBadge ? null : '대표 컬렉션으로 설정',
-      leftPressed: isMainBadge ? null : (() async {
-        Get.back();
-        await Future.delayed(const Duration(milliseconds: 200));
-        final collectionMain = Get.find<CollectionMain>();
-        collectionMain.setMainBadge(collection);
-      }),
+      leftPressed: isMainBadge
+          ? null
+          : (() async {
+              Get.back();
+              await Future.delayed(const Duration(milliseconds: 200));
+              final collectionMain = Get.find<CollectionMain>();
+              collectionMain.setMainBadge(collection);
+            }),
       rightPressed: isMainBadge ? null : Get.back,
       onPressed: isMainBadge ? Get.back : null,
     );
   }
 
-  static void showAwardedBadgeDialog(
-    PBadge badge,
-    [bool firstAward = false]
-  ) async {
+  static void showAwardedBadgeDialog(PBadge badge,
+      [bool firstAward = false]) async {
     showPDialog(
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
@@ -227,14 +241,14 @@ class GlobalPresenter extends GetxController {
                   alignment: Alignment.center,
                   children: [
                     if (firstAward)
-                    EternalRotation(
-                      rps: .3,
-                      child: Image.asset(
-                        effectAsset,
-                        width: 180.0.r,
-                        height: 180.0.r,
+                      EternalRotation(
+                        rps: .3,
+                        child: Image.asset(
+                          effectAsset,
+                          width: 180.0.r,
+                          height: 180.0.r,
+                        ),
                       ),
-                    ),
                     BadgeWidget(
                       badge: badge,
                       size: 80.0.r,
@@ -266,12 +280,14 @@ class GlobalPresenter extends GetxController {
                 bottom: 20.0,
                 child: Column(
                   children: [
-                    FText(badge.title!,
+                    FText(
+                      badge.title!,
                       style: textTheme.titleLarge,
                       bold: true,
                     ),
                     const SizedBox(height: 5.0),
-                    FText(badge.description!,
+                    FText(
+                      badge.description!,
                       style: textTheme.bodyLarge,
                     ),
                   ],
@@ -293,7 +309,6 @@ class GlobalPresenter extends GetxController {
     );
   }
 
-
   // 대표 컬렉션 설정 팝업
   static void showCollectionSettingDialog(String badgeId) {
     PBadge? selectedBadge = BadgePresenter.getBadge(badgeId);
@@ -303,18 +318,23 @@ class GlobalPresenter extends GetxController {
       content: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          selectedBadge == null ? FText('대표 컬렉션이 해제되었습니다.') : Column(
-            children: [
-              BadgeWidget(badge: selectedBadge, size: 100.0.r),
-              SizedBox(height: 20.0.h),
-              FText('대표 컬렉션이'),
-              FTexts(
-                [selectedBadge.title!, '${roEuro(selectedBadge.title!)} 설정되었습니다.'],
-                colors: const [FTheme.colorB, FTheme.black],
-                space: false,
-              )
-            ],
-          ),
+          selectedBadge == null
+              ? FText('대표 컬렉션이 해제되었습니다.')
+              : Column(
+                  children: [
+                    BadgeWidget(badge: selectedBadge, size: 100.0.r),
+                    SizedBox(height: 20.0.h),
+                    FText('대표 컬렉션이'),
+                    FTexts(
+                      [
+                        selectedBadge.title!,
+                        '${roEuro(selectedBadge.title!)} 설정되었습니다.'
+                      ],
+                      colors: const [FTheme.colorB, FTheme.black],
+                      space: false,
+                    )
+                  ],
+                ),
         ],
       ),
       type: DialogType.mono,
@@ -356,7 +376,7 @@ class GlobalPresenter extends GetxController {
     Get.put(CameraPresenter());
     Get.put(PainterPresenter());
     Get.put(WorkoutMain());
-
+    Get.put(CalendarMainP());
     Get.put(HomeP());
     Get.put(FriendP());
   }
