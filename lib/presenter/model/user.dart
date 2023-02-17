@@ -23,6 +23,15 @@ class UserP extends GetxController {
   /// static variables
 
   /// static methods
+  static Future<String?> loadUidByNickname(String nickname) async {
+    var jsonList = await f.collection('users').get();
+    for (var json in jsonList.docs) {
+      var data = json.data();
+      if (data['nickname'] == nickname) return data['uid'];
+    }
+    return null;
+  }
+
   static Future<FUser?> loadUser(String uid) async {
     var json = (await f.collection('users').doc(uid).get()).data();
     if (json == null) return null;
@@ -42,6 +51,11 @@ class UserP extends GetxController {
     }
 
     return false;
+  }
+
+  static bool doesFriendExist(String nickname) {
+    final userP = Get.find<UserP>();
+    return userP.loggedUser.doesFriendExist(nickname);
   }
 
   /// attributes
@@ -328,6 +342,12 @@ class UserP extends GetxController {
       'dates': [toTimestamp(now)],
     }));
 
+    save();
+    update();
+  }
+
+  void addFriend(String uid) async {
+    loggedUser.addFriend(uid);
     save();
     update();
   }

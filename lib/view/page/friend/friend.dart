@@ -3,7 +3,6 @@ import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/presenter/model/badge.dart';
 import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/page/friend.dart';
-import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/view/widget/widget/icon.dart';
@@ -52,10 +51,14 @@ class FriendListCard extends StatelessWidget {
               ),
               Row(
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.add),
-                    color: FTheme.lightGrey,
-                    onPressed: () {  },
+                  GetBuilder<FriendP>(
+                    builder: (friendP) {
+                      return IconButton(
+                        icon: const Icon(Icons.add),
+                        color: FTheme.lightGrey,
+                        onPressed: friendP.addFriendButtonPressed,
+                      );
+                    }
                   ),
                   IconButton(
                     icon: const Icon(Icons.edit),
@@ -117,5 +120,4 @@ class FriendListTile extends StatelessWidget{
       ),
     );
   }
-
 }

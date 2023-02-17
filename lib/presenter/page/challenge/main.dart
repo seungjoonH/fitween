@@ -78,7 +78,7 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
                     hintColor: controller.codeHintText == null
                         ? FTheme.grey : FTheme.colorB,
                   );
-                }
+                },
               ),
             ],
           ),

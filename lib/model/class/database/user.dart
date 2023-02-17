@@ -355,14 +355,20 @@ class FUser {
     return goal <= value;
   }
 
-  void toggleVisible(String uid) {
-    friendsData[uid]['visible'] = !friendsData[uid]['visible'];
-  }
-
   void toggleRival(String uid) {
     friendsData[uid]['rival'] = !friendsData[uid]['rival'];
   }
 
+  void addFriend(String uid) {
+    friendsData[uid] = {'rival': false};
+  }
+
+  bool doesFriendExist(String nickname) {
+    for (FUser user in friends) {
+      if (user.nickname == nickname) return true;
+    }
+    return false;
+  }
 
   /// static variables
   static int defaultWeight = 60;

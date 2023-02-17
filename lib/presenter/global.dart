@@ -50,6 +50,7 @@ class GlobalP extends GetxController {
 
   void navigate(int index) async {
     final homeP = Get.find<HomeP>();
+    final friendP = Get.find<FriendP>();
 
     switch (index) {
       case 0:
@@ -57,7 +58,8 @@ class GlobalP extends GetxController {
         else { HomeP.toHome(); }
         break;
       case 1:
-        FriendP.toFriend();
+        if (navIndex == index) { friendP.init(); }
+        else { FriendP.toFriend(); }
         break;
       case 2:
         ChallengeP.toChallenge();
