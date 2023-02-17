@@ -15,6 +15,27 @@ import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import 'package:get/get.dart';
+
+class ChallengeMainP extends GetxController {
+  static void toChallengeMain() => Get.toNamed('/challengeMain');
+
+  /// methods
+  Future init() async {
+    final userP = Get.find<UserP>();
+    final loadingP = Get.find<LoadingPresenter>();
+
+    loadingP.loadStart();
+
+    // tabCont.index = 0;
+    await ChallengePresenter.importFile();
+    await userP.load();
+    await userP.loadMyParties();
+
+    loadingP.loadEnd();
+  }
+}
+
 class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixin {
 
   /// static variables
@@ -24,7 +45,7 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
   /// static methods
   // 챌린지 메인 페이지로 이동
   static Future toChallengeMain() async {
-    final challengeMain = Get.find<ChallengeMain>();
+    final challengeMain = Get.find<ChallengeMainP>();
 
     Get.offAllNamed('/challenge/main');
     await challengeMain.init();
@@ -37,20 +58,7 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
   bool codeInvalid = false;
   String? codeHintText = '';
 
-  /// methods
-  Future init() async {
-    final userP = Get.find<UserP>();
-    final loadingP = Get.find<LoadingPresenter>();
 
-    loadingP.loadStart();
-
-    tabCont.index = 0;
-    await ChallengePresenter.importFile();
-    await userP.load();
-    await userP.loadMyParties();
-
-    loadingP.loadEnd();
-  }
 
   // 챌린지 참가 버튼 클릭 시
   void challengeJoinButtonPressed() async {
@@ -144,12 +152,6 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
       return false;
     }
     return true;
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-    tabCont = TabController(vsync: this, length: tabs.length);
   }
 
   @override

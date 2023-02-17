@@ -10,6 +10,8 @@ import 'package:fitween/model/enum/part.dart';
 import 'package:fitween/model/enum/workout.dart';
 import 'package:fitween/presenter/page/workout/main.dart';
 
+import '../page/challenge/time_attack/time_attack_camera.dart';
+
 class PainterPresenter extends GetxController {
   static Orientation orientation = Orientation.portrait;
   static double get screenRatio {
@@ -48,7 +50,7 @@ class PainterPresenter extends GetxController {
   WorkoutState state = WorkoutState.stop;
 
   String? stateText;
-  int get count => Get.find<WorkoutMain>().count;
+  int get count => Get.find<TimeAttackCameraP>().count;
 
   static List<WorkoutDistance> distanceHistory = [];
   static List<bool> hitHistory = [];
@@ -111,7 +113,7 @@ class PainterPresenter extends GetxController {
   }
 
   void countUp() {
-    final workoutMain = Get.find<WorkoutMain>();
+    final workoutMain = Get.find<TimeAttackCameraP>();
 
     if (humanHistory < 0 || distance != WorkoutDistance.middle) {
       floatingMessage = '사람이 인식되지 않습니다';

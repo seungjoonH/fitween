@@ -1,4 +1,4 @@
-/* 챌린지 메인 페이지 */
+// /* 챌린지 메인 페이지 */
 
 import 'package:fitween/presenter/global.dart';
 import 'package:fitween/view/page/challenge/main/widget.dart';
@@ -12,12 +12,9 @@ class ChallengeMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: GlobalPresenter.closeBottomBar,
-      child: const Scaffold(
-        appBar: FAppBar(title: '챌린지'),
-        bottomSheet: PBottomSheetBar(body: ChallengeMainView()),
-      ),
+    return Scaffold(
+      body: ChallengeMainPageView(),
     );
   }
 }
+

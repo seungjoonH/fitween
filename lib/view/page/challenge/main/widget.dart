@@ -1,4 +1,18 @@
-/* 챌린지 메인 위젯 */
+// /* 챌린지 메인 위젯 */
+//
+import 'package:fitween/global/theme.dart';
+import 'package:fitween/presenter/page/challenge/time_attack/time_attack_main.dart';
+import 'package:fitween/presenter/page/friend.dart';
+import 'package:fitween/view/widget/button/button.dart';
+import 'package:fitween/view/widget/widget/card.dart';
+import 'package:fitween/view/widget/widget/tab_scaffold.dart';
+import 'package:fitween/view/widget/widget/text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+
+import '../../../../presenter/page/challenge/time_attack/time_attack_friend.dart';
 
 import 'dart:math';
 
@@ -23,6 +37,74 @@ import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+class FTab extends StatelessWidget {
+  const FTab(
+    this.text, {
+    Key? key,
+    this.selected = false,
+  }) : super(key: key);
+
+  final String text;
+  final bool selected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: FText(
+        text,
+        style: textTheme.titleLarge,
+        color: selected ? FTheme.grey : FTheme.lightGrey,
+      ),
+    );
+  }
+}
+
+class ChallengeMainPageView extends StatelessWidget {
+  const ChallengeMainPageView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TabScaffold(
+      tabs: const ['월간', '업적', '타임어택'],
+      bodies: [
+        ChallengeCardView(),
+        Container(),
+        FCard(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FText(
+              '타임어택!',
+              style: FTheme.textTheme.titleLarge,
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Image.asset('assets/image/challenge/timeAttack/timeAttack.png'),
+            SizedBox(
+              height: 10,
+            ),
+            FText(
+              '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
+              maxLines: 2,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            FButton(
+              stretch: true,
+              text: '타임어택 하러가기',
+              onPressed: TimeAttackFriendP.toTimeAttackFriend,
+            )
+          ],
+        ))
+      ],
+    );
+  }
+}
 
 class ChallengeMainView extends StatelessWidget {
   const ChallengeMainView({Key? key}) : super(key: key);

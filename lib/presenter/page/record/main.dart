@@ -6,6 +6,34 @@ import 'package:fitween/presenter/model/record.dart';
 import 'package:fitween/presenter/model/user.dart';
 
 /// class
+class CalendarMainP extends GetxController {
+  /// static methods
+  // 기록 메인 페이지로 이동
+  static void toCalendarMain() {
+    // final calendarMain = Get.find<CalendarMainP>();
+    Get.toNamed('/calendar/main');
+    // calendarMain.loadTiers();
+  }
+
+  /// attributes
+  Map<ActivityType, Map<String, dynamic>> tiers = {};
+
+  /// methods
+  //
+  void loadTiers() {
+    final userP = Get.find<UserP>();
+
+    for (ActivityType type in ActivityType.activeValues) {
+      double amount = userP.loggedUser.getAmounts(type);
+      Record record = Record.init(type, amount, ExerciseUnit.kilometer);
+
+      tiers[type] = LevelPresenter.getTier(type, record);
+    }
+    update();
+  }
+}
+
+/// class
 class RecordMain extends GetxController {
   /// static methods
   // 기록 메인 페이지로 이동
