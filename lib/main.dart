@@ -14,6 +14,7 @@ import 'package:fitween/presenter/widget/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 const version = 'ver 0.0';
 String get versionNumber => version.replaceAll('ver ', '');
@@ -29,7 +30,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const Fitween());
+  initializeDateFormatting().then((_) => runApp(const Fitween()));
 }
 
 class Fitween extends StatefulWidget {
