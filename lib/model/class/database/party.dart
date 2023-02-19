@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
 import 'package:fitween/model/class/database/user.dart';
+import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/class/json/challenge.dart';
 import 'package:fitween/model/enum/difficulty.dart';
@@ -21,8 +23,9 @@ class Party {
   Timestamp? _endDate;
 
   // 의존 변수
-  FUser? leader; // leaderUid 에 의존
-  List<FUser> members = []; // records 에 의존
+  FUserInfo? leader; // leaderUid 에 의존
+  List<FUserInfo> memberInfos = [];
+  List<FUserCollection> memberCollections = [];
 
   /// accessors & mutators
   DateTime? get startDate => _startDate?.toDate();
@@ -59,9 +62,20 @@ class Party {
   }
 
   int getRank(String uid) => ranks.indexWhere((rank) => rank.key == uid) + 1;
-  FUser getMember(String uid) => members.firstWhere((member) => member.uid == uid);
-  FUser getMemberByRank(int rank) => getMember(ranks[rank - 1].key);
-  FUser get winner => getMemberByRank(1);
+  FUserInfo getMemberInfo(String uid) {
+    return memberInfos.firstWhere((member) => member.uid == uid);
+  }
+  FUserCollection getMemberCollection(String uid) {
+    return memberCollections.firstWhere((member) => member.uid == uid);
+  }
+  FUserInfo getMemberInfoByRank(int rank) {
+    return getMemberInfo(ranks[rank - 1].key);
+  }
+  FUserCollection getMemberCollectionByRank(int rank) {
+    return getMemberCollection(ranks[rank - 1].key);
+  }
+  FUserInfo get winnerInfo => getMemberInfoByRank(1);
+  FUserCollection get winnerCollection => getMemberCollectionByRank(1);
 
   FBadge get badge => BadgePresenter.getBadge(level['collection'])!;
 

@@ -1,6 +1,11 @@
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/model/class/database/user.dart';
+import 'package:fitween/model/class/database/user/friend.dart';
+import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/presenter/model/user.dart';
+import 'package:fitween/presenter/model/user/friend.dart';
+import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,23 +23,29 @@ class FriendP extends GetxController {
   bool nicknameExist = true;
   String? nicknameHintText;
 
+  bool editMode = false;
+
   Future init() async {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserFriendP>();
     await userP.load();
     await userP.loadFriends();
     update();
   }
 
+  void friendInteractButtonPressed(String uid) {
+    (editMode ? toggleRival : deleteFriendButtonPressed)(uid);
+  }
+
   void toggleRival(String uid) async {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserFriendP>();
     userP.loggedUser.toggleRival(uid);
     userP.save();
-    await userP.loadFriends();
+    userP.update();
     update();
   }
 
   bool isRival(uid) {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserFriendP>();
     return userP.loggedUser.rivalUids.contains(uid);
   }
 
@@ -43,8 +54,8 @@ class FriendP extends GetxController {
     String text = nicknameCont.text;
 
     Map<String, bool> conditions = {
-      '\'${nicknameCont.text}\'님이 없습니다': !await UserP.duplicatedNickname(text),
-      '이미 등록된 친구입니다': UserP.doesFriendExist(text),
+      '\'${nicknameCont.text}\'님이 없습니다': !await UserInfoP.duplicatedNickname(text),
+      '이미 등록된 친구입니다': UserFriendP.doesFriendExist(text),
       '별명을 입력하세요': text == '',
     };
 
@@ -68,10 +79,10 @@ class FriendP extends GetxController {
   }
 
   Future addFriend() async {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserFriendP>();
     if (!await validate()) return;
 
-    String? uid = await UserP.loadUidByNickname(nicknameCont.text);
+    String? uid = await UserInfoP.loadUidByNickname(nicknameCont.text);
     if (uid == null) return;
 
     userP.addFriend(uid);
@@ -114,5 +125,15 @@ class FriendP extends GetxController {
         rightPressed: addFriend,
       ),
     );
+  }
+
+  void toggleMode() {
+    editMode = !editMode; update();
+  }
+
+  void deleteFriendButtonPressed(String uid) {
+    final userP = Get.find<UserFriendP>();
+    userP.deleteFriend(uid);
+    init();
   }
 }

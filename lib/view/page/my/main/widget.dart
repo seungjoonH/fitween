@@ -1,5 +1,9 @@
 /* 마이 페이지 위젯 */
 
+import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,7 +32,7 @@ class MyMainView extends StatefulWidget {
 class _MyMainViewState extends State<MyMainView> {
   @override
   Widget build(BuildContext context) {
-    FUser loggedUser = Get.find<UserP>().loggedUser;
+    FUserRecord loggedUser = Get.find<UserRecordP>().loggedUser;
 
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
@@ -168,35 +172,37 @@ class MyProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UserP>(
-      builder: (controller) {
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BadgeWidget(
-              badge: BadgePresenter.getBadge(controller.loggedUser.badgeId),
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GetBuilder<UserCollectionP>(
+          builder: (userP) {
+            return BadgeWidget(
+              badge: BadgePresenter.getBadge(userP.loggedUser.badgeId),
               size: 80.0.r,
-            ),
-            SizedBox(width: 30.0.w),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FText(
-                  controller.loggedUser.nickname!,
+            );
+          },
+        ),
+        SizedBox(width: 30.0.w),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GetBuilder<UserInfoP>(
+              builder: (userP) => FText(
+                  userP.loggedUser.nickname!,
                   style: textTheme.displaySmall,
-                ),
-                FText(
-                  '${userHeight}cm | ${userWeight}kg',
-                  style: textTheme.titleLarge,
-                  color: FTheme.grey,
-                ),
-              ],
+                )
+            ),
+            FText(
+              '${userHeight}cm | ${userWeight}kg',
+              style: textTheme.titleLarge,
+              color: FTheme.grey,
             ),
           ],
-        );
-      },
+        ),
+      ],
     );
   }
 }

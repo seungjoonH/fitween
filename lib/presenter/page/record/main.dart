@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
@@ -21,7 +22,7 @@ class CalendarMainP extends GetxController {
   /// methods
   //
   void loadTiers() {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserRecordP>();
 
     for (ActivityType type in ActivityType.activeValues) {
       double amount = userP.loggedUser.getAmounts(type);
@@ -49,7 +50,7 @@ class RecordMain extends GetxController {
   /// methods
   //
   void loadTiers() {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserRecordP>();
 
     for (ActivityType type in ActivityType.activeValues) {
       double amount = userP.loggedUser.getAmounts(type);

@@ -1,4 +1,10 @@
+import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/presenter/firebase/auth/auth.dart';
+import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:fitween/presenter/model/user/friend.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera_guide.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_friend.dart';
@@ -125,7 +131,7 @@ class GlobalPresenter extends GetxController {
   static void goBack() => Get.back(result: true);
 
   static void showBadgeDialog(FBadge? badge) {
-    FUser user = Get.find<UserP>().loggedUser;
+    FUserCollection user = Get.find<UserCollectionP>().loggedUser;
 
     if (badge == null) return;
 
@@ -177,7 +183,7 @@ class GlobalPresenter extends GetxController {
   static void showCollectionDialog(Collection? collection) {
     if (collection == null) return;
 
-    FUser user = Get.find<UserP>().loggedUser;
+    FUserCollection user = Get.find<UserCollectionP>().loggedUser;
     bool isMainBadge = user.badgeId! == collection.badgeId;
 
     showPDialog(
@@ -196,7 +202,7 @@ class GlobalPresenter extends GetxController {
                       collection: collection,
                       onPressed: () {
                         Get.back();
-                        CollectionMain.toCollectionMain();
+                        CollectionMainP.toCollectionMain();
                       },
                     ),
                     Container(
@@ -252,7 +258,7 @@ class GlobalPresenter extends GetxController {
           : (() async {
               Get.back();
               await Future.delayed(const Duration(milliseconds: 200));
-              final collectionMain = Get.find<CollectionMain>();
+              final collectionMain = Get.find<CollectionMainP>();
               collectionMain.setMainBadge(collection);
             }),
       rightPressed: isMainBadge ? null : Get.back,
@@ -291,7 +297,7 @@ class GlobalPresenter extends GetxController {
                       size: 80.0.r,
                       onPressed: () {
                         Get.back();
-                        CollectionMain.toCollectionMain();
+                        CollectionMainP.toCollectionMain();
                       },
                     ),
                   ],
@@ -339,7 +345,7 @@ class GlobalPresenter extends GetxController {
       leftPressed: () async {
         Get.back();
         await Future.delayed(const Duration(milliseconds: 200));
-        final userP = Get.find<UserP>();
+        final userP = Get.find<UserCollectionP>();
         userP.setMainBadge(badge.id!);
       },
       rightPressed: Get.back,
@@ -382,9 +388,14 @@ class GlobalPresenter extends GetxController {
   static void initControllers() {
     Get.put(GlobalPresenter());
 
-    Get.put(LoadingPresenter());
+    Get.put(LoadingP());
 
-    Get.put(UserP());
+    Get.put(UserCollectionP());
+    Get.put(UserFriendP());
+    Get.put(UserInfoP());
+    Get.put(UserPartyP());
+    Get.put(UserRecordP());
+
     Get.put(ChallengePresenter());
     Get.put(BadgePresenter());
     Get.put(LevelPresenter());
@@ -407,8 +418,8 @@ class GlobalPresenter extends GetxController {
 
     // Get.put(ChallengeCreate());
     Get.put(ChallengePartyMain());
-    Get.put(CollectionMain());
-    Get.put(EditGoal());
+    Get.put(CollectionMainP());
+    Get.put(EditGoalP());
 
     //Camera Presenter
     Get.put(CameraPresenter());

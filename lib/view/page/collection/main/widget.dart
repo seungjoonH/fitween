@@ -1,3 +1,5 @@
+import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/class/database/user.dart';
@@ -12,10 +14,10 @@ class CollectionMainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<CollectionMain>(
-      builder: (controller) {
-        final userP = Get.find<UserP>();
-        FUser user = userP.loggedUser;
+    return GetBuilder<CollectionMainP>(
+      builder: (collectionMainP) {
+        final userP = Get.find<UserCollectionP>();
+        FUserCollection user = userP.loggedUser;
         const collectionCounts = 200;
 
         List<Widget> collectionWidgets = user.orderedCollections.map((collection) {
@@ -24,11 +26,11 @@ class CollectionMainView extends StatelessWidget {
               collection: collection,
               detail: true,
               size: 100.0,
-              onPressed: () => controller.collectionPressed(collection),
-              onLongPressed: () => controller.setMainBadge(collection),
-              pressed: controller.mode == PageMode.edit
-                  && controller.selectedBadgeId == collection.badgeId,
-              selected: controller.mode == PageMode.view
+              onPressed: () => collectionMainP.collectionPressed(collection),
+              onLongPressed: () => collectionMainP.setMainBadge(collection),
+              pressed: collectionMainP.mode == PageMode.edit
+                  && collectionMainP.selectedBadgeId == collection.badgeId,
+              selected: collectionMainP.mode == PageMode.view
                   && user.badgeId == collection.badgeId,
             ),
           );

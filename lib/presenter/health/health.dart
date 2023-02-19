@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:health/health.dart';
@@ -67,7 +68,7 @@ class HealthPresenter {
     // 승인 시 헬스 데이터 가져와서 로컬에 저장
     if (!approved) return false;
 
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserRecordP>();
     int? fetchedSteps = await health.getTotalStepsInInterval(today, now);
     if (fetchedSteps == null || fetchedSteps == 0) return false;
     steps = fetchedSteps;
@@ -90,7 +91,7 @@ class HealthPresenter {
     if (!approved) return false;
 
     // 승인 시 헬스 데이터 가져와서 로컬에 저장
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserRecordP>();
 
     flightsData = await health.getHealthDataFromTypes(today, now, flightType);
     if (flightsData.isEmpty) return false;

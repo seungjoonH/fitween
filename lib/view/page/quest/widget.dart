@@ -1,5 +1,9 @@
 import 'dart:math';
 
+import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -120,16 +124,20 @@ class QuestBadgePercentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userP = Get.find<UserP>();
+    final userCollectionP = Get.find<UserCollectionP>();
+    final userRecordP = Get.find<UserRecordP>();
 
-    FUser user = Get.find<UserP>().loggedUser;
-    double record = user.getThisMonthAmounts(type);
+    FUserCollection userCollection = userCollectionP.loggedUser;
+    FUserRecord userRecord = userRecordP.loggedUser;
+
+    double record = userRecord.getThisMonthAmounts(type);
     int goal = QuestPresenter.quests[type] ?? 1;
     if (type == ActivityType.weight) goal ~/= userWeight + 1;
     double percent = min(record / goal, 1);
 
     bool completed = percent == 1;
-    bool received = user.collections.map((col) => col.badge!.id).contains(badge.id);
+    bool received = userCollection.collections
+        .map((col) => col.badge!.id).contains(badge.id);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -143,7 +151,7 @@ class QuestBadgePercentView extends StatelessWidget {
               received: received,
               onPressed: received
                   ? null : completed
-                  ? () => userP.awardBadge(badge)
+                  ? () => userCollectionP.awardBadge(badge)
                   : () => GlobalPresenter.showBadgeDialog(badge),
             ),
           ],

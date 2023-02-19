@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/model/user/info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
@@ -161,7 +162,7 @@ class _MyMainAppBarState extends State<MyMainAppBar> {
         IconButton(
           icon: const Icon(Icons.settings),
           onPressed: () async {
-            final userP = Get.find<UserP>();
+            final userP = Get.find<UserInfoP>();
             if (await MySettingMain.toMySettingMain()) userP.update();
           },
         ),

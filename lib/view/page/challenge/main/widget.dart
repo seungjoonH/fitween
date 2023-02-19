@@ -1,6 +1,8 @@
 // /* 챌린지 메인 위젯 */
 //
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/model/class/database/user/party.dart';
+import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_main.dart';
 import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/view/widget/button/button.dart';
@@ -127,7 +129,7 @@ class ChallengeTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final challengeMain = Get.find<ChallengeMain>();
 
-    return GetBuilder<LoadingPresenter>(
+    return GetBuilder<LoadingP>(
       builder: (controller) {
         return TabBar(
           controller: challengeMain.tabCont,
@@ -171,7 +173,7 @@ class ChallengeListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LoadingPresenter>(
+    return GetBuilder<LoadingP>(
       builder: (controller) {
         return Padding(
           padding: EdgeInsets.fromLTRB(20.0.r, 20.0.r, 20.0.r, 0.0),
@@ -189,7 +191,7 @@ class ChallengeCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LoadingPresenter>(
+    return GetBuilder<LoadingP>(
       builder: (controller) {
         return SmartRefresher(
           controller: ChallengeMain.refreshCont,
@@ -231,7 +233,7 @@ class ChallengeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserPartyP>();
 
     return Column(
       children: [
@@ -433,8 +435,8 @@ class MyPartyListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userP = Get.find<UserP>();
-    FUser user = userP.loggedUser;
+    final userP = Get.find<UserPartyP>();
+    FUserParty user = userP.loggedUser;
 
     return Stack(
       children: [
@@ -606,7 +608,7 @@ class MyPartyListTile extends StatelessWidget {
                                   children: [
                                     const Icon(Icons.people_alt, size: 14.0),
                                     const SizedBox(width: 10.0),
-                                    FText('${party.members.length}/${
+                                    FText('${party.memberInfos.length}/${
                                       party.level['maxMember']
                                     }'),
                                   ],

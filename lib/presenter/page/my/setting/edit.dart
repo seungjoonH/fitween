@@ -1,3 +1,5 @@
+import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/presenter/model/user/info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/string.dart';
@@ -22,8 +24,8 @@ class MySettingEdit extends GetxController {
   /// static methods
   // 내 설정 수정 페이지
   static void toMySettingEdit(String editType) {
-    final userP = Get.find<UserP>();
-    FUser user = userP.loggedUser;
+    final userP = Get.find<UserInfoP>();
+    FUserInfo user = userP.loggedUser;
 
     editConts['nickname']?.text = user.nickname!;
     editConts['height']?.text = '$userHeight';
@@ -88,8 +90,8 @@ class MySettingEdit extends GetxController {
 
   // 제출 시
   void submit(String editType) async {
-    final userP = Get.find<UserP>();
-    FUser user = userP.loggedUser;
+    final userP = Get.find<UserInfoP>();
+    FUserInfo user = userP.loggedUser;
 
     if (!await validate(editType)) return;
 
