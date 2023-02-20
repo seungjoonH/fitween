@@ -610,7 +610,7 @@ PODS:
   - BoringSSL-GRPC/Interface (0.0.24)
   - camera_avfoundation (0.0.1):
     - Flutter
-  - cloud_firestore (4.4.1):
+  - cloud_firestore (4.4.2):
     - Firebase/Firestore (= 10.3.0)
     - firebase_core
     - Flutter
@@ -634,22 +634,22 @@ PODS:
   - Firebase/Storage (10.3.0):
     - Firebase/CoreOnly
     - FirebaseStorage (~> 10.3.0)
-  - firebase_auth (4.2.7):
+  - firebase_auth (4.2.8):
     - Firebase/Auth (= 10.3.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.6.0):
+  - firebase_core (2.6.1):
     - Firebase/CoreOnly (= 10.3.0)
     - Flutter
-  - firebase_in_app_messaging (0.7.0-12):
+  - firebase_in_app_messaging (0.7.0-13):
     - Firebase/InAppMessaging (= 10.3.0)
     - firebase_core
     - Flutter
-  - firebase_messaging (14.2.3):
+  - firebase_messaging (14.2.4):
     - Firebase/Messaging (= 10.3.0)
     - firebase_core
     - Flutter
-  - firebase_storage (11.0.12):
+  - firebase_storage (11.0.13):
     - Firebase/Storage (= 10.3.0)
     - firebase_core
     - Flutter
@@ -947,14 +947,14 @@ SPEC CHECKSUMS:
   AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   camera_avfoundation: 07c77549ea54ad95d8581be86617c094a46280d9
-  cloud_firestore: 2464c599d5eec8ca57afa0d2f77a0ee54e693864
+  cloud_firestore: 2d8c9f23063a6f735004f9b52cc743f7d8c8a5ae
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   Firebase: f92fc551ead69c94168d36c2b26188263860acd9
-  firebase_auth: 1683261c732cd83b8b69223252a6f7a1446779b5
-  firebase_core: a98dd43f175cca0b2d509c7703700d5e9b5833e3
-  firebase_in_app_messaging: 0ea702525f5b32b13aa2bc0151fdd67e6db6d986
-  firebase_messaging: 330dab37891313a27cbc9eb8f8f528ad28f87a4f
-  firebase_storage: 6897e832f5d1df90aadce8d61d3e28ef3eb7a7eb
+  firebase_auth: d9f3339f118479cf41bd9b20daacc2bb590f285c
+  firebase_core: 6242f038aefa4582e028536e71312f7e3a41e6bb
+  firebase_in_app_messaging: f287a11c9d7764677da28eb8689d88cc7929a9a4
+  firebase_messaging: ee61b8065c395a117864224e3031729e656232af
+  firebase_storage: 1cf1f798f92d7d66b0bab3d866f63f1bf41def1c
   FirebaseABTesting: e6660693429b4663573c82f8d2f1041deff1753a
   FirebaseAppCheckInterop: 9fc57dfa08f0abb737b185ea065422b55355c909
   FirebaseAuth: 0e415d29d846c1dce2fb641e46f35e9888d9bec6

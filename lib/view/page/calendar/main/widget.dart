@@ -124,7 +124,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
 
   List<Event> _getEventsForDay(DateTime day) {
     // Implementation example
-    return kEvents[day] ?? [];
+    return userData[day] ?? [];
   }
 
   List<Event> _getEventsForRange(DateTime start, DateTime end) {
@@ -169,14 +169,16 @@ class _MyCalendarViewState extends State<MyCalendarView> {
     }
   }
 
-  Color colorSelector(Event event, int index) {
-    if (event.clear) {
+  Color colorSelector(List<Event> event, int index) {
+    if (event[0].goal <= event[0].amount &&
+        event[1].goal <= event[1].amount &&
+        event[2].goal <= event[2].amount) {
       return Colors.green;
-    } else if (index == 0 && event.goal <= event.amount) {
+    } else if (index == 0 && event[0].goal <= event[0].amount) {
       return Colors.red;
-    } else if (index == 1 && event.goal <= event.amount) {
+    } else if (index == 1 && event[1].goal <= event[1].amount) {
       return Colors.blue;
-    } else if (index == 2 && event.goal <= event.amount) {
+    } else if (index == 2 && event[2].goal <= event[2].amount) {
       return Colors.orange;
     } else {
       return Colors.grey;
@@ -207,7 +209,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
             percent: min(events[index].amount / events[index].goal, 1),
             // center: Text('${events[index].amount / events[index].goal * 100}%'),
             barRadius: const Radius.circular(5),
-            progressColor: colorSelector(events[index], index),
+            progressColor: colorSelector(events, index),
             trailing: IconButton(
               onPressed: () {
                 setState(
@@ -215,17 +217,6 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                     int temp = events[index].amount;
                     events[index].amount = events[index].goal;
                     events[index].goal = temp;
-                    if (events[0].goal <= events[0].amount &&
-                        events[1].goal <= events[1].amount &&
-                        events[2].goal <= events[2].amount) {
-                      events[0].clear = true;
-                      events[1].clear = true;
-                      events[2].clear = true;
-                    } else {
-                      events[0].clear = false;
-                      events[1].clear = false;
-                      events[2].clear = false;
-                    }
                   },
                 );
               },
@@ -237,7 +228,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
             child: Text(
               '${events[index].amount} / ${events[index].goal} $unit',
               style: TextStyle(
-                color: colorSelector(events[index], index),
+                color: colorSelector(events, index),
               ),
             ),
           ),
@@ -251,7 +242,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const EdgeInsets.all(20.0),
           child: Card(
             child: TableCalendar<Event>(
               firstDay: kFirstDay,
@@ -266,17 +257,23 @@ class _MyCalendarViewState extends State<MyCalendarView> {
               startingDayOfWeek: StartingDayOfWeek.monday,
               daysOfWeekHeight: 20.0,
               calendarStyle: const CalendarStyle(
+                isTodayHighlighted: true,
                 cellMargin: EdgeInsets.all(2.0),
+                cellAlignment: Alignment.center,
               ),
               calendarBuilders: CalendarBuilders(
                 defaultBuilder: (BuildContext context, date, events) {
                   return Container(
-                    margin: const EdgeInsets.all(4.0),
                     alignment: Alignment.center,
                     child: Text(
                       date.day.toString(),
                       style: TextStyle(
-                        color: _getEventsForDay(date).first.clear
+                        color: _getEventsForDay(date).elementAt(0).amount >=
+                                    _getEventsForDay(date).elementAt(0).goal &&
+                                _getEventsForDay(date).elementAt(1).amount >=
+                                    _getEventsForDay(date).elementAt(1).goal &&
+                                _getEventsForDay(date).elementAt(2).amount >=
+                                    _getEventsForDay(date).elementAt(2).goal
                             ? Colors.green
                             : Colors.black,
                       ),
@@ -297,7 +294,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                           width: 8,
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: colorSelector(events[index], index),
+                            color: colorSelector(events, index),
                           ),
                         ),
                       );
