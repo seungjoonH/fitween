@@ -96,7 +96,7 @@ class ChallengeInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BorderRadius imageRadius = BorderRadius.circular(20.0.r);
-    List<Color> orderedColors = [FTheme.grey, ...FTheme.orderedColors];
+    List<Color> orderedColors = [FTheme.darkGrey, ...FTheme.orderedColors];
     int index = min(max((party.remainDays ~/ 4) + 1, 0), 4);
 
     return Padding(
@@ -187,7 +187,7 @@ class ChallengeInfoWidget extends StatelessWidget {
                 height: 40.0.h,
                 child: FText('난이도: ${party.difficulty.kr}',
                   style: textTheme.labelLarge,
-                  color: FTheme.grey,
+                  color: FTheme.darkGrey,
                 ),
               ),
               Positioned(
@@ -229,7 +229,7 @@ class ChallengeInfoWidget extends StatelessWidget {
                 '##', party.level['word'],
               ),
               style: textTheme.labelLarge,
-              color: FTheme.grey,
+              color: FTheme.darkGrey,
               align: TextAlign.center,
               maxLines: 7,
             ),
@@ -267,7 +267,7 @@ class MyScoreWidget extends StatelessWidget {
                 const SizedBox(width: 10.0),
                 FText('*현재 챌린지 기준',
                   style: textTheme.bodySmall,
-                  color: FTheme.grey,
+                  color: FTheme.darkGrey,
                 ),
               ],
             ),
@@ -289,7 +289,7 @@ class MyScoreWidget extends StatelessWidget {
                     const SizedBox(width: 10.0),
                     FText(type.unitAlt,
                       style: textTheme.bodySmall,
-                      color: FTheme.grey,
+                      color: FTheme.darkGrey,
                     ),
                   ],
                 );
@@ -302,7 +302,7 @@ class MyScoreWidget extends StatelessWidget {
             child: FTexts(['모두가 합심하여 ',
               '${party.recordSum.round()}${type.unitAlt}',
               '을 ${type.did}'
-            ], colors: [FTheme.grey, type.color, FTheme.grey],
+            ], colors: [FTheme.darkGrey, type.color, FTheme.darkGrey],
               space: false,
               style: textTheme.headlineSmall,
             ),
@@ -451,7 +451,7 @@ class RankWidget extends StatelessWidget {
           ),
         ),
         const Divider(
-          color: FTheme.grey,
+          color: FTheme.darkGrey,
           thickness: 1,
           height: 1.0,
         ),
@@ -497,13 +497,13 @@ class RankWidget extends StatelessWidget {
             );
           },
           separatorBuilder: (context, index) => const Divider(
-            color: FTheme.grey,
+            color: FTheme.darkGrey,
             thickness: 1,
             height: 1.0,
           ),
         ),
         const Divider(
-          color: FTheme.grey,
+          color: FTheme.darkGrey,
           thickness: 1,
           height: 1.0,
         ),
@@ -592,7 +592,7 @@ class ChallengeBadgeWidget extends StatelessWidget {
                         text: '완료하기',
                         stretch: true,
                         backgroundColor: FTheme.lightGrey,
-                        textColor: FTheme.grey,
+                        textColor: FTheme.darkGrey,
                         border: false,
                       ),
                     ],
@@ -699,7 +699,7 @@ class ChallengePartyMainLoading extends StatelessWidget {
               ],
             ),
           ),
-          const Divider(color: FTheme.grey, thickness: 1, height: 1.0),
+          const Divider(color: FTheme.darkGrey, thickness: 1, height: 1.0),
           Column(
             children: [
               Container(

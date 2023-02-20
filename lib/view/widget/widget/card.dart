@@ -142,7 +142,7 @@ class _FCardState extends State<FCard> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        FText(widget.title!, style: textTheme.titleLarge, color: FTheme.grey),
+                        FText(widget.title!, style: textTheme.titleLarge, color: FTheme.darkGrey),
                         if (widget.activateSeeMore)
                           const Icon(Icons.arrow_forward_ios, color: FTheme.lightGrey),
                       ],

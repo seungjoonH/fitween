@@ -84,7 +84,7 @@ class EditGoalP extends GetxController {
     final userP = Get.find<UserRecordP>();
     userP.update();
     userP.save();
-    await HomePresenter.toHome();
+    await HomeP.toHome();
     init();
   }
 

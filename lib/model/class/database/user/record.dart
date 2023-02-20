@@ -237,7 +237,7 @@ class FUserRecord {
 
   // 해당 활동형식의 완료 여부 반환
   bool completed(ActivityType type) {
-    double goal = goals[type.name];
+    double goal = goals[type.name]?.toDouble() ?? .0;
     double value = getTodayAmounts(type);
     return goal <= value;
   }

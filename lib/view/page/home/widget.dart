@@ -196,7 +196,7 @@ class RankingIndividualGraph extends StatelessWidget {
               height: 16.0,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: FTheme.grey,
+                color: FTheme.darkGrey,
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: FText(
@@ -206,7 +206,7 @@ class RankingIndividualGraph extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 5.0),
-            FText(nickname, color: FTheme.grey),
+            FText(nickname, color: FTheme.darkGrey),
           ],
         ),
         Row(
@@ -384,7 +384,7 @@ class RecordCard extends StatelessWidget {
 //               FText(
 //                 '를 달성하고 컬렉션을 모아보세요.',
 //                 style: textTheme.labelMedium,
-//                 color: FTheme.grey,
+//                 color: FTheme.darkGrey,
 //               ),
 //             ],
 //           ),
@@ -472,7 +472,7 @@ class RecordCard extends StatelessWidget {
 //               FText(
 //                 '한 층을 오르면 수명이 1분 40초 늘어나요!',
 //                 style: textTheme.labelMedium,
-//                 color: FTheme.grey,
+//                 color: FTheme.darkGrey,
 //               ),
 //             ],
 //           ),
@@ -490,7 +490,7 @@ class RecordCard extends StatelessWidget {
 //                 FText(
 //                   '한 층을 오르면 수명이 1분 40초 늘어나요!',
 //                   style: textTheme.labelMedium,
-//                   color: FTheme.grey,
+//                   color: FTheme.darkGrey,
 //                 ),
 //               ],
 //             ),
@@ -728,7 +728,7 @@ class RecordCard extends StatelessWidget {
 //               title: '${controller.isToday ? '오늘' : '어제'} 활동량',
 //               button: const FTextButton(
 //                 text: '목표 수정',
-//                 color: FTheme.grey,
+//                 color: FTheme.darkGrey,
 //                 onPressed: HomePresenter.showRouteEditGoalCheckDialog,
 //               ),
 //             ),
@@ -782,14 +782,14 @@ class RecordCard extends StatelessWidget {
 //                   child: IconButton(
 //                     icon: const Icon(Icons.arrow_back_ios),
 //                     onPressed: controller.slideLeftActivityCard,
-//                     color: FTheme.grey,
+//                     color: FTheme.darkGrey,
 //                   ).animate().fadeIn(),
 //                 ) else Positioned(
 //                   right: 5.0,
 //                   child: IconButton(
 //                     icon: const Icon(Icons.arrow_forward_ios),
 //                     onPressed: controller.slideRightActivityCard,
-//                     color: FTheme.grey,
+//                     color: FTheme.darkGrey,
 //                   ).animate().fadeIn(),
 //                 ),
 //               ],
@@ -912,7 +912,7 @@ class RecordCard extends StatelessWidget {
 //           title: '월간 목표',
 //           button: FTextButton(
 //             text: '더 보기',
-//             color: FTheme.grey,
+//             color: FTheme.darkGrey,
 //             onPressed: QuestMain.toQuestMain,
 //           ),
 //         ),
@@ -1070,7 +1070,7 @@ class RecordCard extends StatelessWidget {
 //           title: '컬렉션',
 //           button: FTextButton(
 //             text: '더 보기',
-//             color: FTheme.grey,
+//             color: FTheme.darkGrey,
 //             onPressed: CollectionMain.toCollectionMain,
 //           ),
 //         ),

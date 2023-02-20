@@ -3,6 +3,7 @@ import 'package:fitween/presenter/firebase/auth/auth.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera.dart';
@@ -62,14 +63,11 @@ class GlobalP extends GetxController {
 
     switch (index) {
       case 0:
-        if (navIndex == index) {
-          homeP.init();
-        } else {
-          HomeP.toHome();
-        }
+        if (navIndex == index) { await homeP.init(); }
+        else { HomeP.toHome(); }
         break;
       case 1:
-        if (navIndex == index) { friendP.init(); }
+        if (navIndex == index) { await friendP.init(); }
         else { FriendP.toFriend(); }
         break;
       case 2:
@@ -95,7 +93,7 @@ class GlobalPresenter extends GetxController {
   int navIndex = 0;
 
   void navigate(int index) async {
-    final homeP = Get.find<HomePresenter>();
+    final homeP = Get.find<HomeP>();
     final challengeMain = Get.find<ChallengeMainP>();
 
     switch (index) {
@@ -103,7 +101,7 @@ class GlobalPresenter extends GetxController {
         if (navIndex == index) {
           homeP.init();
         } else {
-          HomePresenter.toHome();
+          HomeP.toHome();
         }
         break;
       
@@ -393,6 +391,7 @@ class GlobalPresenter extends GetxController {
     Get.put(UserCollectionP());
     Get.put(UserFriendP());
     Get.put(UserInfoP());
+    Get.put(UserNotificationP());
     Get.put(UserPartyP());
     Get.put(UserRecordP());
 

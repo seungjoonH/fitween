@@ -76,7 +76,7 @@ class MyNavigationButton extends StatelessWidget {
     return Material(
       color: FTheme.colorB,
       borderRadius: radius,
-      shadowColor: FTheme.grey,
+      shadowColor: FTheme.darkGrey,
       child: InkWell(
         onTap: MyMain.toMyMain,
         borderRadius: radius,
@@ -188,13 +188,13 @@ class MySettingMainAppBar extends StatelessWidget implements PreferredSizeWidget
         FTextButton(
           text: '앱 정보',
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          color: FTheme.grey,
+          color: FTheme.darkGrey,
           onPressed: MySettingMain.showAppInfoDialog,
         ),
         // FTextButton(
         //   text: version,
         //   padding: EdgeInsets.symmetric(horizontal: 20.0),
-        //   color: FTheme.grey,
+        //   color: FTheme.darkGrey,
         //   onPressed: ReleaseNoteMain.toReleaseNoteMain,
         // ),
       ],

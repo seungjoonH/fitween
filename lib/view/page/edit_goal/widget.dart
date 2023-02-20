@@ -173,7 +173,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
               value: record.amount.round(),
               minValue: widget.minValue,
               maxValue: widget.maxValue,
-              textStyle: widget.style?.apply(color: FTheme.grey),
+              textStyle: widget.style?.apply(color: FTheme.darkGrey),
               selectedTextStyle: widget.style?.apply(color: widget.color),
             ),
             IconButton(
@@ -328,7 +328,7 @@ class DistanceGoalView extends StatelessWidget {
                 ),
                 FTexts(
                   ['* 약 ', '${toLocalString(step)}보 (${kilometer}km)'],
-                  colors: const [FTheme.grey, FTheme.colorB],
+                  colors: const [FTheme.darkGrey, FTheme.colorB],
                   space: false,
                   alignment: MainAxisAlignment.end,
                 ),
@@ -430,7 +430,7 @@ class HeightGoalView extends StatelessWidget {
                 const SizedBox(height: 10.0),
                 FTexts(
                   ['* 수명 약', timeToString((100 * goal.amount).round()), '연장'],
-                  colors: [FTheme.grey, ActivityType.height.color, FTheme.grey],
+                  colors: [FTheme.darkGrey, ActivityType.height.color, FTheme.darkGrey],
                   alignment: MainAxisAlignment.start,
                 ),
               ],

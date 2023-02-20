@@ -85,7 +85,7 @@ class CollectionWidget extends StatelessWidget {
                 if (pressed)
                 Container(
                   decoration: const BoxDecoration(
-                    color: FTheme.grey,
+                    color: FTheme.darkGrey,
                     shape: BoxShape.circle,
                   ),
                   child: Icon(Icons.check_circle_outline_rounded,
@@ -335,7 +335,7 @@ class BadgeWidget extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: FTheme.white,
                           borderRadius: BorderRadius.circular(5.0),
-                          boxShadow: const [BoxShadow(color: FTheme.grey, blurRadius: 20.0)],
+                          boxShadow: const [BoxShadow(color: FTheme.darkGrey, blurRadius: 20.0)],
                         ),
                         child: FText('수령하기', style: textTheme.titleMedium, color: FTheme.black),
                       ),

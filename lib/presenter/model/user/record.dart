@@ -29,9 +29,6 @@ class UserRecordP extends GetxController {
 
   /// attributes
   /* 로그인 관련 */
-  // User Credential 정보
-  Map<String, dynamic> data = {};
-
   // 현재 로그인된 사용자
   FUserRecord loggedUser = FUserRecord();
 
@@ -44,7 +41,6 @@ class UserRecordP extends GetxController {
   // 매개변수로 받은 사용자 정보와 User Credential 정보를 병합하여 현재 로그인된 사용자자 최신화
   Future login(FUserRecord user) async {
     Map<String, dynamic> json = user.toJson();
-    data.forEach((key, value) => json[key] = value);
     loggedUser = FUserRecord.fromJson(json);
     if (!await fetchData()) await load();
     save();

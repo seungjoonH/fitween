@@ -153,7 +153,7 @@ class _ExerciseInputPageState extends State<ExerciseInputPage> {
                   //       keyboardType: TextInputType.number,
                   //       invalid: controller.invalid,
                   //       hintColor: controller.hintText == null
-                  //           ? FTheme.grey : FTheme.colorB,
+                  //           ? FTheme.darkGrey : FTheme.colorB,
                   //     );
                   //   }
                   // ),

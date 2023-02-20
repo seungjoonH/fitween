@@ -29,8 +29,8 @@ void main() async {
     // name: 'pistachio',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  initializeDateFormatting().then((_) => runApp(const Fitween()));
+  await initializeDateFormatting();
+  runApp(const Fitween());
 }
 
 class Fitween extends StatefulWidget {
@@ -79,7 +79,7 @@ class _FitweenState extends State<Fitween> {
             scaffoldBackgroundColor: FTheme.background,
             appBarTheme: const AppBarTheme(
               backgroundColor: Colors.transparent,
-              iconTheme: IconThemeData(color: FTheme.grey),
+              iconTheme: IconThemeData(color: FTheme.darkGrey),
             ),
           ),
           darkTheme: ThemeData(

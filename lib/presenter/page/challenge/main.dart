@@ -88,7 +88,7 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
                     invalid: controller.codeInvalid,
                     hintText: controller.codeHintText ?? 'ABC1234',
                     hintColor: controller.codeHintText == null
-                        ? FTheme.grey : FTheme.colorB,
+                        ? FTheme.darkGrey : FTheme.colorB,
                   );
                 },
               ),

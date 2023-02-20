@@ -16,7 +16,7 @@ import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeP extends GetxController {
-  static void toHome() async {
+  static Future toHome() async {
     final homeP = Get.find<HomeP>();
     Get.offAllNamed('/home');
     await homeP.init();
