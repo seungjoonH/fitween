@@ -5,12 +5,26 @@ class Event {
   String title;
   int goal;
   int amount;
-  bool clear;
 
-  Event(this.title, this.goal, this.amount, this.clear);
+  Event(this.title, this.goal, this.amount);
 
   @override
   String toString() => title;
+}
+
+class Record {
+  List<Exercise> distance;
+  List<Exercise> height;
+  List<Exercise> weight;
+
+  Record(this.distance, this.height, this.weight);
+}
+
+class Exercise {
+  int amount;
+  DateTime date;
+
+  Exercise(this.amount, this.date);
 }
 
 final kEvents = LinkedHashMap<DateTime, List<Event>>(
@@ -18,10 +32,12 @@ final kEvents = LinkedHashMap<DateTime, List<Event>>(
   hashCode: getHashCode,
 )..addAll(_kEventSource);
 
+final userData = insetData(kEvents, example);
+
 final _kEventSource = {
   for (var item in List.generate(3680, (index) => index))
     DateTime.utc(kFirstDay.year, kFirstDay.month, item):
-        List.generate(3, (index) => Event('a', 20, 10, false))
+        List.generate(3, (index) => Event('', 40, 0))
 };
 
 int getHashCode(DateTime key) {
@@ -36,6 +52,87 @@ List<DateTime> daysInRange(DateTime first, DateTime last) {
   );
 }
 
+LinkedHashMap<DateTime, List<Event>> insetData(
+    LinkedHashMap<DateTime, List<Event>> kEvents, Record example) {
+  for (int i = 0; i < example.distance.length; i++) {
+    kEvents[example.distance.elementAt(i).date]?.elementAt(0).amount =
+        example.distance.elementAt(i).amount;
+  }
+  for (int i = 0; i < example.height.length; i++) {
+    kEvents[example.height.elementAt(i).date]?.elementAt(1).amount =
+        example.height.elementAt(i).amount;
+  }
+  for (int i = 0; i < example.weight.length; i++) {
+    kEvents[example.weight.elementAt(i).date]?.elementAt(2).amount =
+        example.weight.elementAt(i).amount;
+  }
+  return kEvents;
+}
+
 final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year - 5, kToday.month, kToday.day);
 final kLastDay = DateTime(kToday.year + 5, kToday.month, kToday.day);
+final example = Record(
+  [
+    Exercise(
+      20,
+      DateTime.utc(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day - 1,
+      ),
+    ),
+    Exercise(
+      20,
+      DateTime.utc(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+    ),
+    Exercise(
+      20,
+      DateTime.utc(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day + 1,
+      ),
+    ),
+  ],
+  [
+    Exercise(
+      20,
+      DateTime.utc(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day - 1,
+      ),
+    ),
+    Exercise(
+      20,
+      DateTime.utc(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+    ),
+  ],
+  [
+    Exercise(
+      20,
+      DateTime.utc(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day - 1,
+      ),
+    ),
+    Exercise(
+      20,
+      DateTime.utc(
+        DateTime.now().year,
+        DateTime.now().month,
+        DateTime.now().day,
+      ),
+    ),
+  ],
+);
