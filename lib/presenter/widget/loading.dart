@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
 
 /// class
-class LoadingPresenter extends GetxController {
+class LoadingP extends GetxController {
   /// attributes
   bool loading = false;
   Color mainColor = FTheme.black;

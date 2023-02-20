@@ -1,6 +1,16 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/model/class/database/user/friend.dart';
+import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/model/class/database/user/party.dart';
+import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:fitween/presenter/model/user/friend.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/date.dart';
@@ -35,23 +45,33 @@ class ChallengePartyMain extends GetxController {
 
   // 초기화
   Future init(String id) async {
-    final userP = Get.find<UserP>();
-    final loadingP = Get.find<LoadingPresenter>();
-    FUser user = userP.loggedUser;
+    final userCollectionP = Get.find<UserCollectionP>();
+    final userFriendP = Get.find<UserFriendP>();
+    final userInfoP = Get.find<UserInfoP>();
+    final userPartyP = Get.find<UserPartyP>();
+    final userRecordP = Get.find<UserRecordP>();
+
+    FUserCollection userCollection = userCollectionP.loggedUser;
+    FUserFriend userFriend = userFriendP.loggedUser;
+    FUserInfo userInfo = userInfoP.loggedUser;
+    FUserParty userParty = userPartyP.loggedUser;
+    FUserRecord userRecord = userRecordP.loggedUser;
+
+    final loadingP = Get.find<LoadingP>();
 
     loadingP.loadStart();
     loadedParty = await PartyPresenter.loadParty(id);
     if (loadedParty == null) return;
     await PartyPresenter.loadMembers(loadedParty!);
-    await userP.loadMyParties();
+    await userPartyP.loadMyParties();
 
     value = .0; update();
-    maxValue = user.getAmounts(
+    maxValue = userRecord.getAmounts(
       loadedParty!.challenge!.type!,
       loadedParty!.startDate,
       oneSecondBefore(tomorrow),
     ).toDouble();
-    loadedParty!.records[user.uid!] = maxValue.toInt();
+    loadedParty!.records[userInfo.uid!] = maxValue.toInt();
     animateValue();
 
     loadingP.loadEnd();
@@ -83,7 +103,7 @@ class ChallengePartyMain extends GetxController {
   }
 
   void complete() {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserCollectionP>();
     loadedParty!.complete = true; update();
     Get.back();
     PartyPresenter.save(loadedParty!);

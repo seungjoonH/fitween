@@ -2,6 +2,16 @@
 
 import 'dart:convert';
 
+import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/model/class/database/user/friend.dart';
+import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/model/class/database/user/party.dart';
+import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:fitween/presenter/model/user/friend.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -36,7 +46,7 @@ class BadgePresenter extends GetxController {
   }
 
   static List<FBadge> get notAcquiredBadges {
-    FUser user = Get.find<UserP>().loggedUser;
+    FUserCollection user = Get.find<UserCollectionP>().loggedUser;
     List<FBadge> badgeList = [...availableBadges];
     badgeList.removeWhere((badge) => user.hasCollection(badge.id!));
     return badgeList;
@@ -55,41 +65,51 @@ class BadgePresenter extends GetxController {
 
   // 일일 활동 완료 뱃지 획득
   static void awardDailyActivityCompleteBadge() async {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserCollectionP>();
     userP.awardBadge(BadgePresenter.getBadge('1000001')!, true, true);
   }
 
   static Future synchronizeBadges() async {
     final inAppReview = InAppReview.instance;
-    final userP = Get.find<UserP>();
-    FUser user = userP.loggedUser;
+
+    final userCollectionP = Get.find<UserCollectionP>();
+    // final userFriendP = Get.find<UserFriendP>();
+    final userInfoP = Get.find<UserInfoP>();
+    final userPartyP = Get.find<UserPartyP>();
+    // final userRecordP = Get.find<UserRecordP>();
+
+    FUserCollection userCollection = userCollectionP.loggedUser;
+    // FUserFriend userFriend = userFriendP.loggedUser;
+    FUserInfo userInfo = userInfoP.loggedUser;
+    FUserParty userParty = userPartyP.loggedUser;
+    // FUserRecord userRecord = userRecordP.loggedUser;
 
     // 운영자 뱃지 지급
-    if (AuthPresenter.developerUids.contains(user.uid)) {
-      userP.awardBadge(BadgePresenter.getBadge('1999999')!, true);
+    if (AuthPresenter.developerUids.contains(userInfo.uid)) {
+      userCollectionP.awardBadge(BadgePresenter.getBadge('1999999')!, true);
     }
 
     // 작심삼일, 완벽한주 뱃지 지급
-    int consecutive3 = user.countCompletedDaysInARow(3);
-    int consecutive7 = user.countCompletedDaysInARow(7);
-    int count3 = user.getCollectionsById('1000003')?.dates.length ?? 0;
-    int count7 = user.getCollectionsById('1000004')?.dates.length ?? 0;
+    int consecutive3 = userCollection.countCompletedDaysInARow(3);
+    int consecutive7 = userCollection.countCompletedDaysInARow(7);
+    int count3 = userCollection.getCollectionsById('1000003')?.dates.length ?? 0;
+    int count7 = userCollection.getCollectionsById('1000004')?.dates.length ?? 0;
 
     for (int i = 0; i < consecutive3 - count3; i++) {
-      userP.awardBadge(BadgePresenter.getBadge('1000003')!);
+      userCollectionP.awardBadge(BadgePresenter.getBadge('1000003')!);
     }
     for (int i = 0; i < consecutive7 - count7; i++) {
-      userP.awardBadge(BadgePresenter.getBadge('1000004')!);
+      userCollectionP.awardBadge(BadgePresenter.getBadge('1000004')!);
       if (await inAppReview.isAvailable()) {
         await inAppReview.requestReview();
       }
     }
 
-    for (String id in user.partyIds) {
+    for (String id in userParty.partyIds) {
       Party? party = await PartyPresenter.loadParty(id);
       if (party == null) break;
       if (!party.complete) continue;
-      userP.awardBadge(party.badge, true);
+      userCollectionP.awardBadge(party.badge, true);
     }
   }
 }

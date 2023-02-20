@@ -1,4 +1,10 @@
 
+import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/model/class/database/user/party.dart';
+import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/party.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/model/class/database/user.dart';
@@ -8,7 +14,7 @@ import 'package:fitween/presenter/model/user.dart';
 /// class
 // 파이어베이스 파티 관련
 class PartyPresenter extends GetxController {
-  final userP = Get.find<UserP>();
+  final userPartyP = Get.find<UserPartyP>();
 
   List<Party> parties = [];
 
@@ -45,14 +51,21 @@ class PartyPresenter extends GetxController {
 
   // 파이어베이스에서 해당 파티의 멤버 리스트를 로드
   static Future loadMembers(Party party) async {
-    List<FUser> members = [];
+    List<FUserInfo> memberInfos = [];
+    List<FUserCollection> memberCollections = [];
 
     for (var uid in party.memberUids) {
-      var json = (await f.collection('users').doc(uid).get()).data();
-      if (json == null) continue;
-      members.add(FUser.fromJson(json));
+      FUserInfo? userInfo = await UserInfoP.loadUser(uid);
+      FUserCollection? userCollection = await UserCollectionP.loadUser(uid);
+
+      if (userInfo == null) continue;
+      if (userCollection == null) continue;
+
+      memberInfos.add(userInfo);
+      memberCollections.add(userCollection);
     }
-    party.members = [...members];
+    party.memberInfos = [...memberInfos];
+    party.memberCollections = [...memberCollections];
   }
 
   static void deleteMember(String uid) async {
@@ -77,10 +90,10 @@ class PartyPresenter extends GetxController {
 
   static deletePartyIdFromUser(String id, List<String> uids) async {
     for (String uid in uids) {
-      FUser? user = await UserP.loadUser(uid);
+      FUserParty? user = await UserPartyP.loadUser(uid);
       if (user == null) continue;
       user.partyIds.remove(id);
-      UserP.saveUser(user);
+      UserPartyP.saveUser(user);
     }
   }
 

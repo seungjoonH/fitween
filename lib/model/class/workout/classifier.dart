@@ -58,9 +58,13 @@ class Classifier {
   void performOperations(CameraImage cameraImage) async {
     stopwatch.start();
 
-    image_lib.Image convertedImage = image_lib.Image(cameraImage.width, cameraImage.height);
+    image_lib.Image convertedImage = image_lib.Image(
+      cameraImage.width,
+      cameraImage.height,
+    );
 
-    convertedImage.data = cameraImage.planes.first.bytes.buffer.asUint32List();
+    convertedImage.data = cameraImage.planes
+        .first.bytes.buffer.asUint32List();
 
     inputImage = TensorImage(TfLiteType.float32);
     inputImage.loadImage(convertedImage);

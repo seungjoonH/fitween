@@ -1,3 +1,7 @@
+import 'package:fitween/model/class/database/user/party.dart';
+import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -22,8 +26,8 @@ class ChallengeMainP extends GetxController {
 
   /// methods
   Future init() async {
-    final userP = Get.find<UserP>();
-    final loadingP = Get.find<LoadingPresenter>();
+    final userP = Get.find<UserPartyP>();
+    final loadingP = Get.find<LoadingP>();
 
     loadingP.loadStart();
 
@@ -100,8 +104,9 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
 
   // 파티 참가 버튼 클릭 시
   void partyJoinButtonPressed() async {
-    final userP = Get.find<UserP>();
-    FUser user = userP.loggedUser;
+    final userPartyP = Get.find<UserPartyP>();
+    final userRecordP = Get.find<UserRecordP>();
+    FUserRecord user = userRecordP.loggedUser;
 
     if (!await validate()) return;
     Party? party = await PartyPresenter.loadParty(codeCont.text);
@@ -112,7 +117,7 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
     );
 
     PartyPresenter.save(party);
-    userP.joinParty(codeCont.text);
+    userPartyP.joinParty(codeCont.text);
 
     Get.back();
     ChallengeMain.toChallengeMain();
@@ -121,7 +126,7 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
 
   // 파티 코드 입력 필드 유효성 검사
   Future<bool> validate() async {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserPartyP>();
     String text = codeCont.text;
 
     Map<String, bool> conditions = {

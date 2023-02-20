@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/class/database/collection.dart';
 import 'package:fitween/model/enum/page_mode.dart';
@@ -5,11 +6,11 @@ import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/model/user.dart';
 
 /// class
-class CollectionMain extends GetxController {
+class CollectionMainP extends GetxController {
   /// static methods
   // 컬렉션 메인 페이지로 이동
   static Future<bool> toCollectionMain() async {
-    final collectionMain = Get.find<CollectionMain>();
+    final collectionMain = Get.find<CollectionMainP>();
     collectionMain.init();
     return await Get.toNamed('/collection/main');
   }
@@ -21,7 +22,7 @@ class CollectionMain extends GetxController {
   /// methods
   // 초기화
   void init() {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserCollectionP>();
     selectedBadgeId = userP.loggedUser.badgeId;
     mode = PageMode.view;
     update();
@@ -41,7 +42,7 @@ class CollectionMain extends GetxController {
 
   // 대표 컬렉션 설정
   void setMainBadge(Collection collection) {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserCollectionP>();
 
     if (selectedBadgeId == collection.badgeId) return;
     selectedBadgeId = collection.badgeId;

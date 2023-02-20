@@ -1,6 +1,16 @@
 import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/model/class/database/user/friend.dart';
+import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/model/class/database/user/party.dart';
+import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:fitween/presenter/model/user/friend.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:fitween/main.dart';
@@ -16,6 +26,12 @@ import 'package:fitween/presenter/page/login.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
 
 class AuthPresenter {
+  static final userCollectionP = Get.find<UserCollectionP>();
+  static final userFriendP = Get.find<UserFriendP>();
+  static final userInfoP = Get.find<UserInfoP>();
+  static final userPartyP = Get.find<UserPartyP>();
+  static final userRecordP = Get.find<UserRecordP>();
+
   static const List<String> developerUids = [
     'sLc4rerF1Xg41rclmmfqgc7jlAa2', // 현승준
     'F02JAQ4Cdbb2w7AaCf9VJz9fqs52', // 현승준
@@ -36,10 +52,12 @@ class AuthPresenter {
 
   // 로그인 형식에 따른 피트윈 로그인
   static Future fLogin(LoginType type) async {
-    final userP = Get.find<UserP>();
-
     UserCredential? userCredential;
-    Map<String, dynamic>? json;
+    Map<String, dynamic>? jsonCollection;
+    Map<String, dynamic>? jsonFriend;
+    Map<String, dynamic>? jsonInfo;
+    Map<String, dynamic>? jsonParty;
+    Map<String, dynamic>? jsonRecord;
 
     // 로그인 형식에 따른 로그인 방식
     switch (type) {
@@ -54,17 +72,33 @@ class AuthPresenter {
     if (userCredential == null) return;
 
     // 파이어베이스 데이터
-    json = (await f.collection('users').doc(userCredential.user!.uid).get()).data();
+    jsonCollection = (await f.collection('userCollections')
+        .doc(userCredential.user!.uid).get()).data();
+    jsonFriend = (await f.collection('userFriends')
+        .doc(userCredential.user!.uid).get()).data();
+    jsonInfo = (await f.collection('userInfos')
+        .doc(userCredential.user!.uid).get()).data();
+    jsonParty = (await f.collection('userParties')
+        .doc(userCredential.user!.uid).get()).data();
+    jsonRecord = (await f.collection('userRecords')
+        .doc(userCredential.user!.uid).get()).data();
 
     // 파이어베이스에 문서가 없거나 json 데이터에 닉네임이 없을 경우 신규 회원
-    bool isNewcomer = json == null || json['nickname'] == null;
+    bool isNewcomer = jsonInfo == null
+        || jsonInfo['nickname'] == null;
 
     Map<String, dynamic> data = {};
     data['uid'] = userCredential.user!.uid;
+
+    userCollectionP.data = {...data};
+    userFriendP.data = {...data};
+    userPartyP.data = {...data};
+    userRecordP.data = {...data};
+
     data['name'] = userCredential.user!.displayName ?? appleName;
     data['email'] = userCredential.user!.email;
 
-    userP.data = {...data};
+    userInfoP.data = {...data};
 
     // 신규 회원일 경우
     if (isNewcomer) {
@@ -75,9 +109,19 @@ class AuthPresenter {
     // 기존 회원일 경우
     else {
       // 파이어베이스 데이터로 로그인
-      FUser stranger = FUser.fromJson(json);
-      await userP.login(stranger);
-      await storeLoginData(userP.data);
+      FUserCollection strangerCollection = FUserCollection.fromJson(jsonCollection!);
+      FUserFriend strangerFriend = FUserFriend.fromJson(jsonFriend!);
+      FUserInfo strangerInfo = FUserInfo.fromJson(jsonInfo);
+      FUserParty strangerParty = FUserParty.fromJson(jsonParty!);
+      FUserRecord strangerRecord = FUserRecord.fromJson(jsonRecord!);
+
+      await userCollectionP.login(strangerCollection);
+      await userFriendP.login(strangerFriend);
+      await userInfoP.login(strangerInfo);
+      await userPartyP.login(strangerParty);
+      await userRecordP.login(strangerRecord);
+
+      await storeLoginData(userInfoP.data);
       await HomePresenter.toHome();
     }
 
@@ -86,22 +130,26 @@ class AuthPresenter {
 
   // 피트윈 로그아웃
   static void fLogout() {
-    final userP = Get.find<UserP>();
     Get.offAllNamed('/login');
-    userP.logout();
-    eliminateLoginData(userP.data);
+    userCollectionP.logout();
+    userFriendP.logout();
+    userInfoP.logout();
+    userPartyP.logout();
+    userRecordP.logout();
+    eliminateLoginData(userInfoP.data);
   }
 
   // 피트윈 계정삭제
   static void fDeleteAccount() {
-    final userP = Get.find<UserP>();
-    userP.delete();
+    userCollectionP.delete();
+    userFriendP.delete();
+    userInfoP.delete();
+    userPartyP.delete();
+    userRecordP.delete();
     fLogout();
   }
 
   static void loadLoginData() async {
-    final userP = Get.find<UserP>();
-
     String? userInfo = await storage.read(key: 'login');
     bool beenLogged = userInfo != null;
 
@@ -113,9 +161,9 @@ class AuthPresenter {
     // 자동 로그인
     if (!beenLogged) return;
 
-    userP.data = jsonDecode(userInfo);
-    userP.loggedUser.uid = userP.data['uid'];
-    await userP.load();
+    userInfoP.data = jsonDecode(userInfo);
+    userInfoP.loggedUser.uid = userInfoP.data['uid'];
+    await userInfoP.load();
     HomePresenter.toHome();
   }
 

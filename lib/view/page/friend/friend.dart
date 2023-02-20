@@ -1,7 +1,11 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/user.dart';
+import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/model/class/database/user/friend.dart';
+import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/presenter/model/badge.dart';
 import 'package:fitween/presenter/model/user.dart';
+import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/card.dart';
@@ -16,13 +20,19 @@ class FriendPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UserP>(
+    return GetBuilder<UserFriendP>(
       builder: (userP) {
         return TabScaffold(
           tabs: const ['전체', '라이벌'],
           bodies: [
-            FriendListCard(friends: userP.loggedUser.friends),
-            FriendListCard(friends: userP.loggedUser.rivals),
+            FriendListCard(
+              friendInfos: userP.loggedUser.friendInfos,
+              friendCollections: userP.loggedUser.friendCollections,
+            ),
+            FriendListCard(
+              friendInfos: userP.loggedUser.rivalInfos,
+              friendCollections: userP.loggedUser.rivalCollections,
+            ),
           ],
         );
       }
@@ -33,10 +43,12 @@ class FriendPage extends StatelessWidget {
 class FriendListCard extends StatelessWidget {
   const FriendListCard({
     Key? key,
-    required this.friends,
+    required this.friendInfos,
+    required this.friendCollections,
   }) : super(key: key);
 
-  final List<FUser> friends;
+  final List<FUserInfo> friendInfos;
+  final List<FUserCollection> friendCollections;
 
   @override
   Widget build(BuildContext context) {
@@ -46,34 +58,37 @@ class FriendListCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              FText('친구 ${friends.length}',
+              FText('친구 ${friendInfos.length}',
                 color: FTheme.lightGrey,
               ),
-              Row(
-                children: [
-                  GetBuilder<FriendP>(
-                    builder: (friendP) {
-                      return IconButton(
+              GetBuilder<FriendP>(
+                builder: (friendP) {
+                  return Row(
+                    children: [
+                      IconButton(
                         icon: const Icon(Icons.add),
                         color: FTheme.lightGrey,
                         onPressed: friendP.addFriendButtonPressed,
-                      );
-                    }
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.edit),
-                    color: FTheme.lightGrey,
-                    onPressed: () {  },
-                  ),
-                ],
+                      ),
+                      IconButton(
+                        icon: Icon(friendP.editMode ? Icons.edit : Icons.close),
+                        color: FTheme.lightGrey,
+                        onPressed: friendP.toggleMode,
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
           ListView(
             shrinkWrap: true,
-            children: friends.map((user) => FriendListTile(
-              user: user,
-            )).toList(),
+            children: List.generate(
+              friendInfos.length, (index) => FriendListTile(
+                userInfo: friendInfos[index],
+              userCollection: friendCollections[index],
+              ),
+            ),
           ),
         ],
       ),
@@ -85,10 +100,12 @@ class FriendListCard extends StatelessWidget {
 class FriendListTile extends StatelessWidget{
   const FriendListTile({
     Key? key,
-    required this.user,
+    required this.userInfo,
+    required this.userCollection,
   }) : super(key: key);
 
-  final FUser user;
+  final FUserInfo userInfo;
+  final FUserCollection userCollection;
 
   @override
   Widget build(BuildContext context) {
@@ -96,25 +113,28 @@ class FriendListTile extends StatelessWidget{
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
         children: [
-          FBadgeWidget(badge: BadgePresenter.getBadge(user.badgeId)),
+          FBadgeWidget(badge: BadgePresenter.getBadge(userCollection.badgeId)),
           const SizedBox(width: 10.0),
           Expanded(
             child: FText(
-              user.nickname!,
+              userInfo.nickname!,
               style: textTheme.titleMedium,
             ),
           ),
           GetBuilder<FriendP>(
             builder: (friendP) {
               return IconButton(
-                onPressed: () => friendP.toggleRival(user.uid!),
-                icon: FIcon(
+                onPressed: () => friendP.friendInteractButtonPressed(userInfo.uid!),
+                icon: friendP.editMode ? FIcon(
                   FIcons.swords,
-                  selected: friendP.isRival(user.uid!),
+                  selected: friendP.isRival(userInfo.uid!),
                   size: 20.0,
+                ) : const Icon(
+                  Icons.delete,
+                  color: FTheme.lightGrey,
                 ),
               );
-            }
+            },
           )
         ],
       ),

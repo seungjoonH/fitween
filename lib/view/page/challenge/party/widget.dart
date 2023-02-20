@@ -1,6 +1,12 @@
 import 'dart:math';
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
+import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/model/class/database/user/party.dart';
+import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/party.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -31,7 +37,7 @@ class PartyMainView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<ChallengePartyMain>(
       builder: (challengePartyMain) {
-        return GetBuilder<LoadingPresenter>(
+        return GetBuilder<LoadingP>(
           builder: (loadingP) {
             return SmartRefresher(
               controller: ChallengePartyMain.refreshCont,
@@ -319,7 +325,7 @@ class RankWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     const String trophyAsset = 'assets/image/page/challenge/';
 
-    FUser loggedUser = Get.find<UserP>().loggedUser;
+    FUserParty loggedUser = Get.find<UserPartyP>().loggedUser;
     int myRank = party.getRank(loggedUser.uid!);
     double goal = party.challenge!.levels[party.difficulty.name]['goal'].toDouble();
     double totalRecords = party.records.values.reduce((a, b) => a + b).toDouble();
@@ -387,7 +393,7 @@ class RankWidget extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    FText('현재 1위: ${party.winner.nickname} 님',
+                    FText('현재 1위: ${party.winnerInfo.nickname} 님',
                       style: textTheme.titleMedium,
                       color: FTheme.black,
                     ),
@@ -405,7 +411,7 @@ class RankWidget extends StatelessWidget {
                   border: Border.all(color: FTheme.black, width: .75),
                 ),
                 child: Row(
-                  children: party.members.map((user) {
+                  children: party.memberInfos.map((user) {
                     double record = party.records[user.uid].toDouble();
                     double percent = 100 * record / goal;
                     return Expanded(
@@ -455,12 +461,14 @@ class RankWidget extends StatelessWidget {
           padding: EdgeInsets.zero,
           itemCount: party.records.length,
           itemBuilder: (context, index) {
-            FUser loggedUser = Get.find<UserP>().loggedUser;
-            FUser user = party.getMemberByRank(index + 1);
+            FUserInfo loggedUser = Get.find<UserInfoP>().loggedUser;
+            FUserInfo userInfo = party.getMemberInfoByRank(index + 1);
+            FUserCollection userCollection = party
+                .getMemberCollectionByRank(index + 1);
 
             return Container(
               height: 80.0.h,
-              color: user.uid == loggedUser.uid ? FTheme.bar : null,
+              color: userInfo.uid == loggedUser.uid ? FTheme.bar : null,
               padding: const EdgeInsets.all(15.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -470,18 +478,18 @@ class RankWidget extends StatelessWidget {
                     width: 50.0.w,
                     height: 50.0.h,
                     child: BadgeWidget(
-                      badge: user.collection?.badge, size: 40.0,
+                      badge: userCollection.collection?.badge, size: 40.0,
                     ),
                   ),
                   SizedBox(
                     width: 130.0.w,
-                    child: FText(user.nickname!),
+                    child: FText(userInfo.nickname!),
                   ),
                   Container(
                     alignment: Alignment.centerRight,
                     width: 70.0.w,
                     child: FText(
-                      '${party.records[user.uid!]}${party.challenge!.type!.unit}',
+                      '${party.records[userInfo.uid!]}${party.challenge!.type!.unit}',
                     ),
                   ),
                 ],
@@ -515,7 +523,7 @@ class ChallengeBadgeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    FUser user = Get.find<UserP>().loggedUser;
+    FUserInfo user = Get.find<UserInfoP>().loggedUser;
 
     return GetBuilder<ChallengePartyMain>(
       builder: (controller) {

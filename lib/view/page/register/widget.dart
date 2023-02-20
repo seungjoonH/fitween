@@ -201,16 +201,18 @@ class SexSelectionButton extends StatelessWidget {
     };
 
     return GetBuilder<RegisterP>(
-      builder: (controller) {
+      builder: (registerP) {
         return FButton(
           stretch: true,
           multiple: true,
           text: texts[sex],
-          onPressed: () => controller.setSex(sex),
-          backgroundColor:
-              sex == controller.newcomer.sex ? FTheme.grey : FTheme.background,
-          textColor:
-              sex == controller.newcomer.sex ? FTheme.background : FTheme.grey,
+          onPressed: () => registerP.setSex(sex),
+          backgroundColor: sex == registerP.newcomerInfo.sex
+              ? FTheme.grey
+              : FTheme.background,
+          textColor: sex == registerP.newcomerInfo.sex
+              ? FTheme.background
+              : FTheme.grey,
         );
       },
     );
@@ -231,7 +233,7 @@ class WeightHeightView extends StatelessWidget {
             builder: (controller) {
               return NumberPicker(
                 onChanged: controller.setWeight,
-                value: controller.newcomer.weight!,
+                value: controller.newcomerInfo.weight!,
                 minValue: 30,
                 maxValue: 220,
                 textStyle: textTheme.bodyMedium?.copyWith(
@@ -254,7 +256,7 @@ class WeightHeightView extends StatelessWidget {
             builder: (controller) {
               return NumberPicker(
                 onChanged: controller.setHeight,
-                value: controller.newcomer.height!,
+                value: controller.newcomerInfo.height!,
                 minValue: 100,
                 maxValue: 220,
                 textStyle: textTheme.bodyMedium?.copyWith(
@@ -345,8 +347,8 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RegisterP>(
-      builder: (controller) {
-        Record record = controller.newcomer.getGoal(widget.type)!;
+      builder: (registerP) {
+        Record record = registerP.newcomerRecord.getGoal(widget.type)!;
         record.convert({
           ActivityType.distance: ExerciseUnit.minute,
           ActivityType.weight: ExerciseUnit.count,
@@ -379,13 +381,13 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
                     : Colors.transparent,
               ),
               onPressed: () {
-                controller.newcomer.setGoal(widget.type, greaterRecord);
+                registerP.newcomerRecord.setGoal(widget.type, greaterRecord);
                 setState(() {});
               },
             ),
             NumberPicker(
               onChanged: (val) {
-                controller.newcomer.setGoal(
+                registerP.newcomerRecord.setGoal(
                   widget.type, Record.init(
                     widget.type, val.toDouble(), {
                       ActivityType.distance: ExerciseUnit.minute,
@@ -393,7 +395,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
                     }[widget.type],
                   ),
                 );
-                controller.update();
+                registerP.update();
               },
               itemCount: widget.itemCount,
               itemWidth: widget.itemWidth,
@@ -413,7 +415,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
                     : Colors.transparent,
               ),
               onPressed: () {
-                controller.newcomer.setGoal(widget.type, lessRecord);
+                registerP.newcomerRecord.setGoal(widget.type, lessRecord);
                 setState(() {});
               },
             ),
@@ -463,14 +465,14 @@ class DistanceRecommendView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RegisterP>(
-      builder: (controller) {
+      builder: (registerP) {
         int ageGroup = today.difference(
-          controller.newcomer.dateOfBirth!,
+          registerP.newcomerInfo.dateOfBirth!,
         ).inDays;
         List<int> recommendTimes = [];
         ageGroup = (ageGroup / 3650).floor() * 10;
 
-        ageGroup < 60 && controller.newcomer.sex == Sex.male;
+        ageGroup < 60 && registerP.newcomerInfo.sex == Sex.male;
 
         if (ageGroup < 20) {
           recommendTimes = [60];
@@ -485,7 +487,7 @@ class DistanceRecommendView extends StatelessWidget {
           children: [
             SizedBox(height: 120.0.h),
             FTexts(
-              ['$ageGroup', '대 ', controller.newcomer.sex!.kr, ' 평균'],
+              ['$ageGroup', '대 ', registerP.newcomerInfo.sex!.kr, ' 평균'],
               colors: const [
                 FTheme.colorA, FTheme.black,
                 FTheme.colorA, FTheme.black,
@@ -521,8 +523,8 @@ class DistanceGoalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RegisterP>(
-      builder: (controller) {
-        DistanceRecord distance = controller.newcomer.getGoal(
+      builder: (registerP) {
+        DistanceRecord distance = registerP.newcomerRecord.getGoal(
           ActivityType.distance,
         ) as DistanceRecord;
 
@@ -639,8 +641,8 @@ class HeightGoalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RegisterP>(
-      builder: (controller) {
-        HeightRecord goal = controller.newcomer.getGoal(
+      builder: (registerP) {
+        HeightRecord goal = registerP.newcomerRecord.getGoal(
           ActivityType.height,
         ) as HeightRecord;
 
@@ -750,8 +752,8 @@ class WeightGoalView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RegisterP>(
-      builder: (controller) {
-        WeightRecord goal = controller.newcomer.getGoal(
+      builder: (registerP) {
+        WeightRecord goal = registerP.newcomerRecord.getGoal(
           ActivityType.weight,
         ) as WeightRecord;
 
@@ -843,19 +845,19 @@ class CalorieCheckView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<RegisterP>(
-      builder: (controller) {
-        CalorieRecord goal = controller.newcomer.getGoal(
+      builder: (registerP) {
+        CalorieRecord goal = registerP.newcomerRecord.getGoal(
           ActivityType.calorie,
         ) as CalorieRecord;
 
         String distanceTitle = LevelPresenter.getTier(
           ActivityType.distance,
-          controller.newcomer.getGoal(ActivityType.distance)!,
+          registerP.newcomerRecord.getGoal(ActivityType.distance)!,
         )['current'].title;
 
         String heightTitle = LevelPresenter.getTier(
           ActivityType.height,
-          controller.newcomer.getGoal(ActivityType.height)!,
+          registerP.newcomerRecord.getGoal(ActivityType.height)!,
         )['current'].title;
 
         TextStyle? style(Color color) => textTheme.headlineMedium?.merge(TextStyle(
