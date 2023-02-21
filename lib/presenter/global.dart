@@ -63,12 +63,18 @@ class GlobalP extends GetxController {
 
     switch (index) {
       case 0:
-        if (navIndex == index) { await homeP.init(); }
-        else { HomeP.toHome(); }
+        if (navIndex == index) {
+          await homeP.init();
+        } else {
+          HomeP.toHome();
+        }
         break;
       case 1:
-        if (navIndex == index) { await friendP.init(); }
-        else { FriendP.toFriend(); }
+        if (navIndex == index) {
+          await friendP.init();
+        } else {
+          FriendP.toFriend();
+        }
         break;
       case 2:
         ChallengeMainP.toChallengeMain();
@@ -104,8 +110,9 @@ class GlobalPresenter extends GetxController {
           HomeP.toHome();
         }
         break;
-      
-      case 1: WorkoutGuide.toTimeAttackCameraGuide(); 
+
+      case 1:
+        WorkoutGuide.toTimeAttackCameraGuide();
         break;
 
       case 2:
@@ -395,7 +402,7 @@ class GlobalPresenter extends GetxController {
     Get.put(UserPartyP());
     Get.put(UserRecordP());
 
-    Get.put(ChallengePresenter());
+    Get.put(ChallengeP());
     Get.put(BadgePresenter());
     Get.put(LevelPresenter());
     Get.put(QuestPresenter());
@@ -425,7 +432,7 @@ class GlobalPresenter extends GetxController {
     Get.put(PainterPresenter());
 
     Get.put(CalendarMainP());
-    
+
     Get.put(GlobalP());
     Get.put(HomeP());
     Get.put(FriendP());

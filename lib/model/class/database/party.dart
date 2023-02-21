@@ -33,23 +33,25 @@ class Party {
   set startDate(DateTime? date) => _startDate = toTimestamp(date);
   set endDate(DateTime? date) => _endDate = toTimestamp(date);
 
-  Challenge? get challenge => ChallengePresenter.getChallenge(challengeId);
+  Challenge? get challenge => ChallengeP.getChallenge(challengeId);
   List<String> get memberUids => records.keys.toList();
 
   bool get over => today.isAfter(endDate!);
   int get overDays => today.difference(endDate!).inDays;
   int get remainDays => -overDays;
 
-  List<double> get recordValues => records.values
-      .map<double>((e) => e.toDouble()).toList();
+  List<double> get recordValues =>
+      records.values.map<double>((e) => e.toDouble()).toList();
   double get recordSum => sum(recordValues).toDouble();
   double get recordAverage => average(recordValues).toDouble();
 
   bool get satisfy => recordSum >= level['goal'];
 
   String get dDay => overDays > 0
-      ? '종료' : overDays == 0
-      ? 'D-day' : 'D${over ? '+' : ''}$overDays';
+      ? '종료'
+      : overDays == 0
+          ? 'D-day'
+          : 'D${over ? '+' : ''}$overDays';
   String get periodString =>
       '${dateToString('M/d', startDate)} ~ ${dateToString('M/d', endDate)}';
 
@@ -65,15 +67,19 @@ class Party {
   FUserInfo getMemberInfo(String uid) {
     return memberInfos.firstWhere((member) => member.uid == uid);
   }
+
   FUserCollection getMemberCollection(String uid) {
     return memberCollections.firstWhere((member) => member.uid == uid);
   }
+
   FUserInfo getMemberInfoByRank(int rank) {
     return getMemberInfo(ranks[rank - 1].key);
   }
+
   FUserCollection getMemberCollectionByRank(int rank) {
     return getMemberCollection(ranks[rank - 1].key);
   }
+
   FUserInfo get winnerInfo => getMemberInfoByRank(1);
   FUserCollection get winnerCollection => getMemberCollectionByRank(1);
 
@@ -85,7 +91,8 @@ class Party {
   Party.fromJson(Map<String, dynamic> json) {
     fromJson(json);
     if (_startDate == null) startDate = today;
-    if (_endDate == null) endDate = today.add(Duration(days: challenge!.period!));
+    if (_endDate == null)
+      endDate = today.add(Duration(days: challenge!.period!));
   }
 
   /// methods
@@ -112,5 +119,4 @@ class Party {
     json['endDate'] = endDate;
     return json;
   }
-
 }
