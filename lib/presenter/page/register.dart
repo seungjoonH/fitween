@@ -2,11 +2,13 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/friend.dart';
 import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/model/class/database/user/notification.dart';
 import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
@@ -73,6 +75,7 @@ class RegisterP extends GetxController {
     newcomerCollection = FUserCollection();
     newcomerFriend = FUserFriend();
     newcomerInfo = FUserInfo();
+    newcomerNotification = FUserNotification();
     newcomerParty = FUserParty();
     newcomerRecord = FUserRecord();
     pageIndex = 0;
@@ -95,6 +98,7 @@ class RegisterP extends GetxController {
   FUserCollection newcomerCollection = FUserCollection();
   FUserFriend newcomerFriend = FUserFriend();
   FUserInfo newcomerInfo = FUserInfo();
+  FUserNotification newcomerNotification = FUserNotification();
   FUserParty newcomerParty = FUserParty();
   FUserRecord newcomerRecord = FUserRecord();
   bool keyboardVisible = false;
@@ -137,6 +141,7 @@ class RegisterP extends GetxController {
     final userCollectionP = Get.find<UserCollectionP>();
     final userFriendP = Get.find<UserFriendP>();
     final userInfoP = Get.find<UserInfoP>();
+    final userNotificationP = Get.find<UserNotificationP>();
     final userPartyP = Get.find<UserPartyP>();
     final userRecordP = Get.find<UserRecordP>();
 
@@ -149,10 +154,11 @@ class RegisterP extends GetxController {
     userCollectionP.login(newcomerCollection);
     userFriendP.login(newcomerFriend);
     userInfoP.login(newcomerInfo);
+    userNotificationP.login(newcomerNotification);
     userPartyP.login(newcomerParty);
     userRecordP.login(newcomerRecord);
 
-    await HomePresenter.toHome();
+    await HomeP.toHome();
     await AuthPresenter.storeLoginData(userInfoP.data);
     if (AuthPresenter.developerUids.contains(userInfoP.loggedUser.uid)) {
       userCollectionP.awardBadge(BadgePresenter.getBadge('1999999')!, true);

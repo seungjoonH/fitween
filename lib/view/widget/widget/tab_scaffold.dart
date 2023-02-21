@@ -22,7 +22,7 @@ class FTab extends StatelessWidget {
         text,
         style: textTheme.titleLarge,
         color: selected
-            ? FTheme.grey
+            ? FTheme.darkGrey
             : FTheme.lightGrey,
       ),
     );
@@ -34,10 +34,12 @@ class TabScaffold extends StatefulWidget {
     Key? key,
     required this.tabs,
     required this.bodies,
+    this.action,
   }) : super(key: key);
 
   final List<String> tabs;
   final List<Widget> bodies;
+  final Widget? action;
 
   @override
   State<TabScaffold> createState() => _TabScaffoldState();
@@ -62,39 +64,47 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
         appBar: AppBar(
           elevation: .0,
           bottom: PreferredSize(
-            preferredSize: Size.zero,
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                width: 90.0.w * widget.tabs.length,
-                padding: const EdgeInsets.only(left: 30.0),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Positioned.fill(
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              width: 3.0,
-                              color: FTheme.lightGrey,
+            preferredSize: const Size.fromHeight(15.0),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 30.0,
+                vertical: 10.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 90.0.w * widget.tabs.length,
+                    child: Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        Positioned.fill(
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  width: 3.0,
+                                  color: FTheme.lightGrey,
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        TabBar(
+                          controller: _tabCont,
+                          labelPadding: EdgeInsets.zero,
+                          indicatorColor: FTheme.darkGrey,
+                          indicatorWeight: 3.0,
+                          onTap: (index) => setState(() => _selectedIndex = index),
+                          tabs: widget.tabs.map((text) => FTab(text,
+                            selected: widget.tabs[_selectedIndex] == text,
+                          )).toList(),
+                        ),
+                      ],
                     ),
-                    TabBar(
-                      controller: _tabCont,
-                      labelPadding: EdgeInsets.zero,
-                      indicatorColor: FTheme.grey,
-                      indicatorWeight: 3.0,
-                      onTap: (index) => setState(() => _selectedIndex = index),
-                      tabs: widget.tabs.map((text) => FTab(text,
-                        selected: widget.tabs[_selectedIndex] == text,
-                      )).toList(),
-                    ),
-                  ],
-                ),
+                  ),
+                  widget.action ?? Container(),
+                ],
               ),
             ),
           ),

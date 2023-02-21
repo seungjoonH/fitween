@@ -1,4 +1,5 @@
 import 'package:basic_utils/basic_utils.dart';
+import 'package:fitween/global/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -28,20 +29,36 @@ class FIcon extends StatelessWidget {
     Key? key,
     this.selected = false,
     this.size = 36.0,
+    this.hasNotification = false,
   }) : super(key: key);
 
   final FIcons icons;
   final bool selected;
   final double size;
+  final bool hasNotification;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: size.r,
-      height: size.r,
-      child: SvgPicture.asset(
-        icons.assetPath(selected),
-      ),
+    return Stack(
+      alignment: Alignment.topRight,
+      children: [
+        if (hasNotification)
+        Container(
+          width: 8.0,
+          height: 8.0,
+          decoration: const BoxDecoration(
+            color: FTheme.error,
+            shape: BoxShape.circle,
+          ),
+        ),
+        SizedBox(
+          width: size.r,
+          height: size.r,
+          child: SvgPicture.asset(
+            icons.assetPath(selected),
+          ),
+        ),
+      ],
     );
   }
 }

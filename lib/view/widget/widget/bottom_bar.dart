@@ -1,4 +1,7 @@
 import 'package:bottom_sheet_bar/bottom_sheet_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,6 +19,8 @@ class FBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userP = Get.find<UserInfoP>();
+
     return ClipRRect(
       borderRadius: const BorderRadius.vertical(top: Radius.circular(40.0)),
       child: GetBuilder<GlobalP>(
@@ -28,7 +33,25 @@ class FBottomNavigationBar extends StatelessWidget {
             currentIndex: globalP.navIndex,
             onTap: globalP.navigate,
             items: List.generate(4, (index) => BottomNavigationBarItem(
-              icon: FIcon(FIcons.values[index], selected: index == globalP.navIndex),
+              icon: StreamBuilder<DocumentSnapshot>(
+                stream: UserNotificationP.collection
+                    .doc(userP.loggedUser.uid).snapshots(),
+                builder: (context, snapshot) {
+                  var json = snapshot.data?.data() as Map<String, dynamic>?;
+                  if (json == null) Container();
+                  bool hasNotification = false;
+                  hasNotification |= json?['friendData'].values
+                      .any((data) => !data['checked']) ?? false;
+                  hasNotification |= json?['rivalData']
+                      .values.any((data) => !data['checked']) ?? false;
+
+                  return FIcon(
+                    FIcons.values[index],
+                    selected: index == globalP.navIndex,
+                    hasNotification: index == 1 && hasNotification,
+                  );
+                },
+              ),
               label: FIcons.values[index].label,
             )),
           );

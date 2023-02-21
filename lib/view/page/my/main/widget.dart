@@ -198,7 +198,7 @@ class MyProfileWidget extends StatelessWidget {
             FText(
               '${userHeight}cm | ${userWeight}kg',
               style: textTheme.titleLarge,
-              color: FTheme.grey,
+              color: FTheme.darkGrey,
             ),
           ],
         ),

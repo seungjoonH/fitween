@@ -122,7 +122,7 @@ class UserInfoView extends StatelessWidget {
                 children: [
                   FText('별명',
                     style: textTheme.headlineSmall,
-                    color: FTheme.grey,
+                    color: FTheme.darkGrey,
                   ),
                   const SizedBox(height: 8.0),
                   PInputField(
@@ -141,7 +141,7 @@ class UserInfoView extends StatelessWidget {
                   FText(
                     '생년월일',
                     style: textTheme.headlineSmall,
-                    color: FTheme.grey,
+                    color: FTheme.darkGrey,
                   ),
                   const SizedBox(height: 8.0),
                   PInputField(
@@ -161,7 +161,7 @@ class UserInfoView extends StatelessWidget {
                   FText(
                     '성별',
                     style: textTheme.headlineSmall,
-                    color: FTheme.grey,
+                    color: FTheme.darkGrey,
                   ),
                   const SizedBox(height: 8.0),
                   ShakeWidget(
@@ -208,11 +208,11 @@ class SexSelectionButton extends StatelessWidget {
           text: texts[sex],
           onPressed: () => registerP.setSex(sex),
           backgroundColor: sex == registerP.newcomerInfo.sex
-              ? FTheme.grey
+              ? FTheme.darkGrey
               : FTheme.background,
           textColor: sex == registerP.newcomerInfo.sex
               ? FTheme.background
-              : FTheme.grey,
+              : FTheme.darkGrey,
         );
       },
     );
@@ -240,13 +240,13 @@ class WeightHeightView extends StatelessWidget {
                   color: FTheme.lightGrey,
                 ),
                 selectedTextStyle: textTheme.headlineSmall?.copyWith(
-                  color: FTheme.grey,
+                  color: FTheme.darkGrey,
                 ),
                 itemHeight: 30.0,
               );
             },
           ),
-          FText('kg', color: FTheme.grey),
+          FText('kg', color: FTheme.darkGrey),
         ],
       ),
       '신장': Row(
@@ -263,13 +263,13 @@ class WeightHeightView extends StatelessWidget {
                   color: FTheme.lightGrey,
                 ),
                 selectedTextStyle: textTheme.headlineSmall?.copyWith(
-                  color: FTheme.grey,
+                  color: FTheme.darkGrey,
                 ),
                 itemHeight: 30.0,
               );
             },
           ),
-          FText('cm', color: FTheme.grey),
+          FText('cm', color: FTheme.darkGrey),
         ],
       ),
     };
@@ -285,7 +285,7 @@ class WeightHeightView extends StatelessWidget {
                 FText(
                   content.key,
                   style: textTheme.headlineSmall,
-                  color: FTheme.grey,
+                  color: FTheme.darkGrey,
                 ),
                 const SizedBox(height: 10.0),
                 FCard(
@@ -403,7 +403,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
               value: record.amount.round(),
               minValue: widget.minValue,
               maxValue: widget.maxValue,
-              textStyle: widget.style?.apply(color: FTheme.grey),
+              textStyle: widget.style?.apply(color: FTheme.darkGrey),
               selectedTextStyle: widget.style?.apply(color: widget.color),
             ),
             IconButton(
@@ -598,7 +598,7 @@ class DistanceGoalView extends StatelessWidget {
                     style: textTheme.displaySmall,
                   ),
                   FTexts(['* 약 ', '${toLocalString(step)}보 (${kilometer}km)'],
-                    colors: const [FTheme.grey, FTheme.colorB],
+                    colors: const [FTheme.darkGrey, FTheme.colorB],
                     space: false,
                     alignment: MainAxisAlignment.end,
                   ),
@@ -697,7 +697,7 @@ class HeightGoalView extends StatelessWidget {
                   const SizedBox(height: 10.0),
                   FTexts(
                     ['* 수명 약', timeToString((100 * goal.amount).round()), '연장'],
-                    colors: [FTheme.grey, ActivityType.height.color, FTheme.grey],
+                    colors: [FTheme.darkGrey, ActivityType.height.color, FTheme.darkGrey],
                     alignment: MainAxisAlignment.start,
                   ),
                 ],
@@ -825,7 +825,7 @@ class WeightGoalView extends StatelessWidget {
                     style: textTheme.displaySmall,
                   ),
                   FTexts(['* 약 ', '${toLocalString(weight)} kg'],
-                    colors: const [FTheme.grey, FTheme.colorD],
+                    colors: const [FTheme.darkGrey, FTheme.colorD],
                     space: false,
                     alignment: MainAxisAlignment.end,
                   ),

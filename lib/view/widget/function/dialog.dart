@@ -24,7 +24,7 @@ void showPDialog({
   String? title,
   required Widget content,
   CrossAxisAlignment contentAlignment = CrossAxisAlignment.center,
-  EdgeInsets? titlePadding = const EdgeInsets.only(top: 50.0),
+  EdgeInsets? titlePadding = const EdgeInsets.only(top: 30.0, left: 30.0),
   EdgeInsets? contentPadding = const EdgeInsets.all(20.0),
   DialogType type = DialogType.none,
   String? buttonText,
@@ -85,8 +85,8 @@ class PAlertDialog extends StatefulWidget {
     this.title,
     required this.content,
     this.contentAlignment = CrossAxisAlignment.start,
-    this.titlePadding = const EdgeInsets.only(top: 50.0),
-    this.contentPadding = const EdgeInsets.all(20.0),
+    this.titlePadding = const EdgeInsets.only(top: 30.0, left: 30.0),
+    this.contentPadding = const EdgeInsets.symmetric(horizontal: 20.0),
     this.type = DialogType.none,
     this.buttonText,
     this.onPressed,
@@ -134,7 +134,7 @@ class _PAlertDialogState extends State<PAlertDialog> {
         data = [
           DialogButtonData(widget.type,
             text: widget.buttonText ?? '확인',
-            backgroundColor: widget.color ?? FTheme.black,
+            backgroundColor: widget.color ?? FTheme.darkGrey,
             onPressed: widget.onPressed!,
           ),
         ]; break;
@@ -142,14 +142,14 @@ class _PAlertDialogState extends State<PAlertDialog> {
         data = [
           DialogButtonData(widget.type,
             text: widget.leftText ?? '취소',
-            textColor: widget.leftTextColor ?? FTheme.black,
-            backgroundColor: widget.leftBackgroundColor ?? FTheme.white,
+            textColor: widget.leftTextColor ?? FTheme.white,
+            backgroundColor: widget.leftBackgroundColor ?? FTheme.lightGrey,
             onPressed: widget.leftPressed!,
           ),
           DialogButtonData(widget.type,
             text: widget.rightText ?? '확인',
             textColor: widget.rightTextColor ?? FTheme.white,
-            backgroundColor: widget.rightBackgroundColor ?? FTheme.black,
+            backgroundColor: widget.rightBackgroundColor ?? FTheme.darkGrey,
             onPressed: widget.rightPressed!,
           ),
         ]; break;
@@ -157,59 +157,53 @@ class _PAlertDialogState extends State<PAlertDialog> {
 
     assert(widget.type.index == data.length);
 
+    BorderRadius radius = BorderRadius.circular(12.0);
+
     return AlertDialog(
-      shape: const RoundedRectangleBorder(
-        side: BorderSide(color: FTheme.black, width: 1.5),
-        borderRadius: BorderRadius.zero,
+      shape: RoundedRectangleBorder(
+        borderRadius: radius,
       ),
-      backgroundColor: FTheme.bar,
+      backgroundColor: FTheme.white,
       title: Container(
         padding: widget.titlePadding,
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(20.0),
-          ),
-        ),
-        child: Center(
-          child: FText(widget.title ?? '',
-            style: textTheme.headlineSmall,
-            bold: true,
-          ),
+        child: FText(widget.title ?? '',
+          style: textTheme.titleLarge,
+          bold: true,
         ),
       ),
       titlePadding: EdgeInsets.zero,
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: widget.contentAlignment,
-        children: [
-          Container(
-            padding: widget.contentPadding,
-            constraints: const BoxConstraints(minHeight: 80.0),
-            child: widget.content,
-          ),
-          Row(
-            children: data.map((datum) => Expanded(
-              child: Material(
-                color: datum.backgroundColor,
-                child: InkWell(
-                  onTap: datum.onPressed,
-                  child: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: FTheme.black),
-                    ),
-                    child: Center(
-                      child: FText(datum.text,
-                        color: datum.textColor,
-                        style: textTheme.labelLarge,
+      content: ClipRRect(
+        borderRadius: radius,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: widget.contentAlignment,
+          children: [
+            Container(
+              padding: widget.contentPadding,
+              constraints: const BoxConstraints(minHeight: 80.0),
+              child: widget.content,
+            ),
+            Row(
+              children: data.map((datum) => Expanded(
+                child: Material(
+                  color: datum.backgroundColor,
+                  child: InkWell(
+                    onTap: datum.onPressed,
+                    child: Container(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Center(
+                        child: FText(datum.text,
+                          color: datum.textColor,
+                          style: textTheme.labelLarge,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            )).toList(),
-          ),
-        ],
+              )).toList(),
+            ),
+          ],
+        ),
       ),
       contentPadding: EdgeInsets.zero,
     );

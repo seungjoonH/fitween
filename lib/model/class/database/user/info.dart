@@ -30,7 +30,6 @@ class FUserInfo {
   Timestamp? _dateOfBirth;
 
   /// accessors & mutators
-
   DateTime? get regDate => _regDate?.toDate();
   DateTime? get dateOfBirth => _dateOfBirth?.toDate();
   int get age => today.year - dateOfBirth!.year;

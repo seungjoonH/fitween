@@ -65,7 +65,7 @@ class FTab extends StatelessWidget {
       child: FText(
         text,
         style: textTheme.titleLarge,
-        color: selected ? FTheme.grey : FTheme.lightGrey,
+        color: selected ? FTheme.darkGrey : FTheme.lightGrey,
       ),
     );
   }
@@ -286,7 +286,7 @@ class ChallengeCard extends StatelessWidget {
                                   child: FText(
                                     '${today.month}월의 챌린지',
                                     style: textTheme.labelLarge,
-                                    color: FTheme.grey,
+                                    color: FTheme.darkGrey,
                                   ),
                                 ),
                               ],
@@ -558,7 +558,7 @@ class MyPartyListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Color> orderedColors = [FTheme.grey, ...FTheme.orderedColors];
+    List<Color> orderedColors = [FTheme.darkGrey, ...FTheme.orderedColors];
     int index = min(max((party.remainDays ~/ 4) + 1, 0), 4);
 
     return Stack(
