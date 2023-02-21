@@ -39,9 +39,10 @@ class FBottomNavigationBar extends StatelessWidget {
                 builder: (context, snapshot) {
                   var json = snapshot.data?.data() as Map<String, dynamic>?;
                   if (json == null) Container();
+
                   bool hasNotification = false;
-                  hasNotification |= json?['friendData'].values
-                      .any((data) => !data['checked']) ?? false;
+                  hasNotification |= json?['friendData']
+                      .values.any((data) => !data['checked']) ?? false;
                   hasNotification |= json?['rivalData']
                       .values.any((data) => !data['checked']) ?? false;
 

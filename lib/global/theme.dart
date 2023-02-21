@@ -315,13 +315,13 @@ class FTheme {
     titleMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 18.0,
+      fontSize: 20.0,
       height: (24 / 18),
     ),
     titleSmall: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 14.0,
+      fontSize: 16.0,
       height: (20 / 14),
     ),
 

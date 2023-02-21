@@ -9,6 +9,7 @@ import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
+import 'package:fitween/view/widget/widget/tab_scaffold.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -32,25 +33,13 @@ class FriendP extends GetxController {
     editMode = false;
     await userFriendP.load();
     await userFriendP.loadFriends();
+
     userNotificationP.checkAllNotifications();
     update();
   }
 
   void friendInteractButtonPressed(String uid) {
-    (editMode ? deleteFriendButtonPressed : toggleRival)(uid);
-  }
-
-  void toggleRival(String uid) async {
-    final userP = Get.find<UserFriendP>();
-    userP.loggedUser.toggleRival(uid);
-    userP.save();
-    userP.update();
-    update();
-  }
-
-  bool isRival(uid) {
-    final userP = Get.find<UserFriendP>();
-    return userP.loggedUser.rivalUids.contains(uid);
+    (editMode ? deleteFriendButtonPressed : toggleRivalButtonPressed)(uid);
   }
 
   // 별명 입력 필드 유효성 검사
@@ -84,16 +73,36 @@ class FriendP extends GetxController {
     return true;
   }
 
-  Future friendInfoSubmitted() async {
+  void noticeToFriend(String uid, [bool isRival = false]) async {
     final userP = Get.find<UserNotificationP>();
+    await userP.addNotification(userP.loggedUser.uid!, uid, isRival);
+    Get.back();
+
+    String title = isRival ? '라이벌' : '친구';
+    String? nickname = (await UserInfoP.loadUser(uid))?.nickname;
+
+    if (nickname == null) return;
+
+    Get.dialog(
+      PAlertDialog(
+        title: '$title 신청',
+        content: FText(
+          '\'$nickname\'님께\n$title 신청 하였습니다',
+          maxLines: 2,
+        ),
+        type: DialogType.mono,
+        onPressed: Get.back,
+      ),
+    );
+  }
+
+  void friendInfoSubmitted() async {
     if (!await validate()) return;
 
     String? uid = await UserInfoP.loadUidByNickname(nicknameCont.text);
     if (uid == null) return;
 
-    await userP.addNotification(userP.loggedUser.uid!, uid);
-
-    Get.back();
+    noticeToFriend(uid);
   }
 
   void addFriendButtonPressed() {
@@ -148,6 +157,73 @@ class FriendP extends GetxController {
     init();
   }
 
+  void addRivalButtonPressed(String uid) async {
+    FUserInfo? user = await UserInfoP.loadUser(uid);
+    if (user == null) return;
+
+    Get.dialog(
+      PAlertDialog(
+        title: '라이벌 신청',
+        content: FText(
+          '\'${user.nickname}\'님에게\n라이벌 신청을 하시겠습니까?',
+          maxLines: 2,
+        ),
+        type: DialogType.bi,
+        leftPressed: Get.back,
+        rightText: '신청하기',
+        rightPressed: () => noticeToFriend(uid, true),
+      ),
+    );
+  }
+
+  void releaseRival(String uid) async {
+    final userP = Get.find<UserFriendP>();
+    userP.toggleRival(uid);
+
+    FUserFriend? user = await UserFriendP.loadUser(uid);
+    if (user == null) return;
+
+    user.toggleRival(userP.loggedUser.uid!);
+    UserFriendP.saveUser(user);
+
+    init(); update();
+  }
+
+  void releaseRivalButtonPressed(String uid) async {
+    FUserInfo? user = await UserInfoP.loadUser(uid);
+    if (user == null) return;
+
+    Get.dialog(
+      PAlertDialog(
+        title: '라이벌 해제',
+        content: FText(
+          '\'${user.nickname}\'님을 라이벌에서\n제외하시겠습니까?',
+          maxLines: 2,
+        ),
+        type: DialogType.bi,
+        leftPressed: Get.back,
+        rightText: '제외하기',
+        rightBackgroundColor: FTheme.error,
+        rightPressed: () {
+          releaseRival(uid);
+          Get.back();
+        },
+      ),
+    );
+  }
+
+  void toggleRivalButtonPressed(String uid) {
+    (isRival(uid)
+        ? releaseRivalButtonPressed
+        : addRivalButtonPressed
+    )(uid);
+  }
+
+  bool isRival(uid) {
+    final userP = Get.find<UserFriendP>();
+    return userP.loggedUser.rivalUids.contains(uid);
+  }
+
   void rejectButtonPressed(String uid, [bool isRival = false]) async {
     final userP = Get.find<UserNotificationP>();
     userP.deleteNotification(uid, userP.loggedUser.uid!, isRival);
@@ -157,15 +233,22 @@ class FriendP extends GetxController {
   void acceptButtonPressed(String uid, [bool isRival = false]) async {
     final userNotificationP = Get.find<UserNotificationP>();
     final userFriendP = Get.find<UserFriendP>();
-    userNotificationP.deleteNotification(
-      uid, userNotificationP.loggedUser.uid!, isRival,
-    );
-    userFriendP.addFriend(uid);
+    String myUid = userNotificationP.loggedUser.uid!;
+
+    userNotificationP.deleteNotification(uid, myUid, isRival);
 
     FUserFriend? friend = await UserFriendP.loadUser(uid);
     if (friend == null) return;
 
-    friend.addFriend(userNotificationP.loggedUser.uid!);
+    if (isRival) {
+      userFriendP.toggleRival(uid);
+      friend.toggleRival(myUid);
+    }
+    else {
+      userFriendP.addFriend(uid);
+      friend.addFriend(myUid);
+    }
+
     UserFriendP.saveUser(friend);
     init();
   }

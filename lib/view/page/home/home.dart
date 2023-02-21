@@ -41,7 +41,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          RotateCarousel(),
+          const RotateCarousel(),
           Expanded(
             child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(),

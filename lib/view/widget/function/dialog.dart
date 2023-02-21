@@ -86,7 +86,7 @@ class PAlertDialog extends StatefulWidget {
     required this.content,
     this.contentAlignment = CrossAxisAlignment.start,
     this.titlePadding = const EdgeInsets.only(top: 30.0, left: 30.0),
-    this.contentPadding = const EdgeInsets.symmetric(horizontal: 20.0),
+    this.contentPadding = const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 30.0),
     this.type = DialogType.none,
     this.buttonText,
     this.onPressed,
@@ -180,8 +180,11 @@ class _PAlertDialogState extends State<PAlertDialog> {
           children: [
             Container(
               padding: widget.contentPadding,
-              constraints: const BoxConstraints(minHeight: 80.0),
-              child: widget.content,
+              constraints: const BoxConstraints(minHeight: 70.0),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10.0),
+                child: widget.content,
+              ),
             ),
             Row(
               children: data.map((datum) => Expanded(

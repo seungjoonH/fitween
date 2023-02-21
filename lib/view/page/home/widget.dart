@@ -66,7 +66,8 @@ class _RotateCarouselState extends State<RotateCarousel>
             children: [
               Image.asset(
                 homeP.pngAsset,
-                height: HomeP.screenSize.height * .35,
+                width: HomeP.screenSize.width * 1.3,
+                height: HomeP.screenSize.height * .4,
                 fit: BoxFit.fitHeight,
               ),
               if (homeP.gifAsset != null)
@@ -74,7 +75,8 @@ class _RotateCarouselState extends State<RotateCarousel>
                 children: [
                   GifImage(
                     controller: HomeP.gifCont,
-                    height: HomeP.screenSize.height * .35,
+                    width: HomeP.screenSize.width * 1.3,
+                    height: HomeP.screenSize.height * .4,
                     fit: BoxFit.fitHeight,
                     image: AssetImage(homeP.gifAsset!),
                   ),
@@ -244,9 +246,7 @@ class RecordCard extends StatelessWidget {
     return FCard(
       title: '기록',
       activateSeeMore: true,
-      onPressed: () {
-        CalendarMainP.toCalendarMain();
-      },
+      onPressed: CalendarMainP.toCalendarMain,
       child: Container(),
     );
   }
