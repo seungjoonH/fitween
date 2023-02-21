@@ -18,8 +18,8 @@ void setTimeError() async {
 }
 
 // 현재 시각
-// DateTime get now => DateTime.now().add(timeError);
-DateTime get now => DateTime.now();
+DateTime get now => DateTime.now().add(timeError);
+// DateTime get now => DateTime.now();
 
 // 오늘 날짜 (시간 미포함)
 DateTime get today => ignoreTime(now);

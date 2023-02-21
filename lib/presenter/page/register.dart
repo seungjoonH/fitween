@@ -78,6 +78,13 @@ class RegisterP extends GetxController {
     newcomerNotification = FUserNotification();
     newcomerParty = FUserParty();
     newcomerRecord = FUserRecord();
+
+    newcomerCollection.uid = AuthPresenter.uid;
+    newcomerFriend.uid = AuthPresenter.uid;
+    newcomerInfo.uid = AuthPresenter.uid;
+    newcomerNotification.uid = AuthPresenter.uid;
+    newcomerParty.uid = AuthPresenter.uid;
+    newcomerRecord.uid = AuthPresenter.uid;
     pageIndex = 0;
   }
 
@@ -95,12 +102,12 @@ class RegisterP extends GetxController {
 
   /// attributes
   // 추가될 유저
-  FUserCollection newcomerCollection = FUserCollection();
-  FUserFriend newcomerFriend = FUserFriend();
-  FUserInfo newcomerInfo = FUserInfo();
-  FUserNotification newcomerNotification = FUserNotification();
-  FUserParty newcomerParty = FUserParty();
-  FUserRecord newcomerRecord = FUserRecord();
+  late FUserCollection newcomerCollection;
+  late FUserFriend newcomerFriend;
+  late FUserInfo newcomerInfo;
+  late FUserNotification newcomerNotification;
+  late FUserParty newcomerParty;
+  late FUserRecord newcomerRecord;
   bool keyboardVisible = false;
 
   void setKeyboardVisible(bool value) {
@@ -151,6 +158,7 @@ class RegisterP extends GetxController {
     );
 
     userInfoP.loggedUser.regDate = now;
+
     userCollectionP.login(newcomerCollection);
     userFriendP.login(newcomerFriend);
     userInfoP.login(newcomerInfo);
