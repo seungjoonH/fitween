@@ -10,7 +10,7 @@ import 'package:fitween/presenter/model/weight.dart';
 class ImportPresenter extends GetxController {
   static void importData() {
     BadgePresenter.importFile();
-    ChallengePresenter.importFile();
+    ChallengeP.importFile();
     WeightPresenter.importFile();
     HeightPresenter.importFile();
     LevelPresenter.importFile(ActivityType.calorie);

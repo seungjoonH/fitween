@@ -79,8 +79,8 @@ class ChallengeMainPageView extends StatelessWidget {
     return TabScaffold(
       tabs: const ['월간', '업적', '타임어택'],
       bodies: [
-        ChallengeCardView(),
-        AchievementCardView(),
+        const ChallengeCardView(),
+        const AchievementCardView(),
         FCard(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -90,18 +90,18 @@ class ChallengeMainPageView extends StatelessWidget {
               '타임어택!',
               style: FTheme.textTheme.titleLarge,
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             Image.asset('assets/image/challenge/timeAttack/timeAttack.png'),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             FText(
               '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
               maxLines: 2,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             FButton(
@@ -195,6 +195,9 @@ class ChallengeCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // final userP = Get.find<UserPartyP>();
+    // FUserParty user = userP.loggedUser;
+
     return GetBuilder<LoadingP>(builder: (controller) {
       return SmartRefresher(
         controller: ChallengeMain.refreshCont,
@@ -210,14 +213,88 @@ class ChallengeCardView extends StatelessWidget {
           color: FTheme.black,
           backgroundColor: FTheme.surface,
         ),
-        child: ListView.separated(
-          itemCount: ChallengePresenter.orderedChallenges.length,
-          itemBuilder: (_, index) {
-            return ChallengeCard(
-              challenge: ChallengePresenter.orderedChallenges[index],
-            );
-          },
-          separatorBuilder: (_, index) => SizedBox(height: 30.0.h),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: FText('참여 중인 챌린지'),
+              ),
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: ChallengeP.orderedChallenges.length,
+                itemBuilder: (_, index) {
+                  return ChallengeCard(
+                    challenge: ChallengeP.orderedChallenges[index],
+                  );
+                },
+                separatorBuilder: (_, index) => SizedBox(height: 30.0.h),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: FText('새로운 챌린지'),
+              ),
+              // if (user.parties.isEmpty)
+              //   Padding(
+              //     padding: EdgeInsets.all(20.0.h),
+              //     child: Column(
+              //       children: [
+              //         ListView.separated(
+              //           shrinkWrap: true,
+              //           itemCount: user.parties.length,
+              //           physics: const NeverScrollableScrollPhysics(),
+              //           itemBuilder: (_, index) => MyPartyListTile(
+              //             party: user.parties.values.toList()[index],
+              //           ),
+              //           separatorBuilder: (_, index) => SizedBox(height: 20.0.h),
+              //         ),
+              //         SizedBox(height: 20.0.h),
+              //         GetBuilder<ChallengeMain>(
+              //           builder: (controller) {
+              //             return Row(
+              //               children: [
+              //                 PButton(
+              //                   text: '챌린지 살펴보기',
+              //                   onPressed: () => controller.tabCont.index = 0,
+              //                   stretch: true,
+              //                   fill: false,
+              //                   multiple: true,
+              //                 ),
+              //                 SizedBox(width: 20.0.w),
+              //                 PButton(
+              //                   text: '챌린지 참여하기',
+              //                   onPressed: controller.challengeJoinButtonPressed,
+              //                   stretch: true,
+              //                   multiple: true,
+              //                 ),
+              //               ],
+              //             );
+              //           },
+              //         ),
+              //       ],
+              //     ),
+              //   )
+              // else
+              //   Container(),
+              ListView.separated(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: ChallengeP.orderedChallenges.length,
+                itemBuilder: (_, index) {
+                  return InkWell(
+                    onTap: () => ChallengeDetail.toChallengeDetail(
+                        ChallengeP.orderedChallenges[index]),
+                    child: ChallengeCard(
+                      challenge: ChallengeP.orderedChallenges[index],
+                    ),
+                  );
+                },
+                separatorBuilder: (_, index) => SizedBox(height: 30.0.h),
+              ),
+            ],
+          ),
         ),
       );
     });
@@ -236,115 +313,86 @@ class ChallengeCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final userP = Get.find<UserPartyP>();
 
-    return Column(
+    return Stack(
       children: [
-        Stack(
-          children: [
-            PCard(
-              color: FTheme.background,
-              padding: EdgeInsets.zero,
-              child: Column(
-                children: [
-                  // ParallaxWidget(
-                  //   background: Image.asset(
-                  //     challenge.imageUrls['default'],
-                  //     fit: BoxFit.fitHeight,
-                  //   ),
-                  //   child: Container(height: 200.0),
-                  // ),
-                  if (challenge.locked)
-                    Container(height: 230.0.h, color: FTheme.lightGrey)
-                  else
-                    Image.asset(
-                      challenge.imageUrls['default'],
-                      // height: 230.0.h,
-                      fit: BoxFit.fitWidth,
-                    ),
-                  Divider(height: 1.0.h, color: FTheme.black, thickness: 1.5),
-                  Padding(
-                    padding: EdgeInsets.all(20.0.r),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 80.0.h,
-                                  child: FText(
-                                    challenge.title ?? '',
-                                    style: textTheme.headlineMedium,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                                SizedBox(height: 20.0.h),
-                                SizedBox(
-                                  height: 20.0.h,
-                                  child: FText(
-                                    '${today.month}월의 챌린지',
-                                    style: textTheme.labelLarge,
-                                    color: FTheme.darkGrey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            BadgeWidget(
-                              size: 80.0.r,
-                              badge: challenge.locked
-                                  ? null
-                                  : challenge.badges[Difficulty.hard],
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20.0.h),
-                        SizedBox(
-                          height: 30.0.h,
-                          child: FText(
-                            challenge.descriptions['sub']!,
-                            style: textTheme.titleSmall,
-                            color: FTheme.black,
-                            maxLines: 2,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  userP.alreadyJoinedChallenge(challenge.id!)
-                      ? PButton(
-                          onPressed: () =>
-                              ChallengePartyMain.toChallengePartyMain(
-                                  userP.getPartyByChallengeId(challenge.id!)!),
-                          text: '챌린지 이동하기',
-                          stretch: true,
-                          height: 50.0,
-                        )
-                      : PButton(
-                          onPressed: () =>
-                              ChallengeDetail.toChallengeDetail(challenge),
-                          text: '알아보러 가기',
-                          stretch: true,
-                          height: 50.0,
-                        ),
-                ],
-              ),
-            ),
-            if (challenge.locked)
-              Positioned.fill(
-                child: Container(
-                  color: FTheme.black.withOpacity(.5),
-                  child: const Icon(
-                    Icons.lock,
-                    color: FTheme.black,
-                    size: 70.0,
+        PCard(
+          color: FTheme.background,
+          padding: EdgeInsets.zero,
+          child: Row(
+            children: [
+              // ParallaxWidget(
+              //   background: Image.asset(
+              //     challenge.imageUrls['default'],
+              //     fit: BoxFit.fitHeight,
+              //   ),
+              //   child: Container(height: 200.0),
+              // ),
+              if (challenge.locked)
+                Container(
+                  width: 100.0.w,
+                  height: 100.0.h,
+                  color: FTheme.lightGrey,
+                )
+              else
+                Image.asset(
+                  challenge.imageUrls['default'],
+                  width: 100.0.w,
+                  height: 100.0.h,
+                  fit: BoxFit.cover,
+                ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.all(8.0.r),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      FText(
+                        challenge.title ?? '',
+                        style: textTheme.bodyMedium,
+                        maxLines: 2,
+                      ),
+                      SizedBox(height: 4.0.h),
+                      FText(
+                        challenge.descriptions['sub']!,
+                        style: textTheme.bodySmall,
+                        color: FTheme.lightGrey,
+                        maxLines: 2,
+                      ),
+                    ],
                   ),
                 ),
               ),
-          ],
+              // userP.alreadyJoinedChallenge(challenge.id!)
+              //     ? PButton(
+              //         onPressed: () =>
+              //             ChallengePartyMain.toChallengePartyMain(userP
+              //                 .getPartyByChallengeId(challenge.id!)!),
+              //         text: '챌린지 이동하기',
+              //         stretch: true,
+              //         height: 50.0,
+              //       )
+              //     : PButton(
+              //         onPressed: () =>
+              //             ChallengeDetail.toChallengeDetail(challenge),
+              //         text: '알아보러 가기',
+              //         stretch: true,
+              //         height: 50.0,
+              //       ),
+            ],
+          ),
         ),
-        SizedBox(height: 20.0.h),
+        if (challenge.locked)
+          Positioned.fill(
+            child: Container(
+              color: FTheme.black.withOpacity(.5),
+              child: const Icon(
+                Icons.lock,
+                color: FTheme.black,
+                size: 70.0,
+              ),
+            ),
+          ),
       ],
     );
   }
@@ -699,7 +747,6 @@ class AchievementCardView extends StatelessWidget {
           );
 
           nextValue.convert(ExerciseUnit.step);
-          int remainValue = (nextValue.amount - amount).round();
 
           return Card(
             child: Column(
@@ -734,7 +781,7 @@ class AchievementCardView extends StatelessWidget {
                           style: textTheme.bodyMedium,
                         ),
                         const SizedBox(height: 8.0),
-                        Container(
+                        SizedBox(
                           width: 300,
                           height: 280,
                           child: Stack(
@@ -970,180 +1017,5 @@ class AchievementCard extends StatelessWidget {
         SizedBox(height: 20.0.h),
       ],
     );
-  }
-}
-
-class RPSCustomPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    Paint paint_2 = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 0.8;
-
-    Path path_2 = Path();
-    path_2.moveTo(size.width * 0.5003605, size.height * 0.004285053);
-    path_2.cubicTo(
-        size.width * 0.6747653,
-        size.height * 0.004285053,
-        size.width * 0.8160952,
-        size.height * 0.1495214,
-        size.width * 0.8160952,
-        size.height * 0.3286117);
-    path_2.lineTo(size.width * 0.8194966, size.height * 0.3286117);
-    path_2.cubicTo(
-        size.width * 0.8194966,
-        size.height * 0.1474947,
-        size.width * 0.6765850,
-        size.height * 0.0007263416,
-        size.width * 0.5003605,
-        size.height * 0.0007263416);
-    path_2.lineTo(size.width * 0.5003605, size.height * 0.004285053);
-    path_2.close();
-    path_2.moveTo(size.width * 0.1846286, size.height * 0.3286117);
-    path_2.cubicTo(
-        size.width * 0.1846286,
-        size.height * 0.1495214,
-        size.width * 0.3259571,
-        size.height * 0.004285053,
-        size.width * 0.5003605,
-        size.height * 0.004285053);
-    path_2.lineTo(size.width * 0.5003605, size.height * 0.0007263416);
-    path_2.cubicTo(
-        size.width * 0.3241374,
-        size.height * 0.0007263416,
-        size.width * 0.1812272,
-        size.height * 0.1474947,
-        size.width * 0.1812272,
-        size.height * 0.3286117);
-    path_2.lineTo(size.width * 0.1846286, size.height * 0.3286117);
-    path_2.close();
-    path_2.moveTo(size.width * 0.1846364, size.height * 0.3309331);
-    path_2.cubicTo(
-        size.width * 0.1846313,
-        size.height * 0.3301598,
-        size.width * 0.1846286,
-        size.height * 0.3293861,
-        size.width * 0.1846286,
-        size.height * 0.3286117);
-    path_2.lineTo(size.width * 0.1812272, size.height * 0.3286117);
-    path_2.cubicTo(
-        size.width * 0.1812272,
-        size.height * 0.3293947,
-        size.width * 0.1812299,
-        size.height * 0.3301769,
-        size.width * 0.1812350,
-        size.height * 0.3309584);
-    path_2.lineTo(size.width * 0.1846364, size.height * 0.3309331);
-    path_2.close();
-    path_2.moveTo(size.width * 0.03206218, size.height * 0.3327249);
-    path_2.lineTo(size.width * 0.1829357, size.height * 0.3327249);
-    path_2.lineTo(size.width * 0.1829357, size.height * 0.3291662);
-    path_2.lineTo(size.width * 0.03206218, size.height * 0.3291662);
-    path_2.lineTo(size.width * 0.03206218, size.height * 0.3327249);
-    path_2.close();
-    path_2.moveTo(size.width * 0.001700707, size.height * 0.3644911);
-    path_2.cubicTo(
-        size.width * 0.001700707,
-        size.height * 0.3469473,
-        size.width * 0.01529401,
-        size.height * 0.3327249,
-        size.width * 0.03206218,
-        size.height * 0.3327249);
-    path_2.lineTo(size.width * 0.03206218, size.height * 0.3291662);
-    path_2.cubicTo(
-        size.width * 0.01341548,
-        size.height * 0.3291662,
-        size.width * -0.001700653,
-        size.height * 0.3449819,
-        size.width * -0.001700653,
-        size.height * 0.3644911);
-    path_2.lineTo(size.width * 0.001700707, size.height * 0.3644911);
-    path_2.close();
-    path_2.moveTo(size.width * 0.001700680, size.height * 0.9654057);
-    path_2.lineTo(size.width * 0.001700707, size.height * 0.3644911);
-    path_2.lineTo(size.width * -0.001700653, size.height * 0.3644911);
-    path_2.lineTo(size.width * -0.001700680, size.height * 0.9654057);
-    path_2.lineTo(size.width * 0.001700680, size.height * 0.9654057);
-    path_2.close();
-    path_2.moveTo(size.width * 0.03206211, size.height * 0.9971708);
-    path_2.cubicTo(
-        size.width * 0.01529395,
-        size.height * 0.9971708,
-        size.width * 0.001700680,
-        size.height * 0.9829466,
-        size.width * 0.001700680,
-        size.height * 0.9654057);
-    path_2.lineTo(size.width * -0.001700680, size.height * 0.9654057);
-    path_2.cubicTo(
-        size.width * -0.001700680,
-        size.height * 0.9849146,
-        size.width * 0.01341541,
-        size.height * 1.000730,
-        size.width * 0.03206211,
-        size.height * 1.000730);
-    path_2.lineTo(size.width * 0.03206211, size.height * 0.9971708);
-    path_2.close();
-    path_2.moveTo(size.width * 0.9679388, size.height * 0.9971708);
-    path_2.lineTo(size.width * 0.03206211, size.height * 0.9971708);
-    path_2.lineTo(size.width * 0.03206211, size.height * 1.000730);
-    path_2.lineTo(size.width * 0.9679388, size.height * 1.000730);
-    path_2.lineTo(size.width * 0.9679388, size.height * 0.9971708);
-    path_2.close();
-    path_2.moveTo(size.width * 0.9982993, size.height * 0.9654057);
-    path_2.cubicTo(
-        size.width * 0.9982993,
-        size.height * 0.9829466,
-        size.width * 0.9847075,
-        size.height * 0.9971708,
-        size.width * 0.9679388,
-        size.height * 0.9971708);
-    path_2.lineTo(size.width * 0.9679388, size.height * 1.000730);
-    path_2.cubicTo(
-        size.width * 0.9865850,
-        size.height * 1.000730,
-        size.width * 1.001701,
-        size.height * 0.9849146,
-        size.width * 1.001701,
-        size.height * 0.9654057);
-    path_2.lineTo(size.width * 0.9982993, size.height * 0.9654057);
-    path_2.close();
-    path_2.moveTo(size.width * 0.9982993, size.height * 0.3644911);
-    path_2.lineTo(size.width * 0.9982993, size.height * 0.9654057);
-    path_2.lineTo(size.width * 1.001701, size.height * 0.9654057);
-    path_2.lineTo(size.width * 1.001701, size.height * 0.3644911);
-    path_2.lineTo(size.width * 0.9982993, size.height * 0.3644911);
-    path_2.close();
-    path_2.moveTo(size.width * 0.9679388, size.height * 0.3327249);
-    path_2.cubicTo(
-        size.width * 0.9847075,
-        size.height * 0.3327249,
-        size.width * 0.9982993,
-        size.height * 0.3469473,
-        size.width * 0.9982993,
-        size.height * 0.3644911);
-    path_2.lineTo(size.width * 1.001701, size.height * 0.3644911);
-    path_2.cubicTo(
-        size.width * 1.001701,
-        size.height * 0.3449819,
-        size.width * 0.9865850,
-        size.height * 0.3291662,
-        size.width * 0.9679388,
-        size.height * 0.3291662);
-    path_2.lineTo(size.width * 0.9679388, size.height * 0.3327249);
-    path_2.close();
-    path_2.moveTo(size.width * 0.8177857, size.height * 0.3327249);
-    path_2.lineTo(size.width * 0.9679388, size.height * 0.3327249);
-    path_2.lineTo(size.width * 0.9679388, size.height * 0.3291662);
-    path_2.lineTo(size.width * 0.8177857, size.height * 0.3291662);
-    path_2.lineTo(size.width * 0.8177857, size.height * 0.3327249);
-    path_2.close();
-
-    canvas.drawPath(path_2, paint_2);
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
   }
 }
