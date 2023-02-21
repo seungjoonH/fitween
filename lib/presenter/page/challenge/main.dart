@@ -32,7 +32,7 @@ class ChallengeMainP extends GetxController {
     loadingP.loadStart();
 
     // tabCont.index = 0;
-    await ChallengePresenter.importFile();
+    await ChallengeP.importFile();
     await userP.load();
     await userP.loadMyParties();
 
@@ -40,8 +40,8 @@ class ChallengeMainP extends GetxController {
   }
 }
 
-class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixin {
-
+class ChallengeMain extends GetxController
+    with GetSingleTickerProviderStateMixin {
   /// static variables
   static final refreshCont = RefreshController();
   static final codeCont = TextEditingController();
@@ -57,12 +57,10 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
 
   /// attributes
   late TabController tabCont;
-  List<Widget> tabs = ['이달의 챌린지', '내 챌린지']
-      .map((title) => FText(title)).toList();
+  List<Widget> tabs =
+      ['이달의 챌린지', '내 챌린지'].map((title) => FText(title)).toList();
   bool codeInvalid = false;
   String? codeHintText = '';
-
-
 
   // 챌린지 참가 버튼 클릭 시
   void challengeJoinButtonPressed() async {
@@ -74,7 +72,8 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
         title: '코드 입력',
         content: Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: 10.0, vertical: 20.0,
+            horizontal: 10.0,
+            vertical: 20.0,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,7 +87,8 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
                     invalid: controller.codeInvalid,
                     hintText: controller.codeHintText ?? 'ABC1234',
                     hintColor: controller.codeHintText == null
-                        ? FTheme.darkGrey : FTheme.colorB,
+                        ? FTheme.darkGrey
+                        : FTheme.colorB,
                   );
                 },
               ),
@@ -113,7 +113,9 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
 
     if (party == null) return;
     party.records[user.uid!] = user.getAmounts(
-      party.challenge!.type!, party.startDate, party.endDate,
+      party.challenge!.type!,
+      party.startDate,
+      party.endDate,
     );
 
     PartyPresenter.save(party);
@@ -146,12 +148,15 @@ class ChallengeMain extends GetxController with GetSingleTickerProviderStateMixi
 
     if (conditions.values.any((condition) => condition)) {
       codeCont.clear();
-      codeInvalid = true; update();
+      codeInvalid = true;
+      update();
       await Future.delayed(const Duration(milliseconds: 500), () {
-        codeInvalid = false; update();
+        codeInvalid = false;
+        update();
       });
       await Future.delayed(const Duration(milliseconds: 500), () {
-        codeCont.text = text; update();
+        codeCont.text = text;
+        update();
         codeHintText = null;
       });
       return false;

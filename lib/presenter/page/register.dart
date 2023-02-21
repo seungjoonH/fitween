@@ -43,8 +43,15 @@ class RegisterP extends GetxController {
   int pageIndex = 0;
   bool invalid = false;
   List<bool> imageExistence = [
-    false, false, false, true,
-    false, true, true, true, false,
+    false,
+    false,
+    false,
+    true,
+    false,
+    true,
+    true,
+    true,
+    false,
   ];
   bool imageVisualize = false;
 
@@ -71,7 +78,9 @@ class RegisterP extends GetxController {
   /// static methods
   // 컨트롤러를 모두 초기화
   void init() {
-    for (var field in fields.values) { field.controller?.clear(); }
+    for (var field in fields.values) {
+      field.controller?.clear();
+    }
     newcomerCollection = FUserCollection();
     newcomerFriend = FUserFriend();
     newcomerInfo = FUserInfo();
@@ -198,12 +207,15 @@ class RegisterP extends GetxController {
     if (conditions.values.any((condition) => condition)) {
       invalid = true;
       nicknameField.controller.clear();
-      nicknameField.invalid = true; update();
+      nicknameField.invalid = true;
+      update();
       await Future.delayed(const Duration(milliseconds: 500), () {
-        nicknameField.invalid = false; update();
+        nicknameField.invalid = false;
+        update();
       });
       await Future.delayed(const Duration(milliseconds: 500), () {
-        nicknameField.controller.text = text; update();
+        nicknameField.controller.text = text;
+        update();
         nicknameField.hintText = null;
       });
     }
@@ -231,12 +243,15 @@ class RegisterP extends GetxController {
     if (conditions.values.any((condition) => condition)) {
       invalid = true;
       dateOfBirthField.controller.clear();
-      dateOfBirthField.invalid = true; update();
+      dateOfBirthField.invalid = true;
+      update();
       await Future.delayed(const Duration(milliseconds: 500), () {
-        dateOfBirthField.invalid = false; update();
+        dateOfBirthField.invalid = false;
+        update();
       });
       await Future.delayed(const Duration(milliseconds: 500), () {
-        dateOfBirthField.controller.text = text; update();
+        dateOfBirthField.controller.text = text;
+        update();
         dateOfBirthField.hintText = null;
       });
     }
@@ -247,9 +262,11 @@ class RegisterP extends GetxController {
 
     if (newcomerInfo.sex == null) {
       invalid = true;
-      sexField.invalid = true; update();
+      sexField.invalid = true;
+      update();
       await Future.delayed(const Duration(milliseconds: 500), () {
-        sexField.invalid = false; update();
+        sexField.invalid = false;
+        update();
       });
     }
   }
@@ -279,21 +296,31 @@ class RegisterP extends GetxController {
         await nicknameValidate();
         dateOfBirthValidate();
         sexValidate();
-        if (invalid) { invalid = false; return; }
+        if (invalid) {
+          invalid = false;
+          return;
+        }
         newcomerInfo.nickname = fields['nickname']!.controller.text;
-        newcomerInfo.dateOfBirth = stringToDate(fields['dateOfBirth']!.controller.text);
-        newcomerInfo.weight = WeightPresenter.getAverageWeight(newcomerInfo.age, newcomerInfo.sex!);
-        newcomerInfo.height = HeightPresenter.getAverageHeight(newcomerInfo.age, newcomerInfo.sex!);
+        newcomerInfo.dateOfBirth =
+            stringToDate(fields['dateOfBirth']!.controller.text);
+        newcomerInfo.weight = WeightPresenter.getAverageWeight(
+            newcomerInfo.age, newcomerInfo.sex!);
+        newcomerInfo.height = HeightPresenter.getAverageHeight(
+            newcomerInfo.age, newcomerInfo.sex!);
         break;
-      case 1: break;
-      case 2: break;
+      case 1:
+        break;
+      case 2:
+        break;
       case 3:
         initGoal(Record.init(
           ActivityType.distance,
-          60, ExerciseUnit.minute,
+          60,
+          ExerciseUnit.minute,
         ));
         break;
-      case 4: break;
+      case 4:
+        break;
       case 5:
         initGoal(Record.init(ActivityType.height, 10));
         break;
@@ -312,7 +339,8 @@ class RegisterP extends GetxController {
         initGoal(Record.init(ActivityType.weight, 50, ExerciseUnit.count));
         break;
       case 8:
-        submitted(); return;
+        submitted();
+        return;
     }
     carouselCont.nextPage(
       curve: transitionCurve,
