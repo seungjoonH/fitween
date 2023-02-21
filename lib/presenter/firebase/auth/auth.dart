@@ -46,6 +46,8 @@ class AuthPresenter {
   static const storage = FlutterSecureStorage();
   static String? appleName;
 
+  static late String uid;
+
   /// static methods
   static Future<bool> versionCheck() async {
     var json = (await f.collection('versions').doc(versionNumber).get()).data();
@@ -73,7 +75,7 @@ class AuthPresenter {
     }
 
     if (userCredential == null) return;
-    String uid = userCredential.user!.uid;
+    uid = userCredential.user!.uid;
 
     // 파이어베이스 데이터
     jsonCollection = (await UserCollectionP.collection

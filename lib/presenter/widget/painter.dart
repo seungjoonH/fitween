@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:math';
 
+import 'package:custom_timer/custom_timer.dart';
+import 'package:fitween/view/page/challenge/time_attack/time_attack_camera/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/number.dart';
@@ -15,7 +18,7 @@ import '../page/challenge/time_attack/time_attack_camera.dart';
 class PainterPresenter extends GetxController {
   static Orientation orientation = Orientation.portrait;
   static double get screenRatio {
-    const ratio = 3 / 4;
+    const ratio = 4 / 6;
     if (orientation == Orientation.portrait) return ratio;
     return 1 / ratio;
   }
@@ -55,6 +58,10 @@ class PainterPresenter extends GetxController {
   static List<WorkoutDistance> distanceHistory = [];
   static List<bool> hitHistory = [];
   static int humanHistory = 0;
+
+  static late Timer timer;
+  int timerSeconds = 180;
+  String get timeString => '${'${timerSeconds ~/ 60}'.padLeft(2, '0')} : ${'${timerSeconds % 60}'.padLeft(2, '0')}';
 
   static void addDistanceHistory(WorkoutDistance distance) {
     distanceHistory.add(distance);
@@ -110,6 +117,15 @@ class PainterPresenter extends GetxController {
   void staging() {
     addHitHistory(ExerciseHandler.posture != WorkoutPosture.ready);
     countUp();
+  }
+
+  void timerStart() {
+    print(1);
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
+      print(2);
+      timerSeconds--; update();
+    });
+    print(3);
   }
 
   void countUp() {
@@ -187,7 +203,9 @@ class PainterPresenter extends GetxController {
           Future.delayed(const Duration(milliseconds: 1000), () {
             state = WorkoutState.workout;
             currentStage = WorkoutStage.down;
-            stateText = null; update();
+            stateText = null;
+            timerStart();
+            update();
           });
         });
         update();
@@ -201,4 +219,6 @@ class PainterPresenter extends GetxController {
     }
 
   }
+
+
 }

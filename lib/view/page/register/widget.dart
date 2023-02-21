@@ -57,16 +57,18 @@ class CarouselView extends StatelessWidget {
             for (int i = 0; i < controller.imageExistence.length; i++)
             AnimatedPositioned(
               left: screenSize.width * (i - controller.pageIndex),
-              bottom: 100.0.h + (widthFitIndex.contains(i) ? .0 : 40.0.h),
+              bottom: 140.0.h,
               duration: const Duration(milliseconds: 350),
               curve: Curves.easeInOut,
               width: screenSize.width,
-              height: screenSize.height * (widthFitIndex.contains(i) ? .5 : .4),
+              height: screenSize.height * .4,
               child: controller.imageExistence[i]
                   ? SvgPicture.asset(
                 '${asset}carousel_${i.toString().padLeft(2, '0')}.svg',
                 alignment: Alignment.center,
-                fit: widthFitIndex.contains(i) ? BoxFit.fitWidth : BoxFit.contain,
+                fit: widthFitIndex.contains(i)
+                       ? BoxFit.fitHeight : BoxFit.contain,
+                // fit: BoxFit.fitWidth,
               ) : Container(),
             ),
             Column(
@@ -78,10 +80,7 @@ class CarouselView extends StatelessWidget {
                       constraints: BoxConstraints(minWidth: screenSize.width),
                       child: CarouselSlider(
                         carouselController: RegisterP.carouselCont,
-                        items: carouselWidgets().map((widget) => Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                          child: widget,
-                        )).toList(),
+                        items: carouselWidgets().map((widget) => widget).toList(),
                         options: CarouselOptions(
                           height: double.infinity,
                           initialPage: 0,
@@ -114,72 +113,75 @@ class UserInfoView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<RegisterP>(
       builder: (controller) {
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FText('별명',
-                    style: textTheme.headlineSmall,
-                    color: FTheme.darkGrey,
-                  ),
-                  const SizedBox(height: 8.0),
-                  PInputField(
-                    invalid: controller.fields['nickname']!.invalid,
-                    controller: controller.fields['nickname']!.controller,
-                    hintText: controller.fields['nickname']?.hintText ?? '별명을 입력해주세요',
-                    hintColor: controller.fields['nickname']?.hintText == null
-                        ? FTheme.lightGrey : FTheme.colorB,
-                  ),
-                  const SizedBox(height: 40.0),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FText(
-                    '생년월일',
-                    style: textTheme.headlineSmall,
-                    color: FTheme.darkGrey,
-                  ),
-                  const SizedBox(height: 8.0),
-                  PInputField(
-                    invalid: controller.fields['dateOfBirth']!.invalid,
-                    controller: controller.fields['dateOfBirth']!.controller,
-                    hintText: controller.fields['dateOfBirth']?.hintText ?? 'YYYYMMDD',
-                    hintColor: controller.fields['dateOfBirth']?.hintText == null
-                      ? FTheme.lightGrey : FTheme.colorB,
-                    keyboardType: TextInputType.number,
-                  ),
-                  const SizedBox(height: 40.0),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FText(
-                    '성별',
-                    style: textTheme.headlineSmall,
-                    color: FTheme.darkGrey,
-                  ),
-                  const SizedBox(height: 8.0),
-                  ShakeWidget(
-                    autoPlay: controller.fields['sex']!.invalid,
-                    shakeConstant: ShakeHorizontalConstant2(),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
-                        SexSelectionButton(sex: Sex.male),
-                        SizedBox(width: 20.0),
-                        SexSelectionButton(sex: Sex.female),
-                      ],
+        return Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FText('별명',
+                      style: textTheme.headlineSmall,
+                      color: FTheme.darkGrey,
                     ),
-                  ),
-                  SizedBox(height: 20.0.h),
-                ],
-              ),
-            ],
+                    const SizedBox(height: 8.0),
+                    PInputField(
+                      invalid: controller.fields['nickname']!.invalid,
+                      controller: controller.fields['nickname']!.controller,
+                      hintText: controller.fields['nickname']?.hintText ?? '별명을 입력해주세요',
+                      hintColor: controller.fields['nickname']?.hintText == null
+                          ? FTheme.lightGrey : FTheme.colorB,
+                    ),
+                    const SizedBox(height: 40.0),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FText(
+                      '생년월일',
+                      style: textTheme.headlineSmall,
+                      color: FTheme.darkGrey,
+                    ),
+                    const SizedBox(height: 8.0),
+                    PInputField(
+                      invalid: controller.fields['dateOfBirth']!.invalid,
+                      controller: controller.fields['dateOfBirth']!.controller,
+                      hintText: controller.fields['dateOfBirth']?.hintText ?? 'YYYYMMDD',
+                      hintColor: controller.fields['dateOfBirth']?.hintText == null
+                        ? FTheme.lightGrey : FTheme.colorB,
+                      keyboardType: TextInputType.number,
+                    ),
+                    const SizedBox(height: 40.0),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FText(
+                      '성별',
+                      style: textTheme.headlineSmall,
+                      color: FTheme.darkGrey,
+                    ),
+                    const SizedBox(height: 8.0),
+                    ShakeWidget(
+                      autoPlay: controller.fields['sex']!.invalid,
+                      shakeConstant: ShakeHorizontalConstant2(),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: const [
+                          SexSelectionButton(sex: Sex.male),
+                          SizedBox(width: 20.0),
+                          SexSelectionButton(sex: Sex.female),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 20.0.h),
+                  ],
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -274,35 +276,37 @@ class WeightHeightView extends StatelessWidget {
       ),
     };
 
-    return Column(
-      children: [
-        Expanded(
-          flex: 3,
-          child: Column(
-            children: contents.entries.map((content) => Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FText(
-                  content.key,
-                  style: textTheme.headlineSmall,
-                  color: FTheme.darkGrey,
-                ),
-                const SizedBox(height: 10.0),
-                FCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      content.value,
-                    ],
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Column(
+        children: [
+          Expanded(
+            flex: 3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: contents.entries.map((content) => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  FText(
+                    content.key,
+                    style: textTheme.headlineSmall,
+                    color: FTheme.darkGrey,
                   ),
-                ),
-                const SizedBox(height: 30.0),
-              ],
-            )).toList(),
+                  SizedBox(height: 5.0.h),
+                  FCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        content.value,
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10.0.h),
+                ],
+              )).toList(),
+            ),
           ),
-        ),
-        Expanded(
-          child: Center(
+          Center(
             child: FText(
               '*체중과 신장은 간편한 계산을 위해서만 사용될 뿐\n다른 곳에는 이용되지 않아요!',
               style: textTheme.bodyMedium,
@@ -311,8 +315,8 @@ class WeightHeightView extends StatelessWidget {
               align: TextAlign.center,
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -431,7 +435,9 @@ class SettingIntroView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Container(
+      padding: const EdgeInsets.only(left: 30.0),
+      alignment: Alignment.centerLeft,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -482,35 +488,37 @@ class DistanceRecommendView extends StatelessWidget {
           recommendTimes = [30, 50];
         }
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 120.0.h),
-            FTexts(
-              ['$ageGroup', '대 ', registerP.newcomerInfo.sex!.kr, ' 평균'],
-              colors: const [
-                FTheme.colorA, FTheme.black,
-                FTheme.colorA, FTheme.black,
-              ],
-              alignment: MainAxisAlignment.start,
-              space: false,
-              style: textTheme.displaySmall,
-            ),
-            FTexts(
-              ['매일', '${recommendTimes.length == 1
-                  ? recommendTimes[0]
-                  : recommendTimes.join('~')}', '분',
-              ],
-              colors: [FTheme.black, ActivityType.distance.color, FTheme.black],
-              alignment: MainAxisAlignment.start,
-              style: textTheme.displaySmall,
-            ),
-            FText(
-              '유산소 운동이\n적당해요',
-              style: textTheme.displaySmall,
-              maxLines: 2,
-            ),
-          ],
+        return Padding(
+          padding: const EdgeInsets.only(left: 30.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FTexts(
+                ['$ageGroup', '대 ', registerP.newcomerInfo.sex!.kr, ' 평균'],
+                colors: const [
+                  FTheme.colorA, FTheme.black,
+                  FTheme.colorA, FTheme.black,
+                ],
+                alignment: MainAxisAlignment.start,
+                space: false,
+                style: textTheme.displaySmall,
+              ),
+              FTexts(
+                ['매일', '${recommendTimes.length == 1
+                    ? recommendTimes[0]
+                    : recommendTimes.join('~')}', '분',
+                ],
+                colors: [FTheme.black, ActivityType.distance.color, FTheme.black],
+                alignment: MainAxisAlignment.start,
+                style: textTheme.displaySmall,
+              ),
+              FText(
+                '유산소 운동이\n적당해요',
+                style: textTheme.displaySmall,
+                maxLines: 2,
+              ),
+            ],
+          ),
         );
       },
     );
@@ -546,66 +554,68 @@ class DistanceGoalView extends StatelessWidget {
           pixelsPerSecond: Offset(50, 0),
         );
 
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-              left: .0, top: 100.0.h,
-              child: Container(
-                alignment: Alignment.centerLeft,
-                child: GoalNumberPicker(
-                  type: ActivityType.distance,
-                  itemWidth: 200.0,
-                  color: ActivityType.distance.color,
-                  style: FTheme.largeText,
-                  maxValue: 200,
+        return Padding(
+          padding: const EdgeInsets.only(right: 30.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: GoalNumberPicker(
+                        type: ActivityType.distance,
+                        itemWidth: 200.0,
+                        color: ActivityType.distance.color,
+                        style: FTheme.largeText,
+                        maxValue: 200,
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        FTexts(
+                          ['하루 ', '$minute', '분이면'],
+                          colors: const [FTheme.black, FTheme.colorA, FTheme.black],
+                          style: textTheme.displaySmall,
+                          alignment: MainAxisAlignment.end,
+                          space: false,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                              constraints: BoxConstraints(maxWidth: 230.0.w),
+                              child: TextScroll(
+                                distanceTitle,
+                                style: textTheme.displaySmall?.merge(TextStyle(
+                                  color: ActivityType.distance.color,
+                                  fontWeight: FontWeight.normal,
+                                )),
+                                velocity: velocity,
+                                intervalSpaces: 5,
+                              ),
+                            ),
+                            const SizedBox(width: 10.0),
+                            FText('(${unitDistance(distanceValue.step.round())}보)'),
+                          ],
+                        ),
+                        FText('만큼 걸을 수 있어요', style: textTheme.displaySmall),
+                        FTexts(['* 약 ', '${toLocalString(step)}보 (${kilometer}km)'],
+                          colors: const [FTheme.darkGrey, FTheme.colorB],
+                          space: false,
+                          alignment: MainAxisAlignment.end,
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ),
-            Positioned(
-              right: .0, bottom: 200.0.h,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  FTexts(
-                    ['하루 ', '$minute', '분이면'],
-                    colors: const [FTheme.black, FTheme.colorA, FTheme.black],
-                    style: textTheme.displaySmall,
-                    alignment: MainAxisAlignment.end,
-                    space: false,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        constraints: BoxConstraints(maxWidth: 230.0.w),
-                        child: TextScroll(
-                          distanceTitle,
-                          style: textTheme.displaySmall?.merge(TextStyle(
-                            color: ActivityType.distance.color,
-                            fontWeight: FontWeight.normal,
-                          )),
-                          velocity: velocity,
-                          intervalSpaces: 5,
-                        ),
-                      ),
-                      const SizedBox(width: 10.0),
-                      FText('(${unitDistance(distanceValue.step.round())}보)'),
-                    ],
-                  ),
-                  FText('만큼 걸을 수 있어요',
-                    style: textTheme.displaySmall,
-                  ),
-                  FTexts(['* 약 ', '${toLocalString(step)}보 (${kilometer}km)'],
-                    colors: const [FTheme.darkGrey, FTheme.colorB],
-                    space: false,
-                    alignment: MainAxisAlignment.end,
-                  ),
-                ],
-              ),
-            ),
-          ],
+              const SizedBox(height: 60.0),
+            ],
+          ),
         );
       },
     );
@@ -617,20 +627,22 @@ class HeightRecommendView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(height: 120.0.h),
-        FText('한 층을', style: textTheme.displaySmall, color: FTheme.colorA),
-        FText('오를 때마다', style: textTheme.displaySmall),
-        FText('건강 수명이', style: textTheme.displaySmall),
-        FTexts(
-          const ['1분 40초', '연장돼요'],
-          colors: [ActivityType.height.color, FTheme.black],
-          style: textTheme.displaySmall,
-          alignment: MainAxisAlignment.start,
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 30.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FText('한 층을', style: textTheme.displaySmall, color: FTheme.colorA),
+          FText('오를 때마다', style: textTheme.displaySmall),
+          FText('건강 수명이', style: textTheme.displaySmall),
+          FTexts(
+            const ['1분 40초', '연장돼요'],
+            colors: [ActivityType.height.color, FTheme.black],
+            style: textTheme.displaySmall,
+            alignment: MainAxisAlignment.start,
+          ),
+        ],
+      ),
     );
   }
 }
@@ -664,12 +676,12 @@ class HeightGoalView extends StatelessWidget {
 
         const velocity = Velocity(pixelsPerSecond: Offset(50, 0));
 
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-              left: .0, top: 120.0.h,
-              child: Column(
+        return Padding(
+          padding: const EdgeInsets.only(left: 30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   FTexts(['하루', '${goal.amount.round()}', '층이면'],
@@ -702,18 +714,17 @@ class HeightGoalView extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            Positioned(
-              bottom: 20.0.h,
-              right: .0,
-              child: GoalNumberPicker(
-                type: ActivityType.height,
-                itemWidth: 200.0,
-                color: ActivityType.height.color,
-                style: FTheme.largeText,
+              Container(
+                alignment: Alignment.bottomRight,
+                child: GoalNumberPicker(
+                  type: ActivityType.height,
+                  itemWidth: 200.0,
+                  color: ActivityType.height.color,
+                  style: FTheme.largeText,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );
@@ -726,21 +737,22 @@ class WeightRecommendView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Positioned(
-          left: .0, top: 130.0.h,
-          child: Column(
-            children: [
-              FText('무게 멘트', style: textTheme.displaySmall),
-              FText('무게 멘트', style: textTheme.displaySmall),
-              FText('무게 멘트', style: textTheme.displaySmall),
-              FText('무게 멘트', style: textTheme.displaySmall),
-            ],
+    return Padding(
+      padding: const EdgeInsets.only(left: 30.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FText('무게 멘트', style: textTheme.displaySmall, color: FTheme.colorA),
+          FText('무게 멘트', style: textTheme.displaySmall),
+          FText('무게 멘트', style: textTheme.displaySmall),
+          FTexts(
+            const ['무게', '멘트'],
+            colors: [ActivityType.weight.color, FTheme.black],
+            style: textTheme.displaySmall,
+            alignment: MainAxisAlignment.start,
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -772,12 +784,12 @@ class WeightGoalView extends StatelessWidget {
 
         const velocity = Velocity(pixelsPerSecond: Offset(50, 0));
 
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-              left: .0, top: 100.0.h,
-              child: Container(
+        return Padding(
+          padding: const EdgeInsets.only(right: 30.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Container(
                 alignment: Alignment.centerLeft,
                 child: GoalNumberPicker(
                   type: ActivityType.weight,
@@ -787,10 +799,7 @@ class WeightGoalView extends StatelessWidget {
                   maxValue: 200,
                 ),
               ),
-            ),
-            Positioned(
-              right: .0, bottom: 200.0.h,
-              child: Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   FTexts(
@@ -831,8 +840,8 @@ class WeightGoalView extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

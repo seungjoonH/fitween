@@ -37,7 +37,7 @@ class TimeAttackFriendPageView extends StatelessWidget {
                 FriendCard('추성훈'),
                 FriendCard('황장군'),
                 FriendCard('춘자'),
-                FriendCard('뻘컵')
+                // FriendCard('뻘컵')
               ],
             )
           ),

@@ -33,10 +33,10 @@ class _CarouselViewState extends State<CarouselView> {
   @override
   Widget build(BuildContext context) {
     List<String> messages = [
-      '일상 운동 기록,\n어떻게 관리하시나요?',
-      '입력만 하세요!\n피트윈이 의미있게\n만들어드릴게요',
-      '무게, 유산소\n계단 오르기까지 기록 가능해요!',
-      '오늘의 목표 설정을 통해\n더 쉽게 관리 해보세요!',
+      '\n일상 운동 기록,\n어떻게 관리하시나요?',
+      '\n입력만 하세요!\n피트윈이 의미있게\n만들어드릴게요',
+      '\n무게, 유산소\n계단 오르기까지 기록 가능해요!',
+      '\n오늘의 목표 설정을 통해\n더 쉽게 관리 해보세요!',
     ];
 
     return GetBuilder<OnboardingP>(
@@ -50,40 +50,41 @@ class _CarouselViewState extends State<CarouselView> {
                   duration: const Duration(milliseconds: 1000),
                   opacity: opacity,
                   curve: Curves.easeInOut,
-                  child: Stack(
-                    alignment: Alignment.center,
+                  child: Column(
                     children: [
-                      Positioned(
-                        top: 150.0.h,
-                        child: Column(
-                          children: [
-                            FText(messages[index],
-                              maxLines: 3,
-                              style: textTheme.headlineSmall,
-                              align: TextAlign.center,
-                              color: FTheme.darkGrey,
-                            ),
-                            if (index == 3)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: FText(
-                                '목표는 언제든지 수정이 가능해요',
-                                style: textTheme.labelSmall,
-                                color: FTheme.lightGrey,
+                      SizedBox(height: 100.0.h),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            children: [
+                              FText(messages[index],
+                                maxLines: 3,
+                                style: textTheme.headlineSmall,
+                                align: TextAlign.center,
+                                color: FTheme.darkGrey,
                               ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 70.0.h,
-                        child: Container(
-                          padding: const EdgeInsets.all(30.0),
-                          width: 300.0.w,
-                          child: SvgPicture.asset(
-                            OnboardingP.getAsset(index),
+                              if (index == 3)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: FText(
+                                  '목표는 언제든지 수정이 가능해요',
+                                  style: textTheme.labelSmall,
+                                  color: FTheme.lightGrey,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
+                          SizedBox(height: 50.0.h),
+                          Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: SvgPicture.asset(
+                              OnboardingP.getAsset(index),
+                              height: 300.0.h,
+                              fit: BoxFit.fitHeight,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

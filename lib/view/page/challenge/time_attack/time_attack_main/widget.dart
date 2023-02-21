@@ -1,5 +1,7 @@
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
 import '../../../../../global/theme.dart';
 import '../../../../widget/button/button.dart';

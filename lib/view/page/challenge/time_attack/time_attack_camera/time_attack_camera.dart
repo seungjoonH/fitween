@@ -18,6 +18,7 @@ import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/painter/painter.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:fitween/view/widget/widget/text.dart';
+import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
 import '../../../../../presenter/page/challenge/time_attack/time_attack_camera.dart';
 
@@ -38,6 +39,7 @@ class _TimeAttackCameraPageState extends State<TimeAttackCameraPage> {
   late ExerciseHandler handler;
 
   late LimbPainter painter;
+  int frameCount = 0;
 
   @override
   void initState() {
@@ -128,15 +130,6 @@ class _TimeAttackCameraPageState extends State<TimeAttackCameraPage> {
               extendBodyBehindAppBar: true,
               appBar: FAppBar(
                 title: '운동하기',
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      cameraP.toggleDirection();
-                      initAsync();
-                    },
-                    icon: const Icon(Icons.camera_alt),
-                  ),
-                ],
                 color: Colors.transparent,
               ),
               body: GetBuilder<PainterPresenter>(
@@ -156,32 +149,48 @@ class _TimeAttackCameraPageState extends State<TimeAttackCameraPage> {
                               const FloatingMessageWidget(),
                             if (painterP.count > 0 && painterP.state == WorkoutState.stop)
                               const ExerciseCompleteButton(),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            PCircledButton(
-                              onPressed: painterP.initWorkout,
-                              backgroundColor: FTheme.lightGrey,
-                              enabled: painterP.state == WorkoutState.workout,
-                              child: FText('취소', style: textTheme.titleLarge),
+                            Positioned(
+                              bottom: 200.0.h,
+                              child: FText(
+                                '${painterP.count} 개',
+                                style: textTheme.headlineMedium,
+                              ),
                             ),
-                            FText(
-                              '${painterP.count} 개',
-                              style: textTheme.headlineMedium,
+
+                            Positioned(
+                              top: 250.0.h,
+                              child: CountDownTimer(),
                             ),
-                            if (painterP.state == WorkoutState.workout)
-                              PCircledButton(
-                                onPressed: painterP.workout,
-                                backgroundColor: FTheme.colorA,
-                                child: FText('중지', style: textTheme.titleLarge),
-                              ) else PCircledButton(
-                              onPressed: painterP.workout,
-                              backgroundColor: FTheme.colorB,
-                              child: FText('시작', style: textTheme.titleLarge),
+                            Positioned(
+                              bottom: 50.0.h,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  SizedBox(
+                                    width: 100,
+                                  ),
+                                  if (painterP.state == WorkoutState.workout)
+                                    PCircledButton(
+                                      onPressed: painterP.workout,
+                                      backgroundColor: FTheme.colorB,
+                                        child: Image.asset('assets/image/challenge/timeAttack/button/pause.png')
+                                    ) else PCircledButton(
+                                    onPressed: painterP.workout,
+                                    backgroundColor: FTheme.colorA,
+                                    child: Image.asset('assets/image/challenge/timeAttack/button/start.png')
+                                  ),
+                                  SizedBox(
+                                    width: 40,
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      cameraP.toggleDirection();
+                                      initAsync();
+                                    },
+                                    icon: const Icon(Icons.cameraswitch_rounded, size: 40,),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
