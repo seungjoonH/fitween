@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/model/user/info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
@@ -75,7 +76,7 @@ class MyNavigationButton extends StatelessWidget {
     return Material(
       color: FTheme.colorB,
       borderRadius: radius,
-      shadowColor: FTheme.grey,
+      shadowColor: FTheme.darkGrey,
       child: InkWell(
         onTap: MyMain.toMyMain,
         borderRadius: radius,
@@ -161,7 +162,7 @@ class _MyMainAppBarState extends State<MyMainAppBar> {
         IconButton(
           icon: const Icon(Icons.settings),
           onPressed: () async {
-            final userP = Get.find<UserP>();
+            final userP = Get.find<UserInfoP>();
             if (await MySettingMain.toMySettingMain()) userP.update();
           },
         ),
@@ -187,13 +188,13 @@ class MySettingMainAppBar extends StatelessWidget implements PreferredSizeWidget
         FTextButton(
           text: '앱 정보',
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          color: FTheme.grey,
+          color: FTheme.darkGrey,
           onPressed: MySettingMain.showAppInfoDialog,
         ),
         // FTextButton(
         //   text: version,
         //   padding: EdgeInsets.symmetric(horizontal: 20.0),
-        //   color: FTheme.grey,
+        //   color: FTheme.darkGrey,
         //   onPressed: ReleaseNoteMain.toReleaseNoteMain,
         // ),
       ],

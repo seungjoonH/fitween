@@ -1,4 +1,8 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/class/database/user.dart';
@@ -17,8 +21,10 @@ class Field {
 }
 
 /// class
-class EditGoal extends GetxController {
-  FUser user = FUser();
+class EditGoalP extends GetxController {
+  FUserInfo userInfo = FUserInfo();
+  FUserRecord userRecord = FUserRecord();
+
   int pageIndex = 0;
   bool keyboardVisible = false;
   List<bool> imageExistence = List.generate(5, (_) => true);
@@ -33,7 +39,7 @@ class EditGoal extends GetxController {
   static final carouselCont = CarouselController();
 
   static void toEditGoal() {
-    final editGoalP = Get.find<EditGoal>();
+    final editGoalP = Get.find<EditGoalP>();
     editGoalP.init();
     Get.toNamed('/editGoal');
   }
@@ -41,8 +47,10 @@ class EditGoal extends GetxController {
   /// static methods
   // 컨트롤러를 모두 초기화
   void init() {
-    final userP = Get.find<UserP>();
-    user = userP.loggedUser;
+    final userInfoP = Get.find<UserInfoP>();
+    final userRecordP = Get.find<UserRecordP>();
+    userInfo = userInfoP.loggedUser;
+    userRecord = userRecordP.loggedUser;
     pageIndex = 0;
   }
 
@@ -64,19 +72,19 @@ class EditGoal extends GetxController {
   }
 
   void initGoal(Record record) async {
-    user.goals[record.type!.name] = 0;
+    userRecord.goals[record.type!.name] = 0;
     update();
     await Future.delayed(const Duration(milliseconds: 500), () {
-      user.setGoal(record.type!, record);
+      userRecord.setGoal(record.type!, record);
       update();
     });
   }
 
   void submitted() async {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserRecordP>();
     userP.update();
     userP.save();
-    await HomePresenter.toHome();
+    await HomeP.toHome();
     init();
   }
 
@@ -102,7 +110,7 @@ class EditGoal extends GetxController {
   void nextPressed() async {
     switch (pageIndex) {
       case 0:
-        Record record = user.getGoal(ActivityType.distance)!;
+        Record record = userRecord.getGoal(ActivityType.distance)!;
         record.convert(ExerciseUnit.minute);
 
         initGoal(Record.init(
@@ -115,14 +123,15 @@ class EditGoal extends GetxController {
       case 2:
         initGoal(Record.init(
           ActivityType.height,
-          user.getGoal(ActivityType.height)!.amount
+            userRecord.getGoal(ActivityType.height)!.amount
         ));
         break;
       case 3:
         Record calorie = CalorieRecord(amount: 0);
-        DistanceRecord distance =
-            user.getGoal(ActivityType.distance) as DistanceRecord;
-        HeightRecord height = user.getGoal(ActivityType.height) as HeightRecord;
+        DistanceRecord distance = userRecord
+            .getGoal(ActivityType.distance) as DistanceRecord;
+        HeightRecord height = userRecord
+            .getGoal(ActivityType.height) as HeightRecord;
         calorie.amount += CalorieRecord.from(
           ActivityType.distance,
           distance.minute,
@@ -132,7 +141,7 @@ class EditGoal extends GetxController {
           height.amount,
         );
 
-        user.setGoal(ActivityType.calorie, calorie);
+        userRecord.setGoal(ActivityType.calorie, calorie);
         update();
         break;
       case 4:

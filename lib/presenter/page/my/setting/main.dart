@@ -52,7 +52,7 @@ class MySettingMain extends GetxController {
               vertical: 10.0,
             ),
           ),
-          FText(version, color: FTheme.grey),
+          FText(version, color: FTheme.darkGrey),
           const SizedBox(height: 20.0),
           FTextButton(
             text: '개발자 정보',
@@ -63,7 +63,7 @@ class MySettingMain extends GetxController {
               vertical: 10.0,
             ),
           ),
-          FText('fitween.pistachio@gmail.com', color: FTheme.grey),
+          FText('fitween.pistachio@gmail.com', color: FTheme.darkGrey),
         ],
       ),
       contentAlignment: CrossAxisAlignment.center,

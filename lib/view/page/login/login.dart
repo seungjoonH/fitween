@@ -74,7 +74,7 @@ class _LoginPageState extends State<LoginPage> {
             bottom: 15.0.h,
             child: FText(
               version,
-              color: FTheme.grey,
+              color: FTheme.darkGrey,
               style: textTheme.titleMedium,
             ),
           ),

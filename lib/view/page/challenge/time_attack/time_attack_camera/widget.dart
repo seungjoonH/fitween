@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:custom_timer/custom_timer.dart';
 import 'package:fitween/presenter/page/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -124,6 +125,26 @@ class WorkoutStateWidget extends StatelessWidget {
               'GO!': FTheme.colorB,
               'READY': FTheme.colorC,
             }[painterP.stateText],
+          );
+        }
+    );
+  }
+}
+
+class CountDownTimer extends StatefulWidget {
+  const CountDownTimer({Key? key}) : super(key: key);
+
+  @override
+  State<CountDownTimer> createState() => CountDownTimerState();
+}
+
+class CountDownTimerState extends State<CountDownTimer> {
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<PainterPresenter>(
+        builder: (painterP) {
+          return Container(
+            child: FText(painterP.timeString, style: textTheme.displaySmall, color: FTheme.grey,),
           );
         }
     );

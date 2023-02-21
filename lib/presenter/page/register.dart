@@ -1,4 +1,16 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/model/class/database/user/friend.dart';
+import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/model/class/database/user/notification.dart';
+import 'package:fitween/model/class/database/user/party.dart';
+import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:fitween/presenter/model/user/friend.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/notification.dart';
+import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +42,10 @@ class Field {
 class RegisterP extends GetxController {
   int pageIndex = 0;
   bool invalid = false;
-  List<bool> imageExistence = [false, false, false, true, false, true, true, true, false];
+  List<bool> imageExistence = [
+    false, false, false, true,
+    false, true, true, true, false,
+  ];
   bool imageVisualize = false;
 
   Map<String, Field> fields = {
@@ -57,7 +72,12 @@ class RegisterP extends GetxController {
   // 컨트롤러를 모두 초기화
   void init() {
     for (var field in fields.values) { field.controller?.clear(); }
-    newcomer = FUser();
+    newcomerCollection = FUserCollection();
+    newcomerFriend = FUserFriend();
+    newcomerInfo = FUserInfo();
+    newcomerNotification = FUserNotification();
+    newcomerParty = FUserParty();
+    newcomerRecord = FUserRecord();
     pageIndex = 0;
   }
 
@@ -75,7 +95,12 @@ class RegisterP extends GetxController {
 
   /// attributes
   // 추가될 유저
-  FUser newcomer = FUser();
+  FUserCollection newcomerCollection = FUserCollection();
+  FUserFriend newcomerFriend = FUserFriend();
+  FUserInfo newcomerInfo = FUserInfo();
+  FUserNotification newcomerNotification = FUserNotification();
+  FUserParty newcomerParty = FUserParty();
+  FUserRecord newcomerRecord = FUserRecord();
   bool keyboardVisible = false;
 
   void setKeyboardVisible(bool value) {
@@ -87,45 +112,58 @@ class RegisterP extends GetxController {
   // 성별 설정
   void setSex(Sex? value) {
     if (value == null) return;
-    newcomer.sex = value;
+    newcomerInfo.sex = value;
     update();
   }
 
   // 체중 설정
   void setWeight(int value) {
-    newcomer.weight = value;
+    newcomerInfo.weight = value;
     update();
   }
 
   // 신장 설정
   void setHeight(int value) {
-    newcomer.height = value;
+    newcomerInfo.height = value;
     update();
   }
 
   void initGoal(Record record) async {
-    newcomer.goals[record.type!.name] = 0;
+    newcomerRecord.goals[record.type!.name] = 0;
     update();
     await Future.delayed(const Duration(milliseconds: 500), () {
-      newcomer.setGoal(record.type!, record);
+      newcomerRecord.setGoal(record.type!, record);
       update();
     });
   }
 
   void submitted() async {
-    final userP = Get.find<UserP>();
-    newcomer.nickname = fields['nickname']!.controller.text;
-    newcomer.dateOfBirth = stringToDate(fields['dateOfBirth']!.controller.text);
+    final userCollectionP = Get.find<UserCollectionP>();
+    final userFriendP = Get.find<UserFriendP>();
+    final userInfoP = Get.find<UserInfoP>();
+    final userNotificationP = Get.find<UserNotificationP>();
+    final userPartyP = Get.find<UserPartyP>();
+    final userRecordP = Get.find<UserRecordP>();
 
-    userP.login(newcomer);
-    userP.loggedUser.regDate = now;
+    newcomerInfo.nickname = fields['nickname']!.controller.text;
+    newcomerInfo.dateOfBirth = stringToDate(
+      fields['dateOfBirth']!.controller.text,
+    );
 
-    await HomePresenter.toHome();
-    await AuthPresenter.storeLoginData(userP.data);
-    if (AuthPresenter.developerUids.contains(userP.loggedUser.uid)) {
-      userP.awardBadge(BadgePresenter.getBadge('1999999')!, true);
+    userInfoP.loggedUser.regDate = now;
+    userCollectionP.login(newcomerCollection);
+    userFriendP.login(newcomerFriend);
+    userInfoP.login(newcomerInfo);
+    userNotificationP.login(newcomerNotification);
+    userPartyP.login(newcomerParty);
+    userRecordP.login(newcomerRecord);
+
+    await HomeP.toHome();
+    await AuthPresenter.storeLoginData(userInfoP.data);
+    if (AuthPresenter.developerUids.contains(userInfoP.loggedUser.uid)) {
+      userCollectionP.awardBadge(BadgePresenter.getBadge('1999999')!, true);
     }
-    userP.awardBadge(BadgePresenter.getBadge('1000000')!, true);
+    userCollectionP.awardBadge(BadgePresenter.getBadge('1000000')!, true);
 
     init();
   }
@@ -135,7 +173,7 @@ class RegisterP extends GetxController {
     String text = nicknameField.controller.text;
 
     Map<String, bool> conditions = {
-      '별명이 중복됩니다': await UserP.duplicatedNickname(text),
+      '별명이 중복됩니다': await UserInfoP.duplicatedNickname(text),
       '두 글자 이상 입력해주세요': text.length < 2,
       '열 글자 이하 입력해주세요': text.length > 10,
       '자음 모음은 단독으로 포함될 수 없습니다': hasSeparatedConsonantOrVowel(text),
@@ -199,7 +237,7 @@ class RegisterP extends GetxController {
   void sexValidate() async {
     Field sexField = fields['sex']!;
 
-    if (newcomer.sex == null) {
+    if (newcomerInfo.sex == null) {
       invalid = true;
       sexField.invalid = true; update();
       await Future.delayed(const Duration(milliseconds: 500), () {
@@ -234,10 +272,10 @@ class RegisterP extends GetxController {
         dateOfBirthValidate();
         sexValidate();
         if (invalid) { invalid = false; return; }
-        newcomer.nickname = fields['nickname']!.controller.text;
-        newcomer.dateOfBirth = stringToDate(fields['dateOfBirth']!.controller.text);
-        newcomer.weight = WeightPresenter.getAverageWeight(newcomer.age, newcomer.sex!);
-        newcomer.height = HeightPresenter.getAverageHeight(newcomer.age, newcomer.sex!);
+        newcomerInfo.nickname = fields['nickname']!.controller.text;
+        newcomerInfo.dateOfBirth = stringToDate(fields['dateOfBirth']!.controller.text);
+        newcomerInfo.weight = WeightPresenter.getAverageWeight(newcomerInfo.age, newcomerInfo.sex!);
+        newcomerInfo.height = HeightPresenter.getAverageHeight(newcomerInfo.age, newcomerInfo.sex!);
         break;
       case 1: break;
       case 2: break;
@@ -279,9 +317,20 @@ class RegisterP extends GetxController {
   // 뒤로가기 버튼 클릭 트리거
   void backPressed() {
     if (pageIndex == 0) {
-      final userP = Get.find<UserP>();
+      final userCollectionP = Get.find<UserCollectionP>();
+      final userFriendP = Get.find<UserFriendP>();
+      final userInfoP = Get.find<UserInfoP>();
+      final userPartyP = Get.find<UserPartyP>();
+      final userRecordP = Get.find<UserRecordP>();
       final onboardingP = Get.find<OnboardingP>();
-      userP.logout(); init();
+
+      userCollectionP.logout();
+      userFriendP.logout();
+      userInfoP.logout();
+      userPartyP.logout();
+      userRecordP.logout();
+
+      init();
 
       onboardingP.init();
       Get.offAllNamed('/login');

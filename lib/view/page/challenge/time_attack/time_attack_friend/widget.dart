@@ -23,7 +23,7 @@ class TimeAttackFriendPageView extends StatelessWidget {
             child: FText(
               maxLines: 2,
               '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
-              color: FTheme.grey,
+              color: FTheme.darkGrey,
               style: FTheme.textTheme.titleMedium,
             ),
           ),
@@ -37,7 +37,7 @@ class TimeAttackFriendPageView extends StatelessWidget {
                 FriendCard('추성훈'),
                 FriendCard('황장군'),
                 FriendCard('춘자'),
-                FriendCard('뻘컵')
+                // FriendCard('뻘컵')
               ],
             )
           ),
@@ -88,7 +88,7 @@ class FriendCard extends StatelessWidget{
             FText(
               name,
               style: textTheme.labelLarge,
-              color: FTheme.grey,
+              color: FTheme.darkGrey,
             ),
           ],
         ),

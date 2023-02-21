@@ -65,6 +65,7 @@ dependencies:
   indexed: ^0.0.8
   flutter_gif: ^0.0.4
   table_calendar: ^3.0.8
+  custom_timer: ^0.2.3
 
 dependency_overrides:
   firebase_core_platform_interface: 4.5.2
@@ -93,6 +94,7 @@ flutter:
     - assets/image/challenge/complete/
     - assets/image/challenge/focus/
     - assets/image/challenge/timeAttack/
+    - assets/image/challenge/timeAttack/button/
     - assets/image/badge/
     - assets/image/page/login/
     - assets/image/page/onboarding/
@@ -119,4 +121,4 @@ flutter:
 
     - family: Pretendard
       fonts:
-        - asset: assets/font/Pretendard/Pretendard-Bold.otf
+        - asset: assets/font/Pretendard/Pretendard-Regular.otf

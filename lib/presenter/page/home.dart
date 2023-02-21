@@ -1,4 +1,6 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gif/flutter_gif.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +16,7 @@ import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeP extends GetxController {
-  static void toHome() async {
+  static Future toHome() async {
     final homeP = Get.find<HomeP>();
     Get.offAllNamed('/home');
     await homeP.init();
@@ -32,8 +34,8 @@ class HomeP extends GetxController {
   String? get gifAsset => _gifAsset == null ? null : '$rotationAsset$_gifAsset.gif';
 
   Future init() async {
-    final userP = Get.find<UserP>();
-    final loadingP = Get.find<LoadingPresenter>();
+    final userP = Get.find<UserRecordP>();
+    final loadingP = Get.find<LoadingP>();
 
     loadingP.loadStart();
 
@@ -97,7 +99,7 @@ class HomePresenter extends GetxController {
       type: DialogType.bi,
       leftPressed: Get.back,
       rightPressed: () {
-        Get.back(); EditGoal.toEditGoal();
+        Get.back(); EditGoalP.toEditGoal();
       },
     );
   }
@@ -105,8 +107,8 @@ class HomePresenter extends GetxController {
   bool isToday = true;
 
   Future init() async {
-    final userP = Get.find<UserP>();
-    final loadingP = Get.find<LoadingPresenter>();
+    final userP = Get.find<UserRecordP>();
+    final loadingP = Get.find<LoadingP>();
 
     isToday = true;
     loadingP.loadStart();

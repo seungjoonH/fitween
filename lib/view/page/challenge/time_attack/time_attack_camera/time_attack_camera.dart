@@ -39,6 +39,7 @@ class _TimeAttackCameraPageState extends State<TimeAttackCameraPage> {
   late ExerciseHandler handler;
 
   late LimbPainter painter;
+  int frameCount = 0;
 
   @override
   void initState() {
@@ -129,15 +130,6 @@ class _TimeAttackCameraPageState extends State<TimeAttackCameraPage> {
               extendBodyBehindAppBar: true,
               appBar: FAppBar(
                 title: '운동하기',
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      cameraP.toggleDirection();
-                      initAsync();
-                    },
-                    icon: const Icon(Icons.camera_alt),
-                  ),
-                ],
                 color: Colors.transparent,
               ),
               body: GetBuilder<PainterPresenter>(
@@ -164,20 +156,38 @@ class _TimeAttackCameraPageState extends State<TimeAttackCameraPage> {
                                 style: textTheme.headlineMedium,
                               ),
                             ),
+
+                            Positioned(
+                              top: 250.0.h,
+                              child: CountDownTimer(),
+                            ),
                             Positioned(
                               bottom: 50.0.h,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 children: [
+                                  SizedBox(
+                                    width: 100,
+                                  ),
                                   if (painterP.state == WorkoutState.workout)
                                     PCircledButton(
                                       onPressed: painterP.workout,
                                       backgroundColor: FTheme.colorB,
-                                      child: FText('중지', style: textTheme.titleLarge),
+                                        child: Image.asset('assets/image/challenge/timeAttack/button/pause.png')
                                     ) else PCircledButton(
                                     onPressed: painterP.workout,
                                     backgroundColor: FTheme.colorA,
-                                    child: FText('시작', style: textTheme.titleLarge),
+                                    child: Image.asset('assets/image/challenge/timeAttack/button/start.png')
+                                  ),
+                                  SizedBox(
+                                    width: 40,
+                                  ),
+                                  IconButton(
+                                    onPressed: () {
+                                      cameraP.toggleDirection();
+                                      initAsync();
+                                    },
+                                    icon: const Icon(Icons.cameraswitch_rounded, size: 40,),
                                   ),
                                 ],
                               ),

@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: FBottomNavigationBar(),
+      bottomNavigationBar: const FBottomNavigationBar(),
     );
   }
 }

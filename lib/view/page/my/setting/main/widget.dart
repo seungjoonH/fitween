@@ -1,4 +1,6 @@
 
+import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:fitween/presenter/model/user/info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
@@ -43,7 +45,7 @@ class MyProfileUpdateButtonWidget extends StatefulWidget {
 class _MyProfileUpdateButtonWidgetState extends State<MyProfileUpdateButtonWidget> {
   @override
   Widget build(BuildContext context) {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserCollectionP>();
     String? badgeId = userP.loggedUser.badgeId;
 
     return Column(
@@ -53,7 +55,7 @@ class _MyProfileUpdateButtonWidgetState extends State<MyProfileUpdateButtonWidge
         FTextButton(
           text: '뱃지 변경',
           onPressed: () async {
-            if (await CollectionMain.toCollectionMain()) setState(() {});
+            if (await CollectionMainP.toCollectionMain()) setState(() {});
           },
           action: const Icon(Icons.add_photo_alternate_outlined),
         ),
@@ -87,12 +89,12 @@ class EditTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UserP>(
-      builder: (controller) {
+    return GetBuilder<UserInfoP>(
+      builder: (userP) {
         Map<String, String> value = {
-          'nickname': controller.loggedUser.nickname!,
-          'height': '${controller.loggedUser.height} cm',
-          'weight': '${controller.loggedUser.weight} kg',
+          'nickname': userP.loggedUser.nickname!,
+          'height': '${userP.loggedUser.height} cm',
+          'weight': '${userP.loggedUser.weight} kg',
         };
 
         return Column(
@@ -115,7 +117,7 @@ class EditTextField extends StatelessWidget {
                   ),
                   child: FText(value[editType]!,
                     style: textTheme.titleMedium,
-                    color: FTheme.grey,
+                    color: FTheme.darkGrey,
                   ),
                 ),
               ),
@@ -174,7 +176,7 @@ class AccountDeleteButton extends StatelessWidget {
           padding: const EdgeInsets.all(5.0),
           child: FText('계정 탈퇴',
             style: const TextStyle(fontFamily: 'Noto Sans KR'),
-            color: FTheme.grey,
+            color: FTheme.darkGrey,
           ),
         ),
       ),

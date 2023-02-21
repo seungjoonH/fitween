@@ -19,13 +19,13 @@ class FButton extends StatefulWidget {
     Color? textColor,
     this.stretch = false,
     this.multiple = false,
-    this.border = true,
+    this.border = false,
     this.height,
   }) : assert(
   text == null || child == null,
   ), padding = padding ?? EdgeInsets.symmetric(
     horizontal: 20.0.w, vertical: 10.0.h,
-  ), backgroundColor = backgroundColor ?? FTheme.grey,
+  ), backgroundColor = backgroundColor ?? FTheme.darkGrey,
         textColor = textColor ?? (fill ? FTheme.white : FTheme.black),
         super(key: key);
 
@@ -76,26 +76,29 @@ class _FButtonState extends State<FButton> {
       child: GestureDetector(
         onTapDown: onTapDown,
         onTapUp: onTapUp,
-        child: Container(
-          height: widget.height?.h,
-          padding: widget.padding,
-          constraints: widget.multiple ? null : widget.constraints ?? BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width,
-          ),
-          decoration: BoxDecoration(
-            color: widget.fill ? widget.backgroundColor : Colors.transparent,
-            border: widget.border
-                ? Border.all(color: FTheme.black, width: .5)
-                : const Border(),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (widget.stretch) const Expanded(child: SizedBox()),
-              widget.child ?? FText(widget.text!, color: widget.textColor, style: textTheme.titleMedium),
-              if (widget.stretch) const Expanded(child: SizedBox()),
-            ],
+        child: Material(
+          color: widget.fill ? widget.backgroundColor : Colors.transparent,
+          borderRadius: BorderRadius.circular(15.0),
+          child: Container(
+            height: widget.height?.h,
+            padding: widget.padding,
+            constraints: widget.multiple ? null : widget.constraints ?? BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width,
+            ),
+            decoration: BoxDecoration(
+              border: widget.border
+                  ? Border.all(color: FTheme.black, width: .5)
+                  : const Border(),
+              borderRadius: BorderRadius.circular(15.0),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (widget.stretch) const Expanded(child: SizedBox()),
+                widget.child ?? FText(widget.text!, color: widget.textColor, style: textTheme.titleMedium),
+                if (widget.stretch) const Expanded(child: SizedBox()),
+              ],
+            ),
           ),
         ),
       ),

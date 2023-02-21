@@ -38,7 +38,7 @@ class CarouselView extends StatelessWidget {
     Size screenSize = MediaQuery.of(context).size;
     String asset = 'assets/image/page/edit_goal/';
 
-    return GetBuilder<EditGoal>(
+    return GetBuilder<EditGoalP>(
       builder: (controller) {
         return Stack(
           children: [
@@ -64,7 +64,7 @@ class CarouselView extends StatelessWidget {
                     child: Container(
                       constraints: BoxConstraints(minWidth: screenSize.width),
                       child: CarouselSlider(
-                        carouselController: EditGoal.carouselCont,
+                        carouselController: EditGoalP.carouselCont,
                         items: carouselWidgets().map((widget) => Container(
                           padding: const EdgeInsets.symmetric(
                             horizontal: 30.0,
@@ -123,9 +123,9 @@ class GoalNumberPicker extends StatefulWidget {
 class _GoalNumberPickerState extends State<GoalNumberPicker> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EditGoal>(
-      builder: (controller) {
-        Record record = controller.user.getGoal(widget.type)!;
+    return GetBuilder<EditGoalP>(
+      builder: (editGoalP) {
+        Record record = editGoalP.userRecord.getGoal(widget.type)!;
         record.convert(ExerciseUnit.minute);
 
         Record lessRecord = Record.init(
@@ -151,13 +151,13 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
                     : Colors.transparent,
               ),
               onPressed: () {
-                controller.user.setGoal(widget.type, greaterRecord);
+                editGoalP.userRecord.setGoal(widget.type, greaterRecord);
                 setState(() {});
               },
             ),
             NumberPicker(
               onChanged: (val) {
-                controller.user.setGoal(
+                editGoalP.userRecord.setGoal(
                   widget.type,
                   Record.init(
                     widget.type,
@@ -165,7 +165,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
                     ExerciseUnit.minute,
                   ),
                 );
-                controller.update();
+                editGoalP.update();
               },
               itemCount: widget.itemCount,
               itemWidth: widget.itemWidth,
@@ -173,7 +173,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
               value: record.amount.round(),
               minValue: widget.minValue,
               maxValue: widget.maxValue,
-              textStyle: widget.style?.apply(color: FTheme.grey),
+              textStyle: widget.style?.apply(color: FTheme.darkGrey),
               selectedTextStyle: widget.style?.apply(color: widget.color),
             ),
             IconButton(
@@ -185,7 +185,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
                     : Colors.transparent,
               ),
               onPressed: () {
-                controller.user.setGoal(widget.type, lessRecord);
+                editGoalP.userRecord.setGoal(widget.type, lessRecord);
                 setState(() {});
               },
             ),
@@ -201,13 +201,13 @@ class DistanceRecommendView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EditGoal>(
-      builder: (controller) {
-        int ageGroup = today.difference(controller.user.dateOfBirth!).inDays;
+    return GetBuilder<EditGoalP>(
+      builder: (editGoalP) {
+        int ageGroup = today.difference(editGoalP.userInfo.dateOfBirth!).inDays;
         List<int> recommendTimes = [];
         ageGroup = (ageGroup / 3650).floor() * 10;
 
-        ageGroup < 60 && controller.user.sex == Sex.male;
+        ageGroup < 60 && editGoalP.userInfo.sex == Sex.male;
 
         if (ageGroup < 20) {
           recommendTimes = [60];
@@ -221,7 +221,7 @@ class DistanceRecommendView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             FTexts(
-              ['$ageGroup', '대 ', controller.user.sex!.kr, ' 평균'],
+              ['$ageGroup', '대 ', editGoalP.userInfo.sex!.kr, ' 평균'],
               colors: const [
                 FTheme.colorA, FTheme.black,
                 FTheme.colorA, FTheme.black,
@@ -253,9 +253,9 @@ class DistanceGoalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EditGoal>(
-      builder: (controller) {
-        DistanceRecord distance = controller.user.getGoal(
+    return GetBuilder<EditGoalP>(
+      builder: (editGoalP) {
+        DistanceRecord distance = editGoalP.userRecord.getGoal(
           ActivityType.distance,
         ) as DistanceRecord;
 
@@ -328,7 +328,7 @@ class DistanceGoalView extends StatelessWidget {
                 ),
                 FTexts(
                   ['* 약 ', '${toLocalString(step)}보 (${kilometer}km)'],
-                  colors: const [FTheme.grey, FTheme.colorB],
+                  colors: const [FTheme.darkGrey, FTheme.colorB],
                   space: false,
                   alignment: MainAxisAlignment.end,
                 ),
@@ -369,9 +369,9 @@ class HeightGoalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EditGoal>(
-      builder: (controller) {
-        HeightRecord goal = controller.user.getGoal(
+    return GetBuilder<EditGoalP>(
+      builder: (editGoalP) {
+        HeightRecord goal = editGoalP.userRecord.getGoal(
           ActivityType.height,
         ) as HeightRecord;
 
@@ -430,7 +430,7 @@ class HeightGoalView extends StatelessWidget {
                 const SizedBox(height: 10.0),
                 FTexts(
                   ['* 수명 약', timeToString((100 * goal.amount).round()), '연장'],
-                  colors: [FTheme.grey, ActivityType.height.color, FTheme.grey],
+                  colors: [FTheme.darkGrey, ActivityType.height.color, FTheme.darkGrey],
                   alignment: MainAxisAlignment.start,
                 ),
               ],
@@ -458,20 +458,20 @@ class CalorieCheckView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EditGoal>(
-      builder: (controller) {
-        CalorieRecord goal = controller.user.getGoal(
+    return GetBuilder<EditGoalP>(
+      builder: (editGoalP) {
+        CalorieRecord goal = editGoalP.userRecord.getGoal(
           ActivityType.calorie,
         ) as CalorieRecord;
 
         String distanceTitle = LevelPresenter.getTier(
           ActivityType.distance,
-          controller.user.getGoal(ActivityType.distance)!,
+          editGoalP.userRecord.getGoal(ActivityType.distance)!,
         )['current'].title;
 
         String heightTitle = LevelPresenter.getTier(
           ActivityType.height,
-          controller.user.getGoal(ActivityType.height)!,
+          editGoalP.userRecord.getGoal(ActivityType.height)!,
         )['current'].title;
 
         TextStyle? style(Color color) =>
@@ -558,7 +558,7 @@ class CarouselButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<EditGoal>(
+    return GetBuilder<EditGoalP>(
       builder: (controller) {
         bool lastPage = controller.pageIndex == CarouselView.widgetCount - 1;
 

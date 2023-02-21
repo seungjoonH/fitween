@@ -1,3 +1,5 @@
+import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/number.dart';
@@ -31,7 +33,7 @@ class ExerciseInput extends GetxController {
 
   // 텍스트 입력 필드 값 유효 여부 반환
   Future<bool> validate(ActivityType type) async {
-    FUser user = Get.find<UserP>().loggedUser;
+    FUserRecord user = Get.find<UserRecordP>().loggedUser;
     String text = inputCont.text;
 
     Map<ActivityType, int> limit = {
@@ -74,7 +76,7 @@ class ExerciseInput extends GetxController {
 
   // 완료 버튼 클릭 시
   Future completeButtonPressed(ActivityType type) async {
-    final userP = Get.find<UserP>();
+    final userP = Get.find<UserRecordP>();
     final homeP = Get.find<HomePresenter>();
 
     if (!await validate(type)) return;

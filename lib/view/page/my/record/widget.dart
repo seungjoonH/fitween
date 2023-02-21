@@ -1,3 +1,7 @@
+import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,9 +32,10 @@ class MyRecordDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FUserInfo userInfo = Get.find<UserInfoP>().loggedUser;
+    FUserRecord userRecord = Get.find<UserRecordP>().loggedUser;
 
-    FUser loggedUser = Get.find<UserP>().loggedUser;
-    double amount = loggedUser.getAmounts(type);
+    double amount = userRecord.getAmounts(type);
     Record record = Record.init(type, amount, ExerciseUnit.step);
 
     Map<String, dynamic> tier = LevelPresenter.getTier(type, record);
@@ -101,12 +106,12 @@ class MyRecordDetailView extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      FTexts(['${loggedUser.nickname}', '님은'],
+                      FTexts(['${userInfo.nickname}', '님은'],
                         colors: const [FTheme.colorD, FTheme.black],
                         style: textTheme.headlineMedium,
                       ),
                       FTexts([
-                        '총 ', '${loggedUser.getAmounts(type).round()}${type.unitAlt}',
+                        '총 ', '${userRecord.getAmounts(type).round()}${type.unitAlt}',
                         '${eulReul(type.unitAlt)} ${type.did}',
                       ], colors: [FTheme.black, type.color, FTheme.black],
                         style: textTheme.headlineMedium,

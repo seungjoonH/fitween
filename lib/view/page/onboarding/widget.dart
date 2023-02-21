@@ -61,7 +61,7 @@ class _CarouselViewState extends State<CarouselView> {
                               maxLines: 3,
                               style: textTheme.headlineSmall,
                               align: TextAlign.center,
-                              color: FTheme.grey,
+                              color: FTheme.darkGrey,
                             ),
                             if (index == 3)
                             Padding(
@@ -139,7 +139,7 @@ class CarouselIndicator extends StatelessWidget {
           position: controller.pageIndex.toDouble(),
           decorator: DotsDecorator(
             color: FTheme.lightGrey,
-            activeColor: FTheme.grey,
+            activeColor: FTheme.darkGrey,
             size: const Size(10.0, 10.0),
             activeSize: const Size(150.0, 10.0),
             activeShape: RoundedRectangleBorder(

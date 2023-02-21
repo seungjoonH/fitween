@@ -25,7 +25,7 @@ class TimeAttackMainPageView extends StatelessWidget {
           FText(
             '자세 인식',
             style: FTheme.textTheme.titleLarge,
-            color: FTheme.grey,
+            color: FTheme.darkGrey,
           ),
           SizedBox(
             height: 13,

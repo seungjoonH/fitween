@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fitween/view/page/calendar/main/utils.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
@@ -6,6 +8,7 @@ import 'package:fitween/presenter/page/record/detail.dart';
 import 'package:fitween/presenter/page/record/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -88,134 +91,18 @@ class CalendarCard extends StatelessWidget {
   }
 }
 
-class MyCalendarView extends StatelessWidget {
-  const MyCalendarView({Key? key}) : super(key: key);
+// MyCalendarView
+class MyCalendarView extends StatefulWidget {
+  const MyCalendarView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return GetBuilder<RecordMain>(builder: (controller) {
-      return Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('오늘의 기록', style: textTheme.labelLarge),
-            // Column(
-            //   children: ActivityType.activeValues
-            //       .map((type) => CalendarCard(type: type))
-            //       .toList(),
-            // ),
-            // Container(
-            //   margin: const EdgeInsets.symmetric(horizontal: 15.0),
-            //   width: 330.0,
-            //   height: 110.0,
-            //   child: Card(
-            //     color: const Color(0xfffbf8f1),
-            //     child: Row(
-            //       children: [
-            //         Container(
-            //           width: 100.0,
-            //           height: 100.0,
-            //           padding: const EdgeInsets.all(5.0),
-            //           decoration: const BoxDecoration(
-            //             // color: Colors.white,
-            //             borderRadius: BorderRadius.only(
-            //               topLeft: Radius.circular(10.0),
-            //               bottomLeft: Radius.circular(10.0),
-            //             ),
-            //           ),
-            //           child: SvgPicture.asset('assets/image/object/namhansanseong.svg'),
-            //         ),
-            //         Expanded(
-            //           child: Container(
-            //             padding: const EdgeInsets.all(10.0),
-            //             child: Column(
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: [
-            //                 const Text('오늘 이동한 거리', style: TextStyle(fontSize: 12.0)),
-            //                 const Text('남한산성', style: TextStyle(fontSize: 22.0)),
-            //                 const Text('다음 단계 : 마라톤 풀코스 까지', style: TextStyle(fontSize: 12.0)),
-            //                 Expanded(
-            //                   child: LinearPercentIndicator(
-            //                     percent: .9,
-            //                     padding: EdgeInsets.zero,
-            //                     lineHeight: 12.0,
-            //                     barRadius: const Radius.circular(6.0),
-            //                     progressColor: const Color(0xff54bab9),
-            //                   ),
-            //                 ),
-            //               ],
-            //             ),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            // Container(
-            //   margin: const EdgeInsets.symmetric(horizontal: 15.0),
-            //   width: 330.0,
-            //   height: 110.0,
-            //   child: Card(
-            //     color: const Color(0xfffbf8f1),
-            //     child: Row(
-            //       children: [
-            //         Container(
-            //           width: 100.0,
-            //           height: 100.0,
-            //           padding: const EdgeInsets.all(5.0),
-            //           decoration: const BoxDecoration(
-            //             // color: Colors.white,
-            //             borderRadius: BorderRadius.only(
-            //               topLeft: Radius.circular(10.0),
-            //               bottomLeft: Radius.circular(10.0),
-            //             ),
-            //           ),
-            //           child: SvgPicture.asset('assets/image/object/eiffel_tower.svg'),
-            //         ),
-            //         Expanded(
-            //           child: Container(
-            //             padding: const EdgeInsets.all(10.0),
-            //             child: Column(
-            //               crossAxisAlignment: CrossAxisAlignment.start,
-            //               children: [
-            //                 const Text('오늘 오른 계단 높이', style: TextStyle(fontSize: 12.0)),
-            //                 const Text('에펠탑', style: TextStyle(fontSize: 22.0)),
-            //                 const Text('다음 단계 : 엠파이어 스테이트 빌딩 까지', style: TextStyle(fontSize: 12.0)),
-            //                 Expanded(
-            //                   child: LinearPercentIndicator(
-            //                     percent: .2,
-            //                     padding: EdgeInsets.zero,
-            //                     lineHeight: 12.0,
-            //                     barRadius: const Radius.circular(6.0),
-            //                     progressColor: const Color(0xff54bab9),
-            //                   ),
-            //                 ),
-            //               ],
-            //             ),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-          ],
-        ),
-      );
-    });
-  }
+  State<MyCalendarView> createState() => _MyCalendarViewState();
 }
 
-class TableEventsExample extends StatefulWidget {
-  @override
-  _TableEventsExampleState createState() => _TableEventsExampleState();
-}
-
-class _TableEventsExampleState extends State<TableEventsExample> {
+class _MyCalendarViewState extends State<MyCalendarView> {
   late final ValueNotifier<List<Event>> _selectedEvents;
-  CalendarFormat _calendarFormat = CalendarFormat.month;
-  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode
-      .toggledOff; // Can be toggled on/off by longpressing a date
+  final CalendarFormat _calendarFormat = CalendarFormat.month;
+  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOff;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   DateTime? _rangeStart;
@@ -237,7 +124,7 @@ class _TableEventsExampleState extends State<TableEventsExample> {
 
   List<Event> _getEventsForDay(DateTime day) {
     // Implementation example
-    return kEvents[day] ?? [];
+    return userData[day] ?? [];
   }
 
   List<Event> _getEventsForRange(DateTime start, DateTime end) {
@@ -282,71 +169,178 @@ class _TableEventsExampleState extends State<TableEventsExample> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('TableCalendar - Events'),
-      ),
-      body: Column(
+  Color colorSelector(List<Event> event, int index) {
+    if (event[0].goal <= event[0].amount &&
+        event[1].goal <= event[1].amount &&
+        event[2].goal <= event[2].amount) {
+      return Colors.green;
+    } else if (index == 0 && event[0].goal <= event[0].amount) {
+      return Colors.red;
+    } else if (index == 1 && event[1].goal <= event[1].amount) {
+      return Colors.blue;
+    } else if (index == 2 && event[2].goal <= event[2].amount) {
+      return Colors.orange;
+    } else {
+      return Colors.grey;
+    }
+  }
+
+  Widget percentView(List<Event> events, int index) {
+    String unit = '';
+    switch (index) {
+      case 0:
+        unit = '보';
+        break;
+      case 1:
+        unit = '층';
+        break;
+      case 2:
+        unit = '회';
+        break;
+    }
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          TableCalendar<Event>(
-            firstDay: kFirstDay,
-            lastDay: kLastDay,
-            focusedDay: _focusedDay,
-            selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-            rangeStartDay: _rangeStart,
-            rangeEndDay: _rangeEnd,
-            calendarFormat: _calendarFormat,
-            rangeSelectionMode: _rangeSelectionMode,
-            eventLoader: _getEventsForDay,
-            startingDayOfWeek: StartingDayOfWeek.monday,
-            calendarStyle: CalendarStyle(
-              // Use `CalendarStyle` to customize the UI
-              outsideDaysVisible: false,
-            ),
-            onDaySelected: _onDaySelected,
-            onRangeSelected: _onRangeSelected,
-            onFormatChanged: (format) {
-              if (_calendarFormat != format) {
-                setState(() {
-                  _calendarFormat = format;
-                });
-              }
-            },
-            onPageChanged: (focusedDay) {
-              _focusedDay = focusedDay;
-            },
-          ),
-          const SizedBox(height: 8.0),
-          Expanded(
-            child: ValueListenableBuilder<List<Event>>(
-              valueListenable: _selectedEvents,
-              builder: (context, value, _) {
-                return ListView.builder(
-                  itemCount: value.length,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 12.0,
-                        vertical: 4.0,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(),
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: ListTile(
-                        onTap: () => print('${value[index]}'),
-                        title: Text('${value[index]}'),
-                      ),
-                    );
+          LinearPercentIndicator(
+            width: MediaQuery.of(context).size.width - 110,
+            lineHeight: 30.0,
+            percent: min(events[index].amount / events[index].goal, 1),
+            // center: Text('${events[index].amount / events[index].goal * 100}%'),
+            barRadius: const Radius.circular(5),
+            progressColor: colorSelector(events, index),
+            trailing: IconButton(
+              onPressed: () {
+                setState(
+                  () {
+                    int temp = events[index].amount;
+                    events[index].amount = events[index].goal;
+                    events[index].goal = temp;
                   },
                 );
               },
+              icon: const Icon(Icons.add),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Text(
+              '${events[index].amount} / ${events[index].goal} $unit',
+              style: TextStyle(
+                color: colorSelector(events, index),
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Card(
+            child: TableCalendar<Event>(
+              firstDay: kFirstDay,
+              lastDay: kLastDay,
+              focusedDay: _focusedDay,
+              selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+              rangeStartDay: _rangeStart,
+              rangeEndDay: _rangeEnd,
+              calendarFormat: _calendarFormat,
+              rangeSelectionMode: _rangeSelectionMode,
+              eventLoader: _getEventsForDay,
+              startingDayOfWeek: StartingDayOfWeek.monday,
+              daysOfWeekHeight: 20.0,
+              calendarStyle: const CalendarStyle(
+                isTodayHighlighted: true,
+                cellMargin: EdgeInsets.all(2.0),
+                cellAlignment: Alignment.center,
+              ),
+              calendarBuilders: CalendarBuilders(
+                defaultBuilder: (BuildContext context, date, events) {
+                  return Container(
+                    alignment: Alignment.center,
+                    child: Text(
+                      date.day.toString(),
+                      style: TextStyle(
+                        color: _getEventsForDay(date).elementAt(0).amount >=
+                                    _getEventsForDay(date).elementAt(0).goal &&
+                                _getEventsForDay(date).elementAt(1).amount >=
+                                    _getEventsForDay(date).elementAt(1).goal &&
+                                _getEventsForDay(date).elementAt(2).amount >=
+                                    _getEventsForDay(date).elementAt(2).goal
+                            ? Colors.green
+                            : Colors.black,
+                      ),
+                    ),
+                  );
+                },
+                markerBuilder: (BuildContext context, date, events) {
+                  if (events.isEmpty) return const SizedBox();
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: events.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        margin: const EdgeInsets.only(top: 28),
+                        padding: const EdgeInsets.all(1),
+                        child: Container(
+                          width: 8,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: colorSelector(events, index),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
+              onDaySelected: _onDaySelected,
+              onRangeSelected: _onRangeSelected,
+              onPageChanged: (focusedDay) {
+                _focusedDay = focusedDay;
+              },
+              headerStyle: const HeaderStyle(
+                formatButtonVisible: false,
+                titleCentered: true,
+              ),
+              locale: 'ko_Kr',
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Card(
+            child: ValueListenableBuilder<List<Event>>(
+              valueListenable: _selectedEvents,
+              builder: (context, value, _) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(24.0, 12.0, 0.0, 0.0),
+                      child: Text(
+                        DateFormat('MM' '월 ' 'dd' '일').format(_focusedDay),
+                      ),
+                    ),
+                    percentView(value, 0),
+                    percentView(value, 1),
+                    percentView(value, 2),
+                    const SizedBox(height: 12.0),
+                  ],
+                );
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
