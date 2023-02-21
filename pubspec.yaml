@@ -113,6 +113,7 @@ flutter:
     - assets/json/data/level/
     - assets/image/page/register/
     - assets/rive/input/
+    - assets/image/page/achievement/
 
   fonts:
     - family: BMJUA

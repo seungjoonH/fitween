@@ -102,7 +102,7 @@ class FriendP extends GetxController {
 
     Get.dialog(
       PAlertDialog(
-        title: '친구 별명 입력',
+        title: '친구 추가',
         content: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 10.0, vertical: 20.0,
@@ -126,6 +126,7 @@ class FriendP extends GetxController {
         ),
         type: DialogType.bi,
         leftPressed: Get.back,
+        rightText: '추가하기',
         rightPressed: friendInfoSubmitted,
       ),
     );

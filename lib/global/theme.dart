@@ -1,6 +1,7 @@
 /* 테마 관련 */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 /// global variables
@@ -256,11 +257,11 @@ class FTheme {
   /// typography
   static const fontFamily = 'Pretendard';
 
-  static TextStyle largeText = const TextStyle(
+  static TextStyle largeText = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w700,
-    fontSize: 100.0,
-    height: (64 / 57),
+    fontSize: 100.0.sp,
+    height: (64 / 57).h,
   );
 
   static TextTheme textTheme = const TextTheme(

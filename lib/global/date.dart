@@ -14,11 +14,12 @@ late Duration timeError;
 // 시간 오차 설정
 void setTimeError() async {
   timeError = (await NTP.now()).difference(DateTime.now());
+  print(timeError);
 }
 
 // 현재 시각
-// DateTime get now => DateTime.now().add(timeError);
-DateTime get now => DateTime.now();
+DateTime get now => DateTime.now().add(timeError);
+// DateTime get now => DateTime.now();
 
 // 오늘 날짜 (시간 미포함)
 DateTime get today => ignoreTime(now);

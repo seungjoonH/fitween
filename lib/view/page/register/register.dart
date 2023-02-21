@@ -25,7 +25,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
           return Scaffold(
             backgroundColor: FTheme.white,
-            extendBodyBehindAppBar: registerP.pageIndex > 1,
+            // extendBodyBehindAppBar: registerP.pageIndex > 1,
             appBar: FAppBar(
               title: registerP.pageIndex < 2 ? '정보 입력' : null,
               leading: IconButton(

@@ -12,12 +12,12 @@ class Event {
   String toString() => title;
 }
 
-class Record {
+class Records {
   List<Exercise> distance;
   List<Exercise> height;
   List<Exercise> weight;
 
-  Record(this.distance, this.height, this.weight);
+  Records(this.distance, this.height, this.weight);
 }
 
 class Exercise {
@@ -53,7 +53,7 @@ List<DateTime> daysInRange(DateTime first, DateTime last) {
 }
 
 LinkedHashMap<DateTime, List<Event>> insetData(
-    LinkedHashMap<DateTime, List<Event>> kEvents, Record example) {
+    LinkedHashMap<DateTime, List<Event>> kEvents, Records example) {
   for (int i = 0; i < example.distance.length; i++) {
     kEvents[example.distance.elementAt(i).date]?.elementAt(0).amount =
         example.distance.elementAt(i).amount;
@@ -72,7 +72,7 @@ LinkedHashMap<DateTime, List<Event>> insetData(
 final kToday = DateTime.now();
 final kFirstDay = DateTime(kToday.year - 5, kToday.month, kToday.day);
 final kLastDay = DateTime(kToday.year + 5, kToday.month, kToday.day);
-final example = Record(
+final example = Records(
   [
     Exercise(
       20,
