@@ -61,6 +61,7 @@ class _FButtonState extends State<FButton> {
     onTapUp = widget.onPressed == null ? null : (_) async {
       widget.onPressed!();
       await Future.delayed(duration, () {
+        if (!mounted) return;
         setState(() => scale = 1.0);
       });
     };

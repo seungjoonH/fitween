@@ -15,7 +15,7 @@ import '../page/challenge/time_attack/time_attack_camera.dart';
 class PainterPresenter extends GetxController {
   static Orientation orientation = Orientation.portrait;
   static double get screenRatio {
-    const ratio = 3 / 4;
+    const ratio = 4 / 6;
     if (orientation == Orientation.portrait) return ratio;
     return 1 / ratio;
   }

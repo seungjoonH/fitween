@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:fitween/presenter/page/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -28,8 +29,12 @@ class CameraPainterView extends StatelessWidget {
             onScaleUpdate: cameraP.setZoomLevel,
             child: CustomPaint(
               foregroundPainter: painter,
-              child: CameraPreview(
-                cameraP.cameraController!,
+              child: SizedBox(
+                width: HomeP.screenSize.width,
+                height: HomeP.screenSize.height,
+                child: CameraPreview(
+                  cameraP.cameraController!,
+                ),
               ),
             ),
           );
@@ -50,19 +55,27 @@ class FloatingMessageWidget extends StatelessWidget {
     return GetBuilder<PainterPresenter>(
         builder: (painterP) {
           return Positioned(
-            bottom: 30.0.h,
+            top: 150.0.h,
             child: Container(
-              alignment: Alignment.center,
+              alignment: Alignment.centerLeft,
               width: PainterPresenter.canvasSize.width * .8,
-              height: 70.0.h,
+              height: 80.0.h,
               constraints: const BoxConstraints(maxWidth: 340.0),
               decoration: BoxDecoration(
                 color: FTheme.white.withOpacity(.6),
                 borderRadius: BorderRadius.circular(20.0),
               ),
-              child: FText(
-                painterP.floatingMessage!,
-                style: textTheme.headlineSmall,
+              child: Column(
+                children: [
+                  FText(
+                    '자세를 인식할게요',
+                    style: textTheme.headlineLarge,
+                  ),
+                  FText(
+                    painterP.floatingMessage!,
+                    style: textTheme.headlineSmall,
+                  ),
+                ],
               ),
             ),
           );
@@ -83,7 +96,7 @@ class ExerciseCompleteButton extends StatelessWidget {
             child: PButton(
               height: 80.h,
               stretch: true,
-              constraints: BoxConstraints(maxWidth: 300.0.w),
+              constraints: BoxConstraints(maxWidth: 380.0.w),
               backgroundColor: FTheme.colorD,
               onPressed: workoutMain.finishWorkout,
               child: Text('${workoutMain.count} 개로 운동 완료하기',
