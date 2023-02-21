@@ -39,6 +39,7 @@ class SignInButton extends StatelessWidget {
         }
         AuthPresenter.fLogin(type);
       },
+      border: true,
       backgroundColor: backgroundColors[type],
       child: Container(
         width: 220.0.w,
