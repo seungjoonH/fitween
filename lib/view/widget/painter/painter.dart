@@ -89,18 +89,18 @@ class LimbPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 
   void renderEdge(Canvas canvas, Limb limb) {
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(
-        Rect.fromCenter(
-          center: Offset(
-            PainterPresenter.canvasSize.width * .5,
-            PainterPresenter.canvasSize.height * .55,
-          ),
-          width: PainterPresenter.canvasSize.width * .5,
-          height: PainterPresenter.canvasSize.height * .75,
-        ), const Radius.circular(40.0),
-      ), area,
-    );
+    // canvas.drawRRect(
+    //   RRect.fromRectAndRadius(
+    //     Rect.fromCenter(
+    //       center: Offset(
+    //         PainterPresenter.canvasSize.width * .5,
+    //         PainterPresenter.canvasSize.height * .5,
+    //       ),
+    //       width: PainterPresenter.canvasSize.width * .5,
+    //       height: PainterPresenter.canvasSize.height * .6,
+    //     ), const Radius.circular(40.0),
+    //   ), area,
+    // );
 
     bool isHuman = Parts(painterP.inferences).isHuman;
 
