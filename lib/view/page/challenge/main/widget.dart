@@ -221,17 +221,17 @@ class ChallengeCardView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: FText('참여 중인 챌린지'),
               ),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: ChallengeP.orderedChallenges.length,
-                itemBuilder: (_, index) {
-                  return ChallengeCard(
-                    challenge: ChallengeP.orderedChallenges[index],
-                  );
-                },
-                separatorBuilder: (_, index) => SizedBox(height: 30.0.h),
-              ),
+              // ListView.separated(
+              //   shrinkWrap: true,
+              //   physics: const NeverScrollableScrollPhysics(),
+              //   itemCount: ChallengeP.orderedChallenges.length,
+              //   itemBuilder: (_, index) {
+              //     return ChallengeCard(
+              //       challenge: ChallengeP.orderedChallenges[index],
+              //     );
+              //   },
+              //   separatorBuilder: (_, index) => SizedBox(height: 30.0.h),
+              // ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: FText('새로운 챌린지'),
@@ -284,8 +284,11 @@ class ChallengeCardView extends StatelessWidget {
                 itemCount: ChallengeP.orderedChallenges.length,
                 itemBuilder: (_, index) {
                   return InkWell(
-                    onTap: () => ChallengeDetail.toChallengeDetail(
-                        ChallengeP.orderedChallenges[index]),
+                    onTap: () {
+                      ChallengeDetail.toChallengeDetail(
+                        ChallengeP.orderedChallenges[index],
+                      );
+                    },
                     child: ChallengeCard(
                       challenge: ChallengeP.orderedChallenges[index],
                     ),
@@ -334,11 +337,14 @@ class ChallengeCard extends StatelessWidget {
                   color: FTheme.lightGrey,
                 )
               else
-                Image.asset(
-                  challenge.imageUrls['default'],
-                  width: 100.0.w,
-                  height: 100.0.h,
-                  fit: BoxFit.cover,
+                Hero(
+                  tag: '${challenge.id}',
+                  child: Image.asset(
+                    challenge.imageUrls['default'],
+                    width: 100.0.w,
+                    height: 100.0.h,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               Expanded(
                 child: Padding(

@@ -60,7 +60,7 @@ class PRoute {
         // '/record/main': const RecordMainPage(),
         // '/record/detail': const RecordDetailPage(),
         // '/challenge/main': const ChallengeMainPage(),
-        // '/challenge/detail': const ChallengeDetailPage(),
+        '/challenge/detail': const ChallengeDetailPage(),
         // '/challenge/create': const ChallengeCreatePage(),
         // '/challenge/party/complete': const ChallengePartyCompletePage(),
         // '/challenge/party/main': const ChallengePartyMainPage(),
@@ -78,12 +78,14 @@ class PRoute {
       };
 
   // 겟페이지 리스트
-  static List<GetPage> get getPages => pages.entries
-      .map((page) => GetPage(
-            name: page.key,
-            page: () => page.value,
-            transition: transition,
-            transitionDuration: duration,
-          ))
-      .toList();
+  static List<GetPage> get getPages => pages.entries.map((page) {
+        return GetPage(
+          name: page.key,
+          page: () => page.value,
+          transition: transition,
+          transitionDuration: page.key == '/challenge/detail'
+              ? const Duration(milliseconds: 500)
+              : duration,
+        );
+      }).toList();
 }
