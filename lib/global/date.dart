@@ -17,8 +17,8 @@ void setTimeError() async {
 }
 
 // 현재 시각
-DateTime get now => DateTime.now().add(timeError);
-// DateTime get now => DateTime.now();
+// DateTime get now => DateTime.now().add(timeError);
+DateTime get now => DateTime.now();
 
 // 오늘 날짜 (시간 미포함)
 DateTime get today => ignoreTime(now);
@@ -31,8 +31,9 @@ final tomorrow = today.add(const Duration(days: 1));
 
 /// global functions
 DateTime oneSecondBefore(DateTime date) => date.subtract(const Duration(seconds: 1));
+DateTime nextDay(DateTime date) => oneSecondBefore(date.add(const Duration(days: 1)));
 
-bool isSameDay(DateTime date1, DateTime date2) {
+bool isSameDate(DateTime date1, DateTime date2) {
   return date1.year == date2.year
       && date1.month == date2.month
       && date1.day == date2.day;
@@ -80,4 +81,11 @@ String timeToString(int timeInSecs) {
   if (seconds > 0 || (days + hours + minutes == 0)) output.add('$seconds초');
 
   return output.join(' ');
+}
+
+List<DateTime> daysInRange(DateTime first, DateTime last) {
+  final dayCount = last.difference(first).inDays + 1;
+  return List.generate(
+    dayCount, (index) => DateTime.utc(first.year, first.month, first.day + index),
+  );
 }

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:custom_timer/custom_timer.dart';
 import 'package:fitween/view/page/challenge/time_attack/time_attack_camera/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

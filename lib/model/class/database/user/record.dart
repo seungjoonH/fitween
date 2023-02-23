@@ -1,16 +1,13 @@
 /* 사용자 모델 구조 */
 
-import 'dart:math';
+import 'dart:collection';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get.dart';
 import 'package:fitween/global/date.dart';
-import 'package:fitween/model/class/database/collection.dart';
-import 'package:fitween/model/class/database/party.dart';
+import 'package:fitween/global/number.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
-import 'package:fitween/model/enum/sex.dart';
 import 'package:fitween/presenter/model/record.dart';
+import 'package:fitween/presenter/page/calendar.dart';
 
 class FUserRecord {
   /// attributes
@@ -179,6 +176,7 @@ class FUserRecord {
       ]) {
     double result = 0;
 
+    if (startDate != null && endDate == null) endDate = nextDay(startDate);
     inputRecords.forEach((type, recordList) {
       if (activityType.name == type) {
         for (var record in recordList) {
@@ -216,6 +214,62 @@ class FUserRecord {
       }
     });
     return result;
+  }
+
+  LinkedHashMap<DateTime, List<CalendarEvent>> getEvents(
+    DateTime startDate, DateTime endDate,
+  ) {
+    // LinkedHashMap<DateTime, List<CalendarEvent>> events = LinkedHashMap(
+    //   equals: isSameDate,
+    //   hashCode: (key) => key.day * 1000000 + key.month * 10000 + key.year,
+    // )..addAll({
+    //   for (var item in List.generate(endDate.difference(startDate).inDays, (index) => index))
+    //     DateTime.utc(startDate.year, startDate.month, item):
+    //     List.generate(3, (index) => CalendarEvent(.0, .0))
+    // });
+
+    List<CalendarEvent> eventValues = [
+      for (ActivityType type in ActivityType.activeValues)
+      CalendarEvent(getGoal(type)?.amount ?? 1.0, .0),
+    ];
+
+    LinkedHashMap<DateTime, List<CalendarEvent>> events = LinkedHashMap.from({
+      for (DateTime date in daysInRange(startDate, endDate))
+      ignoreTime(date) : eventValues,
+    });
+
+    for (DateTime date in daysInRange(startDate, endDate)) {
+      events[ignoreTime(date)] = ActivityType.activeValues.map((type) {
+        double goal = getGoal(type)?.amount ?? 1.0;
+        double amount = getAmounts(type, date);
+        return CalendarEvent(goal, amount);
+      }).toList();
+    }
+
+    // inputRecords.forEach((typeString, recordList) {
+    //   ActivityType type = ActivityType.toEnum(typeString)!;
+    //   if (type == ActivityType.calorie) return;
+    //
+    //   for (var record in recordList) {
+    //     DateTime date = record['date'].toDate();
+    //     if (date.isBefore(startDate)) continue;
+    //     if (date.isAfter(endDate)) continue;
+    //     events[date]![type.index - 1].amount += record['amount'];
+    //   }
+    // });
+    // records.forEach((typeString, recordList) {
+    //   ActivityType type = ActivityType.toEnum(typeString)!;
+    //   if (type == ActivityType.calorie) return;
+    //
+    //   for (var record in recordList) {
+    //     DateTime date = record['date'].toDate();
+    //     if (date.isBefore(startDate)) continue;
+    //     if (date.isAfter(endDate)) continue;
+    //     events[date]![type.index - 1].amount += record['amount'];
+    //   }
+    // });
+
+    return events;
   }
 
   Record? getGoal(ActivityType type) {

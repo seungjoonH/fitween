@@ -7,7 +7,6 @@ import 'package:fitween/global/date.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/model/record.dart';
-import 'package:fitween/presenter/model/user.dart';
 
 class HealthPresenter {
   /// static variables

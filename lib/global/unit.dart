@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:fitween/global/number.dart';
 import 'package:fitween/model/class/exercises.dart';
 import 'package:fitween/model/enum/activity_type.dart';
-import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/page/register.dart';
 
 // 사용자의 체중

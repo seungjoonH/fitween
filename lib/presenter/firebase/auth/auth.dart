@@ -16,7 +16,6 @@ import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:fitween/main.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/enum/login_type.dart';
 import 'package:fitween/presenter/firebase/auth/apple.dart';
 import 'package:fitween/presenter/firebase/auth/google.dart';

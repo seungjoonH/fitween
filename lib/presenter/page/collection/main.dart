@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:fitween/model/class/database/collection.dart';
 import 'package:fitween/model/enum/page_mode.dart';
 import 'package:fitween/presenter/global.dart';
-import 'package:fitween/presenter/model/user.dart';
 
 /// class
 class CollectionMainP extends GetxController {

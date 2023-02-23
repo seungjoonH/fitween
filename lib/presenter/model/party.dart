@@ -7,9 +7,7 @@ import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/party.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/class/database/party.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/presenter/firebase/firebase.dart';
-import 'package:fitween/presenter/model/user.dart';
 
 /// class
 // 파이어베이스 파티 관련

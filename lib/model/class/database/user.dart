@@ -1,26 +1,24 @@
 /* 사용자 모델 구조 */
 
-import 'dart:math';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fitween/model/class/database/user/collection.dart';
-import 'package:fitween/model/class/database/user/friend.dart';
-import 'package:fitween/model/class/database/user/info.dart';
-import 'package:fitween/model/class/database/user/party.dart';
-import 'package:fitween/model/class/database/user/record.dart';
-import 'package:fitween/presenter/model/user/collection.dart';
-import 'package:fitween/presenter/model/user/friend.dart';
-import 'package:fitween/presenter/model/user/info.dart';
-import 'package:fitween/presenter/model/user/party.dart';
-import 'package:fitween/presenter/model/user/record.dart';
-import 'package:get/get.dart';
-import 'package:fitween/global/date.dart';
-import 'package:fitween/model/class/database/collection.dart';
-import 'package:fitween/model/class/database/party.dart';
-import 'package:fitween/model/enum/activity_type.dart';
-import 'package:fitween/model/enum/unit.dart';
-import 'package:fitween/model/enum/sex.dart';
-import 'package:fitween/presenter/model/record.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:fitween/model/class/database/user/collection.dart';
+// import 'package:fitween/model/class/database/user/friend.dart';
+// import 'package:fitween/model/class/database/user/info.dart';
+// import 'package:fitween/model/class/database/user/party.dart';
+// import 'package:fitween/model/class/database/user/record.dart';
+// import 'package:fitween/presenter/model/user/collection.dart';
+// import 'package:fitween/presenter/model/user/friend.dart';
+// import 'package:fitween/presenter/model/user/info.dart';
+// import 'package:fitween/presenter/model/user/party.dart';
+// import 'package:fitween/presenter/model/user/record.dart';
+// import 'package:get/get.dart';
+// import 'package:fitween/global/date.dart';
+// import 'package:fitween/model/class/database/collection.dart';
+// import 'package:fitween/model/class/database/party.dart';
+// import 'package:fitween/model/enum/activity_type.dart';
+// import 'package:fitween/model/enum/unit.dart';
+// import 'package:fitween/model/enum/sex.dart';
+// import 'package:fitween/presenter/model/record.dart';
 
 // class FUser {
 //   var userCollection = Get.find<UserCollectionP>().loggedUser;

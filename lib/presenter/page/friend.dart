@@ -145,7 +145,7 @@ class FriendP extends GetxController {
     editMode = !editMode; update();
   }
 
-  void deleteFriendButtonPressed(String uid) async {
+  void breakOffWith(String uid) async {
     final userP = Get.find<UserFriendP>();
     userP.deleteFriend(uid);
 
@@ -155,6 +155,25 @@ class FriendP extends GetxController {
     UserFriendP.saveUser(friend);
 
     init();
+  }
+
+  void deleteFriendButtonPressed(String uid) async {
+    FUserInfo? user = await UserInfoP.loadUser(uid);
+    if (user == null) return;
+    
+    Get.dialog(
+      PAlertDialog(
+        title: '${user.nickname}',
+        content: FText(
+          '님을 친구목록에서 삭제하시겠습니까?',
+          maxLines: 2,
+        ),
+        type: DialogType.bi,
+        leftPressed: Get.back,
+        rightText: '신청하기',
+        rightPressed: () => breakOffWith(uid),
+      ),
+    );
   }
 
   void addRivalButtonPressed(String uid) async {
@@ -195,9 +214,9 @@ class FriendP extends GetxController {
 
     Get.dialog(
       PAlertDialog(
-        title: '라이벌 해제',
+        title: '${user.nickname}',
         content: FText(
-          '\'${user.nickname}\'님을 라이벌에서\n제외하시겠습니까?',
+          '님을 라이벌에서\n제외하시겠습니까?',
           maxLines: 2,
         ),
         type: DialogType.bi,

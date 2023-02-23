@@ -15,9 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/model/class/database/party.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/presenter/model/party.dart';
-import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 

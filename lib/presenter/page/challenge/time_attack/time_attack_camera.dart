@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/model/record.dart';
+// ignore: unused_import
 import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/page/home.dart';
 import 'package:fitween/presenter/widget/painter.dart';

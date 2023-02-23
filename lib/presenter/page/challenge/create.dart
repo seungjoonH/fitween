@@ -1,15 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:fitween/global/theme.dart';
-import 'package:fitween/model/class/database/user.dart';
-import 'package:fitween/model/class/json/challenge.dart';
-import 'package:fitween/model/enum/dialog.dart';
-import 'package:fitween/model/enum/difficulty.dart';
-import 'package:fitween/presenter/model/user.dart';
-import 'package:fitween/presenter/page/challenge/main.dart';
-import 'package:fitween/presenter/page/challenge/party/main.dart';
-import 'package:fitween/view/widget/function/dialog.dart';
-import 'package:fitween/view/widget/widget/text.dart';
 
 // /// class
 // class ChallengeCreate extends GetxController {

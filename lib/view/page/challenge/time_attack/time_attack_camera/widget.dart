@@ -1,5 +1,4 @@
 import 'package:camera/camera.dart';
-import 'package:custom_timer/custom_timer.dart';
 import 'package:fitween/presenter/page/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

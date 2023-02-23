@@ -122,4 +122,4 @@ flutter:
 
     - family: Pretendard
       fonts:
-        - asset: assets/font/Pretendard/Pretendard-Regular.otf
+        - asset: assets/font/Pretendard/Pretendard-Medium.otf

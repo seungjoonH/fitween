@@ -39,25 +39,23 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          const RotateCarousel(),
-          Expanded(
-            child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(),
-                child: Padding(
-                padding: const EdgeInsets.all(28.0),
-                child: Column(
-                  children: [
-                    RankingCard(),
-                    SizedBox(height: 20.0),
-                    RecordCard(),
-                  ],
-                ),
+      body: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(
+          children: [
+            const RotateCarousel(),
+            Padding(
+              padding: const EdgeInsets.all(28.0),
+              child: Column(
+                children: const [
+                  RecordCard(),
+                  SizedBox(height: 20.0),
+                  RankingCard(),
+                ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       bottomNavigationBar: const FBottomNavigationBar(),
     );
