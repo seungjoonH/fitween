@@ -1,25 +1,19 @@
 /* 사용자 모델 프리젠터 */
-import 'package:fitween/model/class/database/user/collection.dart';
-import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/notification.dart';
-import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/info.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:fitween/global/date.dart';
-import 'package:fitween/model/enum/activity_type.dart';
-import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/firebase/firebase.dart';
-import 'package:fitween/presenter/health/health.dart';
-import 'package:fitween/presenter/model/badge.dart';
-import 'package:fitween/presenter/model/record.dart';
 
 /// class
 // 사용자 객체 관련
 class UserNotificationP extends GetxController {
   /// static variables
   static get collection => f.collection('userNotifications');
+  static get doc {
+    final userP = Get.find<UserNotificationP>();
+    return collection.doc(userP.loggedUser.uid);
+  }
 
   /// static methods
   static Future<FUserNotification?> loadUser(String uid) async {

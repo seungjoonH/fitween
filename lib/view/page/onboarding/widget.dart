@@ -34,7 +34,7 @@ class _CarouselViewState extends State<CarouselView> {
   Widget build(BuildContext context) {
     List<String> messages = [
       '\n일상 운동 기록,\n어떻게 관리하시나요?',
-      '\n입력만 하세요!\n피트윈이 의미있게\n만들어드릴게요',
+      '입력만 하세요!\n피트윈이 의미있게\n만들어드릴게요',
       '\n무게, 유산소\n계단 오르기까지 기록 가능해요!',
       '\n오늘의 목표 설정을 통해\n더 쉽게 관리 해보세요!',
     ];

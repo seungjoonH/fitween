@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitween/route.dart';
-import 'package:fitween/route.dart';
 import 'package:fitween/view/page/login/login.dart';
 import 'package:flutter/services.dart';
 import 'package:fitween/firebase_options.dart';

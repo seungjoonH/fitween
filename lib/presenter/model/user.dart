@@ -1,27 +1,4 @@
 /* 사용자 모델 프리젠터 */
-import 'package:fitween/model/class/database/user/collection.dart';
-import 'package:fitween/presenter/model/user/collection.dart';
-import 'package:fitween/presenter/model/user/friend.dart';
-import 'package:fitween/presenter/model/user/info.dart';
-import 'package:fitween/presenter/model/user/party.dart';
-import 'package:fitween/presenter/model/user/record.dart';
-import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
-import 'package:fitween/global/date.dart';
-import 'package:fitween/model/class/json/badge.dart';
-import 'package:fitween/model/class/json/challenge.dart';
-import 'package:fitween/model/class/database/collection.dart';
-import 'package:fitween/model/class/database/party.dart';
-import 'package:fitween/model/class/database/user.dart';
-import 'package:fitween/model/enum/activity_type.dart';
-import 'package:fitween/model/enum/difficulty.dart';
-import 'package:fitween/model/enum/unit.dart';
-import 'package:fitween/presenter/firebase/firebase.dart';
-import 'package:fitween/presenter/global.dart';
-import 'package:fitween/presenter/health/health.dart';
-import 'package:fitween/presenter/model/badge.dart';
-import 'package:fitween/presenter/model/party.dart';
-import 'package:fitween/presenter/model/record.dart';
 
 // class UserP extends GetxController {
 //   final userCollectionP = Get.find<UserCollectionP>();

@@ -5,11 +5,9 @@ import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/model/record.dart';
-import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/view/page/edit_goal/widget.dart';
 import 'home.dart';
 

@@ -1,5 +1,4 @@
 import 'package:camera/camera.dart';
-import 'package:custom_timer/custom_timer.dart';
 import 'package:fitween/presenter/page/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -30,12 +29,8 @@ class CameraPainterView extends StatelessWidget {
             onScaleUpdate: cameraP.setZoomLevel,
             child: CustomPaint(
               foregroundPainter: painter,
-              child: SizedBox(
-                width: HomeP.screenSize.width,
-                height: HomeP.screenSize.height,
-                child: CameraPreview(
-                  cameraP.cameraController!,
-                ),
+              child: CameraPreview(
+                cameraP.cameraController!,
               ),
             ),
           );
@@ -55,29 +50,26 @@ class FloatingMessageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<PainterPresenter>(
         builder: (painterP) {
-          return Positioned(
-            top: 150.0.h,
-            child: Container(
-              alignment: Alignment.centerLeft,
-              width: PainterPresenter.canvasSize.width * .8,
-              height: 80.0.h,
-              constraints: const BoxConstraints(maxWidth: 340.0),
-              decoration: BoxDecoration(
-                color: FTheme.white.withOpacity(.6),
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              child: Column(
-                children: [
-                  FText(
-                    '자세를 인식할게요',
-                    style: textTheme.headlineLarge,
-                  ),
-                  FText(
-                    painterP.floatingMessage!,
-                    style: textTheme.headlineSmall,
-                  ),
-                ],
-              ),
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(10.0, 70.0, 10.0, 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FText(
+                  '자세를 인식할게요',
+                  style: textTheme.titleMedium,
+                  color: FTheme.darkGrey,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                FText(
+                  painterP.floatingMessage ?? '',
+                  style: textTheme.headlineMedium,
+                  color: FTheme.colorA,
+                  bold: true,
+                ),
+              ],
             ),
           );
         }
@@ -144,7 +136,7 @@ class CountDownTimerState extends State<CountDownTimer> {
     return GetBuilder<PainterPresenter>(
         builder: (painterP) {
           return Container(
-            child: FText(painterP.timeString, style: textTheme.displaySmall, color: FTheme.grey,),
+            child: FText(painterP.timeString, style: textTheme.displaySmall, color: FTheme.white, bold: true,),
           );
         }
     );

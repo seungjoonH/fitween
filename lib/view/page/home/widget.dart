@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fitween/presenter/page/calendar.dart';
 import 'package:fitween/presenter/page/record/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -66,7 +67,8 @@ class _RotateCarouselState extends State<RotateCarousel>
             children: [
               Image.asset(
                 homeP.pngAsset,
-                height: HomeP.screenSize.height * .35,
+                width: HomeP.screenSize.width * 1.3,
+                height: HomeP.screenSize.height * .4,
                 fit: BoxFit.fitHeight,
               ),
               if (homeP.gifAsset != null)
@@ -74,7 +76,8 @@ class _RotateCarouselState extends State<RotateCarousel>
                 children: [
                   GifImage(
                     controller: HomeP.gifCont,
-                    height: HomeP.screenSize.height * .35,
+                    width: HomeP.screenSize.width * 1.3,
+                    height: HomeP.screenSize.height * .4,
                     fit: BoxFit.fitHeight,
                     image: AssetImage(homeP.gifAsset!),
                   ),
@@ -137,31 +140,29 @@ class RankingGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          RankingIndividualGraph(
-            type: type,
-            price: 2,
-            nickname: '영천',
-            percent: .56,
-          ),
-          SizedBox(height: 10.0),
-          RankingIndividualGraph(
-            type: type,
-            price: 3,
-            nickname: '하쿠나',
-            percent: .5,
-          ),
-          SizedBox(height: 10.0),
-          RankingIndividualGraph(
-            type: type,
-            price: 4,
-            nickname: '마타타',
-            percent: .2,
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        RankingIndividualGraph(
+          type: type,
+          price: 2,
+          nickname: '영천',
+          percent: .56,
+        ),
+        const SizedBox(height: 10.0),
+        RankingIndividualGraph(
+          type: type,
+          price: 3,
+          nickname: '하쿠나',
+          percent: .5,
+        ),
+        const SizedBox(height: 10.0),
+        RankingIndividualGraph(
+          type: type,
+          price: 4,
+          nickname: '마타타',
+          percent: .2,
+        ),
+      ],
     );
   }
 }
@@ -206,7 +207,10 @@ class RankingIndividualGraph extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 5.0),
-            FText(nickname, color: FTheme.darkGrey),
+            FText(nickname,
+              color: FTheme.darkGrey,
+              style: textTheme.bodyMedium,
+            ),
           ],
         ),
         Row(
@@ -244,9 +248,7 @@ class RecordCard extends StatelessWidget {
     return FCard(
       title: '기록',
       activateSeeMore: true,
-      onPressed: () {
-        CalendarMainP.toCalendarMain();
-      },
+      onPressed: CalendarP.toCalendar,
       child: Container(),
     );
   }

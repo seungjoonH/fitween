@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/json/badge.dart';
@@ -91,8 +90,9 @@ class Party {
   Party.fromJson(Map<String, dynamic> json) {
     fromJson(json);
     if (_startDate == null) startDate = today;
-    if (_endDate == null)
+    if (_endDate == null) {
       endDate = today.add(Duration(days: challenge!.period!));
+    }
   }
 
   /// methods

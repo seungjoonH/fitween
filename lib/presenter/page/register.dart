@@ -229,7 +229,7 @@ class RegisterP extends GetxController {
     Map<String, bool> conditions = {
       '잘못 입력하셨습니다': (today.year - (date?.year ?? 0)) > 99,
       '미래는 입력할 수 없습니다': today.isBefore(date ?? (today)),
-      '오늘은 입력할 수 없습니다': isSameDay(today, date ?? today),
+      '오늘은 입력할 수 없습니다': isSameDate(today, date ?? today),
       '없는 날짜 입니다': date == null,
       '여덟 글자가 아닙니다': text.length != 8,
       '숫자만 입력해주세요': int.tryParse(text) == null,

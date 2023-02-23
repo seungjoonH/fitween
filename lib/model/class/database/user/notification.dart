@@ -1,8 +1,3 @@
-import 'package:fitween/model/class/database/user/collection.dart';
-import 'package:fitween/model/class/database/user/info.dart';
-import 'package:fitween/presenter/model/user/friend.dart';
-import 'package:get/get.dart';
-
 class FUserNotification {
   /// attributes
   // 일반 변수

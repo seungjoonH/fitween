@@ -32,6 +32,6 @@ enum ActivityType {
   static ActivityType? toEnum(String? string) =>
     ActivityType.values.firstWhereOrNull((type) => type.name == string);
 
-  static List<ActivityType> get activeValues => [calorie, distance, height, weight];
+  static List<ActivityType> get activeValues => [distance, height, weight];
 
 }

@@ -180,7 +180,7 @@ class _FBadgeWidgetState extends State<FBadgeWidget> {
         onTapUp: onTapUp,
         child: Material(
           color: FTheme.colorA,
-          borderRadius: BorderRadius.circular(widget.size / 2.25),
+          borderRadius: BorderRadius.circular(widget.size.r / 2.25),
           child: SizedBox(
             width: widget.size.r,
             height: widget.size.r,

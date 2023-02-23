@@ -1,14 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween/global/theme.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
-import 'package:fitween/model/class/database/user/friend.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/notification.dart';
 import 'package:fitween/presenter/model/badge.dart';
-import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
-import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/view/widget/button/button.dart';
@@ -25,25 +21,48 @@ class FriendPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TabScaffold(
-      tabs: const ['전체', '라이벌'],
-      bodies: List.generate(2, (index) {
-        bool isRival = index == 1;
-        return Column(
-          children: [
-            FriendNotificationCard(isRival: isRival),
-            FriendListCard(isRival: isRival),
-          ],
+    return StreamBuilder<DocumentSnapshot>(
+      stream: UserNotificationP.doc.snapshots(),
+      builder: (context, snapshot) {
+        var json = snapshot.data?.data() as Map<String, dynamic>?;
+        if (json == null) return Container();
+
+        FUserNotification user = FUserNotification.fromJson(json);
+        List<bool> hasNotifications = [
+          user.friendData.values.any((data) => !data['checked']),
+          user.rivalData.values.any((data) => !data['checked']),
+        ];
+
+        return TabScaffold(
+          tabs: const ['전체', '라이벌'],
+          hasNotifications: hasNotifications,
+          controlNotifications: (index) async {
+            final userP = Get.find<UserNotificationP>();
+            String myUid = userP.loggedUser.uid!;
+            FUserNotification? user = await UserNotificationP.loadUser(myUid);
+            if (user == null) return;
+            user.checkAllNotifications(index == 1);
+            UserNotificationP.saveUser(user);
+          },
+          bodies: List.generate(2, (index) {
+            bool isRival = index == 1;
+            return Column(
+              children: [
+                FriendNotificationCard(isRival: isRival),
+                FriendListCard(isRival: isRival),
+              ],
+            );
+          }),
+          action: GetBuilder<FriendP>(
+            builder: (friendP) {
+              return IconButton(
+                icon: const Icon(Icons.person_add_alt_1_rounded),
+                onPressed: friendP.addFriendButtonPressed,
+              );
+            },
+          ),
         );
-      }),
-      action: GetBuilder<FriendP>(
-        builder: (friendP) {
-          return IconButton(
-            icon: const Icon(Icons.person_add_alt_1_rounded),
-            onPressed: friendP.addFriendButtonPressed,
-          );
-        },
-      ),
+      }
     );
   }
 }
@@ -149,6 +168,13 @@ class FriendListCard extends StatelessWidget {
     return FCard(
       child: GetBuilder<UserFriendP>(
         builder: (userP) {
+          List<FUserInfo> userInfos = isRival
+              ? userP.loggedUser.rivalInfos
+              : userP.loggedUser.friendInfos;
+          List<FUserCollection> userCollections = isRival
+              ? userP.loggedUser.rivalCollections
+              : userP.loggedUser.friendCollections;
+
           return Column(
             children: [
               GetBuilder<FriendP>(
@@ -156,8 +182,9 @@ class FriendListCard extends StatelessWidget {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      FText('${isRival ? '라이벌' : '친구'} ${userP.loggedUser.friendInfos.length}',
+                      FText('${isRival ? '라이벌' : '친구'} ${userInfos.length}',
                         color: FTheme.lightGrey,
+                        style: textTheme.bodyMedium,
                       ),
                       IconButton(
                         icon: const Icon(Icons.edit),
@@ -170,10 +197,11 @@ class FriendListCard extends StatelessWidget {
               ),
               ListView(
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 children: List.generate(
-                  userP.loggedUser.friendInfos.length, (index) => FriendListTile(
-                    userInfo: userP.loggedUser.friendInfos[index],
-                    userCollection: userP.loggedUser.friendCollections[index],
+                  userInfos.length, (index) => FriendListTile(
+                    userInfo: userInfos[index],
+                    userCollection: userCollections[index],
                   ),
                 ),
               ),

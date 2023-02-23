@@ -57,7 +57,7 @@ class SignInButton extends StatelessWidget {
             SizedBox(width: 20.0.w),
             FText(
               'Continue with ${toBeginningOfSentenceCase(type.name)}',
-              style: textTheme.titleMedium,
+              style: textTheme.titleSmall,
               color: textColors[type],
             ),
           ],

@@ -24,12 +24,12 @@ class DeveloperPage extends StatelessWidget {
               onPressed: FriendP.toFriend,
               text: 'Friend',
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             PButton(
               onPressed: RegisterP.toRegister,
               text: 'Register',
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             PButton(
               onPressed: ChallengeMainP.toChallengeMain,
               text: 'Challenge',

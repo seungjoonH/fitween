@@ -1,4 +1,3 @@
-import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
@@ -8,13 +7,11 @@ import 'package:get/get.dart';
 import 'package:fitween/global/string.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/party.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/presenter/model/party.dart';
 import 'package:fitween/presenter/page/challenge/party/main.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/presenter/model/challenge.dart';
-import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';

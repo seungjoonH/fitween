@@ -18,7 +18,7 @@ class FText extends StatelessWidget {
     this.borderColor = FTheme.black,
     this.align = TextAlign.left,
     this.shadows,
-  }) : style = style ?? FTheme.textTheme.bodyMedium, super(key: key);
+  }) : style = style ?? FTheme.textTheme.titleMedium, super(key: key);
 
   final String data;
   final TextStyle? style;

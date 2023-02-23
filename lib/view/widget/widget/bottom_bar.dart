@@ -55,7 +55,6 @@ class FBottomNavigationBar extends StatelessWidget {
                                   .values
                                   .any((data) => !data['checked']) ??
                               false;
-
                           return FIcon(
                             FIcons.values[index],
                             selected: index == globalP.navIndex,

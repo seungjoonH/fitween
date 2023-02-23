@@ -94,4 +94,9 @@ class UserFriendP extends GetxController {
     }
     update();
   }
+
+  void toggleRival(String uid) {
+    loggedUser.toggleRival(uid);
+    save();
+  }
 }
