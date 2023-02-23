@@ -128,70 +128,102 @@ class _TimeAttackCameraPageState extends State<TimeAttackCameraPage> {
             PainterPresenter.setOrientation(orientation);
             return Scaffold(
               extendBodyBehindAppBar: true,
-              appBar: FAppBar(
-                title: '운동하기',
-                color: Colors.transparent,
-              ),
               body: GetBuilder<PainterPresenter>(
                 builder: (painterP) {
                   return Column(
                     children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height,
+                      const FloatingMessageWidget(),
+                      Expanded(
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            CameraPainterView(painter: painter),
-                            if (painterP.stateText != null)
-                              const WorkoutStateWidget(),
-                            if (painterP.floatingMessage != null)
-                              const FloatingMessageWidget(),
-                            if (painterP.count > 0 && painterP.state == WorkoutState.stop)
-                              const ExerciseCompleteButton(),
-                            Positioned(
-                              bottom: 200.0.h,
-                              child: FText(
-                                '${painterP.count} 개',
-                                style: textTheme.headlineMedium,
-                              ),
-                            ),
-
-                            Positioned(
-                              top: 250.0.h,
-                              child: CountDownTimer(),
+                            SizedBox(
+                              width: PainterPresenter.canvasSize.width,
+                              height: PainterPresenter.canvasSize.height,
+                              child: CameraPainterView(painter: painter),
                             ),
                             Positioned(
-                              bottom: 50.0.h,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              top: 60.0.h,
+                                child: Image.asset('assets/image/challenge/timeAttack/frame.png')),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(20.0, 40.0, 20.0, 60.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  SizedBox(
-                                    width: 100,
-                                  ),
-                                  if (painterP.state == WorkoutState.workout)
-                                    PCircledButton(
-                                      onPressed: painterP.workout,
-                                      backgroundColor: FTheme.colorB,
-                                        child: Image.asset('assets/image/challenge/timeAttack/button/pause.png')
-                                    ) else PCircledButton(
-                                    onPressed: painterP.workout,
-                                    backgroundColor: FTheme.colorA,
-                                    child: Image.asset('assets/image/challenge/timeAttack/button/start.png')
-                                  ),
-                                  SizedBox(
-                                    width: 40,
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      cameraP.toggleDirection();
-                                      initAsync();
-                                    },
-                                    icon: const Icon(Icons.cameraswitch_rounded, size: 40,),
+                                  CountDownTimer(),
+                                  // if (painterP.count > 0 && painterP.state == WorkoutState.stop)
+                                  // const ExerciseCompleteButton(),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      if (painterP.state == WorkoutState.workout)
+                                      SizedBox(
+                                        width: 100.0,
+                                        child: PCircledButton(
+                                          onPressed: painterP.workout,
+                                          backgroundColor: FTheme.colorB,
+                                          child: Image.asset('assets/image/challenge/timeAttack/button/pause.png'),
+                                        ),
+                                      ) else const SizedBox(width: 100.0),
+                                      Container(
+                                        width: 120, height: 92,
+                                        decoration: BoxDecoration(
+                                          color: FTheme.darkGrey,
+                                          borderRadius: BorderRadius.circular(20),
+                                        ),
+                                        child: Center(
+                                          child: FText(
+                                            '${painterP.count}',
+                                            style: textTheme.displayLarge,
+                                            color: FTheme.white,
+                                            bold: true,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 100.0,
+                                        child: Stack(
+                                          alignment: Alignment.center,
+                                          children: [
+                                            Material(
+                                              color: FTheme.grey,
+                                              borderRadius: BorderRadius.circular(30.0),
+                                              child: const SizedBox(
+                                                width: 60.0,
+                                                height: 60.0,
+                                              ),
+                                            ),
+                                            IconButton(
+                                              onPressed: () {
+                                                cameraP.toggleDirection();
+                                                initAsync();
+                                              },
+                                              icon: const Icon(
+                                                Icons.cameraswitch_rounded,
+                                                size: 33,
+                                                color: FTheme.background,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
                             ),
+                            if (painterP.state != WorkoutState.workout)
+                            PCircledButton(
+                              onPressed: painterP.workout,
+                              backgroundColor: FTheme.colorA,
+                              child: Padding(
+                                padding: const EdgeInsets.only(left: 4.0),
+                                child: Image.asset('assets/image/challenge/timeAttack/button/start.png'),
+                              ),
+                            ),
+                            if (painterP.stateText != null)
+                            const WorkoutStateWidget(),
                           ],
                         ),
                       ),

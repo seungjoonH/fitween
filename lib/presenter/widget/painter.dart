@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:fitween/view/page/challenge/time_attack/time_attack_camera/widget.dart';
+import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera.dart';
+import 'package:fitween/presenter/page/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/number.dart';
@@ -10,22 +11,19 @@ import 'package:fitween/model/class/workout/inference.dart';
 import 'package:fitween/model/class/workout/limb.dart';
 import 'package:fitween/model/enum/part.dart';
 import 'package:fitween/model/enum/workout.dart';
-import 'package:fitween/presenter/page/workout/main.dart';
-
-import '../page/challenge/time_attack/time_attack_camera.dart';
 
 class PainterPresenter extends GetxController {
   static Orientation orientation = Orientation.portrait;
-  static double get screenRatio {
-    const ratio = 4 / 6;
-    if (orientation == Orientation.portrait) return ratio;
-    return 1 / ratio;
-  }
-  static double get _canvasHeight =>
-      MediaQuery.of(Get.context!).size.height * .74;
+  // static double get screenRatio {
+  //   const ratio = 9 / 12;
+  //   if (orientation == Orientation.portrait) return ratio;
+  //   return 1 / ratio;
+  // }
+  // static double get _canvasHeight =>
+  //     MediaQuery.of(Get.context!).size.height * .8;
   static Size get canvasSize => Size(
-    _canvasHeight * screenRatio,
-    _canvasHeight,
+    HomeP.screenSize.width,
+    HomeP.screenSize.height * .8,
   );
 
   static void setOrientation(Orientation orientation) {
