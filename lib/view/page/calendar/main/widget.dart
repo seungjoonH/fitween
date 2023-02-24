@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:fitween/global/date.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/calendar.dart';
-import 'package:fitween/view/page/calendar/main/utils.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/activity_type.dart';
@@ -10,88 +10,7 @@ import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:table_calendar/table_calendar.dart';
-
-// class CalendarCard extends StatelessWidget {
-//   const CalendarCard({
-//     Key? key,
-//     required this.type,
-//   }) : super(key: key);
-//
-//   final ActivityType type;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return GetBuilder<RecordMain>(
-//       builder: (controller) {
-//         return Container(
-//           margin: const EdgeInsets.symmetric(horizontal: 15.0),
-//           width: 330.0,
-//           height: 110.0,
-//           child: Card(
-//             // color: const Color(0xfffbf8f1),
-//             child: InkWell(
-//               onTap: RecordDetail.toRecordDetail,
-//               borderRadius: BorderRadius.circular(10.0),
-//               child: Row(
-//                 children: [
-//                   Container(
-//                     width: 100.0,
-//                     height: 100.0,
-//                     padding: const EdgeInsets.all(5.0),
-//                     decoration: const BoxDecoration(
-//                       // color: Colors.white,
-//                       borderRadius: BorderRadius.only(
-//                         topLeft: Radius.circular(10.0),
-//                         bottomLeft: Radius.circular(10.0),
-//                       ),
-//                     ),
-//                     child: SvgPicture.asset('assets/image/object/moai_stone.svg'),
-//                   ),
-//                   Expanded(
-//                     child: Container(
-//                       padding: const EdgeInsets.all(10.0),
-//                       child: Column(
-//                         crossAxisAlignment: CrossAxisAlignment.start,
-//                         children: [
-//                           FText(
-//                             '오늘 ${type.done} ${type.kr}',
-//                             style: textTheme.labelSmall,
-//                           ),
-//                           FText(
-//                             controller.tiers[type]!['current'].title,
-//                             style: textTheme.bodyLarge,
-//                           ),
-//                           FText(
-//                             '다음 단계 : ${controller.tiers[type]!['next'].title} 까지',
-//                             style: textTheme.labelSmall,
-//                           ),
-//                           Expanded(
-//                             child: LinearPercentIndicator(
-//                               percent: controller.tiers[type]!['percent'],
-//                               lineHeight: 12.0,
-//                               padding: EdgeInsets.zero,
-//                               barRadius: const Radius.circular(6.0),
-//                               progressColor: FTheme.primary[40],
-//                               animation: true,
-//                               animationDuration: 1000,
-//                               curve: Curves.easeInOut,
-//                             ),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
 
 class MyCalendarView extends StatefulWidget {
   const MyCalendarView({super.key});
@@ -134,8 +53,6 @@ class _MyCalendarViewState extends State<MyCalendarView> {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
-        // _rangeStart = null; // Important to clean those
-        // _rangeEnd = null;
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
 
@@ -156,8 +73,6 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                 lastDay: CalendarP.lastDay,
                 focusedDay: _focusedDay,
                 selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                // rangeStartDay: calendarP.startDate,
-                // rangeEndDay: calendarP.endDate,
                 calendarFormat: CalendarFormat.month,
                 rangeSelectionMode: _rangeSelectionMode,
                 eventLoader: _getEventsForDay,
@@ -174,10 +89,6 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                 ),
                 calendarBuilders: CalendarBuilders(
                   defaultBuilder: (context, date, events) {
-                    // bool clear = false;
-                    // clear &= _getEventsForDay(date).elementAt(0).amount >= _getEventsForDay(date).elementAt(0).goal;
-                    // clear &= _getEventsForDay(date).elementAt(1).amount >= _getEventsForDay(date).elementAt(1).goal;
-                    // clear &= _getEventsForDay(date).elementAt(2).amount >= _getEventsForDay(date).elementAt(2).goal;
                     return Container(
                       alignment: Alignment.center,
                       child: FText('${date.day}',
@@ -188,22 +99,31 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                       ),
                     );
                   },
-                  markerBuilder: (BuildContext context, date, events) {
-                    if (events.isEmpty) return const SizedBox();
+                  markerBuilder: (context, date, events) {
+                    final userP = Get.find<UserRecordP>();
+                    date = ignoreTime(date);
                     return ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemCount: events.length,
                       itemBuilder: (context, index) {
                         ActivityType type = ActivityType.activeValues[index];
+                        List<ActivityType> completed = userP.loggedUser.completedActivities(date);
+                        int amount = userP.loggedUser.getAmounts(type, date).round();
+
+                        Color color = FTheme.lightGrey;
+                        if (completed.length == 3) { color = ActivityType.calorie.color; }
+                        else if (completed.contains(type)) { color = type.color; }
+                        else if (amount == 0 || date.isAfter(now)) { color = Colors.transparent; }
+
                         return Container(
-                          margin: const EdgeInsets.only(top: 28),
-                          padding: const EdgeInsets.all(1),
+                          margin: const EdgeInsets.only(top: 30.0),
+                          padding: const EdgeInsets.all(1.0),
                           child: Container(
-                            width: 8,
+                            width: 8.0, height: 8.0,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: CalendarP.colorSelector(events, type),
+                              color: color,
                             ),
                           ),
                         );
@@ -212,7 +132,6 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                   },
                 ),
                 onDaySelected: _onDaySelected,
-                // onRangeSelected: _onRangeSelected,
                 onPageChanged: (focusedDay) => _focusedDay = focusedDay,
                 headerStyle: HeaderStyle(
                   formatButtonVisible: false,
@@ -235,7 +154,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                       const SizedBox(height: 20.0),
                       Column(
                         children: ActivityType.activeValues.map((type) => TodayRecordLinearIndicator(
-                          type: type, events: events,
+                          type: type, date: ignoreTime(_focusedDay),
                         )).toList(),
                       ),
                       const SizedBox(height: 12.0),
@@ -255,21 +174,30 @@ class TodayRecordLinearIndicator extends StatefulWidget {
   const TodayRecordLinearIndicator({
     Key? key,
     required this.type,
-    required this.events,
+    required this.date,
   }) : super(key: key);
 
   final ActivityType type;
-  final List<CalendarEvent> events;
+  final DateTime date;
 
   @override
   State<TodayRecordLinearIndicator> createState() => _TodayRecordLinearIndicatorState();
 }
 
 class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator> {
+
   @override
   Widget build(BuildContext context) {
-    int amount = widget.events[widget.type.index - 1].amount.round();
-    int goal = widget.events[widget.type.index - 1].goal.round();
+    final userP = Get.find<UserRecordP>();
+
+    int amount = userP.loggedUser.getAmounts(widget.type, widget.date).round();
+    int goal = userP.loggedUser.getGoal(widget.type)?.amount.round() ?? 1;
+    Color color = FTheme.lightGrey;
+
+    List<ActivityType> completed = userP.loggedUser.completedActivities(widget.date);
+
+    if (completed.length == 3) { color = ActivityType.calorie.color; }
+    else if (completed.contains(widget.type)) { color = widget.type.color; }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,7 +209,7 @@ class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator>
               child: Container(
                 height: 36.0,
                 decoration: BoxDecoration(
-                  color: CalendarP.colorSelector(widget.events, widget.type, true),
+                  color: color,
                   borderRadius: const BorderRadius.horizontal(
                     right: Radius.circular(8.0),
                   ),
@@ -296,7 +224,7 @@ class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator>
         ),
         FText(
           '$amount / $goal ${widget.type.unit}',
-          color: CalendarP.colorSelector(widget.events, widget.type, true),
+          color: color,
           style: textTheme.bodyMedium,
         ),
         const SizedBox(height: 10.0),

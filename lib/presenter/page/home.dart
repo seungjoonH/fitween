@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/material.dart';
@@ -34,14 +35,17 @@ class HomeP extends GetxController {
   String? get gifAsset => _gifAsset == null ? null : '$rotationAsset$_gifAsset.gif';
 
   Future init() async {
-    final userP = Get.find<UserRecordP>();
+    final userRecordP = Get.find<UserRecordP>();
+    final userFriendP = Get.find<UserFriendP>();
     final loadingP = Get.find<LoadingP>();
 
     loadingP.loadStart();
 
-    await userP.load();
-    userP.clearRecords();
-    if (!await userP.fetchData()) await userP.load();
+    await userRecordP.load();
+    userRecordP.clearRecords();
+    if (!await userRecordP.fetchData()) await userRecordP.load();
+    await userFriendP.load();
+    await userFriendP.loadFriends();
 
     loadingP.loadEnd();
 
@@ -107,7 +111,8 @@ class HomePresenter extends GetxController {
   bool isToday = true;
 
   Future init() async {
-    final userP = Get.find<UserRecordP>();
+    final userRecordP = Get.find<UserRecordP>();
+    final userFriendP = Get.find<UserFriendP>();
     final loadingP = Get.find<LoadingP>();
 
     isToday = true;
@@ -120,10 +125,11 @@ class HomePresenter extends GetxController {
       ActivityType.weight: false,
     };
 
-    await userP.load();
-    userP.clearRecords();
-    if (!await userP.fetchData()) await userP.load();
-    userP.updateCalorie();
+    await userRecordP.load();
+    userRecordP.clearRecords();
+    if (!await userRecordP.fetchData()) await userRecordP.load();
+    userRecordP.updateCalorie();
+    await userFriendP.loadFriends();
     await BadgePresenter.synchronizeBadges();
 
     loadingP.loadEnd();

@@ -103,6 +103,7 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
                           indicatorColor: FTheme.darkGrey,
                           indicatorWeight: 3.0,
                           onTap: (index) {
+                            if (widget.controlNotifications == null) return;
                             widget.controlNotifications!(index);
                             setState(() => _selectedIndex = index);
                           },

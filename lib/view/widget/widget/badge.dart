@@ -162,10 +162,11 @@ class _FBadgeWidgetState extends State<FBadgeWidget> {
       setState(() => scale = .9);
     };
     onTapUp = widget.onPressed == null ? null : (_) async {
-      widget.onPressed!();
       await Future.delayed(duration, () {
+        if (!mounted) return;
         setState(() => scale = 1.0);
       });
+      widget.onPressed!();
     };
     super.initState();
   }

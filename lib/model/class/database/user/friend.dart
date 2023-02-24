@@ -2,6 +2,7 @@
 
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/model/class/database/user/record.dart';
 
 class FUserFriend {
   /// attributes
@@ -12,8 +13,9 @@ class FUserFriend {
   Map<String, dynamic> friendsData = {};
 
   // 의존 변수
-  List<FUserInfo> friendInfos = [];
   List<FUserCollection> friendCollections = [];
+  List<FUserInfo> friendInfos = [];
+  List<FUserRecord> friendRecords = [];
 
   /// accessors & mutators
   List<String> get friendUids => friendsData.keys.toList();
@@ -23,6 +25,9 @@ class FUserFriend {
     return friendsData[friend.uid]?['rival'] ?? false;
   }).toList();
   List<FUserCollection> get rivalCollections => friendCollections.where((friend) {
+    return friendsData[friend.uid]?['rival'] ?? false;
+  }).toList();
+  List<FUserRecord> get rivalRecords => friendRecords.where((friend) {
     return friendsData[friend.uid]?['rival'] ?? false;
   }).toList();
 

@@ -8,18 +8,20 @@ import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/view/page/my/record/background/layout/components/floating_object.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class CalendarEvent {
   double goal;
   double amount;
 
   CalendarEvent(this.goal, this.amount);
+
+  @override
+  String toString() => 'amount: $amount';
 }
 
 class CalendarP {
   static final firstDay = Get.find<UserInfoP>().loggedUser.regDate ?? today;
-  static final lastDay = DateTime(today.year + 5, today.month, today.day);
+  static final lastDay = today;
 
   static void toCalendar() async {
     final calendarP = Get.find<CalendarP>();
@@ -41,7 +43,7 @@ class CalendarP {
     Color color = FTheme.lightGrey;
 
     CalendarEvent event = events[type.index - 1];
-    if (!forLinearGraph && event.amount == 0) color = Colors.transparent;
+    // if (!forLinearGraph && event.amount == 0) color = Colors.transparent;
     if (event.goal <= event.amount) color = type.color;
     if (isAllFinished(events)) color = ActivityType.calorie.color;
 

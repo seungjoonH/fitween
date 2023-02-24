@@ -18,21 +18,6 @@ import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
 import '../../../global/theme.dart';
 
-// class HomePage extends StatelessWidget {
-//   const HomePage({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: GlobalPresenter.closeBottomBar,
-//       child: const Scaffold(
-//         appBar: HomeAppBar(),
-//         bottomSheet: PBottomSheetBar(body: HomeView()),
-//       ),
-//     );
-//   }
-// }
-
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -48,7 +33,7 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.all(28.0),
               child: Column(
                 children: const [
-                  RecordCard(),
+                  CalendarCard(),
                   SizedBox(height: 20.0),
                   RankingCard(),
                 ],

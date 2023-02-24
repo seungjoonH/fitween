@@ -107,10 +107,11 @@ class _FCardState extends State<FCard> {
       setState(() => scale = .9);
     };
     onTapUp = widget.onPressed == null ? null : (_) async {
-      widget.onPressed!();
       await Future.delayed(duration, () {
+        if (!mounted) return;
         setState(() => scale = 1.0);
       });
+      widget.onPressed!();
     };
     super.initState();
   }
@@ -144,7 +145,7 @@ class _FCardState extends State<FCard> {
                       children: [
                         FText(widget.title!, style: textTheme.titleLarge, color: FTheme.darkGrey),
                         if (widget.activateSeeMore)
-                          const Icon(Icons.arrow_forward_ios, color: FTheme.lightGrey),
+                        const Icon(Icons.arrow_forward_ios, color: FTheme.lightGrey),
                       ],
                     ),
                     const SizedBox(height: 10.0),

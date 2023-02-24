@@ -2,8 +2,10 @@
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/friend.dart';
 import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:get/get.dart';
 import 'package:fitween/presenter/firebase/firebase.dart';
 
@@ -84,13 +86,17 @@ class UserFriendP extends GetxController {
   Future loadFriends() async {
     loggedUser.friendInfos = [];
     loggedUser.friendCollections = [];
+    loggedUser.friendRecords = [];
     for (String uid in loggedUser.friendUids) {
-      FUserInfo? userInfo = await UserInfoP.loadUser(uid);
       FUserCollection? userCollection = await UserCollectionP.loadUser(uid);
+      FUserInfo? userInfo = await UserInfoP.loadUser(uid);
+      FUserRecord? userRecord = await UserRecordP.loadUser(uid);
       if (userInfo == null) return;
       if (userCollection == null) return;
+      if (userRecord == null) return;
       loggedUser.friendInfos.add(userInfo);
       loggedUser.friendCollections.add(userCollection);
+      loggedUser.friendRecords.add(userRecord);
     }
     update();
   }

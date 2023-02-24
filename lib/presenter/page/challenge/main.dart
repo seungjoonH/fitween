@@ -16,8 +16,6 @@ import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'package:get/get.dart';
-
 class ChallengeMainP extends GetxController {
   static void toChallengeMain() => Get.toNamed('/challengeMain');
 

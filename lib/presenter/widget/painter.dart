@@ -117,12 +117,9 @@ class PainterPresenter extends GetxController {
   }
 
   void timerStart() {
-    print(1);
     timer = Timer.periodic(Duration(seconds: 1), (_) {
-      print(2);
       timerSeconds--; update();
     });
-    print(3);
   }
 
   void countUp() {
