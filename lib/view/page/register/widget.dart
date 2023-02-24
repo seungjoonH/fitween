@@ -742,15 +742,20 @@ class WeightRecommendView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          FText('무게 멘트', style: textTheme.displaySmall, color: FTheme.colorA),
-          FText('무게 멘트', style: textTheme.displaySmall),
-          FText('무게 멘트', style: textTheme.displaySmall),
           FTexts(
-            const ['무게', '멘트'],
+            const ['유산소 운동', '과'],
             colors: [ActivityType.weight.color, FTheme.black],
             style: textTheme.displaySmall,
             alignment: MainAxisAlignment.start,
           ),
+          FTexts(
+            const ['근력 운동', '을'],
+            colors: [ActivityType.weight.color, FTheme.black],
+            style: textTheme.displaySmall,
+            alignment: MainAxisAlignment.start,
+          ),
+          FText('병행 해야 운동 효과가', style: textTheme.displaySmall),
+          FText('훨씬 좋아져요', style: textTheme.displaySmall),
         ],
       ),
     );
