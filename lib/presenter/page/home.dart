@@ -31,19 +31,20 @@ class HomeP extends GetxController {
   String? _gifAsset;
 
   String get pngAsset => '$rotationAsset${'rbo'[rotationIndex]}.png';
-  String? get gifAsset => _gifAsset == null ? null : '$rotationAsset$_gifAsset.gif';
+  String? get gifAsset =>
+      _gifAsset == null ? null : '$rotationAsset$_gifAsset.gif';
 
   Future init() async {
     final userP = Get.find<UserRecordP>();
-    final loadingP = Get.find<LoadingP>();
+    // final loadingP = Get.find<LoadingP>();
 
-    loadingP.loadStart();
+    // loadingP.loadStart();
 
     await userP.load();
     userP.clearRecords();
     if (!await userP.fetchData()) await userP.load();
 
-    loadingP.loadEnd();
+    // loadingP.loadEnd();
 
     update();
   }
@@ -79,7 +80,6 @@ class HomeP extends GetxController {
       update();
     });
   }
-
 }
 
 class HomePresenter extends GetxController {
@@ -99,7 +99,8 @@ class HomePresenter extends GetxController {
       type: DialogType.bi,
       leftPressed: Get.back,
       rightPressed: () {
-        Get.back(); EditGoalP.toEditGoal();
+        Get.back();
+        EditGoalP.toEditGoal();
       },
     );
   }
@@ -108,10 +109,10 @@ class HomePresenter extends GetxController {
 
   Future init() async {
     final userP = Get.find<UserRecordP>();
-    final loadingP = Get.find<LoadingP>();
+    // final loadingP = Get.find<LoadingP>();
 
     isToday = true;
-    loadingP.loadStart();
+    // loadingP.loadStart();
 
     graphStates = {
       ActivityType.calorie: false,
@@ -126,7 +127,7 @@ class HomePresenter extends GetxController {
     userP.updateCalorie();
     await BadgePresenter.synchronizeBadges();
 
-    loadingP.loadEnd();
+    // loadingP.loadEnd();
 
     update();
   }
@@ -148,7 +149,8 @@ class HomePresenter extends GetxController {
   }
 
   void pageChanged(int index) {
-    isToday = index == 1; update();
+    isToday = index == 1;
+    update();
   }
 
   Map<ActivityType, bool> graphStates = {
@@ -159,7 +161,7 @@ class HomePresenter extends GetxController {
   };
 
   void showLaterGraph(ActivityType type) {
-    graphStates[type] = true; update();
+    graphStates[type] = true;
+    update();
   }
-
 }

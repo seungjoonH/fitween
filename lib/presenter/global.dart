@@ -7,6 +7,7 @@ import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/calendar.dart';
+import 'package:fitween/presenter/page/challenge/create.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera_guide.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_friend.dart';
@@ -390,7 +391,7 @@ class GlobalPresenter extends GetxController {
   static void initControllers() {
     Get.put(GlobalPresenter());
 
-    Get.put(LoadingP());
+    // Get.put(LoadingP());
 
     Get.put(UserCollectionP());
     Get.put(UserFriendP());
@@ -419,8 +420,8 @@ class GlobalPresenter extends GetxController {
     Get.put(MySettingMain());
     Get.put(MySettingEdit());
 
-    // Get.put(ChallengeCreate());
-    Get.put(ChallengePartyMain());
+    Get.put(ChallengeCreateP());
+    Get.put(ChallengePartyMainP());
     Get.put(CollectionMainP());
     Get.put(EditGoalP());
 

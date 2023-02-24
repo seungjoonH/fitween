@@ -137,20 +137,21 @@ class ChallengeTabBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final challengeMain = Get.find<ChallengeMain>();
 
-    return GetBuilder<LoadingP>(builder: (controller) {
-      return TabBar(
-        controller: challengeMain.tabCont,
-        tabs: challengeMain.tabs,
-        indicatorColor: FTheme.black,
-        indicatorSize: TabBarIndicatorSize.label,
-        indicatorWeight: 1.5,
-        labelPadding: const EdgeInsets.all(5.0),
-        splashFactory: InkRipple.splashFactory,
-        onTap: (index) {
-          if (controller.loading) challengeMain.tabCont.animateTo(0);
-        },
-      );
-    });
+    // return GetBuilder<LoadingP>(builder: (controller) {
+    return TabBar(
+      controller: challengeMain.tabCont,
+      tabs: challengeMain.tabs,
+      indicatorColor: FTheme.black,
+      indicatorSize: TabBarIndicatorSize.label,
+      indicatorWeight: 1.5,
+      labelPadding: const EdgeInsets.all(5.0),
+      splashFactory: InkRipple.splashFactory,
+      onTap: (index) {
+        // if (controller.loading)
+        challengeMain.tabCont.animateTo(0);
+      },
+    );
+    // });
   }
 }
 
@@ -179,14 +180,18 @@ class ChallengeListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LoadingP>(builder: (controller) {
-      return Padding(
-        padding: EdgeInsets.fromLTRB(20.0.r, 20.0.r, 20.0.r, 0.0),
-        child: controller.loading
-            ? ChallengeCardViewLoading(color: controller.color)
-            : const ChallengeCardView(),
-      );
-    });
+    return
+        // GetBuilder<LoadingP>(builder: (controller) {
+        // return
+        Padding(
+      padding: EdgeInsets.fromLTRB(20.0.r, 20.0.r, 20.0.r, 0.0),
+      child:
+          // controller.loading
+          //     ? ChallengeCardViewLoading(color: controller.color)
+          //     :
+          const ChallengeCardView(),
+    );
+    // });
   }
 }
 
@@ -195,112 +200,122 @@ class ChallengeCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final userP = Get.find<UserPartyP>();
-    // FUserParty user = userP.loggedUser;
+    final userPartyP = Get.find<UserPartyP>();
+    FUserParty user = userPartyP.loggedUser;
+    final parties = user.parties.values.toList();
 
-    return GetBuilder<LoadingP>(builder: (controller) {
-      return SmartRefresher(
-        controller: ChallengeMain.refreshCont,
-        onRefresh: () async {
-          ChallengeMain.toChallengeMain();
-          ChallengeMain.refreshCont.refreshCompleted();
-        },
-        onLoading: () async {
-          await Future.delayed(const Duration(milliseconds: 100));
-          ChallengeMain.refreshCont.loadComplete();
-        },
-        header: const MaterialClassicHeader(
-          color: FTheme.black,
-          backgroundColor: FTheme.surface,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: FText('참여 중인 챌린지'),
-              ),
-              // ListView.separated(
-              //   shrinkWrap: true,
-              //   physics: const NeverScrollableScrollPhysics(),
-              //   itemCount: ChallengeP.orderedChallenges.length,
-              //   itemBuilder: (_, index) {
-              //     return ChallengeCard(
-              //       challenge: ChallengeP.orderedChallenges[index],
-              //     );
-              //   },
-              //   separatorBuilder: (_, index) => SizedBox(height: 30.0.h),
-              // ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: FText('새로운 챌린지'),
-              ),
-              // if (user.parties.isEmpty)
-              //   Padding(
-              //     padding: EdgeInsets.all(20.0.h),
-              //     child: Column(
-              //       children: [
-              //         ListView.separated(
-              //           shrinkWrap: true,
-              //           itemCount: user.parties.length,
-              //           physics: const NeverScrollableScrollPhysics(),
-              //           itemBuilder: (_, index) => MyPartyListTile(
-              //             party: user.parties.values.toList()[index],
-              //           ),
-              //           separatorBuilder: (_, index) => SizedBox(height: 20.0.h),
-              //         ),
-              //         SizedBox(height: 20.0.h),
-              //         GetBuilder<ChallengeMain>(
-              //           builder: (controller) {
-              //             return Row(
-              //               children: [
-              //                 PButton(
-              //                   text: '챌린지 살펴보기',
-              //                   onPressed: () => controller.tabCont.index = 0,
-              //                   stretch: true,
-              //                   fill: false,
-              //                   multiple: true,
-              //                 ),
-              //                 SizedBox(width: 20.0.w),
-              //                 PButton(
-              //                   text: '챌린지 참여하기',
-              //                   onPressed: controller.challengeJoinButtonPressed,
-              //                   stretch: true,
-              //                   multiple: true,
-              //                 ),
-              //               ],
-              //             );
-              //           },
-              //         ),
-              //       ],
-              //     ),
-              //   )
-              // else
-              //   Container(),
-              ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: ChallengeP.orderedChallenges.length,
-                itemBuilder: (_, index) {
-                  return InkWell(
-                    onTap: () {
-                      ChallengeDetail.toChallengeDetail(
-                        ChallengeP.orderedChallenges[index],
-                      );
-                    },
-                    child: ChallengeCard(
-                      challenge: ChallengeP.orderedChallenges[index],
-                    ),
+    return
+        // GetBuilder<LoadingP>(builder: (controller) {
+        // return SmartRefresher(
+        //   controller: ChallengeMain.refreshCont,
+        //   onRefresh: () async {
+        //     ChallengeMain.toChallengeMain();
+        //     ChallengeMain.refreshCont.refreshCompleted();
+        //   },
+        //   onLoading: () async {
+        //     await Future.delayed(const Duration(milliseconds: 100));
+        //     ChallengeMain.refreshCont.loadComplete();
+        //   },
+        //   header: const MaterialClassicHeader(
+        //     color: FTheme.black,
+        //     backgroundColor: FTheme.surface,
+        //   ),
+        //   child:
+        SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: FText('참여 중인 챌린지'),
+          ),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: user.partyIds.length,
+            itemBuilder: (_, index) {
+              return InkWell(
+                onTap: () =>
+                    ChallengePartyMainP.toChallengePartyMain(parties[index]),
+                child: ChallengeCard(
+                  challenge:
+                      ChallengeP.getChallenge(parties[index].challengeId!) ??
+                          ChallengeP.orderedChallenges[0],
+                  isHero: false,
+                ),
+              );
+            },
+            separatorBuilder: (_, index) => SizedBox(height: 30.0.h),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: FText('새로운 챌린지'),
+          ),
+          // if (user.parties.isEmpty)
+          //   Padding(
+          //     padding: EdgeInsets.all(20.0.h),
+          //     child: Column(
+          //       children: [
+          //         ListView.separated(
+          //           shrinkWrap: true,
+          //           itemCount: user.parties.length,
+          //           physics: const NeverScrollableScrollPhysics(),
+          //           itemBuilder: (_, index) => MyPartyListTile(
+          //             party: user.parties.values.toList()[index],
+          //           ),
+          //           separatorBuilder: (_, index) => SizedBox(height: 20.0.h),
+          //         ),
+          //         SizedBox(height: 20.0.h),
+          //         GetBuilder<ChallengeMain>(
+          //           builder: (controller) {
+          //             return Row(
+          //               children: [
+          //                 PButton(
+          //                   text: '챌린지 살펴보기',
+          //                   onPressed: () => controller.tabCont.index = 0,
+          //                   stretch: true,
+          //                   fill: false,
+          //                   multiple: true,
+          //                 ),
+          //                 SizedBox(width: 20.0.w),
+          //                 PButton(
+          //                   text: '챌린지 참여하기',
+          //                   onPressed: controller.challengeJoinButtonPressed,
+          //                   stretch: true,
+          //                   multiple: true,
+          //                 ),
+          //               ],
+          //             );
+          //           },
+          //         ),
+          //       ],
+          //     ),
+          //   )
+          // else
+          //   Container(),
+          ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: ChallengeP.orderedChallenges.length,
+            itemBuilder: (_, index) {
+              return InkWell(
+                onTap: () {
+                  ChallengeDetail.toChallengeDetail(
+                    ChallengeP.orderedChallenges[index],
                   );
                 },
-                separatorBuilder: (_, index) => SizedBox(height: 30.0.h),
-              ),
-            ],
+                child: ChallengeCard(
+                  challenge: ChallengeP.orderedChallenges[index],
+                ),
+              );
+            },
+            separatorBuilder: (_, index) => SizedBox(height: 30.0.h),
           ),
-        ),
-      );
-    });
+        ],
+      ),
+      // ),
+    );
+    // });
   }
 }
 
@@ -308,98 +323,167 @@ class ChallengeCard extends StatelessWidget {
   const ChallengeCard({
     Key? key,
     required this.challenge,
+    this.isHero = true,
   }) : super(key: key);
 
   final Challenge challenge;
+  final bool isHero;
 
   @override
   Widget build(BuildContext context) {
-    final userP = Get.find<UserPartyP>();
+    return challenge.locked
+        ? Container()
+        : FCard(
+            backgroundColor: FTheme.white,
+            padding: const EdgeInsets.all(0.0),
+            child: Row(
+              children: [
+                isHero
+                    ? Hero(
+                        tag: '${challenge.id}',
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.horizontal(
+                            left: Radius.circular(12.0),
+                          ),
+                          child: Image.asset(
+                            challenge.imageUrls['default'],
+                            width: 100.0.w,
+                            height: 100.0.h,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )
+                    : ClipRRect(
+                        borderRadius: const BorderRadius.horizontal(
+                          left: Radius.circular(12.0),
+                        ),
+                        child: Image.asset(
+                          challenge.imageUrls['default'],
+                          width: 100.0.w,
+                          height: 100.0.h,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0.r),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        FText(
+                          challenge.title ?? '',
+                          style: textTheme.bodyMedium,
+                          maxLines: 2,
+                        ),
+                        SizedBox(height: 4.0.h),
+                        FText(
+                          challenge.descriptions['sub']!,
+                          style: textTheme.bodySmall,
+                          color: FTheme.lightGrey,
+                          maxLines: 2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                // userP.alreadyJoinedChallenge(challenge.id!)
+                //     ? PButton(
+                //         onPressed: () =>
+                //             ChallengePartyMain.toChallengePartyMain(userP
+                //                 .getPartyByChallengeId(challenge.id!)!),
+                //         text: '챌린지 이동하기',
+                //         stretch: true,
+                //         height: 50.0,
+                //       )
+                //     : PButton(
+                //         onPressed: () =>
+                //             ChallengeDetail.toChallengeDetail(challenge),
+                //         text: '알아보러 가기',
+                //         stretch: true,
+                //         height: 50.0,
+                //       ),
+              ],
+            ),
+          );
+  }
+}
 
-    return Stack(
-      children: [
-        PCard(
-          color: FTheme.background,
-          padding: EdgeInsets.zero,
-          child: Row(
-            children: [
-              // ParallaxWidget(
-              //   background: Image.asset(
-              //     challenge.imageUrls['default'],
-              //     fit: BoxFit.fitHeight,
-              //   ),
-              //   child: Container(height: 200.0),
-              // ),
-              if (challenge.locked)
-                Container(
+class MyPartyCard extends StatelessWidget {
+  const MyPartyCard({
+    Key? key,
+    required this.party,
+  }) : super(key: key);
+
+  final Party party;
+
+  @override
+  Widget build(BuildContext context) {
+    final challenge = ChallengeP.getChallenge(party.challengeId!);
+
+    return InkWell(
+      onTap: () => ChallengePartyMainP.toChallengePartyMain(party),
+      child: FCard(
+        backgroundColor: FTheme.white,
+        padding: const EdgeInsets.all(0.0),
+        child: Row(
+          children: [
+            Hero(
+              tag: '${party.id}',
+              child: ClipRRect(
+                borderRadius: const BorderRadius.horizontal(
+                  left: Radius.circular(12.0),
+                ),
+                child: Image.asset(
+                  challenge?.imageUrls['default'],
                   width: 100.0.w,
                   height: 100.0.h,
-                  color: FTheme.lightGrey,
-                )
-              else
-                Hero(
-                  tag: '${challenge.id}',
-                  child: Image.asset(
-                    challenge.imageUrls['default'],
-                    width: 100.0.w,
-                    height: 100.0.h,
-                    fit: BoxFit.cover,
-                  ),
+                  fit: BoxFit.cover,
                 ),
-              Expanded(
-                child: Padding(
-                  padding: EdgeInsets.all(8.0.r),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    // crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      FText(
-                        challenge.title ?? '',
-                        style: textTheme.bodyMedium,
-                        maxLines: 2,
-                      ),
-                      SizedBox(height: 4.0.h),
-                      FText(
-                        challenge.descriptions['sub']!,
-                        style: textTheme.bodySmall,
-                        color: FTheme.lightGrey,
-                        maxLines: 2,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              // userP.alreadyJoinedChallenge(challenge.id!)
-              //     ? PButton(
-              //         onPressed: () =>
-              //             ChallengePartyMain.toChallengePartyMain(userP
-              //                 .getPartyByChallengeId(challenge.id!)!),
-              //         text: '챌린지 이동하기',
-              //         stretch: true,
-              //         height: 50.0,
-              //       )
-              //     : PButton(
-              //         onPressed: () =>
-              //             ChallengeDetail.toChallengeDetail(challenge),
-              //         text: '알아보러 가기',
-              //         stretch: true,
-              //         height: 50.0,
-              //       ),
-            ],
-          ),
-        ),
-        if (challenge.locked)
-          Positioned.fill(
-            child: Container(
-              color: FTheme.black.withOpacity(.5),
-              child: const Icon(
-                Icons.lock,
-                color: FTheme.black,
-                size: 70.0,
               ),
             ),
-          ),
-      ],
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(8.0.r),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    FText(
+                      challenge?.title ?? '',
+                      style: textTheme.bodyMedium,
+                      maxLines: 2,
+                    ),
+                    SizedBox(height: 4.0.h),
+                    FText(
+                      challenge?.descriptions['sub']!,
+                      style: textTheme.bodySmall,
+                      color: FTheme.lightGrey,
+                      maxLines: 2,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            // userP.alreadyJoinedChallenge(challenge.id!)
+            //     ? PButton(
+            //         onPressed: () =>
+            //             ChallengePartyMain.toChallengePartyMain(userP
+            //                 .getPartyByChallengeId(challenge.id!)!),
+            //         text: '챌린지 이동하기',
+            //         stretch: true,
+            //         height: 50.0,
+            //       )
+            //     : PButton(
+            //         onPressed: () =>
+            //             ChallengeDetail.toChallengeDetail(challenge),
+            //         text: '알아보러 가기',
+            //         stretch: true,
+            //         height: 50.0,
+            //       ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -621,7 +705,7 @@ class MyPartyListTile extends StatelessWidget {
         Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () => ChallengePartyMain.toChallengePartyMain(party),
+            onTap: () => ChallengePartyMainP.toChallengePartyMain(party),
             child: Container(
               height: 80.0.h,
               decoration: BoxDecoration(
@@ -991,7 +1075,7 @@ class AchievementCard extends StatelessWidget {
                   userP.alreadyJoinedChallenge(challenge.id!)
                       ? PButton(
                           onPressed: () =>
-                              ChallengePartyMain.toChallengePartyMain(
+                              ChallengePartyMainP.toChallengePartyMain(
                                   userP.getPartyByChallengeId(challenge.id!)!),
                           text: '챌린지 이동하기',
                           stretch: true,

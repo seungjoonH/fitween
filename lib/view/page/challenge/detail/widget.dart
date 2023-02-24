@@ -71,29 +71,40 @@ class ChallengeDetailView extends StatelessWidget {
                       SizedBox(height: 20.0.h),
                       Row(
                         children: [
-                          PButton(
-                            onPressed: () {},
-                            // onPressed: challengeMainP.challengeJoinButtonPressed,
-                            text: '챌린지 참여하기',
+                          FButton(
+                            onPressed:
+                                challengeMainP.challengeJoinButtonPressed,
                             stretch: true,
                             padding: EdgeInsets.symmetric(
-                              horizontal: 16.0.w,
-                              vertical: 12.0.h,
+                              horizontal: 20.0.w,
+                              vertical: 16.0.h,
                             ),
                             // textColor: FTheme.black,
                             multiple: true,
+                            backgroundColor: FTheme.white,
+                            border: true,
+                            child: FText(
+                              '챌린지 참여하기',
+                              style: textTheme.titleSmall,
+                              bold: true,
+                            ),
                           ),
                           SizedBox(width: 20.0.w),
-                          PButton(
-                            onPressed: () {},
-                            // onPressed: () => ChallengeCreate.toChallengeCreate(challenge),
-                            text: '챌린지 생성하기',
+                          FButton(
+                            onPressed: () =>
+                                ChallengeCreateP.toChallengeCreate(challenge),
                             stretch: true,
                             padding: EdgeInsets.symmetric(
-                              horizontal: 16.0.w,
-                              vertical: 12.0.h,
+                              horizontal: 20.0.w,
+                              vertical: 16.0.h,
                             ),
                             multiple: true,
+                            child: FText(
+                              '챌린지 생성하기',
+                              style: textTheme.titleSmall,
+                              bold: true,
+                              color: FTheme.white,
+                            ),
                           ),
                         ],
                       ),
