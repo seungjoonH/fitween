@@ -13,14 +13,11 @@ class ChallengePartyMainPage extends StatelessWidget {
     return GestureDetector(
       onTap: GlobalPresenter.closeBottomBar,
       child: Scaffold(
-        appBar: const FAppBar(title: '내 챌린지'),
-        body: GetBuilder<ChallengePartyMainP>(
-          builder: (controller) {
-            return PartyMainView(party: controller.loadedParty);
-          }
-        ),
+        appBar: const FAppBar(title: '챌린지'),
+        body: GetBuilder<ChallengePartyMainP>(builder: (controller) {
+          return PartyMainView(party: controller.loadedParty);
+        }),
       ),
     );
-
   }
 }

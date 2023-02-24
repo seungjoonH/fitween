@@ -22,6 +22,7 @@ import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../../../../presenter/model/badge.dart';
 import '../../../widget/widget/card.dart';
 
 class PartyMainView extends StatelessWidget {
@@ -61,17 +62,7 @@ class PartyMainView extends StatelessWidget {
               ChallengeInfoCard(party: party!),
               SizedBox(height: 20.0.h),
               ChallengeScoreCard(party: party!),
-              const Divider(
-                color: FTheme.lightGrey,
-                thickness: 8,
-              ),
-              RankWidget(party: party!),
-              const Divider(
-                color: FTheme.lightGrey,
-                thickness: 8,
-              ),
-              ChallengeBadgeWidget(party: party!),
-              const SizedBox(height: 100.0),
+              const SizedBox(height: 60.0),
             ],
           ),
           // )
@@ -104,60 +95,64 @@ class ChallengeInfoCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 24.0.r),
       child: FCard(
         padding: EdgeInsets.zero,
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: imageRadius,
-              child: Image.asset(
-                party.challenge?.imageUrls['default'],
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: 230.0.h,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(20.0.r),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+        child: party.satisfy
+            ? ChallengeBadgeWidget(
+                party: party,
+              )
+            : Column(
                 children: [
-                  Row(
-                    children: [
-                      FText(
-                        '최대인원 | ${party.level['maxMember']}명',
-                        style: textTheme.bodyMedium,
-                        color: FTheme.lightGrey,
-                      ),
-                      SizedBox(width: 40.0.w),
-                      FText(
-                        '마감기한 | D-${party.remainDays}',
-                        style: textTheme.bodyMedium,
-                        color: FTheme.lightGrey,
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8.0.h),
-                  FText(
-                    party.challenge?.titleOneLine ?? '',
-                    style: textTheme.headlineSmall,
-                    bold: true,
-                    maxLines: 2,
-                  ),
-                  SizedBox(height: 16.0.h),
-                  FText(
-                    party.challenge?.descriptions['detail']!.replaceAll(
-                      '##',
-                      party.level['word'],
+                  ClipRRect(
+                    borderRadius: imageRadius,
+                    child: Image.asset(
+                      party.challenge?.imageUrls['default'],
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: 230.0.h,
                     ),
-                    style: textTheme.labelLarge,
-                    color: FTheme.grey,
-                    // align: TextAlign.center,
-                    maxLines: 7,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(20.0.r),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            FText(
+                              '최대인원 | ${party.level['maxMember']}명',
+                              style: textTheme.bodyMedium,
+                              color: FTheme.lightGrey,
+                            ),
+                            SizedBox(width: 20.0.w),
+                            FText(
+                              '마감기한 | D-${party.remainDays}',
+                              style: textTheme.bodyMedium,
+                              color: FTheme.lightGrey,
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 8.0.h),
+                        FText(
+                          party.challenge?.titleOneLine ?? '',
+                          style: textTheme.headlineSmall,
+                          bold: true,
+                          maxLines: 2,
+                        ),
+                        SizedBox(height: 16.0.h),
+                        FText(
+                          party.challenge?.descriptions['detail']!.replaceAll(
+                            '##',
+                            party.level['word'],
+                          ),
+                          style: textTheme.labelLarge,
+                          color: FTheme.grey,
+                          // align: TextAlign.center,
+                          maxLines: 7,
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -186,19 +181,80 @@ class ChallengeScoreCard extends StatelessWidget {
                 style: textTheme.headlineSmall,
                 bold: true,
               ),
-              SizedBox(height: 8.0.h),
+              SizedBox(height: 12.0.h),
               FText(
                 '전체 점수',
                 style: textTheme.bodyMedium,
                 color: FTheme.grey,
               ),
-              SizedBox(height: 8.0.h),
+              SizedBox(height: 12.0.h),
               ChallengeScoreLinearIndicator(party: party),
-              SizedBox(height: 8.0.h),
+              SizedBox(height: 12.0.h),
               FText(
-                '친구 ${party.memberUids.length}/${party.level['maxMember']}',
+                '참가자 ${party.memberUids.length}/${party.level['maxMember']}',
                 style: textTheme.bodyMedium,
                 color: FTheme.grey,
+              ),
+              MyPartyRankingWidget(party: party),
+              const Divider(
+                color: FTheme.lightGrey,
+                thickness: 2,
+              ),
+              SizedBox(height: 12.0.h),
+              FText(
+                '참여 코드를 친구에게 공유하여 함께 도전해요!',
+                style: textTheme.bodyLarge,
+              ),
+              SizedBox(height: 12.0.h),
+              GetBuilder<ChallengePartyMainP>(
+                builder: (controller) {
+                  return Material(
+                    color: FTheme.grey,
+                    borderRadius: BorderRadius.circular(10.0.r),
+                    child: InkWell(
+                      onTap: () => controller.copyPartyId(party.id!),
+                      borderRadius: BorderRadius.circular(10.0.r),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6.0,
+                          vertical: 3.0,
+                        ),
+                        child: controller.copied
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  FText(
+                                    '복사완료',
+                                    style: textTheme.titleLarge,
+                                    color: FTheme.white,
+                                  ),
+                                  const SizedBox(width: 5.0),
+                                  const Icon(
+                                    Icons.check,
+                                    color: FTheme.black,
+                                  ),
+                                ],
+                              )
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  FText(
+                                    party.id!,
+                                    style: textTheme.titleLarge,
+                                    color: FTheme.white,
+                                  ),
+                                  const SizedBox(width: 8.0),
+                                  const Icon(
+                                    Icons.copy_rounded,
+                                    color: FTheme.white,
+                                    size: 20.0,
+                                  ),
+                                ],
+                              ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ],
           ),
@@ -260,6 +316,81 @@ class _ChallengeScoreLinearIndicatorState
         ),
         const SizedBox(height: 10.0),
       ],
+    );
+  }
+}
+
+class MyPartyRankingWidget extends StatelessWidget {
+  const MyPartyRankingWidget({
+    Key? key,
+    required this.party,
+  }) : super(key: key);
+
+  final Party party;
+
+  @override
+  Widget build(BuildContext context) {
+    final userP = Get.find<UserInfoP>();
+    FUserInfo user = userP.loggedUser;
+
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemCount: party.records.length,
+      itemBuilder: (context, index) {
+        FUserInfo userInfo = party.getMemberInfoByRank(index + 1);
+        FUserCollection userCollection =
+            party.getMemberCollectionByRank(index + 1);
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              FBadgeWidget(badge: userCollection.collection?.badge),
+              SizedBox(width: 12.0.w),
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: 100.0.w,
+                          child: FText(
+                            userInfo.nickname!,
+                            style: textTheme.bodyLarge,
+                          ),
+                        ),
+                        userInfo.uid == user.uid
+                            ? Container(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 4.0),
+                                decoration: BoxDecoration(
+                                  color: FTheme.black,
+                                  borderRadius: BorderRadius.circular(12.0.r),
+                                ),
+                                child: FText(
+                                  'ME',
+                                  style: textTheme.bodySmall,
+                                  color: FTheme.white,
+                                ),
+                              )
+                            : Container(),
+                      ],
+                    ),
+                    FText(
+                      '${party.records[userInfo.uid!]}${party.challenge!.type!.unit}',
+                      style: textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -726,86 +857,80 @@ class ChallengeBadgeWidget extends StatelessWidget {
     FUserInfo user = Get.find<UserInfoP>().loggedUser;
 
     return GetBuilder<ChallengePartyMainP>(builder: (controller) {
-      return Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 40.0.h,
-                      child: Row(
-                        children: [
-                          FText(
-                            '보상',
-                            style: textTheme.headlineSmall,
-                            color: FTheme.black,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20.0.h),
-                    SizedBox(
-                      height: 150.0.h,
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          if (!party.complete)
-                            EternalRotation(
-                              rps: .3,
-                              child: Image.asset(
-                                GlobalPresenter.effect2Asset,
-                              ),
-                            ),
-                          BadgeWidget(
-                            badge: party.badge,
-                            greyscale: party.complete,
-                          ),
-                          if (party.complete)
-                            RotationTransition(
-                              turns: const AlwaysStoppedAnimation(-.075),
-                              child: Container(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 7.0),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: FTheme.colorB, width: 2.0),
-                                ),
-                                child: FText(
-                                  ' 완 료 ',
-                                  style: textTheme.displayMedium,
-                                  color: FTheme.colorB,
+      return Center(
+        child: Padding(
+          padding: EdgeInsets.all(20.0.r),
+          child: Column(
+            children: [
+              Column(
+                children: [
+                  Column(
+                    children: [
+                      SizedBox(
+                        height: 160.0.h,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            if (!party.complete)
+                              EternalRotation(
+                                rps: .3,
+                                child: Image.asset(
+                                  GlobalPresenter.effectAsset,
                                 ),
                               ),
+                            BadgeWidget(
+                              badge: party.badge,
+                              greyscale: party.complete,
                             ),
-                        ],
+                            if (party.complete)
+                              RotationTransition(
+                                turns: const AlwaysStoppedAnimation(-.075),
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 7.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: FTheme.colorB, width: 2.0),
+                                  ),
+                                  child: FText(
+                                    ' 완 료 ',
+                                    style: textTheme.displayMedium,
+                                    color: FTheme.colorB,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20.0.h),
-                    if (party.satisfy && party.leaderUid == user.uid)
-                      PButton(
-                        text: '완료하기',
-                        stretch: true,
-                        onPressed: () =>
-                            ChallengePartyComplete.toChallengePartyComplete(
-                                party),
-                      )
-                    else
-                      PButton(
-                        text: '완료하기',
-                        stretch: true,
-                        backgroundColor: FTheme.lightGrey,
-                        textColor: FTheme.darkGrey,
-                        border: false,
-                      ),
-                  ],
-                ),
-              ],
-            ),
+                      SizedBox(height: 12.0.h),
+                      if (party.satisfy && party.leaderUid == user.uid)
+                        FButton(
+                          text: '챌린지 완료!',
+                          backgroundColor: party.complete
+                              ? FTheme.lightGrey
+                              : ActivityType.calorie.color,
+                          onPressed: party.complete
+                              ? () {}
+                              : () => controller.complete(),
+                          // onPressed: () =>
+                          //     ChallengePartyComplete.toChallengePartyComplete(
+                          //   party,
+                          // ),
+                        )
+                      else
+                        FButton(
+                          text: '챌린지 완료!',
+                          backgroundColor: FTheme.lightGrey,
+                          textColor: FTheme.darkGrey,
+                          border: false,
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
+        ),
       );
     });
   }

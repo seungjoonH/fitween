@@ -110,7 +110,7 @@ class ChallengePartyMainP extends GetxController {
     final userP = Get.find<UserCollectionP>();
     loadedParty!.complete = true;
     update();
-    Get.back();
+    // Get.back();
     PartyPresenter.save(loadedParty!);
     userP.awardBadge(loadedParty!.badge);
   }

@@ -51,6 +51,22 @@ class ChallengeDetailView extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      Row(
+                        children: [
+                          FText(
+                            '최대인원 | ${challenge.levels['easy']['maxMember']}명',
+                            style: textTheme.bodyMedium,
+                            color: FTheme.lightGrey,
+                          ),
+                          SizedBox(width: 20.0.w),
+                          FText(
+                            '마감기한 | D-${challenge.period}',
+                            style: textTheme.bodyMedium,
+                            color: FTheme.lightGrey,
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 4.0.h),
                       FText(
                         challenge.title!,
                         align: TextAlign.center,
