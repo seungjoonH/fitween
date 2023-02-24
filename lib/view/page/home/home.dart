@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/page/home.dart';
+import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/page/home/widget.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:fitween/view/widget/widget/icon.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:indexed/indexed.dart';
 import 'package:lottie/lottie.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
 import '../../../global/theme.dart';
@@ -23,24 +25,44 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final homeP = Get.find<HomeP>();
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            const RotateCarousel(),
-            Padding(
-              padding: const EdgeInsets.all(28.0),
+      body: GetBuilder<LoadingP>(
+        builder: (loadingP) {
+          return SmartRefresher(
+            controller: HomeP.refreshCont,
+              onRefresh: () async {
+              await HomeP.init();
+              HomeP.refreshCont.refreshCompleted();
+            },
+            onLoading: () async {
+              await Future.delayed(const Duration(milliseconds: 100));
+              HomeP.refreshCont.loadComplete();
+            },
+            header: const MaterialClassicHeader(
+              color: FTheme.black,
+              backgroundColor: FTheme.surface,
+              offset: 40.0,
+            ),
+            child: SingleChildScrollView(
               child: Column(
-                children: const [
-                  CalendarCard(),
-                  SizedBox(height: 20.0),
-                  RankingCard(),
+                children: [
+                  const RotateCarousel(),
+                  Padding(
+                    padding: const EdgeInsets.all(28.0),
+                    child: Column(
+                      children: const [
+                        CalendarCard(),
+                        SizedBox(height: 20.0),
+                        RankingCard(),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-          ],
-        ),
+          );
+        }
       ),
       bottomNavigationBar: const FBottomNavigationBar(),
     );

@@ -17,21 +17,126 @@ import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class ChallengeMainP extends GetxController {
-  static void toChallengeMain() => Get.toNamed('/challengeMain');
+  /// static variables
+  static final refreshCont = RefreshController();
+  static final codeCont = TextEditingController();
+
+  bool codeInvalid = false;
+  String? codeHintText = '';
+
+  static void toChallengeMain() async {
+    final challengeMainP = Get.find<ChallengeMainP>();
+    await challengeMainP.init();
+    Get.toNamed('/challengeMain');
+  }
 
   /// methods
   Future init() async {
     final userP = Get.find<UserPartyP>();
-    final loadingP = Get.find<LoadingP>();
+    // final loadingP = Get.find<LoadingP>();
 
-    loadingP.loadStart();
+    // loadingP.loadStart();
 
     // tabCont.index = 0;
     await ChallengeP.importFile();
     await userP.load();
     await userP.loadMyParties();
 
-    loadingP.loadEnd();
+    // loadingP.loadEnd();
+  }
+
+  // 챌린지 참가 버튼 클릭 시
+  void challengeJoinButtonPressed() async {
+    codeCont.clear();
+    codeHintText = null;
+
+    Get.dialog(
+      PAlertDialog(
+        title: '챌린지 참여코드',
+        content: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GetBuilder<ChallengeMainP>(
+              builder: (controller) {
+                return PInputField(
+                  controller: codeCont,
+                  invalid: controller.codeInvalid,
+                  hintText: controller.codeHintText ?? '참여코드를 입력해주세요',
+                  hintColor: controller.codeHintText == null
+                      ? FTheme.darkGrey
+                      : FTheme.colorB,
+                );
+              },
+            ),
+          ],
+        ),
+        type: DialogType.bi,
+        leftPressed: Get.back,
+        rightPressed: partyJoinButtonPressed,
+      ),
+    );
+  }
+
+  // 파티 참가 버튼 클릭 시
+  void partyJoinButtonPressed() async {
+    final userPartyP = Get.find<UserPartyP>();
+    final userRecordP = Get.find<UserRecordP>();
+    FUserRecord user = userRecordP.loggedUser;
+
+    if (!await validate()) return;
+    Party? party = await PartyPresenter.loadParty(codeCont.text);
+
+    if (party == null) return;
+    party.records[user.uid!] = user.getAmounts(
+      party.challenge!.type!,
+      party.startDate,
+      party.endDate,
+    );
+
+    PartyPresenter.save(party);
+    userPartyP.joinParty(codeCont.text);
+
+    Get.back();
+    ChallengeMain.toChallengeMain();
+    ChallengePartyMainP.toChallengePartyMain(party);
+  }
+
+  // 파티 코드 입력 필드 유효성 검사
+  Future<bool> validate() async {
+    final userP = Get.find<UserPartyP>();
+    String text = codeCont.text;
+
+    Map<String, bool> conditions = {
+      '정원이 차 참여할 수 없습니다': await PartyPresenter.partyFulled(text),
+      '이미 참여중인 챌린지 입니다': userP.alreadyJoinedParty(text),
+      '해당 코드의 챌린지가 없습니다': !await PartyPresenter.partyExists(text),
+      '7글자로 입력해주세요': text.length != 7,
+      '공백을 포함할 수 없습니다': text.contains(' '),
+      '한글을 포함할 수 없습니다': hasKorean(text),
+      '특수문자는 포함할 수 없습니다': RegExp(r'[`~!@#$%^&*|"' r"'‘’””;:/?]").hasMatch(text),
+      '별명을 입력해주세요': text == '',
+    };
+
+    conditions.forEach((message, condition) {
+      if (condition) codeHintText = message;
+    });
+
+    if (conditions.values.any((condition) => condition)) {
+      codeCont.clear();
+      codeInvalid = true;
+      update();
+      await Future.delayed(const Duration(milliseconds: 500), () {
+        codeInvalid = false;
+        update();
+      });
+      await Future.delayed(const Duration(milliseconds: 500), () {
+        codeCont.text = text;
+        update();
+        codeHintText = null;
+      });
+      return false;
+    }
+    return true;
   }
 }
 
@@ -118,7 +223,7 @@ class ChallengeMain extends GetxController
 
     Get.back();
     ChallengeMain.toChallengeMain();
-    ChallengePartyMain.toChallengePartyMain(party);
+    ChallengePartyMainP.toChallengePartyMain(party);
   }
 
   // 파티 코드 입력 필드 유효성 검사

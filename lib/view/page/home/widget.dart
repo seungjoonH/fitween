@@ -126,11 +126,12 @@ class CalendarCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const FCard(
+    return FCard(
       title: '기록',
       activateSeeMore: true,
       onPressed: CalendarP.toCalendar,
-      child: WeekCalendarWidget(),
+      minHeight: 115.0,
+      child: const WeekCalendarWidget(),
     );
   }
 }
@@ -140,8 +141,9 @@ class WeekCalendarWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<UserRecordP>(
-      builder: (userP) {
+    final userP = Get.find<UserRecordP>();
+    return GetBuilder<LoadingP>(
+      builder: (loadingP) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(7, (index) {
@@ -202,7 +204,7 @@ class WeekCalendarWidget extends StatelessWidget {
             );
           }),
         );
-      }
+      },
     );
   }
 }
@@ -222,6 +224,7 @@ class RankingCard extends StatelessWidget {
           const RankingGraph(type: ActivityType.distance),
         ],
       ),
+      minHeight: 160.0,
     );
   }
 }
@@ -264,7 +267,7 @@ class RankingGraph extends StatelessWidget {
         });
 
         int myPrice = infos.indexWhere((info) => info.uid == myUid);
-        int firstIndex = infos.length > 3 ? myPrice : 0;
+        int firstIndex = infos.length > 3 ? myPrice - 1 : 0;
         double maxAmount = records[firstIndex].getAmounts(type, startDate, endDate);
 
         return Column(

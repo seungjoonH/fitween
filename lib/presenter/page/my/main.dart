@@ -11,4 +11,3 @@ class MyMain extends GetxController {
     Get.toNamed('/my/main');
   }
 }
-

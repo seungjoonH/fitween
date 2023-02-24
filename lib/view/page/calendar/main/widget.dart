@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/calendar.dart';
+import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/activity_type.dart';
@@ -10,6 +11,7 @@ import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class MyCalendarView extends StatefulWidget {
@@ -26,8 +28,6 @@ class _MyCalendarViewState extends State<MyCalendarView> {
 
   DateTime _focusedDay = now;
   DateTime? _selectedDay;
-  // DateTime? _rangeStart;
-  // DateTime? _rangeEnd;
 
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
   }
 
   List<CalendarEvent> _getEventsForDay(DateTime day) {
-    return calendarP.events[ignoreTime(day)] ?? [
+    return calendarP.events?[ignoreTime(day)] ?? [
       CalendarEvent(1, .0), CalendarEvent(1, .0), CalendarEvent(1, .0)
     ];
   }
@@ -55,115 +55,138 @@ class _MyCalendarViewState extends State<MyCalendarView> {
         _focusedDay = focusedDay;
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
-
       _selectedEvents.value = _getEventsForDay(selectedDay);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(28.0),
+    return SmartRefresher(
+      controller: CalendarP.refreshCont,
+      onRefresh: () async {
+        await CalendarP.init();
+        CalendarP.refreshCont.refreshCompleted();
+      },
+      onLoading: () async {
+        await Future.delayed(const Duration(milliseconds: 100));
+        CalendarP.refreshCont.loadComplete();
+      },
+      header: const MaterialClassicHeader(
+        color: FTheme.black,
+        backgroundColor: FTheme.surface,
+      ),
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            FCard(
-              child: TableCalendar<CalendarEvent>(
-                firstDay: CalendarP.firstDay,
-                lastDay: CalendarP.lastDay,
-                focusedDay: _focusedDay,
-                selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
-                calendarFormat: CalendarFormat.month,
-                rangeSelectionMode: _rangeSelectionMode,
-                eventLoader: _getEventsForDay,
-                startingDayOfWeek: StartingDayOfWeek.monday,
-                daysOfWeekHeight: 20.0,
-                calendarStyle: const CalendarStyle(
-                  isTodayHighlighted: true,
-                  todayDecoration: BoxDecoration(
-                    color: FTheme.grey,
-                    shape: BoxShape.circle,
+        child: Padding(
+          padding: const EdgeInsets.all(28.0),
+          child: Column(
+            children: [
+              FCard(
+                minHeight: 370.0,
+                child: TableCalendar<CalendarEvent>(
+                  firstDay: CalendarP.firstDay,
+                  lastDay: CalendarP.lastDay,
+                  focusedDay: _focusedDay,
+                  selectedDayPredicate: (day) => isSameDay(_selectedDay, day),
+                  calendarFormat: CalendarFormat.month,
+                  rangeSelectionMode: _rangeSelectionMode,
+                  eventLoader: _getEventsForDay,
+                  startingDayOfWeek: StartingDayOfWeek.monday,
+                  daysOfWeekHeight: 20.0,
+                  calendarStyle: const CalendarStyle(
+                    isTodayHighlighted: true,
+                    todayDecoration: BoxDecoration(
+                      color: FTheme.grey,
+                      shape: BoxShape.circle,
+                    ),
+                    cellMargin: EdgeInsets.all(2.0),
+                    cellAlignment: Alignment.center,
                   ),
-                  cellMargin: EdgeInsets.all(2.0),
-                  cellAlignment: Alignment.center,
-                ),
-                calendarBuilders: CalendarBuilders(
-                  defaultBuilder: (context, date, events) {
-                    return Container(
-                      alignment: Alignment.center,
-                      child: FText('${date.day}',
-                        color: CalendarP.isAllFinished(_getEventsForDay(date))
-                            ? ActivityType.calorie.color
-                            : FTheme.black,
-                        style: textTheme.bodyMedium,
-                      ),
-                    );
-                  },
-                  markerBuilder: (context, date, events) {
-                    final userP = Get.find<UserRecordP>();
-                    date = ignoreTime(date);
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemCount: events.length,
-                      itemBuilder: (context, index) {
-                        ActivityType type = ActivityType.activeValues[index];
-                        List<ActivityType> completed = userP.loggedUser.completedActivities(date);
-                        int amount = userP.loggedUser.getAmounts(type, date).round();
+                  calendarBuilders: CalendarBuilders(
+                    defaultBuilder: (context, date, events) {
+                      return Container(
+                        alignment: Alignment.center,
+                        child: FText('${date.day}',
+                          color: CalendarP.isAllFinished(_getEventsForDay(date))
+                              ? ActivityType.calorie.color
+                              : FTheme.black,
+                          style: textTheme.bodyMedium,
+                        ),
+                      );
+                    },
+                    markerBuilder: (context, date, events) {
+                      final userP = Get.find<UserRecordP>();
+                      date = ignoreTime(date);
+                      return ListView.builder(
+                        shrinkWrap: true,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: events.length,
+                        itemBuilder: (context, index) {
+                          ActivityType type = ActivityType.activeValues[index];
+                          List<ActivityType> completed = userP.loggedUser.completedActivities(date);
+                          int amount = userP.loggedUser.getAmounts(type, date).round();
 
-                        Color color = FTheme.lightGrey;
-                        if (completed.length == 3) { color = ActivityType.calorie.color; }
-                        else if (completed.contains(type)) { color = type.color; }
-                        else if (amount == 0 || date.isAfter(now)) { color = Colors.transparent; }
+                          Color color = FTheme.lightGrey;
+                          if (completed.length == 3) { color = ActivityType.calorie.color; }
+                          else if (completed.contains(type)) { color = type.color; }
+                          else if (amount == 0 || date.isAfter(now)) { color = Colors.transparent; }
 
-                        return Container(
-                          margin: const EdgeInsets.only(top: 30.0),
-                          padding: const EdgeInsets.all(1.0),
-                          child: Container(
-                            width: 8.0, height: 8.0,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: color,
+                          return Container(
+                            margin: const EdgeInsets.only(top: 30.0),
+                            padding: const EdgeInsets.all(1.0),
+                            child: Container(
+                              width: 8.0, height: 8.0,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: color,
+                              ),
                             ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      );
+                    },
+                  ),
+                  onDaySelected: _onDaySelected,
+                  onPageChanged: (focusedDay) => _focusedDay = focusedDay,
+                  headerStyle: HeaderStyle(
+                    formatButtonVisible: false,
+                    headerPadding: EdgeInsets.zero,
+                    titleCentered: true,
+                    titleTextStyle: textTheme.titleLarge!,
+                    leftChevronIcon: const Icon(
+                      Icons.chevron_left,
+                      color: FTheme.black,
+                    ),
+                    rightChevronIcon: const Icon(
+                      Icons.chevron_right,
+                      color: FTheme.black,
+                    ),
+                  ),
+                  locale: 'ko_Kr',
+                ),
+              ),
+              const SizedBox(height: 20.0),
+              FCard(
+                minHeight: 280.0,
+                child: ValueListenableBuilder<List<CalendarEvent>>(
+                  valueListenable: _selectedEvents,
+                  builder: (context, events, _) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        FText(DateFormat('MM월 dd일').format(_focusedDay), style: textTheme.bodyLarge),
+                        const SizedBox(height: 20.0),
+                        Column(
+                          children: ActivityType.activeValues.map((type) => TodayRecordLinearIndicator(
+                            type: type, date: ignoreTime(_focusedDay),
+                          )).toList(),
+                        ),
+                      ],
                     );
                   },
                 ),
-                onDaySelected: _onDaySelected,
-                onPageChanged: (focusedDay) => _focusedDay = focusedDay,
-                headerStyle: HeaderStyle(
-                  formatButtonVisible: false,
-                  headerPadding: EdgeInsets.zero,
-                  titleCentered: true,
-                  titleTextStyle: textTheme.titleLarge!,
-                ),
-                locale: 'ko_Kr',
               ),
-            ),
-            const SizedBox(height: 20.0),
-            FCard(
-              child: ValueListenableBuilder<List<CalendarEvent>>(
-                valueListenable: _selectedEvents,
-                builder: (context, events, _) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FText(DateFormat('MM월 dd일').format(_focusedDay), style: textTheme.bodyLarge),
-                      const SizedBox(height: 20.0),
-                      Column(
-                        children: ActivityType.activeValues.map((type) => TodayRecordLinearIndicator(
-                          type: type, date: ignoreTime(_focusedDay),
-                        )).toList(),
-                      ),
-                      const SizedBox(height: 12.0),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -185,7 +208,6 @@ class TodayRecordLinearIndicator extends StatefulWidget {
 }
 
 class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator> {
-
   @override
   Widget build(BuildContext context) {
     final userP = Get.find<UserRecordP>();
@@ -199,13 +221,17 @@ class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator>
     if (completed.length == 3) { color = ActivityType.calorie.color; }
     else if (completed.contains(widget.type)) { color = widget.type.color; }
 
+
+    int leftFlex = max(1, amount);
+    int rightFlex = amount == 0 ? 49 : max(0, goal - amount);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
             Expanded(
-              flex: max(1, amount),
+              flex: leftFlex,
               child: Container(
                 height: 36.0,
                 decoration: BoxDecoration(
@@ -216,10 +242,7 @@ class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator>
                 ),
               ),
             ),
-            Expanded(
-              flex: amount == 0 ? 49 : max(0, goal - amount),
-              child: const SizedBox(),
-            ),
+            Expanded(flex: rightFlex, child: const SizedBox()),
           ],
         ),
         FText(

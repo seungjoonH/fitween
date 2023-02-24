@@ -43,15 +43,8 @@ class RegisterP extends GetxController {
   int pageIndex = 0;
   bool invalid = false;
   List<bool> imageExistence = [
-    false,
-    false,
-    false,
-    true,
-    false,
-    true,
-    true,
-    true,
-    false,
+    false, false, false, true,
+    false, true, true, true, false,
   ];
   bool imageVisualize = false;
 
@@ -175,7 +168,7 @@ class RegisterP extends GetxController {
     userPartyP.login(newcomerParty);
     userRecordP.login(newcomerRecord);
 
-    await HomeP.toHome();
+    HomeP.toHome();
     await AuthPresenter.storeLoginData(userInfoP.data);
     if (AuthPresenter.developerUids.contains(userInfoP.loggedUser.uid)) {
       userCollectionP.awardBadge(BadgePresenter.getBadge('1999999')!, true);

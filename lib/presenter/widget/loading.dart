@@ -4,12 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
 
-/// class
 class LoadingP extends GetxController {
   /// attributes
   bool loading = false;
-  Color mainColor = FTheme.black;
-  Color color = FTheme.black;
+  Color mainColor = FTheme.lightGrey;
+  Color color = FTheme.lightGrey;
   Timer? timer;
 
   /// methods
@@ -34,4 +33,5 @@ class LoadingP extends GetxController {
     update();
   }
 
+  Color setColor(Color color) => loading ? this.color : color;
 }

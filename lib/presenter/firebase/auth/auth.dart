@@ -132,7 +132,8 @@ class AuthPresenter {
       await userRecordP.login(strangerRecord);
 
       await storeLoginData(userInfoP.data);
-      await HomeP.toHome();
+      HomeP.toHome();
+      HomeP.init();
     }
 
     await BadgePresenter.synchronizeBadges();
@@ -191,6 +192,7 @@ class AuthPresenter {
     await userRecordP.load();
 
     HomeP.toHome();
+    HomeP.init();
   }
 
   // 로그인 데이터 전송

@@ -7,6 +7,7 @@ import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/calendar.dart';
+import 'package:fitween/presenter/page/challenge/create.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera_guide.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_friend.dart';
@@ -55,20 +56,17 @@ class GlobalP extends GetxController {
   int navIndex = 0;
 
   void navigate(int index) async {
-    final homeP = Get.find<HomeP>();
-    final friendP = Get.find<FriendP>();
-
     switch (index) {
       case 0:
         if (navIndex == index) {
-          await homeP.init();
+          await HomeP.init();
         } else {
           HomeP.toHome();
         }
         break;
       case 1:
         if (navIndex == index) {
-          await friendP.init();
+          await FriendP.init();
         } else {
           FriendP.toFriend();
         }
@@ -102,7 +100,7 @@ class GlobalPresenter extends GetxController {
     switch (index) {
       case 0:
         if (navIndex == index) {
-          homeP.init();
+          HomeP.init();
         } else {
           HomeP.toHome();
         }
@@ -419,8 +417,8 @@ class GlobalPresenter extends GetxController {
     Get.put(MySettingMain());
     Get.put(MySettingEdit());
 
-    // Get.put(ChallengeCreate());
-    Get.put(ChallengePartyMain());
+    Get.put(ChallengeCreateP());
+    Get.put(ChallengePartyMainP());
     Get.put(CollectionMainP());
     Get.put(EditGoalP());
 

@@ -15,6 +15,7 @@ import 'package:fitween/view/widget/widget/tab_scaffold.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FriendPage extends StatelessWidget {
   const FriendPage({Key? key}) : super(key: key);
@@ -46,11 +47,28 @@ class FriendPage extends StatelessWidget {
           },
           bodies: List.generate(2, (index) {
             bool isRival = index == 1;
-            return Column(
-              children: [
-                FriendNotificationCard(isRival: isRival),
-                FriendListCard(isRival: isRival),
-              ],
+            return SmartRefresher(
+              controller: FriendP.refreshConts[index],
+              onRefresh: () async {
+                await FriendP.init();
+                FriendP.refreshConts[index].refreshCompleted();
+              },
+              onLoading: () async {
+                await Future.delayed(const Duration(milliseconds: 100));
+                FriendP.refreshConts[index].loadComplete();
+              },
+              header: const MaterialClassicHeader(
+                color: FTheme.black,
+                backgroundColor: FTheme.surface,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    FriendNotificationCard(isRival: isRival),
+                    FriendListCard(isRival: isRival),
+                  ],
+                ),
+              ),
             );
           }),
           action: GetBuilder<FriendP>(
@@ -166,6 +184,7 @@ class FriendListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FCard(
+      minHeight: 100.0,
       child: GetBuilder<UserFriendP>(
         builder: (userP) {
           List<FUserInfo> userInfos = isRival

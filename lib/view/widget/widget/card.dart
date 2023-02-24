@@ -1,9 +1,10 @@
+import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/widget/text.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/border_type.dart';
+import 'package:get/get.dart';
 
 class PCard extends StatelessWidget {
   PCard({
@@ -16,7 +17,8 @@ class PCard extends StatelessWidget {
     this.borderType = BorderType.all,
     this.borderColor = FTheme.black,
     this.borderWidth = 1.5,
-  }) : padding = padding ?? EdgeInsets.all(20.0.r), super(key: key);
+  })  : padding = padding ?? EdgeInsets.all(20.0.r),
+        super(key: key);
 
   final Widget child;
   final EdgeInsets? padding;
@@ -29,13 +31,19 @@ class PCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BorderRadius? radius = rounded
-        ? BorderRadius.circular(20.0) : null;
+    BorderRadius? radius = rounded ? BorderRadius.circular(20.0) : null;
 
-    bool leftBorder = [BorderType.left, BorderType.vertical, BorderType.all].contains(borderType);
-    bool topBorder = [BorderType.top, BorderType.horizontal, BorderType.all].contains(borderType);
-    bool rightBorder = [BorderType.right, BorderType.vertical, BorderType.all].contains(borderType);
-    bool bottomBorder = [BorderType.bottom, BorderType.horizontal, BorderType.all].contains(borderType);
+    bool leftBorder = [BorderType.left, BorderType.vertical, BorderType.all]
+        .contains(borderType);
+    bool topBorder = [BorderType.top, BorderType.horizontal, BorderType.all]
+        .contains(borderType);
+    bool rightBorder = [BorderType.right, BorderType.vertical, BorderType.all]
+        .contains(borderType);
+    bool bottomBorder = [
+      BorderType.bottom,
+      BorderType.horizontal,
+      BorderType.all
+    ].contains(borderType);
 
     return Material(
       color: color,
@@ -47,23 +55,30 @@ class PCard extends StatelessWidget {
           padding: padding,
           decoration: BoxDecoration(
             border: Border(
-              left: leftBorder ? BorderSide(
-                color: borderColor,
-                width: borderWidth.h,
-              ) : BorderSide.none,
-              top: topBorder ? BorderSide(
-                color: borderColor,
-                width: borderWidth.h,
-              ) : BorderSide.none,
-              right: rightBorder ? BorderSide(
-                color: borderColor,
-                width: borderWidth.h,
-              ) : BorderSide.none,
-              bottom: bottomBorder ? BorderSide(
-                color: borderColor,
-                width: borderWidth.h,
-              ) : BorderSide.none,
-
+              left: leftBorder
+                  ? BorderSide(
+                      color: borderColor,
+                      width: borderWidth.h,
+                    )
+                  : BorderSide.none,
+              top: topBorder
+                  ? BorderSide(
+                      color: borderColor,
+                      width: borderWidth.h,
+                    )
+                  : BorderSide.none,
+              right: rightBorder
+                  ? BorderSide(
+                      color: borderColor,
+                      width: borderWidth.h,
+                    )
+                  : BorderSide.none,
+              bottom: bottomBorder
+                  ? BorderSide(
+                      color: borderColor,
+                      width: borderWidth.h,
+                    )
+                  : BorderSide.none,
             ),
             borderRadius: radius,
           ),
@@ -75,20 +90,25 @@ class PCard extends StatelessWidget {
 }
 
 class FCard extends StatefulWidget {
-  const FCard({
+  FCard({
     Key? key,
     this.title,
     this.activateSeeMore = false,
     required this.child,
     this.backgroundColor = FTheme.white,
     this.onPressed,
-  }) : super(key: key);
+    this.minHeight,
+    EdgeInsets? padding,
+  })  : padding = padding ?? EdgeInsets.all(20.0.r),
+        super(key: key);
 
   final String? title;
   final bool activateSeeMore;
   final Widget child;
   final Color backgroundColor;
   final VoidCallback? onPressed;
+  final double? minHeight;
+  final EdgeInsets? padding;
 
   @override
   State<FCard> createState() => _FCardState();
@@ -126,35 +146,41 @@ class _FCardState extends State<FCard> {
       child: GestureDetector(
         onTapDown: onTapDown,
         onTapUp: onTapUp,
-        child: Material(
-          borderRadius: radius,
-          color: widget.backgroundColor,
-          child: Container(
-            padding: const EdgeInsets.all(20.0),
-            decoration: BoxDecoration(
+        child: GetBuilder<LoadingP>(
+          builder: (loadingP) {
+            return Material(
               borderRadius: radius,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (widget.title != null)
-                Column(
+              color: loadingP.setColor(widget.backgroundColor),
+              child: Container(
+                width: double.infinity,
+                padding: widget.padding,
+                decoration: BoxDecoration(
+                  borderRadius: radius,
+                ),
+                constraints: BoxConstraints(minHeight: widget.minHeight ?? .0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    if (widget.title != null && !loadingP.loading)
+                    Column(
                       children: [
-                        FText(widget.title!, style: textTheme.titleLarge, color: FTheme.darkGrey),
-                        if (widget.activateSeeMore)
-                        const Icon(Icons.arrow_forward_ios, color: FTheme.lightGrey),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            FText(widget.title!, style: textTheme.titleLarge, color: FTheme.darkGrey),
+                            if (widget.activateSeeMore)
+                            const Icon(Icons.arrow_forward_ios, color: FTheme.lightGrey),
+                          ],
+                        ),
+                        const SizedBox(height: 10.0),
                       ],
                     ),
-                    const SizedBox(height: 10.0),
+                    if (!loadingP.loading) widget.child,
                   ],
                 ),
-                widget.child,
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

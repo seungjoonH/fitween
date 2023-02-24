@@ -8,34 +8,42 @@ import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
+import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/tab_scaffold.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FriendP extends GetxController {
-  static void toFriend() async {
-    final friendP = Get.find<FriendP>();
-    Get.offAllNamed('/friend');
-    friendP.init();
-  }
+  static void toFriend() => Get.offAllNamed('/friend');
 
+  static final refreshConts = [RefreshController(), RefreshController()];
   static final nicknameCont = TextEditingController();
   bool nicknameExist = true;
   String? nicknameHintText;
 
   bool editMode = false;
 
-  Future init() async {
+  static Future init() async {
+    final friendP = Get.find<FriendP>();
     final userFriendP = Get.find<UserFriendP>();
     final userNotificationP = Get.find<UserNotificationP>();
-    editMode = false;
+    final loadingP = Get.find<LoadingP>();
+
+    friendP.editMode = false;
+
+    if (loadingP.loading) return;
+    loadingP.loadStart();
+
     await userFriendP.load();
     await userFriendP.loadFriends();
 
+    loadingP.loadEnd();
+
     userNotificationP.checkAllNotifications();
-    update();
+    friendP.update();
   }
 
   void friendInteractButtonPressed(String uid) {
@@ -155,6 +163,7 @@ class FriendP extends GetxController {
     UserFriendP.saveUser(friend);
 
     init();
+    Get.back();
   }
 
   void deleteFriendButtonPressed(String uid) async {
@@ -165,13 +174,14 @@ class FriendP extends GetxController {
       PAlertDialog(
         title: '${user.nickname}',
         content: FText(
-          '님을 친구목록에서 삭제하시겠습니까?',
+          '님을 친구목록에서\n삭제하시겠습니까?',
           maxLines: 2,
         ),
         type: DialogType.bi,
         leftPressed: Get.back,
-        rightText: '신청하기',
+        rightText: '삭제',
         rightPressed: () => breakOffWith(uid),
+        rightBackgroundColor: FTheme.error,
       ),
     );
   }

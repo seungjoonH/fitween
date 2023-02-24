@@ -17,13 +17,10 @@ import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeP extends GetxController {
-  static Future toHome() async {
-    final homeP = Get.find<HomeP>();
-    Get.offAllNamed('/home');
-    await homeP.init();
-  }
-
   static Size screenSize = MediaQuery.of(Get.context!).size;
+  static final refreshCont = RefreshController();
+
+  static void toHome() => Get.offAllNamed('/home');
 
   int rotationIndex = 0;
   bool allowClick = true;
@@ -32,9 +29,10 @@ class HomeP extends GetxController {
   String? _gifAsset;
 
   String get pngAsset => '$rotationAsset${'rbo'[rotationIndex]}.png';
-  String? get gifAsset => _gifAsset == null ? null : '$rotationAsset$_gifAsset.gif';
+  String? get gifAsset =>
+      _gifAsset == null ? null : '$rotationAsset$_gifAsset.gif';
 
-  Future init() async {
+  static Future init() async {
     final userRecordP = Get.find<UserRecordP>();
     final userFriendP = Get.find<UserFriendP>();
     final loadingP = Get.find<LoadingP>();
@@ -48,8 +46,7 @@ class HomeP extends GetxController {
     await userFriendP.loadFriends();
 
     loadingP.loadEnd();
-
-    update();
+    userFriendP.update();
   }
 
   void leftButtonPressed() async {
@@ -83,7 +80,6 @@ class HomeP extends GetxController {
       update();
     });
   }
-
 }
 
 class HomePresenter extends GetxController {
@@ -103,7 +99,8 @@ class HomePresenter extends GetxController {
       type: DialogType.bi,
       leftPressed: Get.back,
       rightPressed: () {
-        Get.back(); EditGoalP.toEditGoal();
+        Get.back();
+        EditGoalP.toEditGoal();
       },
     );
   }
@@ -113,10 +110,11 @@ class HomePresenter extends GetxController {
   Future init() async {
     final userRecordP = Get.find<UserRecordP>();
     final userFriendP = Get.find<UserFriendP>();
-    final loadingP = Get.find<LoadingP>();
+    final userP = Get.find<UserRecordP>();
+    // final loadingP = Get.find<LoadingP>();
 
     isToday = true;
-    loadingP.loadStart();
+    // loadingP.loadStart();
 
     graphStates = {
       ActivityType.calorie: false,
@@ -132,7 +130,7 @@ class HomePresenter extends GetxController {
     await userFriendP.loadFriends();
     await BadgePresenter.synchronizeBadges();
 
-    loadingP.loadEnd();
+    // loadingP.loadEnd();
 
     update();
   }
@@ -154,7 +152,8 @@ class HomePresenter extends GetxController {
   }
 
   void pageChanged(int index) {
-    isToday = index == 1; update();
+    isToday = index == 1;
+    update();
   }
 
   Map<ActivityType, bool> graphStates = {
@@ -165,7 +164,7 @@ class HomePresenter extends GetxController {
   };
 
   void showLaterGraph(ActivityType type) {
-    graphStates[type] = true; update();
+    graphStates[type] = true;
+    update();
   }
-
 }
