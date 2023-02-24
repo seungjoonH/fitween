@@ -24,7 +24,7 @@ class ChallengePartyCompleteView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final challengePartyMain = Get.find<ChallengePartyMain>();
+    final challengePartyMain = Get.find<ChallengePartyMainP>();
 
     return Stack(
       alignment: Alignment.center,
@@ -54,7 +54,8 @@ class ChallengePartyCompleteView extends StatelessWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        FText('${party.challenge!.title!}\n완료!',
+                        FText(
+                          '${party.challenge!.title!}\n완료!',
                           align: TextAlign.center,
                           style: textTheme.headlineLarge,
                           color: FTheme.black,

@@ -14,7 +14,7 @@ class ChallengePartyMainPage extends StatelessWidget {
       onTap: GlobalPresenter.closeBottomBar,
       child: Scaffold(
         appBar: const FAppBar(title: '내 챌린지'),
-        body: GetBuilder<ChallengePartyMain>(
+        body: GetBuilder<ChallengePartyMainP>(
           builder: (controller) {
             return PartyMainView(party: controller.loadedParty);
           }

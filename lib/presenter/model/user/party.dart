@@ -47,16 +47,13 @@ class UserPartyP extends GetxController {
   /* 파이어베이스 관련 */
   // 파이어베이스에서 로드
   Future load() async {
-    var json = (await collection
-        .doc(loggedUser.uid).get()).data();
+    var json = (await collection.doc(loggedUser.uid).get()).data();
     if (json == null) return;
     loggedUser = FUserParty.fromJson(json);
   }
 
   // 파이어베이스에 최신화
-  void save() => collection
-      .doc(loggedUser.uid)
-      .set(loggedUser.toJson());
+  void save() => collection.doc(loggedUser.uid).set(loggedUser.toJson());
 
   // 파이어베이스에서 삭제
   void delete() {
@@ -99,6 +96,7 @@ class UserPartyP extends GetxController {
       await PartyPresenter.loadMembers(party);
       loggedUser.parties[json['id']] = party;
     }
+    print(loggedUser.parties);
     update();
   }
 
