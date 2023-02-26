@@ -54,7 +54,7 @@ class CollectionMainP extends GetxController {
   void collectionPressed(Collection collection) {
     switch (mode) {
       case PageMode.view:
-        GlobalPresenter.showCollectionDialog(collection);
+        GlobalP.showCollectionDialog(collection);
         break;
       case PageMode.edit:
         collectionSelected(collection);

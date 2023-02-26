@@ -85,7 +85,7 @@ class ChallengePartyCompleteView extends StatelessWidget {
                             EternalRotation(
                               rps: .3,
                               child: Image.asset(
-                                GlobalPresenter.effectAsset,
+                                GlobalP.effectAsset,
                                 width: 150.0.r,
                                 height: 150.0.r,
                               ),

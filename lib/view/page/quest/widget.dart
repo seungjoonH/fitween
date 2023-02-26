@@ -152,7 +152,7 @@ class QuestBadgePercentView extends StatelessWidget {
               onPressed: received
                   ? null : completed
                   ? () => userCollectionP.awardBadge(badge)
-                  : () => GlobalPresenter.showBadgeDialog(badge),
+                  : () => GlobalP.showBadgeDialog(badge),
             ),
           ],
         ),

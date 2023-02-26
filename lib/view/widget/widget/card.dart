@@ -97,7 +97,7 @@ class FCard extends StatefulWidget {
     required this.child,
     this.backgroundColor = FTheme.white,
     this.onPressed,
-    this.minHeight,
+    this.constraints,
     EdgeInsets? padding,
   })  : padding = padding ?? EdgeInsets.all(20.0.r),
         super(key: key);
@@ -107,7 +107,7 @@ class FCard extends StatefulWidget {
   final Widget child;
   final Color backgroundColor;
   final VoidCallback? onPressed;
-  final double? minHeight;
+  final BoxConstraints? constraints;
   final EdgeInsets? padding;
 
   @override
@@ -119,17 +119,22 @@ class _FCardState extends State<FCard> {
   Function(TapUpDetails)? onTapUp;
 
   double scale = 1.0;
+  double opacity = .0;
   Duration duration = const Duration(milliseconds: 100);
 
   @override
   void initState() {
     onTapDown = widget.onPressed == null ? null : (_) {
-      setState(() => scale = .9);
+      setState(() {
+        scale = .9; opacity = .2;
+      });
     };
     onTapUp = widget.onPressed == null ? null : (_) async {
       await Future.delayed(duration, () {
         if (!mounted) return;
-        setState(() => scale = 1.0);
+        setState(() {
+          scale = 1.0; opacity = .0;
+        });
       });
       widget.onPressed!();
     };
@@ -143,21 +148,22 @@ class _FCardState extends State<FCard> {
     return AnimatedScale(
       scale: scale,
       duration: duration,
-      child: GestureDetector(
-        onTapDown: onTapDown,
-        onTapUp: onTapUp,
-        child: GetBuilder<LoadingP>(
-          builder: (loadingP) {
-            return Material(
-              borderRadius: radius,
-              color: loadingP.setColor(widget.backgroundColor),
-              child: Container(
+      child: GetBuilder<LoadingP>(
+        builder: (loadingP) {
+          return Material(
+            borderRadius: radius,
+            color: loadingP.setColor(widget.backgroundColor),
+            child: GestureDetector(
+              onTapDown: onTapDown,
+              onTapUp: onTapUp,
+              child: AnimatedContainer(
                 width: double.infinity,
                 padding: widget.padding,
                 decoration: BoxDecoration(
                   borderRadius: radius,
                 ),
-                constraints: BoxConstraints(minHeight: widget.minHeight ?? .0),
+                duration: duration,
+                constraints: widget.constraints,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -167,7 +173,12 @@ class _FCardState extends State<FCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            FText(widget.title!, style: textTheme.titleLarge, color: FTheme.darkGrey),
+                            FText(
+                              widget.title!,
+                              style: textTheme.titleMedium,
+                              color: FTheme.darkGrey,
+                              bold: true,
+                            ),
                             if (widget.activateSeeMore)
                             const Icon(Icons.arrow_forward_ios, color: FTheme.lightGrey),
                           ],
@@ -179,9 +190,9 @@ class _FCardState extends State<FCard> {
                   ],
                 ),
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

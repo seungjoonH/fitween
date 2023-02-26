@@ -54,7 +54,7 @@ class _FitweenState extends State<Fitween> {
   @override
   Widget build(BuildContext context) {
     setTimeError();
-    GlobalPresenter.initControllers();
+    GlobalP.initControllers();
     ImportPresenter.importData();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

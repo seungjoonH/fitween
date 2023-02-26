@@ -11,7 +11,7 @@ class ChallengePartyMainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: GlobalPresenter.closeBottomBar,
+      // onTap: GlobalP.closeBottomBar,
       child: Scaffold(
         appBar: const FAppBar(title: '내 챌린지'),
         body: GetBuilder<ChallengePartyMainP>(

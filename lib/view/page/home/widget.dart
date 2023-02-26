@@ -6,7 +6,9 @@ import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/calendar.dart';
+import 'package:fitween/presenter/page/ranking.dart';
 import 'package:fitween/presenter/page/record/main.dart';
+import 'package:fitween/view/page/ranking/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gif/flutter_gif.dart';
@@ -130,7 +132,7 @@ class CalendarCard extends StatelessWidget {
       title: '기록',
       activateSeeMore: true,
       onPressed: CalendarP.toCalendar,
-      minHeight: 115.0,
+      constraints: const BoxConstraints(minHeight: 115.0),
       child: const WeekCalendarWidget(),
     );
   }
@@ -215,16 +217,22 @@ class RankingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FCard(
-      title: '랭킹',
-      activateSeeMore: true,
-      onPressed: () {},
-      child: Column(
-        children: [
-          const RankingGraph(type: ActivityType.distance),
-        ],
-      ),
-      minHeight: 160.0,
+    return GetBuilder<HomeP>(
+      builder: (homeP) {
+        ActivityType type = ActivityType.activeValues[homeP.rotationIndex];
+
+        return FCard(
+          title: '랭킹',
+          activateSeeMore: true,
+          onPressed: () => RankingP.toRanking(type),
+          constraints: const BoxConstraints(minHeight: 160.0),
+          child: Column(
+            children: [
+              RankingGraph(type: type),
+            ],
+          ),
+        );
+      },
     );
   }
 }
@@ -239,133 +247,37 @@ class RankingGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final startDate = firstDayOfWeek(today);
-    final endDate = today;
-
-    return GetBuilder<UserFriendP>(
-      builder: (userFriendP) {
+    return GetBuilder<RankingP>(
+      builder: (rankingP) {
         final userInfoP = Get.find<UserInfoP>();
-        final userRecordP = Get.find<UserRecordP>();
+        String myUid = userInfoP.loggedUser.uid!;
 
-        String myUid = userRecordP.loggedUser.uid!;
-
-        List<FUserInfo> infos = userFriendP.loggedUser.rivalInfos;
-        List<FUserRecord> records = userFriendP.loggedUser.rivalRecords;
-
-        infos.add(userInfoP.loggedUser);
-        records.add(userRecordP.loggedUser);
-        records.sort((a, b) => (
-            b.getAmounts(type, startDate, endDate)
-                - a.getAmounts(type, startDate, endDate)
-        ).round());
-
-        infos.sort((a, b) {
-          int priceA = records.indexWhere((record) => record.uid == a.uid);
-          int priceB = records.indexWhere((record) => record.uid == b.uid);
-          return (records[priceB].getAmounts(type, startDate, endDate)
-              - records[priceA].getAmounts(type, startDate, endDate)).round();
-        });
-
-        int myPrice = infos.indexWhere((info) => info.uid == myUid);
-        int firstIndex = infos.length > 3 ? myPrice - 1 : 0;
-        double maxAmount = records[firstIndex].getAmounts(type, startDate, endDate);
+        int myPrice = rankingP.infos[type]!.indexWhere((info) => info.uid == myUid);
+        int firstIndex = rankingP.infos[type]!.length > 3 ? myPrice - 1 : 0;
+        double maxAmount = rankingP.records[type]![firstIndex]
+            .getAmounts(type, rankingP.startDate, rankingP.endDate);
 
         return Column(
           children: List.generate(
-            min(infos.length, 3), (index) {
+            min(rankingP.infos.length, 3), (index) {
               int newIndex = firstIndex + index;
-              double amount = records[newIndex].getAmounts(type, startDate, endDate);
+              double amount = rankingP.records[type]![newIndex]
+                  .getAmounts(type, rankingP.startDate, rankingP.endDate);
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
                 child: RankingIndividualGraph(
                   type: type,
                   price: newIndex + 1,
-                  nickname: infos[newIndex].nickname!,
+                  nickname: rankingP.infos[type]![newIndex].nickname!,
                   amount: amount,
                   maxAmount: maxAmount,
-                  isMe: infos[newIndex].uid == myUid,
+                  isMe: rankingP.infos[type]![newIndex].uid == myUid,
                 ),
               );
             },
           ),
         );
       }
-    );
-  }
-}
-
-class RankingIndividualGraph extends StatelessWidget {
-  const RankingIndividualGraph({
-    Key? key,
-    required this.type,
-    required this.price,
-    required this.nickname,
-    required this.amount,
-    required this.maxAmount,
-    this.isMe = false,
-  }) : super(key: key);
-
-  final ActivityType type;
-  final int price;
-  final String nickname;
-  final double amount;
-  final double maxAmount;
-  final bool isMe;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          children: [
-            if (price < 4)
-            SvgPicture.asset(
-              'assets/image/page/home/ranking/$price.svg',
-              width: 18.0,
-            )
-            else Container(
-              width: 18.0,
-              height: 16.0,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: FTheme.darkGrey,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: FText(
-                '$price',
-                color: FTheme.white,
-                style: textTheme.labelSmall,
-              ),
-            ),
-            const SizedBox(width: 5.0),
-            FText(nickname,
-              color: FTheme.darkGrey,
-              style: textTheme.bodyMedium,
-            ),
-          ],
-        ),
-        const SizedBox(height: 5.0),
-        Row(
-          children: [
-            Expanded(
-              flex: amount.round(),
-              child: Container(
-                height: 36.0,
-                decoration: BoxDecoration(
-                  color: isMe ? type.color : FTheme.lightGrey,
-                  borderRadius: const BorderRadius.horizontal(
-                    right: Radius.circular(8.0),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: (maxAmount - amount).round(),
-              child: Container(),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

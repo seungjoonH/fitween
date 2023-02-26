@@ -78,101 +78,13 @@ class ChallengeMainPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TabScaffold(
-      tabs: const ['월간', '업적', '타임어택'],
+    return const TabScaffold(
+      tabs: ['월간', '업적', '타임어택'],
       bodies: [
-        const ChallengeCardView(),
-        const AchievementCardView(),
-        FCard(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FText(
-              '타임어택!',
-              style: FTheme.textTheme.titleLarge,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Image.asset('assets/image/challenge/timeAttack/timeAttack.png'),
-            const SizedBox(
-              height: 10,
-            ),
-            FText(
-              '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
-              maxLines: 2,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            FButton(
-              stretch: true,
-              text: '타임어택 하러가기',
-              onPressed: TimeAttackFriendP.toTimeAttackFriend,
-            )
-          ],
-        ))
+        ChallengeCardView(),
+        AchievementCardView(),
+        TimeAttackCardView(),
       ],
-    );
-  }
-}
-
-class ChallengeMainView extends StatelessWidget {
-  const ChallengeMainView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        ChallengeTabBar(),
-        ChallengeTabView(),
-      ],
-    );
-  }
-}
-
-class ChallengeTabBar extends StatelessWidget {
-  const ChallengeTabBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final challengeMain = Get.find<ChallengeMain>();
-
-    // return GetBuilder<LoadingP>(builder: (controller) {
-    return TabBar(
-      controller: challengeMain.tabCont,
-      tabs: challengeMain.tabs,
-      indicatorColor: FTheme.black,
-      indicatorSize: TabBarIndicatorSize.label,
-      indicatorWeight: 1.5,
-      labelPadding: const EdgeInsets.all(5.0),
-      splashFactory: InkRipple.splashFactory,
-      onTap: (index) {
-        // if (controller.loading)
-        challengeMain.tabCont.animateTo(0);
-      },
-    );
-    // });
-  }
-}
-
-class ChallengeTabView extends StatelessWidget {
-  const ChallengeTabView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<ChallengeMain>();
-
-    return Expanded(
-      child: TabBarView(
-        controller: controller.tabCont,
-        physics: const NeverScrollableScrollPhysics(),
-        children: const [
-          ChallengeListView(),
-          MyPartyListView(),
-        ],
-      ),
     );
   }
 }
@@ -236,15 +148,11 @@ class ChallengeCardView extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemCount: user.partyIds.length,
             itemBuilder: (_, index) {
-              return InkWell(
-                onTap: () =>
-                    ChallengePartyMainP.toChallengePartyMain(parties[index]),
-                child: ChallengeCard(
-                  challenge:
-                      ChallengeP.getChallenge(parties[index].challengeId!) ??
-                          ChallengeP.orderedChallenges[0],
-                  isHero: false,
-                ),
+              return ChallengeCard(
+                challenge: ChallengeP.getChallenge(parties[index].challengeId!)
+                    ?? ChallengeP.orderedChallenges[0],
+                isHero: false,
+                onPressed: () => ChallengePartyMainP.toChallengePartyMain(parties[index]),
               );
             },
             separatorBuilder: (_, index) => SizedBox(height: 30.0.h),
@@ -325,10 +233,12 @@ class ChallengeCard extends StatelessWidget {
   const ChallengeCard({
     Key? key,
     required this.challenge,
+    this.onPressed,
     this.isHero = true,
   }) : super(key: key);
 
   final Challenge challenge;
+  final VoidCallback? onPressed;
   final bool isHero;
 
   @override
@@ -336,6 +246,7 @@ class ChallengeCard extends StatelessWidget {
     return challenge.locked
         ? Container()
         : FCard(
+            onPressed: onPressed,
             backgroundColor: FTheme.white,
             padding: const EdgeInsets.all(0.0),
             child: Row(
@@ -580,113 +491,113 @@ class ChallengeCardLoading extends StatelessWidget {
   }
 }
 
-class MyPartyListView extends StatelessWidget {
-  const MyPartyListView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final userP = Get.find<UserPartyP>();
-    FUserParty user = userP.loggedUser;
-
-    return Stack(
-      children: [
-        if (user.parties.isEmpty)
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: PCard(
-                color: FTheme.surface,
-                padding: EdgeInsets.zero,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 30.0.w,
-                        vertical: 150.0.h,
-                      ),
-                      child: FText(
-                        '챌린지가 없습니다',
-                        style: textTheme.displaySmall,
-                      ),
-                    ),
-                    const Divider(
-                      color: FTheme.black,
-                      thickness: 1.5,
-                      height: 0.0,
-                    ),
-                    GetBuilder<ChallengeMain>(
-                      builder: (controller) {
-                        return Row(
-                          children: [
-                            PButton(
-                              text: '챌린지 살펴보기',
-                              onPressed: () => controller.tabCont.index = 0,
-                              stretch: true,
-                              fill: false,
-                              multiple: true,
-                              border: false,
-                            ),
-                            PButton(
-                              text: '챌린지 참여하기',
-                              onPressed: controller.challengeJoinButtonPressed,
-                              stretch: true,
-                              multiple: true,
-                              border: false,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-        else
-          Padding(
-            padding: EdgeInsets.all(20.0.h),
-            child: Column(
-              children: [
-                ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: user.parties.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (_, index) => MyPartyListTile(
-                    party: user.parties.values.toList()[index],
-                  ),
-                  separatorBuilder: (_, index) => SizedBox(height: 20.0.h),
-                ),
-                SizedBox(height: 20.0.h),
-                GetBuilder<ChallengeMain>(
-                  builder: (controller) {
-                    return Row(
-                      children: [
-                        PButton(
-                          text: '챌린지 살펴보기',
-                          onPressed: () => controller.tabCont.index = 0,
-                          stretch: true,
-                          fill: false,
-                          multiple: true,
-                        ),
-                        SizedBox(width: 20.0.w),
-                        PButton(
-                          text: '챌린지 참여하기',
-                          onPressed: controller.challengeJoinButtonPressed,
-                          stretch: true,
-                          multiple: true,
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-      ],
-    );
-  }
-}
+// class MyPartyListView extends StatelessWidget {
+//   const MyPartyListView({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final userP = Get.find<UserPartyP>();
+//     FUserParty user = userP.loggedUser;
+//
+//     return Stack(
+//       children: [
+//         if (user.parties.isEmpty)
+//           Center(
+//             child: Padding(
+//               padding: const EdgeInsets.all(20.0),
+//               child: PCard(
+//                 color: FTheme.surface,
+//                 padding: EdgeInsets.zero,
+//                 child: Column(
+//                   mainAxisSize: MainAxisSize.min,
+//                   children: [
+//                     Padding(
+//                       padding: EdgeInsets.symmetric(
+//                         horizontal: 30.0.w,
+//                         vertical: 150.0.h,
+//                       ),
+//                       child: FText(
+//                         '챌린지가 없습니다',
+//                         style: textTheme.displaySmall,
+//                       ),
+//                     ),
+//                     const Divider(
+//                       color: FTheme.black,
+//                       thickness: 1.5,
+//                       height: 0.0,
+//                     ),
+//                     GetBuilder<ChallengeMain>(
+//                       builder: (controller) {
+//                         return Row(
+//                           children: [
+//                             PButton(
+//                               text: '챌린지 살펴보기',
+//                               onPressed: () => controller.tabCont.index = 0,
+//                               stretch: true,
+//                               fill: false,
+//                               multiple: true,
+//                               border: false,
+//                             ),
+//                             PButton(
+//                               text: '챌린지 참여하기',
+//                               onPressed: controller.challengeJoinButtonPressed,
+//                               stretch: true,
+//                               multiple: true,
+//                               border: false,
+//                             ),
+//                           ],
+//                         );
+//                       },
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//           )
+//         else
+//           Padding(
+//             padding: EdgeInsets.all(20.0.h),
+//             child: Column(
+//               children: [
+//                 ListView.separated(
+//                   shrinkWrap: true,
+//                   itemCount: user.parties.length,
+//                   physics: const NeverScrollableScrollPhysics(),
+//                   itemBuilder: (_, index) => MyPartyListTile(
+//                     party: user.parties.values.toList()[index],
+//                   ),
+//                   separatorBuilder: (_, index) => SizedBox(height: 20.0.h),
+//                 ),
+//                 SizedBox(height: 20.0.h),
+//                 GetBuilder<ChallengeMainP>(
+//                   builder: (challengeMainP) {
+//                     return Row(
+//                       children: [
+//                         PButton(
+//                           text: '챌린지 살펴보기',
+//                           onPressed: () => controller.tabCont.index = 0,
+//                           stretch: true,
+//                           fill: false,
+//                           multiple: true,
+//                         ),
+//                         SizedBox(width: 20.0.w),
+//                         PButton(
+//                           text: '챌린지 참여하기',
+//                           onPressed: controller.challengeJoinButtonPressed,
+//                           stretch: true,
+//                           multiple: true,
+//                         ),
+//                       ],
+//                     );
+//                   },
+//                 ),
+//               ],
+//             ),
+//           ),
+//       ],
+//     );
+//   }
+// }
 
 class MyPartyListTile extends StatelessWidget {
   const MyPartyListTile({
@@ -826,9 +737,14 @@ class AchievementCardView extends StatelessWidget {
 
     return SingleChildScrollView(
       child: Column(
-        children: ActivityType.values.sublist(1, 3).map((type) {
+        children: ActivityType.activeValues.map((type) {
           double amount = loggedUser.getAmounts(type);
-          Record record = Record.init(type, amount, ExerciseUnit.step);
+          ExerciseUnit? unit = {
+            ActivityType.distance: ExerciseUnit.step,
+            ActivityType.weight: ExerciseUnit.count,
+          }[type];
+
+          Record record = Record.init(type, amount, unit);
 
           Map<String, dynamic> tier = LevelPresenter.getTier(type, record);
           Level next = tier['next'] ?? Level.fromJson({'amount': 0});
@@ -839,131 +755,93 @@ class AchievementCardView extends StatelessWidget {
             ExerciseUnit.kilometer,
           );
 
-          nextValue.convert(ExerciseUnit.step);
+          nextValue.convert(unit);
 
-          return Card(
-            child: Column(
-              children: [
-                InkWell(
-                  onTap: () {},
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        FText(
-                          '${userInfo.nickname}님은 지금까지',
-                          style: textTheme.bodyMedium,
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0),
+            child: FCard(
+              child: Column(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FText(
+                        '${userInfo.nickname}님은 지금까지',
+                        style: textTheme.bodyLarge,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(4.0),
+                        decoration: BoxDecoration(
+                          color: type.color,
+                          borderRadius: BorderRadius.circular(10.0.r),
                         ),
-                        Container(
-                          padding: const EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            color: type.color,
-                            borderRadius: BorderRadius.circular(10.0.r),
+                        child: FText(
+                          tier['current']?.title ?? '',
+                          maxLines: 2,
+                          style: textTheme.displayMedium,
+                          color: FTheme.white,
+                          bold: true,
+                        ),
+                      ),
+                      FText(
+                        '만큼 ${type.did}!',
+                        style: textTheme.bodyLarge,
+                      ),
+                      const SizedBox(height: 8.0),
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/image/page/achievement/union.png',
+                            width: 300.0,
+                            fit: BoxFit.fitWidth,
                           ),
-                          child: FText(
-                            tier['current']?.title ?? '',
-                            maxLines: 2,
-                            style: textTheme.displayMedium,
-                            color: FTheme.white,
-                            bold: true,
-                          ),
-                        ),
-                        FText(
-                          '만큼 ${type.did}!',
-                          style: textTheme.bodyMedium,
-                        ),
-                        const SizedBox(height: 8.0),
-                        SizedBox(
-                          width: 300,
-                          height: 280,
-                          child: Stack(
+                          Column(
                             children: [
-                              Image.asset(
-                                'assets/image/page/achievement/Union.png',
-                                height: 280,
-                                width: 300,
+                              SizedBox(
+                                width: 100.0.w,
+                                child: tier['current'] != null ? Image.asset(
+                                  'assets/image/level/${type.name}/${tier['current'].id}.png',
+                                  width: 40.0.w,
+                                ) : Container(),
                               ),
-                              Align(
-                                alignment: Alignment.center,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: SizedBox(
-                                        width: 100.0.w,
-                                        child: tier['current'] != null
-                                            ? Image.asset(
-                                                'assets/image/level/${type.name}/${tier['current'].id}.png',
-                                                width: 40.0.w,
-                                              )
-                                            : Container(),
-                                      ),
+                                    FText(
+                                      '현재 진행도',
+                                      style: textTheme.bodyMedium,
+                                      color: FTheme.black,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12.0,
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: FText(
-                                          '현재 진행도',
-                                          style: textTheme.bodyMedium,
-                                          color: FTheme.black,
-                                        ),
-                                      ),
+                                    const SizedBox(height: 5.0),
+                                    LinearPercentIndicator(
+                                      padding: EdgeInsets.zero,
+                                      progressColor: type.color,
+                                      backgroundColor: FTheme.lightGrey, // Colors.transparent,
+                                      percent: tier['percent'] ?? .0,
+                                      lineHeight: 48.0,
+                                      barRadius: Radius.circular(10.0.r),
+                                      animation: true,
+                                      animationDuration: 1000,
+                                      curve: Curves.easeInOut,
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0,
-                                        horizontal: 12.0,
-                                      ),
-                                      child: LinearPercentIndicator(
-                                        padding: EdgeInsets.zero,
-                                        progressColor: type.color,
-                                        backgroundColor: FTheme
-                                            .lightGrey, // Colors.transparent,
-                                        percent: tier['percent'] ?? .0,
-                                        lineHeight: 48.0,
-                                        barRadius: Radius.circular(10.0.r),
-                                        animation: true,
-                                        animationDuration: 1000,
-                                        curve: Curves.easeInOut,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12.0,
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: FText(
-                                          '${tier['percent'].toInt()}%',
-                                          style: textTheme.bodyMedium,
-                                          color: type.color,
-                                        ),
-                                      ),
+                                    FText(
+                                      '${tier['percent'].toInt()}%',
+                                      style: textTheme.bodyMedium,
+                                      color: type.color,
                                     ),
                                   ],
                                 ),
                               ),
                             ],
                           ),
-                          // child: SizedBox(
-                          //   width: 70.0.w,
-                          //   child: tier['current'] != null
-                          //       ? Image.asset(
-                          //           'assets/image/level/${type.name}/${tier['current'].id}.png',
-                          //           width: 40.0.w,
-                          //         )
-                          //       : Container(),
-                          // ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                   ),
-                ),
-                if (!type.active)
+                  if (!type.active)
                   Positioned.fill(
                     child: Stack(
                       children: [
@@ -978,7 +856,8 @@ class AchievementCardView extends StatelessWidget {
                       ],
                     ),
                   ),
-              ],
+                ],
+              ),
             ),
           );
         }).toList(),
@@ -997,117 +876,154 @@ class AchievementCardView extends StatelessWidget {
   // }
 }
 
-class AchievementCard extends StatelessWidget {
-  final Challenge challenge;
+// class AchievementCard extends StatelessWidget {
+//   final Challenge challenge;
+//
+//   const AchievementCard({Key? key, required this.challenge}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final userP = Get.find<UserPartyP>();
+//
+//     return Column(
+//       children: [
+//         Stack(
+//           children: [
+//             PCard(
+//               color: FTheme.background,
+//               padding: EdgeInsets.zero,
+//               child: Column(
+//                 children: [
+//                   if (challenge.locked)
+//                     Container(height: 230.0.h, color: FTheme.lightGrey)
+//                   else
+//                     Image.asset(
+//                       challenge.imageUrls['default'],
+//                       // height: 230.0.h,
+//                       fit: BoxFit.fitWidth,
+//                     ),
+//                   Divider(height: 1.0.h, color: FTheme.black, thickness: 1.5),
+//                   Padding(
+//                     padding: EdgeInsets.all(20.0.r),
+//                     child: Column(
+//                       crossAxisAlignment: CrossAxisAlignment.stretch,
+//                       children: [
+//                         Row(
+//                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                           children: [
+//                             Column(
+//                               crossAxisAlignment: CrossAxisAlignment.start,
+//                               children: [
+//                                 SizedBox(
+//                                   height: 80.0.h,
+//                                   child: FText(
+//                                     challenge.title ?? '',
+//                                     style: textTheme.headlineMedium,
+//                                     maxLines: 2,
+//                                   ),
+//                                 ),
+//                                 SizedBox(height: 20.0.h),
+//                                 SizedBox(
+//                                   height: 20.0.h,
+//                                   child: FText(
+//                                     '${today.month}월의 챌린지',
+//                                     style: textTheme.labelLarge,
+//                                     color: FTheme.grey,
+//                                   ),
+//                                 ),
+//                               ],
+//                             ),
+//                             BadgeWidget(
+//                               size: 80.0.r,
+//                               badge: challenge.locked
+//                                   ? null
+//                                   : challenge.badges[Difficulty.hard],
+//                             ),
+//                           ],
+//                         ),
+//                         SizedBox(height: 20.0.h),
+//                         SizedBox(
+//                           height: 30.0.h,
+//                           child: FText(
+//                             challenge.descriptions['sub']!,
+//                             style: textTheme.titleSmall,
+//                             color: FTheme.black,
+//                             maxLines: 2,
+//                           ),
+//                         ),
+//                       ],
+//                     ),
+//                   ),
+//                   userP.alreadyJoinedChallenge(challenge.id!)
+//                       ? PButton(
+//                           onPressed: () =>
+//                               ChallengePartyMainP.toChallengePartyMain(
+//                                   userP.getPartyByChallengeId(challenge.id!)!),
+//                           text: '챌린지 이동하기',
+//                           stretch: true,
+//                           height: 50.0,
+//                         )
+//                       : PButton(
+//                           onPressed: () =>
+//                               ChallengeDetail.toChallengeDetail(challenge),
+//                           text: '알아보러 가기',
+//                           stretch: true,
+//                           height: 50.0,
+//                         ),
+//                 ],
+//               ),
+//             ),
+//             if (challenge.locked)
+//               Positioned.fill(
+//                 child: Container(
+//                   color: FTheme.black.withOpacity(.5),
+//                   child: const Icon(
+//                     Icons.lock,
+//                     color: FTheme.black,
+//                     size: 70.0,
+//                   ),
+//                 ),
+//               ),
+//           ],
+//         ),
+//         SizedBox(height: 20.0.h),
+//       ],
+//     );
+//   }
+// }
 
-  const AchievementCard({Key? key, required this.challenge}) : super(key: key);
+class TimeAttackCardView extends StatelessWidget {
+  const TimeAttackCardView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final userP = Get.find<UserPartyP>();
-
     return Column(
       children: [
-        Stack(
-          children: [
-            PCard(
-              color: FTheme.background,
-              padding: EdgeInsets.zero,
-              child: Column(
-                children: [
-                  if (challenge.locked)
-                    Container(height: 230.0.h, color: FTheme.lightGrey)
-                  else
-                    Image.asset(
-                      challenge.imageUrls['default'],
-                      // height: 230.0.h,
-                      fit: BoxFit.fitWidth,
-                    ),
-                  Divider(height: 1.0.h, color: FTheme.black, thickness: 1.5),
-                  Padding(
-                    padding: EdgeInsets.all(20.0.r),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 80.0.h,
-                                  child: FText(
-                                    challenge.title ?? '',
-                                    style: textTheme.headlineMedium,
-                                    maxLines: 2,
-                                  ),
-                                ),
-                                SizedBox(height: 20.0.h),
-                                SizedBox(
-                                  height: 20.0.h,
-                                  child: FText(
-                                    '${today.month}월의 챌린지',
-                                    style: textTheme.labelLarge,
-                                    color: FTheme.grey,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            BadgeWidget(
-                              size: 80.0.r,
-                              badge: challenge.locked
-                                  ? null
-                                  : challenge.badges[Difficulty.hard],
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 20.0.h),
-                        SizedBox(
-                          height: 30.0.h,
-                          child: FText(
-                            challenge.descriptions['sub']!,
-                            style: textTheme.titleSmall,
-                            color: FTheme.black,
-                            maxLines: 2,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  userP.alreadyJoinedChallenge(challenge.id!)
-                      ? PButton(
-                          onPressed: () =>
-                              ChallengePartyMainP.toChallengePartyMain(
-                                  userP.getPartyByChallengeId(challenge.id!)!),
-                          text: '챌린지 이동하기',
-                          stretch: true,
-                          height: 50.0,
-                        )
-                      : PButton(
-                          onPressed: () =>
-                              ChallengeDetail.toChallengeDetail(challenge),
-                          text: '알아보러 가기',
-                          stretch: true,
-                          height: 50.0,
-                        ),
-                ],
-              ),
-            ),
-            if (challenge.locked)
-              Positioned.fill(
-                child: Container(
-                  color: FTheme.black.withOpacity(.5),
-                  child: const Icon(
-                    Icons.lock,
-                    color: FTheme.black,
-                    size: 70.0,
-                  ),
+        FCard(
+          constraints: const BoxConstraints(maxHeight: 500.0),
+          child: Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FText(
+                  '타임어택!',
+                  style: FTheme.textTheme.titleLarge,
                 ),
-              ),
-          ],
+                Image.asset('assets/image/challenge/timeAttack/timeAttack.png'),
+                FText(
+                  '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지\n대결해요!',
+                  maxLines: 3,
+                ),
+                FButton(
+                  stretch: true,
+                  text: '타임어택 하러가기',
+                  onPressed: TimeAttackFriendP.toTimeAttackFriend,
+                ),
+              ],
+            ),
+          ),
         ),
-        SizedBox(height: 20.0.h),
       ],
     );
   }

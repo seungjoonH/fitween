@@ -7,7 +7,7 @@ class MyMain extends GetxController {
   /// static methods
   // 마이 페이지로 이동
   static void toMyMain() async {
-    await GlobalPresenter.closeBottomBar();
+    // await GlobalP.closeBottomBar();
     Get.toNamed('/my/main');
   }
 }

@@ -25,19 +25,24 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final homeP = Get.find<HomeP>();
+    final refreshCont = RefreshController();
+
     return Scaffold(
       body: GetBuilder<LoadingP>(
         builder: (loadingP) {
           return SmartRefresher(
-            controller: HomeP.refreshCont,
+            controller: refreshCont,
               onRefresh: () async {
-              await HomeP.init();
-              HomeP.refreshCont.refreshCompleted();
+              try {
+                await HomeP.init();
+                refreshCont.refreshCompleted();
+              } catch (e) {
+                refreshCont.refreshFailed();
+              }
             },
             onLoading: () async {
               await Future.delayed(const Duration(milliseconds: 100));
-              HomeP.refreshCont.loadComplete();
+              refreshCont.loadComplete();
             },
             header: const MaterialClassicHeader(
               color: FTheme.black,

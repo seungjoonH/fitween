@@ -64,8 +64,12 @@ class _MyCalendarViewState extends State<MyCalendarView> {
     return SmartRefresher(
       controller: CalendarP.refreshCont,
       onRefresh: () async {
-        await CalendarP.init();
-        CalendarP.refreshCont.refreshCompleted();
+        try {
+          await CalendarP.init();
+          CalendarP.refreshCont.refreshCompleted();
+        } catch (e) {
+          CalendarP.refreshCont.refreshFailed();
+        }
       },
       onLoading: () async {
         await Future.delayed(const Duration(milliseconds: 100));
@@ -81,7 +85,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
           child: Column(
             children: [
               FCard(
-                minHeight: 370.0,
+                constraints: const BoxConstraints(minHeight: 370.0),
                 child: TableCalendar<CalendarEvent>(
                   firstDay: CalendarP.firstDay,
                   lastDay: CalendarP.lastDay,
@@ -166,7 +170,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
               ),
               const SizedBox(height: 20.0),
               FCard(
-                minHeight: 280.0,
+                constraints: const BoxConstraints(minHeight: 280.0),
                 child: ValueListenableBuilder<List<CalendarEvent>>(
                   valueListenable: _selectedEvents,
                   builder: (context, events, _) {

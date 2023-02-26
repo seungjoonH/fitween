@@ -81,6 +81,7 @@ flutter:
     - assets/image/logo/
     - assets/image/level/distance/
     - assets/image/level/height/
+    - assets/image/level/weight/
     - assets/image/record/
     - assets/image/record/height/
     - assets/image/record/distance/
@@ -102,14 +103,14 @@ flutter:
     - assets/image/page/challenge/
     - assets/image/page/edit_goal/
     - assets/image/page/workout/
+    - assets/image/page/register/
+    - assets/image/page/achievement/
     - assets/image/icon/selected/
     - assets/image/icon/unselected/
     - assets/json/lottie/
     - assets/json/data/
     - assets/json/data/level/
-    - assets/image/page/register/
     - assets/rive/input/
-    - assets/image/page/achievement/
 
   fonts:
     - family: BMJUA

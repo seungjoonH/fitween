@@ -556,7 +556,7 @@ class RankWidget extends StatelessWidget {
                         EternalRotation(
                           rps: .3,
                           child: Image.asset(
-                            GlobalPresenter.effectAsset,
+                            GlobalP.effectAsset,
                             width: 120.0.r,
                             height: 120.0.r,
                           ),
@@ -756,7 +756,7 @@ class ChallengeBadgeWidget extends StatelessWidget {
                             EternalRotation(
                               rps: .3,
                               child: Image.asset(
-                                GlobalPresenter.effect2Asset,
+                                GlobalP.effect2Asset,
                               ),
                             ),
                           BadgeWidget(

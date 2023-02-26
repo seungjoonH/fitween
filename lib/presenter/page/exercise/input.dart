@@ -20,7 +20,7 @@ class ExerciseInput extends GetxController {
     final exerciseInput = Get.find<ExerciseInput>();
 
     exerciseInput.inputCont.clear();
-    await GlobalPresenter.closeBottomBar();
+    // await GlobalP.closeBottomBar();
     Get.toNamed('/exercise/input', arguments: type);
   }
 
@@ -77,7 +77,7 @@ class ExerciseInput extends GetxController {
   // 완료 버튼 클릭 시
   Future completeButtonPressed(ActivityType type) async {
     final userP = Get.find<UserRecordP>();
-    final homeP = Get.find<HomePresenter>();
+    // final homeP = Get.find<HomePresenter>();
 
     if (!await validate(type)) return;
 
@@ -88,6 +88,6 @@ class ExerciseInput extends GetxController {
 
     inputCont.clear();
     Get.back();
-    homeP.init();
+    // homeP.init();
    }
 }

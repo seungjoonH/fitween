@@ -27,7 +27,6 @@ class TimeAttackCameraP extends GetxController {
 
   void finishWorkout() async {
     final userP = Get.find<UserRecordP>();
-    final homeP = Get.find<HomePresenter>();
 
     Record record = Record.init(
       ActivityType.weight,
@@ -36,6 +35,6 @@ class TimeAttackCameraP extends GetxController {
     );
     userP.addRecord(ActivityType.weight, record);
     Get.back();
-    homeP.init();
+    HomeP.init();
   }
 }

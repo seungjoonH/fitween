@@ -22,6 +22,7 @@ import 'package:fitween/view/page/my/setting/edit/edit.dart';
 import 'package:fitween/view/page/my/setting/main/main.dart';
 import 'package:fitween/view/page/onboarding/onboarding.dart';
 import 'package:fitween/view/page/quest/quest.dart';
+import 'package:fitween/view/page/ranking/ranking.dart';
 import 'package:fitween/view/page/record/detail/detail.dart';
 import 'package:fitween/view/page/record/main/main.dart';
 import 'package:fitween/view/page/register/register.dart';
@@ -47,6 +48,7 @@ class PRoute {
         '/home': const HomePage(),
         '/friend': const FriendPage(),
         '/calendar': const CalendarPage(),
+        '/ranking': const RankingPage(),
         '/register': const RegisterPage(),
         '/login': const LoginPage(),
         '/onboarding': const OnboardingPage(),

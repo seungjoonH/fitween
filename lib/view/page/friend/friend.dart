@@ -47,15 +47,21 @@ class FriendPage extends StatelessWidget {
           },
           bodies: List.generate(2, (index) {
             bool isRival = index == 1;
+            final refreshCont = RefreshController();
+
             return SmartRefresher(
-              controller: FriendP.refreshConts[index],
+              controller: refreshCont,
               onRefresh: () async {
-                await FriendP.init();
-                FriendP.refreshConts[index].refreshCompleted();
+                try {
+                  await FriendP.init();
+                  refreshCont.refreshCompleted();
+                } catch (e) {
+                  refreshCont.refreshFailed();
+                }
               },
               onLoading: () async {
                 await Future.delayed(const Duration(milliseconds: 100));
-                FriendP.refreshConts[index].loadComplete();
+                refreshCont.loadComplete();
               },
               header: const MaterialClassicHeader(
                 color: FTheme.black,
@@ -184,7 +190,7 @@ class FriendListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FCard(
-      minHeight: 100.0,
+      constraints: const BoxConstraints(minHeight: 100.0),
       child: GetBuilder<UserFriendP>(
         builder: (userP) {
           List<FUserInfo> userInfos = isRival
