@@ -6,7 +6,9 @@ import 'package:fitween/global/date.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/model/record.dart';
+import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/page/calendar.dart';
+import 'package:get/get.dart';
 
 class FUserRecord {
   /// attributes
@@ -166,13 +168,13 @@ class FUserRecord {
       ]) {
     double result = 0;
 
-    startDate ??= today;
-    endDate ??= nextDay(startDate);
+    startDate ??= ignoreTime(Get.find<UserInfoP>().loggedUser.regDate!);
+    endDate ??= oneSecondBefore(tomorrow);
 
     inputRecords.forEach((type, recordList) {
       if (activityType.name == type) {
         for (var record in recordList) {
-          if (startDate != null && record['date'].toDate().isBefore(startDate)) continue;
+          if (record['date'].toDate().isBefore(startDate)) continue;
           if (endDate != null && record['date'].toDate().isAfter(endDate)) continue;
           result += record['amount'].toDouble();
         }
@@ -261,7 +263,7 @@ class FUserRecord {
   bool completed(ActivityType type, [DateTime? date]) {
     date ??= today;
     double goal = goals[type.name]?.toDouble() ?? .0;
-    double value = getAmounts(type, date);
+    double value = getAmounts(type, date, nextDay(date));
     return goal <= value;
   }
 }

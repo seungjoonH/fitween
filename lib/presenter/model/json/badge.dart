@@ -7,7 +7,7 @@ import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/info.dart';
-import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/json/party.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:in_app_review/in_app_review.dart';

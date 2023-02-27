@@ -43,7 +43,7 @@ class ExerciseInput extends GetxController {
     };
 
     Map<String, bool> conditions = {
-      '하루 할당량을 초과하였습니다': (user.getAmounts(type) + (stringToNum(text) ?? 0)) > limit[type]!,
+      '하루 할당량을 초과하였습니다': (user.getTodayAmounts(type) + (stringToNum(text) ?? 0)) > limit[type]!,
       '너무 많이 입력했습니다': (stringToNum(text) ?? 0) > limit[type]!,
       '숫자만 입력할 수 있습니다': int.tryParse(text) == null,
       '공백을 포함할 수 없습니다': text.contains(' '),

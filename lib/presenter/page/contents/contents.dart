@@ -5,7 +5,7 @@ import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/party.dart';
-import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:fitween/presenter/widget/loading.dart';
@@ -22,7 +22,7 @@ class ContentsP extends GetxController {
   String? codeHintText = '';
 
   static void toContents() async {
-    Get.toNamed('/contents');
+    Get.offAllNamed('/contents');
   }
 
   /// methods

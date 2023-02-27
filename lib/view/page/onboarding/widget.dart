@@ -9,7 +9,6 @@ import 'package:fitween/presenter/page/onboarding.dart';
 import 'package:fitween/presenter/page/register.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/text.dart';
-import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 
 class CarouselView extends StatefulWidget {
   const CarouselView({Key? key}) : super(key: key);

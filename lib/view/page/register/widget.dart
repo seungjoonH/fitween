@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
-import 'package:fitween/global/string.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/global/unit.dart';
 import 'package:fitween/model/enum/activity_type.dart';
@@ -954,7 +953,7 @@ class CarouselButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<RegisterP>(
       builder: (controller) {
-        bool lastPage = controller.pageIndex == CarouselView.widgetCount - 1;
+        // bool lastPage = controller.pageIndex == CarouselView.widgetCount - 1;
 
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -971,33 +970,33 @@ class CarouselButton extends StatelessWidget {
             stretch: true,
           ),
         );
-        return Row(
-          children: [
-            PButton(
-              onPressed: controller.backPressed,
-              text: '이전',
-              textColor: Colors.black,
-              backgroundColor: Colors.white,
-              padding: const EdgeInsets.all(15.0),
-              stretch: true,
-              multiple: true,
-            ),
-            PButton(
-              onPressed: () async {
-                if (controller.keyboardVisible) {
-                  FocusScope.of(context).unfocus();
-                  await Future.delayed(const Duration(milliseconds: 100));
-                }
-                controller.nextPressed();
-              },
-              text: lastPage ? '완료' : '다음',
-              backgroundColor: Colors.black,
-              padding: const EdgeInsets.all(15.0),
-              stretch: true,
-              multiple: true,
-            ),
-          ],
-        );
+        // return Row(
+        //   children: [
+        //     PButton(
+        //       onPressed: controller.backPressed,
+        //       text: '이전',
+        //       textColor: Colors.black,
+        //       backgroundColor: Colors.white,
+        //       padding: const EdgeInsets.all(15.0),
+        //       stretch: true,
+        //       multiple: true,
+        //     ),
+        //     PButton(
+        //       onPressed: () async {
+        //         if (controller.keyboardVisible) {
+        //           FocusScope.of(context).unfocus();
+        //           await Future.delayed(const Duration(milliseconds: 100));
+        //         }
+        //         controller.nextPressed();
+        //       },
+        //       text: lastPage ? '완료' : '다음',
+        //       backgroundColor: Colors.black,
+        //       padding: const EdgeInsets.all(15.0),
+        //       stretch: true,
+        //       multiple: true,
+        //     ),
+        //   ],
+        // );
       },
     );
   }

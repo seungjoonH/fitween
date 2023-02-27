@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/calendar.dart';
-import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/activity_type.dart';
@@ -127,7 +126,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                         itemBuilder: (context, index) {
                           ActivityType type = ActivityType.activeValues[index];
                           List<ActivityType> completed = userP.loggedUser.completedActivities(date);
-                          int amount = userP.loggedUser.getAmounts(type, date).round();
+                          int amount = userP.loggedUser.getAmounts(type, date, nextDay(date)).round();
 
                           Color color = FTheme.lightGrey;
                           if (completed.length == 3) { color = ActivityType.calorie.color; }
@@ -216,7 +215,10 @@ class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator>
   Widget build(BuildContext context) {
     final userP = Get.find<UserRecordP>();
 
-    int amount = userP.loggedUser.getAmounts(widget.type, widget.date).round();
+    int amount = userP.loggedUser.getAmounts(
+      widget.type, widget.date,
+      nextDay(widget.date),
+    ).round();
     int goal = userP.loggedUser.getGoal(widget.type)?.amount.round() ?? 1;
     Color color = FTheme.lightGrey;
 

@@ -96,14 +96,14 @@ class FriendCard extends StatelessWidget{
           borderRadius: BorderRadius.circular(12),
           color: FTheme.white
         ),
-        margin: EdgeInsets.only(top: 7),
+        margin: const EdgeInsets.only(top: 7),
         child: Row(
           children: [
             /*BadgeWidget(
               badge: BadgeJsonP.getBadge(controller.loggedUser.badgeId),
               size: 80.0.r,
             ),*/
-            SizedBox(
+            const SizedBox(
               width: 18,
             ),
             Image.asset('assets/image/badge/1000000.png', height: 48, width: 48),

@@ -5,7 +5,7 @@ import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/info.dart';
-import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';

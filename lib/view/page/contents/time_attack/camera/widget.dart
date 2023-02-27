@@ -57,9 +57,7 @@ class FloatingMessageWidget extends StatelessWidget {
                   style: textTheme.titleMedium,
                   color: FTheme.darkGrey,
                 ),
-                SizedBox(
-                  height: 5,
-                ),
+                const SizedBox(height: 5.0),
                 FText(
                   painterP.floatingMessage ?? '',
                   style: textTheme.headlineMedium,

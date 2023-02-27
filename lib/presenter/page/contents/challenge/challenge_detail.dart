@@ -1,8 +1,7 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/model/enum/difficulty.dart';
-import 'package:fitween/presenter/model/party.dart';
-import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/text.dart';

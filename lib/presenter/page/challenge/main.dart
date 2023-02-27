@@ -1,4 +1,4 @@
-import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/json/party.dart';
 import 'package:get/get.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';

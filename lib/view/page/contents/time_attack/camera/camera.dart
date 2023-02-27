@@ -147,7 +147,7 @@ class _TimeAttackCameraPageState extends State<TimeAttackCameraPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  CountDownTimer(),
+                                  const CountDownTimer(),
                                   // if (painterP.count > 0 && painterP.state == WorkoutState.stop)
                                   // const ExerciseCompleteButton(),
                                   Row(

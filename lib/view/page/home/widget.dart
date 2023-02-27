@@ -1,47 +1,21 @@
 import 'dart:math';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:fitween/model/class/database/user/info.dart';
-import 'package:fitween/model/class/database/user/record.dart';
-import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/calendar.dart';
 import 'package:fitween/presenter/page/ranking.dart';
-import 'package:fitween/presenter/page/record/main.dart';
 import 'package:fitween/view/page/ranking/widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gif/flutter_gif.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:fitween/global/date.dart';
-import 'package:fitween/global/string.dart';
 import 'package:fitween/global/theme.dart';
-import 'package:fitween/model/class/database/collection.dart';
-import 'package:fitween/model/class/database/user.dart';
-import 'package:fitween/model/class/json/level.dart';
 import 'package:fitween/model/enum/activity_type.dart';
-import 'package:fitween/model/enum/border_type.dart';
-import 'package:fitween/model/enum/unit.dart';
-import 'package:fitween/presenter/global.dart';
-import 'package:fitween/presenter/model/json/badge.dart';
-import 'package:fitween/presenter/model/json/level.dart';
-import 'package:fitween/presenter/model/json/quest.dart';
-import 'package:fitween/presenter/model/record.dart';
-import 'package:fitween/presenter/model/user.dart';
-import 'package:fitween/presenter/page/collection/main.dart';
 import 'package:fitween/presenter/page/home.dart';
-import 'package:fitween/presenter/page/my/record/main.dart';
-import 'package:fitween/presenter/page/quest/main.dart';
 import 'package:fitween/presenter/widget/loading.dart';
-import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/card.dart';
-import 'package:fitween/view/widget/widget/badge.dart';
-import 'package:fitween/view/widget/widget/indicator.dart';
 import 'package:fitween/view/widget/widget/text.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class RotateCarousel extends StatefulWidget {
   const RotateCarousel({Key? key}) : super(key: key);
@@ -71,7 +45,7 @@ class _RotateCarouselState extends State<RotateCarousel>
     return GetBuilder<HomeP>(
       builder: (homeP) {
         ActivityType type = ActivityType.activeValues[homeP.rotationIndex];
-        double amount = userRecordP.loggedUser.getAmounts(type);
+        double amount = userRecordP.loggedUser.getTodayAmounts(type);
         String amountString = '${amount.round()}';
 
         if (type == ActivityType.distance) {

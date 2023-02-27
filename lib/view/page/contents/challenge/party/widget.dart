@@ -1,12 +1,8 @@
 import 'dart:math';
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
-import 'package:fitween/model/class/database/user/collection.dart';
-import 'package:fitween/model/class/database/user/info.dart';
-import 'package:fitween/model/class/database/user/party.dart';
-import 'package:fitween/presenter/model/user/info.dart';
-import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
+import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,43 +10,57 @@ import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/model/enum/activity_type.dart';
-import 'package:fitween/presenter/global.dart';
-import 'package:fitween/view/widget/button/button.dart';
-import 'package:fitween/view/widget/effect/effect.dart';
-import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/text.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PartyView extends StatelessWidget {
-  const PartyView({
-    Key? key,
-    required this.party,
-  }) : super(key: key);
-
-  final Party? party;
+  const PartyView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final refreshCont = RefreshController();
+
     return GetBuilder<PartyP>(
       builder: (partyP) {
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              ChallengeInfoCard(party: party),
-              SizedBox(height: 20.0.h),
-              ChallengeScoreCard(party: party),
-              const SizedBox(height: 100.0),
-              // const Divider(
-              //   color: FTheme.lightGrey,
-              //   thickness: 8,
-              // ),
-              // RankWidget(party: party),
-              // const Divider(
-              //   color: FTheme.lightGrey,
-              //   thickness: 8,
-              // ),
-              // ChallengeBadgeWidget(party: party),
-              // const SizedBox(height: 100.0),
-            ],
+        return SmartRefresher(
+          controller: refreshCont,
+          onRefresh: () async {
+            // try {
+            await PartyP.init(partyP.loadedParty!.id!);
+            refreshCont.refreshCompleted();
+            // } catch (e) {
+            //   refreshCont.refreshFailed();
+            // }
+          },
+          onLoading: () async {
+            await Future.delayed(const Duration(milliseconds: 100));
+            refreshCont.loadComplete();
+          },
+          header: const MaterialClassicHeader(
+            color: FTheme.black,
+            backgroundColor: FTheme.surface,
+            offset: 40.0,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                ChallengeInfoCard(party: partyP.loadedParty),
+                SizedBox(height: 20.0.h),
+                ChallengeScoreCard(party: partyP.loadedParty),
+                const SizedBox(height: 100.0),
+                // const Divider(
+                //   color: FTheme.lightGrey,
+                //   thickness: 8,
+                // ),
+                // RankWidget(party: party),
+                // const Divider(
+                //   color: FTheme.lightGrey,
+                //   thickness: 8,
+                // ),
+                // ChallengeBadgeWidget(party: party),
+                // const SizedBox(height: 100.0),
+              ],
+            ),
           ),
         );
       },
@@ -68,71 +78,74 @@ class ChallengeInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BorderRadius imageRadius =
-        const BorderRadius.vertical(top: Radius.circular(12.0));
-    List<Color> orderedColors = [FTheme.darkGrey, ...FTheme.orderedColors];
-    int index = min(max((party!.remainDays ~/ 4) + 1, 0), 4);
+    BorderRadius imageRadius = const BorderRadius.vertical(top: Radius.circular(12.0));
+    // List<Color> orderedColors = [FTheme.darkGrey, ...FTheme.orderedColors];
+    // int index = min(max((party!.remainDays ~/ 4) + 1, 0), 4);
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 24.0.r),
-      child: FCard(
-        constraints: BoxConstraints(minHeight: 450.0.h),
-        padding: EdgeInsets.zero,
-        child: Column(
-          children: [
-            ClipRRect(
-              borderRadius: imageRadius,
-              child: Image.asset(
-                party?.challenge?.imageUrls['default'],
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: 230.0.h,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(20.0.r),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
+    return GetBuilder<LoadingP>(
+      builder: (loadingP) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24.0.r),
+          child: FCard(
+            constraints: BoxConstraints(minHeight: 450.0.h),
+            padding: EdgeInsets.zero,
+            child: loadingP.loading ? Container() : Column(
+              children: [
+                ClipRRect(
+                  borderRadius: imageRadius,
+                  child: Image.asset(
+                    party?.challenge?.imageUrls['default'],
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                    height: 230.0.h,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(20.0.r),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      FText(
-                        '최대인원 | ${party?.level['maxMember']}명',
-                        style: textTheme.bodyMedium,
-                        color: FTheme.lightGrey,
+                      Row(
+                        children: [
+                          FText(
+                            '최대인원 | ${party?.level['maxMember']}명',
+                            style: textTheme.bodyMedium,
+                            color: FTheme.lightGrey,
+                          ),
+                          SizedBox(width: 40.0.w),
+                          FText(
+                            '마감기한 | D-${party?.remainDays}',
+                            style: textTheme.bodyMedium,
+                            color: FTheme.lightGrey,
+                          ),
+                        ],
                       ),
-                      SizedBox(width: 40.0.w),
+                      SizedBox(height: 8.0.h),
                       FText(
-                        '마감기한 | D-${party?.remainDays}',
-                        style: textTheme.bodyMedium,
-                        color: FTheme.lightGrey,
+                        party?.challenge?.titleOneLine ?? '',
+                        style: textTheme.headlineSmall,
+                        bold: true,
+                        maxLines: 2,
+                      ),
+                      SizedBox(height: 16.0.h),
+                      FText(
+                        party?.challenge?.descriptions['detail']!.replaceAll(
+                          '##',
+                          party?.level['word'],
+                        ),
+                        style: textTheme.labelLarge,
+                        color: FTheme.grey,
+                        // align: TextAlign.center,
+                        maxLines: 7,
                       ),
                     ],
                   ),
-                  SizedBox(height: 8.0.h),
-                  FText(
-                    party?.challenge?.titleOneLine ?? '',
-                    style: textTheme.headlineSmall,
-                    bold: true,
-                    maxLines: 2,
-                  ),
-                  SizedBox(height: 16.0.h),
-                  FText(
-                    party?.challenge?.descriptions['detail']!.replaceAll(
-                      '##',
-                      party?.level['word'],
-                    ),
-                    style: textTheme.labelLarge,
-                    color: FTheme.grey,
-                    // align: TextAlign.center,
-                    maxLines: 7,
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }
     );
   }
 }

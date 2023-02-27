@@ -11,7 +11,7 @@ import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/record.dart';
 import 'package:fitween/presenter/model/user/info.dart';
-import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/contents/challenge/challenge_detail.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
@@ -239,136 +239,158 @@ class AchievementCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final refreshCont = RefreshController();
+
     FUserRecord loggedUser = Get.find<UserRecordP>().loggedUser;
     FUserInfo userInfo = Get.find<UserInfoP>().loggedUser;
 
-    return SingleChildScrollView(
-      child: Column(
-        children: ActivityType.activeValues.map((type) {
-          double amount = loggedUser.getAmounts(type);
-          ExerciseUnit? unit = {
-            ActivityType.distance: ExerciseUnit.step,
-            ActivityType.weight: ExerciseUnit.count,
-          }[type];
+    return SmartRefresher(
+      controller: refreshCont,
+      onRefresh: () async {
+        try {
+          await ContentsP.init();
+          refreshCont.refreshCompleted();
+        } catch (e) {
+          refreshCont.refreshFailed();
+        }
+      },
+      onLoading: () async {
+        await Future.delayed(const Duration(milliseconds: 100));
+        refreshCont.loadComplete();
+      },
+      header: const MaterialClassicHeader(
+        color: FTheme.black,
+        backgroundColor: FTheme.surface,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: ActivityType.activeValues.map((type) {
+            double amount = loggedUser.getAmounts(type);
+            ExerciseUnit? unit = {
+              ActivityType.distance: ExerciseUnit.step,
+              ActivityType.weight: ExerciseUnit.count,
+            }[type];
 
-          Record record = Record.init(type, amount, unit);
+            Record record = Record.init(type, amount, unit);
 
-          Map<String, dynamic> tier = LevelJsonP.getTier(type, record);
-          Level next = tier['next'] ?? Level.fromJson({'amount': 0});
+            Map<String, dynamic> tier = LevelJsonP.getTier(type, record);
+            Level next = tier['next'] ?? Level.fromJson({'amount': 0});
 
-          Record nextValue = Record.init(
-            type,
-            next.amount!.toDouble(),
-            ExerciseUnit.kilometer,
-          );
+            Record nextValue = Record.init(
+              type,
+              next.amount!.toDouble(),
+              ExerciseUnit.kilometer,
+            );
 
-          nextValue.convert(unit);
+            nextValue.convert(unit);
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: FCard(
-              child: Column(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      FText(
-                        '${userInfo.nickname}님은 지금까지',
-                        style: textTheme.bodyLarge,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(4.0),
-                        decoration: BoxDecoration(
-                          color: type.color,
-                          borderRadius: BorderRadius.circular(10.0.r),
-                        ),
-                        child: FText(
-                          tier['current']?.title ?? '',
-                          maxLines: 2,
-                          style: textTheme.displayMedium,
-                          color: FTheme.white,
-                          bold: true,
-                        ),
-                      ),
-                      FText(
-                        '만큼 ${type.did}!',
-                        style: textTheme.bodyLarge,
-                      ),
-                      const SizedBox(height: 8.0),
-                      Stack(
-                        alignment: Alignment.center,
-                        children: [
-                          Image.asset(
-                            'assets/image/page/contents/union.png',
-                            width: 300.0,
-                            fit: BoxFit.fitWidth,
-                          ),
-                          Column(
-                            children: [
-                              SizedBox(
-                                width: 100.0.w,
-                                child: tier['current'] != null ? Image.asset(
-                                  'assets/image/level/${type.name}/${tier['current'].id}.png',
-                                  width: 40.0.w,
-                                ) : Container(),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    FText(
-                                      '현재 진행도',
-                                      style: textTheme.bodyMedium,
-                                      color: FTheme.black,
-                                    ),
-                                    const SizedBox(height: 5.0),
-                                    LinearPercentIndicator(
-                                      padding: EdgeInsets.zero,
-                                      progressColor: type.color,
-                                      backgroundColor: FTheme.lightGrey,
-                                      // Colors.transparent,
-                                      percent: tier['percent'] ?? .0,
-                                      lineHeight: 48.0,
-                                      barRadius: Radius.circular(10.0.r),
-                                      animation: true,
-                                      animationDuration: 1000,
-                                      curve: Curves.easeInOut,
-                                    ),
-                                    FText(
-                                      '${tier['percent'].toInt()}%',
-                                      style: textTheme.bodyMedium,
-                                      color: type.color,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  if (!type.active)
-                  Positioned.fill(
-                    child: Stack(
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10.0),
+              child: FCard(
+                constraints: const BoxConstraints(minHeight: 440.0),
+                child: Column(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                          color: FTheme.surface,
-                          alignment: Alignment.center,
-                          child: Icon(Icons.lock, size: 30.0.r),
+                        FText(
+                          '${userInfo.nickname}님은 지금까지',
+                          style: textTheme.bodyLarge,
                         ),
                         Container(
-                          color: FTheme.black.withOpacity(.3),
+                          padding: const EdgeInsets.all(4.0),
+                          decoration: BoxDecoration(
+                            color: type.color,
+                            borderRadius: BorderRadius.circular(10.0.r),
+                          ),
+                          child: FText(
+                            tier['current']?.title ?? '',
+                            maxLines: 2,
+                            style: textTheme.displayMedium,
+                            color: FTheme.white,
+                            bold: true,
+                          ),
+                        ),
+                        FText(
+                          '만큼 ${type.did}!',
+                          style: textTheme.bodyLarge,
+                        ),
+                        const SizedBox(height: 8.0),
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/image/page/contents/union.png',
+                              width: 300.0,
+                              fit: BoxFit.fitWidth,
+                            ),
+                            Column(
+                              children: [
+                                SizedBox(
+                                  width: 100.0.w,
+                                  child: tier['current'] != null ? Image.asset(
+                                    'assets/image/level/${type.name}/${tier['current'].id}.png',
+                                    width: 40.0.w,
+                                  ) : Container(),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      FText(
+                                        '현재 진행도',
+                                        style: textTheme.bodyMedium,
+                                        color: FTheme.black,
+                                      ),
+                                      const SizedBox(height: 5.0),
+                                      LinearPercentIndicator(
+                                        padding: EdgeInsets.zero,
+                                        progressColor: type.color,
+                                        backgroundColor: FTheme.lightGrey,
+                                        // Colors.transparent,
+                                        percent: tier['percent'] ?? .0,
+                                        lineHeight: 48.0,
+                                        barRadius: Radius.circular(10.0.r),
+                                        animation: true,
+                                        animationDuration: 1000,
+                                        curve: Curves.easeInOut,
+                                      ),
+                                      FText(
+                                        '${tier['percent'].toInt()}%',
+                                        style: textTheme.bodyMedium,
+                                        color: type.color,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    if (!type.active)
+                    Positioned.fill(
+                      child: Stack(
+                        children: [
+                          Container(
+                            color: FTheme.surface,
+                            alignment: Alignment.center,
+                            child: Icon(Icons.lock, size: 30.0.r),
+                          ),
+                          Container(
+                            color: FTheme.black.withOpacity(.3),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        }).toList(),
+            );
+          }).toList(),
+        ),
       ),
     );
   }
@@ -379,34 +401,56 @@ class TimeAttackCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        FCard(
-          title: '타임어택!',
-          constraints: const BoxConstraints(maxHeight: 420.0),
-          child: Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Image.asset(
-                  'assets/image/page/contents/fight.png',
-                  height: 180.0,
+    final refreshCont = RefreshController();
+    return SmartRefresher(
+      controller: refreshCont,
+      onRefresh: () async {
+        try {
+          await ContentsP.init();
+          refreshCont.refreshCompleted();
+        } catch (e) {
+          refreshCont.refreshFailed();
+        }
+      },
+      onLoading: () async {
+        await Future.delayed(const Duration(milliseconds: 100));
+        refreshCont.loadComplete();
+      },
+      header: const MaterialClassicHeader(
+        color: FTheme.black,
+        backgroundColor: FTheme.surface,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            FCard(
+              title: '타임어택!',
+              constraints: const BoxConstraints(maxHeight: 420.0),
+              child: Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Image.asset(
+                      'assets/image/page/contents/fight.png',
+                      height: 180.0,
+                    ),
+                    FText(
+                      '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지\n대결해요!',
+                      maxLines: 3,
+                    ),
+                    FButton(
+                      stretch: true,
+                      text: '타임어택 하러가기',
+                      onPressed: TimeAttackFriendP.toTimeAttackFriend,
+                    ),
+                  ],
                 ),
-                FText(
-                  '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지\n대결해요!',
-                  maxLines: 3,
-                ),
-                FButton(
-                  stretch: true,
-                  text: '타임어택 하러가기',
-                  onPressed: TimeAttackFriendP.toTimeAttackFriend,
-                ),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }

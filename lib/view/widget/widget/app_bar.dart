@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/presenter/global.dart';
-import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/page/my/main.dart';
 import 'package:fitween/presenter/page/my/setting/main.dart';
 import 'package:fitween/view/widget/button/button.dart';

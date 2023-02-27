@@ -1,24 +1,11 @@
-import 'dart:math';
-
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:fitween/presenter/global.dart';
+import 'package:fitween/global/theme.dart';
 import 'package:fitween/presenter/page/home.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/page/home/widget.dart';
-import 'package:fitween/view/widget/widget/app_bar.dart';
-import 'package:fitween/view/widget/widget/icon.dart';
 import 'package:flutter/material.dart';
 import 'package:fitween/view/widget/widget/bottom_bar.dart';
-import 'package:flutter_gif/flutter_gif.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:indexed/indexed.dart';
-import 'package:lottie/lottie.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
-
-import '../../../global/theme.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

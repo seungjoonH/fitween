@@ -1,8 +1,9 @@
 /* 라우트 관련 */
 import 'package:fitween/view/page/calendar/main/main.dart';
-import 'package:fitween/view/page/challenge/detail/detail.dart';
+import 'package:fitween/view/page/contents/achievement/level/level.dart';
+import 'package:fitween/view/page/contents/challenge/detail/detail.dart';
+import 'package:fitween/view/page/contents/challenge/party/party.dart';
 import 'package:fitween/view/page/contents/contents.dart';
-import 'package:fitween/view/page/contents/party/party.dart';
 import 'package:fitween/view/page/contents/time_attack/camera/camera.dart';
 import 'package:fitween/view/page/contents/time_attack/friend/friend.dart';
 import 'package:fitween/view/page/contents/time_attack/main/main.dart';
@@ -40,6 +41,7 @@ class FRoute {
         '/contents/timeAttackFriend': const TimeAttackFriendPage(),
         '/contents/timeAttackReady': const TimeAttackReadyPage(),
         '/contents/timeAttackCamera': const TimeAttackCameraPage(),
+        '/contents/': const ChallengeLevelPage(),
       };
 
   // 겟페이지 리스트
