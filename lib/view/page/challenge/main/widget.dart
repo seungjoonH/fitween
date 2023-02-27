@@ -79,41 +79,12 @@ class ChallengeMainPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TabScaffold(
-      tabs: const ['월간', '업적', '타임어택'],
+    return const TabScaffold(
+      tabs: ['월간', '업적', '타임어택'],
       bodies: [
-        const ChallengeCardView(),
-        const AchievementCardView(),
-        FCard(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            FText(
-              '타임어택!',
-              style: FTheme.textTheme.titleLarge,
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            Image.asset('assets/image/challenge/timeAttack/timeAttack.png'),
-            const SizedBox(
-              height: 10,
-            ),
-            FText(
-              '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
-              maxLines: 2,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            FButton(
-              stretch: true,
-              text: '타임어택 하러가기',
-              onPressed: TimeAttackFriendP.toTimeAttackFriend,
-            )
-          ],
-        ))
+        ChallengeCardView(),
+        AchievementCardView(),
+        TimeAttackTabBar(),
       ],
     );
   }
@@ -132,6 +103,53 @@ class ChallengeMainView extends StatelessWidget {
     );
   }
 }
+
+class TimeAttackTabBar extends StatelessWidget {
+  const TimeAttackTabBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return  Column(
+      children: [
+        FCard(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FText(
+                  '타임어택!',
+                  style: FTheme.textTheme.titleLarge,
+                  bold: true,
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Image.asset('assets/image/challenge/timeAttack/timeAttack.png'),
+                const SizedBox(
+                  height: 10,
+                ),
+                FText(
+                  '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
+                  maxLines: 2,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            )),
+        const SizedBox(
+          height: 20,
+        ),
+        FButton(
+          stretch: true,
+          text: '타임어택 하러가기',
+          onPressed: TimeAttackFriendP.toTimeAttackFriend,
+        )
+      ],
+    );
+  }
+}
+
 
 class ChallengeTabBar extends StatelessWidget {
   const ChallengeTabBar({Key? key}) : super(key: key);
