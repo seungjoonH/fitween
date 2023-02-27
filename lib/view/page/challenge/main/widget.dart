@@ -6,6 +6,7 @@ import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
+import 'package:fitween/presenter/page/challenge/level.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_main.dart';
 import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/view/widget/button/button.dart';
@@ -845,7 +846,7 @@ class AchievementCardView extends StatelessWidget {
             child: Column(
               children: [
                 InkWell(
-                  onTap: () {},
+                onTap: () => ChallengeLevelP.toChallengeLevel(),
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Column(
