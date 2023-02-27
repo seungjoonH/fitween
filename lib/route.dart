@@ -7,6 +7,7 @@ import 'package:fitween/view/page/challenge/detail/detail.dart';
 import 'package:fitween/view/page/challenge/complete/complete.dart';
 import 'package:fitween/view/page/challenge/main/widget.dart';
 import 'package:fitween/view/page/challenge/party/party.dart';
+import 'package:fitween/view/page/challenge/level/level.dart';
 import 'package:fitween/view/page/challenge/time_attack/time_attack_camera/time_attack_camera.dart';
 import 'package:fitween/view/page/challenge/time_attack/time_attack_friend/time_attack_friend.dart';
 import 'package:fitween/view/page/challenge/time_attack/time_attack_main/main.dart';
@@ -51,6 +52,7 @@ class PRoute {
         '/login': const LoginPage(),
         '/onboarding': const OnboardingPage(),
         '/challengeMain': const ChallengeMainPage(),
+        '/challengeLevel': const ChallengeLevelPage(),
         '/challenge/timeAttack/friend': const TimeAttackFriendPage(),
         '/challenge/timeAttack/main': const TimeAttackMainPage(),
         '/challenge/timeAttack/camera': const TimeAttackCameraPage(),
