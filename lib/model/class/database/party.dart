@@ -5,9 +5,12 @@ import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/class/json/challenge.dart';
+import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/difficulty.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
+
+import 'user/record.dart';
 
 class Party {
   /// attributes
@@ -15,7 +18,7 @@ class Party {
   String? id;
   String? challengeId;
   Difficulty difficulty = Difficulty.easy;
-  Map<String, dynamic> records = {};
+  List<String> memberUids = [];
   String? leaderUid;
   bool complete = false;
   Timestamp? _startDate;
@@ -25,6 +28,7 @@ class Party {
   FUserInfo? leader; // leaderUid 에 의존
   List<FUserInfo> memberInfos = [];
   List<FUserCollection> memberCollections = [];
+  List<FUserRecord> memberRecords = [];
 
   /// accessors & mutators
   DateTime? get startDate => _startDate?.toDate();
@@ -33,14 +37,21 @@ class Party {
   set endDate(DateTime? date) => _endDate = toTimestamp(date);
 
   Challenge? get challenge => ChallengeJsonP.getChallenge(challengeId);
-  List<String> get memberUids => records.keys.toList();
+  // List<String> get memberUids => records.keys.toList();
 
   bool get over => today.isAfter(endDate!);
   int get overDays => today.difference(endDate!).inDays;
   int get remainDays => -overDays;
 
-  List<double> get recordValues =>
-      records.values.map<double>((e) => e.toDouble()).toList();
+  ActivityType get type => ChallengeJsonP.getChallenge(challengeId)!.type!;
+
+  // List<double> get recordValues =>
+  //     records.values.map<double>((e) => e.toDouble()).toList();
+  Map<String, double> get records => {
+    for (FUserRecord user in memberRecords)
+      user.uid! : user.getAmounts(type, startDate, endDate)
+  };
+  List<double> get recordValues => records.values.toList();
   double get recordSum => sum(recordValues).toDouble();
   double get recordAverage => average(recordValues).toDouble();
 
@@ -100,7 +111,7 @@ class Party {
     id = json['id'];
     challengeId = json['challengeId'];
     difficulty = Difficulty.toEnum(json['difficulty'])!;
-    records = json['records'] ?? <String, dynamic>{};
+    memberUids = (json['memberUids'] ?? []).cast<String>();
     leaderUid = json['leaderUid'];
     complete = json['complete'];
     startDate = json['startDate']?.toDate();
@@ -112,7 +123,7 @@ class Party {
     json['id'] = id;
     json['challengeId'] = challengeId;
     json['difficulty'] = difficulty.name;
-    json['records'] = records;
+    json['memberUids'] = memberUids;
     json['leaderUid'] = leaderUid;
     json['complete'] = complete;
     json['startDate'] = startDate;

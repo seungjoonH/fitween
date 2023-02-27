@@ -2,9 +2,11 @@
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/party.dart';
+import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/json/party.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/presenter/firebase/firebase.dart';
@@ -51,19 +53,24 @@ class PartyJsonP extends GetxController {
   static Future loadMembers(Party party) async {
     List<FUserInfo> memberInfos = [];
     List<FUserCollection> memberCollections = [];
+    List<FUserRecord> memberRecords = [];
 
     for (var uid in party.memberUids) {
       FUserInfo? userInfo = await UserInfoP.loadUser(uid);
       FUserCollection? userCollection = await UserCollectionP.loadUser(uid);
+      FUserRecord? userRecord = await UserRecordP.loadUser(uid);
 
       if (userInfo == null) continue;
       if (userCollection == null) continue;
+      if (userRecord == null) continue;
 
       memberInfos.add(userInfo);
       memberCollections.add(userCollection);
+      memberRecords.add(userRecord);
     }
     party.memberInfos = [...memberInfos];
     party.memberCollections = [...memberCollections];
+    party.memberRecords = [...memberRecords];
   }
 
   static void deleteMember(String uid) async {

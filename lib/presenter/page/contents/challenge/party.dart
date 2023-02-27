@@ -50,8 +50,8 @@ class PartyP extends GetxController {
     final userPartyP = Get.find<UserPartyP>();
     final userRecordP = Get.find<UserRecordP>();
 
-    FUserInfo userInfo = userInfoP.loggedUser;
-    FUserRecord userRecord = userRecordP.loggedUser;
+    // FUserInfo userInfo = userInfoP.loggedUser;
+    // FUserRecord userRecord = userRecordP.loggedUser;
 
     loadedParty = await PartyJsonP.loadParty(id);
     if (loadedParty == null) return;
@@ -60,12 +60,12 @@ class PartyP extends GetxController {
 
     value = .0;
     update();
-    maxValue = userRecord.getAmounts(
-      loadedParty!.challenge!.type!,
-      loadedParty!.startDate,
-      oneSecondBefore(tomorrow),
-    ).toDouble();
-    loadedParty!.records[userInfo.uid!] = maxValue.toInt();
+    // maxValue = userRecord.getAmounts(
+    //   loadedParty!.challenge!.type!,
+    //   loadedParty!.startDate,
+    //   oneSecondBefore(tomorrow),
+    // ).toDouble();
+    // loadedParty!.records[userInfo.uid!] = maxValue.toInt();
     animateValue();
 
     PartyJsonP.save(loadedParty!);

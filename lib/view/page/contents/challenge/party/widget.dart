@@ -163,18 +163,13 @@ class ChallengeScoreCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.0.r),
       child: FCard(
-        constraints: const BoxConstraints(minHeight: 300.0),
+        title: '점수판',
+        constraints: const BoxConstraints(minHeight: 270.0),
         child: SizedBox(
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FText(
-                '점수판',
-                style: textTheme.headlineSmall,
-                bold: true,
-              ),
-              SizedBox(height: 8.0.h),
               FText(
                 '전체 점수',
                 style: textTheme.bodyMedium,
