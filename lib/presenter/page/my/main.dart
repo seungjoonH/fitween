@@ -1,6 +1,5 @@
 /* 마이 페이지 프리젠터 */
 import 'package:get/get.dart';
-import 'package:fitween/presenter/global.dart';
 
 /// class
 class MyMain extends GetxController {

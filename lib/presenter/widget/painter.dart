@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera.dart';
+import 'package:fitween/presenter/page/contents/time_attack/camera.dart';
 import 'package:fitween/presenter/page/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +12,7 @@ import 'package:fitween/model/class/workout/limb.dart';
 import 'package:fitween/model/enum/part.dart';
 import 'package:fitween/model/enum/workout.dart';
 
-class PainterPresenter extends GetxController {
+class PainterP extends GetxController {
   static Orientation orientation = Orientation.portrait;
   // static double get screenRatio {
   //   const ratio = 9 / 12;
@@ -27,7 +27,7 @@ class PainterPresenter extends GetxController {
   );
 
   static void setOrientation(Orientation orientation) {
-    PainterPresenter.orientation = orientation;
+    PainterP.orientation = orientation;
   }
 
   static double getAngle(Point pointA, Point pointB, Point pointC) {
@@ -117,7 +117,7 @@ class PainterPresenter extends GetxController {
   }
 
   void timerStart() {
-    timer = Timer.periodic(Duration(seconds: 1), (_) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
       timerSeconds--; update();
     });
   }

@@ -12,7 +12,7 @@ import 'package:fitween/global/unit.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/model/enum/sex.dart';
-import 'package:fitween/presenter/model/level.dart';
+import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/record.dart';
 import 'package:fitween/presenter/page/edit_goal.dart';
 import 'package:fitween/view/widget/button/button.dart';
@@ -263,7 +263,7 @@ class DistanceGoalView extends StatelessWidget {
         int minute = distance.minute.round();
         int kilometer = distance.kilometer.round();
 
-        Map<String, dynamic> tier = LevelPresenter.getTier(
+        Map<String, dynamic> tier = LevelJsonP.getTier(
           ActivityType.distance,
           distance,
         );
@@ -375,7 +375,7 @@ class HeightGoalView extends StatelessWidget {
           ActivityType.height,
         ) as HeightRecord;
 
-        Map<String, dynamic> tier = LevelPresenter.getTier(
+        Map<String, dynamic> tier = LevelJsonP.getTier(
           ActivityType.height, goal,
         );
 
@@ -464,12 +464,12 @@ class CalorieCheckView extends StatelessWidget {
           ActivityType.calorie,
         ) as CalorieRecord;
 
-        String distanceTitle = LevelPresenter.getTier(
+        String distanceTitle = LevelJsonP.getTier(
           ActivityType.distance,
           editGoalP.userRecord.getGoal(ActivityType.distance)!,
         )['current'].title;
 
-        String heightTitle = LevelPresenter.getTier(
+        String heightTitle = LevelJsonP.getTier(
           ActivityType.height,
           editGoalP.userRecord.getGoal(ActivityType.height)!,
         )['current'].title;

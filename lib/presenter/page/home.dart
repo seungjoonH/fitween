@@ -1,20 +1,10 @@
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
-import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gif/flutter_gif.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:fitween/model/enum/activity_type.dart';
-import 'package:fitween/model/enum/dialog.dart';
-import 'package:fitween/presenter/model/badge.dart';
-import 'package:fitween/presenter/page/edit_goal.dart';
 import 'package:fitween/presenter/widget/loading.dart';
-import 'package:fitween/presenter/model/user.dart';
-import 'package:fitween/view/widget/function/dialog.dart';
-import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeP extends GetxController {
@@ -24,21 +14,27 @@ class HomeP extends GetxController {
   static void toHome() => Get.offAllNamed('/home');
 
   static Future init() async {
-    final userRecordP = Get.find<UserRecordP>();
-    final userFriendP = Get.find<UserFriendP>();
+    final homeP = Get.find<HomeP>();
     final loadingP = Get.find<LoadingP>();
 
     loadingP.loadStart();
+    await homeP.loadAll();
+    loadingP.loadEnd();
+  }
+
+  Future loadAll() async {
+    final userRecordP = Get.find<UserRecordP>();
+    final userFriendP = Get.find<UserFriendP>();
+    final rankingP = Get.find<RankingP>();
 
     await userRecordP.load();
     userRecordP.clearRecords();
     if (!await userRecordP.fetchData()) await userRecordP.load();
     await userFriendP.load();
     await userFriendP.loadFriends();
-    RankingP.init();
+    await rankingP.loadAll();
 
-    loadingP.loadEnd();
-    userFriendP.update();
+    update();
   }
 
   int rotationIndex = 0;
@@ -130,7 +126,7 @@ class HomeP extends GetxController {
 //     if (!await userRecordP.fetchData()) await userRecordP.load();
 //     userRecordP.updateCalorie();
 //     await userFriendP.loadFriends();
-//     await BadgePresenter.synchronizeBadges();
+//     await BadgeJsonP.synchronizeBadges();
 //
 //     // loadingP.loadEnd();
 //

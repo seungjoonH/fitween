@@ -1,15 +1,14 @@
 /* 챌린지 디테일 위젯 */
 
+import 'package:fitween/presenter/page/contents/challenge/challenge_detail.dart';
+import 'package:fitween/presenter/page/contents/contents.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/json/challenge.dart';
-import 'package:fitween/presenter/page/challenge/create.dart';
-import 'package:fitween/presenter/page/challenge/main.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/text.dart';
-import 'package:fitween/view/widget/widget/card.dart';
 
 // 챌린지 디테일 리스트 뷰
 class ChallengeDetailView extends StatelessWidget {
@@ -22,14 +21,15 @@ class ChallengeDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final challengeMainP = Get.find<ChallengeMainP>();
+    final contentsP = Get.find<ContentsP>();
+    final challengeDetailP = Get.find<ChallengeDetailP>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
-          return Container(
-            height: 320,
+          return SizedBox(
+            height: 320.0,
             // color: Colors.amber,
             child: Column(
               children: [
@@ -72,8 +72,7 @@ class ChallengeDetailView extends StatelessWidget {
                       Row(
                         children: [
                           FButton(
-                            onPressed:
-                                challengeMainP.challengeJoinButtonPressed,
+                            onPressed: contentsP.challengeJoinButtonPressed,
                             stretch: true,
                             padding: EdgeInsets.symmetric(
                               horizontal: 20.0.w,
@@ -91,8 +90,8 @@ class ChallengeDetailView extends StatelessWidget {
                           ),
                           SizedBox(width: 20.0.w),
                           FButton(
-                            onPressed: () =>
-                                ChallengeCreateP.toChallengeCreate(challenge),
+                            onPressed: () => challengeDetailP
+                                .challengeCreateButtonPressed(challenge),
                             stretch: true,
                             padding: EdgeInsets.symmetric(
                               horizontal: 20.0.w,

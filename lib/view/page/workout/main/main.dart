@@ -46,14 +46,14 @@
 //   void dispose() {
 //     super.dispose();
 //
-//     final cameraP = Get.find<CameraPresenter>();
+//     final cameraP = Get.find<CameraP>();
 //     final workoutMain = Get.find<WorkoutMain>();
 //     workoutMain.init();
 //     cameraP.cameraController!.dispose();
 //   }
 //
 //   void initAsync() async {
-//     final cameraP = Get.find<CameraPresenter>();
+//     final cameraP = Get.find<CameraP>();
 //     await cameraP.init();
 //     await cameraP.cameraController!
 //         .startImageStream(createIsolate);
@@ -68,10 +68,10 @@
 //
 //     IsolateData isolateData = IsolateData(
 //       cameraImage: imageStream,
-//       interpreterAddress: CameraPresenter.classifier.interpreter.address,
+//       interpreterAddress: CameraP.classifier.interpreter.address,
 //     );
 //
-//     List inferenceList = await CameraPresenter
+//     List inferenceList = await CameraP
 //         .isolate.inference(isolateData);
 //
 //     inferences = {
@@ -84,7 +84,7 @@
 //
 //     if (!mounted) return;
 //
-//     switch (PainterPresenter.orientation) {
+//     switch (PainterP.orientation) {
 //       case Orientation.portrait:
 //         inferenceSize = Size(
 //           imageStream.width.toDouble(),
@@ -99,8 +99,8 @@
 //         break;
 //     }
 //
-//     widthRatio = PainterPresenter.canvasSize.width / inferenceSize.width;
-//     heightRatio = PainterPresenter.canvasSize.height / inferenceSize.height;
+//     widthRatio = PainterP.canvasSize.width / inferenceSize.width;
+//     heightRatio = PainterP.canvasSize.height / inferenceSize.height;
 //
 //     doPredict = false;
 //     handler.checkLimbs(Inference.refinedInferences);
@@ -116,11 +116,11 @@
 //   Widget build(BuildContext context) {
 //     if (inferences == null) return const Scaffold();
 //
-//     return GetBuilder<CameraPresenter>(
+//     return GetBuilder<CameraP>(
 //       builder: (cameraP) {
 //         return OrientationBuilder(
 //           builder: (context, orientation) {
-//             PainterPresenter.setOrientation(orientation);
+//             PainterP.setOrientation(orientation);
 //             return Scaffold(
 //               extendBodyBehindAppBar: true,
 //               appBar: FAppBar(
@@ -136,7 +136,7 @@
 //                 ],
 //                 color: Colors.transparent,
 //               ),
-//               body: GetBuilder<PainterPresenter>(
+//               body: GetBuilder<PainterP>(
 //                 builder: (painterP) {
 //                   return Column(
 //                     children: [

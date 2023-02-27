@@ -2,10 +2,8 @@ import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/enum/page_mode.dart';
-import 'package:fitween/presenter/model/badge.dart';
-import 'package:fitween/presenter/model/user.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/page/collection/main.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 
@@ -35,7 +33,7 @@ class CollectionMainView extends StatelessWidget {
             ),
           );
         }).toList()..addAll(
-          BadgePresenter.notAcquiredBadges.map((badge) => Center(
+          BadgeJsonP.notAcquiredBadges.map((badge) => Center(
             child: BadgeWidget(
               badge: badge,
               detail: true,

@@ -1,7 +1,7 @@
 import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/difficulty.dart';
-import 'package:fitween/presenter/model/badge.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
 
 class Challenge {
   /// static variables
@@ -55,7 +55,7 @@ class Challenge {
     descriptions = json['descriptions'];
     levels.forEach((string, level) {
       String id = level['collection'];
-      badges[Difficulty.toEnum(string)!] = BadgePresenter.getBadge(id)!;
+      badges[Difficulty.toEnum(string)!] = BadgeJsonP.getBadge(id)!;
     });
   }
 

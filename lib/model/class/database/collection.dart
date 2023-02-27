@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/model/class/json/badge.dart';
-import 'package:fitween/presenter/model/badge.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
 
 class Collection {
   /// attributes
@@ -26,7 +26,7 @@ class Collection {
   void fromJson(Map<String, dynamic> json) {
     dateList = json['dates'].cast<Timestamp>();
     badgeId = json['badgeId'];
-    badge = BadgePresenter.getBadge(badgeId!);
+    badge = BadgeJsonP.getBadge(badgeId!);
   }
 
   Map<String, dynamic> toJson() {

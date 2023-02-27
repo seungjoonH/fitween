@@ -7,7 +7,7 @@ import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/firebase/firebase.dart';
 import 'package:fitween/presenter/health/health.dart';
-import 'package:fitween/presenter/model/badge.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/record.dart';
 
 /// class
@@ -165,7 +165,7 @@ class UserRecordP extends GetxController {
     after = loggedUser.completedActivities().length;
 
     if (before != 3 && after == 3) {
-      BadgePresenter.awardDailyActivityCompleteBadge();
+      BadgeJsonP.awardDailyActivityCompleteBadge();
     }
     save();
   }
@@ -182,7 +182,7 @@ class UserRecordP extends GetxController {
     after = loggedUser.completedActivities().length;
 
     if (before != 3 && after == 3) {
-      BadgePresenter.awardDailyActivityCompleteBadge();
+      BadgeJsonP.awardDailyActivityCompleteBadge();
     }
     save();
   }

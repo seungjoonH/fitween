@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/string.dart';
 import 'package:fitween/global/unit.dart';
-import 'package:fitween/model/class/database/user.dart';
-import 'package:fitween/presenter/model/user.dart';
 
 /// class
 class MySettingEdit extends GetxController {

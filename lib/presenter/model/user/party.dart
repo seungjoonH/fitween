@@ -57,7 +57,7 @@ class UserPartyP extends GetxController {
 
   // 파이어베이스에서 삭제
   void delete() {
-    PartyPresenter.deleteMember(loggedUser.uid!);
+    PartyJsonP.deleteMember(loggedUser.uid!);
     collection.doc(loggedUser.uid).delete();
   }
 
@@ -76,8 +76,8 @@ class UserPartyP extends GetxController {
     });
 
     loggedUser.parties[code] = newParty;
-    await PartyPresenter.loadMembers(newParty);
-    PartyPresenter.save(newParty);
+    await PartyJsonP.loadMembers(newParty);
+    PartyJsonP.save(newParty);
 
     loggedUser.partyIds.add(newParty.id!);
     save();
@@ -88,15 +88,14 @@ class UserPartyP extends GetxController {
   }
 
   // 파이어베이스에서 나의 파티 리스트 로드
-  Future loadMyParties() async {
+  Future  loadMyParties() async {
     for (String id in loggedUser.partyIds) {
       var json = (await f.collection('parties').doc(id).get()).data();
       if (json == null) return;
       Party party = Party.fromJson(json);
-      await PartyPresenter.loadMembers(party);
+      await PartyJsonP.loadMembers(party);
       loggedUser.parties[json['id']] = party;
     }
-    print(loggedUser.parties);
     update();
   }
 

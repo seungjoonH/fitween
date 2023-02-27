@@ -16,8 +16,8 @@ import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/presenter/global.dart';
-import 'package:fitween/presenter/model/badge.dart';
-import 'package:fitween/presenter/model/quest.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
+import 'package:fitween/presenter/model/json/quest.dart';
 import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/card.dart';
@@ -49,14 +49,14 @@ class MonthlyQuestView extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         BadgeWidget(
-                          badge: BadgePresenter.getThisMonthQuestBadge(ActivityType.distance),
+                          badge: BadgeJsonP.getThisMonthQuestBadge(ActivityType.distance),
                           size: 60.0,
                         ),
                         BadgeWidget(
-                          badge: BadgePresenter.getThisMonthQuestBadge(ActivityType.calorie),
+                          badge: BadgeJsonP.getThisMonthQuestBadge(ActivityType.calorie),
                         ),
                         BadgeWidget(
-                          badge: BadgePresenter.getThisMonthQuestBadge(ActivityType.height),
+                          badge: BadgeJsonP.getThisMonthQuestBadge(ActivityType.height),
                           size: 60.0,
                         ),
                       ],
@@ -94,7 +94,7 @@ class MonthlyQuestView extends StatelessWidget {
                     children: ActivityType.activeValues.sublist(0, 3).map((type) {
                       FBadge? badge;
                       () async {
-                        badge = BadgePresenter.getBadge('1040${type.index}${
+                        badge = BadgeJsonP.getBadge('1040${type.index}${
                           (today.month - 1).toString().padLeft(2, '0')}'
                         );
                       }();
@@ -131,7 +131,7 @@ class QuestBadgePercentView extends StatelessWidget {
     FUserRecord userRecord = userRecordP.loggedUser;
 
     double record = userRecord.getThisMonthAmounts(type);
-    int goal = QuestPresenter.quests[type] ?? 1;
+    int goal = QuestJsonP.quests[type] ?? 1;
     if (type == ActivityType.weight) goal ~/= userWeight + 1;
     double percent = min(record / goal, 1);
 

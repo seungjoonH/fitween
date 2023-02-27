@@ -1,16 +1,12 @@
 import 'package:fitween/global/theme.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/class/database/user/friend.dart';
 import 'package:fitween/model/class/database/user/info.dart';
-import 'package:fitween/model/class/database/user/notification.dart';
 import 'package:fitween/model/enum/dialog.dart';
-import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
-import 'package:fitween/view/widget/widget/tab_scaffold.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
@@ -19,32 +15,35 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class FriendP extends GetxController {
   static void toFriend() => Get.offAllNamed('/friend');
 
-  static final refreshConts = [RefreshController(), RefreshController()];
-  static final nicknameCont = TextEditingController();
-  bool nicknameExist = true;
-  String? nicknameHintText;
-
-  bool editMode = false;
-
   static Future init() async {
     final friendP = Get.find<FriendP>();
-    final userFriendP = Get.find<UserFriendP>();
-    final userNotificationP = Get.find<UserNotificationP>();
     final loadingP = Get.find<LoadingP>();
 
     friendP.editMode = false;
 
     if (loadingP.loading) return;
     loadingP.loadStart();
+    await friendP.loadAll();
+    loadingP.loadEnd();
+  }
+
+  Future loadAll() async {
+    final userFriendP = Get.find<UserFriendP>();
+    final userNotificationP = Get.find<UserNotificationP>();
 
     await userFriendP.load();
     await userFriendP.loadFriends();
-
-    loadingP.loadEnd();
-
     userNotificationP.checkAllNotifications();
-    friendP.update();
+
+    update();
   }
+
+  static final refreshConts = [RefreshController(), RefreshController()];
+  static final nicknameCont = TextEditingController();
+  bool nicknameExist = true;
+  String? nicknameHintText;
+
+  bool editMode = false;
 
   void friendInteractButtonPressed(String uid) {
     (editMode ? deleteFriendButtonPressed : toggleRivalButtonPressed)(uid);

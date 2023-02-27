@@ -191,22 +191,22 @@ class FUserRecord {
   }
 
   // 입력된 금일 기록 반환
-  double getTodayInputAmounts(ActivityType activityType) {
-    double result = 0;
-    DateTime startDate = today;
-    DateTime endDate = oneSecondBefore(tomorrow);
-
-    inputRecords.forEach((type, recordList) {
-      if (activityType.name == type) {
-        for (var record in recordList) {
-          if (record['date'].toDate().isBefore(startDate)) continue;
-          if (record['date'].toDate().isAfter(endDate)) continue;
-          result += record['amount'].toDouble();
-        }
-      }
-    });
-    return result;
-  }
+  // double getTodayInputAmounts(ActivityType activityType) {
+  //   double result = 0;
+  //   DateTime startDate = today;
+  //   DateTime endDate = oneSecondBefore(tomorrow);
+  //
+  //   inputRecords.forEach((type, recordList) {
+  //     if (activityType.name == type) {
+  //       for (var record in recordList) {
+  //         if (record['date'].toDate().isBefore(startDate)) continue;
+  //         if (record['date'].toDate().isAfter(endDate)) continue;
+  //         result += record['amount'].toDouble();
+  //       }
+  //     }
+  //   });
+  //   return result;
+  // }
 
   LinkedHashMap<DateTime, List<CalendarEvent>> getEvents(
     DateTime startDate, DateTime endDate,

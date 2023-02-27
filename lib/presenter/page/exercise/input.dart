@@ -3,13 +3,9 @@ import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/number.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
-import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/model/record.dart';
-import 'package:fitween/presenter/model/user.dart';
-import 'package:fitween/presenter/page/home.dart';
 
 class ExerciseInput extends GetxController {
   /// static variables
@@ -47,7 +43,7 @@ class ExerciseInput extends GetxController {
     };
 
     Map<String, bool> conditions = {
-      '하루 할당량을 초과하였습니다': (user.getTodayInputAmounts(type) + (stringToNum(text) ?? 0)) > limit[type]!,
+      '하루 할당량을 초과하였습니다': (user.getAmounts(type) + (stringToNum(text) ?? 0)) > limit[type]!,
       '너무 많이 입력했습니다': (stringToNum(text) ?? 0) > limit[type]!,
       '숫자만 입력할 수 있습니다': int.tryParse(text) == null,
       '공백을 포함할 수 없습니다': text.contains(' '),

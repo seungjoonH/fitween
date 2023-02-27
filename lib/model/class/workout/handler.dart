@@ -54,7 +54,7 @@ class SquatHandler extends ExerciseHandler {
       Point pointB = ExerciseHandler.parts.points[p2]!;
       Point pointC = ExerciseHandler.parts.points[p3]!;
 
-      double angle = PainterPresenter.getAngle(pointA, pointB, pointC);
+      double angle = PainterP.getAngle(pointA, pointB, pointC);
 
       downed &= angleRanges[i].inRange(angle);
       isCorrect &= Parts.similar(pointB.x, pointC.x);

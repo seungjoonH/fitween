@@ -6,8 +6,8 @@ import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/class/json/challenge.dart';
 import 'package:fitween/model/enum/difficulty.dart';
-import 'package:fitween/presenter/model/badge.dart';
-import 'package:fitween/presenter/model/challenge.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
+import 'package:fitween/presenter/model/json/challenge.dart';
 
 class Party {
   /// attributes
@@ -32,7 +32,7 @@ class Party {
   set startDate(DateTime? date) => _startDate = toTimestamp(date);
   set endDate(DateTime? date) => _endDate = toTimestamp(date);
 
-  Challenge? get challenge => ChallengeP.getChallenge(challengeId);
+  Challenge? get challenge => ChallengeJsonP.getChallenge(challengeId);
   List<String> get memberUids => records.keys.toList();
 
   bool get over => today.isAfter(endDate!);
@@ -82,7 +82,7 @@ class Party {
   FUserInfo get winnerInfo => getMemberInfoByRank(1);
   FUserCollection get winnerCollection => getMemberCollectionByRank(1);
 
-  FBadge get badge => BadgePresenter.getBadge(level['collection'])!;
+  FBadge get badge => BadgeJsonP.getBadge(level['collection'])!;
 
   /// constructors
   Party();

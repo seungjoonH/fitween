@@ -13,7 +13,7 @@ import 'package:fitween/model/enum/workout.dart';
 import 'package:fitween/presenter/widget/painter.dart';
 
 class LimbPainter extends CustomPainter {
-  final painterP = Get.find<PainterPresenter>();
+  final painterP = Get.find<PainterP>();
 
   // COLOR PROFILES
 
@@ -93,23 +93,23 @@ class LimbPainter extends CustomPainter {
     //   RRect.fromRectAndRadius(
     //     Rect.fromCenter(
     //       center: Offset(
-    //         PainterPresenter.canvasSize.width * .5,
-    //         PainterPresenter.canvasSize.height * .5,
+    //         PainterP.canvasSize.width * .5,
+    //         PainterP.canvasSize.height * .5,
     //       ),
-    //       width: PainterPresenter.canvasSize.width * .5,
-    //       height: PainterPresenter.canvasSize.height * .6,
+    //       width: PainterP.canvasSize.width * .5,
+    //       height: PainterP.canvasSize.height * .6,
     //     ), const Radius.circular(40.0),
     //   ), area,
     // );
 
     bool isHuman = Parts(painterP.inferences).isHuman;
 
-    PainterPresenter.addHumanHistory(isHuman);
+    PainterP.addHumanHistory(isHuman);
 
     painterP.staging();
 
     if (!isHuman
-        || PainterPresenter.humanHistory < 0
+        || PainterP.humanHistory < 0
         || painterP.distance != WorkoutDistance.middle) return;
 
     painterP.inferences.forEach((part, inference) {

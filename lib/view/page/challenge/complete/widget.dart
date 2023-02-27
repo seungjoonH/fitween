@@ -1,12 +1,12 @@
 /* 챌린지 완료 위젯 */
 
+import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/presenter/global.dart';
-import 'package:fitween/presenter/page/challenge/party/main.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/effect/effect.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
@@ -24,7 +24,7 @@ class ChallengePartyCompleteView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final challengePartyMain = Get.find<ChallengePartyMainP>();
+    final partyP = Get.find<PartyP>();
 
     return Stack(
       alignment: Alignment.center,
@@ -108,7 +108,7 @@ class ChallengePartyCompleteView extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               padding: EdgeInsets.symmetric(horizontal: 36.0.w),
               child: PButton(
-                onPressed: challengePartyMain.complete,
+                onPressed: partyP.complete,
                 text: '보상 받기',
                 stretch: true,
               ),

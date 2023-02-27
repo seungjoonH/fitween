@@ -5,6 +5,7 @@ import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
+import 'package:fitween/presenter/widget/loading.dart';
 import 'package:get/get.dart';
 
 
@@ -12,9 +13,18 @@ class RankingP extends GetxController{
   static void toRanking(ActivityType type) {
     Get.toNamed('/ranking', arguments: type);
   }
-  static void init() {
+  static Future init() async {
     final rankingP = Get.find<RankingP>();
+    final loadingP = Get.find<LoadingP>();
+
+    if (loadingP.loading) return;
+    loadingP.loadStart();
     rankingP.loadRanking();
+    loadingP.loadEnd();
+  }
+
+  Future loadAll() async {
+    loadRanking();
   }
 
   final startDate = firstDayOfWeek(today);

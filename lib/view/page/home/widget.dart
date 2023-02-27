@@ -26,9 +26,9 @@ import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/border_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/global.dart';
-import 'package:fitween/presenter/model/badge.dart';
-import 'package:fitween/presenter/model/level.dart';
-import 'package:fitween/presenter/model/quest.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
+import 'package:fitween/presenter/model/json/level.dart';
+import 'package:fitween/presenter/model/json/quest.dart';
 import 'package:fitween/presenter/model/record.dart';
 import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/page/collection/main.dart';
@@ -58,41 +58,78 @@ class _RotateCarouselState extends State<RotateCarousel>
     super.initState();
   }
 
-  @override
-  void dispose() {
-    HomeP.gifCont.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   HomeP.gifCont.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final userRecordP = Get.find<UserRecordP>();
+
     return GetBuilder<HomeP>(
       builder: (homeP) {
+        ActivityType type = ActivityType.activeValues[homeP.rotationIndex];
+        double amount = userRecordP.loggedUser.getAmounts(type);
+        String amountString = '${amount.round()}';
+
+        if (type == ActivityType.distance) {
+          amountString = '${(amount / 1000).toStringAsFixed(1)}K';
+        }
+
         return Padding(
           padding: const EdgeInsets.only(top: 60.0),
           child: Stack(
             children: [
-              Image.asset(
-                homeP.pngAsset,
-                width: HomeP.screenSize.width * 1.3,
-                height: HomeP.screenSize.height * .4,
-                fit: BoxFit.fitHeight,
-              ),
-              if (homeP.gifAsset != null)
+              // onHorizontalDragEnd: (endDetails) {
+              //   double velocity = endDetails.velocity.pixelsPerSecond.dx;
+              //   if (velocity < -100) homeP.leftButtonPressed();
+              //   if (velocity > 100) homeP.rightButtonPressed();
+              // },
               Stack(
+                alignment: Alignment.center,
                 children: [
-                  GifImage(
-                    controller: HomeP.gifCont,
+                  Image.asset(
+                    homeP.pngAsset,
                     width: HomeP.screenSize.width * 1.3,
                     height: HomeP.screenSize.height * .4,
                     fit: BoxFit.fitHeight,
-                    image: AssetImage(homeP.gifAsset!),
                   ),
-                  Positioned.fill(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: FTheme.white.withOpacity(.09),
+                  if (homeP.gifAsset != null)
+                  Stack(
+                    children: [
+                      GifImage(
+                        controller: HomeP.gifCont,
+                        width: HomeP.screenSize.width * 1.3,
+                        height: HomeP.screenSize.height * .4,
+                        fit: BoxFit.fitHeight,
+                        image: AssetImage(homeP.gifAsset!),
                       ),
+                      Positioned.fill(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: FTheme.white.withOpacity(.09),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ) else Positioned(
+                    top: 150.0.h,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        FText(
+                          amountString,
+                          style: FTheme.largeText,
+                          color: FTheme.white,
+                        ),
+                        FText(
+                          type.unit,
+                          style: textTheme.displaySmall,
+                          color: FTheme.white,
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -102,8 +139,9 @@ class _RotateCarouselState extends State<RotateCarousel>
                 bottom: 150.0,
                 child: GestureDetector(
                   onTap: homeP.leftButtonPressed,
-                  child:
-                      SvgPicture.asset('assets/image/page/home/left_arrow.svg'),
+                  child: SvgPicture.asset(
+                    'assets/image/page/home/left_arrow.svg',
+                  ),
                 ),
               ),
               Positioned(
@@ -112,7 +150,8 @@ class _RotateCarouselState extends State<RotateCarousel>
                 child: GestureDetector(
                   onTap: homeP.rightButtonPressed,
                   child: SvgPicture.asset(
-                      'assets/image/page/home/right_arrow.svg'),
+                    'assets/image/page/home/right_arrow.svg',
+                  ),
                 ),
               ),
             ],

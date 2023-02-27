@@ -1,40 +1,22 @@
 /* 라우트 관련 */
-import 'package:fitween/presenter/page/record/main.dart';
 import 'package:fitween/view/page/calendar/main/main.dart';
-import 'package:fitween/view/page/challenge/create/create.dart';
-import 'package:fitween/view/page/challenge/main/main.dart';
 import 'package:fitween/view/page/challenge/detail/detail.dart';
-import 'package:fitween/view/page/challenge/complete/complete.dart';
-import 'package:fitween/view/page/challenge/main/widget.dart';
-import 'package:fitween/view/page/challenge/party/party.dart';
-import 'package:fitween/view/page/challenge/time_attack/time_attack_camera/time_attack_camera.dart';
-import 'package:fitween/view/page/challenge/time_attack/time_attack_friend/time_attack_friend.dart';
-import 'package:fitween/view/page/challenge/time_attack/time_attack_main/main.dart';
-import 'package:fitween/view/page/collection/main/main.dart';
-import 'package:fitween/view/page/developer_info/main.dart';
-import 'package:fitween/view/page/edit_goal/edit_goal.dart';
-import 'package:fitween/view/page/exercise/input/input.dart';
+import 'package:fitween/view/page/contents/contents.dart';
+import 'package:fitween/view/page/contents/party/party.dart';
+import 'package:fitween/view/page/contents/time_attack/camera/camera.dart';
+import 'package:fitween/view/page/contents/time_attack/friend/friend.dart';
+import 'package:fitween/view/page/contents/time_attack/main/main.dart';
 import 'package:fitween/view/page/friend/friend.dart';
 import 'package:fitween/view/page/home/home.dart';
 import 'package:fitween/view/page/login/login.dart';
-import 'package:fitween/view/page/my/record/record.dart';
-import 'package:fitween/view/page/my/setting/edit/edit.dart';
-import 'package:fitween/view/page/my/setting/main/main.dart';
 import 'package:fitween/view/page/onboarding/onboarding.dart';
-import 'package:fitween/view/page/quest/quest.dart';
 import 'package:fitween/view/page/ranking/ranking.dart';
-import 'package:fitween/view/page/record/detail/detail.dart';
-import 'package:fitween/view/page/record/main/main.dart';
 import 'package:fitween/view/page/register/register.dart';
-import 'package:fitween/view/page/my/main/my.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:fitween/view/page/release_note/main.dart';
-import 'package:fitween/view/page/workout/guide.dart';
-import 'package:fitween/view/page/workout/main/main.dart';
 
 /// class
-class PRoute {
+class FRoute {
   /// static variables
 // 화면 전환 트랜지션
   static const Transition transition = Transition.fadeIn;
@@ -52,42 +34,23 @@ class PRoute {
         '/register': const RegisterPage(),
         '/login': const LoginPage(),
         '/onboarding': const OnboardingPage(),
-        '/challengeMain': const ChallengeMainPage(),
-        '/challenge/timeAttack/friend': const TimeAttackFriendPage(),
-        '/challenge/timeAttack/main': const TimeAttackMainPage(),
-        '/challenge/timeAttack/camera': const TimeAttackCameraPage(),
-        // '/login': const LoginPage(),
-        // '/onboarding': const OnboardingPage(),
-        // '/exercise/input': ExerciseInputPage(),
-        // '/record/main': const RecordMainPage(),
-        // '/record/detail': const RecordDetailPage(),
-        '/challenge/main': const ChallengeMainPage(),
-        '/challenge/detail': const ChallengeDetailPage(),
-        '/challenge/create': const ChallengeCreatePage(),
-        // '/challenge/party/complete': const ChallengePartyCompletePage(),
-        '/challenge/party/main': const ChallengePartyMainPage(),
-        // '/collection/main': const CollectionMainPage(),
-        // '/my/main': const MyMainPage(),
-        // '/my/record/main': const MyRecordMainPage(),
-        // '/my/setting/main': const MySettingMainPage(),
-        // '/my/setting/edit': const MySettingEditPage(),
-        // '/quest': const QuestPage(),
-        // '/editGoal': const EditGoalPage(),
-        // '/releaseNote': const ReleaseNotePage(),
-        // '/developerInfo': const DeveloperInfoPage(),
-        // '/workout/main': const WorkoutMainPage(),
-        // '/workout/guide': const WorkoutGuidePage(),
+        '/contents': const ContentsPage(),
+        '/contents/challengeDetail': const ChallengeDetailPage(),
+        '/contents/party': const PartyPage(),
+        '/contents/timeAttackFriend': const TimeAttackFriendPage(),
+        '/contents/timeAttackReady': const TimeAttackReadyPage(),
+        '/contents/timeAttackCamera': const TimeAttackCameraPage(),
       };
 
   // 겟페이지 리스트
   static List<GetPage> get getPages => pages.entries.map((page) {
-        return GetPage(
-          name: page.key,
-          page: () => page.value,
-          transition: transition,
-          transitionDuration: page.key == '/challenge/detail'
-              ? const Duration(milliseconds: 500)
-              : duration,
-        );
-      }).toList();
+    return GetPage(
+      name: page.key,
+      page: () => page.value,
+      transition: transition,
+      transitionDuration: page.key == '/challenge/detail'
+          ? const Duration(milliseconds: 500)
+          : duration,
+    );
+  }).toList();
 }

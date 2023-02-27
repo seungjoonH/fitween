@@ -17,15 +17,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/string.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/model/enum/sex.dart';
 import 'package:fitween/presenter/firebase/auth/auth.dart';
-import 'package:fitween/presenter/model/badge.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/height.dart';
 import 'package:fitween/presenter/model/record.dart';
-import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/model/weight.dart';
 import 'package:fitween/view/page/register/widget.dart';
 import 'home.dart';
@@ -171,9 +169,9 @@ class RegisterP extends GetxController {
     HomeP.toHome();
     await AuthPresenter.storeLoginData(userInfoP.data);
     if (AuthPresenter.developerUids.contains(userInfoP.loggedUser.uid)) {
-      userCollectionP.awardBadge(BadgePresenter.getBadge('1999999')!, true);
+      userCollectionP.awardBadge(BadgeJsonP.getBadge('1999999')!, true);
     }
-    userCollectionP.awardBadge(BadgePresenter.getBadge('1000000')!, true);
+    userCollectionP.awardBadge(BadgeJsonP.getBadge('1000000')!, true);
 
     init();
   }

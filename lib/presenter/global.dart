@@ -7,17 +7,16 @@ import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/calendar.dart';
-import 'package:fitween/presenter/page/challenge/create.dart';
-import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera.dart';
-import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera_guide.dart';
-import 'package:fitween/presenter/page/challenge/time_attack/time_attack_friend.dart';
-import 'package:fitween/presenter/page/challenge/time_attack/time_attack_main.dart';
+import 'package:fitween/presenter/page/contents/challenge/challenge_detail.dart';
+import 'package:fitween/presenter/page/contents/contents.dart';
+import 'package:fitween/presenter/page/contents/time_attack/camera.dart';
+import 'package:fitween/presenter/page/contents/time_attack/friend.dart';
+import 'package:fitween/presenter/page/contents/time_attack/ready.dart';
 import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/presenter/page/ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:bottom_sheet_bar/bottom_sheet_bar.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/string.dart';
 import 'package:fitween/global/theme.dart';
@@ -32,13 +31,11 @@ import 'package:fitween/presenter/page/my/setting/edit.dart';
 import 'package:fitween/presenter/page/my/setting/main.dart';
 import 'package:fitween/presenter/widget/camera.dart';
 import 'package:fitween/presenter/widget/loading.dart';
-import 'package:fitween/presenter/model/badge.dart';
-import 'package:fitween/presenter/model/level.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
+import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/party.dart';
-import 'package:fitween/presenter/model/quest.dart';
-import 'package:fitween/presenter/model/challenge.dart';
-import 'package:fitween/presenter/page/challenge/main.dart';
-import 'package:fitween/presenter/page/challenge/party/main.dart';
+import 'package:fitween/presenter/model/json/quest.dart';
+import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/page/exercise/input.dart';
 import 'package:fitween/presenter/page/exercise/setting/detail.dart';
 import 'package:fitween/presenter/page/home.dart';
@@ -53,6 +50,8 @@ import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 
+import 'page/contents/challenge/party.dart';
+
 class GlobalP extends GetxController {
   static const String effectAsset =
       'assets/image/widget/dialog/badge_effect.png';
@@ -64,29 +63,18 @@ class GlobalP extends GetxController {
   void navigate(int index) async {
     switch (index) {
       case 0:
-        if (navIndex == index) {
-          await HomeP.init();
-        } else {
-          HomeP.toHome();
-        }
+        if (navIndex == index) { await HomeP.init(); }
+        else { HomeP.toHome(); }
         break;
       case 1:
-        if (navIndex == index) {
-          await FriendP.init();
-        } else {
-          FriendP.toFriend();
-        }
+        if (navIndex == index) { await FriendP.init(); }
+        else { FriendP.toFriend(); }
         break;
-      case 2:
-        ChallengeMainP.toChallengeMain();
-        break;
-      case 3:
-        AuthPresenter.fLogout();
-        break;
+      case 2: ContentsP.toContents(); break;
+      case 3: AuthPresenter.fLogout(); break;
     }
 
     navIndex = index;
-
     update();
   }
 
@@ -186,19 +174,13 @@ class GlobalP extends GetxController {
                 constraints: const BoxConstraints(maxHeight: 70.0),
                 child: SingleChildScrollView(
                   child: Column(
-                    children: collection.dateList
-                        .map(
-                          (date) => FText(
-                            dateToString('yyyy-MM-dd 획득!', date.toDate())!,
-                            color: date == collection.dateList.last
-                                ? FTheme.colorB
-                                : FTheme.black,
-                            bold: date == collection.dateList.last,
-                          ),
-                        )
-                        .toList()
-                        .reversed
-                        .toList(),
+                    children: collection.dateList.map((date) => FText(
+                        dateToString('yyyy-MM-dd 획득!', date.toDate())!,
+                        color: date == collection.dateList.last
+                            ? FTheme.colorB : FTheme.black,
+                        bold: date == collection.dateList.last,
+                      ),
+                    ).toList().reversed.toList(),
                   ),
                 ),
               ),
@@ -215,14 +197,12 @@ class GlobalP extends GetxController {
       ),
       type: isMainBadge ? DialogType.mono : DialogType.bi,
       leftText: isMainBadge ? null : '대표 컬렉션으로 설정',
-      leftPressed: isMainBadge
-          ? null
-          : (() async {
-              Get.back();
-              await Future.delayed(const Duration(milliseconds: 200));
-              final collectionMain = Get.find<CollectionMainP>();
-              collectionMain.setMainBadge(collection);
-            }),
+      leftPressed: isMainBadge ? null : (() async {
+        Get.back();
+        await Future.delayed(const Duration(milliseconds: 200));
+        final collectionMain = Get.find<CollectionMainP>();
+        collectionMain.setMainBadge(collection);
+      }),
       rightPressed: isMainBadge ? null : Get.back,
       onPressed: isMainBadge ? Get.back : null,
     );
@@ -316,7 +296,7 @@ class GlobalP extends GetxController {
 
   // 대표 컬렉션 설정 팝업
   static void showCollectionSettingDialog(String badgeId) {
-    FBadge? selectedBadge = BadgePresenter.getBadge(badgeId);
+    FBadge? selectedBadge = BadgeJsonP.getBadge(badgeId);
 
     showPDialog(
       title: '대표 컬렉션 변경',
@@ -359,45 +339,45 @@ class GlobalP extends GetxController {
     Get.put(UserPartyP());
     Get.put(UserRecordP());
 
-    Get.put(ChallengeP());
-    Get.put(BadgePresenter());
-    Get.put(LevelPresenter());
-    Get.put(QuestPresenter());
-    Get.put(PartyPresenter());
+    Get.put(ChallengeJsonP());
+    Get.put(BadgeJsonP());
+    Get.put(LevelJsonP());
+    Get.put(QuestJsonP());
+    Get.put(PartyJsonP());
 
     Get.put(OnboardingP());
     Get.put(RegisterP());
-    // Get.put(HomePresenter());
     Get.put(NotificationPresenter());
 
-    Get.put(ExerciseDetailSetting());
-    Get.put(ExerciseInput());
-    Get.put(RecordMain());
-    Get.put(QuestMain());
-    Get.put(MyMain());
-    Get.put(MyRecordMain());
-    Get.put(MySettingMain());
-    Get.put(MySettingEdit());
-
-    Get.put(ChallengeCreateP());
-    Get.put(ChallengePartyMainP());
-    Get.put(CollectionMainP());
-    Get.put(EditGoalP());
+    // Get.put(ExerciseDetailSetting());
+    // Get.put(ExerciseInput());
+    // Get.put(RecordMain());
+    // Get.put(QuestMain());
+    // Get.put(MyMain());
+    // Get.put(MyRecordMain());
+    // Get.put(MySettingMain());
+    // Get.put(MySettingEdit());
+    // Get.put(CollectionMainP());
+    // Get.put(EditGoalP());
 
     //Camera Presenter
-    Get.put(CameraPresenter());
-    Get.put(PainterPresenter());
+    Get.put(CameraP());
+    Get.put(PainterP());
 
+
+    Get.put(HomeP());
+    Get.put(RankingP());
     Get.put(CalendarP());
 
-    Get.put(GlobalP());
-    Get.put(HomeP());
     Get.put(FriendP());
-    Get.put(RankingP());
+
+    Get.put(ContentsP());
+
+    Get.put(ChallengeDetailP());
+    Get.put(PartyP());
 
     //챌린지 페이지 Presenter
-    Get.put(ChallengeMainP());
-    Get.put(TimeAttackMainP());
+    Get.put(TimeAttackReadyP());
     Get.put(TimeAttackFriendP());
     Get.put(TimeAttackCameraP());
   }
@@ -665,7 +645,7 @@ class GlobalP extends GetxController {
 //
 //   // 대표 컬렉션 설정 팝업
 //   static void showCollectionSettingDialog(String badgeId) {
-//     FBadge? selectedBadge = BadgePresenter.getBadge(badgeId);
+//     FBadge? selectedBadge = BadgeJsonP.getBadge(badgeId);
 //
 //     showPDialog(
 //       title: '대표 컬렉션 변경',

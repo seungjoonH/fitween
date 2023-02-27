@@ -3,7 +3,7 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/notification.dart';
-import 'package:fitween/presenter/model/badge.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/presenter/page/friend.dart';
@@ -147,7 +147,7 @@ class NotificationListTile extends StatelessWidget {
 
     return Row(
       children: [
-        FBadgeWidget(badge: BadgePresenter.getBadge(userData['badgeId'])),
+        FBadgeWidget(badge: BadgeJsonP.getBadge(userData['badgeId'])),
         const SizedBox(width: 10.0),
         Expanded(
           child: FText(
@@ -255,7 +255,7 @@ class FriendListTile extends StatelessWidget{
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
         children: [
-          FBadgeWidget(badge: BadgePresenter.getBadge(userCollection.badgeId)),
+          FBadgeWidget(badge: BadgeJsonP.getBadge(userCollection.badgeId)),
           const SizedBox(width: 10.0),
           Expanded(
             child: FText(

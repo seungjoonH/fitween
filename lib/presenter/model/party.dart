@@ -11,7 +11,7 @@ import 'package:fitween/presenter/firebase/firebase.dart';
 
 /// class
 // 파이어베이스 파티 관련
-class PartyPresenter extends GetxController {
+class PartyJsonP extends GetxController {
   final userPartyP = Get.find<UserPartyP>();
 
   List<Party> parties = [];
