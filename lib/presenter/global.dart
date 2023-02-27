@@ -8,6 +8,7 @@ import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/calendar.dart';
 import 'package:fitween/presenter/page/challenge/create.dart';
+import 'package:fitween/presenter/page/challenge/level.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_camera_guide.dart';
 import 'package:fitween/presenter/page/challenge/time_attack/time_attack_friend.dart';
@@ -421,6 +422,7 @@ class GlobalPresenter extends GetxController {
     Get.put(MySettingEdit());
 
     Get.put(ChallengeCreateP());
+    Get.put(ChallengeLevelP());
     Get.put(ChallengePartyMainP());
     Get.put(CollectionMainP());
     Get.put(EditGoalP());
