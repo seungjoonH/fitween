@@ -74,9 +74,7 @@ class ChallengeLevelPageView extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    print(1);
                     ChallengeLevelP.toChallengeLevel();
-                    print(2);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
