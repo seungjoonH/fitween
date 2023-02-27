@@ -52,7 +52,7 @@ dependencies:
   ntp: ^2.0.0
   super_banners: ^0.0.1
   native_exif: ^0.4.0
-#  webview_flutter: ^4.0.1
+  #  webview_flutter: ^4.0.1
   in_app_review: ^2.0.6
   path_provider: ^2.0.8
   camera: ^0.9.4+5
@@ -77,39 +77,29 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/model/lite-model_movenet_singlepose_lightning_3.tflite
-    - assets/image/logo/
-    - assets/image/level/distance/
-    - assets/image/level/height/
-    - assets/image/record/
-    - assets/image/record/height/
-    - assets/image/record/distance/
-    - assets/image/widget/bottom_bar/
-    - assets/image/widget/dialog/
-    - assets/image/challenge/default/
-    - assets/image/challenge/complete/
-    - assets/image/challenge/focus/
-    - assets/image/challenge/timeAttack/
-    - assets/image/challenge/timeAttack/button/
     - assets/image/badge/
-    - assets/image/page/login/
-    - assets/image/page/onboarding/
-    - assets/image/page/timer/
-    - assets/image/page/home/
-    - assets/image/page/home/rotation/
-    - assets/image/page/home/ranking/
-    - assets/image/page/input/
-    - assets/image/page/challenge/
-    - assets/image/page/edit_goal/
-    - assets/image/page/workout/
+    - assets/image/challenge/complete/
+    - assets/image/challenge/default/
+    - assets/image/challenge/focus/
     - assets/image/icon/selected/
     - assets/image/icon/unselected/
-    - assets/json/lottie/
+    - assets/image/level/distance/
+    - assets/image/level/height/
+    - assets/image/level/weight/
+    - assets/image/logo/
+    - assets/image/page/challenge/
+    - assets/image/page/contents/
+    - assets/image/page/edit_goal/
+    - assets/image/page/edit_goal/
+    - assets/image/page/home/
+    - assets/image/page/home/ranking/
+    - assets/image/page/home/rotation/
+    - assets/image/page/onboarding/
+    - assets/image/page/register/
+    - assets/image/widget/dialog/
     - assets/json/data/
     - assets/json/data/level/
-    - assets/image/page/register/
-    - assets/rive/input/
-    - assets/image/page/achievement/
+    - assets/model/lite-model_movenet_singlepose_lightning_3.tflite
 
   fonts:
     - family: BMJUA
