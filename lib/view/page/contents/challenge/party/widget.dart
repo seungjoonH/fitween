@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
+import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/widget/card.dart';
@@ -19,6 +20,7 @@ class PartyView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final refreshCont = RefreshController();
+    final userP = Get.find<UserPartyP>();
 
     return GetBuilder<PartyP>(
       builder: (partyP) {

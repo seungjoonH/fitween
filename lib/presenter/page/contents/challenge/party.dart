@@ -46,12 +46,7 @@ class PartyP extends GetxController {
   }
 
   Future loadAll(String id) async {
-    final userInfoP = Get.find<UserInfoP>();
     final userPartyP = Get.find<UserPartyP>();
-    final userRecordP = Get.find<UserRecordP>();
-
-    // FUserInfo userInfo = userInfoP.loggedUser;
-    // FUserRecord userRecord = userRecordP.loggedUser;
 
     loadedParty = await PartyJsonP.loadParty(id);
     if (loadedParty == null) return;
@@ -60,12 +55,6 @@ class PartyP extends GetxController {
 
     value = .0;
     update();
-    // maxValue = userRecord.getAmounts(
-    //   loadedParty!.challenge!.type!,
-    //   loadedParty!.startDate,
-    //   oneSecondBefore(tomorrow),
-    // ).toDouble();
-    // loadedParty!.records[userInfo.uid!] = maxValue.toInt();
     animateValue();
 
     PartyJsonP.save(loadedParty!);

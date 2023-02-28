@@ -260,8 +260,8 @@ class FTheme {
   static TextStyle largeText = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w700,
-    fontSize: 85.0.sp,
-    height: (64 / 85).h,
+    fontSize: 80.0.sp,
+    height: (64 / 80).h,
   );
 
   static TextTheme textTheme = const TextTheme(

@@ -43,7 +43,6 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
     final refreshCont = RefreshController();
     final userPartyP = Get.find<UserPartyP>();
     FUserParty user = userPartyP.loggedUser;
-    List<Party> parties = user.parties.values.toList();
 
     return SmartRefresher(
       controller: refreshCont,
@@ -66,6 +65,12 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
       ),
       child: GetBuilder<LoadingP>(
         builder: (loadingP) {
+          List<Party> parties = user.parties.values.toList();
+          List<Challenge> newChallenges = ChallengeJsonP
+              .orderedChallenges.where((challenge) => !parties
+              .map((party) => party.challengeId)
+              .contains(challenge.id)).toList();
+
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -139,19 +144,17 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: loadingP.loading ? 2 : ChallengeJsonP.orderedChallenges.length,
+                      itemCount: loadingP.loading ? 2 : newChallenges.length,
                       itemBuilder: (_, index) {
                         return InkWell(
-                          onTap: () {
-                            ChallengeDetailP.toChallengeDetail(
-                              ChallengeJsonP.orderedChallenges[index],
-                            );
-                          },
+                          onTap: () => ChallengeDetailP.toChallengeDetail(
+                            newChallenges[index],
+                          ),
                           child: loadingP.loading ? FCard(
                             constraints: const BoxConstraints(minHeight: 100.0),
                             child: const SizedBox(),
                           ) : ChallengeCard(
-                            challenge: ChallengeJsonP.orderedChallenges[index],
+                            challenge: newChallenges[index],
                           ),
                         );
                       },
@@ -293,9 +296,18 @@ class AchievementCardView extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FText(
-                          '${userInfo.nickname}님은 지금까지',
-                          style: textTheme.bodyLarge,
+                        Row(
+                          children: [
+                            FText(
+                              userInfo.nickname!,
+                              style: textTheme.bodyLarge,
+                              bold: true,
+                            ),
+                            FText(
+                              ' 님은 지금까지',
+                              style: textTheme.bodyLarge,
+                            ),
+                          ],
                         ),
                         Container(
                           padding: const EdgeInsets.all(4.0),

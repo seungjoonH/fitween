@@ -49,7 +49,9 @@ class _RotateCarouselState extends State<RotateCarousel>
         String amountString = '${amount.round()}';
 
         if (type == ActivityType.distance) {
-          amountString = '${(amount / 1000).toStringAsFixed(1)}K';
+          amountString = '${(amount / 1000).toStringAsFixed(
+            amount % 1000 < 100 ? 0 : 1
+          )}K';
         }
 
         return Padding(
