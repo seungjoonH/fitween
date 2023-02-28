@@ -24,7 +24,7 @@ class PartyP extends GetxController {
   /// static methods
   // 챌린지 파티 메인 페이지로 이동
   static void toParty(Party party) async {
-    Get.toNamed('contents/party/');
+    Get.toNamed('/contents/party');
     await PartyP.init(party.id!);
   }
 

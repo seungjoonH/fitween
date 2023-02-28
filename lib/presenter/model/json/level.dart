@@ -35,8 +35,8 @@ class LevelJsonP extends GetxController {
     }[type]);
 
     for (int i = 0; i < levelList.length - 1; i++) {
-      int current = levelList[i].amount!;
-      int next = levelList[i + 1].amount!;
+      double current = levelList[i].amount!;
+      double next = levelList[i + 1].amount!;
 
       if (record.amount >= current && record.amount < next) {
         result['current'] = levelList[i];

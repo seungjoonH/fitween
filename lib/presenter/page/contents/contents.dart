@@ -90,11 +90,7 @@ class ContentsP extends GetxController {
     Party? party = await PartyJsonP.loadParty(codeCont.text);
 
     if (party == null) return;
-    party.records[user.uid!] = user.getAmounts(
-      party.challenge!.type!,
-      party.startDate,
-      party.endDate,
-    );
+    party.memberUids.add(user.uid!);
 
     PartyJsonP.save(party);
     userPartyP.joinParty(codeCont.text);

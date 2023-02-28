@@ -1,3 +1,7 @@
+import 'dart:async';
+import 'dart:math';
+
+import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/model/class/database/user/info.dart';
@@ -189,11 +193,22 @@ class ChallengeCard extends StatelessWidget {
       borderRadius: const BorderRadius.horizontal(
         left: Radius.circular(12.0),
       ),
-      child: Image.asset(
-        challenge.imageUrls['default'],
-        width: 100.0,
-        height: 100.0,
-        fit: BoxFit.fitWidth,
+      child: Stack(
+        children: [
+          Container(
+            width: 100.0,
+            height: 100.0,
+            child: Image.asset(
+              challenge.imageUrls['default'],
+              fit: BoxFit.fitWidth,
+            ),
+          ),
+          Container(
+            width: 100.0,
+            height: 100.0,
+            color: FTheme.black.withOpacity(.2),
+          ),
+        ],
       ),
     );
 
@@ -205,7 +220,7 @@ class ChallengeCard extends StatelessWidget {
       child: Row(
         children: [
           isHero ? Hero(
-            tag: '${challenge.id}',
+            tag: challenge.id!,
             child: imageWidget,
           ) : imageWidget,
           Expanded(
@@ -292,111 +307,10 @@ class AchievementCardView extends StatelessWidget {
               child: FCard(
                 constraints: const BoxConstraints(minHeight: 440.0),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            FText(
-                              userInfo.nickname!,
-                              style: textTheme.bodyLarge,
-                              bold: true,
-                            ),
-                            FText(
-                              ' 님은 지금까지',
-                              style: textTheme.bodyLarge,
-                            ),
-                          ],
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            color: type.color,
-                            borderRadius: BorderRadius.circular(10.0.r),
-                          ),
-                          child: FText(
-                            tier['current']?.title ?? '',
-                            maxLines: 2,
-                            style: textTheme.displayMedium,
-                            color: FTheme.white,
-                            bold: true,
-                          ),
-                        ),
-                        FText(
-                          '만큼 ${type.did}!',
-                          style: textTheme.bodyLarge,
-                        ),
-                        const SizedBox(height: 8.0),
-                        Stack(
-                          alignment: Alignment.center,
-                          children: [
-                            Image.asset(
-                              'assets/image/page/contents/union.png',
-                              width: 300.0,
-                              fit: BoxFit.fitWidth,
-                            ),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  width: 100.0.w,
-                                  child: tier['current'] != null ? Image.asset(
-                                    'assets/image/level/${type.name}/${tier['current'].id}.png',
-                                    width: 40.0.w,
-                                  ) : Container(),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      FText(
-                                        '현재 진행도',
-                                        style: textTheme.bodyMedium,
-                                        color: FTheme.black,
-                                      ),
-                                      const SizedBox(height: 5.0),
-                                      LinearPercentIndicator(
-                                        padding: EdgeInsets.zero,
-                                        progressColor: type.color,
-                                        backgroundColor: FTheme.lightGrey,
-                                        // Colors.transparent,
-                                        percent: tier['percent'] ?? .0,
-                                        lineHeight: 48.0,
-                                        barRadius: Radius.circular(10.0.r),
-                                        animation: true,
-                                        animationDuration: 1000,
-                                        curve: Curves.easeInOut,
-                                      ),
-                                      FText(
-                                        '${tier['percent'].toInt()}%',
-                                        style: textTheme.bodyMedium,
-                                        color: type.color,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    if (!type.active)
-                    Positioned.fill(
-                      child: Stack(
-                        children: [
-                          Container(
-                            color: FTheme.surface,
-                            alignment: Alignment.center,
-                            child: Icon(Icons.lock, size: 30.0.r),
-                          ),
-                          Container(
-                            color: FTheme.black.withOpacity(.3),
-                          ),
-                        ],
-                      ),
-                    ),
+                    ProgressTextWidget(tier: tier, type: type, userInfo: userInfo),
+                    ProgressImageWidget(tier: tier, type: type),
                   ],
                 ),
               ),
@@ -407,6 +321,280 @@ class AchievementCardView extends StatelessWidget {
     );
   }
 }
+
+class ProgressTextWidget extends StatefulWidget {
+  const ProgressTextWidget({
+    Key? key,
+    required this.tier,
+    required this.type,
+    required this.userInfo,
+  }) : super(key: key);
+
+  final Map<String, dynamic> tier;
+  final ActivityType type;
+  final FUserInfo userInfo;
+
+  @override
+  State<ProgressTextWidget> createState() => _ProgressTextWidgetState();
+}
+
+class _ProgressTextWidgetState extends State<ProgressTextWidget> {
+  bool isText = true;
+  late Timer timer;
+  late String text;
+  late String amountString;
+
+  @override
+  void initState() {
+    final userRecordP = Get.find<UserRecordP>();
+    double amount = userRecordP.loggedUser.getAmounts(widget.type);
+
+    text = widget.tier['current']?.title ?? '';
+    if (text.length > 10) {
+      int len = text.length;
+      text = '${text.substring(0, len ~/ 2)}\n${text.substring(len ~/ 2, len)}';
+    }
+    amountString = '${toLocalString(amount ~/ 100 * 100)}${widget.type.unit}';
+
+    timer = Timer.periodic(const Duration(seconds: 5), (_) {
+      setState(() => isText = !isText);
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            FText(
+              widget.userInfo.nickname!,
+              style: textTheme.bodyLarge,
+              bold: true,
+            ),
+            FText(
+              ' 님은 지금까지',
+              style: textTheme.bodyLarge,
+            ),
+          ],
+        ),
+        GestureDetector(
+          onTap: () {
+            setState(() => isText = !isText); timer.cancel();
+            timer = Timer.periodic(const Duration(seconds: 5), (_) {
+              setState(() => isText = !isText);
+            });
+          },
+          child: Stack(
+            children: [
+              AnimatedOpacity(
+                opacity: isText ? .0 : 1.0,
+                duration: const Duration(milliseconds: 300),
+                child: Container(
+                  height: 55.0,
+                  padding: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    color: widget.type.color,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: FText(text,
+                    maxLines: text.contains('\n') ? 2 : 1,
+                    style: text.contains('\n')
+                        ? textTheme.titleSmall
+                        : textTheme.displaySmall,
+                    color: FTheme.white,
+                    bold: true,
+                  ),
+                ),
+              ),
+              AnimatedOpacity(
+                opacity: isText ? 1.0 : .0,
+                duration: const Duration(milliseconds: 300),
+                child: Container(
+                  height: 55.0,
+                  padding: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                    color: widget.type.color,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  child: FText(amountString,
+                    maxLines: 1,
+                    style: textTheme.displaySmall,
+                    color: FTheme.white,
+                    bold: true,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        FText(
+          '만큼 ${widget.type.did}!',
+          style: textTheme.bodyLarge,
+        ),
+        const SizedBox(height: 8.0)
+      ],
+    );
+  }
+}
+
+
+class ProgressImageWidget extends StatefulWidget {
+  const ProgressImageWidget({
+    Key? key,
+    required this.tier,
+    required this.type,
+  }) : super(key: key);
+
+  final Map<String, dynamic> tier;
+  final ActivityType type;
+
+  @override
+  State<ProgressImageWidget> createState() => _ProgressImageWidgetState();
+}
+
+class _ProgressImageWidgetState extends State<ProgressImageWidget> {
+  late bool visible;
+  late bool downed;
+  late double position;
+  late Timer timer;
+  late Duration duration;
+
+  @override
+  void initState() {
+    visible = false;
+    downed = true;
+    position = 160.0;
+    duration = const Duration(seconds: 1);
+    Future.delayed(Duration.zero, () => setState(() {
+      visible = true; position = 130.0;
+      duration = const Duration(milliseconds: 700);
+    }));
+    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        duration = const Duration(seconds: 1);
+        position = downed ? 135.0 : 130.0;
+        downed = !downed;
+      });
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  ExerciseUnit? get beforeUnit => {
+    ActivityType.distance: ExerciseUnit.kilometer,
+    ActivityType.weight: ExerciseUnit.count,
+  }[widget.type];
+
+  ExerciseUnit? get afterUnit => {
+    ActivityType.distance: ExerciseUnit.step,
+    ActivityType.weight: ExerciseUnit.count,
+  }[widget.type];
+
+  @override
+  Widget build(BuildContext context) {
+    final userRecordP = Get.find<UserRecordP>();
+    double amount = userRecordP.loggedUser.getAmounts(widget.type);
+
+    String id = widget.tier['current'].id;
+    double current = widget.tier['current'].amount;
+    double next = widget.tier['next'].amount;
+    double percent = widget.tier['percent'];
+
+    Record currentRecord = Record.init(widget.type, current, beforeUnit);
+    Record nextRecord = Record.init(widget.type, next, beforeUnit);
+
+    currentRecord.convert(afterUnit);
+    nextRecord.convert(afterUnit);
+
+    int displayAmount = (amount - currentRecord.amount).round();
+    int displayTotal = (nextRecord.amount - currentRecord.amount).round();
+
+    if (widget.type == ActivityType.distance) {
+      displayAmount = displayAmount > 1000 ? displayAmount ~/ 100 * 100 : displayAmount;
+      displayTotal = displayTotal > 1000 ? displayTotal ~/ 100 * 100 : displayTotal;
+    }
+
+    String amountString = toLocalString(displayAmount);
+    String totalString = toLocalString(displayTotal);
+    // String percentString = '${(percent * 100).round()}%';
+
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Image.asset(
+          'assets/image/page/contents/union.png',
+          fit: BoxFit.fitWidth,
+        ),
+        AnimatedPositioned(
+          bottom: position,
+          duration: duration,
+          curve: Curves.easeInOut,
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 200),
+            opacity: visible ? 1.0 : .0,
+            child: SizedBox(
+              width: 80.0.w,
+              child: widget.tier['current'] != null ? Image.asset(
+                'assets/image/level/${widget.type.name}/$id.png',
+                width: 40.0.w,
+              ) : Container(),
+            ),
+          ),
+        ),
+        Positioned(
+          bottom: 10.0,
+          child: Container(
+            width: 300.0,
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                FText(
+                  '다음 레벨까지',
+                  style: textTheme.bodyMedium,
+                  color: FTheme.black,
+                ),
+                const SizedBox(height: 5.0),
+                LinearPercentIndicator(
+                  padding: EdgeInsets.zero,
+                  progressColor: widget.type.color,
+                  backgroundColor: const Color(0xFFE9E9E9),
+                  percent: max(percent, .02),
+                  lineHeight: 48.0,
+                  barRadius: const Radius.circular(6.28),
+                  animation: true,
+                  animationDuration: 1000,
+                  curve: Curves.easeInOut,
+                ),
+                FText(
+                  '$amountString/$totalString ${widget.type.unit}',// $percentString',
+                  style: textTheme.bodyMedium,
+                  color: widget.type.color,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 
 class TimeAttackCardView extends StatelessWidget {
   const TimeAttackCardView({Key? key}) : super(key: key);

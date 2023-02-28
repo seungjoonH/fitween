@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/user/info.dart';
@@ -10,6 +12,7 @@ import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class RankingCardView extends StatelessWidget {
   const RankingCardView({
@@ -86,14 +89,6 @@ class RankingIndividualGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int leftFlex = amount.round();
-    int rightFlex = (maxAmount - amount).round();
-
-    if (amount == 0) {
-      leftFlex = 1;
-      rightFlex = 49;
-    }
-
     return Column(
       children: [
         Row(
@@ -128,25 +123,17 @@ class RankingIndividualGraph extends StatelessWidget {
         Stack(
           alignment: Alignment.centerLeft,
           children: [
-            Row(
-              children: [
-                Expanded(
-                  flex: leftFlex,
-                  child: Container(
-                    height: 36.0,
-                    decoration: BoxDecoration(
-                      color: isMe ? type.color : FTheme.lightGrey,
-                      borderRadius: const BorderRadius.horizontal(
-                        right: Radius.circular(8.0),
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  flex: rightFlex,
-                  child: const SizedBox(),
-                ),
-              ],
+            LinearPercentIndicator(
+              percent: max(amount / maxAmount, .02),
+              backgroundColor: Colors.transparent,
+              fillColor: Colors.transparent,
+              progressColor: isMe ? type.color : FTheme.lightGrey,
+              lineHeight: 36.0,
+              padding: EdgeInsets.zero,
+              barRadius: const Radius.circular(5.0),
+              animation: true,
+              curve: Curves.easeInOut,
+              animationDuration: 800,
             ),
             if (showText)
             Padding(

@@ -134,7 +134,7 @@ class ChallengeDetailView extends StatelessWidget {
     });
 
     return Hero(
-      tag: '${challenge.id}',
+      tag: challenge.id!,
       child: Image.asset(
         challenge.imageUrls['default'],
         height: 700.0,

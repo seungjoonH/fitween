@@ -2,7 +2,7 @@ class Level {
   /// attributes
   String? id;
   String? title;
-  int? amount;
+  double? amount;
   String? description;
   String? imageUrl;
   bool? activate;
@@ -18,7 +18,7 @@ class Level {
   void fromJson(Map<String, dynamic> json) {
     id = '${json['id']}';
     title = '${json['title']}';
-    amount = json['amount'];
+    amount = json['amount'].toDouble();
     description = json['description'];
     imageUrl = idToImageUrl(id!);
     activate = json['activate'];

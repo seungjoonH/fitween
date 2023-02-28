@@ -50,7 +50,7 @@ class FRoute {
       name: page.key,
       page: () => page.value,
       transition: transition,
-      transitionDuration: page.key == '/challenge/detail'
+      transitionDuration: page.key == '/contents/challengeDetail'
           ? const Duration(milliseconds: 500)
           : duration,
     );
