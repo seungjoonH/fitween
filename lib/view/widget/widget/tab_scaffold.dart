@@ -1,12 +1,8 @@
-import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
-import 'package:fitween/presenter/model/user/notification.dart';
-import 'package:fitween/view/page/friend/friend.dart';
 import 'package:fitween/view/widget/widget/bottom_bar.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class FTab extends StatelessWidget {
   const FTab(this.text, {
@@ -74,8 +70,7 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
             preferredSize: const Size.fromHeight(15.0),
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 30.0,
-                vertical: 10.0,
+                horizontal: 30.0, vertical: 10.0,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -103,6 +98,7 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
                           indicatorColor: FTheme.darkGrey,
                           indicatorWeight: 3.0,
                           onTap: (index) {
+                            if (widget.controlNotifications == null) return;
                             widget.controlNotifications!(index);
                             setState(() => _selectedIndex = index);
                           },
@@ -138,7 +134,9 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
         body: TabBarView(
           controller: tabCont,
           children: widget.bodies.map((body) => Padding(
-            padding: const EdgeInsets.all(30.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 30.0, vertical: 10.0,
+            ),
             child: body,
           )).toList(),
         ),

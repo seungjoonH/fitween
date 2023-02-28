@@ -59,20 +59,16 @@ class _FButtonState extends State<FButton> {
 
   @override
   void initState() {
-    onTapDown = widget.onPressed == null
-        ? null
-        : (_) {
-            setState(() => scale = .9);
-          };
-    onTapUp = widget.onPressed == null
-        ? null
-        : (_) async {
-            widget.onPressed!();
-            await Future.delayed(duration, () {
-              if (!mounted) return;
-              setState(() => scale = 1.0);
-            });
-          };
+    onTapDown = widget.onPressed == null ? null : (_) {
+      setState(() => scale = .9);
+    };
+    onTapUp = widget.onPressed == null ? null : (_) async {
+      await Future.delayed(duration, () {
+        if (!mounted) return;
+        setState(() => scale = 1.0);
+      });
+      widget.onPressed!();
+    };
     super.initState();
   }
 

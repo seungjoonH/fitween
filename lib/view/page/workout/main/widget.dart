@@ -19,7 +19,7 @@
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     return GetBuilder<CameraPresenter>(
+//     return GetBuilder<CameraP>(
 //       builder: (cameraP) {
 //         return GestureDetector(
 //           onScaleStart: (details) => cameraP.setInitZoom(),
@@ -45,13 +45,13 @@
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     return GetBuilder<PainterPresenter>(
+//     return GetBuilder<PainterP>(
 //       builder: (painterP) {
 //         return Positioned(
 //           bottom: 30.0.h,
 //           child: Container(
 //             alignment: Alignment.center,
-//             width: PainterPresenter.canvasSize.width * .8,
+//             width: PainterP.canvasSize.width * .8,
 //             height: 70.0.h,
 //             constraints: const BoxConstraints(maxWidth: 340.0),
 //             decoration: BoxDecoration(
@@ -99,7 +99,7 @@
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     return GetBuilder<PainterPresenter>(
+//     return GetBuilder<PainterP>(
 //       builder: (painterP) {
 //         return FText(
 //           painterP.stateText!,

@@ -1,7 +1,6 @@
 import 'dart:io' show Platform;
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/main.dart';
 import 'package:fitween/model/enum/login_type.dart';
@@ -35,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    // Size screenSize = MediaQuery.of(context).size;
     // const backgroundAsset = 'assets/image/page/login/background.svg';
 
     return Scaffold(

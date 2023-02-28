@@ -8,13 +8,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/string.dart';
 import 'package:fitween/global/theme.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/class/json/level.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
-import 'package:fitween/presenter/model/level.dart';
+import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/record.dart';
-import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/page/my/record/main.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:text_scroll/text_scroll.dart';
@@ -38,7 +36,7 @@ class MyRecordDetailView extends StatelessWidget {
     double amount = userRecord.getAmounts(type);
     Record record = Record.init(type, amount, ExerciseUnit.step);
 
-    Map<String, dynamic> tier = LevelPresenter.getTier(type, record);
+    Map<String, dynamic> tier = LevelJsonP.getTier(type, record);
     Level current = tier['current'];
     Level next = tier['next'];
 

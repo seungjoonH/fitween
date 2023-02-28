@@ -33,6 +33,16 @@ final tomorrow = today.add(const Duration(days: 1));
 DateTime oneSecondBefore(DateTime date) => date.subtract(const Duration(seconds: 1));
 DateTime nextDay(DateTime date) => oneSecondBefore(date.add(const Duration(days: 1)));
 
+DateTime firstDayOfMonth([DateTime? date]) {
+  date ??= today;
+  return DateTime(date.year, date.month, 1);
+}
+
+DateTime firstDayOfWeek([DateTime? date]) {
+  date ??= today;
+  return date.subtract(Duration(days: (date.weekday + 6) % 7));
+}
+
 bool isSameDate(DateTime date1, DateTime date2) {
   return date1.year == date2.year
       && date1.month == date2.month

@@ -21,7 +21,7 @@ class CollectionWidget extends StatelessWidget {
     this.size = 80.0,
     this.color = FTheme.lightGrey,
     this.border = true,
-  }) : onPressed = onPressed ?? (() => GlobalPresenter.showCollectionDialog(collection)),
+  }) : onPressed = onPressed ?? (() => GlobalP.showCollectionDialog(collection)),
         super(key: key);
 
   final Collection? collection;
@@ -138,7 +138,7 @@ class FBadgeWidget extends StatefulWidget {
     this.badge,
     this.size = 45.0,
     VoidCallback? onPressed,
-  }) : onPressed = onPressed ?? (() => GlobalPresenter.showBadgeDialog(badge)),
+  }) : onPressed = onPressed ?? (() => GlobalP.showBadgeDialog(badge)),
         super(key: key);
 
   final FBadge? badge;
@@ -162,10 +162,11 @@ class _FBadgeWidgetState extends State<FBadgeWidget> {
       setState(() => scale = .9);
     };
     onTapUp = widget.onPressed == null ? null : (_) async {
-      widget.onPressed!();
       await Future.delayed(duration, () {
+        if (!mounted) return;
         setState(() => scale = 1.0);
       });
+      widget.onPressed!();
     };
     super.initState();
   }
@@ -206,7 +207,7 @@ class BadgeWidget extends StatelessWidget {
     this.received = false,
     this.greyscale = false,
     this.lock = false,
-  }) : onPressed = onPressed ?? (() => GlobalPresenter.showBadgeDialog(badge)),
+  }) : onPressed = onPressed ?? (() => GlobalP.showBadgeDialog(badge)),
         super(key: key);
 
   final FBadge? badge;

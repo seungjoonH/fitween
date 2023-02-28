@@ -1,9 +1,10 @@
+import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/widget/text.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/border_type.dart';
+import 'package:get/get.dart';
 
 class PCard extends StatelessWidget {
   PCard({
@@ -96,6 +97,7 @@ class FCard extends StatefulWidget {
     required this.child,
     this.backgroundColor = FTheme.white,
     this.onPressed,
+    this.constraints,
     EdgeInsets? padding,
   })  : padding = padding ?? EdgeInsets.all(20.0.r),
         super(key: key);
@@ -105,6 +107,7 @@ class FCard extends StatefulWidget {
   final Widget child;
   final Color backgroundColor;
   final VoidCallback? onPressed;
+  final BoxConstraints? constraints;
   final EdgeInsets? padding;
 
   @override
@@ -116,23 +119,25 @@ class _FCardState extends State<FCard> {
   Function(TapUpDetails)? onTapUp;
 
   double scale = 1.0;
+  double opacity = .0;
   Duration duration = const Duration(milliseconds: 100);
 
   @override
   void initState() {
-    onTapDown = widget.onPressed == null
-        ? null
-        : (_) {
-            setState(() => scale = .9);
-          };
-    onTapUp = widget.onPressed == null
-        ? null
-        : (_) async {
-            widget.onPressed!();
-            await Future.delayed(duration, () {
-              setState(() => scale = 1.0);
-            });
-          };
+    onTapDown = widget.onPressed == null ? null : (_) {
+      setState(() {
+        scale = .9; opacity = .2;
+      });
+    };
+    onTapUp = widget.onPressed == null ? null : (_) async {
+      await Future.delayed(duration, () {
+        if (!mounted) return;
+        setState(() {
+          scale = 1.0; opacity = .0;
+        });
+      });
+      widget.onPressed!();
+    };
     super.initState();
   }
 
@@ -143,42 +148,51 @@ class _FCardState extends State<FCard> {
     return AnimatedScale(
       scale: scale,
       duration: duration,
-      child: GestureDetector(
-        onTapDown: onTapDown,
-        onTapUp: onTapUp,
-        child: Material(
-          borderRadius: radius,
-          color: widget.backgroundColor,
-          child: Container(
-            padding: widget.padding,
-            decoration: BoxDecoration(
-              borderRadius: radius,
+      child: GetBuilder<LoadingP>(
+        builder: (loadingP) {
+          return Material(
+            borderRadius: radius,
+            color: loadingP.setColor(widget.backgroundColor),
+            child: GestureDetector(
+              onTapDown: onTapDown,
+              onTapUp: onTapUp,
+              child: AnimatedContainer(
+                width: double.infinity,
+                padding: widget.padding,
+                decoration: BoxDecoration(
+                  borderRadius: radius,
+                ),
+                duration: duration,
+                constraints: widget.constraints,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (widget.title != null && !loadingP.loading)
+                    Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            FText(
+                              widget.title!,
+                              style: textTheme.titleMedium,
+                              color: FTheme.darkGrey,
+                              bold: true,
+                            ),
+                            if (widget.activateSeeMore)
+                            const Icon(Icons.arrow_forward_ios, color: FTheme.lightGrey),
+                          ],
+                        ),
+                        const SizedBox(height: 10.0),
+                      ],
+                    ),
+                    if (!loadingP.loading) widget.child,
+                  ],
+                ),
+              ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (widget.title != null)
-                  Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          FText(widget.title!,
-                              style: textTheme.titleLarge,
-                              color: FTheme.darkGrey),
-                          if (widget.activateSeeMore)
-                            const Icon(Icons.arrow_forward_ios,
-                                color: FTheme.lightGrey),
-                        ],
-                      ),
-                      const SizedBox(height: 10.0),
-                    ],
-                  ),
-                widget.child,
-              ],
-            ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

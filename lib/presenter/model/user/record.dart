@@ -7,7 +7,7 @@ import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/firebase/firebase.dart';
 import 'package:fitween/presenter/health/health.dart';
-import 'package:fitween/presenter/model/badge.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/record.dart';
 
 /// class
@@ -157,15 +157,15 @@ class UserRecordP extends GetxController {
       ) async {
     late int before, after;
 
-    before = loggedUser.completedActivities.length;
+    before = loggedUser.completedActivities().length;
 
     loggedUser.addRecord(type, today, record, true);
     updateCalorie();
 
-    after = loggedUser.completedActivities.length;
+    after = loggedUser.completedActivities().length;
 
     if (before != 3 && after == 3) {
-      BadgePresenter.awardDailyActivityCompleteBadge();
+      BadgeJsonP.awardDailyActivityCompleteBadge();
     }
     save();
   }
@@ -174,15 +174,15 @@ class UserRecordP extends GetxController {
   void setRecord(ActivityType type, Record record) async {
     late int before, after;
 
-    before = loggedUser.completedActivities.length;
+    before = loggedUser.completedActivities().length;
 
     loggedUser.setRecord(type, today, record);
     updateCalorie();
 
-    after = loggedUser.completedActivities.length;
+    after = loggedUser.completedActivities().length;
 
     if (before != 3 && after == 3) {
-      BadgePresenter.awardDailyActivityCompleteBadge();
+      BadgeJsonP.awardDailyActivityCompleteBadge();
     }
     save();
   }

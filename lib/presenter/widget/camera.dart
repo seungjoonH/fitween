@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:fitween/model/class/workout/classifier.dart';
 import 'package:fitween/model/class/workout/isolate.dart';
 
-class CameraPresenter extends GetxController {
+class CameraP extends GetxController {
   static List<CameraDescription>? descriptions;
   CameraController? cameraController;
   static late Classifier classifier;

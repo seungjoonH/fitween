@@ -73,7 +73,7 @@ class UserCollectionP extends GetxController {
   void setMainBadge(String badgeId, [bool showDialog = true]) {
     loggedUser.badgeId = badgeId;
     if (!showDialog) return;
-    GlobalPresenter.showCollectionSettingDialog(badgeId);
+    GlobalP.showCollectionSettingDialog(badgeId);
     save(); update();
   }
 
@@ -96,12 +96,12 @@ class UserCollectionP extends GetxController {
         if (!aDay && awarded) return;
       }
 
-      GlobalPresenter.showAwardedBadgeDialog(badge);
+      GlobalP.showAwardedBadgeDialog(badge);
       collection.addDate(now);
       return;
     }
 
-    GlobalPresenter.showAwardedBadgeDialog(badge, true);
+    GlobalP.showAwardedBadgeDialog(badge, true);
     if (badge.id == '1000000') setMainBadge(badge.id!, false);
     if (badge.id == '1999999') setMainBadge(badge.id!, false);
 

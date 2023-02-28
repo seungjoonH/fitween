@@ -39,7 +39,7 @@
 //
 //   // 파이어베이스에서 삭제
 //   void delete() {
-//     PartyPresenter.deleteMember(loggedUser.uid!);
+//     PartyP.deleteMember(loggedUser.uid!);
 //     f.collection('users').doc(loggedUser.uid).delete();
 //   }
 // }
@@ -125,7 +125,7 @@
 //
 //   // 파이어베이스에서 삭제
 //   void delete() {
-//     PartyPresenter.deleteMember(loggedUser.uid!);
+//     PartyP.deleteMember(loggedUser.uid!);
 //     f.collection('users').doc(loggedUser.uid).delete();
 //   }
 //
@@ -144,8 +144,8 @@
 //     });
 //
 //     loggedUser.parties[code] = newParty;
-//     await PartyPresenter.loadMembers(newParty);
-//     PartyPresenter.save(newParty);
+//     await PartyP.loadMembers(newParty);
+//     PartyP.save(newParty);
 //
 //     loggedUser.partyIds.add(newParty.id!);
 //     save();
@@ -161,7 +161,7 @@
 //       var json = (await f.collection('parties').doc(id).get()).data();
 //       if (json == null) return;
 //       Party party = Party.fromJson(json);
-//       await PartyPresenter.loadMembers(party);
+//       await PartyP.loadMembers(party);
 //       loggedUser.parties[json['id']] = party;
 //     }
 //     update();
@@ -305,7 +305,7 @@
 //     after = loggedUser.completedActivities.length;
 //
 //     if (before != 3 && after == 3) {
-//       BadgePresenter.awardDailyActivityCompleteBadge();
+//       BadgeJsonP.awardDailyActivityCompleteBadge();
 //     }
 //     save();
 //   }
@@ -322,7 +322,7 @@
 //     after = loggedUser.completedActivities.length;
 //
 //     if (before != 3 && after == 3) {
-//       BadgePresenter.awardDailyActivityCompleteBadge();
+//       BadgeJsonP.awardDailyActivityCompleteBadge();
 //     }
 //     save();
 //   }

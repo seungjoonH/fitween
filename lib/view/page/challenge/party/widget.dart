@@ -5,7 +5,6 @@ import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/presenter/model/user/info.dart';
-import 'package:fitween/presenter/model/user/party.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,16 +12,15 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/presenter/global.dart';
-import 'package:fitween/presenter/page/challenge/party/complete.dart';
-import 'package:fitween/presenter/page/challenge/party/main.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/effect/effect.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
-import '../../../../presenter/model/badge.dart';
+import '../../../../presenter/model/json/party.dart';
+import '../../../../presenter/page/challenge/main.dart';
+import '../../../../presenter/page/contents/challenge/party.dart';
 import '../../../widget/widget/card.dart';
 
 class PartyMainView extends StatelessWidget {
@@ -35,7 +33,7 @@ class PartyMainView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ChallengePartyMainP>(
+    return GetBuilder<ChallengeMainP>(
       builder: (challengePartyMain) {
         return
             // GetBuilder<LoadingP>(
@@ -206,7 +204,7 @@ class ChallengeScoreCard extends StatelessWidget {
                 style: textTheme.bodyLarge,
               ),
               SizedBox(height: 12.0.h),
-              GetBuilder<ChallengePartyMainP>(
+              GetBuilder<PartyP>(
                 builder: (controller) {
                   return Material(
                     color: FTheme.grey,
@@ -599,7 +597,7 @@ class MyScoreWidget extends StatelessWidget {
           SizedBox(height: 30.0.h),
           SizedBox(
             height: 70.0.h,
-            child: GetBuilder<ChallengePartyMainP>(builder: (controller) {
+            child: GetBuilder<PartyP>(builder: (controller) {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -687,7 +685,7 @@ class RankWidget extends StatelessWidget {
                         EternalRotation(
                           rps: .3,
                           child: Image.asset(
-                            GlobalPresenter.effectAsset,
+                            GlobalP.effectAsset,
                             width: 120.0.r,
                             height: 120.0.r,
                           ),
@@ -743,10 +741,10 @@ class RankWidget extends StatelessWidget {
                 ),
                 child: Row(
                   children: party.memberInfos.map((user) {
-                    double record = party.records[user.uid].toDouble();
-                    double percent = 100 * record / goal;
+                    double? record = party.records[user.uid];
+                    double percent = 100 * record! / goal;
                     return Expanded(
-                      flex: max(party.records[user.uid!], 1),
+                      flex: max(party.records[user.uid!] as int, 1),
                       child: Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
@@ -856,7 +854,7 @@ class ChallengeBadgeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     FUserInfo user = Get.find<UserInfoP>().loggedUser;
 
-    return GetBuilder<ChallengePartyMainP>(builder: (controller) {
+    return GetBuilder<PartyP>(builder: (controller) {
       return Center(
         child: Padding(
           padding: EdgeInsets.all(20.0.r),
@@ -875,7 +873,7 @@ class ChallengeBadgeWidget extends StatelessWidget {
                               EternalRotation(
                                 rps: .3,
                                 child: Image.asset(
-                                  GlobalPresenter.effectAsset,
+                                  GlobalP.effectAsset,
                                 ),
                               ),
                             BadgeWidget(

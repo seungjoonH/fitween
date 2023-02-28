@@ -8,13 +8,12 @@ import 'package:get/get.dart';
 import 'package:numberpicker/numberpicker.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
-import 'package:fitween/global/string.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/global/unit.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/model/enum/sex.dart';
-import 'package:fitween/presenter/model/level.dart';
+import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/record.dart';
 import 'package:fitween/presenter/page/register.dart';
 import 'package:fitween/view/widget/button/button.dart';
@@ -540,7 +539,7 @@ class DistanceGoalView extends StatelessWidget {
         int minute = distance.minute.round();
         int kilometer = distance.kilometer.round();
 
-        Map<String, dynamic> tier = LevelPresenter.getTier(
+        Map<String, dynamic> tier = LevelJsonP.getTier(
           ActivityType.distance, distance,
         );
 
@@ -658,7 +657,7 @@ class HeightGoalView extends StatelessWidget {
           ActivityType.height,
         ) as HeightRecord;
 
-        Map<String, dynamic> tier = LevelPresenter.getTier(
+        Map<String, dynamic> tier = LevelJsonP.getTier(
           ActivityType.height, goal,
         );
 
@@ -774,7 +773,7 @@ class WeightGoalView extends StatelessWidget {
           ActivityType.weight,
         ) as WeightRecord;
 
-        Map<String, dynamic> tier = LevelPresenter.getTier(
+        Map<String, dynamic> tier = LevelJsonP.getTier(
           ActivityType.weight, goal,
         );
 
@@ -864,12 +863,12 @@ class CalorieCheckView extends StatelessWidget {
           ActivityType.calorie,
         ) as CalorieRecord;
 
-        String distanceTitle = LevelPresenter.getTier(
+        String distanceTitle = LevelJsonP.getTier(
           ActivityType.distance,
           registerP.newcomerRecord.getGoal(ActivityType.distance)!,
         )['current'].title;
 
-        String heightTitle = LevelPresenter.getTier(
+        String heightTitle = LevelJsonP.getTier(
           ActivityType.height,
           registerP.newcomerRecord.getGoal(ActivityType.height)!,
         )['current'].title;
@@ -954,7 +953,7 @@ class CarouselButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<RegisterP>(
       builder: (controller) {
-        bool lastPage = controller.pageIndex == CarouselView.widgetCount - 1;
+        // bool lastPage = controller.pageIndex == CarouselView.widgetCount - 1;
 
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -971,33 +970,33 @@ class CarouselButton extends StatelessWidget {
             stretch: true,
           ),
         );
-        return Row(
-          children: [
-            PButton(
-              onPressed: controller.backPressed,
-              text: '이전',
-              textColor: Colors.black,
-              backgroundColor: Colors.white,
-              padding: const EdgeInsets.all(15.0),
-              stretch: true,
-              multiple: true,
-            ),
-            PButton(
-              onPressed: () async {
-                if (controller.keyboardVisible) {
-                  FocusScope.of(context).unfocus();
-                  await Future.delayed(const Duration(milliseconds: 100));
-                }
-                controller.nextPressed();
-              },
-              text: lastPage ? '완료' : '다음',
-              backgroundColor: Colors.black,
-              padding: const EdgeInsets.all(15.0),
-              stretch: true,
-              multiple: true,
-            ),
-          ],
-        );
+        // return Row(
+        //   children: [
+        //     PButton(
+        //       onPressed: controller.backPressed,
+        //       text: '이전',
+        //       textColor: Colors.black,
+        //       backgroundColor: Colors.white,
+        //       padding: const EdgeInsets.all(15.0),
+        //       stretch: true,
+        //       multiple: true,
+        //     ),
+        //     PButton(
+        //       onPressed: () async {
+        //         if (controller.keyboardVisible) {
+        //           FocusScope.of(context).unfocus();
+        //           await Future.delayed(const Duration(milliseconds: 100));
+        //         }
+        //         controller.nextPressed();
+        //       },
+        //       text: lastPage ? '완료' : '다음',
+        //       backgroundColor: Colors.black,
+        //       padding: const EdgeInsets.all(15.0),
+        //       stretch: true,
+        //       multiple: true,
+        //     ),
+        //   ],
+        // );
       },
     );
   }

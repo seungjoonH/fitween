@@ -4,8 +4,7 @@ import 'package:fitween/presenter/model/user/info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
-import 'package:fitween/presenter/model/badge.dart';
-import 'package:fitween/presenter/model/user.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/page/collection/main.dart';
 import 'package:fitween/presenter/page/my/setting/edit.dart';
 import 'package:fitween/presenter/page/my/setting/main.dart';
@@ -50,7 +49,7 @@ class _MyProfileUpdateButtonWidgetState extends State<MyProfileUpdateButtonWidge
 
     return Column(
       children: [
-        BadgeWidget(badge: BadgePresenter.getBadge(badgeId), size: 100.0),
+        BadgeWidget(badge: BadgeJsonP.getBadge(badgeId), size: 100.0),
         const SizedBox(height: 10.0),
         FTextButton(
           text: '뱃지 변경',

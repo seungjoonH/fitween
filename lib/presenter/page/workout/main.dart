@@ -18,7 +18,7 @@
 //   void countUp() => count++;
 //
 //   void init() {
-//     final painterP = Get.find<PainterPresenter>();
+//     final painterP = Get.find<PainterP>();
 //     count = 0;
 //     painterP.initWorkout();
 //   }

@@ -4,17 +4,13 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/presenter/model/user/info.dart';
-import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
-import 'package:fitween/presenter/page/challenge/time_attack/time_attack_main.dart';
-import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/view/widget/widget/tab_scaffold.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -22,33 +18,20 @@ import '../../../../model/class/database/user/record.dart';
 import '../../../../model/class/json/level.dart';
 import '../../../../model/enum/activity_type.dart';
 import '../../../../model/enum/unit.dart';
-import '../../../../presenter/model/level.dart';
+import '../../../../presenter/model/json/challenge.dart';
+import '../../../../presenter/model/json/level.dart';
+import '../../../../presenter/model/json/party.dart';
 import '../../../../presenter/model/record.dart';
-import '../../../../presenter/page/challenge/time_attack/time_attack_friend.dart';
-
 import 'dart:math';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:fitween/global/date.dart';
-import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/party.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/class/json/challenge.dart';
 import 'package:fitween/model/enum/border_type.dart';
 import 'package:fitween/model/enum/difficulty.dart';
-import 'package:fitween/presenter/widget/loading.dart';
-import 'package:fitween/presenter/model/challenge.dart';
-import 'package:fitween/presenter/model/user.dart';
-import 'package:fitween/presenter/page/challenge/detail.dart';
-import 'package:fitween/presenter/page/challenge/main.dart';
-import 'package:fitween/presenter/page/challenge/party/main.dart';
-import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
-import 'package:fitween/view/widget/widget/text.dart';
-import 'package:fitween/view/widget/widget/card.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import '../../../../presenter/page/contents/challenge/challenge_detail.dart';
+import '../../../../presenter/page/contents/challenge/party.dart';
+import '../../../../presenter/page/contents/time_attack/friend.dart';
 
 class FTab extends StatelessWidget {
   const FTab(
@@ -114,65 +97,6 @@ class ChallengeMainPageView extends StatelessWidget {
           ],
         ))
       ],
-    );
-  }
-}
-
-class ChallengeMainView extends StatelessWidget {
-  const ChallengeMainView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: const [
-        ChallengeTabBar(),
-        ChallengeTabView(),
-      ],
-    );
-  }
-}
-
-class ChallengeTabBar extends StatelessWidget {
-  const ChallengeTabBar({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final challengeMain = Get.find<ChallengeMain>();
-
-    // return GetBuilder<LoadingP>(builder: (controller) {
-    return TabBar(
-      controller: challengeMain.tabCont,
-      tabs: challengeMain.tabs,
-      indicatorColor: FTheme.black,
-      indicatorSize: TabBarIndicatorSize.label,
-      indicatorWeight: 1.5,
-      labelPadding: const EdgeInsets.all(5.0),
-      splashFactory: InkRipple.splashFactory,
-      onTap: (index) {
-        // if (controller.loading)
-        challengeMain.tabCont.animateTo(0);
-      },
-    );
-    // });
-  }
-}
-
-class ChallengeTabView extends StatelessWidget {
-  const ChallengeTabView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<ChallengeMain>();
-
-    return Expanded(
-      child: TabBarView(
-        controller: controller.tabCont,
-        physics: const NeverScrollableScrollPhysics(),
-        children: const [
-          ChallengeListView(),
-          MyPartyListView(),
-        ],
-      ),
     );
   }
 }
@@ -289,17 +213,17 @@ class ChallengeCardView extends StatelessWidget {
           ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: ChallengeP.orderedChallenges.length,
+            itemCount: ChallengeJsonP.orderedChallenges.length,
             itemBuilder: (_, index) {
               return userPartyP.alreadyJoinedChallenge(
-                      ChallengeP.orderedChallenges[index].id!)
+                  ChallengeJsonP.orderedChallenges[index].id!)
                   ? Container()
                   : ChallengeCard(
-                      challenge: ChallengeP.orderedChallenges[index],
+                      challenge: ChallengeJsonP.orderedChallenges[index],
                     );
             },
             separatorBuilder: (_, index) => userPartyP.alreadyJoinedChallenge(
-                    ChallengeP.orderedChallenges[index].id!)
+                ChallengeJsonP.orderedChallenges[index].id!)
                 ? const SizedBox(height: 0.0)
                 : SizedBox(height: 30.0.h),
           ),
@@ -326,7 +250,7 @@ class ChallengeCard extends StatelessWidget {
     return challenge.locked
         ? Container()
         : InkWell(
-            onTap: () => ChallengeDetail.toChallengeDetail(challenge),
+            onTap: () => ChallengeDetailP.toChallengeDetail(challenge),
             child: FCard(
               backgroundColor: FTheme.white,
               padding: const EdgeInsets.all(0.0),
@@ -450,9 +374,9 @@ class MyPartyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Challenge? challenge = ChallengeP.getChallenge(party.challengeId!);
+    Challenge? challenge = ChallengeJsonP.getChallenge(party.challengeId!);
     return InkWell(
-      onTap: () => ChallengePartyMainP.toChallengePartyMain(party),
+      onTap: () => PartyP.toParty(party),
       child: FCard(
         backgroundColor: FTheme.white,
         padding: const EdgeInsets.all(0.0),
@@ -638,114 +562,6 @@ class ChallengeCardLoading extends StatelessWidget {
   }
 }
 
-class MyPartyListView extends StatelessWidget {
-  const MyPartyListView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final userP = Get.find<UserPartyP>();
-    FUserParty user = userP.loggedUser;
-
-    return Stack(
-      children: [
-        if (user.parties.isEmpty)
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: PCard(
-                color: FTheme.surface,
-                padding: EdgeInsets.zero,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 30.0.w,
-                        vertical: 150.0.h,
-                      ),
-                      child: FText(
-                        '챌린지가 없습니다',
-                        style: textTheme.displaySmall,
-                      ),
-                    ),
-                    const Divider(
-                      color: FTheme.black,
-                      thickness: 1.5,
-                      height: 0.0,
-                    ),
-                    GetBuilder<ChallengeMain>(
-                      builder: (controller) {
-                        return Row(
-                          children: [
-                            PButton(
-                              text: '챌린지 살펴보기',
-                              onPressed: () => controller.tabCont.index = 0,
-                              stretch: true,
-                              fill: false,
-                              multiple: true,
-                              border: false,
-                            ),
-                            PButton(
-                              text: '챌린지 참여하기',
-                              onPressed: controller.challengeJoinButtonPressed,
-                              stretch: true,
-                              multiple: true,
-                              border: false,
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-        else
-          Padding(
-            padding: EdgeInsets.all(20.0.h),
-            child: Column(
-              children: [
-                ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: user.parties.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (_, index) => MyPartyListTile(
-                    party: user.parties.values.toList()[index],
-                  ),
-                  separatorBuilder: (_, index) => SizedBox(height: 20.0.h),
-                ),
-                SizedBox(height: 20.0.h),
-                GetBuilder<ChallengeMain>(
-                  builder: (controller) {
-                    return Row(
-                      children: [
-                        PButton(
-                          text: '챌린지 살펴보기',
-                          onPressed: () => controller.tabCont.index = 0,
-                          stretch: true,
-                          fill: false,
-                          multiple: true,
-                        ),
-                        SizedBox(width: 20.0.w),
-                        PButton(
-                          text: '챌린지 참여하기',
-                          onPressed: controller.challengeJoinButtonPressed,
-                          stretch: true,
-                          multiple: true,
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              ],
-            ),
-          ),
-      ],
-    );
-  }
-}
-
 class MyPartyListTile extends StatelessWidget {
   const MyPartyListTile({
     Key? key,
@@ -765,7 +581,7 @@ class MyPartyListTile extends StatelessWidget {
         Material(
           color: Colors.transparent,
           child: InkWell(
-            onTap: () => ChallengePartyMainP.toChallengePartyMain(party),
+            onTap: () => PartyP.toParty(party),
             child: Container(
               height: 80.0.h,
               decoration: BoxDecoration(
@@ -888,7 +704,7 @@ class AchievementCardView extends StatelessWidget {
           double amount = loggedUser.getAmounts(type);
           Record record = Record.init(type, amount, ExerciseUnit.step);
 
-          Map<String, dynamic> tier = LevelPresenter.getTier(type, record);
+          Map<String, dynamic> tier = LevelJsonP.getTier(type, record);
           Level next = tier['next'] ?? Level.fromJson({'amount': 0});
 
           Record nextValue = Record.init(
@@ -1136,7 +952,7 @@ class AchievementCard extends StatelessWidget {
                   userP.alreadyJoinedChallenge(challenge.id!)
                       ? PButton(
                           onPressed: () =>
-                              ChallengePartyMainP.toChallengePartyMain(
+                              PartyP.toParty(
                                   userP.getPartyByChallengeId(challenge.id!)!),
                           text: '챌린지 이동하기',
                           stretch: true,
@@ -1144,7 +960,7 @@ class AchievementCard extends StatelessWidget {
                         )
                       : PButton(
                           onPressed: () =>
-                              ChallengeDetail.toChallengeDetail(challenge),
+                              ChallengeDetailP.toChallengeDetail(challenge),
                           text: '알아보러 가기',
                           stretch: true,
                           height: 50.0,

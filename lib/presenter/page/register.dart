@@ -9,7 +9,7 @@ import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
-import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,15 +17,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/string.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/model/enum/sex.dart';
 import 'package:fitween/presenter/firebase/auth/auth.dart';
-import 'package:fitween/presenter/model/badge.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/height.dart';
 import 'package:fitween/presenter/model/record.dart';
-import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/model/weight.dart';
 import 'package:fitween/view/page/register/widget.dart';
 import 'home.dart';
@@ -43,15 +41,8 @@ class RegisterP extends GetxController {
   int pageIndex = 0;
   bool invalid = false;
   List<bool> imageExistence = [
-    false,
-    false,
-    false,
-    true,
-    false,
-    true,
-    true,
-    true,
-    false,
+    false, false, false, true,
+    false, true, true, true, false,
   ];
   bool imageVisualize = false;
 
@@ -175,12 +166,12 @@ class RegisterP extends GetxController {
     userPartyP.login(newcomerParty);
     userRecordP.login(newcomerRecord);
 
-    await HomeP.toHome();
+    HomeP.toHome();
     await AuthPresenter.storeLoginData(userInfoP.data);
     if (AuthPresenter.developerUids.contains(userInfoP.loggedUser.uid)) {
-      userCollectionP.awardBadge(BadgePresenter.getBadge('1999999')!, true);
+      userCollectionP.awardBadge(BadgeJsonP.getBadge('1999999')!, true);
     }
-    userCollectionP.awardBadge(BadgePresenter.getBadge('1000000')!, true);
+    userCollectionP.awardBadge(BadgeJsonP.getBadge('1000000')!, true);
 
     init();
   }

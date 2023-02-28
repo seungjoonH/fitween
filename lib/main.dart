@@ -22,7 +22,7 @@ const releaseNoteUrl =
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  CameraPresenter.descriptions = await availableCameras();
+  CameraP.descriptions = await availableCameras();
 
   await Firebase.initializeApp(
     // name: 'pistachio',
@@ -54,7 +54,7 @@ class _FitweenState extends State<Fitween> {
   @override
   Widget build(BuildContext context) {
     setTimeError();
-    GlobalPresenter.initControllers();
+    GlobalP.initControllers();
     ImportPresenter.importData();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,
@@ -92,7 +92,7 @@ class _FitweenState extends State<Fitween> {
           ),
           // home: const DeveloperPage(),
           home: const LoginPage(),
-          getPages: PRoute.getPages,
+          getPages: FRoute.getPages,
         );
       },
     );

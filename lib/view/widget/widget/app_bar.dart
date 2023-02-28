@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/presenter/global.dart';
-import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/page/my/main.dart';
 import 'package:fitween/presenter/page/my/setting/main.dart';
 import 'package:fitween/view/widget/button/button.dart';
@@ -28,7 +27,7 @@ class FAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GlobalPresenter>(
+    return GetBuilder<GlobalP>(
       builder: (controller) {
         return AppBar(
           elevation: 0.0,
@@ -51,7 +50,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GlobalPresenter>(
+    return GetBuilder<GlobalP>(
       builder: (controller) {
         return AppBar(
           elevation: 0.0,
@@ -119,7 +118,7 @@ class CollectionMainAppBar extends StatelessWidget implements PreferredSizeWidge
       title: '컬렉션',
       leading: IconButton(
         icon: Icon(Icons.arrow_back_ios),
-        onPressed: GlobalPresenter.goBack,
+        onPressed: GlobalP.goBack,
       ),
       actions: [
         /*
@@ -182,7 +181,7 @@ class MySettingMainAppBar extends StatelessWidget implements PreferredSizeWidget
     return const FAppBar(title: '설정',
       leading: IconButton(
         icon: Icon(Icons.arrow_back_ios),
-        onPressed: GlobalPresenter.goBack,
+        onPressed: GlobalP.goBack,
       ),
       actions: [
         FTextButton(
@@ -221,7 +220,7 @@ class CameraAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GlobalPresenter>(
+    return GetBuilder<GlobalP>(
       builder: (controller) {
         return AppBar(
           elevation: 0.0,

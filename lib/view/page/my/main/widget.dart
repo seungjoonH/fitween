@@ -10,14 +10,12 @@ import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/global/unit.dart';
-import 'package:fitween/model/class/database/user.dart';
 import 'package:fitween/model/class/json/level.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
-import 'package:fitween/presenter/model/badge.dart';
-import 'package:fitween/presenter/model/level.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
+import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/record.dart';
-import 'package:fitween/presenter/model/user.dart';
 import 'package:fitween/presenter/page/my/record/main.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/text.dart';
@@ -53,7 +51,7 @@ class _MyMainViewState extends State<MyMainView> {
                     double amount = loggedUser.getAmounts(type);
                     Record record = Record.init(type, amount, ExerciseUnit.step);
 
-                    Map<String, dynamic> tier = LevelPresenter.getTier(type, record);
+                    Map<String, dynamic> tier = LevelJsonP.getTier(type, record);
                     Level next = tier['next'] ?? Level.fromJson({'amount': 0});
 
                     Record nextValue = Record.init(
@@ -179,7 +177,7 @@ class MyProfileWidget extends StatelessWidget {
         GetBuilder<UserCollectionP>(
           builder: (userP) {
             return BadgeWidget(
-              badge: BadgePresenter.getBadge(userP.loggedUser.badgeId),
+              badge: BadgeJsonP.getBadge(userP.loggedUser.badgeId),
               size: 80.0.r,
             );
           },

@@ -2,9 +2,8 @@ import 'package:fitween/presenter/model/user/record.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
-import 'package:fitween/presenter/model/level.dart';
+import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/record.dart';
-import 'package:fitween/presenter/model/user.dart';
 
 /// class
 class RecordMain extends GetxController {
@@ -28,7 +27,7 @@ class RecordMain extends GetxController {
       double amount = userP.loggedUser.getAmounts(type);
       Record record = Record.init(type, amount, ExerciseUnit.kilometer);
 
-      tiers[type] = LevelPresenter.getTier(type, record);
+      tiers[type] = LevelJsonP.getTier(type, record);
     }
     update();
   }

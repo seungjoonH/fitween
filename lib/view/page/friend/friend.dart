@@ -3,7 +3,7 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/notification.dart';
-import 'package:fitween/presenter/model/badge.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/presenter/page/friend.dart';
@@ -15,6 +15,7 @@ import 'package:fitween/view/widget/widget/tab_scaffold.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FriendPage extends StatelessWidget {
   const FriendPage({Key? key}) : super(key: key);
@@ -46,11 +47,34 @@ class FriendPage extends StatelessWidget {
           },
           bodies: List.generate(2, (index) {
             bool isRival = index == 1;
-            return Column(
-              children: [
-                FriendNotificationCard(isRival: isRival),
-                FriendListCard(isRival: isRival),
-              ],
+            final refreshCont = RefreshController();
+
+            return SmartRefresher(
+              controller: refreshCont,
+              onRefresh: () async {
+                try {
+                  await FriendP.init();
+                  refreshCont.refreshCompleted();
+                } catch (e) {
+                  refreshCont.refreshFailed();
+                }
+              },
+              onLoading: () async {
+                await Future.delayed(const Duration(milliseconds: 100));
+                refreshCont.loadComplete();
+              },
+              header: const MaterialClassicHeader(
+                color: FTheme.black,
+                backgroundColor: FTheme.surface,
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    FriendNotificationCard(isRival: isRival),
+                    FriendListCard(isRival: isRival),
+                  ],
+                ),
+              ),
             );
           }),
           action: GetBuilder<FriendP>(
@@ -123,7 +147,7 @@ class NotificationListTile extends StatelessWidget {
 
     return Row(
       children: [
-        FBadgeWidget(badge: BadgePresenter.getBadge(userData['badgeId'])),
+        FBadgeWidget(badge: BadgeJsonP.getBadge(userData['badgeId'])),
         const SizedBox(width: 10.0),
         Expanded(
           child: FText(
@@ -166,6 +190,7 @@ class FriendListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FCard(
+      constraints: const BoxConstraints(minHeight: 100.0),
       child: GetBuilder<UserFriendP>(
         builder: (userP) {
           List<FUserInfo> userInfos = isRival
@@ -230,7 +255,7 @@ class FriendListTile extends StatelessWidget{
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
         children: [
-          FBadgeWidget(badge: BadgePresenter.getBadge(userCollection.badgeId)),
+          FBadgeWidget(badge: BadgeJsonP.getBadge(userCollection.badgeId)),
           const SizedBox(width: 10.0),
           Expanded(
             child: FText(

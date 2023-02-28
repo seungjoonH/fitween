@@ -11,8 +11,9 @@ import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
-import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
+import 'package:fitween/presenter/page/contents/contents.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:fitween/main.dart';
@@ -20,7 +21,7 @@ import 'package:fitween/model/enum/login_type.dart';
 import 'package:fitween/presenter/firebase/auth/apple.dart';
 import 'package:fitween/presenter/firebase/auth/google.dart';
 import 'package:fitween/presenter/firebase/firebase.dart';
-import 'package:fitween/presenter/model/badge.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/page/home.dart';
 import 'package:fitween/presenter/page/login.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
@@ -132,10 +133,12 @@ class AuthPresenter {
       await userRecordP.login(strangerRecord);
 
       await storeLoginData(userInfoP.data);
-      await HomeP.toHome();
+      HomeP.toHome();
+      HomeP.init();
+      await Get.find<ContentsP>().loadAll();
     }
 
-    await BadgePresenter.synchronizeBadges();
+    await BadgeJsonP.synchronizeBadges();
   }
 
   // 피트윈 로그아웃
@@ -191,6 +194,8 @@ class AuthPresenter {
     await userRecordP.load();
 
     HomeP.toHome();
+    HomeP.init();
+    await Get.find<ContentsP>().loadAll();
   }
 
   // 로그인 데이터 전송

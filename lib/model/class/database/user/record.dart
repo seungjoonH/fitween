@@ -3,11 +3,12 @@
 import 'dart:collection';
 
 import 'package:fitween/global/date.dart';
-import 'package:fitween/global/number.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/model/record.dart';
+import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/page/calendar.dart';
+import 'package:get/get.dart';
 
 class FUserRecord {
   /// attributes
@@ -18,15 +19,6 @@ class FUserRecord {
   Map<String, dynamic> goals = {};
   Map<String, dynamic> inputRecords = {};
   Map<String, dynamic> records = {};
-
-  /// accessors & mutators
-  List<ActivityType> get completedActivities {
-    List<ActivityType> types = [];
-    for (ActivityType type in ActivityType.activeValues.sublist(0, 3)) {
-      if (completed(type)) types.add(type);
-    }
-    return types;
-  }
 
   /// constructors
   FUserRecord() {
@@ -176,11 +168,13 @@ class FUserRecord {
       ]) {
     double result = 0;
 
-    if (startDate != null && endDate == null) endDate = nextDay(startDate);
+    startDate ??= ignoreTime(Get.find<UserInfoP>().loggedUser.regDate!);
+    endDate ??= oneSecondBefore(tomorrow);
+
     inputRecords.forEach((type, recordList) {
       if (activityType.name == type) {
         for (var record in recordList) {
-          if (startDate != null && record['date'].toDate().isBefore(startDate)) continue;
+          if (record['date'].toDate().isBefore(startDate)) continue;
           if (endDate != null && record['date'].toDate().isAfter(endDate)) continue;
           result += record['amount'].toDouble();
         }
@@ -199,35 +193,26 @@ class FUserRecord {
   }
 
   // 입력된 금일 기록 반환
-  double getTodayInputAmounts(ActivityType activityType) {
-    double result = 0;
-    DateTime startDate = today;
-    DateTime endDate = oneSecondBefore(tomorrow);
-
-    inputRecords.forEach((type, recordList) {
-      if (activityType.name == type) {
-        for (var record in recordList) {
-          if (record['date'].toDate().isBefore(startDate)) continue;
-          if (record['date'].toDate().isAfter(endDate)) continue;
-          result += record['amount'].toDouble();
-        }
-      }
-    });
-    return result;
-  }
+  // double getTodayInputAmounts(ActivityType activityType) {
+  //   double result = 0;
+  //   DateTime startDate = today;
+  //   DateTime endDate = oneSecondBefore(tomorrow);
+  //
+  //   inputRecords.forEach((type, recordList) {
+  //     if (activityType.name == type) {
+  //       for (var record in recordList) {
+  //         if (record['date'].toDate().isBefore(startDate)) continue;
+  //         if (record['date'].toDate().isAfter(endDate)) continue;
+  //         result += record['amount'].toDouble();
+  //       }
+  //     }
+  //   });
+  //   return result;
+  // }
 
   LinkedHashMap<DateTime, List<CalendarEvent>> getEvents(
     DateTime startDate, DateTime endDate,
   ) {
-    // LinkedHashMap<DateTime, List<CalendarEvent>> events = LinkedHashMap(
-    //   equals: isSameDate,
-    //   hashCode: (key) => key.day * 1000000 + key.month * 10000 + key.year,
-    // )..addAll({
-    //   for (var item in List.generate(endDate.difference(startDate).inDays, (index) => index))
-    //     DateTime.utc(startDate.year, startDate.month, item):
-    //     List.generate(3, (index) => CalendarEvent(.0, .0))
-    // });
-
     List<CalendarEvent> eventValues = [
       for (ActivityType type in ActivityType.activeValues)
       CalendarEvent(getGoal(type)?.amount ?? 1.0, .0),
@@ -245,30 +230,6 @@ class FUserRecord {
         return CalendarEvent(goal, amount);
       }).toList();
     }
-
-    // inputRecords.forEach((typeString, recordList) {
-    //   ActivityType type = ActivityType.toEnum(typeString)!;
-    //   if (type == ActivityType.calorie) return;
-    //
-    //   for (var record in recordList) {
-    //     DateTime date = record['date'].toDate();
-    //     if (date.isBefore(startDate)) continue;
-    //     if (date.isAfter(endDate)) continue;
-    //     events[date]![type.index - 1].amount += record['amount'];
-    //   }
-    // });
-    // records.forEach((typeString, recordList) {
-    //   ActivityType type = ActivityType.toEnum(typeString)!;
-    //   if (type == ActivityType.calorie) return;
-    //
-    //   for (var record in recordList) {
-    //     DateTime date = record['date'].toDate();
-    //     if (date.isBefore(startDate)) continue;
-    //     if (date.isAfter(endDate)) continue;
-    //     events[date]![type.index - 1].amount += record['amount'];
-    //   }
-    // });
-
     return events;
   }
 
@@ -289,10 +250,20 @@ class FUserRecord {
     goals[type.name] = record.amount;
   }
 
+  List<ActivityType> completedActivities([DateTime? date]) {
+    date ??= today;
+    List<ActivityType> types = [];
+    for (ActivityType type in ActivityType.activeValues) {
+      if (completed(type, date)) types.add(type);
+    }
+    return types;
+  }
+
   // 해당 활동형식의 완료 여부 반환
-  bool completed(ActivityType type) {
+  bool completed(ActivityType type, [DateTime? date]) {
+    date ??= today;
     double goal = goals[type.name]?.toDouble() ?? .0;
-    double value = getTodayAmounts(type);
+    double value = getAmounts(type, date, nextDay(date));
     return goal <= value;
   }
 }
