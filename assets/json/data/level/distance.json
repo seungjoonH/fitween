@@ -284,6 +284,6 @@
     "title": "지구 둘레",
     "amount": 40075,
     "description": "",
-    "activate": false
+    "activate": true
   }
 ]

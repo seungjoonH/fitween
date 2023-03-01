@@ -200,7 +200,7 @@ class WeekCalendarWidget extends StatelessWidget {
                           if (completed.length == 3) { circleColor = ActivityType.calorie.color; }
                           else if (completed.contains(type)) { circleColor = type.color; }
                           else if (
-                            userP.loggedUser.getAmounts(type, date) == 0
+                            userP.loggedUser.getAmounts(type, date, nextDay(date)) == 0
                               || date.isAfter(now)
                           ) { circleColor = Colors.transparent; }
 

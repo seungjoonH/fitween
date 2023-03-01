@@ -124,7 +124,7 @@ class RankingIndividualGraph extends StatelessWidget {
           alignment: Alignment.centerLeft,
           children: [
             LinearPercentIndicator(
-              percent: max(amount / maxAmount, .02),
+              percent: max(amount / max(maxAmount, 1), .02),
               backgroundColor: Colors.transparent,
               fillColor: Colors.transparent,
               progressColor: isMe ? type.color : FTheme.lightGrey,

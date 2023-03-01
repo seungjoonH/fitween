@@ -46,4 +46,13 @@ class LevelJsonP extends GetxController {
     }
     return result;
   }
+
+  static List<Level> getUnlockedLevels(ActivityType type, Record record) {
+    record.convert({
+      ActivityType.distance: ExerciseUnit.kilometer,
+      ActivityType.weight: ExerciseUnit.weight,
+    }[type]);
+    return levels[type]!
+        .where((level) => level.amount! <= record.amount).toList();
+  }
 }

@@ -17,6 +17,7 @@ import 'package:fitween/presenter/model/record.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
+import 'package:fitween/presenter/page/contents/achievement/level.dart';
 import 'package:fitween/presenter/page/contents/challenge/challenge_detail.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:fitween/presenter/page/contents/contents.dart';
@@ -195,7 +196,7 @@ class ChallengeCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Container(
+          SizedBox(
             width: 100.0,
             height: 100.0,
             child: Image.asset(
@@ -292,7 +293,10 @@ class AchievementCardView extends StatelessWidget {
             Record record = Record.init(type, amount, unit);
 
             Map<String, dynamic> tier = LevelJsonP.getTier(type, record);
-            Level next = tier['next'] ?? Level.fromJson({'amount': 0});
+            List<Level> levels = LevelJsonP.getUnlockedLevels(type, record);
+            Level? next = tier['next'];
+
+            if (next == null) return Container();
 
             Record nextValue = Record.init(
               type,
@@ -306,11 +310,20 @@ class AchievementCardView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: FCard(
                 constraints: const BoxConstraints(minHeight: 440.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
+                  alignment: Alignment.topRight,
                   children: [
-                    ProgressTextWidget(tier: tier, type: type, userInfo: userInfo),
-                    ProgressImageWidget(tier: tier, type: type),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ProgressTextWidget(tier: tier, type: type, userInfo: userInfo),
+                        ProgressImageWidget(tier: tier, type: type),
+                      ],
+                    ),
+                    LevelButton(
+                      level: levels.length,
+                      onPressed: () => AchievementLevelP.toAchievementLevel(type),
+                    ),
                   ],
                 ),
               ),
@@ -348,13 +361,14 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
   void initState() {
     final userRecordP = Get.find<UserRecordP>();
     double amount = userRecordP.loggedUser.getAmounts(widget.type);
+    if (widget.type == ActivityType.distance) amount = amount ~/ 100 * 100;
 
     text = widget.tier['current']?.title ?? '';
     if (text.length > 10) {
-      int len = text.length;
-      text = '${text.substring(0, len ~/ 2)}\n${text.substring(len ~/ 2, len)}';
+      text = '${text.substring(0, text.length ~/ 3 * 2)}'
+          '\n${text.substring(text.length ~/ 3 * 2, text.length)}';
     }
-    amountString = '${toLocalString(amount ~/ 100 * 100)}${widget.type.unit}';
+    amountString = '${toLocalString(amount)}${widget.type.unit}';
 
     timer = Timer.periodic(const Duration(seconds: 5), (_) {
       setState(() => isText = !isText);
@@ -370,19 +384,16 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
 
   @override
   Widget build(BuildContext context) {
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            FText(
-              widget.userInfo.nickname!,
+            FText(widget.userInfo.nickname!,
               style: textTheme.bodyLarge,
               bold: true,
             ),
-            FText(
-              ' 님은 지금까지',
+            FText(' 님은 지금까지',
               style: textTheme.bodyLarge,
             ),
           ],
@@ -473,16 +484,16 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
   void initState() {
     visible = false;
     downed = true;
-    position = 160.0;
+    position = 195.0;
     duration = const Duration(seconds: 1);
     Future.delayed(Duration.zero, () => setState(() {
-      visible = true; position = 130.0;
+      visible = true; position = 165.0;
       duration = const Duration(milliseconds: 700);
     }));
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         duration = const Duration(seconds: 1);
-        position = downed ? 135.0 : 130.0;
+        position = downed ? 170.0 : 165.0;
         downed = !downed;
       });
     });
@@ -534,10 +545,11 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
     // String percentString = '${(percent * 100).round()}%';
 
     return Stack(
-      alignment: Alignment.center,
+      alignment: Alignment.bottomCenter,
       children: [
         Image.asset(
           'assets/image/page/contents/union.png',
+          height: 350.0,
           fit: BoxFit.fitWidth,
         ),
         AnimatedPositioned(
@@ -557,7 +569,7 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
           ),
         ),
         Positioned(
-          bottom: 10.0,
+          bottom: 50.0,
           child: Container(
             width: 300.0,
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -591,6 +603,73 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class LevelButton extends StatefulWidget {
+  const LevelButton({
+    Key? key,
+    required this.level,
+    required this.onPressed,
+  }) : super(key: key);
+
+  final int level;
+  final VoidCallback? onPressed;
+
+  @override
+  State<LevelButton> createState() => _LevelButtonState();
+}
+
+class _LevelButtonState extends State<LevelButton> {
+  Function(TapDownDetails)? onTapDown;
+  Function(TapUpDetails)? onTapUp;
+
+  double scale = 1.0;
+  Duration duration = const Duration(milliseconds: 100);
+
+  @override
+  void initState() {
+    onTapDown = widget.onPressed == null ? null : (_) {
+      setState(() => scale = .9);
+    };
+    onTapUp = widget.onPressed == null ? null : (_) async {
+      await Future.delayed(duration, () {
+        if (!mounted) return;
+        setState(() => scale = 1.0);
+      });
+      widget.onPressed!();
+    };
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    BorderRadius radius = BorderRadius.circular(20.0);
+
+    return AnimatedScale(
+      scale: scale,
+      duration: duration,
+      child: GestureDetector(
+        onTapDown: onTapDown,
+        onTapUp: onTapUp,
+        child: Material(
+          color: FTheme.darkGrey,
+          borderRadius: radius,
+          child: Container(
+            padding: const EdgeInsets.fromLTRB(12.0, 6.0, 6.0, 6.0),
+            decoration: BoxDecoration(borderRadius: radius),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FText('Level ${widget.level}', style: textTheme.bodySmall, color: FTheme.white),
+                const Icon(Icons.chevron_right, size: 14.0, color: FTheme.white),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

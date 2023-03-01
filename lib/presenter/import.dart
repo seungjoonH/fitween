@@ -13,7 +13,7 @@ class ImportPresenter extends GetxController {
     ChallengeJsonP.importFile();
     WeightPresenter.importFile();
     HeightPresenter.importFile();
-    LevelJsonP.importFile(ActivityType.calorie);
+    // LevelJsonP.importFile(ActivityType.calorie);
     LevelJsonP.importFile(ActivityType.distance);
     LevelJsonP.importFile(ActivityType.height);
     LevelJsonP.importFile(ActivityType.weight);

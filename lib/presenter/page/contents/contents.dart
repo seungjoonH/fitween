@@ -38,11 +38,14 @@ class ContentsP extends GetxController {
   }
 
   Future loadAll() async {
-    final userP = Get.find<UserPartyP>();
+    final userPartyP = Get.find<UserPartyP>();
+    final userRecordP = Get.find<UserRecordP>();
 
     await ChallengeJsonP.importFile();
-    await userP.load();
-    await userP.loadMyParties();
+    await userPartyP.load();
+    await userPartyP.loadMyParties();
+
+    await userRecordP.load();
 
     update();
   }

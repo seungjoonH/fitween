@@ -17,6 +17,7 @@ class FTheme {
   // simple
   static const Color black = Color(0xFF1F1F1F);
   static const Color lightGrey = Color(0xFFB4B4B4);
+  static const Color stroke = Color(0xFFAAAAAA);
   static const Color grey = Color(0xFF73796E);
   static const Color darkGrey = Color(0xFF494D45);
   static const Color white = Color(0xFFFDFDFD);

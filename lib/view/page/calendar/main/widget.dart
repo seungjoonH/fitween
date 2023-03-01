@@ -96,6 +96,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                   eventLoader: _getEventsForDay,
                   startingDayOfWeek: StartingDayOfWeek.monday,
                   daysOfWeekHeight: 20.0,
+                  pageJumpingEnabled: true,
                   calendarStyle: const CalendarStyle(
                     isTodayHighlighted: true,
                     todayDecoration: BoxDecoration(
@@ -227,10 +228,6 @@ class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator>
 
     if (completed.length == 3) { color = ActivityType.calorie.color; }
     else if (completed.contains(widget.type)) { color = widget.type.color; }
-
-
-    int leftFlex = max(1, amount);
-    int rightFlex = amount == 0 ? 49 : max(0, goal - amount);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

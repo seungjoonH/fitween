@@ -226,7 +226,7 @@ class FUserRecord {
     for (DateTime date in daysInRange(startDate, endDate)) {
       events[ignoreTime(date)] = ActivityType.activeValues.map((type) {
         double goal = getGoal(type)?.amount ?? 1.0;
-        double amount = getAmounts(type, date);
+        double amount = getAmounts(type, date, nextDay(date));
         return CalendarEvent(goal, amount);
       }).toList();
     }
