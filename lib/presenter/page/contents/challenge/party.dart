@@ -1,15 +1,10 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:fitween/model/class/database/user/info.dart';
-import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
-import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/json/party.dart';
-import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:fitween/global/date.dart';
 import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/presenter/model/party.dart';
 import 'package:fitween/presenter/widget/loading.dart';
@@ -24,7 +19,7 @@ class PartyP extends GetxController {
   /// static methods
   // 챌린지 파티 메인 페이지로 이동
   static void toParty(Party party) async {
-    Get.toNamed('contents/party/');
+    Get.toNamed('/contents/party');
     await PartyP.init(party.id!);
   }
 
@@ -46,12 +41,7 @@ class PartyP extends GetxController {
   }
 
   Future loadAll(String id) async {
-    final userInfoP = Get.find<UserInfoP>();
     final userPartyP = Get.find<UserPartyP>();
-    final userRecordP = Get.find<UserRecordP>();
-
-    // FUserInfo userInfo = userInfoP.loggedUser;
-    // FUserRecord userRecord = userRecordP.loggedUser;
 
     loadedParty = await PartyJsonP.loadParty(id);
     if (loadedParty == null) return;
@@ -60,12 +50,6 @@ class PartyP extends GetxController {
 
     value = .0;
     update();
-    // maxValue = userRecord.getAmounts(
-    //   loadedParty!.challenge!.type!,
-    //   loadedParty!.startDate,
-    //   oneSecondBefore(tomorrow),
-    // ).toDouble();
-    // loadedParty!.records[userInfo.uid!] = maxValue.toInt();
     animateValue();
 
     PartyJsonP.save(loadedParty!);

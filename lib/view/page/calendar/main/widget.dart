@@ -10,6 +10,7 @@ import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -95,6 +96,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                   eventLoader: _getEventsForDay,
                   startingDayOfWeek: StartingDayOfWeek.monday,
                   daysOfWeekHeight: 20.0,
+                  pageJumpingEnabled: true,
                   calendarStyle: const CalendarStyle(
                     isTodayHighlighted: true,
                     todayDecoration: BoxDecoration(
@@ -227,29 +229,21 @@ class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator>
     if (completed.length == 3) { color = ActivityType.calorie.color; }
     else if (completed.contains(widget.type)) { color = widget.type.color; }
 
-
-    int leftFlex = max(1, amount);
-    int rightFlex = amount == 0 ? 49 : max(0, goal - amount);
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Expanded(
-              flex: leftFlex,
-              child: Container(
-                height: 36.0,
-                decoration: BoxDecoration(
-                  color: color,
-                  borderRadius: const BorderRadius.horizontal(
-                    right: Radius.circular(8.0),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(flex: rightFlex, child: const SizedBox()),
-          ],
+        LinearPercentIndicator(
+          percent: max(min(amount / goal, 1.0), .02),
+          backgroundColor: Colors.transparent,
+          fillColor: Colors.transparent,
+          progressColor: color,
+          lineHeight: 36.0,
+          padding: EdgeInsets.zero,
+          barRadius: const Radius.circular(5.0),
+          animation: true,
+          curve: Curves.easeInOut,
+          animateFromLastPercent: true,
+          animationDuration: 800,
         ),
         FText(
           '$amount / $goal ${widget.type.unit}',

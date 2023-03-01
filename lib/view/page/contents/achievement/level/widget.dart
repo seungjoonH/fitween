@@ -1,179 +1,129 @@
+import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
-import 'package:fitween/model/class/database/user/info.dart';
-import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/class/json/level.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/record.dart';
-import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
-import 'package:fitween/presenter/page/challenge/level.dart';
+import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 
-class ChallengeLevelPageView extends StatelessWidget {
-  const ChallengeLevelPageView({Key? key}) : super(key: key);
+class AchievementLevelView extends StatelessWidget {
+  const AchievementLevelView({
+    Key? key,
+    required this.type,
+  }) : super(key: key);
+
+  final ActivityType type;
 
   @override
   Widget build(BuildContext context) {
-    FUserRecord loggedUser = Get.find<UserRecordP>().loggedUser;
-    FUserInfo userInfo = Get.find<UserInfoP>().loggedUser;
+    final userP = Get.find<UserRecordP>();
+    double amount = userP.loggedUser.getAmounts(type);
+    Record record = Record.init(type, amount, {
+      ActivityType.distance: ExerciseUnit.step,
+      ActivityType.weight: ExerciseUnit.count,
+    }[type]);
 
-    return SingleChildScrollView(
-      child: Column(
-        children: ActivityType.values.sublist(1, 3).map((type) {
-          double amount = loggedUser.getAmounts(type);
-          Record record = Record.init(type, amount, ExerciseUnit.step);
+    List<Level> levels = LevelJsonP
+        .getUnlockedLevels(type, record).reversed.toList();
 
-          Map<String, dynamic> tier = LevelJsonP.getTier(type, record);
-          Level next = tier['next'] ?? Level.fromJson({'amount': 0});
+    return Padding(
+      padding: const EdgeInsets.all(28.0),
+      child: ListView.separated(
+        shrinkWrap: true,
+        itemCount: levels.length,
+        itemBuilder: (_, index) {
+          double amount = levels[index].amount!;
+          Record record = Record.init(type, amount, {
+            ActivityType.distance: ExerciseUnit.kilometer,
+            ActivityType.weight: ExerciseUnit.weight,
+          }[type]);
 
-          Record nextValue = Record.init(
-            type,
-            next.amount!.toDouble(),
-            ExerciseUnit.kilometer,
-          );
+          record.convert({
+            ActivityType.distance: ExerciseUnit.step,
+            ActivityType.weight: ExerciseUnit.count,
+          }[type]);
 
-          nextValue.convert(ExerciseUnit.step);
+          amount = record.amount;
+          if (type == ActivityType.distance) amount = amount ~/ 100 * 100;
 
-          return Card(
-            child: Column(
+          String amountString = '${toLocalString(amount)}${type.unit}';
+          String title = levels[index].title!;
+
+          if (title.length > 10) {
+            title = '${title.substring(0, title.length ~/ 3 * 2)}'
+                '\n${title.substring(title.length ~/ 3 * 2, title.length)}';
+          }
+
+          return FCard(
+            borderColor: FTheme.stroke,
+            constraints: const BoxConstraints(minHeight: 240.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                InkWell(
-                  onTap: () {
-                    ChallengeLevelP.toChallengeLevel();
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        FText(
-                          '${userInfo.nickname}님은 지금까지',
-                          style: textTheme.bodyMedium,
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(4.0),
-                          decoration: BoxDecoration(
-                            color: type.color,
-                            borderRadius: BorderRadius.circular(10.0.r),
-                          ),
-                          child: FText(
-                            tier['current']?.title ?? '',
-                            maxLines: 2,
-                            style: textTheme.displayMedium,
-                            color: FTheme.white,
-                            bold: true,
-                          ),
-                        ),
-                        FText(
-                          '만큼 ${type.did}!',
-                          style: textTheme.bodyMedium,
-                        ),
-                        const SizedBox(height: 8.0),
-                        SizedBox(
-                          width: 300,
-                          height: 280,
-                          child: Stack(
-                            children: [
-                              Image.asset(
-                                'assets/image/page/achievement/Union.png',
-                                height: 280,
-                                width: 300,
-                              ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Column(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: SizedBox(
-                                        width: 100.0.w,
-                                        child: tier['current'] != null
-                                            ? Image.asset(
-                                          'assets/image/level/${type.name}/${tier['current'].id}.png',
-                                          width: 40.0.w,
-                                        )
-                                            : Container(),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12.0,
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: FText(
-                                          '현재 진행도',
-                                          style: textTheme.bodyMedium,
-                                          color: FTheme.black,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0,
-                                        horizontal: 12.0,
-                                      ),
-                                      child: LinearPercentIndicator(
-                                        padding: EdgeInsets.zero,
-                                        progressColor: type.color,
-                                        backgroundColor: FTheme
-                                            .lightGrey, // Colors.transparent,
-                                        percent: tier['percent'] ?? .0,
-                                        lineHeight: 48.0,
-                                        barRadius: Radius.circular(10.0.r),
-                                        animation: true,
-                                        animationDuration: 1000,
-                                        curve: Curves.easeInOut,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 12.0,
-                                      ),
-                                      child: Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: FText(
-                                          '${tier['percent'].toInt()}%',
-                                          style: textTheme.bodyMedium,
-                                          color: type.color,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                Container(
+                  height: 200.0,
+                  alignment: Alignment.bottomCenter,
+                  child: Image.asset(
+                    levels[index].imageUrl!,
+                    width: 100.0,
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
-                if (!type.active)
-                  Positioned.fill(
-                    child: Stack(
-                      children: [
-                        Container(
-                          color: FTheme.surface,
-                          alignment: Alignment.center,
-                          child: Icon(Icons.lock, size: 30.0.r),
+                const SizedBox(width: 20.0),
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 5.0,
+                            ),
+                            decoration: BoxDecoration(
+                              color: type.color,
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: FText(
+                              'LVL ${levels.length - index}',
+                              color: FTheme.white,
+                              style: textTheme.bodyLarge,
+                            ),
+                          ),
+                          FText(
+                            '조건: $amountString',
+                            color: FTheme.lightGrey,
+                            style: textTheme.bodyMedium,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15.0),
+                      FText(title, maxLines: 2),
+                      const SizedBox(height: 10.0),
+                      SizedBox(
+                        height: 90.0,
+                        child: FText(
+                          levels[index].description!,
+                          color: FTheme.grey,
+                          style: textTheme.bodySmall,
+                          maxLines: 5,
                         ),
-                        Container(
-                          color: FTheme.black.withOpacity(.3),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
+                ),
               ],
             ),
           );
-        }).toList(),
+        },
+        separatorBuilder: (_, index) => const SizedBox(height: 20.0),
       ),
     );
   }

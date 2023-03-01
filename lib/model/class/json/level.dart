@@ -1,8 +1,10 @@
+import 'package:fitween/model/enum/activity_type.dart';
+
 class Level {
   /// attributes
   String? id;
   String? title;
-  int? amount;
+  double? amount;
   String? description;
   String? imageUrl;
   bool? activate;
@@ -16,9 +18,9 @@ class Level {
 
   /// methods
   void fromJson(Map<String, dynamic> json) {
-    id = '${json['id']}';
+    id = json['id']?.toString();
     title = '${json['title']}';
-    amount = json['amount'];
+    amount = json['amount'].toDouble();
     description = json['description'];
     imageUrl = idToImageUrl(id!);
     activate = json['activate'];
@@ -38,5 +40,8 @@ class Level {
   static String asset = 'assets/image/level/';
 
   /// static methods
-  static String idToImageUrl(String id) => '$asset$id.svg';
+  static String idToImageUrl(String id) {
+    String name = ActivityType.values[int.parse(id[2])].name;
+    return '$asset$name/$id.png';
+  }
 }

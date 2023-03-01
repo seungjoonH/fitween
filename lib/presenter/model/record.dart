@@ -143,7 +143,7 @@ class WeightRecord extends Record {
   double convert(ExerciseUnit? unit) {
     assert(ExerciseUnit.weights.contains(unit));
 
-    double value = amount;
+    double value = amount * 1000;
     if (state == unit) return value;
 
     switch (unit) {

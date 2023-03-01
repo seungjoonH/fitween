@@ -53,8 +53,7 @@ class GuideCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PCard(
-      rounded: true,
+    return FCard(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

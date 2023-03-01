@@ -38,10 +38,10 @@ class FRoute {
         '/contents': const ContentsPage(),
         '/contents/challengeDetail': const ChallengeDetailPage(),
         '/contents/party': const PartyPage(),
+        '/contents/achievementLevel': const AchievementLevelPage(),
         '/contents/timeAttackFriend': const TimeAttackFriendPage(),
         '/contents/timeAttackReady': const TimeAttackReadyPage(),
         '/contents/timeAttackCamera': const TimeAttackCameraPage(),
-        '/contents/': const ChallengeLevelPage(),
       };
 
   // 겟페이지 리스트
@@ -50,7 +50,7 @@ class FRoute {
       name: page.key,
       page: () => page.value,
       transition: transition,
-      transitionDuration: page.key == '/challenge/detail'
+      transitionDuration: page.key == '/contents/challengeDetail'
           ? const Duration(milliseconds: 500)
           : duration,
     );

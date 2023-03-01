@@ -72,8 +72,8 @@ class UserPartyP extends GetxController {
       'challengeId': challenge.id,
       'difficulty': diff.name,
       'records': <String, dynamic>{loggedUser.uid!: 0},
-      'memberUids': [loggedUser.uid],
-      'leaderUid': loggedUser.uid,
+      'memberUids': <String>[loggedUser.uid!],
+      'leaderUid': loggedUser.uid!,
     });
 
     loggedUser.parties[code] = newParty;

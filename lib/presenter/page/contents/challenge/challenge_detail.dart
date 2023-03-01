@@ -45,7 +45,7 @@ class ChallengeDetailP {
       ),
       type: DialogType.mono,
       onPressed: () {
-        Get.back();
+        Get.offAllNamed('/contents');
         final userPartyP = Get.find<UserPartyP>();
         PartyP.toParty(userPartyP.loggedUser.parties[code]!);
       },

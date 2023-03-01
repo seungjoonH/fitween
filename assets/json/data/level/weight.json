@@ -95,21 +95,21 @@
     "title": "자유의 여신상",
     "amount": 225,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030014,
     "title": "첨성대",
     "amount": 264,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030015,
     "title": "고인돌(전남 화순)",
     "amount": 280,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030016,
@@ -130,7 +130,7 @@
     "title": "비행기",
     "amount": 340,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030019,
@@ -144,14 +144,14 @@
     "title": "KTX",
     "amount": 700,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030021,
     "title": "일반열차",
     "amount": 1000,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030022,
@@ -165,7 +165,7 @@
     "title": "제너럴 셔먼 나무",
     "amount": 1900,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030024,
@@ -186,7 +186,7 @@
     "title": "1인당 50년간 물 사용량",
     "amount": 5000,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030027,
@@ -200,14 +200,14 @@
     "title": "정조대왕함",
     "amount": 8200,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030029,
     "title": "피사의 사탑",
     "amount": 14453,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030030,
@@ -221,35 +221,35 @@
     "title": "타이타닉",
     "amount": 46300,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030032,
     "title": "전국 초등학생 무게 총합",
     "amount": 87500,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030033,
     "title": "항공모함",
     "amount": 150000,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030034,
     "title": "원더 오브 더 시즈호",
     "amount": 236857,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030035,
     "title": "엠파이어 스테이트 빌딩",
     "amount": 331122,
     "description": "",
-    "activate": true
+    "activate": false
   },
   {
     "id": 3030036,

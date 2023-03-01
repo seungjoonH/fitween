@@ -156,7 +156,7 @@ class _TimeAttackCameraPageState extends State<TimeAttackCameraPage> {
                                       if (painterP.state == WorkoutState.workout)
                                       SizedBox(
                                         width: 100.0,
-                                        child: PCircledButton(
+                                        child: FCircledButton(
                                           onPressed: painterP.workout,
                                           backgroundColor: FTheme.colorB,
                                           child: Image.asset('assets/image/page/contents/time_attack/pause.png'),
@@ -210,7 +210,7 @@ class _TimeAttackCameraPageState extends State<TimeAttackCameraPage> {
                               ),
                             ),
                             if (painterP.state != WorkoutState.workout)
-                            PCircledButton(
+                            FCircledButton(
                               onPressed: painterP.workout,
                               backgroundColor: FTheme.colorA,
                               child: Padding(

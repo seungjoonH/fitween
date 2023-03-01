@@ -35,8 +35,8 @@ class LevelJsonP extends GetxController {
     }[type]);
 
     for (int i = 0; i < levelList.length - 1; i++) {
-      int current = levelList[i].amount!;
-      int next = levelList[i + 1].amount!;
+      double current = levelList[i].amount!;
+      double next = levelList[i + 1].amount!;
 
       if (record.amount >= current && record.amount < next) {
         result['current'] = levelList[i];
@@ -45,5 +45,14 @@ class LevelJsonP extends GetxController {
       }
     }
     return result;
+  }
+
+  static List<Level> getUnlockedLevels(ActivityType type, Record record) {
+    record.convert({
+      ActivityType.distance: ExerciseUnit.kilometer,
+      ActivityType.weight: ExerciseUnit.weight,
+    }[type]);
+    return levels[type]!
+        .where((level) => level.amount! <= record.amount).toList();
   }
 }

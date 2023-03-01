@@ -1,24 +1,22 @@
 import 'package:fitween/global/theme.dart';
-import 'package:fitween/presenter/page/challenge/level.dart';
+import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/view/page/contents/achievement/level/widget.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 /// class
-class ChallengeLevelPage extends StatelessWidget {
-  const ChallengeLevelPage({Key? key}) : super(key: key);
+class AchievementLevelPage extends StatelessWidget {
+  const AchievementLevelPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: FAppBar(title: '거리',
-        color: FTheme.white,
-        leading: IconButton(
-          onPressed: ChallengeLevelP.backPressed,
-          icon: Icon(Icons.arrow_back_ios_rounded),
-        ),
-      ),
-      body: ChallengeLevelPageView(),
+    ActivityType type = Get.arguments;
+
+    return Scaffold(
+      backgroundColor: FTheme.white,
+      appBar: FAppBar(title: type.kr, color: FTheme.white),
+      body: AchievementLevelView(type: type),
     );
   }
 }

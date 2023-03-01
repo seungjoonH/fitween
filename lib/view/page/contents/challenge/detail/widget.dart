@@ -113,6 +113,7 @@ class ChallengeDetailView extends StatelessWidget {
                               horizontal: 20.0.w,
                               vertical: 16.0.h,
                             ),
+                            backgroundColor: challenge.type!.color,
                             multiple: true,
                             child: FText(
                               '챌린지 생성하기',
@@ -134,7 +135,7 @@ class ChallengeDetailView extends StatelessWidget {
     });
 
     return Hero(
-      tag: '${challenge.id}',
+      tag: challenge.id!,
       child: Image.asset(
         challenge.imageUrls['default'],
         height: 700.0,

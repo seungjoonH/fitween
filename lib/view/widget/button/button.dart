@@ -21,17 +21,13 @@ class FButton extends StatefulWidget {
     this.multiple = false,
     this.border = false,
     this.height,
-  })  : assert(
-          text == null || child == null,
-        ),
-        padding = padding ??
-            EdgeInsets.symmetric(
-              horizontal: 20.0.w,
-              vertical: 10.0.h,
-            ),
-        backgroundColor = backgroundColor ?? FTheme.darkGrey,
-        textColor = textColor ?? (fill ? FTheme.white : FTheme.black),
-        super(key: key);
+  }) : assert(text == null || child == null),
+    padding = padding ?? EdgeInsets.symmetric(
+      horizontal: 20.0.w, vertical: 10.0.h,
+    ),
+    backgroundColor = backgroundColor ?? FTheme.darkGrey,
+    textColor = textColor ?? (fill ? FTheme.white : FTheme.black),
+    super(key: key);
 
   final String? text;
   final Widget? child;
@@ -94,7 +90,7 @@ class _FButtonState extends State<FButton> {
                     ),
             decoration: BoxDecoration(
               border: widget.border
-                  ? Border.all(color: FTheme.black, width: 1.0)
+                  ? Border.all(color: FTheme.stroke, width: .5)
                   : const Border(),
               borderRadius: BorderRadius.circular(15.0),
             ),
@@ -132,17 +128,13 @@ class PButton extends StatelessWidget {
     this.multiple = false,
     this.border = true,
     this.height,
-  })  : assert(
-          text == null || child == null,
-        ),
-        padding = padding ??
-            EdgeInsets.symmetric(
-              horizontal: 20.0.w,
-              vertical: 10.0.h,
-            ),
-        backgroundColor = backgroundColor ?? FTheme.black,
-        textColor = textColor ?? (fill ? FTheme.white : FTheme.black),
-        super(key: key);
+  }) : assert(text == null || child == null),
+    padding = padding ?? EdgeInsets.symmetric(
+      horizontal: 20.0.w, vertical: 10.0.h,
+    ),
+    backgroundColor = backgroundColor ?? FTheme.black,
+    textColor = textColor ?? (fill ? FTheme.white : FTheme.black),
+    super(key: key);
 
   final String? text;
   final Widget? child;
@@ -167,12 +159,9 @@ class PButton extends StatelessWidget {
         child: Container(
           height: height?.h,
           padding: padding,
-          constraints: multiple
-              ? null
-              : constraints ??
-                  BoxConstraints(
-                    maxWidth: MediaQuery.of(context).size.width,
-                  ),
+          constraints: multiple ? null : constraints ?? BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+          ),
           decoration: BoxDecoration(
             border: border
                 ? Border.all(color: FTheme.black, width: 1.5)
@@ -231,8 +220,8 @@ class PDirectButton extends StatelessWidget {
   }
 }
 
-class PCircledButton extends StatelessWidget {
-  const PCircledButton({
+class FCircledButton extends StatelessWidget {
+  const FCircledButton({
     Key? key,
     required this.onPressed,
     required this.child,
@@ -270,14 +259,14 @@ class PCircledButton extends StatelessWidget {
           ),
         ),
         if (!enabled)
-          Container(
-            width: size.r,
-            height: size.r,
-            decoration: BoxDecoration(
-              color: FTheme.white.withOpacity(.3),
-              borderRadius: radius,
-            ),
+        Container(
+          width: size.r,
+          height: size.r,
+          decoration: BoxDecoration(
+            color: FTheme.white.withOpacity(.3),
+            borderRadius: radius,
           ),
+        ),
       ],
     );
   }
