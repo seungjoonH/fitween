@@ -38,7 +38,7 @@ class RankingCardView extends StatelessWidget {
 
                 return Column(
                   children: List.generate(
-                    rankingP.infos.length, (index) {
+                    rankingP.infos.length + 1, (index) {
                       FUserInfo info = rankingP.infos[type]![index];
                       FUserRecord record = rankingP.records[type]![index];
                       double amount = record.getAmounts(type, rankingP.startDate, rankingP.endDate);

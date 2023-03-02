@@ -74,6 +74,7 @@ class _FCardState extends State<FCard> {
             child: GestureDetector(
               onTapDown: onTapDown,
               onTapUp: onTapUp,
+              onTapCancel: () => setState(() => scale = 1.0),
               child: AnimatedContainer(
                 width: double.infinity,
                 padding: widget.padding,

@@ -66,7 +66,7 @@ class AchievementLevelView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  height: 200.0,
+                  height: 220.0,
                   alignment: Alignment.bottomCenter,
                   child: Image.asset(
                     levels[index].imageUrl!,
@@ -108,12 +108,12 @@ class AchievementLevelView extends StatelessWidget {
                       FText(title, maxLines: 2),
                       const SizedBox(height: 10.0),
                       SizedBox(
-                        height: 90.0,
+                        height: 100.0,
                         child: FText(
                           levels[index].description!,
                           color: FTheme.grey,
                           style: textTheme.bodySmall,
-                          maxLines: 5,
+                          maxLines: 7,
                         ),
                       ),
                     ],

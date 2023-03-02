@@ -179,6 +179,7 @@ class _FBadgeWidgetState extends State<FBadgeWidget> {
       child: GestureDetector(
         onTapDown: onTapDown,
         onTapUp: onTapUp,
+        onTapCancel: () => setState(() => scale = 1.0),
         child: Material(
           color: FTheme.colorA,
           borderRadius: BorderRadius.circular(widget.size.r / 2.25),

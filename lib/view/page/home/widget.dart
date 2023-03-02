@@ -3,7 +3,7 @@ import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/calendar.dart';
 import 'package:fitween/presenter/page/ranking.dart';
-import 'package:fitween/view/page/ranking/widget.dart';
+import 'package:fitween/view/page/home/ranking/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gif/flutter_gif.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -268,7 +268,8 @@ class RankingGraph extends StatelessWidget {
         String myUid = userInfoP.loggedUser.uid!;
 
         int myPrice = rankingP.infos[type]!.indexWhere((info) => info.uid == myUid);
-        int firstIndex = rankingP.infos[type]!.length > 3 ? myPrice - 1 : 0;
+        int firstIndex = rankingP.infos[type]!.length > 3
+            ? max(myPrice - 2, 0) : 0;
         double maxAmount = rankingP.records[type]![firstIndex]
             .getAmounts(type, rankingP.startDate, rankingP.endDate);
 

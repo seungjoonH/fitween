@@ -151,15 +151,13 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: loadingP.loading ? 2 : newChallenges.length,
                       itemBuilder: (_, index) {
-                        return InkWell(
-                          onTap: () => ChallengeDetailP.toChallengeDetail(
+                        return loadingP.loading ? FCard(
+                          constraints: const BoxConstraints(minHeight: 100.0),
+                          child: const SizedBox(),
+                        ) : ChallengeCard(
+                          challenge: newChallenges[index],
+                          onPressed: () => ChallengeDetailP.toChallengeDetail(
                             newChallenges[index],
-                          ),
-                          child: loadingP.loading ? FCard(
-                            constraints: const BoxConstraints(minHeight: 100.0),
-                            child: const SizedBox(),
-                          ) : ChallengeCard(
-                            challenge: newChallenges[index],
                           ),
                         );
                       },
@@ -653,6 +651,7 @@ class _LevelButtonState extends State<LevelButton> {
       child: GestureDetector(
         onTapDown: onTapDown,
         onTapUp: onTapUp,
+        onTapCancel: () => setState(() => scale = 1.0),
         child: Material(
           color: FTheme.darkGrey,
           borderRadius: radius,

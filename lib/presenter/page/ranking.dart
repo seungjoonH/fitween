@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 class RankingP extends GetxController{
   static void toRanking(ActivityType type) {
-    Get.toNamed('/ranking', arguments: type);
+    Get.toNamed('/home/ranking', arguments: type);
   }
   static Future init() async {
     final rankingP = Get.find<RankingP>();
