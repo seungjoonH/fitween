@@ -48,6 +48,7 @@ class PainterP extends GetxController {
   WorkoutStage beforeStage = WorkoutStage.ready;
   WorkoutStage currentStage = WorkoutStage.ready;
   WorkoutState state = WorkoutState.stop;
+  WorkoutTimer timerState = WorkoutTimer.start;
 
   String? stateText;
   int get count => Get.find<TimeAttackCameraP>().count;
@@ -118,9 +119,24 @@ class PainterP extends GetxController {
 
   void timerStart() {
     timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      timerSeconds--; update();
+        switch (timerState) {
+          case WorkoutTimer.start:
+            if(timerSeconds>0) {
+              timerSeconds--;
+              update();
+            }
+            break;
+            case WorkoutTimer.stop: if(timerSeconds==0) break;
+      }
     });
   }
+
+  void initTimer() {
+    timerState = WorkoutTimer.start;
+    timerSeconds = 180;
+    update();
+  }
+
 
   void countUp() {
     final workoutMain = Get.find<TimeAttackCameraP>();
@@ -213,6 +229,4 @@ class PainterP extends GetxController {
     }
 
   }
-
-
 }

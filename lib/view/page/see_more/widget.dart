@@ -8,6 +8,7 @@ import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/see_more/collection/collection.dart';
+import 'package:fitween/presenter/page/see_more/goal_edit/goal_edit.dart';
 import 'package:fitween/presenter/page/see_more/info_edit/info_edit.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/card.dart';
@@ -124,6 +125,7 @@ class GoalEditCard extends StatelessWidget {
         bold: true,
       ),
       icon: const Icon(Icons.edit),
+      onPressed: GoalEditP.toGoalEdit,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

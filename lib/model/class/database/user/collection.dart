@@ -1,6 +1,8 @@
 /* 사용자 모델 구조 */
 
+import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/model/class/database/collection.dart';
@@ -15,7 +17,8 @@ class FUserCollection {
   List<Collection> collections = [];
 
   /// accessors & mutators
-  // 대표 컬렉션
+  Color get badgeColor => ActivityType.values[uid!.codeUnitAt(1) % 4].color;
+
   Collection? get collection => collections
       .firstWhereOrNull((collection) => collection.badgeId == badgeId);
 

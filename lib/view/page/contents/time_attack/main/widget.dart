@@ -1,5 +1,5 @@
 import 'package:fitween/global/theme.dart';
-import 'package:fitween/presenter/page/contents/time_attack/camera.dart';
+import 'package:fitween/presenter/page/contents/time_attack/result.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +29,7 @@ class TimeAttackReadyView extends StatelessWidget {
               ),
               const SizedBox(height: 10.0),
               FText(
-                '스쿼트 휫수 계산을 위해 자세를 인식합니다',
+                '스쿼트 횟수 계산을 위해 자세를 인식합니다',
                 style: FTheme.textTheme.bodySmall,
                 color: FTheme.lightGrey,
               ),
@@ -40,7 +40,8 @@ class TimeAttackReadyView extends StatelessWidget {
             child: FButton(
               text: '시작하기',
               stretch: true,
-              onPressed: TimeAttackCameraP.toTimeAttackCamera,
+              //onPressed: TimeAttackCameraP.toTimeAttackCamera,
+              onPressed: TimeAttackResultP.toTimeAttackResult,
             ),
           )
         ],

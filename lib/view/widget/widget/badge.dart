@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_polygon/flutter_polygon.dart';
@@ -8,6 +9,7 @@ import 'package:fitween/model/class/database/collection.dart';
 import 'package:fitween/presenter/global.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 class CollectionWidget extends StatelessWidget {
   CollectionWidget({
@@ -136,12 +138,18 @@ class FBadgeWidget extends StatefulWidget {
     Key? key,
     this.badge,
     this.size = 45.0,
+    Color? backgroundColor,
+    this.defeated,
     VoidCallback? onPressed,
-  }) : onPressed = onPressed ?? (() => GlobalP.showBadgeDialog(badge)),
+  }) : assert(badge == null || defeated == null),
+        onPressed = onPressed ?? (() => GlobalP.showBadgeDialog(badge)),
+        backgroundColor = backgroundColor ?? Get.find<UserCollectionP>().loggedUser.badgeColor,
         super(key: key);
 
   final FBadge? badge;
   final double size;
+  final Color backgroundColor;
+  final bool? defeated;
   final VoidCallback? onPressed;
 
   @override
@@ -170,8 +178,14 @@ class _FBadgeWidgetState extends State<FBadgeWidget> {
     super.initState();
   }
 
+  String get asset {
+    String filename = (widget.defeated ?? false) ? 'defeat' : 'void';
+    return 'assets/image/badge/$filename.svg';
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return AnimatedScale(
       scale: scale,
       duration: duration,
@@ -180,14 +194,15 @@ class _FBadgeWidgetState extends State<FBadgeWidget> {
         onTapUp: onTapUp,
         onTapCancel: () => setState(() => scale = 1.0),
         child: Material(
-          color: FTheme.colorA,
+          color: widget.backgroundColor,
           borderRadius: BorderRadius.circular(widget.size.r / 2.25),
           child: SizedBox(
             width: widget.size.r,
             height: widget.size.r,
             child: widget.badge?.imageUrl! == null
-                ? SvgPicture.asset('assets/image/badge/void.svg')
-                : Image.asset(widget.badge!.imageUrl!),
+                ? SvgPicture.asset(asset,
+              fit: BoxFit.contain,
+            ) : Image.asset(widget.badge!.imageUrl!),
           ),
         ),
       ),

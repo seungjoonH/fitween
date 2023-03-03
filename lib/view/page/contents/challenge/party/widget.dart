@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
+import 'package:fitween/global/number.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/party.dart';
@@ -15,6 +16,7 @@ import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/effect/effect.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/card.dart';
+import 'package:fitween/view/widget/widget/me.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -176,8 +178,9 @@ class ChallengeScoreCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 24.0.r),
       child: FCard(
         title: FText('점수판',
-          style: textTheme.titleSmall,
-          color: FTheme.lightGrey,
+          style: textTheme.titleLarge,
+          color: FTheme.darkGrey,
+          bold: true,
         ),
         constraints: const BoxConstraints(minHeight: 270.0),
         child: SizedBox(
@@ -202,11 +205,6 @@ class ChallengeScoreCard extends StatelessWidget {
               const Divider(
                 color: FTheme.lightGrey,
                 thickness: 2,
-              ),
-              SizedBox(height: 12.0.h),
-              FText(
-                '참여 코드를 친구에게 공유하여 함께 도전해요!',
-                style: textTheme.bodyLarge,
               ),
               SizedBox(height: 12.0.h),
               GetBuilder<PartyP>(
@@ -257,6 +255,11 @@ class ChallengeScoreCard extends StatelessWidget {
                   );
                 },
               ),
+              const SizedBox(height: 10.0),
+              FText(
+                '참여 코드를 친구에게 공유하여 함께 도전해요!',
+                style: textTheme.bodyLarge,
+              ),
             ],
           ),
         ),
@@ -286,15 +289,15 @@ class _ChallengeScoreLinearIndicatorState
     double goal = widget.party.level['goal'].toDouble();
 
     if (widget.party.type == ActivityType.distance) {
-      amount = amount ~/ 100 / 10;
-      goal = goal ~/ 100 / 10;
+      amount = (amount / 100).round() / 10;
+      goal = (goal / 100).round() / 10;
     }
 
     String amountString = '${amount}K';
     String goalString = '${goal}K';
 
-    if (amount * 10 % 10 > 0) amountString = '${amount.round()}K';
-    if (goal * 10 % 10 > 0) goalString = '${goal.round()}K';
+    if (amount * 10 % 10 == 0) amountString = '${amount.round()}K';
+    if (goal * 10 % 10 == 0) goalString = '${goal.round()}K';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -327,10 +330,10 @@ class _ChallengeScoreLinearIndicatorState
         //   ],
         // ),
         FText(
-          '$amountString / $goalString ${widget.party.challenge?.type?.unit}',
+          '$amountString/$goalString',
           color: amount >= goal
               ? widget.party.challenge?.type?.color
-              : FTheme.black,
+              : FTheme.darkGrey,
           style: textTheme.bodyLarge,
         ),
         const SizedBox(height: 10.0),
@@ -394,23 +397,13 @@ class MyPartyRankingWidget extends StatelessWidget {
                               ),
                             ),
                             if (infos[index].uid == user.uid)
-                            Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                              margin: const EdgeInsets.only(left: 5.0),
-                              decoration: BoxDecoration(
-                                color: FTheme.black,
-                                borderRadius: BorderRadius.circular(12.0.r),
-                              ),
-                              child: FText('ME',
-                                style: textTheme.bodySmall,
-                                color: FTheme.white,
-                              ),
-                            ),
+                            const MeTagWidget(),
                           ],
                         ),
                         FText(
-                          '$amount${party!.type.unit}',
+                          '${toLocalString(amount)}${party!.type.unit}',
                           style: textTheme.bodyLarge,
+                          color: FTheme.darkGrey,
                         ),
                       ],
                     ),

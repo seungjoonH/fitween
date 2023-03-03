@@ -89,13 +89,13 @@ flutter:
     - assets/image/logo/
     - assets/image/page/challenge/
     - assets/image/page/contents/
-    - assets/image/page/edit_goal/
-    - assets/image/page/edit_goal/
+    - assets/image/page/contents/time_attack/
     - assets/image/page/home/
     - assets/image/page/home/ranking/
     - assets/image/page/home/rotation/
     - assets/image/page/onboarding/
     - assets/image/page/register/
+    - assets/image/page/see_more/goal_edit/
     - assets/image/widget/dialog/
     - assets/json/data/
     - assets/json/data/level/

@@ -22,7 +22,6 @@ class _RegisterPageState extends State<RegisterPage> {
           registerP.setKeyboardVisible(
             MediaQuery.of(context).viewInsets.bottom != 0,
           );
-
           return Scaffold(
             backgroundColor: FTheme.white,
             // extendBodyBehindAppBar: registerP.pageIndex > 1,

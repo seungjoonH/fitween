@@ -255,7 +255,10 @@ class FriendListTile extends StatelessWidget{
       padding: const EdgeInsets.symmetric(vertical: 5.0),
       child: Row(
         children: [
-          FBadgeWidget(badge: BadgeJsonP.getBadge(userCollection.badgeId)),
+          FBadgeWidget(
+            badge: BadgeJsonP.getBadge(userCollection.badgeId),
+            backgroundColor: userCollection.badgeColor,
+          ),
           const SizedBox(width: 10.0),
           Expanded(
             child: FText(

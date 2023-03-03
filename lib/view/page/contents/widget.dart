@@ -702,9 +702,9 @@ class TimeAttackCardView extends StatelessWidget {
         child: Column(
           children: [
             FCard(
-              title: FText('타임어택!',
-                style: textTheme.titleSmall,
-                color: FTheme.lightGrey,
+              title: FText('스쿼트!',
+                style: textTheme.titleLarge,
+                bold: true,
               ),
               constraints: const BoxConstraints(maxHeight: 420.0),
               child: Expanded(
@@ -717,8 +717,9 @@ class TimeAttackCardView extends StatelessWidget {
                       height: 180.0,
                     ),
                     FText(
-                      '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지\n대결해요!',
-                      maxLines: 3,
+                      '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
+                      maxLines: 2,
+                      style: textTheme.titleSmall,
                     ),
                     FButton(
                       stretch: true,

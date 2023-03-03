@@ -1,4 +1,4 @@
-import 'package:fitween/view/page/collection/main/widget.dart';
+import 'package:fitween/view/page/see_more/collection/widget.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:flutter/material.dart';
 

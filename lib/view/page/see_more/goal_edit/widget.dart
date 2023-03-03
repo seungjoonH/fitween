@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fitween/presenter/page/see_more/goal_edit/goal_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
@@ -21,17 +22,12 @@ import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:text_scroll/text_scroll.dart';
 
-// 회원가입 페이지 위젯 모음
-
 // Carousel 뷰 위젯
 class CarouselView extends StatelessWidget {
   const CarouselView({Key? key}) : super(key: key);
 
   // 회원가입 페이지 carousel 리스트
   static List<Widget> carouselWidgets() => const [
-    UserInfoView(),
-    WeightHeightView(),
-    SettingIntroView(),
     DistanceRecommendView(),
     DistanceGoalView(),
     HeightRecommendView(),
@@ -45,30 +41,30 @@ class CarouselView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    String asset = 'assets/image/page/register/';
-    const List<int> widthFitIndex = [5, 6];
+    String asset = 'assets/image/page/see_more/goal_edit/';
+    const List<int> widthFitIndex = [2, 3];
 
-    return GetBuilder<RegisterP>(
-      builder: (controller) {
+    return GetBuilder<GoalEditP>(
+      builder: (goalEditP) {
         return Stack(
           children: [
-            for (int i = 0; i < controller.imageExistence.length; i++)
-            AnimatedPositioned(
-              left: screenSize.width * (i - controller.pageIndex),
-              bottom: 140.0.h,
-              duration: const Duration(milliseconds: 350),
-              curve: Curves.easeInOut,
-              width: screenSize.width,
-              height: screenSize.height * .4,
-              child: controller.imageExistence[i]
-                  ? SvgPicture.asset(
-                '${asset}carousel_${i.toString().padLeft(2, '0')}.svg',
-                alignment: Alignment.center,
-                fit: widthFitIndex.contains(i)
-                       ? BoxFit.fitHeight : BoxFit.contain,
-                // fit: BoxFit.fitWidth,
-              ) : Container(),
-            ),
+            for (int i = 0; i < goalEditP.imageExistence.length; i++)
+              AnimatedPositioned(
+                left: screenSize.width * (i - goalEditP.pageIndex),
+                bottom: 140.0.h,
+                duration: const Duration(milliseconds: 350),
+                curve: Curves.easeInOut,
+                width: screenSize.width,
+                height: screenSize.height * .4,
+                child: goalEditP.imageExistence[i]
+                    ? SvgPicture.asset(
+                  '${asset}carousel_${i.toString().padLeft(2, '0')}.svg',
+                  alignment: Alignment.center,
+                  fit: widthFitIndex.contains(i)
+                      ? BoxFit.fitHeight : BoxFit.contain,
+                  // fit: BoxFit.fitWidth,
+                ) : Container(),
+              ),
             Column(
               children: [
                 Expanded(
@@ -77,7 +73,7 @@ class CarouselView extends StatelessWidget {
                     child: Container(
                       constraints: BoxConstraints(minWidth: screenSize.width),
                       child: CarouselSlider(
-                        carouselController: RegisterP.carouselCont,
+                        carouselController: GoalEditP.carouselCont,
                         items: carouselWidgets().map((widget) => widget).toList(),
                         options: CarouselOptions(
                           height: double.infinity,
@@ -99,222 +95,6 @@ class CarouselView extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-// 닉네임 입력 뷰
-class UserInfoView extends StatelessWidget {
-  const UserInfoView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<RegisterP>(
-      builder: (controller) {
-        return Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FText('별명',
-                      style: textTheme.headlineSmall,
-                      color: FTheme.darkGrey,
-                    ),
-                    const SizedBox(height: 8.0),
-                    FInputField(
-                      invalid: controller.fields['nickname']!.invalid,
-                      controller: controller.fields['nickname']!.controller,
-                      hintText: controller.fields['nickname']?.hintText ?? '별명을 입력해주세요',
-                      hintColor: controller.fields['nickname']?.hintText == null
-                          ? FTheme.lightGrey : FTheme.colorB,
-                    ),
-                    const SizedBox(height: 40.0),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FText(
-                      '생년월일',
-                      style: textTheme.headlineSmall,
-                      color: FTheme.darkGrey,
-                    ),
-                    const SizedBox(height: 8.0),
-                    FInputField(
-                      invalid: controller.fields['dateOfBirth']!.invalid,
-                      controller: controller.fields['dateOfBirth']!.controller,
-                      hintText: controller.fields['dateOfBirth']?.hintText ?? 'YYYYMMDD',
-                      hintColor: controller.fields['dateOfBirth']?.hintText == null
-                        ? FTheme.lightGrey : FTheme.colorB,
-                      keyboardType: TextInputType.number,
-                    ),
-                    const SizedBox(height: 40.0),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FText(
-                      '성별',
-                      style: textTheme.headlineSmall,
-                      color: FTheme.darkGrey,
-                    ),
-                    const SizedBox(height: 8.0),
-                    ShakeWidget(
-                      autoPlay: controller.fields['sex']!.invalid,
-                      shakeConstant: ShakeHorizontalConstant2(),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
-                          SexSelectionButton(sex: Sex.male),
-                          SizedBox(width: 20.0),
-                          SexSelectionButton(sex: Sex.female),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20.0.h),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-// 성별 선택 버튼
-class SexSelectionButton extends StatelessWidget {
-  const SexSelectionButton({Key? key, required this.sex}) : super(key: key);
-
-  final Sex sex;
-
-  @override
-  Widget build(BuildContext context) {
-    const Map<Sex, String> texts = {
-      Sex.male: '남성',
-      Sex.female: '여성',
-    };
-
-    return GetBuilder<RegisterP>(
-      builder: (registerP) {
-        return FButton(
-          stretch: true,
-          multiple: true,
-          text: texts[sex],
-          onPressed: () => registerP.setSex(sex),
-          backgroundColor: sex == registerP.newcomerInfo.sex
-              ? FTheme.darkGrey
-              : FTheme.background,
-          textColor: sex == registerP.newcomerInfo.sex
-              ? FTheme.background
-              : FTheme.darkGrey,
-        );
-      },
-    );
-  }
-}
-
-// 체중 신장 선택 뷰
-class WeightHeightView extends StatelessWidget {
-  const WeightHeightView({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    Map<String, Widget> contents = {
-      '체중': Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GetBuilder<RegisterP>(
-            builder: (controller) {
-              return NumberPicker(
-                onChanged: controller.setWeight,
-                value: controller.newcomerInfo.weight!,
-                minValue: 30,
-                maxValue: 220,
-                textStyle: textTheme.bodyMedium?.copyWith(
-                  color: FTheme.lightGrey,
-                ),
-                selectedTextStyle: textTheme.headlineSmall?.copyWith(
-                  color: FTheme.darkGrey,
-                ),
-                itemHeight: 30.0,
-              );
-            },
-          ),
-          FText('kg', color: FTheme.darkGrey),
-        ],
-      ),
-      '신장': Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GetBuilder<RegisterP>(
-            builder: (controller) {
-              return NumberPicker(
-                onChanged: controller.setHeight,
-                value: controller.newcomerInfo.height!,
-                minValue: 100,
-                maxValue: 220,
-                textStyle: textTheme.bodyMedium?.copyWith(
-                  color: FTheme.lightGrey,
-                ),
-                selectedTextStyle: textTheme.headlineSmall?.copyWith(
-                  color: FTheme.darkGrey,
-                ),
-                itemHeight: 30.0,
-              );
-            },
-          ),
-          FText('cm', color: FTheme.darkGrey),
-        ],
-      ),
-    };
-
-    return Padding(
-      padding: const EdgeInsets.all(30.0),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 3,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: contents.entries.map((content) => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FText(
-                    content.key,
-                    style: textTheme.headlineSmall,
-                    color: FTheme.darkGrey,
-                  ),
-                  SizedBox(height: 5.0.h),
-                  FCard(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        content.value,
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 10.0.h),
-                ],
-              )).toList(),
-            ),
-          ),
-          Center(
-            child: FText(
-              '*체중과 신장은 간편한 계산을 위해서만 사용될 뿐\n다른 곳에는 이용되지 않아요!',
-              style: textTheme.bodyMedium,
-              color: FTheme.lightGrey,
-              maxLines: 2,
-              align: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
@@ -348,9 +128,9 @@ class GoalNumberPicker extends StatefulWidget {
 class _GoalNumberPickerState extends State<GoalNumberPicker> {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterP>(
-      builder: (registerP) {
-        Record record = registerP.newcomerRecord.getGoal(widget.type)!;
+    return GetBuilder<GoalEditP>(
+      builder: (goalEditP) {
+        Record record = goalEditP.userRecord.getGoal(widget.type)!;
         record.convert({
           ActivityType.distance: ExerciseUnit.minute,
           ActivityType.weight: ExerciseUnit.count,
@@ -359,16 +139,16 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
         Record lessRecord = Record.init(
           widget.type,
           max(record.amount - 1, widget.minValue.toDouble()), {
-            ActivityType.distance: ExerciseUnit.minute,
-            ActivityType.weight: ExerciseUnit.count,
-          }[widget.type],
+          ActivityType.distance: ExerciseUnit.minute,
+          ActivityType.weight: ExerciseUnit.count,
+        }[widget.type],
         );
         Record greaterRecord = Record.init(
           widget.type,
           min(record.amount + 1, widget.maxValue.toDouble()),{
-            ActivityType.distance: ExerciseUnit.minute,
-            ActivityType.weight: ExerciseUnit.count,
-          }[widget.type],
+          ActivityType.distance: ExerciseUnit.minute,
+          ActivityType.weight: ExerciseUnit.count,
+        }[widget.type],
         );
 
         return Column(
@@ -383,21 +163,21 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
                     : Colors.transparent,
               ),
               onPressed: () {
-                registerP.newcomerRecord.setGoal(widget.type, greaterRecord);
+                goalEditP.userRecord.setGoal(widget.type, greaterRecord);
                 setState(() {});
               },
             ),
             NumberPicker(
               onChanged: (val) {
-                registerP.newcomerRecord.setGoal(
+                goalEditP.userRecord.setGoal(
                   widget.type, Record.init(
-                    widget.type, val.toDouble(), {
-                      ActivityType.distance: ExerciseUnit.minute,
-                      ActivityType.weight: ExerciseUnit.count,
-                    }[widget.type],
-                  ),
+                  widget.type, val.toDouble(), {
+                  ActivityType.distance: ExerciseUnit.minute,
+                  ActivityType.weight: ExerciseUnit.count,
+                }[widget.type],
+                ),
                 );
-                registerP.update();
+                goalEditP.update();
               },
               itemCount: widget.itemCount,
               itemWidth: widget.itemWidth,
@@ -417,7 +197,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
                     : Colors.transparent,
               ),
               onPressed: () {
-                registerP.newcomerRecord.setGoal(widget.type, lessRecord);
+                goalEditP.userRecord.setGoal(widget.type, lessRecord);
                 setState(() {});
               },
             ),
@@ -468,15 +248,15 @@ class DistanceRecommendView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterP>(
-      builder: (registerP) {
+    return GetBuilder<GoalEditP>(
+      builder: (goalEditP) {
         int ageGroup = today.difference(
-          registerP.newcomerInfo.dateOfBirth!,
+          goalEditP.userInfo.dateOfBirth!,
         ).inDays;
         List<int> recommendTimes = [];
         ageGroup = (ageGroup / 3650).floor() * 10;
 
-        ageGroup < 60 && registerP.newcomerInfo.sex == Sex.male;
+        ageGroup < 60 && goalEditP.userInfo.sex == Sex.male;
 
         if (ageGroup < 20) {
           recommendTimes = [60];
@@ -492,7 +272,7 @@ class DistanceRecommendView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FTexts(
-                ['$ageGroup', '대 ', registerP.newcomerInfo.sex!.kr, ' 평균'],
+                ['$ageGroup', '대 ', goalEditP.userInfo.sex!.kr, ' 평균'],
                 colors: const [
                   FTheme.colorA, FTheme.black,
                   FTheme.colorA, FTheme.black,
@@ -528,9 +308,9 @@ class DistanceGoalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterP>(
-      builder: (registerP) {
-        DistanceRecord distance = registerP.newcomerRecord.getGoal(
+    return GetBuilder<GoalEditP>(
+      builder: (goalEditP) {
+        DistanceRecord distance = goalEditP.userRecord.getGoal(
           ActivityType.distance,
         ) as DistanceRecord;
 
@@ -544,8 +324,8 @@ class DistanceGoalView extends StatelessWidget {
 
         String distanceTitle = tier['current'].title;
         DistanceRecord distanceValue = DistanceRecord(
-            amount: tier['current'].amount.toDouble(),
-            state: ExerciseUnit.kilometer,
+          amount: tier['current'].amount.toDouble(),
+          state: ExerciseUnit.kilometer,
         );
 
         const Velocity velocity = Velocity(
@@ -650,9 +430,9 @@ class HeightGoalView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterP>(
-      builder: (registerP) {
-        HeightRecord goal = registerP.newcomerRecord.getGoal(
+    return GetBuilder<GoalEditP>(
+      builder: (goalEditP) {
+        HeightRecord goal = goalEditP.userRecord.getGoal(
           ActivityType.height,
         ) as HeightRecord;
 
@@ -762,14 +542,15 @@ class WeightRecommendView extends StatelessWidget {
   }
 }
 
+
 class WeightGoalView extends StatelessWidget {
   const WeightGoalView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterP>(
-      builder: (registerP) {
-        WeightRecord goal = registerP.newcomerRecord.getGoal(
+    return GetBuilder<GoalEditP>(
+      builder: (goalEditP) {
+        WeightRecord goal = goalEditP.userRecord.getGoal(
           ActivityType.weight,
         ) as WeightRecord;
 
@@ -857,20 +638,20 @@ class CalorieCheckView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterP>(
-      builder: (registerP) {
-        CalorieRecord goal = registerP.newcomerRecord.getGoal(
+    return GetBuilder<GoalEditP>(
+      builder: (goalEditP) {
+        CalorieRecord goal = goalEditP.userRecord.getGoal(
           ActivityType.calorie,
         ) as CalorieRecord;
 
         String distanceTitle = LevelJsonP.getTier(
           ActivityType.distance,
-          registerP.newcomerRecord.getGoal(ActivityType.distance)!,
+          goalEditP.userRecord.getGoal(ActivityType.distance)!,
         )['current'].title;
 
         String heightTitle = LevelJsonP.getTier(
           ActivityType.height,
-          registerP.newcomerRecord.getGoal(ActivityType.height)!,
+          goalEditP.userRecord.getGoal(ActivityType.height)!,
         )['current'].title;
 
         TextStyle? style(Color color) => textTheme.headlineMedium?.merge(TextStyle(
@@ -951,7 +732,7 @@ class CarouselButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<RegisterP>(
+    return GetBuilder<GoalEditP>(
       builder: (controller) {
         // bool lastPage = controller.pageIndex == CarouselView.widgetCount - 1;
 

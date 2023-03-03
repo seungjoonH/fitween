@@ -1,5 +1,5 @@
 /* 라우트 관련 */
-import 'package:fitween/view/page/collection/main/main.dart';
+import 'package:fitween/view/page/see_more/collection/collection.dart';
 import 'package:fitween/view/page/contents/achievement/level/level.dart';
 import 'package:fitween/view/page/contents/challenge/detail/detail.dart';
 import 'package:fitween/view/page/contents/challenge/party/party.dart';
@@ -7,6 +7,7 @@ import 'package:fitween/view/page/contents/contents.dart';
 import 'package:fitween/view/page/contents/time_attack/camera/camera.dart';
 import 'package:fitween/view/page/contents/time_attack/friend/friend.dart';
 import 'package:fitween/view/page/contents/time_attack/main/main.dart';
+import 'package:fitween/view/page/contents/time_attack/result/result.dart';
 import 'package:fitween/view/page/friend/friend.dart';
 import 'package:fitween/view/page/home/calendar/calendar.dart';
 import 'package:fitween/view/page/home/home.dart';
@@ -14,6 +15,7 @@ import 'package:fitween/view/page/home/ranking/ranking.dart';
 import 'package:fitween/view/page/login/login.dart';
 import 'package:fitween/view/page/onboarding/onboarding.dart';
 import 'package:fitween/view/page/register/register.dart';
+import 'package:fitween/view/page/see_more/goal_edit/goal_edit.dart';
 import 'package:fitween/view/page/see_more/info_edit/info_edit.dart';
 import 'package:fitween/view/page/see_more/see_more.dart';
 import 'package:flutter/material.dart';
@@ -45,8 +47,10 @@ class FRoute {
     '/contents/timeAttackFriend': const TimeAttackFriendPage(),
     '/contents/timeAttackReady': const TimeAttackReadyPage(),
     '/contents/timeAttackCamera': const TimeAttackCameraPage(),
+    '/contents/timeAttackResult': const TimeAttackResultPage(),
     '/seeMore': const SeeMorePage(),
     '/seeMore/collection': const CollectionPage(),
+    '/seeMore/goalEdit': const GoalEditPage(),
     '/seeMore/infoEdit': const InfoEditPage(),
   };
 

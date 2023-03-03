@@ -21,6 +21,7 @@ class TimeAttackCameraP extends GetxController {
     final painterP = Get.find<PainterP>();
     count = 0;
     painterP.initWorkout();
+    painterP.initTimer();
   }
 
   void finishWorkout() async {

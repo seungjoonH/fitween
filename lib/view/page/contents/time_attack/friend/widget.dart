@@ -9,8 +9,10 @@ import 'package:fitween/presenter/page/contents/time_attack/ready.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/card.dart';
+import 'package:fitween/view/widget/widget/me.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class TimeAttackFriendView extends StatelessWidget {
@@ -21,6 +23,7 @@ class TimeAttackFriendView extends StatelessWidget {
     final userInfoP = Get.find<UserInfoP>();
     final userFriendP = Get.find<UserFriendP>();
     final userCollectionP = Get.find<UserCollectionP>();
+
     List<FUserInfo> infos = userFriendP.loggedUser.rivalInfos;
     List<FUserCollection> collections = userFriendP.loggedUser.rivalCollections;
 
@@ -39,31 +42,38 @@ class TimeAttackFriendView extends StatelessWidget {
               ),
               const SizedBox(height: 50.0),
               FCard(
-                backgroundColor: FTheme.colorD,
                 child: Row(
                   children: [
                     FBadgeWidget(
                       badge: BadgeJsonP.getBadge(userCollectionP.loggedUser.badgeId),
                     ),
                     const SizedBox(width: 20.0),
-                    FText(userInfoP.loggedUser.nickname!),
+                    Row(
+                      children: [
+                        FText(userInfoP.loggedUser.nickname!),
+                        const MeTagWidget(),
+                      ],
+                    ),
                   ],
                 ),
               ),
               const SizedBox(height: 20.0),
-              ListView.separated(
-                shrinkWrap: true,
-                itemCount: infos.length,
-                itemBuilder: (context, index) => FCard(
-                  child: Row(
-                    children: [
-                      FBadgeWidget(badge: BadgeJsonP.getBadge(collections[index].badgeId)),
-                      const SizedBox(width: 20.0),
-                      FText(infos[index].nickname!),
-                    ],
+              SizedBox(
+                height: 250.0.h,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: infos.length,
+                  itemBuilder: (context, index) => FCard(
+                    child: Row(
+                      children: [
+                        FBadgeWidget(badge: BadgeJsonP.getBadge(collections[index].badgeId)),
+                        const SizedBox(width: 20.0),
+                        FText(infos[index].nickname!),
+                      ],
+                    ),
                   ),
+                  separatorBuilder: (context, index) => const SizedBox(height: 20.0),
                 ),
-                separatorBuilder: (context, index) => const SizedBox(height: 20.0),
               ),
             ],
           ),

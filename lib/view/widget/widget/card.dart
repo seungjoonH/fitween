@@ -1,5 +1,4 @@
 import 'package:fitween/presenter/widget/loading.dart';
-import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fitween/global/theme.dart';
