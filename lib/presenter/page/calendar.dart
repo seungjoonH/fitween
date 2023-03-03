@@ -24,7 +24,7 @@ class CalendarP extends GetxController {
   static final lastDay = today;
 
   static Future toCalendar() async {
-    Get.toNamed('/calendar');
+    Get.toNamed('/home/calendar');
     await CalendarP.init();
   }
 

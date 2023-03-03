@@ -52,6 +52,12 @@ class GlobalP extends GetxController {
 
   int navIndex = 0;
 
+  static void init() {
+    final globalP = Get.find<GlobalP>();
+    globalP.navIndex = 0;
+    globalP.update();
+  }
+
   void navigate(int index) async {
     switch (index) {
       case 0:

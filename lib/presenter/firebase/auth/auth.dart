@@ -7,6 +7,7 @@ import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/notification.dart';
 import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
@@ -35,13 +36,12 @@ class AuthPresenter {
   static final userRecordP = Get.find<UserRecordP>();
 
   static const List<String> developerUids = [
-    'sLc4rerF1Xg41rclmmfqgc7jlAa2', // 현승준
-    'F02JAQ4Cdbb2w7AaCf9VJz9fqs52', // 현승준
-    '09zhHKukWhaK2MlwJMJoOVFq7D23', // 정윤석
-    'e3Ei6k4c9TSZrNzzfUZCLXtbqRB3', // 정윤석
-    'AEROyVDTr2P04e2GD0x2Js6ejN42', // 이하준
-    'OelnDbcyH8dXR04DkWpbfaXtjVN2', // 최복원
-    '8VQFtwpLhqNThjhYNuizKWo7vlK2', // 한상윤
+    '4E6PMbXYTFaYOiipTyGC6QezRaf2', // 현승준
+    'haCNmPqUPoQFlofMskJE2kFTbBq2', // 현승준
+    '8jc9gBbVXKOPaheVFjiWQKJlvOq2', // 정윤석
+    'FHYnE3iuWlQ6ppWCQiAZQN79kyO2', // 최복원
+    'cXv586pkx6fSlXs83oNOme9SRjI3', // 한상윤
+    'J5y5BI2LeHgUN1hbshEggJhSvmd2', // 한상윤
   ];
   static const storage = FlutterSecureStorage();
   static String? appleName;
@@ -133,6 +133,7 @@ class AuthPresenter {
       await userRecordP.login(strangerRecord);
 
       await storeLoginData(userInfoP.data);
+      GlobalP.init();
       HomeP.toHome();
       HomeP.init();
       await Get.find<ContentsP>().loadAll();
@@ -193,6 +194,7 @@ class AuthPresenter {
     await userPartyP.load();
     await userRecordP.load();
 
+    GlobalP.init();
     HomeP.toHome();
     HomeP.init();
     await Get.find<ContentsP>().loadAll();

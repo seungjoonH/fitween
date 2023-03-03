@@ -76,6 +76,7 @@ class _FButtonState extends State<FButton> {
       child: GestureDetector(
         onTapDown: onTapDown,
         onTapUp: onTapUp,
+        onTapCancel: () => setState(() => scale = 1.0),
         child: Material(
           color: widget.fill ? widget.backgroundColor : Colors.transparent,
           borderRadius: BorderRadius.circular(15.0),

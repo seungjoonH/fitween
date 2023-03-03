@@ -22,6 +22,7 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/view/widget/widget/text.dart';
+import 'package:percent_indicator/percent_indicator.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PartyView extends StatelessWidget {
@@ -278,38 +279,59 @@ class _ChallengeScoreLinearIndicatorState
     extends State<ChallengeScoreLinearIndicator> {
   @override
   Widget build(BuildContext context) {
-    int amount = widget.party.recordSum.round();
-    int goal = widget.party.level['goal'];
+    double amount = widget.party.recordSum;
+    double goal = widget.party.level['goal'].toDouble();
+
+    if (widget.party.type == ActivityType.distance) {
+      amount = amount ~/ 100 / 10;
+      goal = goal ~/ 100 / 10;
+    }
+
+    String amountString = '${amount}K';
+    String goalString = '${goal}K';
+
+    // if (amount % 100 == 0) {
+    //
+    // } else {
+    //
+    // }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Expanded(
-              flex: max(1, amount),
-              child: Container(
-                height: 100.0,
-                decoration: BoxDecoration(
-                  color: widget.party.challenge?.type?.color,
-                  borderRadius: const BorderRadius.horizontal(
-                    right: Radius.circular(20.0),
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: amount == 0 ? 49 : max(0, goal - amount),
-              child: const SizedBox(),
-            ),
-          ],
+        LinearPercentIndicator(
+          percent: amount / goal,
+          lineHeight: 100.0,
+          backgroundColor: FTheme.background,
+          barRadius: const Radius.circular(20.0),
+          progressColor: widget.party.type.color,
         ),
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       flex: max(1, amount),
+        //       child: Container(
+        //         height: 100.0,
+        //         decoration: BoxDecoration(
+        //           color: widget.party.challenge?.type?.color,
+        //           borderRadius: const BorderRadius.horizontal(
+        //             right: Radius.circular(20.0),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //     Expanded(
+        //       flex: amount == 0 ? 49 : max(0, goal - amount),
+        //       child: const SizedBox(),
+        //     ),
+        //   ],
+        // ),
         FText(
-          '$amount / $goal ${widget.party.challenge?.type?.unit}',
+          '${amount}K / ${goal}K ${widget.party.challenge?.type?.unit}',
           color: amount >= goal
               ? widget.party.challenge?.type?.color
               : FTheme.black,
-          style: textTheme.bodyMedium,
+          style: textTheme.bodyLarge,
         ),
         const SizedBox(height: 10.0),
       ],
