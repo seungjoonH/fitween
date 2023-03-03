@@ -6,7 +6,7 @@ import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/presenter/model/user/info.dart';
-import 'package:fitween/presenter/page/ranking.dart';
+import 'package:fitween/presenter/page/home/ranking.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class RankingCardView extends StatelessWidget {
 
                 return Column(
                   children: List.generate(
-                    rankingP.infos.length + 1, (index) {
+                    rankingP.infos.length, (index) {
                       FUserInfo info = rankingP.infos[type]![index];
                       FUserRecord record = rankingP.records[type]![index];
                       double amount = record.getAmounts(type, rankingP.startDate, rankingP.endDate);

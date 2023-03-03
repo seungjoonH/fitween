@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:fitween/global/date.dart';
 import 'package:fitween/presenter/model/user/record.dart';
-import 'package:fitween/presenter/page/calendar.dart';
+import 'package:fitween/presenter/page/home/calendar.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/activity_type.dart';

@@ -5,7 +5,6 @@ import 'package:fitween/model/class/database/collection.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/enum/dialog.dart';
-import 'package:fitween/presenter/firebase/auth/auth.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/json/level.dart';
@@ -18,7 +17,7 @@ import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/notification.dart';
-import 'package:fitween/presenter/page/calendar.dart';
+import 'package:fitween/presenter/page/home/calendar.dart';
 import 'package:fitween/presenter/page/collection/main.dart';
 import 'package:fitween/presenter/page/contents/challenge/challenge_detail.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
@@ -28,10 +27,11 @@ import 'package:fitween/presenter/page/contents/time_attack/friend.dart';
 import 'package:fitween/presenter/page/contents/time_attack/ready.dart';
 import 'package:fitween/presenter/page/exercise/setting/detail.dart';
 import 'package:fitween/presenter/page/friend.dart';
-import 'package:fitween/presenter/page/home.dart';
+import 'package:fitween/presenter/page/home/home.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
-import 'package:fitween/presenter/page/ranking.dart';
+import 'package:fitween/presenter/page/home/ranking.dart';
 import 'package:fitween/presenter/page/register.dart';
+import 'package:fitween/presenter/page/see_more.dart';
 import 'package:fitween/presenter/widget/camera.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/presenter/widget/painter.dart';
@@ -71,7 +71,11 @@ class GlobalP extends GetxController {
         if (navIndex == index) { await ContentsP.init(); }
         else { ContentsP.toContents(); }
         break;
-      case 3: AuthPresenter.fLogout(); break;
+      // case 3: AuthPresenter.fLogout(); break;
+      case 3:
+        if (navIndex == index) { SeeMoreP.init(); }
+        else { SeeMoreP.toSeeMore(); }
+        break;
     }
 
     navIndex = index;
@@ -360,13 +364,12 @@ class GlobalP extends GetxController {
     Get.put(FriendP());
 
     Get.put(ContentsP());
-
     Get.put(ChallengeDetailP());
     Get.put(PartyP());
-
-    //챌린지 페이지 Presenter
     Get.put(TimeAttackReadyP());
     Get.put(TimeAttackFriendP());
     Get.put(TimeAttackCameraP());
+
+    Get.put(SeeMoreP());
   }
 }

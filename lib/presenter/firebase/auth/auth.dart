@@ -23,7 +23,7 @@ import 'package:fitween/presenter/firebase/auth/apple.dart';
 import 'package:fitween/presenter/firebase/auth/google.dart';
 import 'package:fitween/presenter/firebase/firebase.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
-import 'package:fitween/presenter/page/home.dart';
+import 'package:fitween/presenter/page/home/home.dart';
 import 'package:fitween/presenter/page/login.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
 

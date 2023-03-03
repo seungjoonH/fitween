@@ -1,6 +1,6 @@
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/record.dart';
-import 'package:fitween/presenter/page/ranking.dart';
+import 'package:fitween/presenter/page/home/ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gif/flutter_gif.dart';
 import 'package:get/get.dart';

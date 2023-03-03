@@ -7,7 +7,7 @@ import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/model/record.dart';
 import 'package:fitween/presenter/model/user/info.dart';
-import 'package:fitween/presenter/page/calendar.dart';
+import 'package:fitween/presenter/page/home/calendar.dart';
 import 'package:get/get.dart';
 
 class FUserRecord {

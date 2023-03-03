@@ -26,7 +26,7 @@ import 'package:fitween/presenter/model/height.dart';
 import 'package:fitween/presenter/model/record.dart';
 import 'package:fitween/presenter/model/weight.dart';
 import 'package:fitween/view/page/register/widget.dart';
-import 'home.dart';
+import 'home/home.dart';
 
 class Field {
   bool invalid = false;

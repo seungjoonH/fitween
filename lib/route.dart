@@ -13,6 +13,7 @@ import 'package:fitween/view/page/home/ranking/ranking.dart';
 import 'package:fitween/view/page/login/login.dart';
 import 'package:fitween/view/page/onboarding/onboarding.dart';
 import 'package:fitween/view/page/register/register.dart';
+import 'package:fitween/view/page/see_more/see_more.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -42,6 +43,7 @@ class FRoute {
     '/contents/timeAttackFriend': const TimeAttackFriendPage(),
     '/contents/timeAttackReady': const TimeAttackReadyPage(),
     '/contents/timeAttackCamera': const TimeAttackCameraPage(),
+    '/seeMore': const SeeMorePage(),
   };
 
   // 겟페이지 리스트

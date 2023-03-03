@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:fitween/presenter/page/contents/time_attack/camera.dart';
-import 'package:fitween/presenter/page/home.dart';
+import 'package:fitween/presenter/page/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/number.dart';

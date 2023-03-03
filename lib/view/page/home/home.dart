@@ -1,5 +1,5 @@
 import 'package:fitween/global/theme.dart';
-import 'package:fitween/presenter/page/home.dart';
+import 'package:fitween/presenter/page/home/home.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/page/home/widget.dart';
 import 'package:flutter/material.dart';
