@@ -175,7 +175,10 @@ class ChallengeScoreCard extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.0.r),
       child: FCard(
-        title: '점수판',
+        title: FText('점수판',
+          style: textTheme.titleSmall,
+          color: FTheme.lightGrey,
+        ),
         constraints: const BoxConstraints(minHeight: 270.0),
         child: SizedBox(
           width: double.infinity,
@@ -290,11 +293,8 @@ class _ChallengeScoreLinearIndicatorState
     String amountString = '${amount}K';
     String goalString = '${goal}K';
 
-    // if (amount % 100 == 0) {
-    //
-    // } else {
-    //
-    // }
+    if (amount * 10 % 10 > 0) amountString = '${amount.round()}K';
+    if (goal * 10 % 10 > 0) goalString = '${goal.round()}K';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -327,7 +327,7 @@ class _ChallengeScoreLinearIndicatorState
         //   ],
         // ),
         FText(
-          '${amount}K / ${goal}K ${widget.party.challenge?.type?.unit}',
+          '$amountString / $goalString ${widget.party.challenge?.type?.unit}',
           color: amount >= goal
               ? widget.party.challenge?.type?.color
               : FTheme.black,

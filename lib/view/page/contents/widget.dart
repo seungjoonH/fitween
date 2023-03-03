@@ -702,7 +702,10 @@ class TimeAttackCardView extends StatelessWidget {
         child: Column(
           children: [
             FCard(
-              title: '타임어택!',
+              title: FText('타임어택!',
+                style: textTheme.titleSmall,
+                color: FTheme.lightGrey,
+              ),
               constraints: const BoxConstraints(maxHeight: 420.0),
               child: Expanded(
                 child: Column(

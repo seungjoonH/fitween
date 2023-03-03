@@ -128,7 +128,7 @@ class FriendP extends GetxController {
             children: [
               GetBuilder<FriendP>(
                 builder: (friendP) {
-                  return PInputField(
+                  return FInputField(
                     controller: nicknameCont,
                     invalid: !friendP.nicknameExist,
                     hintText: friendP.nicknameHintText ?? '별명을 입력하세요',

@@ -1,9 +1,7 @@
-import 'package:fitween/presenter/model/user/info.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/presenter/global.dart';
-import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 
 class FAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -31,7 +29,11 @@ class FAppBar extends StatelessWidget implements PreferredSizeWidget {
           elevation: 0.0,
           iconTheme: const IconThemeData(color: FTheme.black),
           backgroundColor: color,
-          title: FText(title ?? '', style: textTheme.headlineMedium),
+          title: FText(
+            title ?? '',
+            style: textTheme.headlineSmall,
+            bold: true,
+          ),
           leading: leading,
           actions: actions,
         );

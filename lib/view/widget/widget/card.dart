@@ -9,7 +9,7 @@ class FCard extends StatefulWidget {
   FCard({
     Key? key,
     this.title,
-    this.activateSeeMore = false,
+    this.icon,
     required this.child,
     this.backgroundColor = FTheme.white,
     this.onPressed,
@@ -19,8 +19,8 @@ class FCard extends StatefulWidget {
   })  : padding = padding ?? EdgeInsets.all(20.0.r),
         super(key: key);
 
-  final String? title;
-  final bool activateSeeMore;
+  final Widget? title;
+  final Icon? icon;
   final Widget child;
   final Color backgroundColor;
   final VoidCallback? onPressed;
@@ -62,7 +62,6 @@ class _FCardState extends State<FCard> {
   @override
   Widget build(BuildContext context) {
     BorderRadius radius = BorderRadius.circular(12.0);
-
     return AnimatedScale(
       scale: scale,
       duration: duration,
@@ -95,17 +94,15 @@ class _FCardState extends State<FCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            FText(
-                              widget.title!,
-                              style: textTheme.titleMedium,
-                              color: FTheme.darkGrey,
-                              bold: true,
+                            widget.title!,
+                            if (widget.icon != null)
+                            Icon(
+                              widget.icon!.icon,
+                              color: FTheme.lightGrey,
                             ),
-                            if (widget.activateSeeMore)
-                            const Icon(Icons.arrow_forward_ios, color: FTheme.lightGrey),
                           ],
                         ),
-                        const SizedBox(height: 10.0),
+                        const SizedBox(height: 20.0),
                       ],
                     ),
                     if (!loadingP.loading) widget.child,

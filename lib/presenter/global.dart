@@ -18,7 +18,6 @@ import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/notification.dart';
 import 'package:fitween/presenter/page/home/calendar.dart';
-import 'package:fitween/presenter/page/collection/main.dart';
 import 'package:fitween/presenter/page/contents/challenge/challenge_detail.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:fitween/presenter/page/contents/contents.dart';
@@ -31,7 +30,9 @@ import 'package:fitween/presenter/page/home/home.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
 import 'package:fitween/presenter/page/home/ranking.dart';
 import 'package:fitween/presenter/page/register.dart';
-import 'package:fitween/presenter/page/see_more.dart';
+import 'package:fitween/presenter/page/see_more/collection/collection.dart';
+import 'package:fitween/presenter/page/see_more/info_edit/info_edit.dart';
+import 'package:fitween/presenter/page/see_more/see_more.dart';
 import 'package:fitween/presenter/widget/camera.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/presenter/widget/painter.dart';
@@ -156,7 +157,7 @@ class GlobalP extends GetxController {
                       collection: collection,
                       onPressed: () {
                         Get.back();
-                        CollectionMainP.toCollectionMain();
+                        CollectionP.toCollection();
                       },
                     ),
                     Container(
@@ -204,8 +205,8 @@ class GlobalP extends GetxController {
       leftPressed: isMainBadge ? null : (() async {
         Get.back();
         await Future.delayed(const Duration(milliseconds: 200));
-        final collectionMain = Get.find<CollectionMainP>();
-        collectionMain.setMainBadge(collection);
+        final collectionP = Get.find<CollectionP>();
+        collectionP.setMainBadge(collection);
       }),
       rightPressed: isMainBadge ? null : Get.back,
       onPressed: isMainBadge ? Get.back : null,
@@ -243,7 +244,7 @@ class GlobalP extends GetxController {
                       size: 80.0.r,
                       onPressed: () {
                         Get.back();
-                        CollectionMainP.toCollectionMain();
+                        CollectionP.toCollection();
                       },
                     ),
                   ],
@@ -371,5 +372,7 @@ class GlobalP extends GetxController {
     Get.put(TimeAttackCameraP());
 
     Get.put(SeeMoreP());
+    Get.put(CollectionP());
+    Get.put(InfoEditP());
   }
 }

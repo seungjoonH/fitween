@@ -67,16 +67,12 @@ class BadgeJsonP extends GetxController {
     final inAppReview = InAppReview.instance;
 
     final userCollectionP = Get.find<UserCollectionP>();
-    // final userFriendP = Get.find<UserFriendP>();
     final userInfoP = Get.find<UserInfoP>();
     final userPartyP = Get.find<UserPartyP>();
-    // final userRecordP = Get.find<UserRecordP>();
 
     FUserCollection userCollection = userCollectionP.loggedUser;
-    // FUserFriend userFriend = userFriendP.loggedUser;
     FUserInfo userInfo = userInfoP.loggedUser;
     FUserParty userParty = userPartyP.loggedUser;
-    // FUserRecord userRecord = userRecordP.loggedUser;
 
     // 운영자 뱃지 지급
     if (AuthPresenter.developerUids.contains(userInfo.uid)) {

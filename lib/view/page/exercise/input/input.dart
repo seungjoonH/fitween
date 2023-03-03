@@ -147,7 +147,7 @@
 //                   const SizedBox(height: 20.0),
 //                   // GetBuilder<ExerciseInput>(
 //                   //   builder: (controller) {
-//                   //     return PInputField(
+//                   //     return FInputField(
 //                   //       controller: controller.inputCont,
 //                   //       hintText: controller.hintText ?? hints[type]!,
 //                   //       keyboardType: TextInputType.number,

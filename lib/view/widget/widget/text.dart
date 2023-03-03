@@ -135,24 +135,29 @@ class FTexts extends StatelessWidget {
   }
 }
 
-class PInputField extends StatelessWidget {
-  const PInputField({
+class FInputField extends StatelessWidget {
+  const FInputField({
     Key? key,
     required this.controller,
     this.hintText,
     this.hintColor = FTheme.lightGrey,
     this.invalid = false,
+    this.completed = false,
     this.keyboardType = TextInputType.text,
+    this.onEditingComplete,
   }) : super(key: key);
 
   final TextEditingController controller;
   final String? hintText;
   final Color hintColor;
   final bool invalid;
+  final bool completed;
   final TextInputType keyboardType;
+  final VoidCallback? onEditingComplete;
 
   @override
   Widget build(BuildContext context) {
+
     return ShakeWidget(
       autoPlay: invalid,
       shakeConstant: ShakeHorizontalConstant2(),
@@ -161,17 +166,31 @@ class PInputField extends StatelessWidget {
         controller: controller,
         cursorColor: FTheme.darkGrey,
         keyboardType: keyboardType,
+        onSubmitted: (_) {
+          if (onEditingComplete != null) onEditingComplete!();
+        },
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: BorderSide(color: hintColor),
+            borderSide: BorderSide(
+              width: 1.0,
+              color: completed
+                  ? FTheme.colorA
+                  : hintColor,
+            ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(color: FTheme.darkGrey, width: 2.0),
+            borderSide: const BorderSide(
+              width: 2.0,
+              color: FTheme.darkGrey,
+            ),
           ),
           hintText: hintText,
-          hintStyle: textTheme.bodyLarge?.apply(color: hintColor),
+          hintStyle: textTheme.bodyLarge?.apply(
+            color: completed && hintText != null
+                ? FTheme.colorA : hintColor,
+          ),
           isDense: true,
         ),
       ),

@@ -78,7 +78,7 @@ class CollectionWidget extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: Icon(Icons.check_circle_outline_rounded,
-                    size: 40.0.r,
+                    size: 30.0.r,
                     color: FTheme.background,
                   ),
                 ),
@@ -98,29 +98,28 @@ class CollectionWidget extends StatelessWidget {
             if (detail)
             Column(
               children: [
-                const SizedBox(height: 10.0),
+                const SizedBox(height: 8.0),
                 FText(collection?.badge?.title ?? '',
+                  style: FTheme.textTheme.bodyMedium,
                   maxLines: 1,
                   align: TextAlign.center,
                 ),
-                const SizedBox(height: 10.0),
-                Container(
-                  width: 30.0.r,
-                  height: 30.0.r,
-                  alignment: Alignment.center,
+                const SizedBox(height: 4.0),
+                collection?.dates.length == 1
+                    ? FText(
+                  '${collection?.dates.first?.year}-${collection?.dates.first?.month}-${collection?.dates.first?.day}',
+                  style: FTheme.textTheme.bodySmall,
+                )
+                    : Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12.0.r),
                   decoration: BoxDecoration(
-                    color: FTheme.surface,
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: border
-                          ? FTheme.black
-                          : Colors.transparent,
-                      width: 1.5,
-                    ),
+                    color: FTheme.lightGrey,
+                    borderRadius: BorderRadius.circular(18.0),
                   ),
                   child: FText(
                     '${collection?.dates.length ?? ''}',
-                    border: true,
+                    style: FTheme.textTheme.bodySmall,
+                    color: FTheme.white,
                   ),
                 ),
               ],
@@ -187,7 +186,7 @@ class _FBadgeWidgetState extends State<FBadgeWidget> {
             width: widget.size.r,
             height: widget.size.r,
             child: widget.badge?.imageUrl! == null
-                ? SvgPicture.asset('void.svg')
+                ? SvgPicture.asset('assets/image/badge/void.svg')
                 : Image.asset(widget.badge!.imageUrl!),
           ),
         ),

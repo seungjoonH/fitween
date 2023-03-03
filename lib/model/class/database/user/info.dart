@@ -8,6 +8,17 @@ class FUserInfo {
   /// static variables
   static int defaultWeight = 60;
   static int defaultHeight = 170;
+  static int heightMax = 220;
+  static int heightMin = 100;
+  static int weightMax = 220;
+  static int weightMin = 30;
+
+  static bool heightInRange(int height) {
+    return height >= heightMin && height <= heightMax;
+  }
+  static bool weightInRange(int weight) {
+    return weight >= weightMin && weight <= weightMax;
+  }
 
   /// attributes
   // 일반 변수
@@ -17,6 +28,8 @@ class FUserInfo {
   String? email;
   int? weight;
   int? height;
+  bool? weightVisibility;
+  bool? heightVisibility;
   Sex? sex;
   Timestamp? _regDate;
   Timestamp? _dateOfBirth;
@@ -49,6 +62,8 @@ class FUserInfo {
     email = json['email'];
     weight = json['weight']?.toInt();
     height = json['height']?.toInt();
+    weightVisibility = json['weightVisibility'];
+    heightVisibility = json['heightVisibility'];
     sex = Sex.toEnum(json['sex']);
     _regDate = json['regDate'];
     _dateOfBirth = json['dateOfBirth'];
@@ -62,6 +77,8 @@ class FUserInfo {
     json['email'] = email;
     json['weight'] = weight;
     json['height'] = height;
+    json['weightVisibility'] = weightVisibility;
+    json['heightVisibility'] = heightVisibility;
     json['sex'] = sex?.name;
     json['regDate'] = _regDate;
     json['dateOfBirth'] = _dateOfBirth;

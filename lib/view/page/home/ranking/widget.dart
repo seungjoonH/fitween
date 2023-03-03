@@ -29,7 +29,10 @@ class RankingCardView extends StatelessWidget {
       child: Column(
         children: [
           FCard(
-            title: '친구들의 순위를 확인해보세요!',
+            title: FText('친구들의 순위를 확인해보세요!',
+              style: textTheme.titleMedium,
+              bold: true,
+            ),
             child: GetBuilder<RankingP>(
               builder: (rankingP) {
                 String myUid = Get.find<UserInfoP>().loggedUser.uid!;

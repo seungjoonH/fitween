@@ -80,4 +80,5 @@ class UserInfoP extends GetxController {
   // 파이어베이스에서 삭제
   void delete() => collection
       .doc(loggedUser.uid).delete();
+
 }

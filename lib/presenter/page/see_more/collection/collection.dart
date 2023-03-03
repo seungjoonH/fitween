@@ -5,13 +5,13 @@ import 'package:fitween/model/enum/page_mode.dart';
 import 'package:fitween/presenter/global.dart';
 
 /// class
-class CollectionMainP extends GetxController {
+class CollectionP extends GetxController {
   /// static methods
   // 컬렉션 메인 페이지로 이동
-  static Future<bool> toCollectionMain() async {
-    final collectionMain = Get.find<CollectionMainP>();
+  static Future toCollection() async {
+    final collectionMain = Get.find<CollectionP>();
     collectionMain.init();
-    return await Get.toNamed('/collection/main');
+    Get.toNamed('/seeMore/collection');
   }
 
   /// attributes

@@ -64,7 +64,7 @@ class ContentsP extends GetxController {
           children: [
             GetBuilder<ContentsP>(
               builder: (controller) {
-                return PInputField(
+                return FInputField(
                   controller: codeCont,
                   invalid: controller.codeInvalid,
                   hintText: controller.codeHintText ?? '참여코드를 입력해주세요',

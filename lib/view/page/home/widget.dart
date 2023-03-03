@@ -144,8 +144,11 @@ class CalendarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FCard(
-      title: '기록',
-      activateSeeMore: true,
+      title: FText('기록',
+        style: textTheme.titleMedium,
+        bold: true,
+      ),
+      icon: const Icon(Icons.arrow_forward_ios),
       onPressed: CalendarP.toCalendar,
       constraints: const BoxConstraints(minHeight: 115.0),
       child: const WeekCalendarWidget(),
@@ -237,8 +240,11 @@ class RankingCard extends StatelessWidget {
         ActivityType type = ActivityType.activeValues[homeP.rotationIndex];
 
         return FCard(
-          title: '랭킹',
-          activateSeeMore: true,
+          title: FText('랭킹',
+            style: textTheme.titleMedium,
+            bold: true,
+          ),
+          icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () => RankingP.toRanking(type),
           constraints: const BoxConstraints(minHeight: 160.0),
           child: Column(

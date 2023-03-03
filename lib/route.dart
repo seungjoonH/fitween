@@ -1,4 +1,5 @@
 /* 라우트 관련 */
+import 'package:fitween/view/page/collection/main/main.dart';
 import 'package:fitween/view/page/contents/achievement/level/level.dart';
 import 'package:fitween/view/page/contents/challenge/detail/detail.dart';
 import 'package:fitween/view/page/contents/challenge/party/party.dart';
@@ -13,6 +14,7 @@ import 'package:fitween/view/page/home/ranking/ranking.dart';
 import 'package:fitween/view/page/login/login.dart';
 import 'package:fitween/view/page/onboarding/onboarding.dart';
 import 'package:fitween/view/page/register/register.dart';
+import 'package:fitween/view/page/see_more/info_edit/info_edit.dart';
 import 'package:fitween/view/page/see_more/see_more.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,6 +46,8 @@ class FRoute {
     '/contents/timeAttackReady': const TimeAttackReadyPage(),
     '/contents/timeAttackCamera': const TimeAttackCameraPage(),
     '/seeMore': const SeeMorePage(),
+    '/seeMore/collection': const CollectionPage(),
+    '/seeMore/infoEdit': const InfoEditPage(),
   };
 
   // 겟페이지 리스트

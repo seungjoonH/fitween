@@ -4,8 +4,6 @@ class SeeMoreP extends GetxController {
   static void toSeeMore() => Get.offAllNamed('/seeMore');
 
   static void init() {
-    final seeMoreP = Get.find<SeeMoreP>();
+    // final seeMoreP = Get.find<SeeMoreP>();
   }
-
-
 }
