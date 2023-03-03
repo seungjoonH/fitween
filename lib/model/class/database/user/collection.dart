@@ -1,5 +1,6 @@
 /* 사용자 모델 구조 */
 
+import 'package:cloud_firestore_platform_interface/src/timestamp.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/date.dart';
@@ -26,6 +27,43 @@ class FUserCollection {
       DateTime bDate = b.dates.last!;
       if (aDate.isAtSameMomentAs(bDate)) return 0;
       return aDate.isBefore(bDate) ? 1 : -1;
+    });
+    return cols;
+  }
+
+  List<Collection> get recentCollections {
+    List<Collection> cols = collections.where(
+            (element)=>element.dates.last!.compareTo(now.subtract(const Duration(days: 7))) > 0).toList();
+
+    cols.sort((a, b) {
+      DateTime aDate = a.dates.last!;
+      DateTime bDate = b.dates.last!;
+      if (aDate.isAtSameMomentAs(bDate)) return 0;
+      return aDate.isBefore(bDate) ? 1 : -1;
+    });
+    return cols;
+  }
+
+  List<Collection> get dailyCollections {
+    List<Collection> cols = collections.where(
+            (element)=>element.badgeId!.compareTo('1050000') < 0).toList();
+
+    cols.sort((a, b) {
+      String? aId = a.badgeId;
+      String? bId = b.badgeId;
+      return aId!.compareTo(bId!);
+    });
+    return cols;
+  }
+
+  List<Collection> get challengeCollections {
+    List<Collection> cols = collections.where(
+            (element)=>element.badgeId!.compareTo('1050000') >= 0).toList();
+
+    cols.sort((a, b) {
+      String? aId = a.badgeId;
+      String? bId = b.badgeId;
+      return aId!.compareTo(bId!);
     });
     return cols;
   }
