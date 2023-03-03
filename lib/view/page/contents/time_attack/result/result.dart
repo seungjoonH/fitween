@@ -1,5 +1,6 @@
 import 'package:fitween/view/page/contents/time_attack/result/widget.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
+import 'package:fitween/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 
 class TimeAttackResultPage extends StatelessWidget {
@@ -14,10 +15,11 @@ class TimeAttackResultPage extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {},
-              icon: Icon(Icons.clear))
+              icon: const Icon(Icons.clear))
         ],
       ),
-      body: TimeAttackResultView(),
+      body: const TimeAttackResultView(),
+      bottomNavigationBar: const FBottomNavigationBar(),
     );
   }
 }
