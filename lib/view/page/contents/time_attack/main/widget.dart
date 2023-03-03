@@ -4,6 +4,8 @@ import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../presenter/page/contents/time_attack/result.dart';
+
 class TimeAttackReadyView extends StatelessWidget {
   const TimeAttackReadyView({Key? key}) : super(key: key);
 
@@ -40,7 +42,8 @@ class TimeAttackReadyView extends StatelessWidget {
             child: FButton(
               text: '시작하기',
               stretch: true,
-              onPressed: TimeAttackCameraP.toTimeAttackCamera,
+              //onPressed: TimeAttackCameraP.toTimeAttackCamera,
+              onPressed: TimeAttackResultP.toTimeAttackResult,
             ),
           )
         ],
