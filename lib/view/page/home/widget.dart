@@ -281,7 +281,7 @@ class RankingGraph extends StatelessWidget {
 
         return Column(
           children: List.generate(
-            min(rankingP.infos.length, 3), (index) {
+            min(rankingP.infos[type]!.length, 3), (index) {
               int newIndex = firstIndex + index;
               double amount = rankingP.records[type]![newIndex]
                   .getAmounts(type, rankingP.startDate, rankingP.endDate);
