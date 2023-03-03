@@ -1,4 +1,5 @@
 /* 라우트 관련 */
+import 'package:fitween/view/page/collection/main/main.dart';
 import 'package:fitween/view/page/contents/achievement/level/level.dart';
 import 'package:fitween/view/page/contents/challenge/detail/detail.dart';
 import 'package:fitween/view/page/contents/challenge/party/party.dart';
@@ -44,6 +45,7 @@ class FRoute {
     '/contents/timeAttackReady': const TimeAttackReadyPage(),
     '/contents/timeAttackCamera': const TimeAttackCameraPage(),
     '/contents/timeAttackResult': const TimeAttackResultPage(),
+    '/collection/main': const CollectionPage(),
   };
 
   // 겟페이지 리스트
