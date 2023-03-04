@@ -61,14 +61,18 @@ class RegisterP extends GetxController {
   static final carouselCont = CarouselController();
 
   static void toRegister() {
-    final registerP = Get.find<RegisterP>();
-    registerP.init();
+    init();
     Get.toNamed('/register');
   }
 
-  /// static methods
-  // 컨트롤러를 모두 초기화
-  void init() {
+  static void init() {
+    final registerP = Get.find<RegisterP>();
+    registerP.loadAll();
+  }
+
+  Map<ActivityType, Record> amounts = {};
+
+  void loadAll() {
     for (var field in fields.values) {
       field.controller?.clear();
     }
@@ -79,13 +83,27 @@ class RegisterP extends GetxController {
     newcomerParty = FUserParty();
     newcomerRecord = FUserRecord();
 
-    newcomerCollection.uid = AuthPresenter.uid;
-    newcomerFriend.uid = AuthPresenter.uid;
-    newcomerInfo.uid = AuthPresenter.uid;
-    newcomerNotification.uid = AuthPresenter.uid;
-    newcomerParty.uid = AuthPresenter.uid;
-    newcomerRecord.uid = AuthPresenter.uid;
+    newcomerCollection.uid = AuthP.uid;
+    newcomerFriend.uid = AuthP.uid;
+    newcomerInfo.uid = AuthP.uid;
+    newcomerNotification.uid = AuthP.uid;
+    newcomerParty.uid = AuthP.uid;
+    newcomerRecord.uid = AuthP.uid;
+
     pageIndex = 0;
+
+    for (ActivityType type in ActivityType.activeValues) {
+      amounts[type] = Record.init(type, {
+        ActivityType.distance: 60.0,
+        ActivityType.height: 10.0,
+        ActivityType.weight: 50.0,
+      }[type]!, {
+        ActivityType.distance: ExerciseUnit.minute,
+        ActivityType.weight: ExerciseUnit.count,
+      }[type]);
+    }
+
+    update();
   }
 
   // 현재 페이지 인덱스 증가
@@ -136,12 +154,19 @@ class RegisterP extends GetxController {
   }
 
   void initGoal(Record record) async {
-    newcomerRecord.goals[record.type!.name] = 0;
+    amounts[record.type!] = Record.init(record.type!, .0, {
+      ActivityType.distance: ExerciseUnit.minute,
+      ActivityType.weight: ExerciseUnit.count,
+    }[record.type!]);
     update();
     await Future.delayed(const Duration(milliseconds: 500), () {
-      newcomerRecord.setGoal(record.type!, record);
+      amounts[record.type!] = record;
       update();
     });
+  }
+
+  void setGoal(Record record) {
+    amounts[record.type!] = record;
   }
 
   void submitted() async {
@@ -157,7 +182,14 @@ class RegisterP extends GetxController {
       fields['dateOfBirth']!.controller.text,
     );
 
-    userInfoP.loggedUser.regDate = now;
+    for (ActivityType type in ActivityType.activeValues) {
+      newcomerRecord.setGoal(type, today, amounts[type]!, {
+        ActivityType.distance: ExerciseUnit.step,
+        ActivityType.weight: ExerciseUnit.count,
+      }[type]);
+    }
+
+    newcomerInfo.regDate = now;
 
     userCollectionP.login(newcomerCollection);
     userFriendP.login(newcomerFriend);
@@ -167,8 +199,8 @@ class RegisterP extends GetxController {
     userRecordP.login(newcomerRecord);
 
     HomeP.toHome();
-    await AuthPresenter.storeLoginData(userInfoP.data);
-    if (AuthPresenter.developerUids.contains(userInfoP.loggedUser.uid)) {
+    await AuthP.storeLoginData(userInfoP.data);
+    if (AuthP.developerUids.contains(userInfoP.loggedUser.uid)) {
       userCollectionP.awardBadge(BadgeJsonP.getBadge('1999999')!, true);
     }
     userCollectionP.awardBadge(BadgeJsonP.getBadge('1000000')!, true);
@@ -299,35 +331,24 @@ class RegisterP extends GetxController {
         newcomerInfo.height = HeightPresenter.getAverageHeight(
             newcomerInfo.age, newcomerInfo.sex!);
         break;
-      case 1:
-        break;
-      case 2:
-        break;
+      case 1: break;
+      case 2: break;
       case 3:
         initGoal(Record.init(
-          ActivityType.distance,
-          60,
+          ActivityType.distance, 60,
           ExerciseUnit.minute,
         ));
         break;
-      case 4:
-        break;
+      case 4: break;
       case 5:
         initGoal(Record.init(ActivityType.height, 10));
         break;
-      case 6:
-        // Record calorie = CalorieRecord(amount: 0);
-        // DistanceRecord distance = newcomer.getGoal(ActivityType.distance) as DistanceRecord;
-        // HeightRecord height = newcomer.getGoal(ActivityType.height) as HeightRecord;
-        // WeightRecord weight = newcomer.getGoal(ActivityType.weight) as WeightRecord;
-        // calorie.amount += CalorieRecord.from(ActivityType.distance, distance.minute);
-        // calorie.amount += CalorieRecord.from(ActivityType.height, height.amount);
-        // calorie.amount += CalorieRecord.from(ActivityType.weight, weight.count);
-        // newcomer.setGoal(ActivityType.calorie, calorie);
-        // update();
-        break;
+      case 6: break;
       case 7:
-        initGoal(Record.init(ActivityType.weight, 50, ExerciseUnit.count));
+        initGoal(Record.init(
+          ActivityType.weight, 50,
+          ExerciseUnit.count,
+        ));
         break;
       case 8:
         submitted();

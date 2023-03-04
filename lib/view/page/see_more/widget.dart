@@ -1,3 +1,4 @@
+import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/json/badge.dart';
@@ -132,7 +133,7 @@ class GoalEditCard extends StatelessWidget {
           Container(
             alignment: Alignment.center,
             width: double.infinity,
-            height: 60.0,
+            height: 70.0,
             child: ListView.separated(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
@@ -140,8 +141,8 @@ class GoalEditCard extends StatelessWidget {
               itemCount: ActivityType.activeValues.length,
               itemBuilder: (context, index) {
                 ActivityType type = ActivityType.activeValues[index];
-                Record? record = userP.loggedUser.getGoal(type);
-                if (record == null) return Container();
+                Record newGoal = userP.loggedUser.getGoal(type, tomorrow)!;
+                Record goal = userP.loggedUser.getGoal(type, today)!;
 
                 return SizedBox(
                   width: 70.0.w,
@@ -150,8 +151,14 @@ class GoalEditCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       FText(type.kr, style: textTheme.bodyLarge),
-                      FText('${toLocalString(record.amount.round())}${type.unit}',
+                      FText('${toLocalString(newGoal.amount.round())}${type.unit}',
                         color: type.color,
+                      ),
+                      if (newGoal.amount != goal.amount)
+                      FText(
+                        '* 변경 예정',
+                        style: textTheme.bodySmall,
+                        color: FTheme.lightGrey,
                       ),
                     ],
                   ),

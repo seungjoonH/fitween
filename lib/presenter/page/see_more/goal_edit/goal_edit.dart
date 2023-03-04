@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fitween/global/date.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/friend.dart';
 import 'package:fitween/model/class/database/user/info.dart';
@@ -14,7 +15,6 @@ import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/presenter/model/user/record.dart';
-import 'package:fitween/presenter/page/onboarding.dart';
 import 'package:fitween/presenter/page/see_more/see_more.dart';
 import 'package:fitween/view/page/see_more/goal_edit/widget.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +49,8 @@ class GoalEditP extends GetxController {
     goalEditP.loadAll();
   }
 
+  Map<ActivityType, Record> amounts = {};
+
   void loadAll() {
     final userCollectionP = Get.find<UserCollectionP>();
     final userFriendP = Get.find<UserFriendP>();
@@ -65,6 +67,11 @@ class GoalEditP extends GetxController {
     userRecord = userRecordP.loggedUser;
 
     pageIndex = 0;
+
+    for (ActivityType type in ActivityType.activeValues) {
+      amounts[type] = userRecord.getGoal(type, tomorrow)!;
+    }
+
     update();
   }
 
@@ -97,12 +104,19 @@ class GoalEditP extends GetxController {
 
   /// methods
   void initGoal(Record record) async {
-    userRecord.goals[record.type!.name] = 0;
+    amounts[record.type!] = Record.init(record.type!, .0, {
+      ActivityType.distance: ExerciseUnit.minute,
+      ActivityType.weight: ExerciseUnit.count,
+    }[record.type!]);
     update();
     await Future.delayed(const Duration(milliseconds: 500), () {
-      userRecord.setGoal(record.type!, record);
+      amounts[record.type!] = record;
       update();
     });
+  }
+
+  void setGoal(Record record) {
+    amounts[record.type!] = record;
   }
 
   void submitted() async {
@@ -112,6 +126,13 @@ class GoalEditP extends GetxController {
     final userNotificationP = Get.find<UserNotificationP>();
     final userPartyP = Get.find<UserPartyP>();
     final userRecordP = Get.find<UserRecordP>();
+
+    for (ActivityType type in ActivityType.activeValues) {
+      userRecord.setGoal(type, today, amounts[type]!, {
+        ActivityType.distance: ExerciseUnit.step,
+        ActivityType.weight: ExerciseUnit.count,
+      }[type]);
+    }
 
     userCollectionP.loggedUser = userCollection;
     userFriendP.loggedUser = userFriend;
@@ -150,37 +171,17 @@ class GoalEditP extends GetxController {
 
   // 다음 버튼 클릭 트리거
   void nextPressed() async {
-    final userP = Get.find<UserRecordP>();
-    double getGoal(ActivityType type) {
-      Record goal = userP.loggedUser.getGoal(type)!;
-      if (type == ActivityType.distance) {
-        goal.convert(ExerciseUnit.minute);
-      }
-      return goal.amount;
-    }
-
     switch (pageIndex) {
       case 0:
-        initGoal(Record.init(
-          ActivityType.distance,
-          getGoal(ActivityType.distance),
-          ExerciseUnit.minute,
-        ));
+        initGoal(amounts[ActivityType.distance]!);
         break;
       case 1: break;
       case 2:
-        initGoal(Record.init(
-          ActivityType.height,
-          getGoal(ActivityType.height),
-        ));
+        initGoal(amounts[ActivityType.height]!);
         break;
       case 3: break;
       case 4:
-        initGoal(Record.init(
-          ActivityType.weight,
-          getGoal(ActivityType.weight),
-          ExerciseUnit.count,
-        ));
+        initGoal(amounts[ActivityType.weight]!);
         break;
       case 5:
         submitted();

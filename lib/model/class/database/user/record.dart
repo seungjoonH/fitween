@@ -23,7 +23,7 @@ class FUserRecord {
   /// constructors
   FUserRecord() {
     for (var type in ActivityType.activeValues) {
-      goals[type.name] = 0;
+      goals[type.name] = [];
       inputRecords[type.name] = [];
       records[type.name] = [];
     }
@@ -215,7 +215,7 @@ class FUserRecord {
   ) {
     List<CalendarEvent> eventValues = [
       for (ActivityType type in ActivityType.activeValues)
-      CalendarEvent(getGoal(type)?.amount ?? 1.0, .0),
+      CalendarEvent(getGoal(type, today)?.amount ?? 1.0, .0),
     ];
 
     LinkedHashMap<DateTime, List<CalendarEvent>> events = LinkedHashMap.from({
@@ -225,7 +225,7 @@ class FUserRecord {
 
     for (DateTime date in daysInRange(startDate, endDate)) {
       events[ignoreTime(date)] = ActivityType.activeValues.map((type) {
-        double goal = getGoal(type)?.amount ?? 1.0;
+        double goal = getGoal(type, date)?.amount ?? 1.0;
         double amount = getAmounts(type, date, nextDay(date));
         return CalendarEvent(goal, amount);
       }).toList();
@@ -233,21 +233,65 @@ class FUserRecord {
     return events;
   }
 
-  Record? getGoal(ActivityType type) {
+  Record? getGoal(ActivityType type, DateTime date) {
     ExerciseUnit? unit = {
       ActivityType.distance: ExerciseUnit.step,
       ActivityType.weight: ExerciseUnit.count,
     }[type];
-    return Record.init(
-      type, goals[type.name]?.toDouble() ?? .0,
-      unit,
-    );
+
+    double amount = 1.0;
+
+    // if (goals[type.name].length == 1) {
+    //   amount = goals[type.name][0]['amount'].toDouble();
+    // }
+    for (var goal in goals[type.name].reversed) {
+      if (!ignoreTime(goal['date'].toDate()).isAfter(date)) {
+        amount = goal['amount'].toDouble();
+        break;
+      }
+    }
+
+    return Record.init(type, amount, unit);
   }
 
-  void setGoal(ActivityType type, Record record) {
-    if (type == ActivityType.distance) record.convert(ExerciseUnit.step);
-    if (type == ActivityType.weight) record.convert(ExerciseUnit.count);
-    goals[type.name] = record.amount;
+  void setGoal(
+    ActivityType type,
+    DateTime date,
+    Record record, [
+      ExerciseUnit? unit
+  ]) {
+    if (unit != null) record.convert(unit);
+
+    double dateGoal = getGoal(type, date)!.amount;
+    double tomorrowGoal = getGoal(type, tomorrow)!.amount;
+
+    if (dateGoal.round() == record.amount.round()) {
+      if (tomorrowGoal.round() == record.amount.round()) return;
+      List<dynamic> newGoal = [];
+
+      for (var goal in goals[type.name]) {
+        if (goal['date'].toDate().isAfter(today)) break;
+        newGoal.add(goal);
+      }
+
+      goals[type.name] = newGoal;
+      return;
+    }
+
+    DateTime nextDay = ignoreTime(date.add(const Duration(days: 1)));
+
+    for (var goal in goals[type.name] ?? []) {
+      if (goal['date'] == toTimestamp(nextDay)) {
+        goal['amount'] = record.amount.round();
+        return;
+      }
+    }
+
+    goals[type.name] ??= [];
+    goals[type.name].add({
+      'date': toTimestamp(nextDay),
+      'amount': record.amount.round(),
+    });
   }
 
   List<ActivityType> completedActivities([DateTime? date]) {
@@ -262,7 +306,7 @@ class FUserRecord {
   // 해당 활동형식의 완료 여부 반환
   bool completed(ActivityType type, [DateTime? date]) {
     date ??= today;
-    double goal = goals[type.name]?.toDouble() ?? .0;
+    double goal = getGoal(type, date)?.amount ?? .0;
     double value = getAmounts(type, date, nextDay(date));
     return goal <= value;
   }

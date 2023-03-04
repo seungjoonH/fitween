@@ -27,7 +27,7 @@ import 'package:fitween/presenter/page/home/home.dart';
 import 'package:fitween/presenter/page/login.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
 
-class AuthPresenter {
+class AuthP {
   static final userCollectionP = Get.find<UserCollectionP>();
   static final userFriendP = Get.find<UserFriendP>();
   static final userInfoP = Get.find<UserInfoP>();
@@ -169,7 +169,7 @@ class AuthPresenter {
     String? userInfo = await storage.read(key: 'login');
     bool beenLogged = userInfo != null;
 
-    if (!await AuthPresenter.versionCheck()) {
+    if (!await AuthP.versionCheck()) {
       LoginPresenter.showVersionInvalidDialog();
       return;
     }

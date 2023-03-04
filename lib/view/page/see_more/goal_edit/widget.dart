@@ -130,7 +130,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
   Widget build(BuildContext context) {
     return GetBuilder<GoalEditP>(
       builder: (goalEditP) {
-        Record record = goalEditP.userRecord.getGoal(widget.type)!;
+        Record record = goalEditP.amounts[widget.type]!;
         record.convert({
           ActivityType.distance: ExerciseUnit.minute,
           ActivityType.weight: ExerciseUnit.count,
@@ -163,20 +163,20 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
                     : Colors.transparent,
               ),
               onPressed: () {
-                goalEditP.userRecord.setGoal(widget.type, greaterRecord);
-                setState(() {});
+                goalEditP.setGoal(greaterRecord);
+                Future.delayed(const Duration(milliseconds: 100), () {
+                  if (mounted) setState(() {});
+                });
               },
             ),
             NumberPicker(
               onChanged: (val) {
-                goalEditP.userRecord.setGoal(
-                  widget.type, Record.init(
+                goalEditP.setGoal(Record.init(
                   widget.type, val.toDouble(), {
-                  ActivityType.distance: ExerciseUnit.minute,
-                  ActivityType.weight: ExerciseUnit.count,
-                }[widget.type],
-                ),
-                );
+                    ActivityType.distance: ExerciseUnit.minute,
+                    ActivityType.weight: ExerciseUnit.count,
+                  }[widget.type],
+                ));
                 goalEditP.update();
               },
               itemCount: widget.itemCount,
@@ -197,8 +197,10 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
                     : Colors.transparent,
               ),
               onPressed: () {
-                goalEditP.userRecord.setGoal(widget.type, lessRecord);
-                setState(() {});
+                goalEditP.setGoal(lessRecord);
+                Future.delayed(const Duration(milliseconds: 100), () {
+                  if (mounted) setState(() {});
+                });
               },
             ),
           ],
@@ -310,9 +312,8 @@ class DistanceGoalView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<GoalEditP>(
       builder: (goalEditP) {
-        DistanceRecord distance = goalEditP.userRecord.getGoal(
-          ActivityType.distance,
-        ) as DistanceRecord;
+        DistanceRecord distance = goalEditP
+            .amounts[ActivityType.distance] as DistanceRecord;
 
         int step = distance.step.round();
         int minute = distance.minute.round();
@@ -432,9 +433,8 @@ class HeightGoalView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<GoalEditP>(
       builder: (goalEditP) {
-        HeightRecord goal = goalEditP.userRecord.getGoal(
-          ActivityType.height,
-        ) as HeightRecord;
+        HeightRecord goal = goalEditP
+            .amounts[ActivityType.height] as HeightRecord;
 
         Map<String, dynamic> tier = LevelJsonP.getTier(
           ActivityType.height, goal,
@@ -522,7 +522,7 @@ class WeightRecommendView extends StatelessWidget {
         children: [
           FTexts(
             const ['유산소 운동', '과'],
-            colors: [ActivityType.weight.color, FTheme.black],
+            colors: [ActivityType.calorie.color, FTheme.black],
             style: textTheme.displaySmall,
             alignment: MainAxisAlignment.start,
             space: false,
@@ -550,9 +550,8 @@ class WeightGoalView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<GoalEditP>(
       builder: (goalEditP) {
-        WeightRecord goal = goalEditP.userRecord.getGoal(
-          ActivityType.weight,
-        ) as WeightRecord;
+        WeightRecord goal = goalEditP
+            .amounts[ActivityType.weight] as WeightRecord;
 
         Map<String, dynamic> tier = LevelJsonP.getTier(
           ActivityType.weight, goal,
@@ -640,18 +639,17 @@ class CalorieCheckView extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<GoalEditP>(
       builder: (goalEditP) {
-        CalorieRecord goal = goalEditP.userRecord.getGoal(
-          ActivityType.calorie,
-        ) as CalorieRecord;
+        CalorieRecord goal = goalEditP
+            .amounts[ActivityType.calorie] as CalorieRecord;
 
         String distanceTitle = LevelJsonP.getTier(
           ActivityType.distance,
-          goalEditP.userRecord.getGoal(ActivityType.distance)!,
+          goalEditP.amounts[ActivityType.distance]!
         )['current'].title;
 
         String heightTitle = LevelJsonP.getTier(
           ActivityType.height,
-          goalEditP.userRecord.getGoal(ActivityType.height)!,
+            goalEditP.amounts[ActivityType.height]!
         )['current'].title;
 
         TextStyle? style(Color color) => textTheme.headlineMedium?.merge(TextStyle(

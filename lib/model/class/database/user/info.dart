@@ -48,6 +48,8 @@ class FUserInfo {
   FUserInfo() {
     weight = defaultWeight;
     height = defaultHeight;
+    weightVisibility = true;
+    heightVisibility = true;
   }
 
   FUserInfo.fromJson(Map<String, dynamic> json) {

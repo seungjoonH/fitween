@@ -66,7 +66,10 @@ class TimeAttackFriendView extends StatelessWidget {
                   itemBuilder: (context, index) => FCard(
                     child: Row(
                       children: [
-                        FBadgeWidget(badge: BadgeJsonP.getBadge(collections[index].badgeId)),
+                        FBadgeWidget(
+                          badge: BadgeJsonP.getBadge(collections[index].badgeId),
+                          backgroundColor: collections[index].badgeColor,
+                        ),
                         const SizedBox(width: 20.0),
                         FText(infos[index].nickname!),
                       ],

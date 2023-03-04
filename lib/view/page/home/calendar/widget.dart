@@ -221,7 +221,7 @@ class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator>
       widget.type, widget.date,
       nextDay(widget.date),
     ).round();
-    int goal = userP.loggedUser.getGoal(widget.type)?.amount.round() ?? 1;
+    int goal = userP.loggedUser.getGoal(widget.type, widget.date)?.amount.round() ?? 1;
     Color color = FTheme.lightGrey;
 
     List<ActivityType> completed = userP.loggedUser.completedActivities(widget.date);

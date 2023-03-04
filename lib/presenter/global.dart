@@ -73,7 +73,7 @@ class GlobalP extends GetxController {
         if (navIndex == index) { await ContentsP.init(); }
         else { ContentsP.toContents(); }
         break;
-      // case 3: AuthPresenter.fLogout(); break;
+      // case 3: AuthP.fLogout(); break;
       case 3:
         if (navIndex == index) { SeeMoreP.init(); }
         else { SeeMoreP.toSeeMore(); }
