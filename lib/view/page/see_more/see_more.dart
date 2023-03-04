@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/firebase/auth/auth.dart';
 import 'package:fitween/view/page/see_more/widget.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:fitween/view/widget/widget/bottom_bar.dart';
@@ -9,7 +10,14 @@ class SeeMorePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const FAppBar(title: '더보기'),
+      appBar: const FAppBar(
+        title: '더보기',
+        actions: [
+          IconButton(
+            onPressed: AuthP.fLogout, icon: Icon(Icons.logout),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28.0),

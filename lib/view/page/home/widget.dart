@@ -237,6 +237,7 @@ class RankingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeP>(
       builder: (homeP) {
+        final rankingP = Get.find<RankingP>();
         ActivityType type = ActivityType.activeValues[homeP.rotationIndex];
 
         return FCard(
@@ -250,6 +251,18 @@ class RankingCard extends StatelessWidget {
           child: Column(
             children: [
               RankingGraph(type: type),
+              if ((rankingP.infos[type] ?? []).length < 2)
+              Column(
+                children: [
+                  const SizedBox(height: 5.0),
+                  const Divider(thickness: 2, color: FTheme.stroke),
+                  FText(
+                    '친구를 라이벌로 지정하여 함께 대결해보세요!',
+                    style: textTheme.bodyMedium,
+                    color: FTheme.darkGrey,
+                  ),
+                ],
+              ),
             ],
           ),
         );
@@ -281,7 +294,7 @@ class RankingGraph extends StatelessWidget {
 
         return Column(
           children: List.generate(
-            min(rankingP.infos.length, 3), (index) {
+            min(rankingP.infos[type]!.length, 3), (index) {
               int newIndex = firstIndex + index;
               double amount = rankingP.records[type]![newIndex]
                   .getAmounts(type, rankingP.startDate, rankingP.endDate);

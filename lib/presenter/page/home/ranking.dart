@@ -19,7 +19,7 @@ class RankingP extends GetxController{
 
     if (loadingP.loading) return;
     loadingP.loadStart();
-    rankingP.loadRanking();
+    rankingP.loadAll();
     loadingP.loadEnd();
   }
 
@@ -49,6 +49,7 @@ class RankingP extends GetxController{
           b.getAmounts(type, startDate, endDate)
               - a.getAmounts(type, startDate, endDate)
       ).round());
+
       infos[type]!.sort((a, b) {
         int priceA = records[type]!.indexWhere((record) => record.uid == a.uid);
         int priceB = records[type]!.indexWhere((record) => record.uid == b.uid);

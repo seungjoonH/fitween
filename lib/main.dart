@@ -46,7 +46,7 @@ class _FitweenState extends State<Fitween> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(
         const Duration(milliseconds: 500),
-        AuthPresenter.loadLoginData,
+        AuthP.loadLoginData,
       );
     });
   }

@@ -307,7 +307,7 @@ class AchievementCardView extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 10.0),
               child: FCard(
-                constraints: const BoxConstraints(minHeight: 440.0),
+                constraints: const BoxConstraints(minHeight: 480.0),
                 child: Stack(
                   alignment: Alignment.topRight,
                   children: [
@@ -450,7 +450,7 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
           '만큼 ${widget.type.did}!',
           style: textTheme.bodyLarge,
         ),
-        const SizedBox(height: 8.0)
+        const SizedBox(height: 8.0),
       ],
     );
   }
@@ -482,16 +482,16 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
   void initState() {
     visible = false;
     downed = true;
-    position = 195.0;
+    position = 155.0;
     duration = const Duration(seconds: 1);
     Future.delayed(Duration.zero, () => setState(() {
-      visible = true; position = 165.0;
+      visible = true; position = 125.0;
       duration = const Duration(milliseconds: 700);
     }));
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         duration = const Duration(seconds: 1);
-        position = downed ? 170.0 : 165.0;
+        position = downed ? 130.0 : 125.0;
         downed = !downed;
       });
     });
@@ -545,10 +545,13 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        Image.asset(
-          'assets/image/page/contents/union.png',
-          height: 350.0,
-          fit: BoxFit.fitWidth,
+        Container(
+          height: 320.0,
+          alignment: Alignment.bottomCenter,
+          child: Image.asset(
+            'assets/image/page/contents/union.png',
+            fit: BoxFit.fitWidth,
+          ),
         ),
         AnimatedPositioned(
           bottom: position,
@@ -567,7 +570,7 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
           ),
         ),
         Positioned(
-          bottom: 50.0,
+          bottom: 10.0,
           child: Container(
             width: 300.0,
             padding: const EdgeInsets.symmetric(horizontal: 20.0),

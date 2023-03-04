@@ -75,7 +75,7 @@ class BadgeJsonP extends GetxController {
     FUserParty userParty = userPartyP.loggedUser;
 
     // 운영자 뱃지 지급
-    if (AuthPresenter.developerUids.contains(userInfo.uid)) {
+    if (AuthP.developerUids.contains(userInfo.uid)) {
       userCollectionP.awardBadge(BadgeJsonP.getBadge('1999999')!, true);
     }
 
