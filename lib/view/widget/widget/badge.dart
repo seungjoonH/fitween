@@ -116,7 +116,7 @@ class CollectionWidget extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 12.0.r),
                   decoration: BoxDecoration(
                     color: FTheme.lightGrey,
-                    borderRadius: BorderRadius.circular(18.0),
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: FText(
                     '${collection?.dates.length ?? ''}',

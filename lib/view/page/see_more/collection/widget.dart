@@ -76,6 +76,7 @@ class CollectionMainView extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(0.0.r, 0.0.r, 20.0.r, 0.0.r),
               child: CollectionWidget(
                 collection: collection,
+                detail: true,
                 size: 100.0,
                 onPressed: () => collectionP.collectionPressed(collection),
                 onLongPressed: () => collectionP.setMainBadge(collection),
@@ -131,11 +132,13 @@ class CollectionMainView extends StatelessWidget {
                           SizedBox(height: 20.0.h),
                           SizedBox(
                             height: 160.0.h,
-                            child: ListView(
+                            child: recentCollectionWidgets.isEmpty
+                                ? Center(child: FText('최근에 획득한 뱃지가 없어요!'))
+                                : ListView(
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               children: recentCollectionWidgets,
-                            ),
+                            )
                           ),
                         ],
                       ),
@@ -150,7 +153,9 @@ class CollectionMainView extends StatelessWidget {
                           SizedBox(height: 20.0.h),
                           SizedBox(
                             height: 160.0.h,
-                            child: ListView(
+                            child: dailyCollectionWidgets.isEmpty
+                                ? Center(child: FText('일일 목표를 달성해보세요!'))
+                                : ListView(
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               children: dailyCollectionWidgets,
@@ -169,11 +174,13 @@ class CollectionMainView extends StatelessWidget {
                           SizedBox(height: 20.0.h),
                           SizedBox(
                             height: 160.0.h,
-                            child: ListView(
+                            child: challengeCollectionWidgets.isEmpty
+                                ? Center(child: FText('월간 챌린지에 도전해보세요!'))
+                                : ListView(
                               shrinkWrap: true,
                               scrollDirection: Axis.horizontal,
                               children: challengeCollectionWidgets,
-                            ),
+                            )
                           ),
                         ],
                       ),
