@@ -161,16 +161,28 @@ class GlobalP extends GetxController {
                         CollectionP.toCollection();
                       },
                     ),
+                    // Container(
+                    //   width: 30.0.r,
+                    //   height: 30.0.r,
+                    //   alignment: Alignment.center,
+                    //   decoration: BoxDecoration(
+                    //     color: FTheme.white,
+                    //     shape: BoxShape.circle,
+                    //     border: Border.all(color: FTheme.black, width: 1.5),
+                    //   ),
+                    //   child: FText('${collection.dates.length}', border: true),
+                    // ),
                     Container(
-                      width: 30.0.r,
-                      height: 30.0.r,
-                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(horizontal: 12.0.r),
                       decoration: BoxDecoration(
-                        color: FTheme.white,
-                        shape: BoxShape.circle,
-                        border: Border.all(color: FTheme.black, width: 1.5),
+                        color: FTheme.lightGrey,
+                        borderRadius: BorderRadius.circular(12.0),
                       ),
-                      child: FText('${collection.dates.length}', border: true),
+                      child: FText(
+                        '${collection.dates.length ?? ''}',
+                        style: FTheme.textTheme.bodySmall,
+                        color: FTheme.white,
+                      ),
                     ),
                   ],
                 ),
