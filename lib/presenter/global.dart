@@ -51,34 +51,18 @@ class GlobalP extends GetxController {
   static const String effect2Asset =
       'assets/image/widget/dialog/badge_effect2.png';
 
-  int navIndex = 0;
+  late int navIndex;
 
   static void init() {
     final globalP = Get.find<GlobalP>();
     globalP.navIndex = 0;
-    globalP.update();
   }
 
   void navigate(int index) async {
-    switch (index) {
-      case 0:
-        if (navIndex == index) { await HomeP.init(); }
-        else { HomeP.toHome(); }
-        break;
-      case 1:
-        if (navIndex == index) { await FriendP.init(); }
-        else { FriendP.toFriend(); }
-        break;
-      case 2:
-        if (navIndex == index) { await ContentsP.init(); }
-        else { ContentsP.toContents(); }
-        break;
-      // case 3: AuthP.fLogout(); break;
-      case 3:
-        if (navIndex == index) { SeeMoreP.init(); }
-        else { SeeMoreP.toSeeMore(); }
-        break;
-    }
+    [
+      HomeP.toHome, FriendP.toFriend,
+      ContentsP.toContents, SeeMoreP.toSeeMore
+    ][index](navIndex == index);
 
     navIndex = index;
     update();

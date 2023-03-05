@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/home/ranking.dart';
@@ -11,7 +12,10 @@ class HomeP extends GetxController {
   static Size screenSize = MediaQuery.of(Get.context!).size;
   static final refreshCont = RefreshController();
 
-  static void toHome() => Get.offAllNamed('/home');
+  static void toHome([bool initialize = false]) async {
+    Get.offAllNamed('/home');
+    if (initialize) await init();
+  }
 
   static Future init() async {
     final homeP = Get.find<HomeP>();

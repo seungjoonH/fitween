@@ -8,6 +8,7 @@ import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
+import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/model/record.dart';
 import 'package:fitween/presenter/model/user/collection.dart';

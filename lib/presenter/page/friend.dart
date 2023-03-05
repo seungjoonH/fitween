@@ -2,6 +2,7 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/user/friend.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/enum/dialog.dart';
+import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
@@ -13,7 +14,10 @@ import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FriendP extends GetxController {
-  static void toFriend() => Get.offAllNamed('/friend');
+  static void toFriend([bool initialize = false]) async {
+    Get.offAllNamed('/friend');
+    if (initialize) await init();
+  }
 
   static Future init() async {
     final friendP = Get.find<FriendP>();

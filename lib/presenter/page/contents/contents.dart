@@ -3,6 +3,7 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/enum/dialog.dart';
+import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/party.dart';
 import 'package:fitween/presenter/model/json/party.dart';
@@ -21,8 +22,9 @@ class ContentsP extends GetxController {
   bool codeInvalid = false;
   String? codeHintText = '';
 
-  static void toContents() async {
+  static void toContents([bool initialize = false]) async {
     Get.offAllNamed('/contents');
+    if (initialize) await init();
   }
 
   /// methods
