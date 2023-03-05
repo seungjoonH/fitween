@@ -1,4 +1,3 @@
-import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/home/ranking.dart';

@@ -3,7 +3,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitween/presenter/page/see_more/goal_edit/goal_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_shake_animated/flutter_shake_animated.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -16,9 +15,7 @@ import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/model/enum/sex.dart';
 import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/record.dart';
-import 'package:fitween/presenter/page/register.dart';
 import 'package:fitween/view/widget/button/button.dart';
-import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:text_scroll/text_scroll.dart';
 

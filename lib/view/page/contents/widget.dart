@@ -25,6 +25,7 @@ import 'package:fitween/presenter/page/contents/time_attack/friend.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/card.dart';
+import 'package:fitween/view/widget/widget/tag.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,6 +81,7 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                if (parties.isNotEmpty)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -124,6 +126,7 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
                   ],
                 ),
                 const SizedBox(height: 30.0),
+                if (newChallenges.isNotEmpty)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -245,116 +248,28 @@ class ChallengeCard extends StatelessWidget {
                   ),
                   SizedBox(height: 4.0.h),
                   if(party == null)
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0.r),
-                          decoration: BoxDecoration(
-                            color: FTheme.lightGrey,
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: FText(
-                            '${challenge.levels['easy']['maxMember']}명',
-                            style: FTheme.textTheme.bodySmall,
-                            color: FTheme.white,
-                          ),
-                        ),
-                        SizedBox(width: 4.0.w),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0.r),
-                          decoration: BoxDecoration(
-                            color: FTheme.lightGrey,
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: FText(
-                            'D-${challenge.period}',
-                            style: FTheme.textTheme.bodySmall,
-                            color: FTheme.white,
-                          ),
-                        ),
-                        SizedBox(width: 4.0.w),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0.r),
-                          decoration: BoxDecoration(
-                            color: FTheme.lightGrey,
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: FText(
-                            challenge.type!.kr,
-                            style: FTheme.textTheme.bodySmall,
-                            color: FTheme.white,
-                          ),
-                        ),
-                      ],
-                    )
-                  else
-                    Row(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0.r),
-                          decoration: BoxDecoration(
-                            color: FTheme.lightGrey,
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: FText(
-                            '${party?.memberUids.length}명',
-                            style: FTheme.textTheme.bodySmall,
-                            color: FTheme.white,
-                          ),
-                        ),
-                        SizedBox(width: 4.0.w),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0.r),
-                          decoration: BoxDecoration(
-                            color: FTheme.lightGrey,
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: FText(
-                            'D-${party?.remainDays}',
-                            style: FTheme.textTheme.bodySmall,
-                            color: FTheme.white,
-                          ),
-                        ),
-                        SizedBox(width: 4.0.w),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0.r),
-                          decoration: BoxDecoration(
-                            color: FTheme.lightGrey,
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: FText(
-                            challenge.type!.kr,
-                            style: FTheme.textTheme.bodySmall,
-                            color: FTheme.white,
-                          ),
-                        ),
-                        SizedBox(width: 4.0.w),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 8.0.r),
-                          decoration: BoxDecoration(
-                            color: party!.over
-                                ? party!.satisfy
-                                  ? FTheme.colorC
-                                  : FTheme.colorB
-                                : party!.satisfy
-                                  ? FTheme.colorC
-                                  : FTheme.lightGrey,
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          child: FText(
-                            party!.over
-                                ? party!.satisfy
-                                  ? '완료'
-                                  : '실패'
-                                : party!.satisfy
-                                  ? '완료'
-                                  : '미완료',
-                            style: FTheme.textTheme.bodySmall,
-                            color: FTheme.white,
-                          ),
-                        ),
-                      ],
-                    )
+                  Row(
+                    children: [
+                      FTag('${challenge.levels['easy']['maxMember']}명'),
+                      FTag('D-${challenge.period}'),
+                      FTag(challenge.type!.kr),
+                    ],
+                  ) else Row(
+                    children: [
+                      FTag('${party?.memberUids.length}명'),
+                      FTag('D-${party?.remainDays}'),
+                      FTag(challenge.type!.kr),
+                      Builder(
+                        builder: (context) {
+                          String text = party!.satisfy ? '완료'
+                              : (party!.over ? '실패' : '미완료');
+                          Color color = party!.satisfy ? FTheme.colorC
+                              : (party!.over ? FTheme.colorB : FTheme.lightGrey);
+                          return FTag(text, backgroundColor: color);
+                        },
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -364,7 +279,6 @@ class ChallengeCard extends StatelessWidget {
     );
   }
 }
-
 
 class AchievementCardView extends StatelessWidget {
   const AchievementCardView({Key? key}) : super(key: key);
@@ -530,13 +444,20 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
                     color: widget.type.color,
                     borderRadius: BorderRadius.circular(8.0),
                   ),
-                  child: FText(text,
-                    maxLines: text.contains('\n') ? 2 : 1,
-                    style: text.contains('\n')
-                        ? textTheme.titleSmall
-                        : textTheme.displaySmall,
-                    color: FTheme.white,
-                    bold: true,
+                  child: Builder(
+                    builder: (context) {
+                      bool isOneLine = !text.contains('\n');
+                      int maxLines = isOneLine ? 1 : 2;
+                      TextStyle? style = isOneLine
+                          ? textTheme.displaySmall
+                          : textTheme.titleSmall;
+                      return FText(text,
+                        maxLines: maxLines,
+                        style: style,
+                        color: FTheme.white,
+                        bold: true,
+                      );
+                    }
                   ),
                 ),
               ),

@@ -16,7 +16,7 @@ import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/effect/effect.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/card.dart';
-import 'package:fitween/view/widget/widget/me.dart';
+import 'package:fitween/view/widget/widget/tag.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -303,32 +303,14 @@ class _ChallengeScoreLinearIndicatorState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         LinearPercentIndicator(
-          percent: amount / goal,
+          percent: max(amount / goal, .02),
           lineHeight: 100.0,
           backgroundColor: FTheme.background,
           barRadius: const Radius.circular(20.0),
           progressColor: widget.party.type.color,
+          animation: true,
+          animationDuration: 1000,
         ),
-        // Row(
-        //   children: [
-        //     Expanded(
-        //       flex: max(1, amount),
-        //       child: Container(
-        //         height: 100.0,
-        //         decoration: BoxDecoration(
-        //           color: widget.party.challenge?.type?.color,
-        //           borderRadius: const BorderRadius.horizontal(
-        //             right: Radius.circular(20.0),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     Expanded(
-        //       flex: amount == 0 ? 49 : max(0, goal - amount),
-        //       child: const SizedBox(),
-        //     ),
-        //   ],
-        // ),
         FText(
           '$amountString/$goalString',
           color: amount >= goal
@@ -397,7 +379,7 @@ class MyPartyRankingWidget extends StatelessWidget {
                               ),
                             ),
                             if (infos[index].uid == user.uid)
-                            const MeTagWidget(),
+                            const MeTag(),
                           ],
                         ),
                         FText(

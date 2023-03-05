@@ -40,6 +40,7 @@ void showPDialog({
   Color? rightTextColor,
   Color? leftBackgroundColor,
   Color? rightBackgroundColor,
+  bool barrierDismissible = true,
 }) async {
   switch (type) {
     case DialogType.bi:
@@ -68,25 +69,28 @@ void showPDialog({
       break;
   }
 
-  Get.dialog(PAlertDialog(
-    title: title,
-    content: content,
-    contentAlignment: contentAlignment,
-    titlePadding: titlePadding,
-    contentPadding: contentPadding,
-    type: type,
-    buttonText: buttonText,
-    onPressed: onPressed,
-    color: color,
-    leftText: leftText,
-    rightText: rightText,
-    leftPressed: leftPressed,
-    rightPressed: rightPressed,
-    leftTextColor: leftTextColor,
-    rightTextColor: rightTextColor,
-    leftBackgroundColor: leftBackgroundColor,
-    rightBackgroundColor: rightBackgroundColor,
-  ));
+  Get.dialog(
+    PAlertDialog(
+      title: title,
+      content: content,
+      contentAlignment: contentAlignment,
+      titlePadding: titlePadding,
+      contentPadding: contentPadding,
+      type: type,
+      buttonText: buttonText,
+      onPressed: onPressed,
+      color: color,
+      leftText: leftText,
+      rightText: rightText,
+      leftPressed: leftPressed,
+      rightPressed: rightPressed,
+      leftTextColor: leftTextColor,
+      rightTextColor: rightTextColor,
+      leftBackgroundColor: leftBackgroundColor,
+      rightBackgroundColor: rightBackgroundColor,
+    ),
+    barrierDismissible: barrierDismissible,
+  );
 }
 
 class PAlertDialog extends StatefulWidget {
@@ -204,26 +208,24 @@ class _PAlertDialogState extends State<PAlertDialog> {
               ),
             ),
             Row(
-              children: data
-                  .map((datum) => Expanded(
-                        child: Material(
-                          color: datum.backgroundColor,
-                          child: InkWell(
-                            onTap: datum.onPressed,
-                            child: Container(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Center(
-                                child: FText(
-                                  datum.text,
-                                  color: datum.textColor,
-                                  style: textTheme.labelLarge,
-                                ),
-                              ),
-                            ),
-                          ),
+              children: data.map((datum) => Expanded(
+                child: Material(
+                  color: datum.backgroundColor,
+                  child: InkWell(
+                    onTap: datum.onPressed,
+                    child: Container(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Center(
+                        child: FText(
+                          datum.text,
+                          color: datum.textColor,
+                          style: textTheme.labelLarge,
                         ),
-                      ))
-                  .toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              )).toList(),
             ),
           ],
         ),

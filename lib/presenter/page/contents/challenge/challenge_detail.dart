@@ -3,6 +3,7 @@ import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/model/enum/difficulty.dart';
 import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
+import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +21,15 @@ class ChallengeDetailP {
   // 챌린지 생성 버튼 클릭 시
   void challengeCreateButtonPressed(Challenge challenge) async {
     final userPartyP = Get.find<UserPartyP>();
+    final loadingP = Get.find<LoadingP>();
+
+    if (loadingP.loading) return;
+    loadingP.loadStart();
+
     String code = await userPartyP.createMyParty(challenge, Difficulty.easy);
     showChallengeCreatedDialog(code);
+
+    loadingP.loadEnd();
   }
 
   // 챌린지 생성 팝업
@@ -44,6 +52,7 @@ class ChallengeDetailP {
         ],
       ),
       type: DialogType.mono,
+      barrierDismissible: false,
       onPressed: () {
         Get.offAllNamed('/contents');
         final userPartyP = Get.find<UserPartyP>();

@@ -3,7 +3,6 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/enum/dialog.dart';
-import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/party.dart';
 import 'package:fitween/presenter/model/json/party.dart';

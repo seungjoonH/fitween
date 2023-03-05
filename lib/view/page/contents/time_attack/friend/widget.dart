@@ -9,7 +9,7 @@ import 'package:fitween/presenter/page/contents/time_attack/ready.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/card.dart';
-import 'package:fitween/view/widget/widget/me.dart';
+import 'package:fitween/view/widget/widget/tag.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -51,7 +51,7 @@ class TimeAttackFriendView extends StatelessWidget {
                     Row(
                       children: [
                         FText(userInfoP.loggedUser.nickname!),
-                        const MeTagWidget(),
+                        const MeTag(),
                       ],
                     ),
                   ],
