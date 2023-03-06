@@ -57,81 +57,83 @@ class _RotateCarouselState extends State<RotateCarousel>
 
         return Padding(
           padding: const EdgeInsets.only(top: 60.0),
-          child: Stack(
-            children: [
-              // onHorizontalDragEnd: (endDetails) {
-              //   double velocity = endDetails.velocity.pixelsPerSecond.dx;
-              //   if (velocity < -100) homeP.leftButtonPressed();
-              //   if (velocity > 100) homeP.rightButtonPressed();
-              // },
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Image.asset(
-                    homeP.pngAsset,
-                    width: HomeP.screenSize.width * 1.3,
-                    height: HomeP.screenSize.height * .4,
-                    fit: BoxFit.fitHeight,
-                  ),
-                  if (homeP.gifAsset != null)
-                  Stack(
-                    children: [
-                      GifImage(
-                        controller: HomeP.gifCont,
-                        width: HomeP.screenSize.width * 1.3,
-                        height: HomeP.screenSize.height * .4,
-                        fit: BoxFit.fitHeight,
-                        image: AssetImage(homeP.gifAsset!),
-                      ),
-                      Positioned.fill(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: FTheme.white.withOpacity(.09),
+          child: GestureDetector(
+            onHorizontalDragEnd: (endDetails) {
+              double velocity = endDetails.velocity.pixelsPerSecond.dx;
+              if (velocity < -100) homeP.leftButtonPressed();
+              if (velocity > 100) homeP.rightButtonPressed();
+            },
+            child: Stack(
+              children: [
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Image.asset(
+                      homeP.pngAsset,
+                      width: HomeP.screenSize.width * 1.3,
+                      height: HomeP.screenSize.height * .4,
+                      fit: BoxFit.fitHeight,
+                    ),
+                    if (homeP.gifAsset != null)
+                    Stack(
+                      children: [
+                        GifImage(
+                          controller: HomeP.gifCont,
+                          width: HomeP.screenSize.width * 1.3,
+                          height: HomeP.screenSize.height * .4,
+                          fit: BoxFit.fitHeight,
+                          image: AssetImage(homeP.gifAsset!),
+                        ),
+                        Positioned.fill(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: FTheme.white.withOpacity(.09),
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ) else Positioned(
-                    top: 150.0.h,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        FText(
-                          amountString,
-                          style: FTheme.largeText,
-                          color: FTheme.white,
-                        ),
-                        FText(
-                          type.unit,
-                          style: textTheme.displaySmall,
-                          color: FTheme.white,
-                        ),
                       ],
+                    ) else Positioned(
+                      top: 150.0.h,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          FText(
+                            amountString,
+                            style: FTheme.largeText,
+                            color: FTheme.white,
+                          ),
+                          FText(
+                            type.unit,
+                            style: textTheme.displaySmall,
+                            color: FTheme.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Positioned(
+                  left: HomeP.screenSize.width * .08,
+                  bottom: 150.0,
+                  child: GestureDetector(
+                    onTap: homeP.rightButtonPressed,
+                    child: SvgPicture.asset(
+                      'assets/image/page/home/left_arrow.svg',
                     ),
                   ),
-                ],
-              ),
-              Positioned(
-                left: HomeP.screenSize.width * .08,
-                bottom: 150.0,
-                child: GestureDetector(
-                  onTap: homeP.leftButtonPressed,
-                  child: SvgPicture.asset(
-                    'assets/image/page/home/left_arrow.svg',
+                ),
+                Positioned(
+                  right: HomeP.screenSize.width * .08,
+                  bottom: 150.0,
+                  child: GestureDetector(
+                    onTap: homeP.leftButtonPressed,
+                    child: SvgPicture.asset(
+                      'assets/image/page/home/right_arrow.svg',
+                    ),
                   ),
                 ),
-              ),
-              Positioned(
-                right: HomeP.screenSize.width * .08,
-                bottom: 150.0,
-                child: GestureDetector(
-                  onTap: homeP.rightButtonPressed,
-                  child: SvgPicture.asset(
-                    'assets/image/page/home/right_arrow.svg',
-                  ),
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         );
       },
@@ -290,6 +292,8 @@ class RankingGraph extends StatelessWidget {
       builder: (rankingP) {
         final userInfoP = Get.find<UserInfoP>();
         String myUid = userInfoP.loggedUser.uid!;
+
+        if (rankingP.infos.isEmpty) return Container();
 
         int myPrice = rankingP.infos[type]!.indexWhere((info) => info.uid == myUid);
         int firstIndex = rankingP.infos[type]!.length > 3

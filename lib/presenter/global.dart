@@ -51,11 +51,12 @@ class GlobalP extends GetxController {
   static const String effect2Asset =
       'assets/image/widget/dialog/badge_effect2.png';
 
-  late int navIndex;
+  int navIndex = 0;
 
-  static void init() {
+  static Future init() async {
     final globalP = Get.find<GlobalP>();
     globalP.navIndex = 0;
+    globalP.update();
   }
 
   void navigate(int index) async {

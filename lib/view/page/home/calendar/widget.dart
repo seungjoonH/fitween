@@ -61,19 +61,21 @@ class _MyCalendarViewState extends State<MyCalendarView> {
 
   @override
   Widget build(BuildContext context) {
+    final refreshCont = RefreshController();
+
     return SmartRefresher(
-      controller: CalendarP.refreshCont,
+      controller: refreshCont,
       onRefresh: () async {
         try {
           await CalendarP.init();
-          CalendarP.refreshCont.refreshCompleted();
+          refreshCont.refreshCompleted();
         } catch (e) {
-          CalendarP.refreshCont.refreshFailed();
+          refreshCont.refreshFailed();
         }
       },
       onLoading: () async {
         await Future.delayed(const Duration(milliseconds: 100));
-        CalendarP.refreshCont.loadComplete();
+        refreshCont.loadComplete();
       },
       header: const MaterialClassicHeader(
         color: FTheme.black,

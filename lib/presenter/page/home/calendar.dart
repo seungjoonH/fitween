@@ -19,7 +19,6 @@ class CalendarEvent {
 }
 
 class CalendarP extends GetxController {
-  static final refreshCont = RefreshController();
   static final firstDay = Get.find<UserInfoP>().loggedUser.regDate ?? today;
   static final lastDay = today;
 

@@ -133,9 +133,9 @@ class AuthP {
       await userRecordP.login(strangerRecord);
 
       await storeLoginData(userInfoP.data);
-      GlobalP.init();
+      await GlobalP.init();
+      await HomeP.init();
       HomeP.toHome();
-      HomeP.init();
       await Get.find<ContentsP>().loadAll();
     }
 
@@ -194,9 +194,9 @@ class AuthP {
     await userPartyP.load();
     await userRecordP.load();
 
-    GlobalP.init();
+    await GlobalP.init();
+    await HomeP.init();
     HomeP.toHome();
-    HomeP.init();
     await Get.find<ContentsP>().loadAll();
   }
 

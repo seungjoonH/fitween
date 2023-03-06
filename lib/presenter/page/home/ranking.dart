@@ -19,12 +19,12 @@ class RankingP extends GetxController{
 
     if (loadingP.loading) return;
     loadingP.loadStart();
-    rankingP.loadAll();
+    await rankingP.loadAll();
     loadingP.loadEnd();
   }
 
   Future loadAll() async {
-    loadRanking();
+    await loadRanking();
   }
 
   final startDate = firstDayOfWeek(today);
@@ -33,7 +33,7 @@ class RankingP extends GetxController{
   Map<ActivityType, List<FUserInfo>> infos = {};
   Map<ActivityType, List<FUserRecord>> records = {};
 
-  void loadRanking() {
+  Future loadRanking() async {
     final userInfoP = Get.find<UserInfoP>();
     final userRecordP = Get.find<UserRecordP>();
     final userFriendP = Get.find<UserFriendP>();
