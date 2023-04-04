@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:fitween/presenter/page/contents/workout/battle/camera.dart';
+import 'package:fitween/presenter/page/contents/workout/solo/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
@@ -7,16 +9,16 @@ import 'package:fitween/model/class/workout/edge.dart';
 import 'package:fitween/model/class/workout/handler.dart';
 import 'package:fitween/model/class/workout/inference.dart';
 import 'package:fitween/model/class/workout/limb.dart';
-import 'package:fitween/model/class/workout/parts.dart';
 import 'package:fitween/model/enum/part.dart';
 import 'package:fitween/model/enum/workout.dart';
-import 'package:fitween/presenter/widget/painter.dart';
 
 class LimbPainter extends CustomPainter {
-  final painterP = Get.find<PainterP>();
+  final workoutSoloCameraP = Get.find<WorkoutSoloCameraP>();
+  final battleCameraP = Get.find<BattleCameraP>();
+
+  bool isSolo = false;
 
   // COLOR PROFILES
-
   Paint pointBlue = Paint()
     ..color = colorScheme.tertiary.withOpacity(.5)
     ..strokeCap = StrokeCap.round
@@ -46,109 +48,81 @@ class LimbPainter extends CustomPainter {
     ..color = colorScheme.secondaryContainer.withOpacity(.8)
     ..strokeWidth = 5;
 
-  Paint pointBlack = Paint()
-    ..color = Colors.black
-    ..strokeCap = StrokeCap.round
-    ..strokeWidth = 8;
-
-  Paint edgeBlack = Paint()
-    ..color = Colors.black12
-    ..strokeWidth = 5;
-
-  // Paint area = Paint()
-  //   ..color = Colors.white24;
-
   Paint area = Paint()
     ..style = PaintingStyle.stroke
     ..color = FTheme.colorB
     ..strokeWidth = 5;
 
-  List<Offset> pointsBlue  = [];
-  List<Offset> pointsGreen = [];
-  List<Offset> pointsRed   = [];
-  List<Offset> pointsBlack = [];
-
   LimbPainter({
     required Map<Part, Inference> inferences,
-    required List<Limb> limbs
+    required List<Limb> limbs,
+    this.isSolo = false,
   }) {
-    painterP.inferences = inferences;
-    painterP.limbs = limbs;
+    workoutSoloCameraP.inferences = inferences;
+    workoutSoloCameraP.limbs = limbs;
+    battleCameraP.inferences = inferences;
+    battleCameraP.limbs = limbs;
+  }
+
+  bool get humanDetected {
+    if (isSolo) return Get.find<WorkoutSoloCameraP>().humanDetected;
+    return Get.find<BattleCameraP>().humanDetected;
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (Limb limb in painterP.limbs) { renderEdge(canvas, limb); }
-    canvas.drawPoints(PointMode.points, pointsBlue, pointBlue);
-    canvas.drawPoints(PointMode.points, pointsGreen, pointGreen);
-    canvas.drawPoints(PointMode.points, pointsRed, pointRed);
-    // canvas.drawPoints(PointMode.points, pointsBlack, pointBlack);
+    if (!humanDetected) return;
+    renderEdges(canvas);
+    renderPoints(canvas);
   }
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 
-  void renderEdge(Canvas canvas, Limb limb) {
-    // canvas.drawRRect(
-    //   RRect.fromRectAndRadius(
-    //     Rect.fromCenter(
-    //       center: Offset(
-    //         PainterP.canvasSize.width * .5,
-    //         PainterP.canvasSize.height * .5,
-    //       ),
-    //       width: PainterP.canvasSize.width * .5,
-    //       height: PainterP.canvasSize.height * .6,
-    //     ), const Radius.circular(40.0),
-    //   ), area,
-    // );
+  void renderPoints(Canvas canvas) {
+    Map<Part, Inference> inferences = isSolo
+        ? workoutSoloCameraP.inferences
+        : battleCameraP.inferences;
 
-    bool isHuman = Parts(painterP.inferences).isHuman;
+    List<Offset> points = inferences.values.map((inf) => inf.offset).toList();
+    List<Offset> refinedPoints = [];
 
-    PainterP.addHumanHistory(isHuman);
-
-    painterP.staging();
-
-    if (!isHuman
-        || PainterP.humanHistory < 0
-        || painterP.distance != WorkoutDistance.middle) return;
-
-    painterP.inferences.forEach((part, inference) {
-      if ((inference.prob > 0.40) & limb.contains(part)) {
-        Offset offset = Offset(
-          inference.x.toDouble(),
-          inference.y.toDouble(),
-        ); ({
-          WorkoutPosture.ready: pointsBlue,
-          WorkoutPosture.correct: pointsGreen,
-          WorkoutPosture.wrong: pointsRed,
-        }[ExerciseHandler.posture]!).add(offset);
-        // (ExerciseHandler.isCorrect ? pointsGreen : pointsRed).add(offset);
+    for (Part part in Part.values) {
+      bool contain = false;
+      for (Limb limb in ExerciseHandler.limbs) {
+        contain |= limb.containsPart(part);
       }
-    });
+      if (contain) refinedPoints.add(points[part.index]);
+    }
+    canvas.drawPoints(PointMode.points, refinedPoints, {
+      WorkoutPosture.unbent: pointBlue,
+      WorkoutPosture.correct: pointGreen,
+      WorkoutPosture.wrong: pointRed,
+      WorkoutPosture.fast: pointRed,
+    }[ExerciseHandler.posture]!);
+  }
+
+  void renderEdges(Canvas canvas) {
+    Map<Part, Inference> inferences = isSolo
+        ? workoutSoloCameraP.inferences
+        : battleCameraP.inferences;
 
     for (Edge edge in Edges.list) {
-      double vertex1X = painterP.inferences[edge.part1]!.x.toDouble();
-      double vertex1Y = painterP.inferences[edge.part1]!.y.toDouble();
-      double vertex2X = painterP.inferences[edge.part2]!.x.toDouble();
-      double vertex2Y = painterP.inferences[edge.part2]!.y.toDouble();
-
-      if (limb.contains(edge.part1) & limb.contains(edge.part2)) {
-        canvas.drawLine(
-          Offset(vertex1X, vertex1Y),
-          Offset(vertex2X, vertex2Y), {
-            WorkoutPosture.ready: edgeBlue,
-            WorkoutPosture.correct: edgeGreen,
-            WorkoutPosture.wrong: edgeRed,
-          }[ExerciseHandler.posture]!,
-        );
+      Offset? p1 = inferences[edge.part1]?.offset;
+      Offset? p2 = inferences[edge.part2]?.offset;
+      if (p1 == null || p2 == null) continue;
+      bool contain = false;
+      for (Limb limb in ExerciseHandler.limbs) {
+        contain |= limb.containsEdge(edge);
       }
-      // else {
-      //   canvas.drawLine(
-      //     Offset(vertex1X, vertex1Y),
-      //     Offset(vertex2X, vertex2Y),
-      //     edgeBlack,
-      //   );
-      // }
+
+      if (!contain) continue;
+      canvas.drawLine(p1, p2, {
+        WorkoutPosture.unbent: edgeBlue,
+        WorkoutPosture.correct: edgeGreen,
+        WorkoutPosture.wrong: edgeRed,
+        WorkoutPosture.fast: edgeRed,
+      }[ExerciseHandler.posture]!);
     }
   }
 }

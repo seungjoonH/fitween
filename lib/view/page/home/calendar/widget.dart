@@ -99,13 +99,27 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                   startingDayOfWeek: StartingDayOfWeek.monday,
                   daysOfWeekHeight: 20.0,
                   pageJumpingEnabled: true,
-                  calendarStyle: const CalendarStyle(
+                  calendarStyle: CalendarStyle(
                     isTodayHighlighted: true,
-                    todayDecoration: BoxDecoration(
-                      color: FTheme.grey,
+                      selectedDecoration: const BoxDecoration(
+                      color: FTheme.darkGrey,
                       shape: BoxShape.circle,
                     ),
-                    cellMargin: EdgeInsets.all(2.0),
+                      selectedTextStyle: textTheme.bodyLarge!.copyWith(
+                      color: CalendarP.isAllFinished(_getEventsForDay(_selectedDay!))
+                          ? ActivityType.calorie.color
+                          : FTheme.white,
+                    ),
+                    todayDecoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: FTheme.darkGrey, width: 3.0),
+                    ),
+                    todayTextStyle: textTheme.bodyLarge!.copyWith(
+                      color: CalendarP.isAllFinished(_getEventsForDay(today))
+                          ? ActivityType.calorie.color
+                          : FTheme.darkGrey,
+                    ),
+                    cellMargin: const EdgeInsets.all(2.0),
                     cellAlignment: Alignment.center,
                   ),
                   calendarBuilders: CalendarBuilders(

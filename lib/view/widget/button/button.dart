@@ -5,6 +5,7 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/view/widget/widget/icon.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:pausable_timer/pausable_timer.dart';
 
 class FButton extends StatefulWidget {
   FButton({
@@ -20,6 +21,7 @@ class FButton extends StatefulWidget {
     this.stretch = false,
     this.multiple = false,
     this.border = false,
+    this.motion = false,
     this.height,
   }) : assert(text == null || child == null),
     padding = padding ?? EdgeInsets.symmetric(
@@ -40,6 +42,7 @@ class FButton extends StatefulWidget {
   final bool stretch;
   final bool multiple;
   final bool border;
+  final bool motion;
   final double? height;
 
   @override
@@ -49,13 +52,16 @@ class FButton extends StatefulWidget {
 class _FButtonState extends State<FButton> {
   Function(TapDownDetails)? onTapDown;
   Function(TapUpDetails)? onTapUp;
+  VoidCallback? onTapCancel;
 
   double scale = 1.0;
   Duration duration = const Duration(milliseconds: 100);
+  PausableTimer? timer;
 
   @override
   void initState() {
     onTapDown = widget.onPressed == null ? null : (_) {
+      timer?.pause();
       setState(() => scale = .9);
     };
     onTapUp = widget.onPressed == null ? null : (_) async {
@@ -65,7 +71,28 @@ class _FButtonState extends State<FButton> {
       });
       widget.onPressed!();
     };
+    onTapCancel = () {
+      timer?.start();
+      setState(() => scale = 1.0);
+    };
+    if (!widget.motion) return;
+    timer = PausableTimer(const Duration(milliseconds: 600), () async {
+      if (!mounted) return;
+      setState(() => scale = 1.05);
+      await Future.delayed(duration, () {
+        if (!mounted) return;
+        setState(() => scale = 1.0);
+        timer?..reset()..start();
+      });
+    });
+    timer?.start();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -76,19 +103,17 @@ class _FButtonState extends State<FButton> {
       child: GestureDetector(
         onTapDown: onTapDown,
         onTapUp: onTapUp,
-        onTapCancel: () => setState(() => scale = 1.0),
+        onTapCancel: onTapCancel,
         child: Material(
           color: widget.fill ? widget.backgroundColor : Colors.transparent,
           borderRadius: BorderRadius.circular(15.0),
           child: Container(
             height: widget.height?.h,
             padding: widget.padding,
-            constraints: widget.multiple
-                ? null
-                : widget.constraints ??
-                    BoxConstraints(
-                      maxWidth: MediaQuery.of(context).size.width,
-                    ),
+            constraints: widget.multiple ? null
+                : widget.constraints ?? BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width,
+            ),
             decoration: BoxDecoration(
               border: widget.border
                   ? Border.all(color: FTheme.stroke, width: .5)
@@ -99,9 +124,9 @@ class _FButtonState extends State<FButton> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 if (widget.stretch) const Expanded(child: SizedBox()),
-                widget.child ??
-                    FText(widget.text!,
-                        color: widget.textColor, style: textTheme.titleMedium),
+                widget.child ?? FText(widget.text!,
+                  color: widget.textColor, style: textTheme.titleMedium,
+                ),
                 if (widget.stretch) const Expanded(child: SizedBox()),
               ],
             ),
@@ -221,54 +246,72 @@ class PDirectButton extends StatelessWidget {
   }
 }
 
-class FCircledButton extends StatelessWidget {
+class FCircledButton extends StatefulWidget {
   const FCircledButton({
     Key? key,
     required this.onPressed,
+    this.onLongPressed,
     required this.child,
     this.size = 80.0,
-    this.enabled = true,
-    Color? backgroundColor,
-  })  : backgroundColor = backgroundColor ?? const Color(0xFFD6BDAC),
-        super(key: key);
+    this.backgroundColor,
+  }) : super(key: key);
 
   final VoidCallback onPressed;
+  final VoidCallback? onLongPressed;
   final Widget child;
   final double size;
-  final bool enabled;
   final Color? backgroundColor;
 
   @override
+  State<FCircledButton> createState() => _FCircledButtonState();
+}
+
+class _FCircledButtonState extends State<FCircledButton> {
+  Function(TapDownDetails)? onTapDown;
+  Function(TapUpDetails)? onTapUp;
+
+  double scale = 1.0;
+  Duration duration = const Duration(milliseconds: 100);
+
+  bool longPressed = false;
+
+  @override
+  void initState() {
+    onTapDown = (_) {
+      setState(() => scale = .9);
+    };
+    onTapUp = (_) async {
+      await Future.delayed(duration, () {
+        if (!mounted) return;
+        setState(() => scale = 1.0);
+      });
+      widget.onPressed();
+    };
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    BorderRadius radius = BorderRadius.circular(size.r * .5);
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Material(
-          color: backgroundColor,
-          borderRadius: radius,
-          child: InkWell(
-            onTap: onPressed,
-            borderRadius: radius,
-            child: Container(
-              padding: EdgeInsets.all(10.0.r),
-              alignment: Alignment.center,
-              width: size.r,
-              height: size.r,
-              child: child,
-            ),
-          ),
-        ),
-        if (!enabled)
-        Container(
-          width: size.r,
-          height: size.r,
+    return AnimatedScale(
+      scale: scale,
+      duration: duration,
+      child: GestureDetector(
+        onTapDown: onTapDown,
+        onTapUp: onTapUp,
+        onTapCancel: () => setState(() => scale = 1.0),
+        onLongPress: widget.onLongPressed,
+        child: Container(
+          width: widget.size.r,
+          height: widget.size.r,
           decoration: BoxDecoration(
-            color: FTheme.white.withOpacity(.3),
-            borderRadius: radius,
+            color: widget.backgroundColor,
+            shape: BoxShape.circle,
           ),
+          padding: EdgeInsets.all(10.0.r),
+          alignment: Alignment.center,
+          child: widget.child,
         ),
-      ],
+      ),
     );
   }
 }

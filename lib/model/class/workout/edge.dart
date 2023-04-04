@@ -9,6 +9,11 @@ class Edge {
     part1 = Part.values[index1];
     part2 = Part.values[index2];
   }
+
+  bool equalTo(Edge edge) => (
+      edge.part1 == part1 && edge.part2 == part2
+          || edge.part1 == part2 && edge.part2 == part1
+  );
 }
 
 class Edges {

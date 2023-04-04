@@ -1,7 +1,7 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/model/enum/difficulty.dart';
-import 'package:fitween/presenter/model/json/party.dart';
+import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
@@ -34,7 +34,7 @@ class ChallengeDetailP {
 
   // 챌린지 생성 팝업
   void showChallengeCreatedDialog(String code) {
-    showPDialog(
+    showFDialog(
       title: '챌린지 생성',
       content: Column(
         children: [

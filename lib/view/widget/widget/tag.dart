@@ -26,7 +26,7 @@ class FTag extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0.r),
       ),
       child: FText(text,
-        style: textTheme.bodySmall,
+        style: textTheme.labelSmall,
         color: textColor,
       ),
     );

@@ -31,7 +31,7 @@ class LevelJsonP extends GetxController {
     List<Level> levelList = levels[type] ?? [];
     record.convert({
       ActivityType.distance: ExerciseUnit.kilometer,
-      ActivityType.weight: ExerciseUnit.count,
+      ActivityType.weight: ExerciseUnit.weight,
     }[type]);
 
     for (int i = 0; i < levelList.length - 1; i++) {

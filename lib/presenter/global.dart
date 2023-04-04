@@ -9,24 +9,30 @@ import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/json/quest.dart';
-import 'package:fitween/presenter/model/party.dart';
+import 'package:fitween/presenter/model/json/party.dart';
+import 'package:fitween/presenter/model/user/battle.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
-import 'package:fitween/presenter/model/json/party.dart';
+import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/notification.dart';
+import 'package:fitween/presenter/page/contents/workout/battle/record.dart';
+import 'package:fitween/presenter/page/contents/workout/battle/result.dart';
+import 'package:fitween/presenter/page/contents/workout/friend.dart';
+import 'package:fitween/presenter/page/contents/workout/ready.dart';
+import 'package:fitween/presenter/page/contents/workout/battle/camera.dart';
+import 'package:fitween/presenter/page/contents/workout/solo/camera.dart';
+import 'package:fitween/presenter/page/contents/workout/solo/result.dart';
 import 'package:fitween/presenter/page/home/calendar.dart';
 import 'package:fitween/presenter/page/contents/challenge/challenge_detail.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:fitween/presenter/page/contents/contents.dart';
-import 'package:fitween/presenter/page/contents/time_attack/camera.dart';
-import 'package:fitween/presenter/page/contents/time_attack/friend.dart';
-import 'package:fitween/presenter/page/contents/time_attack/ready.dart';
 import 'package:fitween/presenter/page/exercise/setting/detail.dart';
 import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/presenter/page/home/home.dart';
+import 'package:fitween/presenter/page/login.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
 import 'package:fitween/presenter/page/home/ranking.dart';
 import 'package:fitween/presenter/page/register.dart';
@@ -36,7 +42,6 @@ import 'package:fitween/presenter/page/see_more/info_edit/info_edit.dart';
 import 'package:fitween/presenter/page/see_more/see_more.dart';
 import 'package:fitween/presenter/widget/camera.dart';
 import 'package:fitween/presenter/widget/loading.dart';
-import 'package:fitween/presenter/widget/painter.dart';
 import 'package:fitween/view/widget/effect/effect.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
@@ -84,7 +89,7 @@ class GlobalP extends GetxController {
       return;
     }
 
-    showPDialog(
+    showFDialog(
       title: badge.title,
       content: Column(
         children: [
@@ -127,7 +132,7 @@ class GlobalP extends GetxController {
     FUserCollection user = Get.find<UserCollectionP>().loggedUser;
     bool isMainBadge = user.badgeId! == collection.badgeId;
 
-    showPDialog(
+    showFDialog(
       title: collection.badge!.title,
       content: Column(
         children: [
@@ -146,17 +151,6 @@ class GlobalP extends GetxController {
                         CollectionP.toCollection();
                       },
                     ),
-                    // Container(
-                    //   width: 30.0.r,
-                    //   height: 30.0.r,
-                    //   alignment: Alignment.center,
-                    //   decoration: BoxDecoration(
-                    //     color: FTheme.white,
-                    //     shape: BoxShape.circle,
-                    //     border: Border.all(color: FTheme.black, width: 1.5),
-                    //   ),
-                    //   child: FText('${collection.dates.length}', border: true),
-                    // ),
                     Container(
                       padding: EdgeInsets.symmetric(horizontal: 12.0.r),
                       decoration: BoxDecoration(
@@ -164,7 +158,7 @@ class GlobalP extends GetxController {
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: FText(
-                        '${collection.dates.length ?? ''}',
+                        '${collection.dates.length}',
                         style: FTheme.textTheme.bodySmall,
                         color: FTheme.white,
                       ),
@@ -213,7 +207,7 @@ class GlobalP extends GetxController {
 
   static void showAwardedBadgeDialog(FBadge badge,
       [bool firstAward = false]) async {
-    showPDialog(
+    showFDialog(
       titlePadding: EdgeInsets.zero,
       contentPadding: EdgeInsets.zero,
       content: Column(
@@ -301,7 +295,7 @@ class GlobalP extends GetxController {
   static void showCollectionSettingDialog(String badgeId) {
     FBadge? selectedBadge = BadgeJsonP.getBadge(badgeId);
 
-    showPDialog(
+    showFDialog(
       title: '대표 컬렉션 변경',
       content: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -339,6 +333,7 @@ class GlobalP extends GetxController {
     Get.put(UserNotificationP());
     Get.put(UserPartyP());
     Get.put(UserRecordP());
+    Get.put(UserBattleP());
 
     Get.put(ChallengeJsonP());
     Get.put(BadgeJsonP());
@@ -354,7 +349,8 @@ class GlobalP extends GetxController {
 
     //Camera Presenter
     Get.put(CameraP());
-    Get.put(PainterP());
+
+    Get.put(LoginP());
 
     Get.put(HomeP());
     Get.put(RankingP());
@@ -365,9 +361,13 @@ class GlobalP extends GetxController {
     Get.put(ContentsP());
     Get.put(ChallengeDetailP());
     Get.put(PartyP());
-    Get.put(TimeAttackReadyP());
-    Get.put(TimeAttackFriendP());
-    Get.put(TimeAttackCameraP());
+    Get.put(WorkoutSoloCameraP());
+    Get.put(WorkoutSoloResultP());
+    Get.put(WorkoutReadyP());
+    Get.put(WorkoutFriendP());
+    Get.put(BattleCameraP());
+    Get.put(BattleResultP());
+    Get.put(BattleRecordP());
 
     Get.put(SeeMoreP());
     Get.put(CollectionP());

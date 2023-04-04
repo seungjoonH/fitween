@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/enum/page_mode.dart';
-import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 
 class CollectionMainView extends StatelessWidget {
@@ -20,36 +19,35 @@ class CollectionMainView extends StatelessWidget {
       builder: (collectionP) {
         final userP = Get.find<UserCollectionP>();
         FUserCollection user = userP.loggedUser;
-        const collectionCounts = 200;
 
-        List<Widget> collectionWidgets = user.recentCollections.map((collection) {
-          return Center(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(0.0.r, 0.0.r, 20.0.r, 0.0.r),
-              child: CollectionWidget(
-                collection: collection,
-                detail: true,
-                size: 100.0,
-                onPressed: () => collectionP.collectionPressed(collection),
-                onLongPressed: () => collectionP.setMainBadge(collection),
-                pressed: collectionP.mode == PageMode.edit
-                    && collectionP.selectedBadgeId == collection.badgeId,
-                selected: collectionP.mode == PageMode.view
-                    && user.badgeId == collection.badgeId,
-              ),
-            ),
-          );
-        }).toList()..addAll(
-          BadgeJsonP.notAcquiredBadges.map((badge) => Center(
-            child: BadgeWidget(
-              badge: badge,
-              detail: true,
-              size: 100.0,
-              greyscale: true,
-              lock: true,
-            ),
-          ),
-        ));
+        // List<Widget> collectionWidgets = user.recentCollections.map((collection) {
+        //   return Center(
+        //     child: Padding(
+        //       padding: const EdgeInsets.only(right: 20.0),
+        //       child: CollectionWidget(
+        //         collection: collection,
+        //         detail: true,
+        //         size: 100.0,
+        //         onPressed: () => collectionP.collectionPressed(collection),
+        //         onLongPressed: () => collectionP.setMainBadge(collection),
+        //         pressed: collectionP.mode == PageMode.edit
+        //             && collectionP.selectedBadgeId == collection.badgeId,
+        //         selected: collectionP.mode == PageMode.view
+        //             && user.badgeId == collection.badgeId,
+        //       ),
+        //     ),
+        //   );
+        // }).toList()..addAll(
+        //   BadgeJsonP.notAcquiredBadges.map((badge) => Center(
+        //     child: BadgeWidget(
+        //       badge: badge,
+        //       detail: true,
+        //       size: 100.0,
+        //       greyscale: true,
+        //       lock: true,
+        //     ),
+        //   ),
+        // ));
 
         List<Widget> recentCollectionWidgets = user.recentCollections.map((collection) {
           return Center(
@@ -114,7 +112,6 @@ class CollectionMainView extends StatelessWidget {
         // ).toList();
 
         // List<Widget> gridWidgets = collectionWidgets..addAll(emptyWidgets);
-        List<Widget> gridWidgets = collectionWidgets;
 
         return SingleChildScrollView(
           child: Column(

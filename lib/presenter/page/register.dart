@@ -5,12 +5,14 @@ import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/notification.dart';
 import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/model/class/database/user/battle.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
-import 'package:fitween/presenter/model/json/party.dart';
+import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
+import 'package:fitween/presenter/model/user/battle.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -82,6 +84,7 @@ class RegisterP extends GetxController {
     newcomerNotification = FUserNotification();
     newcomerParty = FUserParty();
     newcomerRecord = FUserRecord();
+    newcomerBattle = FUserBattle();
 
     newcomerCollection.uid = AuthP.uid;
     newcomerFriend.uid = AuthP.uid;
@@ -89,6 +92,7 @@ class RegisterP extends GetxController {
     newcomerNotification.uid = AuthP.uid;
     newcomerParty.uid = AuthP.uid;
     newcomerRecord.uid = AuthP.uid;
+    newcomerBattle.uid = AuthP.uid;
 
     pageIndex = 0;
 
@@ -126,6 +130,7 @@ class RegisterP extends GetxController {
   late FUserNotification newcomerNotification;
   late FUserParty newcomerParty;
   late FUserRecord newcomerRecord;
+  late FUserBattle newcomerBattle;
   bool keyboardVisible = false;
 
   void setKeyboardVisible(bool value) {
@@ -176,6 +181,7 @@ class RegisterP extends GetxController {
     final userNotificationP = Get.find<UserNotificationP>();
     final userPartyP = Get.find<UserPartyP>();
     final userRecordP = Get.find<UserRecordP>();
+    final userBattleP = Get.find<UserBattleP>();
 
     newcomerInfo.nickname = fields['nickname']!.controller.text;
     newcomerInfo.dateOfBirth = stringToDate(
@@ -197,6 +203,7 @@ class RegisterP extends GetxController {
     userNotificationP.login(newcomerNotification);
     userPartyP.login(newcomerParty);
     userRecordP.login(newcomerRecord);
+    userBattleP.login(newcomerBattle);
 
     HomeP.toHome();
     await AuthP.storeLoginData(userInfoP.data);
@@ -370,6 +377,7 @@ class RegisterP extends GetxController {
       final userInfoP = Get.find<UserInfoP>();
       final userPartyP = Get.find<UserPartyP>();
       final userRecordP = Get.find<UserRecordP>();
+      final userBattleP = Get.find<UserBattleP>();
       final onboardingP = Get.find<OnboardingP>();
 
       userCollectionP.logout();
@@ -377,6 +385,7 @@ class RegisterP extends GetxController {
       userInfoP.logout();
       userPartyP.logout();
       userRecordP.logout();
+      userBattleP.logout();
 
       init();
 

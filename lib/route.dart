@@ -1,13 +1,16 @@
 /* 라우트 관련 */
+import 'package:fitween/view/page/contents/workout/battle/record/record.dart';
+import 'package:fitween/view/page/contents/workout/friend/friend.dart';
+import 'package:fitween/view/page/contents/workout/ready/ready.dart';
+import 'package:fitween/view/page/contents/workout/battle/camera/camera.dart';
+import 'package:fitween/view/page/contents/workout/battle/result/result.dart';
+import 'package:fitween/view/page/contents/workout/solo/camera/camera.dart';
+import 'package:fitween/view/page/contents/workout/solo/result/result.dart';
 import 'package:fitween/view/page/see_more/collection/collection.dart';
 import 'package:fitween/view/page/contents/achievement/level/level.dart';
 import 'package:fitween/view/page/contents/challenge/detail/detail.dart';
 import 'package:fitween/view/page/contents/challenge/party/party.dart';
 import 'package:fitween/view/page/contents/contents.dart';
-import 'package:fitween/view/page/contents/time_attack/camera/camera.dart';
-import 'package:fitween/view/page/contents/time_attack/friend/friend.dart';
-import 'package:fitween/view/page/contents/time_attack/main/main.dart';
-import 'package:fitween/view/page/contents/time_attack/result/result.dart';
 import 'package:fitween/view/page/friend/friend.dart';
 import 'package:fitween/view/page/home/calendar/calendar.dart';
 import 'package:fitween/view/page/home/home.dart';
@@ -44,10 +47,13 @@ class FRoute {
     '/contents/challengeDetail': const ChallengeDetailPage(),
     '/contents/party': const PartyPage(),
     '/contents/achievementLevel': const AchievementLevelPage(),
-    '/contents/timeAttackFriend': const TimeAttackFriendPage(),
-    '/contents/timeAttackReady': const TimeAttackReadyPage(),
-    '/contents/timeAttackCamera': const TimeAttackCameraPage(),
-    '/contents/timeAttackResult': const TimeAttackResultPage(),
+    '/contents/workout/friend': const WorkoutFriendPage(),
+    '/contents/workout/ready': const WorkoutReadyPage(),
+    '/contents/workout/solo/camera': const WorkoutSoloCameraPage(),
+    '/contents/workout/solo/result': const WorkoutSoloResultPage(),
+    '/contents/workout/battle/camera': const BattleCameraPage(),
+    '/contents/workout/battle/result': const BattleResultPage(),
+    '/contents/workout/battle/record': const BattleRecordPage(),
     '/seeMore': const SeeMorePage(),
     '/seeMore/collection': const CollectionPage(),
     '/seeMore/goalEdit': const GoalEditPage(),

@@ -1,130 +1,110 @@
-/* 사용자 모델 프리젠터 */
+
+import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/party.dart';
+import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/party.dart';
+import 'package:fitween/presenter/model/user/record.dart';
 import 'package:get/get.dart';
-import 'package:fitween/model/class/json/challenge.dart';
 import 'package:fitween/model/class/database/party.dart';
-import 'package:fitween/model/enum/difficulty.dart';
 import 'package:fitween/presenter/firebase/firebase.dart';
-import 'package:fitween/presenter/model/party.dart';
 
 /// class
-// 사용자 객체 관련
-class UserPartyP extends GetxController {
-  /// static variables
-  static get collection => f.collection('userParties');
+// 파이어베이스 파티 관련
+class PartyJsonP extends GetxController {
+  final userPartyP = Get.find<UserPartyP>();
 
-  /// static methods
-  static Future<FUserParty?> loadUser(String uid) async {
-    var json = (await collection.doc(uid).get()).data();
-    if (json == null) return null;
-    return FUserParty.fromJson(json);
+  List<Party> parties = [];
+
+  // 파이어베이스에서 해당 아이디의 파티 존재 여부 반환
+  static Future<bool> partyExists(String id) async {
+    if (id == '') return false;
+    return (await f.collection('parties').doc(id).get()).exists;
   }
 
-  static void saveUser(FUserParty user) async {
-    collection.doc(user.uid).set(user.toJson());
+  // 파이어베이스에서 해당 아이디의 파티 만원 여부 반환
+  static Future<bool> partyFulled(String id) async {
+    if (id == '') return false;
+    var json = (await f.collection('parties').doc(id).get()).data();
+    if (json == null) return false;
+    Party party = Party.fromJson(json);
+
+    return party.level['maxMember'] <= party.memberUids.length;
   }
 
-  /// attributes
-  /* 로그인 관련 */
-
-  // 현재 로그인된 사용자
-  FUserParty loggedUser = FUserParty();
-
-  /// methods
-  /* 로그인 관련 */
-  // 로그인
-  // 매개변수로 받은 사용자 정보와 User Credential 정보를 병합하여 현재 로그인된 사용자자 최신화
-  Future login(FUserParty user) async {
-    Map<String, dynamic> json = user.toJson();
-    loggedUser = FUserParty.fromJson(json);
-    save();
-  }
-
-  // 로그아웃
-  // 현재 로그인된 사용자 정보 초기화
-  void logout() => loggedUser = FUserParty();
-
-  /* 파이어베이스 관련 */
-  // 파이어베이스에서 로드
-  Future load() async {
-    var json = (await collection.doc(loggedUser.uid).get()).data();
-    if (json == null) return;
-    loggedUser = FUserParty.fromJson(json);
-  }
-
-  // 파이어베이스에 최신화
-  void save() => collection.doc(loggedUser.uid).set(loggedUser.toJson());
-
-  // 파이어베이스에서 삭제
-  void delete() {
-    PartyJsonP.deleteMember(loggedUser.uid!);
-    collection.doc(loggedUser.uid).delete();
-  }
-
-  // 챌린지와 난이도에 따른 새로운 파티 생성, 해당 파티 코드 반환
-  // 로그인된 사용자가 직접 파티를 생성하는 경우
-  Future<String> createMyParty(Challenge challenge, Difficulty diff) async {
-    String code = FUserParty.randomCode;
-
-    Party newParty = Party.fromJson({
-      'id': code,
-      'complete': false,
-      'challengeId': challenge.id,
-      'difficulty': diff.name,
-      'records': <String, dynamic>{loggedUser.uid!: 0},
-      'memberUids': <String>[loggedUser.uid!],
-      'leaderUid': loggedUser.uid!,
-    });
-
-    loggedUser.parties[code] = newParty;
-    await PartyJsonP.loadMembers(newParty);
-    PartyJsonP.save(newParty);
-
-    loggedUser.partyIds.add(newParty.id!);
-    save();
-
-    update();
-
-    return code;
-  }
-
-  // 파이어베이스에서 나의 파티 리스트 로드
-  Future  loadMyParties() async {
-    for (String id in loggedUser.partyIds) {
-      var json = (await f.collection('parties').doc(id).get()).data();
-      if (json == null) return;
-      Party party = Party.fromJson(json);
-      await PartyJsonP.loadMembers(party);
-      loggedUser.parties[json['id']] = party;
+  // 파이어베이스에서 전체 파티 리스트 로드 (사용 지양)
+  Future loadAll() async {
+    parties.clear();
+    for (var doc in (await f.collection('parties').get()).docs) {
+      parties.add(Party.fromJson(doc.data()));
     }
-    update();
   }
 
-  // 해당 아이디의 파티에 참가
-  // 로그인된 사용자가 직접 참가하는 경우
-  void joinParty(String id) {
-    if (loggedUser.partyIds.contains(id)) return;
-    loggedUser.partyIds.add(id);
-    save();
+  // 파이어베이스에서 해당 아이디의 파티를 로드
+  static Future<Party?> loadParty(String id) async {
+    var json = (await f.collection('parties').doc(id).get()).data();
+    if (json == null) return null;
+    return Party.fromJson(json);
   }
 
-  // 로그인된 사용자가 해당 아이디의 챌린지에 이미 참여 중인지 여부 반환
-  bool alreadyJoinedChallenge(String challengeId) {
-    return loggedUser.parties.values
-        .map((party) => party.challengeId)
-        .contains(challengeId);
+  // 파이어베이스에서 해당 파티의 멤버 리스트를 로드
+  static Future loadMembers(Party party) async {
+    List<FUserInfo> memberInfos = [];
+    List<FUserCollection> memberCollections = [];
+    List<FUserRecord> memberRecords = [];
+
+    for (var uid in party.memberUids) {
+      FUserInfo? userInfo = await UserInfoP.loadUser(uid);
+      FUserCollection? userCollection = await UserCollectionP.loadUser(uid);
+      FUserRecord? userRecord = await UserRecordP.loadUser(uid);
+
+      if (userInfo == null) continue;
+      if (userCollection == null) continue;
+      if (userRecord == null) continue;
+
+      memberInfos.add(userInfo);
+      memberCollections.add(userCollection);
+      memberRecords.add(userRecord);
+    }
+    party.memberInfos = [...memberInfos];
+    party.memberCollections = [...memberCollections];
+    party.memberRecords = [...memberRecords];
   }
 
-  // 로그인된 사용자가 해당 코드의 파티에 이미 참여 중인지 여부 반환
-  bool alreadyJoinedParty(String code) {
-    return loggedUser.parties.values.map((party) => party.id).contains(code);
+  static void deleteMember(String uid) async {
+    var jsonList = (await f.collection('parties').get()).docs;
+
+    for (var data in jsonList) {
+      Map<String, dynamic> json = data.data();
+      Party party = Party.fromJson(json);
+
+      party.records.remove(uid);
+      save(party);
+
+      if (party.leaderUid == uid) delete(party.id!);
+    }
   }
 
-  // 로그인된 사용자가 해당 아이디의 파티가 있을 경우 파티 객체 반환
-  // 그렇지 않은 경우 null 반환
-  Party? getPartyByChallengeId(String challengeId) {
-    return loggedUser.parties.values
-        .toList()
-        .firstWhereOrNull((party) => party.challengeId == challengeId);
+  static void delete(String id) async {
+    Party? party = await loadParty(id);
+    deletePartyIdFromUser(id, party!.memberUids);
+    f.collection('parties').doc(id).delete();
   }
+
+  static deletePartyIdFromUser(String id, List<String> uids) async {
+    for (String uid in uids) {
+      FUserParty? user = await UserPartyP.loadUser(uid);
+      if (user == null) continue;
+      user.partyIds.remove(id);
+      UserPartyP.saveUser(user);
+    }
+  }
+
+  // 파이어베이스에 해당 파티를 최신화
+  static void save(Party party) {
+    f.collection('parties').doc(party.id).set(party.toJson());
+  }
+
 }

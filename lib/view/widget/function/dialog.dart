@@ -22,7 +22,7 @@ class DialogButtonData {
         backgroundColor = backgroundColor ?? FTheme.black;
 }
 
-void showPDialog({
+void showFDialog({
   String? title,
   required Widget content,
   CrossAxisAlignment contentAlignment = CrossAxisAlignment.center,

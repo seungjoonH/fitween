@@ -3,6 +3,7 @@ import 'package:fitween/view/widget/widget/bottom_bar.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class FTab extends StatelessWidget {
   const FTab(this.text, {
@@ -23,6 +24,7 @@ class FTab extends StatelessWidget {
         color: selected
             ? FTheme.darkGrey
             : FTheme.lightGrey,
+        bold: true,
       ),
     );
   }
@@ -36,6 +38,7 @@ class TabScaffold extends StatefulWidget {
     this.action,
     this.hasNotifications,
     this.controlNotifications,
+    this.presenter,
   }) : super(key: key);
 
   final List<String> tabs;
@@ -43,6 +46,7 @@ class TabScaffold extends StatefulWidget {
   final Widget? action;
   final List<bool>? hasNotifications;
   final Function(int)? controlNotifications;
+  final dynamic presenter;
 
   @override
   State<TabScaffold> createState() => _TabScaffoldState();
@@ -55,7 +59,16 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
   @override
   void initState() {
     tabCont = TabController(length: widget.tabs.length, vsync: this);
-    tabCont.addListener(() => setState(() => _selectedIndex = tabCont.index));
+    if (widget.presenter != null) {
+      _selectedIndex = widget.presenter.tabIndex;
+      tabCont.index = _selectedIndex;
+    }
+    tabCont.addListener(() => setState(() {
+      _selectedIndex = tabCont.index;
+      if (widget.presenter != null) {
+        widget.presenter.tabIndex = _selectedIndex;
+      }
+    }));
     super.initState();
   }
 

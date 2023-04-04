@@ -22,6 +22,8 @@ class FriendPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userP = Get.find<UserNotificationP>();
+
     return StreamBuilder<DocumentSnapshot>(
       stream: UserNotificationP.doc.snapshots(),
       builder: (context, snapshot) {
@@ -70,7 +72,29 @@ class FriendPage extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    FriendNotificationCard(isRival: isRival),
+                    StreamBuilder<DocumentSnapshot>(
+                      stream: UserNotificationP.collection
+                          .doc(userP.loggedUser.uid).snapshots(),
+                      builder: (context, snapshot) {
+                        var json = snapshot.data?.data() as Map<String, dynamic>?;
+                        if (json == null) return Container();
+                        FUserNotification user = FUserNotification.fromJson(json);
+                        Map<String, dynamic> userData = isRival
+                            ? user.rivalData : user.friendData;
+
+                        if (userData.isEmpty) return Container();
+                        return Column(
+                          children: userData.values.map((friend) => Column(
+                            children: [
+                              FriendNotificationCard(
+                                isRival: isRival, userData: friend,
+                              ),
+                              const SizedBox(height: 20.0),
+                            ],
+                          )).toList(),
+                        );
+                      },
+                    ),
                     FriendListCard(isRival: isRival),
                   ],
                 ),
@@ -85,6 +109,7 @@ class FriendPage extends StatelessWidget {
               );
             },
           ),
+          presenter: Get.find<FriendP>(),
         );
       }
     );
@@ -95,44 +120,6 @@ class FriendNotificationCard extends StatelessWidget {
   const FriendNotificationCard({
     Key? key,
     required this.isRival,
-  }) : super(key: key);
-
-  final bool isRival;
-
-  @override
-  Widget build(BuildContext context) {
-    final userP = Get.find<UserNotificationP>();
-
-    return StreamBuilder<DocumentSnapshot>(
-      stream: UserNotificationP.collection
-          .doc(userP.loggedUser.uid).snapshots(),
-      builder: (context, snapshot) {
-        var json = snapshot.data?.data() as Map<String, dynamic>?;
-        if (json == null) return Container();
-        FUserNotification user = FUserNotification.fromJson(json);
-        Map<String, dynamic> userData = isRival
-            ? user.rivalData : user.friendData;
-
-        if (userData.isEmpty) return Container();
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 20.0),
-          child: FCard(
-            child: Column(
-              children: userData.values.map((friend) => NotificationListTile(
-                isRival: isRival, userData: friend,
-              )).toList(),
-            ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class NotificationListTile extends StatelessWidget {
-  const NotificationListTile({
-    Key? key,
-    required this.isRival,
     required this.userData,
   }) : super(key: key);
 
@@ -141,43 +128,41 @@ class NotificationListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const padding = EdgeInsets.symmetric(
-      vertical: 8.0, horizontal: 16.0,
-    );
-
-    return Row(
-      children: [
-        FBadgeWidget(badge: BadgeJsonP.getBadge(userData['badgeId'])),
-        const SizedBox(width: 10.0),
-        Expanded(
-          child: FText(
-            userData['nickname'],
-            style: textTheme.titleMedium,
+    return FCard(
+      child: Row(
+        children: [
+          FBadgeWidget(badge: BadgeJsonP.getBadge(userData['badgeId'])),
+          const SizedBox(width: 10.0),
+          Expanded(
+            child: FText(
+              userData['nickname'],
+              style: textTheme.titleMedium,
+            ),
           ),
-        ),
-        GetBuilder<FriendP>(
-          builder: (friendP) {
-            return Row(
-              children: [
-                FButton(
-                  padding: padding, text: '거절',
-                  onPressed: () => friendP.rejectButtonPressed(userData['uid'], isRival),
-                  backgroundColor: FTheme.lightGrey,
-                ),
-                const SizedBox(width: 8.0),
-                FButton(
-                  padding: padding, text: '수락',
-                  onPressed: () => friendP.acceptButtonPressed(userData['uid'], isRival),
-                ),
-              ],
-            );
-          }
-        ),
-      ],
+          GetBuilder<FriendP>(
+            builder: (friendP) {
+              const EdgeInsets padding = EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0);
+              return Row(
+                children: [
+                  FButton(
+                    padding: padding, text: '수락',
+                    onPressed: () => friendP.acceptButtonPressed(userData['uid'], isRival),
+                  ),
+                  const SizedBox(width: 8.0),
+                  FButton(
+                    padding: padding, text: '거절',
+                    onPressed: () => friendP.rejectButtonPressed(userData['uid'], isRival),
+                    backgroundColor: FTheme.lightGrey,
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }
-
 
 class FriendListCard extends StatelessWidget {
   const FriendListCard({

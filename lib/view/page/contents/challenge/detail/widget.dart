@@ -1,5 +1,6 @@
 /* 챌린지 디테일 위젯 */
 
+import 'package:fitween/global/number.dart';
 import 'package:fitween/presenter/page/contents/challenge/challenge_detail.dart';
 import 'package:fitween/presenter/page/contents/contents.dart';
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class ChallengeDetailView extends StatelessWidget {
                           ),
                           SizedBox(width: 20.0.w),
                           FText(
-                            '마감기한 | D-${challenge.period}',
+                            '마감기한 | D${withSign(challenge.period!)}',
                             style: textTheme.bodyMedium,
                             color: FTheme.lightGrey,
                           ),

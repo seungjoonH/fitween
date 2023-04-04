@@ -1,4 +1,3 @@
-/* 구글 로그인 관련 프리젠터 */
 // Needed because we can't import `dart:html` into a mobile app,
 // while on the flip-side access to `dart:io` throws at runtime (hence the `kIsWeb` check below)
 //import 'html_shim.dart' if (dart.library.html) 'dart:html' show window;

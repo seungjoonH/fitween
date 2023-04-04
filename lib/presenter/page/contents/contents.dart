@@ -1,13 +1,20 @@
 import 'package:fitween/global/string.dart';
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/model/class/database/battle.dart';
 import 'package:fitween/model/class/database/party.dart';
+import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/enum/dialog.dart';
+import 'package:fitween/presenter/model/json/battle.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
-import 'package:fitween/presenter/model/party.dart';
 import 'package:fitween/presenter/model/json/party.dart';
+import 'package:fitween/presenter/model/user/battle.dart';
+import 'package:fitween/presenter/model/user/friend.dart';
+import 'package:fitween/presenter/model/user/info.dart';
+import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
+import 'package:fitween/presenter/page/contents/workout/battle/camera.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/text.dart';
@@ -17,6 +24,7 @@ import 'package:get/get.dart';
 class ContentsP extends GetxController {
   /// static variables
   static final codeCont = TextEditingController();
+  int tabIndex = 0;
 
   bool codeInvalid = false;
   String? codeHintText = '';
@@ -38,17 +46,109 @@ class ContentsP extends GetxController {
 
   }
 
+  static bool cardPressed = false;
+  static void unfinishedBattleCardPressed(String id) async {
+    if (cardPressed) return;
+    cardPressed = true;
+    final userInfoP = Get.find<UserInfoP>();
+    Battle? battle = await BattleJsonP.load(id);
+
+    if (battle == null) return;
+    String myUid = userInfoP.loggedUser.uid!;
+    String rivalUid = battle.data.keys.firstWhere((uid) => uid != myUid);
+    int remainChance = battle.getRemainChance(userInfoP.loggedUser.uid!);
+
+    FUserInfo? rivalInfo = await UserInfoP.loadUser(rivalUid);
+    if (rivalInfo == null) return;
+
+    if (remainChance > 0) {
+      showFDialog(
+        title: '타임어택 신청',
+        content: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FText('정말 '),
+                FText(rivalInfo.nickname!, bold: true),
+                FText('님에게'),
+              ],
+            ),
+            FText('${['', '다시'][2 - remainChance]} 도전 하시겠습니까?'),
+            const SizedBox(height: 20.0),
+            FText(
+              '주의! ${['시작하는 즉시 기회가 1회 소모됩니다', '마지막 도전입니다'][2 - remainChance]}',
+              color: FTheme.error,
+              style: textTheme.labelLarge,
+            ),
+          ],
+        ),
+        type: DialogType.bi,
+        leftPressed: Get.back,
+        rightPressed: () async {
+          Get.back();
+          await BattleJsonP.reduceChance(id);
+          BattleCameraP.toBattleCamera(id);
+        },
+      );
+    }
+    else {
+      showFDialog(
+        title: '경고!',
+        content: Column(
+          children: [
+            FText(
+              '남은 기회가 없어 더 이상\n타임어택을 진행할 수 없습니다.',
+              maxLines: 2,
+              color: FTheme.error,
+              style: textTheme.titleSmall,
+            ),
+            const SizedBox(height: 20.0),
+          ],
+        ),
+        type: DialogType.mono,
+        onPressed: Get.back,
+      );
+    }
+    cardPressed = false;
+  }
+
   Future loadAll() async {
-    final userPartyP = Get.find<UserPartyP>();
-    final userRecordP = Get.find<UserRecordP>();
-
     await ChallengeJsonP.importFile();
-    await userPartyP.load();
-    await userPartyP.loadMyParties();
 
-    await userRecordP.load();
+    if (tabIndex == 0) await loadParty();
+    if (tabIndex == 1) await loadRecord();
+    if (tabIndex == 2) { await loadBattle(); await loadFriend(); }
+
+    loadParty();
+    loadRecord();
+    loadBattle();
+    loadFriend();
 
     update();
+  }
+
+  Future loadParty() async {
+    final userPartyP = Get.find<UserPartyP>();
+    await userPartyP.load();
+    await userPartyP.loadMyParties();
+  }
+
+  Future loadRecord() async {
+    final userRecordP = Get.find<UserRecordP>();
+    await userRecordP.load();
+  }
+
+  Future loadBattle() async {
+    final userBattleP = Get.find<UserBattleP>();
+    await userBattleP.load();
+    await userBattleP.loadMyBattles();
+  }
+
+  Future loadFriend() async {
+    final userFriendP = Get.find<UserFriendP>();
+    await userFriendP.load();
+    await userFriendP.loadFriends();
   }
 
   /// challenges

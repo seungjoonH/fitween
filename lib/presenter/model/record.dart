@@ -148,10 +148,10 @@ class WeightRecord extends Record {
 
     switch (unit) {
       case ExerciseUnit.count:
-        value /= userWeight;
+        value /= userWeight / 1000;
         break;
       case ExerciseUnit.weight:
-        value *= userWeight;
+        value *= userWeight / 1000;
         break;
       default: break;
     }

@@ -91,25 +91,6 @@ class FUserRecord {
         });
       }
     }
-
-    alreadyExist = (records[type.name] ?? [])
-        .map((rec) => rec['date']).contains(toTimestamp(date));
-
-    if (alreadyExist) {
-      for (var rec in records[type.name] ?? []) {
-        if (rec['date'] == toTimestamp(date)) {
-          rec['amount'] += amount;
-          break;
-        }
-      }
-    }
-    else {
-      records[type.name] ??= [];
-      records[type.name].add({
-        'date': toTimestamp(date),
-        'amount': amount,
-      });
-    }
   }
 
   // 기록 설정
@@ -166,15 +147,15 @@ class FUserRecord {
         DateTime? startDate,
         DateTime? endDate,
       ]) {
-    double result = 0;
+    double result = .0;
 
     startDate ??= ignoreTime(Get.find<UserInfoP>().loggedUser.regDate!);
-    endDate ??= oneSecondBefore(tomorrow);
+    endDate ??= nextDay(today);
 
     inputRecords.forEach((type, recordList) {
       if (activityType.name == type) {
         for (var record in recordList) {
-          if (record['date'].toDate().isBefore(startDate)) continue;
+          if (startDate != null && record['date'].toDate().isBefore(startDate)) continue;
           if (endDate != null && record['date'].toDate().isAfter(endDate)) continue;
           result += record['amount'].toDouble();
         }
@@ -224,12 +205,14 @@ class FUserRecord {
     });
 
     for (DateTime date in daysInRange(startDate, endDate)) {
-      events[ignoreTime(date)] = ActivityType.activeValues.map((type) {
+      date = ignoreTime(date);
+      events[date] = ActivityType.activeValues.map((type) {
         double goal = getGoal(type, date)?.amount ?? 1.0;
         double amount = getAmounts(type, date, nextDay(date));
         return CalendarEvent(goal, amount);
       }).toList();
     }
+
     return events;
   }
 

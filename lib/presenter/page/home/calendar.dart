@@ -6,7 +6,6 @@ import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class CalendarEvent {
   double goal;

@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:fitween/model/class/workout/edge.dart';
 import 'package:fitween/model/enum/part.dart';
 
 class Limb {
@@ -17,7 +20,25 @@ class Limb {
     part3 = Part.values[list[2]];
   }
 
-  bool contains(Part part) {
+  List<Edge> get edges => [Edge(part1, part2), Edge(part2, part3)];
+
+  bool containsPart(Part part) {
     return [part1, part2, part3].contains(part);
+  }
+
+  bool containsEdge(Edge edge) {
+    bool result = false;
+    for (Edge e in edges) { result |= e.equalTo(edge); }
+    return result;
+  }
+
+  // 세 점이 이루는 각도를 반환 (0 ~ 180)
+  static double getAngle(Point pointA, Point pointB, Point pointC) {
+    double radians = atan2(pointC.y - pointB.y, pointC.x - pointB.x) -
+        atan2(pointA.y - pointB.y, pointA.x - pointB.x);
+    double angle = (radians * 180 / pi).abs();
+    if (angle > 180) angle = 360 - angle;
+
+    return angle;
   }
 }

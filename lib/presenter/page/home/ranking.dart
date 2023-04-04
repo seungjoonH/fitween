@@ -28,7 +28,7 @@ class RankingP extends GetxController{
   }
 
   final startDate = firstDayOfWeek(today);
-  final endDate = today;
+  final endDate = nextDay(today);
 
   Map<ActivityType, List<FUserInfo>> infos = {};
   Map<ActivityType, List<FUserRecord>> records = {};

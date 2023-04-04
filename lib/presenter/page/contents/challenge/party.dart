@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:fitween/presenter/model/user/collection.dart';
-import 'package:fitween/presenter/model/json/party.dart';
+import 'package:fitween/presenter/model/user/party.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/class/database/party.dart';
-import 'package:fitween/presenter/model/party.dart';
+import 'package:fitween/presenter/model/json/party.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 

@@ -116,7 +116,8 @@ class GoalEditCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userP = Get.find<UserRecordP>();
+    final userInfoP = Get.find<UserInfoP>();
+    final userRecordP = Get.find<UserRecordP>();
 
     return FCard(
       title: FText(
@@ -141,8 +142,9 @@ class GoalEditCard extends StatelessWidget {
               itemCount: ActivityType.activeValues.length,
               itemBuilder: (context, index) {
                 ActivityType type = ActivityType.activeValues[index];
-                Record newGoal = userP.loggedUser.getGoal(type, tomorrow)!;
-                Record goal = userP.loggedUser.getGoal(type, today)!;
+                bool registeredToday = isSameDate(userInfoP.loggedUser.regDate!, today);
+                Record newGoal = userRecordP.loggedUser.getGoal(type, tomorrow)!;
+                Record goal = userRecordP.loggedUser.getGoal(type, today)!;
 
                 return SizedBox(
                   width: 70.0.w,
@@ -154,7 +156,7 @@ class GoalEditCard extends StatelessWidget {
                       FText('${toLocalString(newGoal.amount.round())}${type.unit}',
                         color: type.color,
                       ),
-                      if (newGoal.amount != goal.amount)
+                      if (!registeredToday && newGoal.amount != goal.amount)
                       FText(
                         '* 변경 예정',
                         style: textTheme.bodySmall,

@@ -9,7 +9,7 @@ class FText extends StatelessWidget {
   FText(this.data, {
     Key? key,
     TextStyle? style,
-    this.color = FTheme.black,
+    this.color = FTheme.darkGrey,
     this.maxLines = 1,
     this.bold = false,
     this.italic = false,

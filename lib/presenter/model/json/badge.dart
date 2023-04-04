@@ -7,7 +7,7 @@ import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/info.dart';
-import 'package:fitween/presenter/model/json/party.dart';
+import 'package:fitween/presenter/model/user/party.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -16,7 +16,7 @@ import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/presenter/firebase/auth/auth.dart';
-import 'package:fitween/presenter/model/party.dart';
+import 'package:fitween/presenter/model/json/party.dart';
 
 /// class
 // 뱃지 [badges.json] 파일 관련

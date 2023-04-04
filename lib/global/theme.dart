@@ -258,6 +258,13 @@ class FTheme {
   /// typography
   static const fontFamily = 'Pretendard';
 
+  static TextStyle veryLargeText = TextStyle(
+    fontFamily: fontFamily,
+    fontWeight: FontWeight.w700,
+    fontSize: 250.0.sp,
+    height: (225 / 250).h,
+  );
+
   static TextStyle largeText = TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w700,
@@ -342,8 +349,8 @@ class FTheme {
     labelSmall: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 11.0,
-      height: (16 / 11),
+      fontSize: 10.0,
+      height: (13 / 10),
     ),
 
     //Body

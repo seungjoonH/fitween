@@ -36,11 +36,13 @@ class HealthPresenter {
 
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
+        return;
         final permissionStatus = await Permission.activityRecognition.request();
         hasPermission = !(
           permissionStatus.isDenied ||
           permissionStatus.isPermanentlyDenied
         );
+        // await HealthFactory.revokePermissions();
         break;
       case TargetPlatform.iOS:
         hasPermission = await HealthFactory.hasPermissions(
@@ -54,7 +56,6 @@ class HealthPresenter {
       approved = true;
       return;
     }
-    // if (isAndroid) await HealthFactory.revokePermissions();
     approved = await health.requestAuthorization(
       types, permissions: read,
     );

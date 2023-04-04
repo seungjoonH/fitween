@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:fitween/global/number.dart';
+import 'package:fitween/model/class/workout/handler.dart';
 import 'package:fitween/model/class/workout/inference.dart';
 import 'package:fitween/model/enum/part.dart';
 
@@ -19,7 +19,12 @@ class Parts {
     return (n1 - n2).abs() < 40;
   }
 
-  bool get isHuman {
-    return average(probs.values.toList().sublist(11)) > .3;
+  bool get humanDetected {
+    const double threshold = .3;
+    double sumProbs = .0; int count = 0;
+    for (Part part in ExerciseHandler.probAvailParts) {
+      sumProbs += probs[part]!; count++;
+    }
+    return sumProbs / count > threshold;
   }
 }

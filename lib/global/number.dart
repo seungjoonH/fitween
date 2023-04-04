@@ -8,6 +8,8 @@ double? stringToNum(String string) {
   catch(_) { return null; }
 }
 
+bool similar(num n1, num n2) => (n1 - n2).abs() < .001;
+
 num sum(List<num> list) {
   List<num> temp = [...list];
   return temp.reduce((a, b) => a + b);
@@ -20,3 +22,6 @@ num average(List<num> list) {
 List<double> toDoubleList(List<num> list) {
   return list.map((e) => e.toDouble()).toList();
 }
+
+String sign(num n) => n < 0 ? '-' : '+';
+String withSign(num n) => '${sign(n)}${(n).abs()}';

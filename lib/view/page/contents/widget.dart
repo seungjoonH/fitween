@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/model/class/database/battle.dart';
 import 'package:fitween/model/class/database/party.dart';
+import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
@@ -11,20 +14,28 @@ import 'package:fitween/model/class/json/challenge.dart';
 import 'package:fitween/model/class/json/level.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
+import 'package:fitween/presenter/model/json/battle.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/record.dart';
+import 'package:fitween/presenter/model/user/battle.dart';
+import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/info.dart';
-import 'package:fitween/presenter/model/json/party.dart';
+import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/contents/achievement/level.dart';
 import 'package:fitween/presenter/page/contents/challenge/challenge_detail.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:fitween/presenter/page/contents/contents.dart';
-import 'package:fitween/presenter/page/contents/time_attack/friend.dart';
+import 'package:fitween/presenter/page/contents/workout/battle/record.dart';
+import 'package:fitween/presenter/page/contents/workout/battle/result.dart';
+import 'package:fitween/presenter/page/contents/workout/friend.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/button/button.dart';
+import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/card.dart';
+import 'package:fitween/view/widget/widget/icon.dart';
 import 'package:fitween/view/widget/widget/tag.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
@@ -251,13 +262,13 @@ class ChallengeCard extends StatelessWidget {
                   Row(
                     children: [
                       FTag('${challenge.levels['easy']['maxMember']}명'),
-                      FTag('D-${challenge.period}'),
+                      FTag('D${withSign(challenge.period!)}'),
                       FTag(challenge.type!.kr),
                     ],
                   ) else Row(
                     children: [
                       FTag('${party?.memberUids.length}명'),
-                      FTag('D-${party?.remainDays}'),
+                      FTag('D${withSign(party!.overDays)}'),
                       FTag(challenge.type!.kr),
                       Builder(
                         builder: (context) {
@@ -542,7 +553,7 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
 
   ExerciseUnit? get beforeUnit => {
     ActivityType.distance: ExerciseUnit.kilometer,
-    ActivityType.weight: ExerciseUnit.count,
+    ActivityType.weight: ExerciseUnit.weight,
   }[widget.type];
 
   ExerciseUnit? get afterUnit => {
@@ -616,7 +627,7 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
                 FText(
                   '다음 레벨까지',
                   style: textTheme.bodyMedium,
-                  color: FTheme.black,
+                  color: FTheme.darkGrey,
                 ),
                 const SizedBox(height: 5.0),
                 LinearPercentIndicator(
@@ -713,12 +724,14 @@ class _LevelButtonState extends State<LevelButton> {
 }
 
 
-class TimeAttackCardView extends StatelessWidget {
-  const TimeAttackCardView({Key? key}) : super(key: key);
+class BattleCardView extends StatelessWidget {
+  const BattleCardView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final refreshCont = RefreshController();
+    final userBattleP = Get.find<UserBattleP>();
+
     return SmartRefresher(
       controller: refreshCont,
       onRefresh: () async {
@@ -740,6 +753,45 @@ class TimeAttackCardView extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            FCard(
+              constraints: const BoxConstraints(minHeight: 80.0),
+              child: FButton(
+                text: '최근 전적 보기',
+                stretch: true,
+                backgroundColor: FTheme.colorD,
+                onPressed: BattleRecordP.toBattleRecord,
+              ),
+            ),
+            const SizedBox(height: 20.0),
+            Column(
+              children: userBattleP.loggedUser.visibleBattles.values.map((battle) {
+                return Column(
+                  children: [
+                    FCard(
+                      title: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          FText(battle.finished ? '완료' : '진행중',
+                            style: textTheme.titleLarge,
+                            bold: true,
+                          ),
+                          RemainingTimeWidget(battle: battle),
+                        ],
+                      ),
+                      constraints: const BoxConstraints(minHeight: 230.0),
+                      onPressed: battle.finished
+                          ? null : () => ContentsP.unfinishedBattleCardPressed(battle.id!),
+                      child: Column(
+                        children: [
+                          BattleCardContentWidget(battle: battle),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20.0),
+                  ],
+                );
+              }).toList(),
+            ),
             FCard(
               title: FText('스쿼트!',
                 style: textTheme.titleLarge,
@@ -763,7 +815,7 @@ class TimeAttackCardView extends StatelessWidget {
                     FButton(
                       stretch: true,
                       text: '타임어택 하러가기',
-                      onPressed: TimeAttackFriendP.toTimeAttackFriend,
+                      onPressed: WorkoutFriendP.toWorkoutFriend,
                     ),
                   ],
                 ),
@@ -772,6 +824,222 @@ class TimeAttackCardView extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class BattleCardContentWidget extends StatelessWidget {
+  const BattleCardContentWidget({
+    Key? key,
+    required this.battle,
+  }) : super(key: key);
+
+  final Battle battle;
+
+  @override
+  Widget build(BuildContext context) {
+    final userCollectionP = Get.find<UserCollectionP>();
+    final userInfoP = Get.find<UserInfoP>();
+    final userBattleP = Get.find<UserBattleP>();
+
+    String myUid = userBattleP.loggedUser.uid!;
+    String rivalUid = battle.data.keys.firstWhere((uid) => uid != myUid);
+
+    FUserInfo myInfo = userInfoP.loggedUser;
+    FUserCollection myCollection = userCollectionP.loggedUser;
+    FUserInfo rivalInfo = battle.memberInfos[rivalUid]!;
+    FUserCollection rivalCollection = battle.memberCollections[rivalUid]!;
+
+    return battle.finished ? Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Column(
+              children: [
+                FBadgeWidget(
+                  size: 80.0,
+                  badge: BadgeJsonP.getBadge(myCollection.badgeId),
+                ),
+                const SizedBox(height: 8.0),
+                SizedBox(
+                  width: 70.0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 35.0,
+                        child: FText(
+                          myInfo.nickname!,
+                          style: textTheme.bodyMedium,
+                        ),
+                      ),
+                      const MeTag(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const FIcon(FIcons.swords, selected: true),
+            Column(
+              children: [
+                FBadgeWidget(
+                  size: 80.0,
+                  badge: BadgeJsonP.getBadge(rivalCollection.badgeId),
+                  backgroundColor: rivalCollection.badgeColor,
+                ),
+                const SizedBox(height: 8.0),
+                Container(
+                  width: 70.0,
+                  alignment: Alignment.center,
+                  child: FText(
+                    rivalInfo.nickname!,
+                    style: textTheme.bodyMedium,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        const SizedBox(height: 20.0),
+        FButton(
+          text: '결과 확인하기',
+          stretch: true,
+          backgroundColor: ActivityType.weight.color,
+          onPressed: () {
+            final userP = Get.find<UserBattleP>();
+            BattleResultP.toBattleResult(battle.id!, offAll: false);
+            userP.hideBattle(battle.id!);
+          },
+          motion: true,
+        ),
+      ],
+    ) : Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Column(
+          children: [
+            FBadgeWidget(
+              size: 80.0,
+              badge: BadgeJsonP.getBadge(myCollection.badgeId),
+            ),
+            const SizedBox(height: 8.0),
+            SizedBox(
+              width: 70.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 35.0,
+                    child: FText(
+                      myInfo.nickname!,
+                      style: textTheme.bodyMedium,
+                    ),
+                  ),
+                  const MeTag(),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8.0),
+            FText('${battle.getMaxCount(myUid)}회',
+              color: FTheme.darkGrey,
+              bold: true,
+            ),
+            const SizedBox(height: 5.0),
+            FText('* 남은 기회: ${battle.getRemainChance(myUid)}회',
+              color: FTheme.lightGrey,
+              style: textTheme.labelMedium,
+            ),
+          ],
+        ),
+        const FIcon(FIcons.swords, selected: true),
+        Column(
+          children: [
+            FBadgeWidget(
+              size: 80.0,
+              badge: BadgeJsonP.getBadge(rivalCollection.badgeId),
+              backgroundColor: rivalCollection.badgeColor,
+            ),
+            const SizedBox(height: 8.0),
+            Container(
+              width: 70.0,
+              alignment: Alignment.center,
+              child: FText(
+                rivalInfo.nickname!,
+                style: textTheme.bodyMedium,
+              ),
+            ),
+            const SizedBox(height: 8.0),
+            FText(
+              '${battle.getMaxCount(rivalUid) == 0 ? 0 : '??'}회',
+              color: FTheme.grey,
+            ),
+            const SizedBox(height: 5.0),
+            FText('* 남은 기회: ${battle.getRemainChance(rivalUid)}회',
+              color: FTheme.lightGrey,
+              style: textTheme.labelMedium,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+
+class RemainingTimeWidget extends StatefulWidget {
+  const RemainingTimeWidget({
+    Key? key,
+    required this.battle,
+  }) : super(key: key);
+
+  final Battle battle;
+
+  @override
+  State<RemainingTimeWidget> createState() => _RemainingTimeWidgetState();
+}
+
+class _RemainingTimeWidgetState extends State<RemainingTimeWidget> {
+  int timerSeconds = 0;
+  late Timer timer;
+
+  @override
+  void initState() {
+    timerSeconds = widget.battle.genDate!
+        .add(const Duration(days: 1)).difference(now).inSeconds;
+    setState(() {});
+
+    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      setState(() => timerSeconds = max(timerSeconds - 1, 0));
+    });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  int get hour => timerSeconds ~/ 3600;
+  int get minute => (timerSeconds - hour * 3600) ~/ 60;
+  int get second => timerSeconds % 60;
+
+  String get timeString {
+    String text = '';
+    if (hour > 0) text += ' $hour시간';
+    if (minute > 0) text += ' $minute분';
+    if (second > 0) text += ' $second초';
+    return text.trim();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FText(
+      widget.battle.expired ? '만료' : '$timeString 남음',
+      style: textTheme.labelMedium,
+      color: FTheme.lightGrey,
     );
   }
 }

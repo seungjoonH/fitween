@@ -14,6 +14,7 @@ class FCard extends StatefulWidget {
     this.onPressed,
     this.constraints,
     this.borderColor,
+    this.borderWidth,
     EdgeInsets? padding,
   })  : padding = padding ?? EdgeInsets.all(20.0.r),
         super(key: key);
@@ -26,6 +27,7 @@ class FCard extends StatefulWidget {
   final BoxConstraints? constraints;
   final EdgeInsets? padding;
   final Color? borderColor;
+  final double? borderWidth;
 
   @override
   State<FCard> createState() => _FCardState();
@@ -79,8 +81,10 @@ class _FCardState extends State<FCard> {
                 decoration: BoxDecoration(
                   borderRadius: radius,
                   border: widget.borderColor != null
-                      ? Border.all(color: widget.borderColor!)
-                      : null,
+                      ? Border.all(
+                    color: widget.borderColor!,
+                    width: widget.borderWidth ?? .0,
+                  ) : null,
                 ),
                 duration: duration,
                 constraints: widget.constraints,
@@ -93,7 +97,7 @@ class _FCardState extends State<FCard> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            widget.title!,
+                            Expanded(child: widget.title!),
                             if (widget.icon != null)
                             Icon(
                               widget.icon!.icon,

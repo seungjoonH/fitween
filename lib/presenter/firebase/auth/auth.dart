@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/friend.dart';
@@ -7,14 +8,17 @@ import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/notification.dart';
 import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
+import 'package:fitween/model/class/database/user/battle.dart';
 import 'package:fitween/presenter/global.dart';
+import 'package:fitween/presenter/model/user/battle.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
-import 'package:fitween/presenter/model/json/party.dart';
+import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/contents/contents.dart';
+import 'package:fitween/presenter/page/friend.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:fitween/main.dart';
@@ -34,6 +38,7 @@ class AuthP {
   static final userNotificationP = Get.find<UserNotificationP>();
   static final userPartyP = Get.find<UserPartyP>();
   static final userRecordP = Get.find<UserRecordP>();
+  static final userBattleP = Get.find<UserBattleP>();
 
   static const List<String> developerUids = [
     '4E6PMbXYTFaYOiipTyGC6QezRaf2', // 현승준
@@ -63,6 +68,7 @@ class AuthP {
     Map<String, dynamic>? jsonNotification;
     Map<String, dynamic>? jsonParty;
     Map<String, dynamic>? jsonRecord;
+    Map<String, dynamic>? jsonBattle;
 
     // 로그인 형식에 따른 로그인 방식
     switch (type) {
@@ -90,6 +96,8 @@ class AuthP {
         .doc(uid).get()).data() ?? {};
     jsonRecord = (await UserRecordP.collection
         .doc(uid).get()).data() ?? {};
+    jsonBattle = (await UserBattleP.collection
+        .doc(uid).get()).data() ?? {};
 
     // 파이어베이스에 문서가 없거나 json 데이터에 닉네임이 없을 경우 신규 회원
     bool isNewcomer = jsonInfo == null
@@ -108,6 +116,7 @@ class AuthP {
     jsonNotification ??= uidJson;
     jsonParty ??= uidJson;
     jsonRecord ??= uidJson;
+    jsonBattle ??= uidJson;
 
     // 신규 회원일 경우
     if (isNewcomer) {
@@ -124,19 +133,36 @@ class AuthP {
       FUserNotification strangerNotification = FUserNotification.fromJson(jsonNotification);
       FUserParty strangerParty = FUserParty.fromJson(jsonParty);
       FUserRecord strangerRecord = FUserRecord.fromJson(jsonRecord);
+      FUserBattle strangerBattle = FUserBattle.fromJson(jsonBattle);
 
-      await userCollectionP.login(strangerCollection);
-      await userFriendP.login(strangerFriend);
-      await userInfoP.login(strangerInfo);
-      await userNotificationP.login(strangerNotification);
-      await userPartyP.login(strangerParty);
-      await userRecordP.login(strangerRecord);
+      final loginP = Get.find<LoginP>();
 
-      await storeLoginData(userInfoP.data);
-      await GlobalP.init();
-      await HomeP.init();
+      loginP.loadStart();
+
+      if (networkResult != ConnectivityResult.none) {
+        loginP.percent = .2;
+        await userCollectionP.login(strangerCollection);
+        await userFriendP.login(strangerFriend);
+        await userInfoP.login(strangerInfo);
+        await userNotificationP.login(strangerNotification);
+        await userPartyP.login(strangerParty);
+        await userRecordP.login(strangerRecord);
+        await userBattleP.login(strangerBattle);
+
+        loginP.percent = .4; await storeLoginData(userInfoP.data);
+        loginP.percent = .5; await GlobalP.init();
+        loginP.percent = .6; await Get.find<HomeP>().loadAll();
+        loginP.percent = .7; await Get.find<FriendP>().loadAll();
+        loginP.percent = .8; await Get.find<ContentsP>().loadAll();
+        loginP.percent = .999; await Future.delayed(const Duration(seconds: 1), () {});
+        loginP.percent = 1.0; await Future.delayed(const Duration(milliseconds: 500), () {});
+      }
+
+
+      loginP.loadEnd();
+
       HomeP.toHome();
-      await Get.find<ContentsP>().loadAll();
+      await HomeP.init();
     }
 
     await BadgeJsonP.synchronizeBadges();
@@ -151,7 +177,8 @@ class AuthP {
     userNotificationP.logout();
     userPartyP.logout();
     userRecordP.logout();
-    eliminateLoginData(/*userInfoP.data*/);
+    userBattleP.logout();
+    eliminateLoginData();
   }
 
   // 피트윈 계정삭제
@@ -162,17 +189,13 @@ class AuthP {
     userNotificationP.delete();
     userPartyP.delete();
     userRecordP.delete();
+    userBattleP.delete();
     fLogout();
   }
 
   static void loadLoginData() async {
     String? userInfo = await storage.read(key: 'login');
     bool beenLogged = userInfo != null;
-
-    if (!await AuthP.versionCheck()) {
-      LoginPresenter.showVersionInvalidDialog();
-      return;
-    }
 
     // 자동 로그인
     if (!beenLogged) return;
@@ -186,18 +209,33 @@ class AuthP {
     userNotificationP.loggedUser.uid = uid;
     userPartyP.loggedUser.uid = uid;
     userRecordP.loggedUser.uid = uid;
+    userBattleP.loggedUser.uid = uid;
 
-    await userCollectionP.load();
-    await userFriendP.load();
-    await userInfoP.load();
-    await userNotificationP.load();
-    await userPartyP.load();
-    await userRecordP.load();
+    final loginP = Get.find<LoginP>();
 
-    await GlobalP.init();
-    await HomeP.init();
+    loginP.loadStart();
+
+    if (networkResult != ConnectivityResult.none) {
+      loginP.percent = .2;
+      await userCollectionP.load();
+      await userFriendP.load();
+      await userInfoP.load();
+      await userNotificationP.load();
+      await userPartyP.load();
+      await userRecordP.load();
+      await userBattleP.load();
+
+      loginP.percent = .5; await GlobalP.init();
+      loginP.percent = .6; await Get.find<HomeP>().loadAll();
+      loginP.percent = .7; await Get.find<FriendP>().loadAll();
+      loginP.percent = .8; await Get.find<ContentsP>().loadAll();
+      loginP.percent = .999; await Future.delayed(const Duration(seconds: 1), () {});
+      loginP.percent = 1.0; await Future.delayed(const Duration(milliseconds: 500), () {});
+    }
+
+    loginP.loadEnd();
+
     HomeP.toHome();
-    await Get.find<ContentsP>().loadAll();
   }
 
   // 로그인 데이터 전송
@@ -209,7 +247,7 @@ class AuthP {
   }
 
   // 로그인 데이터 삭제
-  static Future eliminateLoginData(/*Map<String, dynamic> data*/) async {
+  static Future eliminateLoginData() async {
     await storage.delete(key: 'login');
   }
 }

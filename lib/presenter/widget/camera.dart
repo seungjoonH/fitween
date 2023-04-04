@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:camera/camera.dart';
@@ -38,12 +37,10 @@ class CameraP extends GetxController {
   Future loadCamera([direction = 0]) async {
     if (descriptions == null) return;
 
-    if (Platform.isIOS) {
-      cameraController = CameraController(
-        descriptions![direction], ResolutionPreset.max,
-        enableAudio: false,
-      );
-    }
+    cameraController = CameraController(
+      descriptions![direction], ResolutionPreset.medium,
+      enableAudio: false,
+    );
     await cameraController!.initialize();
     await cameraController!.setZoomLevel(zoom);
   }

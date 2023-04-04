@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fitween/presenter/page/login.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/view/page/login/login.dart';
 import 'package:flutter/services.dart';
@@ -14,11 +17,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:connectivity/connectivity.dart';
 
 const version = 'ver 0.0';
 String get versionNumber => version.replaceAll('ver ', '');
 const releaseNoteUrl =
     'https://trusted-robe-5cd.notion.site/ad4f1c130b7a45e5a86eac2cc71133d8';
+
+late ConnectivityResult networkResult;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,6 +35,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await initializeDateFormatting();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const Fitween());
 }
 
@@ -43,17 +52,28 @@ class _FitweenState extends State<Fitween> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      networkResult = await Connectivity().checkConnectivity();
       Future.delayed(
-        const Duration(milliseconds: 500),
-        AuthP.loadLoginData,
+        const Duration(milliseconds: 500), () async {
+          if (networkResult == ConnectivityResult.none) {
+            LoginP.showNetworkErrorDialog();
+            return;
+          }
+          if (!await AuthP.versionCheck()) {
+            LoginP.showVersionInvalidDialog();
+            return;
+          }
+          AuthP.loadLoginData();
+        },
       );
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    setTimeError();
+    if (Platform.isIOS) setTimeError();
+
     GlobalP.initControllers();
     ImportPresenter.importData();
     SystemChrome.setPreferredOrientations([

@@ -43,6 +43,8 @@ class FriendP extends GetxController {
 
   static final refreshConts = [RefreshController(), RefreshController()];
   static final nicknameCont = TextEditingController();
+
+  int tabIndex = 0;
   bool nicknameExist = true;
   String? nicknameHintText;
 

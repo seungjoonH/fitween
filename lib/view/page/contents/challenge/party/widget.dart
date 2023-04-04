@@ -8,7 +8,7 @@ import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
-import 'package:fitween/presenter/model/json/party.dart';
+import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:fitween/presenter/widget/loading.dart';
@@ -96,6 +96,7 @@ class ChallengeInfoCard extends StatelessWidget {
     // List<Color> orderedColors = [FTheme.darkGrey, ...FTheme.orderedColors];
     // int index = min(max((party!.remainDays ~/ 4) + 1, 0), 4);
 
+    if (party == null) Container();
     return GetBuilder<LoadingP>(
       builder: (loadingP) {
         return Padding(
@@ -122,13 +123,13 @@ class ChallengeInfoCard extends StatelessWidget {
                       Row(
                         children: [
                           FText(
-                            '최대인원 | ${party?.level['maxMember']}명',
+                            '최대인원 | ${party!.level['maxMember']}명',
                             style: textTheme.bodyMedium,
                             color: FTheme.lightGrey,
                           ),
                           SizedBox(width: 40.0.w),
                           FText(
-                            '마감기한 | D-${party?.remainDays}',
+                            '마감기한 | D${withSign(party!.overDays)}',
                             style: textTheme.bodyMedium,
                             color: FTheme.lightGrey,
                           ),
@@ -144,8 +145,7 @@ class ChallengeInfoCard extends StatelessWidget {
                       SizedBox(height: 16.0.h),
                       FText(
                         party?.challenge?.descriptions['detail']!.replaceAll(
-                          '##',
-                          party?.level['word'],
+                          '##', party?.level['word'],
                         ),
                         style: textTheme.labelLarge,
                         color: FTheme.grey,
@@ -310,6 +310,7 @@ class _ChallengeScoreLinearIndicatorState
           progressColor: widget.party.type.color,
           animation: true,
           animationDuration: 1000,
+          curve: Curves.easeInOut,
         ),
         FText(
           '$amountString/$goalString',
