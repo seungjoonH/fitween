@@ -60,6 +60,7 @@ class BattleCameraP extends GetxController {
   void loadAll([String? id]) {
     if (id != null) battleId = id;
     count = 0;
+    humanDetected = false;
     state = WorkoutState.stop;
     stage = WorkoutStage.down;
     distance = HumanDistance.middle;
@@ -141,7 +142,7 @@ class BattleCameraP extends GetxController {
 
   void resetTimer() {
     timerState = TimerState.stop;
-    timerSeconds = 20;
+    timerSeconds = 180;
     update();
   }
 

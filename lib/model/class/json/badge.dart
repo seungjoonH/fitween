@@ -23,8 +23,8 @@ class FBadge {
   /// methods
   void fromJson(Map<String, dynamic> json) {
     id = '${json['id']}';
-    title = json['title'];
-    imageUrl = '$asset$id.png';
+    title = '${json['title']}';
+    imageUrl = '$asset$id.svg';
     description = json['description'];
     activate = json['activate'];
   }

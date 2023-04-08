@@ -87,7 +87,7 @@ class FTexts extends StatelessWidget {
     this.space = true,
     this.shadows,
   }) : assert(texts.length == colors.length),
-        style = style ?? textTheme.bodyMedium,
+        style = style ?? textTheme.titleMedium,
         super(key: key);
 
   final List<String> texts;

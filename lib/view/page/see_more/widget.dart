@@ -23,90 +23,130 @@ class BadgeManagementCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userCollection = Get.find<UserCollectionP>();
-    FBadge badge = BadgeJsonP.getBadge(userCollection.loggedUser.badgeId!)!;
-
-    return FCard(
-      title: FText(
-        '뱃지 관리',
-        style: textTheme.bodyMedium,
-        color: FTheme.lightGrey,
-        bold: true,
-      ),
-      icon: const Icon(Icons.arrow_forward_ios),
-      onPressed: CollectionP.toCollection,
-      child: Column(
-        children: [
-          IntrinsicHeight(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    FBadgeWidget(badge: badge, size: 96.0),
-                    const SizedBox(height: 5.0),
-                    FText(badge.title!, style: textTheme.bodyMedium),
-                    const SizedBox(height: 5.0),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8.0, vertical: 1.0,
-                      ),
-                      decoration: BoxDecoration(
-                        color: FTheme.darkGrey,
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: FText(
-                        '대표',
-                        color: FTheme.white,
-                        style: textTheme.bodySmall,
-                      ),
-                    ),
-                  ],
-                ),
-                const VerticalDivider(
-                  color: FTheme.stroke,
-                  thickness: .5,
-                  width: 40.0,
-                ),
-                Column(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        FText(
-                          '최근',
-                          style: textTheme.bodyMedium,
-                          color: FTheme.lightGrey,
-                        ),
-                        const SizedBox(height: 20.0),
-                        Row(
-                          children: [
-                            Column(
-                              children: [
-                                FBadgeWidget(size: 48.0),
-                                const SizedBox(height: 5.0),
-                                FText(badge.title!, style: textTheme.bodyMedium),
-                              ],
-                            ),
-                            const SizedBox(width: 20.0),
-                            Column(
-                              children: [
-                                FBadgeWidget(size: 48.0),
-                                const SizedBox(height: 5.0),
-                                FText(badge.title!, style: textTheme.bodyMedium),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
+    return GetBuilder<UserCollectionP>(
+      builder: (userCollectionP) {
+        FBadge badge = BadgeJsonP.getBadge(userCollectionP.loggedUser.badgeId!)!;
+        return FCard(
+          title: FText(
+            '뱃지 관리',
+            style: textTheme.bodyMedium,
+            color: FTheme.lightGrey,
+            bold: true,
           ),
-        ],
-      ),
+          icon: const Icon(Icons.arrow_forward_ios),
+          onPressed: CollectionP.toCollection,
+          child: Column(
+            children: [
+              IntrinsicHeight(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      constraints: BoxConstraints(maxWidth: 90.0.w),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          FBadgeWidget(badge: badge, size: 88.0),
+                          const SizedBox(height: 5.0),
+                          FText(
+                            badge.title!,
+                            style: textTheme.bodyMedium,
+                          ),
+                          const SizedBox(height: 5.0),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 1.0,
+                            ),
+                            decoration: BoxDecoration(
+                              color: FTheme.darkGrey,
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            child: FText(
+                              '대표',
+                              color: FTheme.white,
+                              style: textTheme.bodySmall,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const VerticalDivider(
+                      color: FTheme.stroke,
+                      thickness: .5,
+                      width: 40.0,
+                    ),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              FText(
+                                '최근',
+                                style: textTheme.bodyMedium,
+                                color: FTheme.lightGrey,
+                              ),
+                              const SizedBox(height: 20.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: userCollectionP.loggedUser.orderedCollections
+                                    .where((collection) => collection.badgeId != userCollectionP.loggedUser.badgeId)
+                                    .toList().sublist(0, 2).map((collection) => SizedBox(
+                                  width: 70.0.w,
+                                  child: Column(
+                                    children: [
+                                      FBadgeWidget(
+                                        size: 45.0,
+                                        badge: collection.badge,
+                                      ),
+                                      const SizedBox(height: 5.0),
+                                      FText(
+                                        collection.badge!.title!,
+                                        style: textTheme.bodySmall,
+                                      ),
+                                    ],
+                                  ),
+                                )).toList(),
+                              ),
+                              // Row(
+                              //   children: [
+                              //     Container(
+                              //       constraints: BoxConstraints(maxWidth: 60.0.w),
+                              //       child: Column(
+                              //         children: [
+                              //           FBadgeWidget(
+                              //             size: 45.0,
+                              //           ),
+                              //           const SizedBox(height: 5.0),
+                              //           FText(badge.title!, style: textTheme.bodyMedium),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     const SizedBox(width: 20.0),
+                              //     Container(
+                              //       constraints: BoxConstraints(maxWidth: 60.0.w),
+                              //       child: Column(
+                              //         children: [
+                              //           FBadgeWidget(size: 45.0),
+                              //           const SizedBox(height: 5.0),
+                              //           FText(badge.title!, style: textTheme.bodyMedium),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        );
+      }
     );
   }
 }

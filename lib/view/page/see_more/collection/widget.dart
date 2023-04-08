@@ -1,5 +1,8 @@
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/model/class/database/collection.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/model/enum/activity_type.dart';
+import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/page/see_more/collection/collection.dart';
 import 'package:fitween/view/widget/widget/card.dart';
@@ -20,99 +23,6 @@ class CollectionMainView extends StatelessWidget {
         final userP = Get.find<UserCollectionP>();
         FUserCollection user = userP.loggedUser;
 
-        // List<Widget> collectionWidgets = user.recentCollections.map((collection) {
-        //   return Center(
-        //     child: Padding(
-        //       padding: const EdgeInsets.only(right: 20.0),
-        //       child: CollectionWidget(
-        //         collection: collection,
-        //         detail: true,
-        //         size: 100.0,
-        //         onPressed: () => collectionP.collectionPressed(collection),
-        //         onLongPressed: () => collectionP.setMainBadge(collection),
-        //         pressed: collectionP.mode == PageMode.edit
-        //             && collectionP.selectedBadgeId == collection.badgeId,
-        //         selected: collectionP.mode == PageMode.view
-        //             && user.badgeId == collection.badgeId,
-        //       ),
-        //     ),
-        //   );
-        // }).toList()..addAll(
-        //   BadgeJsonP.notAcquiredBadges.map((badge) => Center(
-        //     child: BadgeWidget(
-        //       badge: badge,
-        //       detail: true,
-        //       size: 100.0,
-        //       greyscale: true,
-        //       lock: true,
-        //     ),
-        //   ),
-        // ));
-
-        List<Widget> recentCollectionWidgets = user.recentCollections.map((collection) {
-          return Center(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(0.0.r, 0.0.r, 20.0.r, 0.0.r),
-              child: CollectionWidget(
-                collection: collection,
-                detail: true,
-                size: 100.0,
-                onPressed: () => collectionP.collectionPressed(collection),
-                onLongPressed: () => collectionP.setMainBadge(collection),
-                pressed: collectionP.mode == PageMode.edit
-                    && collectionP.selectedBadgeId == collection.badgeId,
-                selected: collectionP.mode == PageMode.view
-                    && user.badgeId == collection.badgeId,
-              ),
-            ),
-          );
-        }).toList();
-
-        List<Widget> dailyCollectionWidgets = user.dailyCollections.map((collection) {
-          return Center(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(0.0.r, 0.0.r, 20.0.r, 0.0.r),
-              child: CollectionWidget(
-                collection: collection,
-                detail: true,
-                size: 100.0,
-                onPressed: () => collectionP.collectionPressed(collection),
-                onLongPressed: () => collectionP.setMainBadge(collection),
-                pressed: collectionP.mode == PageMode.edit
-                    && collectionP.selectedBadgeId == collection.badgeId,
-                selected: collectionP.mode == PageMode.view
-                    && user.badgeId == collection.badgeId,
-              ),
-            ),
-          );
-        }).toList();
-
-        List<Widget> challengeCollectionWidgets = user.challengeCollections.map((collection) {
-          return Center(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(0.0.r, 0.0.r, 20.0.r, 0.0.r),
-              child: CollectionWidget(
-                collection: collection,
-                detail: true,
-                size: 100.0,
-                onPressed: () => collectionP.collectionPressed(collection),
-                onLongPressed: () => collectionP.setMainBadge(collection),
-                pressed: collectionP.mode == PageMode.edit
-                    && collectionP.selectedBadgeId == collection.badgeId,
-                selected: collectionP.mode == PageMode.view
-                    && user.badgeId == collection.badgeId,
-              ),
-            ),
-          );
-        }).toList();
-
-        // List<Widget> emptyWidgets = List.generate(
-        //   (collectionCounts - collectionWidgets.length).toInt(),
-        //       (_) => Center(child: CollectionWidget(size: 100.0)),
-        // ).toList();
-
-        // List<Widget> gridWidgets = collectionWidgets..addAll(emptyWidgets);
-
         return SingleChildScrollView(
           child: Column(
             children: [
@@ -121,83 +31,106 @@ class CollectionMainView extends StatelessWidget {
                 child: Column(
                   children: [
                     FCard(
-                      padding: EdgeInsets.all(20.0.r),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          FText('최근에 획득한 뱃지에요', color: FTheme.darkGrey),
-                          SizedBox(height: 20.0.h),
-                          SizedBox(
-                            height: 160.0.h,
-                            child: recentCollectionWidgets.isEmpty
-                                ? Center(child: FText('최근에 획득한 뱃지가 없어요!'))
-                                : ListView(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              children: recentCollectionWidgets,
-                            )
-                          ),
-                        ],
+                      title: FText('내 대표 컬렉션'),
+                      child: Center(
+                        child: FCollectionWidget(
+                          collection: userP.loggedUser.collection,
+                          direction: Axis.horizontal,
+                        ),
                       ),
                     ),
-                    SizedBox(height: 20.0.h),
-                    FCard(
-                      padding: EdgeInsets.all(20.0.r),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          FText('일일 목표로 획득한 뱃지에요'),
-                          SizedBox(height: 20.0.h),
-                          SizedBox(
-                            height: 160.0.h,
-                            child: dailyCollectionWidgets.isEmpty
-                                ? Center(child: FText('일일 목표를 달성해보세요!'))
-                                : ListView(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              children: dailyCollectionWidgets,
-                            ),
-                          ),
-                        ],
+                    const SizedBox(height: 20.0),
+                    MyCollectionCard(
+                      title: FText(
+                        '최근에 획득한 컬렉션이에요',
+                        style: textTheme.titleSmall,
                       ),
+                      collections: user.orderedCollections,
+                      size: 80.0,
                     ),
-                    SizedBox(height: 20.0.h),
-                    FCard(
-                      padding: EdgeInsets.all(20.0.r),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          FText('월간 챌린지로 획득한 뱃지에요'),
-                          SizedBox(height: 20.0.h),
-                          SizedBox(
-                            height: 160.0.h,
-                            child: challengeCollectionWidgets.isEmpty
-                                ? Center(child: FText('월간 챌린지에 도전해보세요!'))
-                                : ListView(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              children: challengeCollectionWidgets,
-                            )
-                          ),
-                        ],
+                    /*
+                    const SizedBox(height: 20.0),
+                    MyCollectionCard(
+                      title: FTexts(
+                        const ['이동한 거리', '에 따라 뱃지를 획득했어요'],
+                        colors: [ActivityType.distance.color, FTheme.darkGrey],
+                        alignment: MainAxisAlignment.start,
+                        style: textTheme.titleSmall,
+                        space: false,
                       ),
+                      collections: user.distanceCollections,
                     ),
+                    const SizedBox(height: 20.0),
+                    MyCollectionCard(
+                      title: FTexts(
+                        const ['오른 높이', '에 따라 뱃지를 획득했어요'],
+                        colors: [ActivityType.height.color, FTheme.darkGrey],
+                        alignment: MainAxisAlignment.start,
+                        style: textTheme.titleSmall,
+                        space: false,
+                      ),
+                      collections: user.heightCollections,
+                    ),
+                    const SizedBox(height: 20.0),
+                    MyCollectionCard(
+                      title: FTexts(
+                        const ['운동한 양', '에 따라 뱃지를 획득했어요'],
+                        colors: [ActivityType.weight.color, FTheme.darkGrey],
+                        alignment: MainAxisAlignment.start,
+                        style: textTheme.titleSmall,
+                        space: false,
+                      ),
+                      collections: user.weightCollections,
+                    ),
+                    */
+                    const SizedBox(height: 20.0),
                   ],
                 ),
               ),
-              // Expanded(
-              //   child: GridView(
-              //     padding: const EdgeInsets.all(20.0),
-              //     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              //       crossAxisCount: 3,
-              //       childAspectRatio: .6,
-              //       mainAxisSpacing: 10.0,
-              //       crossAxisSpacing: 10.0,
-              //     ),
-              //     children: gridWidgets,
-              //   ),
-              // ),
             ],
+          ),
+        );
+      }
+    );
+  }
+}
+
+class MyCollectionCard extends StatelessWidget {
+  const MyCollectionCard({
+    Key? key,
+    required this.title,
+    required this.collections,
+    this.size = 45.0,
+  }) : super(key: key);
+
+  final Widget title;
+  final List<Collection> collections;
+  final double size;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetBuilder<CollectionP>(
+      builder: (collectionP) {
+        final userP = Get.find<UserCollectionP>();
+
+        return FCard(
+          title: title,
+          constraints: const BoxConstraints(minHeight: 200.0),
+          child: SizedBox(
+            height: size * 1.2 + 60.0,
+            child: ListView.separated(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: collections.length,
+              itemBuilder: (context, index) => FCollectionWidget(
+                collection: collections[index],
+                size: size,
+                onPressed: () => collectionP.collectionPressed(collections[index]),
+                selected: userP.loggedUser.badgeId == collections[index].badgeId,
+                onLongPressed: () => collectionP.setMainBadge(collections[index]),
+              ),
+              separatorBuilder: (context, index) => SizedBox(width: size / 2.6),
+            ),
           ),
         );
       }

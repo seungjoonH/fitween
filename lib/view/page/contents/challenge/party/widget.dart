@@ -812,7 +812,7 @@ class RankWidget extends StatelessWidget {
                   SizedBox(
                     width: 50.0.w,
                     height: 50.0.h,
-                    child: BadgeWidget(
+                    child: FBadgeWidget(
                       badge: userCollection.collection?.badge,
                       size: 40.0,
                     ),
@@ -884,9 +884,9 @@ class ChallengeBadgeWidget extends StatelessWidget {
                                   GlobalP.effectAsset,
                                 ),
                               ),
-                              BadgeWidget(
+                              FBadgeWidget(
                                 badge: party.badge,
-                                greyscale: party.complete,
+                                // greyscale: party.complete,
                               ),
                               if (party.complete)
                                 RotationTransition(

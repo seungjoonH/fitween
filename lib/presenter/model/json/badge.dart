@@ -82,14 +82,14 @@ class BadgeJsonP extends GetxController {
     // 작심삼일, 완벽한주 뱃지 지급
     int consecutive3 = userCollection.countCompletedDaysInARow(3);
     int consecutive7 = userCollection.countCompletedDaysInARow(7);
-    int count3 = userCollection.getCollectionsById('1000003')?.dates.length ?? 0;
-    int count7 = userCollection.getCollectionsById('1000004')?.dates.length ?? 0;
+    int count3 = userCollection.getCollectionsById('1000002')?.dates.length ?? 0;
+    int count7 = userCollection.getCollectionsById('1000003')?.dates.length ?? 0;
 
     for (int i = 0; i < consecutive3 - count3; i++) {
-      userCollectionP.awardBadge(BadgeJsonP.getBadge('1000003')!);
+      userCollectionP.awardBadge(BadgeJsonP.getBadge('1000002')!);
     }
     for (int i = 0; i < consecutive7 - count7; i++) {
-      userCollectionP.awardBadge(BadgeJsonP.getBadge('1000004')!);
+      userCollectionP.awardBadge(BadgeJsonP.getBadge('1000003')!);
       if (await inAppReview.isAvailable()) {
         await inAppReview.requestReview();
       }

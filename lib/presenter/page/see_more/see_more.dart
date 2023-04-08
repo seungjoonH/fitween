@@ -5,5 +5,8 @@ class SeeMoreP extends GetxController {
     Get.offAllNamed('/seeMore');
     if (initialize) await init();
   }
-  static Future init() async {}
+  static Future init() async {
+    final seeMoreP = Get.find<SeeMoreP>();
+    seeMoreP.update();
+  }
 }

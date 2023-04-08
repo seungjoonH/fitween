@@ -105,7 +105,7 @@ class GlobalP extends GetxController {
                     height: 180.0.r,
                   ),
                 ),
-                BadgeWidget(
+                FBadgeWidget(
                   badge: badge,
                   size: 80.0.r,
                   onPressed: () {},
@@ -137,34 +137,32 @@ class GlobalP extends GetxController {
       content: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              SizedBox(
-                height: 95.0.h,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    CollectionWidget(
-                      collection: collection,
-                      onPressed: () {
-                        Get.back();
-                        CollectionP.toCollection();
-                      },
+              Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  FBadgeWidget(
+                    badge: collection.badge,
+                    size: 80.0,
+                    onPressed: () {
+                      Get.back();
+                      CollectionP.toCollection();
+                    },
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12.0.r),
+                    decoration: BoxDecoration(
+                      color: FTheme.lightGrey,
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 12.0.r),
-                      decoration: BoxDecoration(
-                        color: FTheme.lightGrey,
-                        borderRadius: BorderRadius.circular(12.0),
-                      ),
-                      child: FText(
-                        '${collection.dates.length}',
-                        style: FTheme.textTheme.bodySmall,
-                        color: FTheme.white,
-                      ),
+                    child: FText(
+                      '${collection.dates.length}',
+                      style: FTheme.textTheme.bodySmall,
+                      color: FTheme.white,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
               const SizedBox(width: 20.0),
               Container(
@@ -173,6 +171,7 @@ class GlobalP extends GetxController {
                   child: Column(
                     children: collection.dateList.map((date) => FText(
                         dateToString('yyyy-MM-dd 획득!', date.toDate())!,
+                        style: textTheme.bodyMedium,
                         color: date == collection.dateList.last
                             ? FTheme.colorB : FTheme.black,
                         bold: date == collection.dateList.last,
@@ -188,7 +187,11 @@ class GlobalP extends GetxController {
             padding: const EdgeInsets.all(10.0),
             alignment: Alignment.topLeft,
             constraints: const BoxConstraints(minHeight: 100.0),
-            child: FText(collection.badge!.description!, maxLines: 5),
+            child: FText(
+                collection.badge!.description!,
+                style: textTheme.titleSmall,
+                maxLines: 5,
+            ),
           ),
         ],
       ),
@@ -231,7 +234,7 @@ class GlobalP extends GetxController {
                           height: 180.0.r,
                         ),
                       ),
-                    BadgeWidget(
+                    FBadgeWidget(
                       badge: badge,
                       size: 80.0.r,
                       onPressed: () {
@@ -304,14 +307,15 @@ class GlobalP extends GetxController {
               ? FText('대표 컬렉션이 해제되었습니다.')
               : Column(
             children: [
-              BadgeWidget(badge: selectedBadge, size: 100.0.r),
+              FBadgeWidget(badge: selectedBadge, size: 100.0.r),
               SizedBox(height: 20.0.h),
-              FText('대표 컬렉션이'),
+              FText('대표 컬렉션이', style: textTheme.titleSmall),
               FTexts([
                 selectedBadge.title!,
                 '${roEuro(selectedBadge.title!)} 설정되었습니다.'
               ], colors: const [FTheme.colorB, FTheme.black],
                 space: false,
+                style: textTheme.titleSmall,
               )
             ],
           ),

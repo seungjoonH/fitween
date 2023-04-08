@@ -1,4 +1,5 @@
 import 'package:fitween/presenter/model/user/collection.dart';
+import 'package:fitween/presenter/page/see_more/see_more.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/class/database/collection.dart';
 import 'package:fitween/model/enum/page_mode.dart';
@@ -15,7 +16,6 @@ class CollectionP extends GetxController {
   }
 
   /// attributes
-  PageMode mode = PageMode.view;
   String? selectedBadgeId;
 
   /// methods
@@ -23,7 +23,6 @@ class CollectionP extends GetxController {
   void init() {
     final userP = Get.find<UserCollectionP>();
     selectedBadgeId = userP.loggedUser.badgeId;
-    mode = PageMode.view;
     update();
   }
 
@@ -47,26 +46,13 @@ class CollectionP extends GetxController {
     selectedBadgeId = collection.badgeId;
 
     userP.setMainBadge(selectedBadgeId!);
+    SeeMoreP.init();
     update();
   }
 
   // 컬렉션 클릭 시
   void collectionPressed(Collection collection) {
-    switch (mode) {
-      case PageMode.view:
-        GlobalP.showCollectionDialog(collection);
-        break;
-      case PageMode.edit:
-        collectionSelected(collection);
-        break;
-    }
-    update();
-  }
-
-  // 편집모드에서 컬렉션 선택 시
-  void collectionSelected(Collection collection) {
-    selectedBadgeId = selectedBadgeId == collection.badgeId
-        ? null : selectedBadgeId = collection.badgeId;
+    GlobalP.showCollectionDialog(collection);
     update();
   }
 }
