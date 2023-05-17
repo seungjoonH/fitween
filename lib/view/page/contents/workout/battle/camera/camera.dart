@@ -89,9 +89,6 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
       imageStream.height.toDouble(),
     );
 
-    widthRatio = PainterP.canvasSize.width / inferenceSize.width;
-    heightRatio = PainterP.canvasSize.height / inferenceSize.height;
-
     doPredict = false;
     ExerciseHandler.checkLimbs(Inference.refinedInferences);
 
@@ -105,6 +102,19 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+    Size canvasSize = screenSize;
+    Orientation orientation = MediaQuery.of(context).orientation;
+
+    switch (orientation) {
+      case Orientation.portrait:
+        canvasSize = Size(screenSize.width, screenSize.width * 4 / 3);
+        break;
+      case Orientation.landscape:
+        canvasSize = Size(screenSize.width, screenSize.width * 4 / 3);
+        break;
+    }
+
     if (inferences == null) return const Scaffold();
 
     return GetBuilder<CameraP>(
@@ -119,8 +129,8 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
                 children: [
                   const FloatingMessageWidget(),
                   SizedBox(
-                    width: PainterP.canvasSize.width,
-                    height: PainterP.canvasSize.height,
+                    width: canvasSize.width,
+                    height: canvasSize.height,
                     child: Stack(
                       alignment: Alignment.center,
                       children: [

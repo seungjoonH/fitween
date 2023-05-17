@@ -42,23 +42,30 @@ class FloatingMessageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<WorkoutSoloCameraP>(
-      builder: (battleCameraP) {
-        return Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                FText(
-                  battleCameraP.message,
-                  style: textTheme.headlineMedium,
+      builder: (soloCameraP) {
+        return Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(50.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(50.0),
+                decoration: BoxDecoration(
+                  color: FTheme.background.withOpacity(.3),
+                  borderRadius: BorderRadius.circular(30.0),
+                ),
+                child: FText(
+                  soloCameraP.message,
+                  style: textTheme.headlineLarge,
                   color: FTheme.colorA,
                   maxLines: 2,
                   bold: true,
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         );
       },

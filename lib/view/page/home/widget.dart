@@ -41,6 +41,8 @@ class _RotateCarouselState extends State<RotateCarousel>
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+
     final userRecordP = Get.find<UserRecordP>();
 
     return GetBuilder<HomeP>(
@@ -71,8 +73,8 @@ class _RotateCarouselState extends State<RotateCarousel>
                   children: [
                     Image.asset(
                       homeP.pngAsset,
-                      width: HomeP.screenSize.width * 1.3,
-                      height: HomeP.screenSize.height * .4,
+                      width: screenSize.width * 1.3,
+                      height: screenSize.height * .4,
                       fit: BoxFit.fitHeight,
                     ),
                     if (homeP.gifAsset != null)
@@ -80,8 +82,8 @@ class _RotateCarouselState extends State<RotateCarousel>
                       children: [
                         GifImage(
                           controller: HomeP.gifCont,
-                          width: HomeP.screenSize.width * 1.3,
-                          height: HomeP.screenSize.height * .4,
+                          width: screenSize.width * 1.3,
+                          height: screenSize.height * .4,
                           fit: BoxFit.fitHeight,
                           image: AssetImage(homeP.gifAsset!),
                         ),
@@ -114,7 +116,7 @@ class _RotateCarouselState extends State<RotateCarousel>
                   ],
                 ),
                 Positioned(
-                  left: HomeP.screenSize.width * .08,
+                  left: screenSize.width * .08,
                   bottom: 150.0,
                   child: GestureDetector(
                     onTap: homeP.rightButtonPressed,
@@ -124,7 +126,7 @@ class _RotateCarouselState extends State<RotateCarousel>
                   ),
                 ),
                 Positioned(
-                  right: HomeP.screenSize.width * .08,
+                  right: screenSize.width * .08,
                   bottom: 150.0,
                   child: GestureDetector(
                     onTap: homeP.leftButtonPressed,

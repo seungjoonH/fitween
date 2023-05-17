@@ -89,9 +89,6 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
       imageStream.height.toDouble(),
     );
 
-    widthRatio = PainterP.canvasSize.width / inferenceSize.width;
-    heightRatio = PainterP.canvasSize.height / inferenceSize.height;
-
     doPredict = false;
     ExerciseHandler.checkLimbs(Inference.refinedInferences);
 
@@ -106,6 +103,19 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+    Size canvasSize = screenSize;
+    Orientation orientation = MediaQuery.of(context).orientation;
+
+    switch (orientation) {
+      case Orientation.portrait:
+        canvasSize = Size(screenSize.width, screenSize.height);
+        break;
+      case Orientation.landscape:
+        canvasSize = Size(screenSize.width, screenSize.height);
+        break;
+    }
+
     if (inferences == null) return const Scaffold();
 
     return GetBuilder<CameraP>(
@@ -120,22 +130,17 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
               bool showStopButton = showButton && workoutSoloCameraP.count == 0;
               bool showPauseButton = showButton && workoutSoloCameraP.count > 0;
 
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              return Stack(
+                alignment: Alignment.topCenter,
                 children: [
-                  const FloatingMessageWidget(),
-                  SizedBox(
-                    width: PainterP.canvasSize.width,
-                    height: PainterP.canvasSize.height,
+                  Container(
+                    color: FTheme.black,
+                    width: canvasSize.width,
+                    height: canvasSize.height,
                     child: Stack(
                       alignment: Alignment.center,
                       children: [
                         CameraPainterView(painter: painter),
-                        // Positioned(
-                        //   top: 60.0,
-                        //   child: Image.asset('${assets}frame.png'),
-                        // ),
                         Positioned(
                           bottom: 20.0,
                           child: Padding(
@@ -224,14 +229,15 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
                             ),
                           ),
                         if (workoutSoloCameraP.threeSecTimerState == TimerState.run)
-                          FText(
-                            '${workoutSoloCameraP.threeSecTimerSeconds}',
-                            style: FTheme.veryLargeText,
-                            color: FTheme.colorD,
-                          ),
+                        FText(
+                          '${workoutSoloCameraP.threeSecTimerSeconds}',
+                          style: FTheme.veryLargeText,
+                          color: FTheme.colorD,
+                        ),
                       ],
                     ),
                   ),
+                  const FloatingMessageWidget(),
                 ],
               );
             },

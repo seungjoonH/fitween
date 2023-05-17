@@ -8,8 +8,6 @@ import 'package:fitween/presenter/widget/loading.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeP extends GetxController {
-  static Size screenSize = MediaQuery.of(Get.context!).size;
-  static double screenRatio = screenSize.width / screenSize.height;
   static final refreshCont = RefreshController();
 
   static void toHome([bool initialize = false]) async {

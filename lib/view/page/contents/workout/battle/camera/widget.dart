@@ -18,18 +18,18 @@ class CameraPainterView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<CameraP>(
-        builder: (cameraP) {
-          return GestureDetector(
-            onScaleStart: (details) => cameraP.setInitZoom(),
-            onScaleUpdate: cameraP.setZoomLevel,
-            child: CustomPaint(
-              foregroundPainter: painter,
-              child: CameraPreview(
-                cameraP.cameraController!,
-              ),
+      builder: (cameraP) {
+        return GestureDetector(
+          onScaleStart: (details) => cameraP.setInitZoom(),
+          onScaleUpdate: cameraP.setZoomLevel,
+          child: CustomPaint(
+            foregroundPainter: painter,
+            child: CameraPreview(
+              cameraP.cameraController!,
             ),
-          );
-        }
+          ),
+        );
+      },
     );
   }
 }

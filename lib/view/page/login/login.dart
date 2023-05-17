@@ -52,6 +52,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: FTheme.white,
       body: GetBuilder<LoginP>(
@@ -66,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
               if (loginP.loading) Positioned(
                 bottom: 130.0.h,
                 child: SizedBox(
-                  width: HomeP.screenSize.width * .9,
+                  width: screenSize.width * .9,
                   child: LinearPercentIndicator(
                     percent: loginP.loadPercent,
                     lineHeight: 40.0,
