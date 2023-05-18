@@ -19,17 +19,39 @@ class CameraPainterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+    CameraP.canvasSize = screenSize;
+    Orientation orientation = MediaQuery.of(context).orientation;
+
+    switch (orientation) {
+      case Orientation.portrait:
+        CameraP.canvasSize = Size(screenSize.width, screenSize.width * 16 / 9); break;
+      case Orientation.landscape:
+        CameraP.canvasSize = Size(screenSize.height * 16 / 9, screenSize.height); break;
+    }
+
+    double horizontalError = .5 * (screenSize.width - CameraP.canvasSize!.width);
+    double verticalError = .5 * (screenSize.height - CameraP.canvasSize!.height);
+
     return GetBuilder<CameraP>(
       builder: (cameraP) {
-        return GestureDetector(
-          onScaleStart: (details) => cameraP.setInitZoom(),
-          onScaleUpdate: cameraP.setZoomLevel,
-          child: CustomPaint(
-            foregroundPainter: painter,
-            child: CameraPreview(
-              cameraP.cameraController!,
+        return Stack(
+          children: [
+            Positioned(
+              left: horizontalError, right: horizontalError,
+              top: verticalError, bottom: verticalError,
+              child: GestureDetector(
+                onScaleStart: (details) => cameraP.setInitZoom(),
+                onScaleUpdate: cameraP.setZoomLevel,
+                child: CustomPaint(
+                  foregroundPainter: painter,
+                  child: CameraPreview(
+                    cameraP.cameraController!,
+                  ),
+                ),
+              ),
             ),
-          ),
+          ],
         );
       },
     );
@@ -41,25 +63,31 @@ class FloatingMessageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+    EdgeInsets padding = EdgeInsets.all(screenSize.width * .05);
+
     return GetBuilder<WorkoutSoloCameraP>(
       builder: (soloCameraP) {
-        return Container(
-          width: double.infinity,
-          padding: const EdgeInsets.all(50.0),
+        return Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: screenSize.width * .05,
+            vertical: 40.0,
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(50.0),
+                padding: padding,
                 decoration: BoxDecoration(
-                  color: FTheme.background.withOpacity(.3),
+                  color: FTheme.black.withOpacity(.4),
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 child: FText(
                   soloCameraP.message,
-                  style: textTheme.headlineLarge,
+                  style: CameraP.orientation == Orientation.portrait
+                      ? textTheme.headlineMedium : textTheme.headlineLarge,
                   color: FTheme.colorA,
                   maxLines: 2,
                   bold: true,

@@ -10,7 +10,6 @@ import 'package:fitween/model/class/workout/isolate.dart';
 import 'package:fitween/model/enum/part.dart';
 import 'package:fitween/model/enum/workout.dart';
 import 'package:fitween/presenter/widget/camera.dart';
-import 'package:fitween/presenter/widget/painter.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/painter/painter.dart';
 import 'package:fitween/view/widget/widget/text.dart';
@@ -33,6 +32,7 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
 
   late LimbPainter painter;
   int frameCount = 0;
+  late Size screenSize;
 
   @override
   void initState() {
@@ -73,6 +73,16 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
     List inferenceList = await CameraP
         .isolate.inference(isolateData);
 
+    inferenceSize = Size(
+      imageStream.width.toDouble(),
+      imageStream.height.toDouble(),
+    );
+
+    if (CameraP.canvasSize != null) {
+      widthRatio = CameraP.canvasSize!.width / imageStream.width;
+      heightRatio = CameraP.canvasSize!.height / imageStream.height;
+    }
+
     inferences = {
       for (int i = 0; i < inferenceList.length; i++)
         Part.values[i] : Inference.list(inferenceList[i])
@@ -83,11 +93,6 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
     battleCameraP.staging();
 
     if (!mounted) return;
-
-    inferenceSize = Size(
-      imageStream.width.toDouble(),
-      imageStream.height.toDouble(),
-    );
 
     doPredict = false;
     ExerciseHandler.checkLimbs(Inference.refinedInferences);
@@ -102,19 +107,7 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-    Size canvasSize = screenSize;
-    Orientation orientation = MediaQuery.of(context).orientation;
-
-    switch (orientation) {
-      case Orientation.portrait:
-        canvasSize = Size(screenSize.width, screenSize.width * 4 / 3);
-        break;
-      case Orientation.landscape:
-        canvasSize = Size(screenSize.width, screenSize.width * 4 / 3);
-        break;
-    }
-
+    screenSize = MediaQuery.of(context).size;
     if (inferences == null) return const Scaffold();
 
     return GetBuilder<CameraP>(
@@ -123,134 +116,128 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
           extendBodyBehindAppBar: true,
           body: GetBuilder<BattleCameraP>(
             builder: (battleCameraP) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              return Stack(
+                alignment: Alignment.topCenter,
                 children: [
-                  const FloatingMessageWidget(),
-                  SizedBox(
-                    width: canvasSize.width,
-                    height: canvasSize.height,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        CameraPainterView(painter: painter),
-                        // Positioned(
-                        //   top: 60.0,
-                        //   child: Image.asset('${assets}frame.png'),
-                        // ),
-                        const Positioned(
-                          top: 20.0,
-                          child: TimerWidget(),
-                        ),
-                        Positioned(
-                          bottom: 20.0,
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(
-                                      width: 100.0,
-                                      child: battleCameraP.state == WorkoutState.workout
-                                          ? FCircledButton(
-                                        onPressed: battleCameraP.stopButtonPressed,
-                                        onLongPressed: battleCameraP.stopButtonLongPressed,
-                                        backgroundColor: FTheme.colorB,
-                                        child: const Icon(
-                                          Icons.stop_rounded,
-                                          color: FTheme.white,
-                                          size: 50.0,
-                                        ),
-                                      ) : null,
-                                    ),
-                                    Container(
-                                      width: 120, height: 80,
-                                      decoration: BoxDecoration(
-                                        color: FTheme.darkGrey,
-                                        borderRadius: BorderRadius.circular(20.0),
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      CameraPainterView(painter: painter),
+                      Positioned(
+                        bottom: 20.0,
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width: 100.0,
+                                    child: battleCameraP.state == WorkoutState.workout
+                                        ? FCircledButton(
+                                      onPressed: battleCameraP.stopButtonPressed,
+                                      onLongPressed: battleCameraP.stopButtonLongPressed,
+                                      backgroundColor: FTheme.colorB,
+                                      child: const Icon(
+                                        Icons.stop_rounded,
+                                        color: FTheme.white,
+                                        size: 50.0,
                                       ),
-                                      child: Center(
-                                        child: FText(
-                                          '${battleCameraP.count}',
-                                          style: textTheme.displayLarge,
-                                          color: FTheme.white,
-                                          bold: true,
-                                        ),
+                                    ) : null,
+                                  ),
+                                  Container(
+                                    width: 120, height: 80,
+                                    decoration: BoxDecoration(
+                                      color: FTheme.darkGrey,
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Center(
+                                      child: FText(
+                                        '${battleCameraP.count}',
+                                        style: textTheme.displayLarge,
+                                        color: FTheme.white,
+                                        bold: true,
                                       ),
                                     ),
-                                    SizedBox(
-                                      width: 100.0,
-                                      child: battleCameraP.state == WorkoutState.stop ? Stack(
-                                        alignment: Alignment.center,
-                                        children: [
-                                          Material(
-                                            color: FTheme.lightGrey,
-                                            borderRadius: BorderRadius.circular(30.0),
-                                            child: const SizedBox(
-                                              width: 60.0,
-                                              height: 60.0,
-                                            ),
+                                  ),
+                                  SizedBox(
+                                    width: 100.0,
+                                    child: battleCameraP.state == WorkoutState.stop ? Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Material(
+                                          color: FTheme.lightGrey,
+                                          borderRadius: BorderRadius.circular(30.0),
+                                          child: const SizedBox(
+                                            width: 60.0,
+                                            height: 60.0,
                                           ),
-                                          IconButton(
-                                            onPressed: () {
-                                              cameraP.toggleDirection();
-                                              initAsync();
-                                            },
-                                            icon: const Icon(
-                                              Icons.cameraswitch_rounded,
-                                              size: 33,
-                                              color: FTheme.background,
-                                            ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            cameraP.toggleDirection();
+                                            initAsync();
+                                          },
+                                          icon: const Icon(
+                                            Icons.cameraswitch_rounded,
+                                            size: 33,
+                                            color: FTheme.background,
                                           ),
-                                        ],
-                                      ) : null,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                                        ),
+                                      ],
+                                    ) : null,
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        AnimatedOpacity(
-                          opacity: battleCameraP.activeSnackBar ? 1.0 : .0,
-                          duration: const Duration(milliseconds: 200),
-                          child: Container(
-                            padding: const EdgeInsets.all(12.0),
-                            margin: const EdgeInsets.symmetric(horizontal: 20.0),
-                            decoration: BoxDecoration(
-                              color: FTheme.grey,
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: FText(
-                              '중도포기를 하려면 버튼을 2초 이상 눌러주세요',
-                              color: FTheme.white,
-                              style: textTheme.titleSmall,
-                            ),
+                      ),
+                      AnimatedOpacity(
+                        opacity: battleCameraP.activeSnackBar ? 1.0 : .0,
+                        duration: const Duration(milliseconds: 200),
+                        child: Container(
+                          padding: const EdgeInsets.all(12.0),
+                          margin: const EdgeInsets.symmetric(horizontal: 20.0),
+                          decoration: BoxDecoration(
+                            color: FTheme.grey,
+                            borderRadius: BorderRadius.circular(8.0),
                           ),
-                        ),
-                        if (battleCameraP.state == WorkoutState.stop)
-                        FCircledButton(
-                          onPressed: battleCameraP.startButtonPressed,
-                          backgroundColor: FTheme.colorA,
-                          child: const Icon(
-                            Icons.play_arrow_rounded,
+                          child: FText(
+                            '중도포기를 하려면 버튼을 2초 이상 눌러주세요',
                             color: FTheme.white,
-                            size: 50.0,
+                            style: textTheme.titleSmall,
                           ),
                         ),
-                        if (battleCameraP.threeSecTimerState == TimerState.run)
-                        FText(
-                          '${battleCameraP.threeSecTimerSeconds}',
-                          style: FTheme.veryLargeText,
-                          color: FTheme.colorD,
+                      ),
+                      if (battleCameraP.state == WorkoutState.stop)
+                      FCircledButton(
+                        onPressed: battleCameraP.startButtonPressed,
+                        backgroundColor: FTheme.colorA,
+                        child: const Icon(
+                          Icons.play_arrow_rounded,
+                          color: FTheme.white,
+                          size: 50.0,
                         ),
-                      ],
-                    ),
+                      ),
+                      if (battleCameraP.threeSecTimerState == TimerState.run)
+                      FText(
+                        '${battleCameraP.threeSecTimerSeconds}',
+                        style: FTheme.veryLargeText,
+                        color: FTheme.colorD,
+                      ),
+                    ],
+                  ),
+                  const FloatingMessageWidget(),
+                  CameraP.orientation == Orientation.portrait
+                      ? const Positioned(
+                    top: 170.0, child: TimerWidget(),
+                  ) : const Positioned(
+                    top: 100.0, right: 100.0,
+                    child: TimerWidget(),
                   ),
                 ],
               );

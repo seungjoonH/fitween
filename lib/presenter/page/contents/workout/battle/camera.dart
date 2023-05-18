@@ -100,7 +100,7 @@ class BattleCameraP extends GetxController {
     humanDetected = Parts(inferences).humanDetected;
 
     distance = HumanDistance.middle;
-    if (legHeight > 250) distance = HumanDistance.near;
+    if (legHeight > 300) distance = HumanDistance.near;
     if (legHeight < 100 - (ExerciseHandler.bent ? 50.0 : .0)) {
       distance = HumanDistance.far;
     }

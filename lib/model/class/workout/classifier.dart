@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:camera/camera.dart';
+import 'package:fitween/presenter/widget/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
@@ -84,9 +85,12 @@ class Classifier {
     late int x, y;
     late double c;
 
+    double width = CameraP.presetSize.width;
+    double height = CameraP.presetSize.height;
+
     for (var i = 0; i < 51; i += 3) {
-      y = (data[0 + i] * 640).toInt();
-      x = (data[1 + i] * 480).toInt();
+      y = (data[0 + i] * height).toInt();
+      x = (data[1 + i] * width).toInt();
       c = (data[2 + i]);
       result.add([x, y, c]);
     }

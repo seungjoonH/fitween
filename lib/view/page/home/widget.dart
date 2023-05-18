@@ -42,6 +42,28 @@ class _RotateCarouselState extends State<RotateCarousel>
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+    const double gifRatio = 16 / 9;
+    const double pngRatio = 73 / 48;
+    const widthRatio = pngRatio / gifRatio;
+
+    Size gifSize = Size(
+      screenSize.width * 1.3,
+      screenSize.width * 1.3 / gifRatio,
+    );
+
+    if (screenSize.height * .5 < gifSize.height) {
+      gifSize = Size(
+        screenSize.height * .5 * gifRatio,
+        screenSize.height * .5,
+      );
+    }
+
+    Size pngSize = Size(
+      gifSize.width * widthRatio,
+      gifSize.height,
+    );
+
+    bool imageOverflowed = gifSize.width > screenSize.width;
 
     final userRecordP = Get.find<UserRecordP>();
 
@@ -58,85 +80,105 @@ class _RotateCarouselState extends State<RotateCarousel>
           )}K';
         }
 
-        return Padding(
-          padding: const EdgeInsets.only(top: 60.0),
-          child: GestureDetector(
-            onHorizontalDragEnd: (endDetails) {
-              double velocity = endDetails.velocity.pixelsPerSecond.dx;
-              if (velocity < -100) homeP.leftButtonPressed();
-              if (velocity > 100) homeP.rightButtonPressed();
-            },
-            child: Stack(
-              children: [
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Image.asset(
-                      homeP.pngAsset,
-                      width: screenSize.width * 1.3,
-                      height: screenSize.height * .4,
-                      fit: BoxFit.fitHeight,
-                    ),
-                    if (homeP.gifAsset != null)
-                    Stack(
-                      children: [
-                        GifImage(
-                          controller: HomeP.gifCont,
-                          width: screenSize.width * 1.3,
-                          height: screenSize.height * .4,
-                          fit: BoxFit.fitHeight,
-                          image: AssetImage(homeP.gifAsset!),
-                        ),
-                        Positioned.fill(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: FTheme.white.withOpacity(.09),
+        return GestureDetector(
+          onHorizontalDragEnd: (endDetails) {
+            double velocity = endDetails.velocity.pixelsPerSecond.dx;
+            if (velocity < -100) homeP.leftButtonPressed();
+            if (velocity > 100) homeP.rightButtonPressed();
+          },
+          child: Stack(
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset(
+                    homeP.pngAsset,
+                    width: gifSize.width,
+                    height: gifSize.height,
+                    fit: BoxFit.fitHeight,
+                  ),
+                  if (homeP.gifAsset != null)
+                  Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      GifImage(
+                        controller: HomeP.gifCont,
+                        width: gifSize.width,
+                        height: gifSize.height,
+                        fit: BoxFit.fitHeight,
+                        image: AssetImage(homeP.gifAsset!),
+                      ),
+                      if (!imageOverflowed)
+                      Positioned.fill(
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              left: -.5,
+                              child: Container(
+                                width: .5 * (gifSize.width - pngSize.width) + 1,
+                                height: gifSize.height,
+                                color: FTheme.background,
+                              ),
                             ),
-                          ),
+                            Positioned(
+                              right: -.5,
+                              child: Container(
+                                width: .5 * (gifSize.width - pngSize.width) + 1,
+                                height: gifSize.height,
+                                color: FTheme.background,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Container(
+                      //   width: pngSize.width,
+                      //   decoration: BoxDecoration(
+                      //     color: FTheme.colorA.withOpacity(.5),
+                      //   ),
+                      // ),
+                    ],
+                  ) else Positioned(
+                    top: pngSize.height * .5,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        FText(
+                          amountString,
+                          style: FTheme.largeText,
+                          color: FTheme.white,
+                        ),
+                        FText(
+                          type.unit,
+                          style: textTheme.displaySmall,
+                          color: FTheme.white,
                         ),
                       ],
-                    ) else Positioned(
-                      top: 150.0.h,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          FText(
-                            amountString,
-                            style: FTheme.largeText,
-                            color: FTheme.white,
-                          ),
-                          FText(
-                            type.unit,
-                            style: textTheme.displaySmall,
-                            color: FTheme.white,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                Positioned(
-                  left: screenSize.width * .08,
-                  bottom: 150.0,
-                  child: GestureDetector(
-                    onTap: homeP.rightButtonPressed,
-                    child: SvgPicture.asset(
-                      'assets/image/page/home/left_arrow.svg',
                     ),
                   ),
-                ),
-                Positioned(
-                  right: screenSize.width * .08,
-                  bottom: 150.0,
-                  child: GestureDetector(
-                    onTap: homeP.leftButtonPressed,
-                    child: SvgPicture.asset(
-                      'assets/image/page/home/right_arrow.svg',
-                    ),
+                ],
+              ),
+              Positioned(
+                left: screenSize.width * .08,
+                bottom: pngSize.height * .6,
+                child: GestureDetector(
+                  onTap: homeP.rightButtonPressed,
+                  child: SvgPicture.asset(
+                    'assets/image/page/home/left_arrow.svg',
                   ),
                 ),
-              ],
-            ),
+              ),
+              Positioned(
+                right: screenSize.width * .08,
+                bottom: pngSize.height * .6,
+                child: GestureDetector(
+                  onTap: homeP.leftButtonPressed,
+                  child: SvgPicture.asset(
+                    'assets/image/page/home/right_arrow.svg',
+                  ),
+                ),
+              ),
+            ],
           ),
         );
       },

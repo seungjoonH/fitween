@@ -9,6 +9,8 @@ import 'package:fitween/model/class/workout/parts.dart';
 import 'package:fitween/model/enum/part.dart';
 import 'package:fitween/model/enum/workout.dart';
 import 'package:fitween/presenter/page/contents/workout/solo/result.dart';
+import 'package:fitween/presenter/widget/camera.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class WorkoutSoloCameraP extends GetxController {
@@ -47,6 +49,7 @@ class WorkoutSoloCameraP extends GetxController {
   void loadAll() {
     count = 0;
     state = WorkoutState.stop;
+    message = state.message;
     stage = WorkoutStage.down;
     distance = HumanDistance.middle;
     resetThreeSecTimer();
@@ -75,6 +78,9 @@ class WorkoutSoloCameraP extends GetxController {
   }
 
   void measureDistance() {
+    humanDetected = false;
+    if (state == WorkoutState.stop) return;
+
     double hipLY = inferences[Part.hipL]!.y.toDouble();
     double hipRY = inferences[Part.hipR]!.y.toDouble();
     double ankleLY = inferences[Part.ankleL]!.y.toDouble();
@@ -84,7 +90,8 @@ class WorkoutSoloCameraP extends GetxController {
     humanDetected = Parts(inferences).humanDetected;
 
     distance = HumanDistance.middle;
-    if (legHeight > 250) distance = HumanDistance.near;
+
+    if (legHeight > CameraP.presetSize.height * .4) distance = HumanDistance.near;
     if (legHeight < 100 - (ExerciseHandler.bent ? 50.0 : .0)) {
       distance = HumanDistance.far;
     }
@@ -171,7 +178,7 @@ class WorkoutSoloCameraP extends GetxController {
 
   void staging() {
     message = state.message;
-    if (state != WorkoutState.stop) measureDistance();
+    measureDistance();
 
     switch (state) {
       case WorkoutState.stop: return;

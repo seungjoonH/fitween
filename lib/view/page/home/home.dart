@@ -1,5 +1,6 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/presenter/page/home/home.dart';
+import 'package:fitween/presenter/widget/camera.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/page/home/widget.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CameraP.orientation = MediaQuery.of(context).orientation;
     final refreshCont = RefreshController();
 
     return Scaffold(

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:fitween/presenter/page/home/home.dart';
 import 'package:fitween/presenter/page/login.dart';
+import 'package:fitween/presenter/widget/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fitween/global/theme.dart';

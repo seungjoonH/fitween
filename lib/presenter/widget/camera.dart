@@ -9,6 +9,13 @@ import 'package:fitween/model/class/workout/isolate.dart';
 class CameraP extends GetxController {
   static List<CameraDescription>? descriptions;
   CameraController? cameraController;
+
+  static ResolutionPreset preset = ResolutionPreset.high;
+  static Orientation? orientation;
+  static Size get presetSize => orientation == Orientation.portrait
+      ? const Size(720, 1280) : const Size(1280, 720);
+  static Size? canvasSize;
+
   static late Classifier classifier;
   static late IsolateUtils isolate;
 
@@ -38,7 +45,7 @@ class CameraP extends GetxController {
     if (descriptions == null) return;
 
     cameraController = CameraController(
-      descriptions![direction], ResolutionPreset.medium,
+      descriptions![direction], preset,
       enableAudio: false,
     );
     await cameraController!.initialize();

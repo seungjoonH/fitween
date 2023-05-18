@@ -2,6 +2,9 @@ import 'dart:isolate';
 
 import 'package:camera/camera.dart';
 import 'package:fitween/model/class/workout/classifier.dart';
+import 'package:fitween/presenter/widget/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 
 class IsolateData {

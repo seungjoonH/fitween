@@ -2,22 +2,23 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fitween/global/date.dart';
 import 'package:fitween/presenter/page/login.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/view/page/login/login.dart';
-import 'package:flutter/services.dart';
 import 'package:fitween/firebase_options.dart';
-import 'package:fitween/global/date.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/presenter/firebase/auth/auth.dart';
 import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/import.dart';
 import 'package:fitween/presenter/widget/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:connectivity/connectivity.dart';
+
 
 const version = 'ver 0.0';
 String get versionNumber => version.replaceAll('ver ', '');
@@ -51,6 +52,7 @@ class _FitweenState extends State<Fitween> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       networkResult = await Connectivity().checkConnectivity();
+
       Future.delayed(
         const Duration(milliseconds: 500), () async {
           if (networkResult == ConnectivityResult.none) {
@@ -73,11 +75,6 @@ class _FitweenState extends State<Fitween> {
 
     GlobalP.initControllers();
     ImportPresenter.importData();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
 
     return ScreenUtilInit(
       designSize: const Size(360, 800),
