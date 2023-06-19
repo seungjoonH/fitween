@@ -45,31 +45,23 @@
 	<string>ca-app-pub-1627293083770208~8224143481</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppleMusicUsageDescription</key>
-	<string>Access to pick a photo</string>
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_dartobservatory._tcp</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Fitween tries to access your gallery.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Access to take a photo by camera</string>
+	<string>Fitween tries to use a camera to measure your exercise posture.</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Fitween will sync your data with the Apple Health app to give you better insights</string>
+	<string>Fitween tries to access your number of steps and the number of floors you go up.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Fitween will sync your data with the Apple Health app to give you better insights</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
+	<string>Fitween tries to access your number of steps and the number of floors you go up.</string>
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
 	<dict>
 		<key>YourPurposeKey</key>
-		<string>The example App requires temporary access to the device's precise location.</string>
+		<string>The example App requires temporary access to the device&apos;s precise location.</string>
 	</dict>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>Need microphone access for uploading audio</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Access to pick a photo</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>
@@ -87,10 +79,16 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>

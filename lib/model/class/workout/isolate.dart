@@ -23,7 +23,7 @@ class IsolateUtils {
   static const String debugName = 'InferenceIsolate';
 
   late Isolate isolate;
-   SendPort? sendPort;
+  SendPort? sendPort;
   ReceivePort receivePort = ReceivePort();
 
   Future start() async {
@@ -50,7 +50,7 @@ class IsolateUtils {
     }
   }
 
-  Future<List<dynamic>> inference(IsolateData isolateData) async {
+  Future<List> inference(IsolateData isolateData) async {
     ReceivePort responsePort = ReceivePort();
     if (sendPort == null) return [];
     sendPort!.send(isolateData..responsePort = responsePort.sendPort);

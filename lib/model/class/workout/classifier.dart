@@ -33,8 +33,7 @@ class Classifier {
   void loadModel([Interpreter? interpret]) async {
     try {
       interpreter = interpret ?? await Interpreter.fromAsset(
-        'model/lite-model_movenet_singlepose_lightning_3.tflite',
-        options: InterpreterOptions()..threads = 4,
+        model, options: InterpreterOptions()..threads = 4,
       );
     } catch (e) {
       if (kDebugMode) {
@@ -89,8 +88,8 @@ class Classifier {
     double height = CameraP.presetSize.height;
 
     for (var i = 0; i < 51; i += 3) {
-      y = (data[0 + i] * height).toInt();
-      x = (data[1 + i] * width).toInt();
+      y = (data[0 + i] * width).toInt();
+      x = (data[1 + i] * height).toInt();
       c = (data[2 + i]);
       result.add([x, y, c]);
     }

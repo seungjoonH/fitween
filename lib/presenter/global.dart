@@ -29,7 +29,6 @@ import 'package:fitween/presenter/page/home/calendar.dart';
 import 'package:fitween/presenter/page/contents/challenge/challenge_detail.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:fitween/presenter/page/contents/contents.dart';
-import 'package:fitween/presenter/page/exercise/setting/detail.dart';
 import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/presenter/page/home/home.dart';
 import 'package:fitween/presenter/page/login.dart';
@@ -348,8 +347,6 @@ class GlobalP extends GetxController {
     Get.put(OnboardingP());
     Get.put(RegisterP());
     Get.put(NotificationP());
-
-    Get.put(ExerciseDetailSetting());
 
     //Camera Presenter
     Get.put(CameraP());

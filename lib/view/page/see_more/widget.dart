@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/model/class/database/collection.dart';
 import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
@@ -26,6 +29,13 @@ class BadgeManagementCard extends StatelessWidget {
     return GetBuilder<UserCollectionP>(
       builder: (userCollectionP) {
         FBadge badge = BadgeJsonP.getBadge(userCollectionP.loggedUser.badgeId!)!;
+        List<Collection> collections = userCollectionP.loggedUser.orderedCollections
+            .where((collection) => collection.badgeId != userCollectionP.loggedUser.badgeId)
+            .toList();
+        List<Collection> subCollections = collections
+            .sublist(0, min(collections.length, 2));
+
+
         return FCard(
           title: FText(
             '뱃지 관리',
@@ -89,9 +99,7 @@ class BadgeManagementCard extends StatelessWidget {
                               const SizedBox(height: 20.0),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                children: userCollectionP.loggedUser.orderedCollections
-                                    .where((collection) => collection.badgeId != userCollectionP.loggedUser.badgeId)
-                                    .toList().sublist(0, 2).map((collection) => SizedBox(
+                                children: subCollections.map((collection) => SizedBox(
                                   width: 70.0.w,
                                   child: Column(
                                     children: [
