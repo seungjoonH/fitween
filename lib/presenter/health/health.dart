@@ -8,7 +8,7 @@ import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/model/record.dart';
 
-class HealthPresenter {
+class HealthP {
   /// static variables
   static HealthFactory health = HealthFactory();
 
@@ -61,53 +61,85 @@ class HealthPresenter {
     );
   }
 
-  // 걸음 데이터 가져오기
-  static Future<bool> fetchStepData() async {
+  static Future<bool> fetchStepData([DateTime? startTime, DateTime? endTime]) async {
+    endTime ??= startTime;
+    startTime ??= today;
+    endTime ??= nextDay(startTime);
+
     int steps = 0;
 
     // 승인 시 헬스 데이터 가져와서 로컬에 저장
     if (!approved) return false;
 
     final userP = Get.find<UserRecordP>();
-    int? fetchedSteps = await health.getTotalStepsInInterval(today, now);
-    if (fetchedSteps == null || fetchedSteps == 0) return false;
-    steps = fetchedSteps;
-    DistanceRecord distance = DistanceRecord(
-      amount: steps.toDouble(),
-      state: ExerciseUnit.step,
-    );
+    DateTime date = startTime;
 
-    userP.setRecord(ActivityType.distance, distance);
+    while (date.isBefore(endTime)) {
+      int? fetchedSteps = await health.getTotalStepsInInterval(
+        date, date.add(const Duration(days: 1)),
+      );
+      if (fetchedSteps == null || fetchedSteps == 0) return false;
+      steps = fetchedSteps;
+
+      DistanceRecord distance = DistanceRecord(
+        amount: steps.toDouble(),
+        state: ExerciseUnit.step,
+      );
+
+      userP.setRecord(ActivityType.distance, distance, date);
+      date = date.add(const Duration(days: 1));
+    }
+
     userP.save();
 
     return true;
   }
 
+  // 걸음 데이터 가져오기
+  static Future<bool> fetchTodayStepData() async {
+    return await fetchStepData(today);
+  }
+
   // 높이 데이터 가져오기
-  static Future fetchFlightsData() async {
+  static Future fetchFlightsData([DateTime? startTime, DateTime? endTime]) async {
+    endTime ??= startTime;
+    startTime ??= today;
+    endTime ??= nextDay(startTime);
+
     List<HealthDataPoint> flightsData = [];
-    int flights = 0;
 
     if (!approved) return false;
 
     // 승인 시 헬스 데이터 가져와서 로컬에 저장
     final userP = Get.find<UserRecordP>();
 
-    flightsData = await health.getHealthDataFromTypes(today, now, flightType);
+    flightsData = await health.getHealthDataFromTypes(startTime, endTime, flightType);
     if (flightsData.isEmpty) return false;
 
     flightsData = HealthFactory.removeDuplicates(flightsData);
 
-    for (var flight in flightsData) {
-      flights += double.parse(flight.value.toString()).round();
+    DateTime date = startTime;
+
+    while (date.isBefore(endTime)) {
+      double flights = .0;
+      for (var flight in flightsData) {
+        if (!isSameDate(flight.dateFrom, date)) continue;
+        flights += double.parse(flight.value.toString()).round();
+      }
+
+      HeightRecord height = HeightRecord(amount: flights);
+      userP.setRecord(ActivityType.height, height, date);
+
+      date = date.add(const Duration(days: 1));
     }
 
-    HeightRecord height = HeightRecord(amount: flights.toDouble());
-
-    userP.setRecord(ActivityType.height, height);
     userP.save();
 
     return true;
+  }
+
+  static Future fetchTodayFlightsData() async {
+    return await fetchFlightsData(today);
   }
 
   // 걸음 데이터 저장

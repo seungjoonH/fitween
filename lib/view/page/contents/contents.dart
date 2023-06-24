@@ -11,8 +11,8 @@ class ContentsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TabScaffold(
-      tabs: ['월간', '업적', '타임어택'],
-      bodies: [
+      tabs: const ['월간', '업적', '타임어택'],
+      bodies: const [
         ChallengeCardView(),
         AchievementCardView(),
         BattleCardView(),

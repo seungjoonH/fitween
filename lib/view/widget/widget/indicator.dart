@@ -62,7 +62,7 @@ class PCircularPercentIndicator extends StatelessWidget {
             curve: Curves.easeInOut,
             center: FText(centerText,
               color: textColor,
-              style: textTheme.titleLarge,
+              style: textTheme(context).titleLarge,
               borderWidth: 1.0,
               maxLines: 2,
               align: TextAlign.center

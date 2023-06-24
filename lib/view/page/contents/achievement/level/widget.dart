@@ -9,6 +9,7 @@ import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class AchievementLevelView extends StatelessWidget {
@@ -32,7 +33,10 @@ class AchievementLevelView extends StatelessWidget {
         .getUnlockedLevels(type, record).reversed.toList();
 
     return Padding(
-      padding: const EdgeInsets.all(28.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: 28.0.w,
+        vertical: 28.0.h,
+      ),
       child: ListView.separated(
         shrinkWrap: true,
         itemCount: levels.length,
@@ -94,13 +98,13 @@ class AchievementLevelView extends StatelessWidget {
                             child: FText(
                               'LVL ${levels.length - index}',
                               color: FTheme.white,
-                              style: textTheme.bodyLarge,
+                              style: textTheme(context).bodyLarge,
                             ),
                           ),
                           FText(
                             '조건: $amountString',
                             color: FTheme.lightGrey,
-                            style: textTheme.bodyMedium,
+                            style: textTheme(context).bodyMedium,
                           ),
                         ],
                       ),
@@ -112,7 +116,7 @@ class AchievementLevelView extends StatelessWidget {
                         child: FText(
                           levels[index].description!,
                           color: FTheme.grey,
-                          style: textTheme.bodySmall,
+                          style: textTheme(context).bodySmall,
                           maxLines: 7,
                         ),
                       ),

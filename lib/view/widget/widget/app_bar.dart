@@ -23,21 +23,17 @@ class FAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<GlobalP>(
-      builder: (controller) {
-        return AppBar(
-          elevation: 0.0,
-          iconTheme: const IconThemeData(color: FTheme.black),
-          backgroundColor: color,
-          title: FText(
-            title ?? '',
-            style: textTheme.headlineSmall,
-            bold: true,
-          ),
-          leading: leading,
-          actions: actions,
-        );
-      },
+    return SafeArea(
+      child: AppBar(
+        elevation: 0.0,
+        title: FText(
+          title ?? '',
+          style: textTheme(context).headlineSmall,
+          bold: true,
+        ),
+        leading: leading,
+        actions: actions,
+      ),
     );
   }
 }
@@ -67,7 +63,7 @@ class CameraAppBar extends StatelessWidget implements PreferredSizeWidget {
           elevation: 0.0,
           iconTheme: const IconThemeData(color: FTheme.black),
           backgroundColor: color,
-          title: FText(title ?? '', style: textTheme.headlineMedium),
+          title: FText(title ?? '', style: textTheme(context).headlineMedium),
           leading: leading,
           actions: actions,
         );

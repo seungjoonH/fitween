@@ -7,6 +7,7 @@ import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
@@ -18,7 +19,9 @@ class WorkoutSoloResultPage extends StatelessWidget {
     return Scaffold(
       appBar: const FAppBar(title: '운동 결과'),
       body: Padding(
-        padding: const EdgeInsets.all(28.0),
+        padding: EdgeInsets.symmetric(
+          horizontal: 28.0.w, vertical: 28.0.h,
+        ),
         child: GetBuilder<WorkoutSoloResultP>(
           builder: (workoutSoloResultP) {
             return Column(
@@ -26,7 +29,7 @@ class WorkoutSoloResultPage extends StatelessWidget {
               children: [
                 FCard(
                   title: FText('나의 기록',
-                    style: textTheme.titleLarge,
+                    style: textTheme(context).titleLarge,
                     color: FTheme.darkGrey,
                     bold: true,
                   ),
@@ -35,7 +38,7 @@ class WorkoutSoloResultPage extends StatelessWidget {
                     children: [
                       FText(
                         '무게 기록 상승!',
-                        style: textTheme.bodyLarge,
+                        style: textTheme(context).bodyLarge,
                         color: FTheme.grey,
                       ),
                       const SizedBox(height: 20.0),
@@ -47,7 +50,7 @@ class WorkoutSoloResultPage extends StatelessWidget {
                             value: workoutSoloResultP.amount,
                             suffix: '회',
                             thousandSeparator: ',',
-                            textStyle: textTheme.displayLarge?.copyWith(
+                            textStyle: textTheme(context).displayLarge?.copyWith(
                               color: ActivityType.weight.color,
                             ),
                           ),
@@ -97,7 +100,7 @@ class WorkoutSoloResultPage extends StatelessWidget {
                                       child: FText(
                                         '+${workoutSoloResultP.addedWeight.amount.round()}회',
                                         color: FTheme.darkGrey,
-                                        style: textTheme.bodyLarge,
+                                        style: textTheme(context).bodyLarge,
                                       ),
                                     ),
                                     Expanded(flex: rightFlex, child: const SizedBox()),

@@ -157,7 +157,7 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
                                     child: Center(
                                       child: FText(
                                         '${battleCameraP.count}',
-                                        style: textTheme.displayLarge,
+                                        style: textTheme(context).displayLarge,
                                         color: FTheme.white,
                                         bold: true,
                                       ),
@@ -209,7 +209,7 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
                           child: FText(
                             '중도포기를 하려면 버튼을 2초 이상 눌러주세요',
                             color: FTheme.white,
-                            style: textTheme.titleSmall,
+                            style: textTheme(context).titleSmall,
                           ),
                         ),
                       ),

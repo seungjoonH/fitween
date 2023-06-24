@@ -87,7 +87,7 @@ class FloatingMessageWidget extends StatelessWidget {
                 child: FText(
                   soloCameraP.message,
                   style: CameraP.orientation == Orientation.portrait
-                      ? textTheme.headlineMedium : textTheme.headlineLarge,
+                      ? textTheme(context).headlineMedium : textTheme(context).headlineLarge,
                   color: FTheme.colorA,
                   maxLines: 2,
                   bold: true,
@@ -186,7 +186,7 @@ class _CountBoxWidgetState extends State<CountBoxWidget> {
           child: Center(
             child: FText(
               '${widget.count}',
-              style: textTheme.displayLarge,
+              style: textTheme(context).displayLarge,
               color: FTheme.white,
               bold: true,
             ),

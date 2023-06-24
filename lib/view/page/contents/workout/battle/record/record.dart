@@ -13,6 +13,7 @@ import 'package:fitween/view/widget/widget/icon.dart';
 import 'package:fitween/view/widget/widget/tag.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class BattleRecordPage extends StatelessWidget {
@@ -31,7 +32,10 @@ class BattleRecordPage extends StatelessWidget {
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               child: Padding(
-                padding: const EdgeInsets.all(28.0),
+                padding: EdgeInsets.symmetric(
+                  horizontal: 28.0.w,
+                  vertical: 28.0.h,
+                ),
                 child: Column(
                   children: [
                     FCard(
@@ -42,12 +46,12 @@ class BattleRecordPage extends StatelessWidget {
                         children: [
                           FText(
                             userP.loggedUser.nickname!,
-                            style: textTheme.titleSmall,
+                            style: textTheme(context).titleSmall,
                             color: FTheme.darkGrey,
                             bold: true,
                           ),
                           FText(' 님의 전적',
-                            style: textTheme.titleSmall,
+                            style: textTheme(context).titleSmall,
                             color: FTheme.darkGrey,
                           ),
                         ],
@@ -70,12 +74,12 @@ class BattleRecordPage extends StatelessWidget {
                                   FTheme.colorD, FTheme.darkGrey,
                                   FTheme.colorB
                                 ],
-                                style: textTheme.headlineMedium,
+                                style: textTheme(context).headlineMedium,
                                 bold: true,
                               ),
                               FText(
                                 '승률 ${(rate * 100).toStringAsFixed(1)}%',
-                                style: textTheme.titleSmall,
+                                style: textTheme(context).titleSmall,
                                 color: FTheme.darkGrey,
                               ),
                             ],
@@ -122,7 +126,7 @@ class BattleRecordPage extends StatelessWidget {
                                 children: [
                                   FText(overString,
                                     color: FTheme.lightGrey,
-                                    style: textTheme.labelMedium,
+                                    style: textTheme(context).labelMedium,
                                   ),
                                   SizedBox(
                                     width: double.infinity,

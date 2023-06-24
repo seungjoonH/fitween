@@ -15,7 +15,6 @@ import 'package:fitween/model/class/json/level.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
-import 'package:fitween/presenter/model/json/battle.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/record.dart';
@@ -101,14 +100,15 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
                         joiningChallenge = !joiningChallenge;
                       }),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6.0),
+                        padding: EdgeInsets.symmetric(vertical: 6.0.h),
                         child: Row(
                           children: [
                             FText('참여 중인 챌린지'),
-                            const SizedBox(width: 10.0),
+                            SizedBox(width: 10.0.w),
                             Icon(joiningChallenge
                                 ? Icons.keyboard_arrow_down_outlined
-                                : Icons.keyboard_arrow_up_outlined
+                                : Icons.keyboard_arrow_up_outlined,
+                              size: 20.0.r,
                             ),
                           ],
                         ),
@@ -122,7 +122,7 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
                       itemCount: loadingP.loading ? 2 : parties.length,
                       itemBuilder: (_, index) {
                         return loadingP.loading ? FCard(
-                          constraints: const BoxConstraints(minHeight: 100.0),
+                          constraints: BoxConstraints(minHeight: 130.0.h),
                           child: const SizedBox(),
                         ) : ChallengeCard(
                           challenge: ChallengeJsonP.getChallenge(parties[index].challengeId!)
@@ -136,7 +136,7 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 30.0),
+                SizedBox(height: 30.0.h),
                 if (newChallenges.isNotEmpty)
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -150,16 +150,17 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
                         child: Row(
                           children: [
                             FText('새로운 챌린지'),
-                            const SizedBox(width: 10.0),
+                            SizedBox(width: 10.0.h),
                             Icon(newChallenge
                                 ? Icons.keyboard_arrow_down_outlined
-                                : Icons.keyboard_arrow_up_outlined
+                                : Icons.keyboard_arrow_up_outlined,
+                              size: 20.0.h,
                             ),
                           ],
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20.0),
+                    SizedBox(height: 20.0.h),
                     if (newChallenge)
                     ListView.separated(
                       shrinkWrap: true,
@@ -167,7 +168,7 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
                       itemCount: loadingP.loading ? 2 : newChallenges.length,
                       itemBuilder: (_, index) {
                         return loadingP.loading ? FCard(
-                          constraints: const BoxConstraints(minHeight: 100.0),
+                          constraints: BoxConstraints(minHeight: 130.0.h),
                           child: const SizedBox(),
                         ) : ChallengeCard(
                           challenge: newChallenges[index],
@@ -212,16 +213,14 @@ class ChallengeCard extends StatelessWidget {
       child: Stack(
         children: [
           SizedBox(
-            width: 100.0,
-            height: 100.0,
             child: Image.asset(
               challenge.imageUrls['default'],
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.cover,
+              height: 120.0.h,
             ),
           ),
           Container(
-            width: 100.0,
-            height: 100.0,
+            height: 100.0.h,
             color: FTheme.black.withOpacity(.2),
           ),
         ],
@@ -231,8 +230,8 @@ class ChallengeCard extends StatelessWidget {
     return challenge.locked ? Container() : FCard(
       onPressed: onPressed,
       backgroundColor: FTheme.white,
-      padding: const EdgeInsets.all(0.0),
-      constraints: const BoxConstraints(minHeight: 100.0),
+      padding: EdgeInsets.zero,
+      height: 120.0.h,
       child: Row(
         children: [
           isHero ? Hero(
@@ -241,28 +240,29 @@ class ChallengeCard extends StatelessWidget {
           ) : imageWidget,
           Expanded(
             child: Padding(
-              padding: EdgeInsets.all(8.0.r),
+              padding: EdgeInsets.fromLTRB(20.0.w, 8.0.h, 8.0.w, 8.0.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   FText(
                     challenge.title ?? '',
-                    style: textTheme.bodyMedium,
+                    style: textTheme(context).titleMedium,
                     maxLines: 2,
+                    bold: true,
                   ),
                   SizedBox(height: 4.0.h),
                   FText(
                     challenge.descriptions['sub']!,
-                    style: textTheme.bodySmall,
+                    style: textTheme(context).bodyMedium,
                     color: FTheme.lightGrey,
                     maxLines: 2,
                   ),
-                  SizedBox(height: 4.0.h),
+                  SizedBox(height: 10.0.h),
                   if(party == null)
                   Row(
                     children: [
                       FTag('${challenge.levels['easy']['maxMember']}명'),
-                      FTag('D${withSign(challenge.period!)}'),
+                      FTag('${challenge.period!}일'),
                       FTag(challenge.type!.kr),
                     ],
                   ) else Row(
@@ -296,10 +296,16 @@ class AchievementCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
     final refreshCont = RefreshController();
+
+    bool isPortrait = orientation == Orientation.portrait;
 
     FUserRecord loggedUser = Get.find<UserRecordP>().loggedUser;
     FUserInfo userInfo = Get.find<UserInfoP>().loggedUser;
+
+    double ratio = (30 / 43);
+    // if (!isPortrait) ratio = 1 / ratio;
 
     return SmartRefresher(
       controller: refreshCont,
@@ -319,56 +325,114 @@ class AchievementCardView extends StatelessWidget {
         color: FTheme.black,
         backgroundColor: FTheme.surface,
       ),
-      child: SingleChildScrollView(
-        child: Column(
-          children: ActivityType.activeValues.map((type) {
-            double amount = loggedUser.getAmounts(type);
-            ExerciseUnit? unit = {
-              ActivityType.distance: ExerciseUnit.step,
-              ActivityType.weight: ExerciseUnit.count,
-            }[type];
-
-            Record record = Record.init(type, amount, unit);
-
-            Map<String, dynamic> tier = LevelJsonP.getTier(type, record);
-            List<Level> levels = LevelJsonP.getUnlockedLevels(type, record);
-            Level? next = tier['next'];
-
-            if (next == null) return Container();
-
-            Record nextValue = Record.init(
-              type,
-              next.amount!.toDouble(),
-              ExerciseUnit.kilometer,
-            );
-
-            nextValue.convert(unit);
-
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10.0),
-              child: FCard(
-                constraints: const BoxConstraints(minHeight: 480.0),
-                child: Stack(
-                  alignment: Alignment.topRight,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ProgressTextWidget(tier: tier, type: type, userInfo: userInfo),
-                        ProgressImageWidget(tier: tier, type: type),
-                      ],
-                    ),
-                    LevelButton(
-                      level: levels.length,
-                      onPressed: () => AchievementLevelP.toAchievementLevel(type),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }).toList(),
+      child: GridView(
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: isPortrait ? 1 : 2,
+          childAspectRatio: ratio,
+          mainAxisSpacing: 20.0.r,
+          crossAxisSpacing: 20.0.r,
         ),
+        children: ActivityType.activeValues.map((type) {
+          double amount = loggedUser.getAmounts(type);
+          ExerciseUnit? unit = {
+            ActivityType.distance: ExerciseUnit.step,
+            ActivityType.weight: ExerciseUnit.count,
+          }[type];
+
+          Record record = Record.init(type, amount, unit);
+
+          Map<String, dynamic> tier = LevelJsonP.getTier(type, record);
+          List<Level> levels = LevelJsonP.getUnlockedLevels(type, record);
+          Level? next = tier['next'];
+
+          if (next == null) return Container();
+
+          Record nextValue = Record.init(
+            type,
+            next.amount!.toDouble(),
+            ExerciseUnit.kilometer,
+          );
+
+          nextValue.convert(unit);
+
+          return FCard(
+            child: AspectRatio(
+              aspectRatio: ratio,
+              child: Stack(
+                alignment: Alignment.topRight,
+                children: [
+                  LevelButton(
+                    level: levels.length,
+                    onPressed: () => AchievementLevelP.toAchievementLevel(type),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ProgressTextWidget(tier: tier, type: type, userInfo: userInfo),
+                      ProgressImageWidget(tier: tier, type: type),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).toList(),
       ),
+      // child: SingleChildScrollView(
+      //   child: Column(
+      //     children: ActivityType.activeValues.map((type) {
+      //       double amount = loggedUser.getAmounts(type);
+      //       ExerciseUnit? unit = {
+      //         ActivityType.distance: ExerciseUnit.step,
+      //         ActivityType.weight: ExerciseUnit.count,
+      //       }[type];
+      //
+      //       Record record = Record.init(type, amount, unit);
+      //
+      //       Map<String, dynamic> tier = LevelJsonP.getTier(type, record);
+      //       List<Level> levels = LevelJsonP.getUnlockedLevels(type, record);
+      //       Level? next = tier['next'];
+      //
+      //       if (next == null) return Container();
+      //
+      //       Record nextValue = Record.init(
+      //         type,
+      //         next.amount!.toDouble(),
+      //         ExerciseUnit.kilometer,
+      //       );
+      //
+      //       nextValue.convert(unit);
+      //
+      //       return Padding(
+      //         padding: EdgeInsets.symmetric(vertical: 10.0.h),
+      //         child: FCard(
+      //           height: 470.0.h,
+      //           child: Expanded(
+      //             child: Stack(
+      //               alignment: Alignment.topRight,
+      //               children: [
+      //                 Column(
+      //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //                   crossAxisAlignment: CrossAxisAlignment.start,
+      //                   children: [
+      //                     ProgressTextWidget(tier: tier, type: type, userInfo: userInfo),
+      //                     ProgressImageWidget(tier: tier, type: type),
+      //                   ],
+      //                 ),
+      //                 LevelButton(
+      //                   level: levels.length,
+      //                   onPressed: () => AchievementLevelP.toAchievementLevel(type),
+      //                 ),
+      //               ],
+      //             ),
+      //           ),
+      //         ),
+      //       );
+      //     }).toList(),
+      //   ),
+      // ),
     );
   }
 }
@@ -399,13 +463,10 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
   void initState() {
     final userRecordP = Get.find<UserRecordP>();
     double amount = userRecordP.loggedUser.getAmounts(widget.type);
+
     if (widget.type == ActivityType.distance) amount = amount ~/ 100 * 100;
 
     text = widget.tier['current']?.title ?? '';
-    if (text.length > 10) {
-      text = '${text.substring(0, text.length ~/ 3 * 2)}'
-          '\n${text.substring(text.length ~/ 3 * 2, text.length)}';
-    }
     amountString = '${toLocalString(amount)}${widget.type.unit}';
 
     timer = Timer.periodic(const Duration(seconds: 5), (_) {
@@ -422,20 +483,36 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final orientation = MediaQuery.of(context).orientation;
+    bool isPortrait = orientation == Orientation.portrait;
+
+    String oneLineText = text;
+    String twoLineText = text;
+
+    bool isOneLine = true;
+
+    if (text.length > 10) {
+      twoLineText = '${text.substring(0, text.length ~/ 3 * 2)}'
+          '\n${text.substring(text.length ~/ 3 * 2, text.length)}';
+      if (size.width < 600 / (isPortrait ? 2 : 1)) isOneLine = false;
+    }
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
             FText(widget.userInfo.nickname!,
-              style: textTheme.bodyLarge,
+              style: textTheme(context).titleSmall,
               bold: true,
             ),
             FText(' 님은 지금까지',
-              style: textTheme.bodyLarge,
+              style: textTheme(context).titleSmall,
             ),
           ],
         ),
+        SizedBox(height: 8.0.h),
         GestureDetector(
           onTap: () {
             setState(() => isText = !isText); timer.cancel();
@@ -449,20 +526,19 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
                 opacity: isText ? .0 : 1.0,
                 duration: const Duration(milliseconds: 300),
                 child: Container(
-                  height: 55.0,
-                  padding: const EdgeInsets.all(5.0),
+                  height: 48.0.h,
+                  padding: EdgeInsets.all(5.0.r),
                   decoration: BoxDecoration(
                     color: widget.type.color,
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(8.0.r),
                   ),
                   child: Builder(
                     builder: (context) {
-                      bool isOneLine = !text.contains('\n');
                       int maxLines = isOneLine ? 1 : 2;
                       TextStyle? style = isOneLine
-                          ? textTheme.displaySmall
-                          : textTheme.titleSmall;
-                      return FText(text,
+                          ? textTheme(context).displaySmall
+                          : textTheme(context).titleSmall;
+                      return FText(isOneLine ? oneLineText : twoLineText,
                         maxLines: maxLines,
                         style: style,
                         color: FTheme.white,
@@ -476,28 +552,30 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
                 opacity: isText ? 1.0 : .0,
                 duration: const Duration(milliseconds: 300),
                 child: Container(
-                  height: 55.0,
-                  padding: const EdgeInsets.all(5.0),
+                  height: 48.0.r,
+                  padding: EdgeInsets.all(5.0.r),
                   decoration: BoxDecoration(
                     color: widget.type.color,
-                    borderRadius: BorderRadius.circular(8.0),
+                    borderRadius: BorderRadius.circular(8.0.r),
                   ),
                   child: FText(amountString,
                     maxLines: 1,
-                    style: textTheme.displaySmall,
+                    style: textTheme(context).displaySmall,
                     color: FTheme.white,
                     bold: true,
+                    align: TextAlign.center,
                   ),
                 ),
               ),
             ],
           ),
         ),
+        SizedBox(height: 8.0.h),
         FText(
           '만큼 ${widget.type.did}!',
-          style: textTheme.bodyLarge,
+          style: textTheme(context).titleSmall,
         ),
-        const SizedBox(height: 8.0),
+        SizedBox(height: 8.0.h),
       ],
     );
   }
@@ -529,16 +607,16 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
   void initState() {
     visible = false;
     downed = true;
-    position = 155.0;
+    position = .4;
     duration = const Duration(seconds: 1);
     Future.delayed(Duration.zero, () => setState(() {
-      visible = true; position = 125.0;
+      visible = true; position = .45;
       duration = const Duration(milliseconds: 700);
     }));
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         duration = const Duration(seconds: 1);
-        position = downed ? 130.0 : 125.0;
+        position = (downed ? .5 : .45);
         downed = !downed;
       });
     });
@@ -563,6 +641,9 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final orientation = MediaQuery.of(context).orientation;
+
     final userRecordP = Get.find<UserRecordP>();
     double amount = userRecordP.loggedUser.getAmounts(widget.type);
 
@@ -587,67 +668,66 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
 
     String amountString = toLocalString(displayAmount);
     String totalString = toLocalString(displayTotal);
-    // String percentString = '${(percent * 100).round()}%';
+
+    bool isPortrait = orientation == Orientation.portrait;
+
+    const unionRatio = 588 / 561;
+    double unionWidth = size.width * (isPortrait ? .7 : .35);
+    double unionHeight = unionWidth / unionRatio;
 
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
-        Container(
-          height: 320.0,
-          alignment: Alignment.bottomCenter,
-          child: Image.asset(
-            'assets/image/page/contents/union.png',
-            fit: BoxFit.fitWidth,
-          ),
+        Image.asset(
+          'assets/image/page/contents/union.png',
+          width: double.infinity,
+          fit: BoxFit.cover,
         ),
         AnimatedPositioned(
-          bottom: position,
+          bottom: position * unionHeight,
           duration: duration,
           curve: Curves.easeInOut,
           child: AnimatedOpacity(
             duration: const Duration(milliseconds: 200),
             opacity: visible ? 1.0 : .0,
             child: SizedBox(
-              width: 80.0.w,
+              width: 80.0.w / (isPortrait ? 1 : 2),
               child: widget.tier['current'] != null ? Image.asset(
                 'assets/image/level/${widget.type.name}/$id.png',
-                width: 40.0.w,
+                width: 80.0.w / (isPortrait ? 1 : 2),
               ) : Container(),
             ),
           ),
         ),
-        Positioned(
-          bottom: 10.0,
-          child: Container(
-            width: 300.0,
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                FText(
-                  '다음 레벨까지',
-                  style: textTheme.bodyMedium,
-                  color: FTheme.darkGrey,
-                ),
-                const SizedBox(height: 5.0),
-                LinearPercentIndicator(
-                  padding: EdgeInsets.zero,
-                  progressColor: widget.type.color,
-                  backgroundColor: const Color(0xFFE9E9E9),
-                  percent: max(percent, .02),
-                  lineHeight: 48.0,
-                  barRadius: const Radius.circular(6.28),
-                  animation: true,
-                  animationDuration: 1000,
-                  curve: Curves.easeInOut,
-                ),
-                FText(
-                  '$amountString/$totalString ${widget.type.unit}',// $percentString',
-                  style: textTheme.bodyMedium,
-                  color: widget.type.color,
-                ),
-              ],
-            ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 30.0.w / (isPortrait ? 1 : 2)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FText(
+                '다음 레벨까지',
+                style: textTheme(context).bodyMedium,
+                color: FTheme.darkGrey,
+              ),
+              SizedBox(height: 5.0.h),
+              LinearPercentIndicator(
+                padding: EdgeInsets.zero,
+                progressColor: widget.type.color,
+                backgroundColor: const Color(0xFFE9E9E9),
+                percent: max(percent, .02),
+                lineHeight: 40.0.h,
+                barRadius: Radius.circular(6.28.r),
+                animation: true,
+                animationDuration: 1000,
+                curve: Curves.easeInOut,
+              ),
+              FText(
+                '$amountString/$totalString ${widget.type.unit}',
+                style: textTheme(context).bodyMedium,
+                color: widget.type.color,
+              ),
+              SizedBox(height: 10.0.h),
+            ],
           ),
         ),
       ],
@@ -712,8 +792,8 @@ class _LevelButtonState extends State<LevelButton> {
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FText('Level ${widget.level}', style: textTheme.bodySmall, color: FTheme.white),
-                const Icon(Icons.chevron_right, size: 14.0, color: FTheme.white),
+                FText('Level ${widget.level}', style: textTheme(context).bodySmall, color: FTheme.white),
+                Icon(Icons.chevron_right, size: 14.0.r, color: FTheme.white),
               ],
             ),
           ),
@@ -754,7 +834,7 @@ class BattleCardView extends StatelessWidget {
         child: Column(
           children: [
             FCard(
-              constraints: const BoxConstraints(minHeight: 80.0),
+              constraints: BoxConstraints(minHeight: 80.0.h),
               child: FButton(
                 text: '최근 전적 보기',
                 stretch: true,
@@ -772,7 +852,7 @@ class BattleCardView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           FText(battle.finished ? '완료' : '진행중',
-                            style: textTheme.titleLarge,
+                            style: textTheme(context).titleLarge,
                             bold: true,
                           ),
                           RemainingTimeWidget(battle: battle),
@@ -794,10 +874,10 @@ class BattleCardView extends StatelessWidget {
             ),
             FCard(
               title: FText('스쿼트!',
-                style: textTheme.titleLarge,
+                style: textTheme(context).titleLarge,
                 bold: true,
               ),
-              constraints: const BoxConstraints(maxHeight: 420.0),
+              height: 420.0.h,
               child: Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -805,12 +885,12 @@ class BattleCardView extends StatelessWidget {
                   children: [
                     Image.asset(
                       'assets/image/page/contents/fight.png',
-                      height: 180.0,
+                      height: 180.0.h,
                     ),
                     FText(
                       '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
                       maxLines: 2,
-                      style: textTheme.titleSmall,
+                      style: textTheme(context).titleSmall,
                     ),
                     FButton(
                       stretch: true,
@@ -871,7 +951,7 @@ class BattleCardContentWidget extends StatelessWidget {
                         width: 35.0,
                         child: FText(
                           myInfo.nickname!,
-                          style: textTheme.bodyMedium,
+                          style: textTheme(context).bodyMedium,
                         ),
                       ),
                       const MeTag(),
@@ -894,7 +974,7 @@ class BattleCardContentWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   child: FText(
                     rivalInfo.nickname!,
-                    style: textTheme.bodyMedium,
+                    style: textTheme(context).bodyMedium,
                   ),
                 ),
               ],
@@ -933,7 +1013,7 @@ class BattleCardContentWidget extends StatelessWidget {
                     width: 35.0,
                     child: FText(
                       myInfo.nickname!,
-                      style: textTheme.bodyMedium,
+                      style: textTheme(context).bodyMedium,
                     ),
                   ),
                   const MeTag(),
@@ -948,7 +1028,7 @@ class BattleCardContentWidget extends StatelessWidget {
             const SizedBox(height: 5.0),
             FText('* 남은 기회: ${battle.getRemainChance(myUid)}회',
               color: FTheme.lightGrey,
-              style: textTheme.labelMedium,
+              style: textTheme(context).labelMedium,
             ),
           ],
         ),
@@ -966,7 +1046,7 @@ class BattleCardContentWidget extends StatelessWidget {
               alignment: Alignment.center,
               child: FText(
                 rivalInfo.nickname!,
-                style: textTheme.bodyMedium,
+                style: textTheme(context).bodyMedium,
               ),
             ),
             const SizedBox(height: 8.0),
@@ -977,7 +1057,7 @@ class BattleCardContentWidget extends StatelessWidget {
             const SizedBox(height: 5.0),
             FText('* 남은 기회: ${battle.getRemainChance(rivalUid)}회',
               color: FTheme.lightGrey,
-              style: textTheme.labelMedium,
+              style: textTheme(context).labelMedium,
             ),
           ],
         ),
@@ -1038,7 +1118,7 @@ class _RemainingTimeWidgetState extends State<RemainingTimeWidget> {
   Widget build(BuildContext context) {
     return FText(
       widget.battle.expired ? '만료' : '$timeString 남음',
-      style: textTheme.labelMedium,
+      style: textTheme(context).labelMedium,
       color: FTheme.lightGrey,
     );
   }

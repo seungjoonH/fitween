@@ -102,7 +102,7 @@ import 'package:get/get.dart';
 //               children: [
 //                 const SizedBox(height: 8.0),
 //                 FText(collection?.badge?.title ?? '',
-//                   style: FTheme.textTheme.bodyMedium,
+//                   style: FTheme.textTheme(context).bodyMedium,
 //                   maxLines: 1,
 //                   align: TextAlign.center,
 //                 ),
@@ -110,7 +110,7 @@ import 'package:get/get.dart';
 //                 collection?.dates.length == 1
 //                     ? FText(
 //                   '${collection?.dates.first?.year}-${collection?.dates.first?.month}-${collection?.dates.first?.day}',
-//                   style: FTheme.textTheme.bodySmall,
+//                   style: FTheme.textTheme(context).bodySmall,
 //                 )
 //                     : Container(
 //                   padding: EdgeInsets.symmetric(horizontal: 12.0.r),
@@ -120,7 +120,7 @@ import 'package:get/get.dart';
 //                   ),
 //                   child: FText(
 //                     '${collection?.dates.length ?? ''}',
-//                     style: FTheme.textTheme.bodySmall,
+//                     style: FTheme.textTheme(context).bodySmall,
 //                     color: FTheme.white,
 //                   ),
 //                 ),
@@ -187,19 +187,19 @@ class FCollectionWidget extends StatelessWidget {
             ? CrossAxisAlignment.center
             : CrossAxisAlignment.start,
         children: [
-          FText(collection!.badge?.title ?? '알 수 없는 뱃지', style: textTheme.bodyMedium),
+          FText(collection!.badge?.title ?? '알 수 없는 뱃지', style: textTheme(context).bodyMedium),
           collection!.dates.length == 1 ?
           FText(
             dateToString('yyyy-MM-dd', collection!.dates.last) ?? '',
-            style: textTheme.bodyMedium,
+            style: textTheme(context).bodyMedium,
             color: FTheme.lightGrey,
           ) : FTag('${collection!.dates.length}'),
         ],
       ),
     ];
     return direction == Axis.vertical
-        ? Column(children: children)
-        : Row(children: children);
+        ? Column(mainAxisAlignment: MainAxisAlignment.center, children: children)
+        : Row(crossAxisAlignment: CrossAxisAlignment.center, children: children);
   }
 }
 
@@ -418,7 +418,7 @@ class _FBadgeWidgetState extends State<FBadgeWidget> {
 //                             border: Border.all(color: FTheme.colorB, width: 2.0),
 //                           ),
 //                           child: FText(' 완 료 ',
-//                             style: textTheme.headlineMedium,
+//                             style: textTheme(context).headlineMedium,
 //                             color: FTheme.colorB,
 //                           ),
 //                         ),
@@ -429,7 +429,7 @@ class _FBadgeWidgetState extends State<FBadgeWidget> {
 //                           borderRadius: BorderRadius.circular(5.0),
 //                           boxShadow: const [BoxShadow(color: FTheme.darkGrey, blurRadius: 20.0)],
 //                         ),
-//                         child: FText('수령하기', style: textTheme.titleMedium, color: FTheme.black),
+//                         child: FText('수령하기', style: textTheme(context).titleMedium, color: FTheme.black),
 //                       ),
 //                     ],
 //                   ),

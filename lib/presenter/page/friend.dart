@@ -96,7 +96,7 @@ class FriendP extends GetxController {
     if (nickname == null) return;
 
     Get.dialog(
-      PAlertDialog(
+      FAlertDialog(
         title: '$title 신청',
         content: FText(
           '\'$nickname\'님께\n$title 신청 하였습니다',
@@ -122,7 +122,7 @@ class FriendP extends GetxController {
     nicknameHintText = null;
 
     Get.dialog(
-      PAlertDialog(
+      FAlertDialog(
         title: '친구 추가',
         content: Padding(
           padding: const EdgeInsets.symmetric(
@@ -175,7 +175,7 @@ class FriendP extends GetxController {
     if (user == null) return;
     
     Get.dialog(
-      PAlertDialog(
+      FAlertDialog(
         title: '${user.nickname}',
         content: FText(
           '님을 친구목록에서\n삭제하시겠습니까?',
@@ -195,7 +195,7 @@ class FriendP extends GetxController {
     if (user == null) return;
 
     Get.dialog(
-      PAlertDialog(
+      FAlertDialog(
         title: '라이벌 신청',
         content: FText(
           '\'${user.nickname}\'님에게\n라이벌 신청을 하시겠습니까?',
@@ -227,7 +227,7 @@ class FriendP extends GetxController {
     if (user == null) return;
 
     Get.dialog(
-      PAlertDialog(
+      FAlertDialog(
         title: '${user.nickname}',
         content: FText(
           '님을 라이벌에서\n제외하시겠습니까?',

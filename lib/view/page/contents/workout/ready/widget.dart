@@ -27,13 +27,13 @@ class BattleReadyView extends StatelessWidget {
               const SizedBox(height: 50.0),
               FText(
                 '자세 인식',
-                style: FTheme.textTheme.titleLarge,
+                style: textTheme(context).titleLarge,
                 color: FTheme.darkGrey,
               ),
               const SizedBox(height: 10.0),
               FText(
                 '스쿼트 횟수 계산을 위해 자세를 인식합니다',
-                style: FTheme.textTheme.bodySmall,
+                style: textTheme(context).bodySmall,
                 color: FTheme.lightGrey,
               ),
             ],

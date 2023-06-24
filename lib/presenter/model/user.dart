@@ -201,9 +201,9 @@
 //     bool isIOS = defaultTargetPlatform == TargetPlatform.iOS;
 //     bool fetchCompleted = true;
 //
-//     await HealthPresenter.requestAuth();
-//     fetchCompleted &= await HealthPresenter.fetchStepData();
-//     if (isIOS) fetchCompleted &= await HealthPresenter.fetchFlightsData();
+//     await HealthP.requestAuth();
+//     fetchCompleted &= await HealthP.fetchStepData();
+//     if (isIOS) fetchCompleted &= await HealthP.fetchFlightsData();
 //
 //     return fetchCompleted;
 //   }
@@ -293,11 +293,11 @@
 //     // switch (type) {
 //     //   case ActivityType.distance:
 //     //     if (!isIOS) record.amount += loggedUser.getTodayAmounts(type);
-//     //     await HealthPresenter.addStepsData(record);
+//     //     await HealthP.addStepsData(record);
 //     //     break;
 //     //   case ActivityType.height:
 //     //     if (!isIOS) break;
-//     //     await HealthPresenter.addFlightsData(record);
+//     //     await HealthP.addFlightsData(record);
 //     //     break;
 //     //   default: break;
 //     // }

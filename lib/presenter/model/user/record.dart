@@ -73,9 +73,9 @@ class UserRecordP extends GetxController {
     bool isIOS = defaultTargetPlatform == TargetPlatform.iOS;
     bool fetchCompleted = true;
 
-    await HealthPresenter.requestAuth();
-    fetchCompleted &= await HealthPresenter.fetchStepData();
-    if (isIOS) fetchCompleted &= await HealthPresenter.fetchFlightsData();
+    await HealthP.requestAuth();
+    fetchCompleted &= await HealthP.fetchTodayStepData();
+    if (isIOS) fetchCompleted &= await HealthP.fetchTodayFlightsData();
 
     return fetchCompleted;
   }
@@ -150,16 +150,13 @@ class UserRecordP extends GetxController {
     }
   }
 
-  // 해당 활동형식의 기록 추가 (구글핏/건강 연동, 칼로리 계산, 관련 뱃지 수여)
-  void addRecord(
-      ActivityType type,
-      Record record,
-      ) async {
+  void addRecord(ActivityType type, Record record, [DateTime? date]) async {
+    date ??= today;
     late int before, after;
 
     before = loggedUser.completedActivities().length;
 
-    loggedUser.addRecord(type, today, record, true);
+    loggedUser.addRecord(type, date, record, true);
     updateCalorie();
 
     after = loggedUser.completedActivities().length;
@@ -170,13 +167,13 @@ class UserRecordP extends GetxController {
     save();
   }
 
-  // 해당 활동형식의 기록 설정
-  void setRecord(ActivityType type, Record record) async {
+  void setRecord(ActivityType type, Record record, [DateTime? date]) async {
+    date ??= today;
     late int before, after;
 
     before = loggedUser.completedActivities().length;
 
-    loggedUser.setRecord(type, today, record);
+    loggedUser.setRecord(type, date, record);
     updateCalorie();
 
     after = loggedUser.completedActivities().length;

@@ -59,7 +59,7 @@ class _CarouselViewState extends State<CarouselView> {
                             children: [
                               FText(messages[index],
                                 maxLines: 3,
-                                style: textTheme.headlineSmall,
+                                style: textTheme(context).headlineSmall,
                                 align: TextAlign.center,
                                 color: FTheme.darkGrey,
                               ),
@@ -68,7 +68,7 @@ class _CarouselViewState extends State<CarouselView> {
                                 padding: const EdgeInsets.only(top: 8.0),
                                 child: FText(
                                   '목표는 언제든지 수정이 가능해요',
-                                  style: textTheme.labelSmall,
+                                  style: textTheme(context).labelSmall,
                                   color: FTheme.lightGrey,
                                 ),
                               ),

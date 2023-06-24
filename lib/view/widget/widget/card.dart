@@ -12,6 +12,8 @@ class FCard extends StatefulWidget {
     required this.child,
     this.backgroundColor = FTheme.white,
     this.onPressed,
+    this.width,
+    this.height,
     this.constraints,
     this.borderColor,
     this.borderWidth,
@@ -24,6 +26,8 @@ class FCard extends StatefulWidget {
   final Widget child;
   final Color backgroundColor;
   final VoidCallback? onPressed;
+  final double? width;
+  final double? height;
   final BoxConstraints? constraints;
   final EdgeInsets? padding;
   final Color? borderColor;
@@ -62,7 +66,7 @@ class _FCardState extends State<FCard> {
 
   @override
   Widget build(BuildContext context) {
-    BorderRadius radius = BorderRadius.circular(12.0);
+    BorderRadius radius = BorderRadius.circular(12.0.r);
     return AnimatedScale(
       scale: scale,
       duration: duration,
@@ -76,7 +80,6 @@ class _FCardState extends State<FCard> {
               onTapUp: onTapUp,
               onTapCancel: () => setState(() => scale = 1.0),
               child: AnimatedContainer(
-                width: double.infinity,
                 padding: widget.padding,
                 decoration: BoxDecoration(
                   borderRadius: radius,
@@ -86,6 +89,8 @@ class _FCardState extends State<FCard> {
                     width: widget.borderWidth ?? .0,
                   ) : null,
                 ),
+                width: widget.width ?? double.infinity,
+                height: widget.height,
                 duration: duration,
                 constraints: widget.constraints,
                 child: Column(

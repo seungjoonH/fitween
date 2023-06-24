@@ -10,6 +10,7 @@ import 'package:fitween/presenter/page/home/ranking.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -25,12 +26,15 @@ class RankingCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(28.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: 28.0.w,
+        vertical: 28.0.h,
+      ),
       child: Column(
         children: [
           FCard(
             title: FText('친구들의 순위를 확인해보세요!',
-              style: textTheme.titleMedium,
+              style: textTheme(context).titleMedium,
               bold: true,
             ),
             child: GetBuilder<RankingP>(
@@ -47,7 +51,7 @@ class RankingCardView extends StatelessWidget {
                       double amount = record.getAmounts(type, rankingP.startDate, rankingP.endDate);
 
                       return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        padding: EdgeInsets.symmetric(vertical: 5.0.h),
                         child: RankingIndividualGraph(
                           type: type,
                           price: index + 1,
@@ -97,28 +101,27 @@ class RankingIndividualGraph extends StatelessWidget {
         Row(
           children: [
             if (price < 4)
-              SvgPicture.asset(
-                'assets/image/page/home/ranking/$price.svg',
-                width: 18.0,
-              )
-            else Container(
-              width: 18.0,
-              height: 16.0,
+            SvgPicture.asset(
+              'assets/image/page/home/ranking/$price.svg',
+              width: 18.0.r,
+            ) else Container(
+              width: 18.0.w,
+              height: 16.0.h,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: FTheme.darkGrey,
-                borderRadius: BorderRadius.circular(10.0),
+                borderRadius: BorderRadius.circular(10.0.r),
               ),
               child: FText(
                 '$price',
                 color: FTheme.white,
-                style: textTheme.labelSmall,
+                style: textTheme(context).labelSmall,
               ),
             ),
             const SizedBox(width: 5.0),
             FText(nickname,
               color: FTheme.darkGrey,
-              style: textTheme.bodyMedium,
+              style: textTheme(context).bodyMedium,
             ),
           ],
         ),
@@ -131,7 +134,7 @@ class RankingIndividualGraph extends StatelessWidget {
               backgroundColor: Colors.transparent,
               fillColor: Colors.transparent,
               progressColor: isMe ? type.color : FTheme.lightGrey,
-              lineHeight: 36.0,
+              lineHeight: 36.0.h,
               padding: EdgeInsets.zero,
               barRadius: const Radius.circular(5.0),
               animation: true,
@@ -140,10 +143,10 @@ class RankingIndividualGraph extends StatelessWidget {
             ),
             if (showText)
             Padding(
-              padding: const EdgeInsets.only(left: 8.0),
+              padding: EdgeInsets.only(left: 8.0.w),
               child: FText(
                 '${toLocalString(amount)}${type.unit}',
-                style: textTheme.bodyMedium,
+                style: textTheme(context).bodyMedium,
               ),
             ),
           ],

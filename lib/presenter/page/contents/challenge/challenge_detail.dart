@@ -41,7 +41,7 @@ class ChallengeDetailP {
           Center(
             child: FText(
               code,
-              style: textTheme.titleLarge,
+              style: FTheme.textTheme.titleLarge,
               color: FTheme.colorB,
             ),
           ),

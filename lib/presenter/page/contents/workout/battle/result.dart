@@ -1,9 +1,6 @@
-import 'package:fitween/global/date.dart';
 import 'package:fitween/model/class/database/battle.dart';
-import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/presenter/model/json/battle.dart';
 import 'package:fitween/presenter/model/user/battle.dart';
-import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/contents/workout/solo/result.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:get/get.dart';

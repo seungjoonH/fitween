@@ -4,13 +4,18 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 
 class FLogo extends StatelessWidget {
-  const FLogo({Key? key}) : super(key: key);
+  const FLogo({
+    Key? key,
+    this.size = 250.0,
+  }) : super(key: key);
 
   static const String asset = 'assets/image/logo/fitween.png';
 
+  final double size;
+
   @override
   Widget build(BuildContext context) {
-    return Image.asset(asset, width: 350.0);
+    return Center(child: Image.asset(asset, width: size.w));
   }
 }
 

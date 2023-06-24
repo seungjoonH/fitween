@@ -20,32 +20,32 @@ class LimbPainter extends CustomPainter {
 
   // COLOR PROFILES
   Paint pointBlue = Paint()
-    ..color = colorScheme.tertiary.withOpacity(.5)
+    ..color = FTheme.lightColorScheme.tertiary.withOpacity(.5)
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 8;
 
   Paint edgeBlue = Paint()
-    ..color = colorScheme.tertiaryContainer.withOpacity(.8)
+    ..color = FTheme.lightColorScheme.tertiaryContainer.withOpacity(.8)
     ..strokeWidth = 5;
 
   // CORRECT POSTURE COLOR PROFILE
   Paint pointGreen = Paint()
-    ..color = colorScheme.primary.withOpacity(.5)
+    ..color = FTheme.lightColorScheme.primary.withOpacity(.5)
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 8;
 
   Paint edgeGreen = Paint()
-    ..color = colorScheme.primaryContainer.withOpacity(.8)
+    ..color = FTheme.lightColorScheme.primaryContainer.withOpacity(.8)
     ..strokeWidth = 5;
 
   // INCORRECT POSTURE COLOR PROFILE
   Paint pointRed = Paint()
-    ..color = colorScheme.secondary.withOpacity(.5)
+    ..color = FTheme.lightColorScheme.secondary.withOpacity(.5)
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 8;
 
   Paint edgeRed = Paint()
-    ..color = colorScheme.secondaryContainer.withOpacity(.8)
+    ..color = FTheme.lightColorScheme.secondaryContainer.withOpacity(.8)
     ..strokeWidth = 5;
 
   Paint area = Paint()

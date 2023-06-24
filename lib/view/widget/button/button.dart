@@ -106,7 +106,7 @@ class _FButtonState extends State<FButton> {
         onTapCancel: onTapCancel,
         child: Material(
           color: widget.fill ? widget.backgroundColor : Colors.transparent,
-          borderRadius: BorderRadius.circular(15.0),
+          borderRadius: BorderRadius.circular(15.0.r),
           child: Container(
             height: widget.height?.h,
             padding: widget.padding,
@@ -125,7 +125,7 @@ class _FButtonState extends State<FButton> {
               children: [
                 if (widget.stretch) const Expanded(child: SizedBox()),
                 widget.child ?? FText(widget.text!,
-                  color: widget.textColor, style: textTheme.titleMedium,
+                  color: widget.textColor, style: textTheme(context).titleMedium,
                 ),
                 if (widget.stretch) const Expanded(child: SizedBox()),
               ],
@@ -198,7 +198,7 @@ class PButton extends StatelessWidget {
             children: [
               if (stretch) const Expanded(child: SizedBox()),
               child ??
-                  FText(text!, color: textColor, style: textTheme.titleMedium),
+                  FText(text!, color: textColor, style: textTheme(context).titleMedium),
               if (stretch) const Expanded(child: SizedBox()),
             ],
           ),

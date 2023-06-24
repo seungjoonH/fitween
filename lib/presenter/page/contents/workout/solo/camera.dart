@@ -10,7 +10,6 @@ import 'package:fitween/model/enum/part.dart';
 import 'package:fitween/model/enum/workout.dart';
 import 'package:fitween/presenter/page/contents/workout/solo/result.dart';
 import 'package:fitween/presenter/widget/camera.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class WorkoutSoloCameraP extends GetxController {

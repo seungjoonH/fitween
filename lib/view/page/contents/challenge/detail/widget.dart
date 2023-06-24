@@ -22,125 +22,179 @@ class ChallengeDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final contentsP = Get.find<ContentsP>();
-    final challengeDetailP = Get.find<ChallengeDetailP>();
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        final size = MediaQuery.of(context).size;
+        final contentsP = Get.find<ContentsP>();
+        final challengeDetailP = Get.find<ChallengeDetailP>();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      showModalBottomSheet(
-        context: context,
-        builder: (BuildContext context) {
-          return SizedBox(
-            height: 320.0,
-            // color: Colors.amber,
-            child: Column(
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 20.0),
-                  width: 100.0,
-                  height: 8.0,
-                  decoration: BoxDecoration(
-                    // border: Border.all(color: FTheme.black, width: 1.5),
+        bool isPortrait = orientation == Orientation.portrait;
+
+        FButton joinButton = FButton(
+          onPressed: contentsP.challengeJoinButtonPressed,
+          stretch: true,
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.0.w,
+            vertical: 16.0.h,
+          ),
+          multiple: isPortrait,
+          backgroundColor: FTheme.darkGrey,
+          child: FText(
+            '챌린지 참여하기',
+            style: textTheme(context).titleSmall,
+            color: FTheme.white,
+            bold: true,
+          ),
+        );
+
+        FButton createButton = FButton(
+          onPressed: () => challengeDetailP
+              .challengeCreateButtonPressed(challenge),
+          stretch: true,
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.0.w,
+            vertical: 16.0.h,
+          ),
+          backgroundColor: challenge.type!.color,
+          multiple: isPortrait,
+          child: FText(
+            '챌린지 생성하기',
+            style: textTheme(context).titleSmall,
+            bold: true,
+            color: FTheme.white,
+          ),
+        );
+
+        Widget buttonWidget = isPortrait ? Row(
+          children: [joinButton, SizedBox(width: 20.0.w), createButton],
+        ) : Column(
+          children: [joinButton, SizedBox(height: 20.0.h), createButton],
+        );
+
+        Widget detailWidget = Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 20.0.w,
+            vertical: 20.0.h,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  FText(
+                    '최대인원 | ${challenge.levels['easy']['maxMember']}명',
+                    style: textTheme(context).bodyMedium,
                     color: FTheme.lightGrey,
-                    borderRadius: BorderRadius.circular(3.5),
                   ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 20.0,
-                    horizontal: 28.0,
+                  SizedBox(width: 20.0.w),
+                  FText(
+                    '마감기한 | D${withSign(challenge.period!)}',
+                    style: textTheme(context).bodyMedium,
+                    color: FTheme.lightGrey,
                   ),
+                ],
+              ),
+              SizedBox(height: 4.0.h),
+              FText(
+                challenge.title!,
+                style: textTheme(context).titleLarge,
+                bold: true,
+                color: FTheme.black,
+                maxLines: 2,
+              ),
+              SizedBox(height: 12.0.h),
+              FText(
+                challenge.descriptions['detail']!
+                    .replaceAll('##', challenge.word),
+                style: textTheme(context).bodyLarge,
+                color: FTheme.black,
+                maxLines: 5,
+              ),
+              SizedBox(height: 20.0.h),
+              buttonWidget,
+            ],
+          ),
+        );
+
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (isPortrait) {
+            showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return SizedBox(
+                  height: size.height * .4,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Row(
-                        children: [
-                          FText(
-                            '최대인원 | ${challenge.levels['easy']['maxMember']}명',
-                            style: textTheme.bodyMedium,
-                            color: FTheme.lightGrey,
-                          ),
-                          SizedBox(width: 20.0.w),
-                          FText(
-                            '마감기한 | D${withSign(challenge.period!)}',
-                            style: textTheme.bodyMedium,
-                            color: FTheme.lightGrey,
-                          ),
-                        ],
+                      Container(
+                        margin: EdgeInsets.only(top: 20.0.r),
+                        width: 100.0.w,
+                        height: 8.0.r,
+                        decoration: BoxDecoration(
+                          color: FTheme.lightGrey,
+                          borderRadius: BorderRadius.circular(3.5.r),
+                        ),
                       ),
-                      SizedBox(height: 4.0.h),
-                      FText(
-                        challenge.title!,
-                        align: TextAlign.center,
-                        style: textTheme.titleLarge,
-                        bold: true,
-                        color: FTheme.black,
-                        maxLines: 2,
+                      detailWidget,
+                    ],
+                  ),
+                );
+              },
+            ).whenComplete(() => Get.back());
+          }
+          else {
+            showGeneralDialog(
+              barrierLabel: 'barrier',
+              barrierDismissible: true,
+              barrierColor: FTheme.black.withOpacity(0.5),
+              transitionDuration: const Duration(milliseconds: 300),
+              context: context,
+              pageBuilder: (context, _, __) {
+                return Container(
+                  color: FTheme.white,
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 20.0.r),
+                        width: 8.0.r,
+                        height: 100.0.h,
+                        decoration: BoxDecoration(
+                          color: FTheme.lightGrey,
+                          borderRadius: BorderRadius.circular(3.5.r),
+                        ),
                       ),
-                      SizedBox(height: 12.0.h),
-                      FText(
-                        challenge.descriptions['detail']!
-                            .replaceAll('##', challenge.word),
-                        // align: TextAlign.center,
-                        style: textTheme.bodyLarge,
-                        color: FTheme.black,
-                        maxLines: 5,
-                      ),
-                      SizedBox(height: 20.0.h),
-                      Row(
-                        children: [
-                          FButton(
-                            onPressed: contentsP.challengeJoinButtonPressed,
-                            stretch: true,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 20.0.w,
-                              vertical: 16.0.h,
-                            ),
-                            multiple: true,
-                            backgroundColor: FTheme.darkGrey,
-                            child: FText(
-                              '챌린지 참여하기',
-                              style: textTheme.titleSmall,
-                              color: FTheme.white,
-                              bold: true,
-                            ),
-                          ),
-                          SizedBox(width: 20.0.w),
-                          FButton(
-                            onPressed: () => challengeDetailP
-                                .challengeCreateButtonPressed(challenge),
-                            stretch: true,
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 20.0.w,
-                              vertical: 16.0.h,
-                            ),
-                            backgroundColor: challenge.type!.color,
-                            multiple: true,
-                            child: FText(
-                              '챌린지 생성하기',
-                              style: textTheme.titleSmall,
-                              bold: true,
-                              color: FTheme.white,
-                            ),
-                          ),
-                        ],
+                      Container(
+                        width: size.width * .45,
+                        alignment: Alignment.centerLeft,
+                        child: detailWidget,
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-          );
-        },
-      ).whenComplete(() => Get.back());
-    });
+                );
+              },
+              transitionBuilder: (context, animation, _, child) {
+                return SlideTransition(
+                  position: Tween(
+                    begin: const Offset(1.0, .0),
+                    end: const Offset(.5, .0),
+                  ).animate(animation),
+                  child: child,
+                );
+              },
+            ).whenComplete(() => Get.back());
+          }
+        });
 
-    return Hero(
-      tag: challenge.id!,
-      child: Image.asset(
-        challenge.imageUrls['default'],
-        height: 700.0,
-        fit: BoxFit.cover,
-      ),
+        return Hero(
+          tag: challenge.id!,
+          child: Image.asset(
+            challenge.imageUrls['default'],
+            width: isPortrait ? null : size.width * .5,
+            height: isPortrait ? size.height * .65 : null,
+            fit: BoxFit.cover,
+          ),
+        );
+      }
     );
   }
 }

@@ -87,7 +87,7 @@ class FTexts extends StatelessWidget {
     this.space = true,
     this.shadows,
   }) : assert(texts.length == colors.length),
-        style = style ?? textTheme.titleMedium,
+        style = style ?? FTheme.textTheme.titleMedium,
         super(key: key);
 
   final List<String> texts;
@@ -162,7 +162,7 @@ class FInputField extends StatelessWidget {
       autoPlay: invalid,
       shakeConstant: ShakeHorizontalConstant2(),
       child: TextField(
-        style: textTheme.bodyLarge?.copyWith(color: FTheme.darkGrey),
+        style: textTheme(context).bodyLarge?.copyWith(color: FTheme.darkGrey),
         controller: controller,
         cursorColor: FTheme.darkGrey,
         keyboardType: keyboardType,
@@ -187,7 +187,7 @@ class FInputField extends StatelessWidget {
             ),
           ),
           hintText: hintText,
-          hintStyle: textTheme.bodyLarge?.apply(
+          hintStyle: textTheme(context).bodyLarge?.apply(
             color: completed && hintText != null
                 ? FTheme.colorA : hintColor,
           ),

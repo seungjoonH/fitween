@@ -2,14 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 /// global variables
-// 텍스트 테마
-TextTheme textTheme = Theme.of(Get.context!).textTheme;
-
-// 컬러 스키마
-ColorScheme colorScheme = Theme.of(Get.context!).colorScheme;
+TextTheme textTheme(BuildContext context) => Theme.of(context).textTheme;
+ColorScheme colorScheme(BuildContext context) => Theme.of(context).colorScheme;
 
 /// class
 class FTheme {
@@ -258,58 +254,58 @@ class FTheme {
   /// typography
   static const fontFamily = 'Pretendard';
 
-  static TextStyle veryLargeText = TextStyle(
+  static TextStyle get veryLargeText => TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w700,
     fontSize: 250.0.sp,
-    height: (225 / 250).h,
+    height: (225 / 250),
   );
 
-  static TextStyle largeText = TextStyle(
+  static TextStyle get largeText => TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w700,
-    fontSize: 80.0.sp,
-    height: (64 / 80).h,
+    fontSize: 70.0.sp,
+    height: (60.h / 70.sp),
   );
 
-  static TextTheme textTheme = const TextTheme(
+  static TextTheme get textTheme => TextTheme(
     //Display
     displayLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700,
-      fontSize: 57.0,
-      height: (64 / 57),
+      fontSize: 57.0.sp,
+      height: (64.h / 57.sp),
     ),
     displayMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700,
-      fontSize: 45.0,
-      height: (52 / 45),
+      fontSize: 45.0.sp,
+      height: (52.h / 45.sp),
     ),
     displaySmall: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700,
-      fontSize: 36.0,
-      height: (44 / 36),
+      fontSize: 36.0.sp,
+      height: (40.h / 36.sp),
     ),
 
     //Headline
     headlineLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700,
-      fontSize: 32.0,
-      height: (40 / 32),
+      fontSize: 32.0.sp,
+      height: (40.h / 32.sp),
     ),
     headlineMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700,
-      fontSize: 28.0,
-      height: (36 / 28),
+      fontSize: 28.0.sp,
+      height: (36.h / 28.sp),
     ),
     headlineSmall: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700,
-      fontSize: 24.0,
+      fontSize: 24.0.sp,
       height: (32 / 24),
     ),
 
@@ -317,39 +313,39 @@ class FTheme {
     titleLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 22.0,
-      height: (28 / 22),
+      fontSize: 24.0.sp,
+      height: (32 / 24),
     ),
     titleMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 20.0,
-      height: (24 / 18),
+      fontSize: 22.0.sp,
+      height: (30 / 22),
     ),
     titleSmall: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 16.0,
-      height: (20 / 14),
+      fontSize: 20.0.sp,
+      height: (24 / 20),
     ),
 
     //Label
     labelLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 14.0,
+      fontSize: 14.0.sp,
       height: (20 / 14),
     ),
     labelMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 12.0,
+      fontSize: 12.0.sp,
       height: (16 / 12),
     ),
     labelSmall: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 10.0,
+      fontSize: 10.0.sp,
       height: (13 / 10),
     ),
 
@@ -357,19 +353,19 @@ class FTheme {
     bodyLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w400,
-      fontSize: 16.0,
+      fontSize: 16.0.sp,
       height: (24 / 16),
     ),
     bodyMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w400,
-      fontSize: 14.0,
+      fontSize: 14.0.sp,
       height: (20 / 14),
     ),
     bodySmall: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w400,
-      fontSize: 12.0,
+      fontSize: 12.0.sp,
       height: (16 / 12),
     ),
   );

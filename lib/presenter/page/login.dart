@@ -1,6 +1,3 @@
-import 'dart:async';
-import 'dart:math';
-
 import 'package:fitween/global/theme.dart';
 import 'package:get/get.dart';
 import 'package:fitween/main.dart';
@@ -14,7 +11,7 @@ class LoginP extends GetxController {
       title: '네트워크 에러',
       content: FText(
         '네트워크가 연결되어 있지 않습니다.\nWifi 혹은 셀룰러 데이터를 연결한 후 앱을 이용해주세요.',
-        style: textTheme.bodyMedium,
+        style: FTheme.textTheme.bodyMedium,
         color: FTheme.error,
         maxLines: 3,
       ),

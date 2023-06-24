@@ -170,7 +170,7 @@ class GlobalP extends GetxController {
                   child: Column(
                     children: collection.dateList.map((date) => FText(
                         dateToString('yyyy-MM-dd 획득!', date.toDate())!,
-                        style: textTheme.bodyMedium,
+                        style: FTheme.textTheme.bodyMedium,
                         color: date == collection.dateList.last
                             ? FTheme.colorB : FTheme.black,
                         bold: date == collection.dateList.last,
@@ -188,7 +188,7 @@ class GlobalP extends GetxController {
             constraints: const BoxConstraints(minHeight: 100.0),
             child: FText(
                 collection.badge!.description!,
-                style: textTheme.titleSmall,
+                style: FTheme.textTheme.titleSmall,
                 maxLines: 5,
             ),
           ),
@@ -248,7 +248,7 @@ class GlobalP extends GetxController {
                 top: .0,
                 child: FText(
                   '${firstAward ? '신규' : ''} 뱃지 획득!',
-                  style: textTheme.headlineSmall,
+                  style: FTheme.textTheme.headlineSmall,
                 ),
               ),
               Positioned(
@@ -266,13 +266,13 @@ class GlobalP extends GetxController {
                   children: [
                     FText(
                       badge.title!,
-                      style: textTheme.titleLarge,
+                      style: FTheme.textTheme.titleLarge,
                       bold: true,
                     ),
                     const SizedBox(height: 5.0),
                     FText(
                       badge.description!,
-                      style: textTheme.bodyLarge,
+                      style: FTheme.textTheme.bodyLarge,
                     ),
                   ],
                 ),
@@ -308,13 +308,13 @@ class GlobalP extends GetxController {
             children: [
               FBadgeWidget(badge: selectedBadge, size: 100.0.r),
               SizedBox(height: 20.0.h),
-              FText('대표 컬렉션이', style: textTheme.titleSmall),
+              FText('대표 컬렉션이', style: FTheme.textTheme.titleSmall),
               FTexts([
                 selectedBadge.title!,
                 '${roEuro(selectedBadge.title!)} 설정되었습니다.'
               ], colors: const [FTheme.colorB, FTheme.black],
                 space: false,
-                style: textTheme.titleSmall,
+                style: FTheme.textTheme.titleSmall,
               )
             ],
           ),

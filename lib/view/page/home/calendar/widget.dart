@@ -8,6 +8,7 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -83,12 +84,16 @@ class _MyCalendarViewState extends State<MyCalendarView> {
       ),
       child: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(28.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 28.0.w,
+            vertical: 28.0.h,
+          ),
           child: Column(
             children: [
               FCard(
-                constraints: const BoxConstraints(minHeight: 370.0),
+                constraints: BoxConstraints(minHeight: 370.0.h),
                 child: TableCalendar<CalendarEvent>(
+                  rowHeight: 52.0.h,
                   firstDay: CalendarP.firstDay,
                   lastDay: CalendarP.lastDay,
                   focusedDay: _focusedDay,
@@ -97,7 +102,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                   rangeSelectionMode: _rangeSelectionMode,
                   eventLoader: _getEventsForDay,
                   startingDayOfWeek: StartingDayOfWeek.monday,
-                  daysOfWeekHeight: 20.0,
+                  daysOfWeekHeight: 30.0.h,
                   pageJumpingEnabled: true,
                   calendarStyle: CalendarStyle(
                     isTodayHighlighted: true,
@@ -105,21 +110,21 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                       color: FTheme.darkGrey,
                       shape: BoxShape.circle,
                     ),
-                      selectedTextStyle: textTheme.bodyLarge!.copyWith(
+                      selectedTextStyle: textTheme(context).bodyLarge!.copyWith(
                       color: CalendarP.isAllFinished(_getEventsForDay(_selectedDay!))
                           ? ActivityType.calorie.color
                           : FTheme.white,
                     ),
                     todayDecoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      border: Border.all(color: FTheme.darkGrey, width: 3.0),
+                      border: Border.all(color: FTheme.darkGrey, width: 3.0.r),
                     ),
-                    todayTextStyle: textTheme.bodyLarge!.copyWith(
+                    todayTextStyle: textTheme(context).bodyLarge!.copyWith(
                       color: CalendarP.isAllFinished(_getEventsForDay(today))
                           ? ActivityType.calorie.color
                           : FTheme.darkGrey,
                     ),
-                    cellMargin: const EdgeInsets.all(2.0),
+                    cellMargin: EdgeInsets.all(2.0.r),
                     cellAlignment: Alignment.center,
                   ),
                   calendarBuilders: CalendarBuilders(
@@ -130,7 +135,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                           color: CalendarP.isAllFinished(_getEventsForDay(date))
                               ? ActivityType.calorie.color
                               : FTheme.black,
-                          style: textTheme.bodyMedium,
+                          style: textTheme(context).bodyMedium,
                         ),
                       );
                     },
@@ -152,10 +157,13 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                           else if (amount == 0 || date.isAfter(now)) { color = Colors.transparent; }
 
                           return Container(
-                            margin: const EdgeInsets.only(top: 30.0),
-                            padding: const EdgeInsets.all(1.0),
+                            margin: EdgeInsets.only(top: 30.0.h),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 1.0.w,
+                              vertical: 1.0.h,
+                            ),
                             child: Container(
-                              width: 8.0, height: 8.0,
+                              width: 8.0.r, height: 8.0.r,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: color,
@@ -172,7 +180,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                     formatButtonVisible: false,
                     headerPadding: EdgeInsets.zero,
                     titleCentered: true,
-                    titleTextStyle: textTheme.titleLarge!,
+                    titleTextStyle: textTheme(context).titleLarge!,
                     leftChevronIcon: const Icon(
                       Icons.chevron_left,
                       color: FTheme.black,
@@ -185,17 +193,17 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                   locale: 'ko_Kr',
                 ),
               ),
-              const SizedBox(height: 20.0),
+              SizedBox(height: 20.0.h),
               FCard(
-                constraints: const BoxConstraints(minHeight: 280.0),
+                constraints: BoxConstraints(minHeight: 280.0.h),
                 child: ValueListenableBuilder<List<CalendarEvent>>(
                   valueListenable: _selectedEvents,
                   builder: (context, events, _) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FText(DateFormat('MM월 dd일').format(_focusedDay), style: textTheme.bodyLarge),
-                        const SizedBox(height: 20.0),
+                        FText(DateFormat('MM월 dd일').format(_focusedDay), style: textTheme(context).bodyLarge),
+                        SizedBox(height: 20.0.h),
                         Column(
                           children: ActivityType.activeValues.map((type) => TodayRecordLinearIndicator(
                             type: type, date: ignoreTime(_focusedDay),
@@ -253,9 +261,9 @@ class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator>
           backgroundColor: Colors.transparent,
           fillColor: Colors.transparent,
           progressColor: color,
-          lineHeight: 36.0,
+          lineHeight: 36.0.h,
           padding: EdgeInsets.zero,
-          barRadius: const Radius.circular(5.0),
+          barRadius: Radius.circular(5.0.r),
           animation: true,
           curve: Curves.easeInOut,
           animateFromLastPercent: true,
@@ -264,9 +272,9 @@ class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator>
         FText(
           '$amount / $goal ${widget.type.unit}',
           color: color,
-          style: textTheme.bodyMedium,
+          style: textTheme(context).bodyMedium,
         ),
-        const SizedBox(height: 10.0),
+        SizedBox(height: 10.0.h),
       ],
     );
   }

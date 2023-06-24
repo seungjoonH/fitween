@@ -85,7 +85,7 @@ class FloatingMessageWidget extends StatelessWidget {
                 child: FText(
                   battleCameraP.message,
                   style: CameraP.orientation == Orientation.portrait
-                      ? textTheme.headlineMedium : textTheme.headlineLarge,
+                      ? textTheme(context).headlineMedium : textTheme(context).headlineLarge,
                   color: FTheme.colorA,
                   maxLines: 2,
                   bold: true,
@@ -137,7 +137,7 @@ class TimerWidgetState extends State<TimerWidget> {
           width: 50.0,
           alignment: Alignment.center,
           child: FText(text,
-            style: textTheme.displaySmall,
+            style: textTheme(context).displaySmall,
             color: painterP.timerSeconds > 10
                 ? FTheme.white : FTheme.error,
             bold: true,

@@ -56,7 +56,7 @@ class GuideCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FText('<무게 측정 방법>', style: textTheme.headlineSmall),
+          FText('<무게 측정 방법>', style: textTheme(context).headlineSmall),
           const SizedBox(height: 10.0),
           Image.asset(
             BattleGuideP.getAsset(index),

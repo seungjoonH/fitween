@@ -3,6 +3,7 @@ import 'package:fitween/view/page/see_more/widget.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:fitween/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SeeMorePage extends StatelessWidget {
   const SeeMorePage({Key? key}) : super(key: key);
@@ -20,15 +21,18 @@ class SeeMorePage extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 28.0.w,
+            vertical: 28.0.h,
+          ),
           child: Column(
-            children: const [
-              BadgeManagementCard(),
-              SizedBox(height: 20.0),
-              GoalEditCard(),
-              SizedBox(height: 20.0),
-              InfoEditCard(),
-              SizedBox(height: 100.0),
+            children: [
+              const BadgeManagementCard(),
+              SizedBox(height: 20.0.h),
+              const GoalEditCard(),
+              SizedBox(height: 20.0.h),
+              const InfoEditCard(),
+              SizedBox(height: 100.0.h),
             ],
           ),
         ),

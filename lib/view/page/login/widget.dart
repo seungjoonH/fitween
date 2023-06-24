@@ -50,7 +50,7 @@ class SignInButton extends StatelessWidget {
       child: Container(
         width: 220.0.w,
         // height: 30.0.h,
-        padding: const EdgeInsets.symmetric(vertical: 5.0),
+        padding: EdgeInsets.symmetric(vertical: 5.0.r),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,7 +63,7 @@ class SignInButton extends StatelessWidget {
             SizedBox(width: 20.0.w),
             FText(
               'Continue with ${toBeginningOfSentenceCase(type.name)}',
-              style: textTheme.titleSmall,
+              style: textTheme(context).titleSmall,
               color: textColors[type],
             ),
           ],

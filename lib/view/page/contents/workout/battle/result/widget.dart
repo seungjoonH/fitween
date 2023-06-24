@@ -16,6 +16,7 @@ import 'package:fitween/view/widget/widget/icon.dart';
 import 'package:fitween/view/widget/widget/tag.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -89,7 +90,7 @@ class WorkoutFinishCard extends StatelessWidget {
                     FText(
                       '${battle.getAttempts(userP.loggedUser.uid!).last}회',
                       color: FTheme.white,
-                      style: FTheme.textTheme.displayMedium,
+                      style: textTheme(context).displayMedium,
                     ),
                   ],
                 ),
@@ -118,7 +119,10 @@ class BattleResultCard extends StatelessWidget {
     BoxConstraints constraints = const BoxConstraints(minHeight: 380.0);
 
     return Padding(
-      padding: const EdgeInsets.all(28.0),
+      padding: EdgeInsets.symmetric(
+        horizontal: 28.0.w,
+        vertical: 28.0.h,
+      ),
       child: GetBuilder<BattleResultP>(
         builder: (battleResultP) {
           if (battleResultP.battle == null) {
@@ -152,7 +156,7 @@ class BattleResultCard extends StatelessWidget {
           return FCard(
             title: FText(
               '대결 결과',
-              style: FTheme.textTheme.titleLarge,
+              style: textTheme(context).titleLarge,
               color: FTheme.darkGrey,
               bold: true,
             ),
@@ -165,7 +169,7 @@ class BattleResultCard extends StatelessWidget {
                     String text = battle.tied ? '비겼어요!'
                         : '${winnerInfo!.nickname!} 님이 승리하셨어요!';
                     return FText(text,
-                      style: FTheme.textTheme.bodyLarge,
+                      style: textTheme(context).bodyLarge,
                       color: FTheme.grey,
                     );
                   },
@@ -191,7 +195,7 @@ class BattleResultCard extends StatelessWidget {
                                 children: [
                                   FText(
                                     userInfoP.loggedUser.nickname!,
-                                    style: textTheme.bodyLarge,
+                                    style: textTheme(context).bodyLarge,
                                   ),
                                   const MeTag(),
                                 ],
@@ -214,7 +218,7 @@ class BattleResultCard extends StatelessWidget {
                                 defeated: battle.defeated(rivalUid),
                               ),
                               const SizedBox(height: 3.0),
-                              FText(rival.nickname!, style: textTheme.bodyLarge),
+                              FText(rival.nickname!, style: textTheme(context).bodyLarge),
                               const SizedBox(height: 5.0),
                               FText(
                                 '${battle.getMaxCount(rivalUid)}회',
@@ -241,7 +245,7 @@ class BattleResultCard extends StatelessWidget {
                       children: [
                         FText(
                           '상대와의 전적',
-                          style: FTheme.textTheme.bodyLarge,
+                          style: textTheme(context).bodyLarge,
                         ),
                         const SizedBox(height: 15.0),
                         Builder(
@@ -288,7 +292,7 @@ class MyAchievementCard extends StatelessWidget {
               FCard(
                 constraints: const BoxConstraints(minHeight: 280.0),
                 title: FText('나의 기록',
-                  style: textTheme.titleLarge,
+                  style: textTheme(context).titleLarge,
                   color: FTheme.darkGrey,
                   bold: true,
                 ),
@@ -297,7 +301,7 @@ class MyAchievementCard extends StatelessWidget {
                   children: [
                     FText(
                       '무게 기록 상승!',
-                      style: textTheme.bodyLarge,
+                      style: textTheme(context).bodyLarge,
                       color: FTheme.grey,
                     ),
                     const SizedBox(height: 20.0),
@@ -309,7 +313,7 @@ class MyAchievementCard extends StatelessWidget {
                           value: workoutSoloResultP.amount,
                           suffix: '회',
                           thousandSeparator: ',',
-                          textStyle: textTheme.displayLarge?.copyWith(
+                          textStyle: textTheme(context).displayLarge?.copyWith(
                             color: ActivityType.weight.color,
                           ),
                         ),
@@ -359,7 +363,7 @@ class MyAchievementCard extends StatelessWidget {
                                     child: FText(
                                       '+${workoutSoloResultP.addedWeight.amount.round()}회',
                                       color: FTheme.darkGrey,
-                                      style: textTheme.bodyLarge,
+                                      style: textTheme(context).bodyLarge,
                                     ),
                                   ),
                                   Expanded(flex: rightFlex, child: const SizedBox()),

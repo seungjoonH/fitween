@@ -3,6 +3,7 @@ import 'package:fitween/presenter/page/see_more/info_edit/info_edit.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class InfoEditPage extends StatelessWidget {
@@ -23,7 +24,10 @@ class InfoEditPage extends StatelessWidget {
       body: GetBuilder<InfoEditP>(
         builder: (infoEditP) {
           return Padding(
-            padding: const EdgeInsets.all(28.0),
+            padding: EdgeInsets.symmetric(
+              horizontal: 28.0.w,
+              vertical: 28.0.h,
+            ),
             child: SingleChildScrollView(
               child: Column(
                 children: [
@@ -150,7 +154,7 @@ class VisibilityButton extends StatelessWidget {
           ),
           child: Row(
             children: [
-              FText(text, style: textTheme.bodyMedium, color: FTheme.lightGrey),
+              FText(text, style: textTheme(context).bodyMedium, color: FTheme.lightGrey),
               const SizedBox(width: 5.0),
               Icon(data, color: color),
             ],

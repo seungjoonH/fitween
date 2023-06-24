@@ -79,7 +79,7 @@ class ContentsP extends GetxController {
             FText(
               '주의! ${['시작하는 즉시 기회가 1회 소모됩니다', '마지막 도전입니다'][2 - remainChance]}',
               color: FTheme.error,
-              style: textTheme.labelLarge,
+              style: FTheme.textTheme.labelLarge,
             ),
           ],
         ),
@@ -101,7 +101,7 @@ class ContentsP extends GetxController {
               '남은 기회가 없어 더 이상\n타임어택을 진행할 수 없습니다.',
               maxLines: 2,
               color: FTheme.error,
-              style: textTheme.titleSmall,
+              style: FTheme.textTheme.titleSmall,
             ),
             const SizedBox(height: 20.0),
           ],
@@ -158,7 +158,7 @@ class ContentsP extends GetxController {
     codeHintText = null;
 
     Get.dialog(
-      PAlertDialog(
+      FAlertDialog(
         title: '챌린지 참여코드',
         content: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

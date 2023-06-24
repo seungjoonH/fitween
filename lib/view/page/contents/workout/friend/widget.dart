@@ -32,7 +32,7 @@ class BattleFriendView extends StatelessWidget {
                     '라이벌과 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
                     maxLines: 2,
                     color: FTheme.darkGrey,
-                    style: FTheme.textTheme.titleMedium,
+                    style: textTheme(context).titleMedium,
                   ),
                   const SizedBox(height: 50.0),
                   SizedBox(
@@ -107,7 +107,7 @@ class FriendCard extends StatelessWidget{
             const SizedBox(width: 12.0, height: 90.0),
             FText(
               name,
-              style: textTheme.labelLarge,
+              style: textTheme(context).labelLarge,
               color: FTheme.darkGrey,
             ),
           ],

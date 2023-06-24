@@ -3,7 +3,6 @@ import 'package:fitween/view/widget/widget/bottom_bar.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 class FTab extends StatelessWidget {
   const FTab(this.text, {
@@ -20,7 +19,7 @@ class FTab extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: FText(
         text,
-        style: textTheme.titleMedium,
+        style: textTheme(context).titleMedium,
         color: selected
             ? FTheme.darkGrey
             : FTheme.lightGrey,
@@ -80,10 +79,10 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
         appBar: AppBar(
           elevation: .0,
           bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(15.0),
+            preferredSize: Size.fromHeight(20.0.h),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 30.0, vertical: 10.0,
+              padding: EdgeInsets.symmetric(
+                horizontal: 28.0.w,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -95,10 +94,10 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
                       children: [
                         Positioned.fill(
                           child: Container(
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               border: Border(
                                 bottom: BorderSide(
-                                  width: 3.0,
+                                  width: 3.0.h,
                                   color: FTheme.lightGrey,
                                 ),
                               ),
@@ -109,7 +108,7 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
                           controller: tabCont,
                           labelPadding: EdgeInsets.zero,
                           indicatorColor: FTheme.darkGrey,
-                          indicatorWeight: 3.0,
+                          indicatorWeight: 3.0.h,
                           onTap: (index) {
                             if (widget.controlNotifications == null) return;
                             widget.controlNotifications!(index);
@@ -147,8 +146,9 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
         body: TabBarView(
           controller: tabCont,
           children: widget.bodies.map((body) => Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 30.0, vertical: 10.0,
+            padding: EdgeInsets.symmetric(
+              horizontal: 28.0.w,
+              vertical: 28.0.h,
             ),
             child: body,
           )).toList(),

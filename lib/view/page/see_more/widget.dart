@@ -16,6 +16,7 @@ import 'package:fitween/presenter/page/see_more/goal_edit/goal_edit.dart';
 import 'package:fitween/presenter/page/see_more/info_edit/info_edit.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/card.dart';
+import 'package:fitween/view/widget/widget/tag.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,7 +40,7 @@ class BadgeManagementCard extends StatelessWidget {
         return FCard(
           title: FText(
             '뱃지 관리',
-            style: textTheme.bodyMedium,
+            style: textTheme(context).bodyMedium,
             color: FTheme.lightGrey,
             bold: true,
           ),
@@ -49,35 +50,27 @@ class BadgeManagementCard extends StatelessWidget {
             children: [
               IntrinsicHeight(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      constraints: BoxConstraints(maxWidth: 90.0.w),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          FBadgeWidget(badge: badge, size: 88.0),
-                          const SizedBox(height: 5.0),
-                          FText(
-                            badge.title!,
-                            style: textTheme.bodyMedium,
-                          ),
-                          const SizedBox(height: 5.0),
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 1.0,
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        constraints: BoxConstraints(maxWidth: 100.0.w),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            FBadgeWidget(badge: badge, size: 88.0),
+                            const SizedBox(height: 5.0),
+                            FText(
+                              badge.title!,
+                              style: textTheme(context).bodyMedium,
                             ),
-                            decoration: BoxDecoration(
-                              color: FTheme.darkGrey,
-                              borderRadius: BorderRadius.circular(12.0),
+                            const SizedBox(height: 5.0),
+                            const FTag('대표',
+                              left: false,
+                              backgroundColor: FTheme.darkGrey,
                             ),
-                            child: FText(
-                              '대표',
-                              color: FTheme.white,
-                              style: textTheme.bodySmall,
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     const VerticalDivider(
@@ -86,6 +79,7 @@ class BadgeManagementCard extends StatelessWidget {
                       width: 40.0,
                     ),
                     Expanded(
+                      flex: 2,
                       child: Column(
                         children: [
                           Column(
@@ -93,7 +87,7 @@ class BadgeManagementCard extends StatelessWidget {
                             children: [
                               FText(
                                 '최근',
-                                style: textTheme.bodyMedium,
+                                style: textTheme(context).bodyMedium,
                                 color: FTheme.lightGrey,
                               ),
                               const SizedBox(height: 20.0),
@@ -104,45 +98,18 @@ class BadgeManagementCard extends StatelessWidget {
                                   child: Column(
                                     children: [
                                       FBadgeWidget(
-                                        size: 45.0,
+                                        size: 50.0,
                                         badge: collection.badge,
                                       ),
                                       const SizedBox(height: 5.0),
                                       FText(
                                         collection.badge!.title!,
-                                        style: textTheme.bodySmall,
+                                        style: textTheme(context).bodySmall,
                                       ),
                                     ],
                                   ),
                                 )).toList(),
                               ),
-                              // Row(
-                              //   children: [
-                              //     Container(
-                              //       constraints: BoxConstraints(maxWidth: 60.0.w),
-                              //       child: Column(
-                              //         children: [
-                              //           FBadgeWidget(
-                              //             size: 45.0,
-                              //           ),
-                              //           const SizedBox(height: 5.0),
-                              //           FText(badge.title!, style: textTheme.bodyMedium),
-                              //         ],
-                              //       ),
-                              //     ),
-                              //     const SizedBox(width: 20.0),
-                              //     Container(
-                              //       constraints: BoxConstraints(maxWidth: 60.0.w),
-                              //       child: Column(
-                              //         children: [
-                              //           FBadgeWidget(size: 45.0),
-                              //           const SizedBox(height: 5.0),
-                              //           FText(badge.title!, style: textTheme.bodyMedium),
-                              //         ],
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
                             ],
                           ),
                         ],
@@ -170,7 +137,7 @@ class GoalEditCard extends StatelessWidget {
     return FCard(
       title: FText(
         '목표 수정',
-        style: textTheme.bodyMedium,
+        style: textTheme(context).bodyMedium,
         color: FTheme.lightGrey,
         bold: true,
       ),
@@ -182,7 +149,7 @@ class GoalEditCard extends StatelessWidget {
           Container(
             alignment: Alignment.center,
             width: double.infinity,
-            height: 70.0,
+            height: 70.0.h,
             child: ListView.separated(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
@@ -200,14 +167,14 @@ class GoalEditCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      FText(type.kr, style: textTheme.bodyLarge),
+                      FText(type.kr, style: textTheme(context).bodyLarge),
                       FText('${toLocalString(newGoal.amount.round())}${type.unit}',
                         color: type.color,
                       ),
                       if (!registeredToday && newGoal.amount != goal.amount)
                       FText(
                         '* 변경 예정',
-                        style: textTheme.bodySmall,
+                        style: textTheme(context).bodySmall,
                         color: FTheme.lightGrey,
                       ),
                     ],
@@ -238,7 +205,7 @@ class InfoEditCard extends StatelessWidget {
     return FCard(
       title: FText(
         '정보 수정',
-        style: textTheme.bodyMedium,
+        style: textTheme(context).bodyMedium,
         color: FTheme.lightGrey,
         bold: true,
       ),
@@ -250,17 +217,17 @@ class InfoEditCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FText('닉네임', style: textTheme.bodyMedium, color: FTheme.lightGrey),
-              const SizedBox(height: 5.0),
+              FText('닉네임', style: textTheme(context).bodyMedium, color: FTheme.lightGrey),
+              SizedBox(height: 5.0.h),
               FText(userP.loggedUser.nickname!),
             ],
           ),
-          const SizedBox(height: 10.0),
+          SizedBox(height: 10.0.h),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FText('신장', style: textTheme.bodyMedium, color: FTheme.lightGrey),
-              const SizedBox(height: 5.0),
+              FText('신장', style: textTheme(context).bodyMedium, color: FTheme.lightGrey),
+              SizedBox(height: 5.0.h),
               Stack(
                 children: [
                   FText('${userP.loggedUser.height!}cm'),
@@ -277,12 +244,12 @@ class InfoEditCard extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(height: 10.0),
+          SizedBox(height: 10.0.h),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FText('체중', style: textTheme.bodyMedium, color: FTheme.lightGrey),
-              const SizedBox(height: 5.0),
+              FText('체중', style: textTheme(context).bodyMedium, color: FTheme.lightGrey),
+              SizedBox(height: 5.0.h),
               Stack(
                 children: [
                   FText('${userP.loggedUser.weight!}kg'),

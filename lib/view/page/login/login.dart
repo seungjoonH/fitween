@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:io' show Platform;
-import 'package:fitween/presenter/page/home/home.dart';
 import 'package:fitween/presenter/page/login.dart';
-import 'package:fitween/presenter/widget/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fitween/global/theme.dart';
@@ -65,14 +63,14 @@ class _LoginPageState extends State<LoginPage> {
           return Stack(
             alignment: Alignment.center,
             children: [
-              Positioned(top: 300.0.h, child: const FLogo()),
+              const FLogo(),
               if (loginP.loading) Positioned(
-                bottom: 130.0.h,
+                bottom: 80.0.h,
                 child: SizedBox(
                   width: screenSize.width * .9,
                   child: LinearPercentIndicator(
                     percent: loginP.loadPercent,
-                    lineHeight: 40.0,
+                    lineHeight: 40.0.h,
                     backgroundColor: FTheme.background,
                     barRadius: const Radius.circular(10.0),
                     progressColor: FTheme.colorA,
@@ -81,10 +79,10 @@ class _LoginPageState extends State<LoginPage> {
                     animateFromLastPercent: true,
                     curve: Curves.linear,
                     center: Container(
-                      width: 60.0,
+                      width: 80.0,
                       alignment: Alignment.centerLeft,
                       child: FText(text,
-                        style: textTheme.labelLarge,
+                        style: textTheme(context).labelLarge,
                         color: FTheme.darkGrey,
                         bold: loginP.loadPercent == 1.0,
                       ),
@@ -101,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SignInButton(type: LoginType.google),
-                      const SizedBox(height: 20.0),
+                      SizedBox(height: 20.0.h),
                       if (Platform.isIOS)
                         const SignInButton(type: LoginType.apple),
                     ],
@@ -114,7 +112,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: FText(
                   version,
                   color: FTheme.darkGrey,
-                  style: textTheme.titleMedium,
+                  style: textTheme(context).titleMedium,
                 ),
               ),
             ],

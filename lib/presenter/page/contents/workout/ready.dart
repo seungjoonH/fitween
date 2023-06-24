@@ -36,16 +36,16 @@ class WorkoutReadyP extends GetxController {
           const SizedBox(height: 20.0),
           Column(
             children: [
-              FText('기회: 2회', color: FTheme.lightGrey, style: textTheme.labelLarge),
-              FText('운동시간: 3분', color: FTheme.lightGrey, style: textTheme.labelLarge),
-              FText('기간: 24시간', color: FTheme.lightGrey, style: textTheme.labelLarge),
+              FText('기회: 2회', color: FTheme.lightGrey, style: FTheme.textTheme.labelLarge),
+              FText('운동시간: 3분', color: FTheme.lightGrey, style: FTheme.textTheme.labelLarge),
+              FText('기간: 24시간', color: FTheme.lightGrey, style: FTheme.textTheme.labelLarge),
             ],
           ),
           const SizedBox(height: 20.0),
           FText(
             '주의! 시작하는 즉시 기회가 1회 소모됩니다.',
             color: FTheme.error,
-            style: textTheme.labelLarge,
+            style: FTheme.textTheme.labelLarge,
           ),
         ],
       ),

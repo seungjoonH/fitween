@@ -1,4 +1,3 @@
-import 'package:fitween/global/date.dart';
 import 'package:fitween/model/class/database/battle.dart';
 
 class BattleData {

@@ -33,28 +33,29 @@ class _RotateCarouselState extends State<RotateCarousel>
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   HomeP.gifCont.dispose();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    final screenSize = MediaQuery.of(context).size;
+    final orientation = MediaQuery.of(context).orientation;
+
     const double gifRatio = 16 / 9;
     const double pngRatio = 73 / 48;
     const widthRatio = pngRatio / gifRatio;
 
-    Size gifSize = Size(
-      screenSize.width * 1.3,
-      screenSize.width * 1.3 / gifRatio,
-    );
+    late Size gifSize;
 
-    if (screenSize.height * .5 < gifSize.height) {
+    bool isPortrait = orientation == Orientation.portrait;
+
+    if (isPortrait) {
       gifSize = Size(
-        screenSize.height * .5 * gifRatio,
-        screenSize.height * .5,
+        screenSize.width * 1.3,
+        screenSize.width * 1.3 / gifRatio,
+      );
+    }
+    else {
+      gifSize = Size(
+        screenSize.height * .65 * gifRatio,
+        screenSize.height * .65,
       );
     }
 
@@ -131,12 +132,6 @@ class _RotateCarouselState extends State<RotateCarousel>
                           ],
                         ),
                       ),
-                      // Container(
-                      //   width: pngSize.width,
-                      //   decoration: BoxDecoration(
-                      //     color: FTheme.colorA.withOpacity(.5),
-                      //   ),
-                      // ),
                     ],
                   ) else Positioned(
                     top: pngSize.height * .5,
@@ -150,7 +145,7 @@ class _RotateCarouselState extends State<RotateCarousel>
                         ),
                         FText(
                           type.unit,
-                          style: textTheme.displaySmall,
+                          style: textTheme(context).displaySmall,
                           color: FTheme.white,
                         ),
                       ],
@@ -159,22 +154,24 @@ class _RotateCarouselState extends State<RotateCarousel>
                 ],
               ),
               Positioned(
-                left: screenSize.width * .08,
-                bottom: pngSize.height * .6,
+                left: screenSize.width * .1,
+                bottom: pngSize.height * .5,
                 child: GestureDetector(
                   onTap: homeP.rightButtonPressed,
                   child: SvgPicture.asset(
                     'assets/image/page/home/left_arrow.svg',
+                    width: 40.0.h,
                   ),
                 ),
               ),
               Positioned(
-                right: screenSize.width * .08,
-                bottom: pngSize.height * .6,
+                right: screenSize.width * .1,
+                bottom: pngSize.height * .5,
                 child: GestureDetector(
                   onTap: homeP.leftButtonPressed,
                   child: SvgPicture.asset(
                     'assets/image/page/home/right_arrow.svg',
+                    width: 40.0.h,
                   ),
                 ),
               ),
@@ -193,7 +190,7 @@ class CalendarCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return FCard(
       title: FText('기록',
-        style: textTheme.titleMedium,
+        style: textTheme(context).titleMedium,
         bold: true,
       ),
       icon: const Icon(Icons.arrow_forward_ios),
@@ -210,6 +207,8 @@ class WeekCalendarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userP = Get.find<UserRecordP>();
+    final orientation = MediaQuery.of(context).orientation;
+
     return GetBuilder<LoadingP>(
       builder: (loadingP) {
         return Row(
@@ -224,12 +223,16 @@ class WeekCalendarWidget extends StatelessWidget {
             if (completed.length == 3) { textColor = ActivityType.calorie.color; }
             else if (isToday) { textColor = FTheme.white; }
 
+            bool isPortrait = orientation == Orientation.portrait;
+            double circleRadius = isPortrait ? 36.0.r : 50.0.r;
+
             return Stack(
               alignment: Alignment.center,
               children: [
                 if (isToday)
                 Container(
-                  width: 36.0, height: 36.0,
+                  width: circleRadius,
+                  height: circleRadius,
                   decoration: const BoxDecoration(
                     color: FTheme.grey,
                     shape: BoxShape.circle,
@@ -242,9 +245,9 @@ class WeekCalendarWidget extends StatelessWidget {
                       FText(
                         '월화수목금토일'[index],
                         color: textColor,
-                        style: textTheme.titleSmall,
+                        style: textTheme(context).titleSmall,
                       ),
-                      const SizedBox(height: 2.0),
+                      SizedBox(height: 2.0.h),
                       Row(
                         children: ActivityType.activeValues.map((type) {
                           Color circleColor = FTheme.lightGrey;
@@ -290,7 +293,7 @@ class RankingCard extends StatelessWidget {
 
         return FCard(
           title: FText('랭킹',
-            style: textTheme.titleMedium,
+            style: textTheme(context).titleMedium,
             bold: true,
           ),
           icon: const Icon(Icons.arrow_forward_ios),
@@ -310,7 +313,7 @@ class RankingCard extends StatelessWidget {
                   const Divider(thickness: 2, color: FTheme.stroke),
                   FText(
                     '친구를 라이벌로 지정하여 함께 대결해보세요!',
-                    style: textTheme.bodyMedium,
+                    style: textTheme(context).bodyMedium,
                     color: FTheme.darkGrey,
                   ),
                 ],

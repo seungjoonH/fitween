@@ -14,6 +14,7 @@ import 'package:fitween/view/widget/widget/icon.dart';
 import 'package:fitween/view/widget/widget/tab_scaffold.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -104,7 +105,7 @@ class FriendPage extends StatelessWidget {
           action: GetBuilder<FriendP>(
             builder: (friendP) {
               return IconButton(
-                icon: const Icon(Icons.person_add_alt_1_rounded),
+                icon: Icon(Icons.person_add_alt_1_rounded, size: 30.0.r),
                 onPressed: friendP.addFriendButtonPressed,
               );
             },
@@ -136,7 +137,7 @@ class FriendNotificationCard extends StatelessWidget {
           Expanded(
             child: FText(
               userData['nickname'],
-              style: textTheme.titleMedium,
+              style: textTheme(context).titleMedium,
             ),
           ),
           GetBuilder<FriendP>(
@@ -175,7 +176,7 @@ class FriendListCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FCard(
-      constraints: const BoxConstraints(minHeight: 100.0),
+      constraints: BoxConstraints(minHeight: 130.0.h),
       child: GetBuilder<UserFriendP>(
         builder: (userP) {
           List<FUserInfo> userInfos = isRival
@@ -194,10 +195,10 @@ class FriendListCard extends StatelessWidget {
                     children: [
                       FText('${isRival ? '라이벌' : '친구'} ${userInfos.length}',
                         color: FTheme.lightGrey,
-                        style: textTheme.bodyMedium,
+                        style: textTheme(context).bodyMedium,
                       ),
                       IconButton(
-                        icon: const Icon(Icons.edit),
+                        icon: Icon(Icons.edit, size: 20.0.r),
                         color: friendP.editMode ? FTheme.darkGrey : FTheme.lightGrey,
                         onPressed: friendP.toggleMode,
                       ),
@@ -205,6 +206,7 @@ class FriendListCard extends StatelessWidget {
                   );
                 },
               ),
+              SizedBox(height: 10.0.h),
               ListView(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
@@ -237,18 +239,18 @@ class FriendListTile extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5.0),
+      padding: EdgeInsets.symmetric(vertical: 5.0.h),
       child: Row(
         children: [
           FBadgeWidget(
             badge: BadgeJsonP.getBadge(userCollection.badgeId),
             backgroundColor: userCollection.badgeColor,
           ),
-          const SizedBox(width: 10.0),
+          SizedBox(width: 10.0.w),
           Expanded(
             child: FText(
               userInfo.nickname!,
-              style: textTheme.titleMedium,
+              style: textTheme(context).titleMedium,
             ),
           ),
           GetBuilder<FriendP>(

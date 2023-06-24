@@ -70,7 +70,7 @@ void showFDialog({
   }
 
   Get.dialog(
-    PAlertDialog(
+    FAlertDialog(
       title: title,
       content: content,
       contentAlignment: contentAlignment,
@@ -93,8 +93,8 @@ void showFDialog({
   );
 }
 
-class PAlertDialog extends StatefulWidget {
-  const PAlertDialog({
+class FAlertDialog extends StatefulWidget {
+  const FAlertDialog({
     Key? key,
     this.title,
     required this.content,
@@ -134,17 +134,16 @@ class PAlertDialog extends StatefulWidget {
   final Color? rightBackgroundColor;
 
   @override
-  State<PAlertDialog> createState() => _PAlertDialogState();
+  State<FAlertDialog> createState() => _FAlertDialogState();
 }
 
-class _PAlertDialogState extends State<PAlertDialog> {
+class _FAlertDialogState extends State<FAlertDialog> {
   @override
   Widget build(BuildContext context) {
     List<DialogButtonData> data = [];
 
     switch (widget.type) {
-      case DialogType.none:
-        break;
+      case DialogType.none: break;
       case DialogType.mono:
         data = [
           DialogButtonData(
@@ -180,54 +179,56 @@ class _PAlertDialogState extends State<PAlertDialog> {
     BorderRadius radius = BorderRadius.circular(12.0);
 
     return AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: radius,
-      ),
+      shape: RoundedRectangleBorder(borderRadius: radius),
       backgroundColor: FTheme.white,
       title: Container(
         padding: widget.titlePadding,
         child: FText(
           widget.title ?? '',
-          style: textTheme.titleLarge,
+          style: textTheme(context).titleLarge,
           bold: true,
         ),
       ),
       titlePadding: EdgeInsets.zero,
-      content: ClipRRect(
-        borderRadius: radius,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: widget.contentAlignment,
-          children: [
-            Container(
-              padding: widget.contentPadding,
-              constraints: BoxConstraints(minHeight: 70.0.h, minWidth: 360.0.w),
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: widget.content,
+      content: Container(
+        width: MediaQuery.of(context).size.width * .3,
+        constraints: const BoxConstraints(maxWidth: 500.0),
+        child: ClipRRect(
+          borderRadius: radius,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: widget.contentAlignment,
+            children: [
+              Container(
+                padding: widget.contentPadding,
+                constraints: BoxConstraints(minHeight: 70.0.h, minWidth: 360.0.w),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: widget.content,
+                ),
               ),
-            ),
-            Row(
-              children: data.map((datum) => Expanded(
-                child: Material(
-                  color: datum.backgroundColor,
-                  child: InkWell(
-                    onTap: datum.onPressed,
-                    child: Container(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Center(
-                        child: FText(
-                          datum.text,
-                          color: datum.textColor,
-                          style: textTheme.labelLarge,
+              Row(
+                children: data.map((datum) => Expanded(
+                  child: Material(
+                    color: datum.backgroundColor,
+                    child: InkWell(
+                      onTap: datum.onPressed,
+                      child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Center(
+                          child: FText(
+                            datum.text,
+                            color: datum.textColor,
+                            style: textTheme(context).labelLarge,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              )).toList(),
-            ),
-          ],
+                )).toList(),
+              ),
+            ],
+          ),
         ),
       ),
       contentPadding: EdgeInsets.zero,

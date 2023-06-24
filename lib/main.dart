@@ -13,7 +13,6 @@ import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/import.dart';
 import 'package:fitween/presenter/widget/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -90,9 +89,12 @@ class _FitweenState extends State<Fitween> {
             colorScheme: FTheme.lightColorScheme,
             textTheme: FTheme.textTheme,
             scaffoldBackgroundColor: FTheme.background,
-            appBarTheme: const AppBarTheme(
+            appBarTheme: AppBarTheme(
               backgroundColor: Colors.transparent,
-              iconTheme: IconThemeData(color: FTheme.darkGrey),
+              iconTheme: IconThemeData(
+                color: FTheme.darkGrey,
+                size: 20.0.r,
+              ),
             ),
           ),
           darkTheme: ThemeData(
