@@ -44,8 +44,7 @@ class FIcon extends StatelessWidget {
       children: [
         if (hasNotification)
         Container(
-          width: 8.0,
-          height: 8.0,
+          width: 8.0.r, height: 8.0.r,
           decoration: const BoxDecoration(
             color: FTheme.error,
             shape: BoxShape.circle,

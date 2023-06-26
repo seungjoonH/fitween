@@ -114,7 +114,7 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 20.0),
+                    SizedBox(height: 20.0.h),
                     if (joiningChallenge)
                     ListView.separated(
                       shrinkWrap: true,
@@ -207,8 +207,8 @@ class ChallengeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget imageWidget = ClipRRect(
-      borderRadius: const BorderRadius.horizontal(
-        left: Radius.circular(12.0),
+      borderRadius: BorderRadius.horizontal(
+        left: Radius.circular(12.0.r),
       ),
       child: Stack(
         children: [
@@ -247,7 +247,7 @@ class ChallengeCard extends StatelessWidget {
                   FText(
                     challenge.title ?? '',
                     style: textTheme(context).titleMedium,
-                    maxLines: 2,
+                    maxLines: 1,
                     bold: true,
                   ),
                   SizedBox(height: 4.0.h),
@@ -487,15 +487,12 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
     final orientation = MediaQuery.of(context).orientation;
     bool isPortrait = orientation == Orientation.portrait;
 
-    String oneLineText = text;
-    String twoLineText = text;
-
-    bool isOneLine = true;
+    bool isLong = true;
 
     if (text.length > 10) {
-      twoLineText = '${text.substring(0, text.length ~/ 3 * 2)}'
-          '\n${text.substring(text.length ~/ 3 * 2, text.length)}';
-      if (size.width < 600 / (isPortrait ? 2 : 1)) isOneLine = false;
+      // twoLineText = '${text.substring(0, text.length ~/ 3 * 2)}'
+      //     '\n${text.substring(text.length ~/ 3 * 2, text.length)}';
+      if (size.width < 600 / (isPortrait ? 1 : 2)) isLong = false;
     }
 
     return Column(
@@ -534,12 +531,10 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
                   ),
                   child: Builder(
                     builder: (context) {
-                      int maxLines = isOneLine ? 1 : 2;
-                      TextStyle? style = isOneLine
+                      TextStyle? style = isLong
                           ? textTheme(context).displaySmall
-                          : textTheme(context).titleSmall;
-                      return FText(isOneLine ? oneLineText : twoLineText,
-                        maxLines: maxLines,
+                          : textTheme(context).titleLarge;
+                      return FText(text,
                         style: style,
                         color: FTheme.white,
                         bold: true,

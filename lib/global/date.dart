@@ -21,9 +21,9 @@ void setTimeError() async {
 DateTime get now => DateTime.now();
 
 // 오늘 날짜 (시간 미포함)
-DateTime get today => ignoreTime(now);
+DateTime get today => ignoreTime(now)!;
 
-// 어제 날짜
+// 어제 날짜`
 DateTime get yesterday => today.subtract(const Duration(days: 1));
 
 // 내일 날짜
@@ -50,7 +50,8 @@ bool isSameDate(DateTime date1, DateTime date2) {
 }
 
 // 날짜에서 시간을 제외하여 반환
-DateTime ignoreTime(DateTime date) => DateTime(date.year, date.month, date.day);
+DateTime? ignoreTime(DateTime? date) => date == null
+    ? null : DateTime(date.year, date.month, date.day);
 
 // DateTime 형식을 Timestamp 형식으로 변환
 Timestamp? toTimestamp(DateTime? date) => date == null
@@ -96,6 +97,6 @@ String timeToString(int timeInSecs) {
 List<DateTime> daysInRange(DateTime first, DateTime last) {
   final dayCount = last.difference(first).inDays + 1;
   return List.generate(
-    dayCount, (index) => DateTime.utc(first.year, first.month, first.day + index),
+    dayCount, (index) => ignoreTime(DateTime.utc(first.year, first.month, first.day + index))!,
   );
 }

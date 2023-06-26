@@ -136,7 +136,7 @@ class RankingIndividualGraph extends StatelessWidget {
               progressColor: isMe ? type.color : FTheme.lightGrey,
               lineHeight: 36.0.h,
               padding: EdgeInsets.zero,
-              barRadius: const Radius.circular(5.0),
+              barRadius: Radius.circular(5.0.r),
               animation: true,
               curve: Curves.easeInOut,
               animationDuration: 800,

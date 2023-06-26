@@ -107,10 +107,11 @@ class _FCardState extends State<FCard> {
                             Icon(
                               widget.icon!.icon,
                               color: FTheme.lightGrey,
+                              size: 20.0.r,
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20.0),
+                        SizedBox(height: 20.0.h),
                       ],
                     ),
                     if (!loadingP.loading) widget.child,

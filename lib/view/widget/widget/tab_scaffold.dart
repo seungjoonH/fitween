@@ -82,7 +82,7 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
             preferredSize: Size.fromHeight(20.0.h),
             child: Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: 28.0.w,
+                horizontal: 26.0.w,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -125,7 +125,7 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
                               ),
                               if (widget.hasNotifications?[index] ?? false)
                               Container(
-                                width: 8.0, height: 8.0,
+                                width: 8.0.r, height: 8.0.r,
                                 decoration: const BoxDecoration(
                                   color: FTheme.error,
                                   shape: BoxShape.circle,

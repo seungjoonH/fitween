@@ -128,7 +128,6 @@ class UserRecordP extends GetxController {
       today, calorie,
     );
 
-    save();
     update();
   }
 
@@ -164,7 +163,6 @@ class UserRecordP extends GetxController {
     if (before != 3 && after == 3) {
       BadgeJsonP.awardDailyActivityCompleteBadge();
     }
-    save();
   }
 
   void setRecord(ActivityType type, Record record, [DateTime? date]) async {
@@ -181,6 +179,5 @@ class UserRecordP extends GetxController {
     if (before != 3 && after == 3) {
       BadgeJsonP.awardDailyActivityCompleteBadge();
     }
-    save();
   }
 }

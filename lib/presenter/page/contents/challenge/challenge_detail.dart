@@ -7,6 +7,7 @@ import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:fitween/model/class/json/challenge.dart';
 
@@ -46,7 +47,7 @@ class ChallengeDetailP {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(20.0.r),
             child: FText('챌린지가 생성되었습니다.'),
           ),
         ],

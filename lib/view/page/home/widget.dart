@@ -195,7 +195,7 @@ class CalendarCard extends StatelessWidget {
       ),
       icon: const Icon(Icons.arrow_forward_ios),
       onPressed: CalendarP.toCalendar,
-      constraints: const BoxConstraints(minHeight: 115.0),
+      constraints: BoxConstraints(minHeight: 115.0.h),
       child: const WeekCalendarWidget(),
     );
   }
@@ -259,7 +259,7 @@ class WeekCalendarWidget extends StatelessWidget {
                           ) { circleColor = Colors.transparent; }
 
                           return Container(
-                            width: 8.0, height: 8.0,
+                            width: 8.0.r, height: 8.0.r,
                             margin: const EdgeInsets.symmetric(horizontal: 1.0),
                             decoration: BoxDecoration(
                               color: circleColor,
@@ -302,7 +302,7 @@ class RankingCard extends StatelessWidget {
             if (len > 1) { RankingP.toRanking(type); }
             else { FriendP.toFriend(); }
           },
-          constraints: const BoxConstraints(minHeight: 160.0),
+          constraints: BoxConstraints(minHeight: 160.0.h),
           child: Column(
             children: [
               RankingGraph(type: type),

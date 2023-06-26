@@ -189,8 +189,8 @@ class ChallengeDetailView extends StatelessWidget {
           tag: challenge.id!,
           child: Image.asset(
             challenge.imageUrls['default'],
-            width: isPortrait ? null : size.width * .5,
-            height: isPortrait ? size.height * .65 : null,
+            width: size.width * (isPortrait ? 1 : .5),
+            height: size.height * (isPortrait ? .6 : 1),
             fit: BoxFit.cover,
           ),
         );

@@ -141,7 +141,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                     },
                     markerBuilder: (context, date, events) {
                       final userP = Get.find<UserRecordP>();
-                      date = ignoreTime(date);
+                      date = ignoreTime(date)!;
                       return ListView.builder(
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
@@ -206,7 +206,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                         SizedBox(height: 20.0.h),
                         Column(
                           children: ActivityType.activeValues.map((type) => TodayRecordLinearIndicator(
-                            type: type, date: ignoreTime(_focusedDay),
+                            type: type, date: ignoreTime(_focusedDay)!,
                           )).toList(),
                         ),
                       ],

@@ -46,6 +46,7 @@ class BadgeManagementCard extends StatelessWidget {
           ),
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: CollectionP.toCollection,
+          constraints: BoxConstraints(minHeight: 220.0.h),
           child: Column(
             children: [
               IntrinsicHeight(
@@ -58,7 +59,7 @@ class BadgeManagementCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            FBadgeWidget(badge: badge, size: 88.0),
+                            FBadgeWidget(badge: badge, size: 78.0),
                             const SizedBox(height: 5.0),
                             FText(
                               badge.title!,
@@ -143,6 +144,7 @@ class GoalEditCard extends StatelessWidget {
       ),
       icon: const Icon(Icons.edit),
       onPressed: GoalEditP.toGoalEdit,
+      constraints: BoxConstraints(minHeight: 150.0.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -211,6 +213,7 @@ class InfoEditCard extends StatelessWidget {
       ),
       icon: const Icon(Icons.edit),
       onPressed: InfoEditP.toInfoEdit,
+      constraints: BoxConstraints(minHeight: 270.0.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

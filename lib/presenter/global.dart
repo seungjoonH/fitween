@@ -219,8 +219,8 @@ class GlobalP extends GetxController {
             alignment: Alignment.center,
             children: [
               SizedBox(
-                width: 300.0.w,
-                height: 300.0.h,
+                width: 300.0.r,
+                height: 300.0.r,
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
@@ -252,8 +252,8 @@ class GlobalP extends GetxController {
                 ),
               ),
               Positioned(
-                top: 40.0,
-                right: 20.0,
+                top: 40.0.r,
+                right: 20.0.r,
                 child: FText(
                   dateToString('yyyy-MM-dd', now)!,
                   color: FTheme.colorB,
@@ -306,16 +306,23 @@ class GlobalP extends GetxController {
               ? FText('대표 컬렉션이 해제되었습니다.')
               : Column(
             children: [
-              FBadgeWidget(badge: selectedBadge, size: 100.0.r),
+              FBadgeWidget(badge: selectedBadge, size: 100.0),
               SizedBox(height: 20.0.h),
-              FText('대표 컬렉션이', style: FTheme.textTheme.titleSmall),
-              FTexts([
-                selectedBadge.title!,
-                '${roEuro(selectedBadge.title!)} 설정되었습니다.'
-              ], colors: const [FTheme.colorB, FTheme.black],
-                space: false,
-                style: FTheme.textTheme.titleSmall,
-              )
+              Column(
+                children: [
+                  FText('대표 컬렉션이', style: FTheme.textTheme.titleSmall),
+                  SizedBox(height: 5.0.h),
+                  FText(selectedBadge.title!,
+                    color: FTheme.colorB,
+                    style: FTheme.textTheme.titleSmall,
+                  ),
+                  SizedBox(height: 5.0.h),
+                  FText('${roEuro(selectedBadge.title!)} 설정되었습니다.',
+                    color: FTheme.black,
+                    style: FTheme.textTheme.titleSmall,
+                  ),
+                ],
+              ),
             ],
           ),
         ],

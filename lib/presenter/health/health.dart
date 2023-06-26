@@ -2,7 +2,6 @@ import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:health/health.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
@@ -37,13 +36,13 @@ class HealthP {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return;
-        final permissionStatus = await Permission.activityRecognition.request();
-        hasPermission = !(
-          permissionStatus.isDenied ||
-          permissionStatus.isPermanentlyDenied
-        );
+        // final permissionStatus = await Permission.activityRecognition.request();
+        // hasPermission = !(
+        //   permissionStatus.isDenied ||
+        //   permissionStatus.isPermanentlyDenied
+        // );
         // await HealthFactory.revokePermissions();
-        break;
+        // break;
       case TargetPlatform.iOS:
         hasPermission = await HealthFactory.hasPermissions(
           types, permissions: read,
@@ -63,8 +62,11 @@ class HealthP {
 
   static Future<bool> fetchStepData([DateTime? startTime, DateTime? endTime]) async {
     endTime ??= startTime;
-    startTime ??= today;
-    endTime ??= nextDay(startTime);
+    startTime ??= now;
+    endTime ??= now;
+    
+    DateTime startDate = ignoreTime(startTime)!;
+    DateTime endDate = nextDay(ignoreTime(endTime)!);
 
     int steps = 0;
 
@@ -72,12 +74,9 @@ class HealthP {
     if (!approved) return false;
 
     final userP = Get.find<UserRecordP>();
-    DateTime date = startTime;
 
-    while (date.isBefore(endTime)) {
-      int? fetchedSteps = await health.getTotalStepsInInterval(
-        date, date.add(const Duration(days: 1)),
-      );
+    for (DateTime date in daysInRange(startDate, endDate)) {
+      int? fetchedSteps = await health.getTotalStepsInInterval(date, nextDay(date));
       if (fetchedSteps == null || fetchedSteps == 0) return false;
       steps = fetchedSteps;
 
@@ -87,7 +86,6 @@ class HealthP {
       );
 
       userP.setRecord(ActivityType.distance, distance, date);
-      date = date.add(const Duration(days: 1));
     }
 
     userP.save();
@@ -97,14 +95,17 @@ class HealthP {
 
   // 걸음 데이터 가져오기
   static Future<bool> fetchTodayStepData() async {
-    return await fetchStepData(today);
+    return await fetchStepData(now);
   }
 
   // 높이 데이터 가져오기
   static Future fetchFlightsData([DateTime? startTime, DateTime? endTime]) async {
     endTime ??= startTime;
-    startTime ??= today;
-    endTime ??= nextDay(startTime);
+    startTime ??= now;
+    endTime ??= now;
+
+    DateTime startDate = ignoreTime(startTime)!;
+    DateTime endDate = nextDay(ignoreTime(endTime)!);
 
     List<HealthDataPoint> flightsData = [];
 
@@ -113,24 +114,22 @@ class HealthP {
     // 승인 시 헬스 데이터 가져와서 로컬에 저장
     final userP = Get.find<UserRecordP>();
 
-    flightsData = await health.getHealthDataFromTypes(startTime, endTime, flightType);
+    flightsData = await health.getHealthDataFromTypes(startDate, endDate, flightType);
     if (flightsData.isEmpty) return false;
 
     flightsData = HealthFactory.removeDuplicates(flightsData);
 
-    DateTime date = startTime;
+    Map<DateTime, double> amounts = {};
 
-    while (date.isBefore(endTime)) {
-      double flights = .0;
-      for (var flight in flightsData) {
-        if (!isSameDate(flight.dateFrom, date)) continue;
-        flights += double.parse(flight.value.toString()).round();
-      }
+    for (var flight in flightsData) {
+      double value = amounts[ignoreTime(flight.dateFrom)] ?? .0;
+      value += double.parse(flight.value.toString());
+      amounts[ignoreTime(flight.dateFrom)!] = value;
+    }
 
-      HeightRecord height = HeightRecord(amount: flights);
+    for (DateTime date in daysInRange(startDate, endDate)) {
+      HeightRecord height = HeightRecord(amount: amounts[date] ?? .0);
       userP.setRecord(ActivityType.height, height, date);
-
-      date = date.add(const Duration(days: 1));
     }
 
     userP.save();
@@ -139,12 +138,12 @@ class HealthP {
   }
 
   static Future fetchTodayFlightsData() async {
-    return await fetchFlightsData(today);
+    return await fetchFlightsData(now);
   }
 
   // 걸음 데이터 저장
   static Future addStepsData(Record distance) async {
-    DateTime startTime = today;
+    DateTime startTime = now;
     DateTime endTime = now;
     distance.convert(ExerciseUnit.step);
 

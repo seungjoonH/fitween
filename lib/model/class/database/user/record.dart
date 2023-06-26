@@ -170,6 +170,7 @@ class FUserRecord {
         }
       }
     });
+
     return result;
   }
 
@@ -205,7 +206,7 @@ class FUserRecord {
     });
 
     for (DateTime date in daysInRange(startDate, endDate)) {
-      date = ignoreTime(date);
+      date = ignoreTime(date)!;
       events[date] = ActivityType.activeValues.map((type) {
         double goal = getGoal(type, date)?.amount ?? 1.0;
         double amount = getAmounts(type, date, nextDay(date));
@@ -224,11 +225,8 @@ class FUserRecord {
 
     double amount = 1.0;
 
-    // if (goals[type.name].length == 1) {
-    //   amount = goals[type.name][0]['amount'].toDouble();
-    // }
     for (var goal in goals[type.name].reversed) {
-      if (!ignoreTime(goal['date'].toDate()).isAfter(date)) {
+      if (!ignoreTime(goal['date'].toDate())!.isAfter(date)) {
         amount = goal['amount'].toDouble();
         break;
       }
@@ -261,7 +259,7 @@ class FUserRecord {
       return;
     }
 
-    DateTime nextDay = ignoreTime(date.add(const Duration(days: 1)));
+    DateTime nextDay = ignoreTime(date.add(const Duration(days: 1)))!;
 
     for (var goal in goals[type.name] ?? []) {
       if (goal['date'] == toTimestamp(nextDay)) {

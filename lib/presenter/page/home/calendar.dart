@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:fitween/global/date.dart';
-import 'package:fitween/model/enum/activity_type.dart';
+import 'package:fitween/presenter/health/health.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/widget/loading.dart';
@@ -51,15 +51,29 @@ class CalendarP extends GetxController {
   late DateTime startDate;
   DateTime endDate = tomorrow;
 
-
-  double getAmounts(ActivityType type, DateTime day) {
-    final userP = Get.find<UserRecordP>();
-    return userP.loggedUser.getAmounts(type, day, day);
-  }
-
   Future getEvents() async {
     final userRecordP = Get.find<UserRecordP>();
     await userRecordP.load();
     events = userRecordP.loggedUser.getEvents(startDate, endDate);
+  }
+
+  void fetchData([int? days]) async {
+    final userP = Get.find<UserInfoP>();
+    final loadingP = Get.find<LoadingP>();
+
+    late DateTime startDate, endDate;
+
+    startDate = ignoreTime(userP.loggedUser.regDate)!;
+    if (days != null) startDate = today.subtract(Duration(days: days));
+    endDate = today;
+
+    loadingP.loadStart();
+
+    await HealthP.fetchStepData(startDate, endDate);
+    await HealthP.fetchFlightsData(startDate, endDate);
+
+    loadingP.loadEnd();
+
+    update();
   }
 }

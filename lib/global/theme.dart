@@ -313,20 +313,20 @@ class FTheme {
     titleLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 24.0.sp,
-      height: (32 / 24),
+      fontSize: 22.0.sp,
+      height: (30 / 22),
     ),
     titleMedium: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 22.0.sp,
-      height: (30 / 22),
+      fontSize: 20.0.sp,
+      height: (28 / 20),
     ),
     titleSmall: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
-      fontSize: 20.0.sp,
-      height: (24 / 20),
+      fontSize: 18.0.sp,
+      height: (22 / 18),
     ),
 
     //Label

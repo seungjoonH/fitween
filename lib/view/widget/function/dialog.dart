@@ -176,7 +176,7 @@ class _FAlertDialogState extends State<FAlertDialog> {
 
     assert(widget.type.index == data.length);
 
-    BorderRadius radius = BorderRadius.circular(12.0);
+    BorderRadius radius = BorderRadius.circular(12.0.r);
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: radius),
@@ -191,8 +191,8 @@ class _FAlertDialogState extends State<FAlertDialog> {
       ),
       titlePadding: EdgeInsets.zero,
       content: Container(
-        width: MediaQuery.of(context).size.width * .3,
-        constraints: const BoxConstraints(maxWidth: 500.0),
+        width: MediaQuery.of(context).size.width * .5,
+        constraints: BoxConstraints(maxWidth: 500.0.w),
         child: ClipRRect(
           borderRadius: radius,
           child: Column(
@@ -201,7 +201,7 @@ class _FAlertDialogState extends State<FAlertDialog> {
             children: [
               Container(
                 padding: widget.contentPadding,
-                constraints: BoxConstraints(minHeight: 70.0.h, minWidth: 360.0.w),
+                constraints: BoxConstraints(minHeight: 70.0.r, minWidth: 380.0.r),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 10.0),
                   child: widget.content,
