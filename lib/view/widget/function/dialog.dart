@@ -26,8 +26,8 @@ void showFDialog({
   String? title,
   required Widget content,
   CrossAxisAlignment contentAlignment = CrossAxisAlignment.center,
-  EdgeInsets? titlePadding = const EdgeInsets.only(top: 30.0, left: 30.0),
-  EdgeInsets? contentPadding = const EdgeInsets.all(20.0),
+  EdgeInsets? titlePadding,
+  EdgeInsets? contentPadding,
   DialogType type = DialogType.none,
   String? buttonText,
   VoidCallback? onPressed,
@@ -69,6 +69,9 @@ void showFDialog({
       break;
   }
 
+  titlePadding = EdgeInsets.only(top: 20.0.r, left: 20.0.r);
+  contentPadding = EdgeInsets.all(20.0.r);
+
   Get.dialog(
     FAlertDialog(
       title: title,
@@ -99,8 +102,8 @@ class FAlertDialog extends StatefulWidget {
     this.title,
     required this.content,
     this.contentAlignment = CrossAxisAlignment.start,
-    this.titlePadding = const EdgeInsets.only(top: 30.0, left: 30.0),
-    this.contentPadding = const EdgeInsets.fromLTRB(30.0, 10.0, 30.0, 30.0),
+    this.titlePadding,
+    this.contentPadding,
     this.type = DialogType.none,
     this.buttonText,
     this.onPressed,
@@ -185,8 +188,8 @@ class _FAlertDialogState extends State<FAlertDialog> {
         padding: widget.titlePadding,
         child: FText(
           widget.title ?? '',
-          style: textTheme(context).titleLarge,
           bold: true,
+          style: textTheme(context).titleLarge,
         ),
       ),
       titlePadding: EdgeInsets.zero,
@@ -201,9 +204,12 @@ class _FAlertDialogState extends State<FAlertDialog> {
             children: [
               Container(
                 padding: widget.contentPadding,
-                constraints: BoxConstraints(minHeight: 70.0.r, minWidth: 380.0.r),
+                constraints: BoxConstraints(
+                  minWidth: 380.0.r,
+                  minHeight: 70.0.r,
+                ),
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
+                  padding: EdgeInsets.only(top: 10.0.r),
                   child: widget.content,
                 ),
               ),
@@ -214,7 +220,7 @@ class _FAlertDialogState extends State<FAlertDialog> {
                     child: InkWell(
                       onTap: datum.onPressed,
                       child: Container(
-                        padding: const EdgeInsets.all(10.0),
+                        padding: EdgeInsets.all(10.0.r),
                         child: Center(
                           child: FText(
                             datum.text,

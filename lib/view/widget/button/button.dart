@@ -118,7 +118,7 @@ class _FButtonState extends State<FButton> {
               border: widget.border
                   ? Border.all(color: FTheme.stroke, width: .5)
                   : const Border(),
-              borderRadius: BorderRadius.circular(15.0),
+              borderRadius: BorderRadius.circular(15.0.r),
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -135,114 +135,6 @@ class _FButtonState extends State<FButton> {
       ),
     );
     return widget.multiple ? Expanded(child: content) : content;
-  }
-}
-
-/// class
-class PButton extends StatelessWidget {
-  PButton({
-    Key? key,
-    this.text,
-    this.child,
-    this.onPressed,
-    this.fill = true,
-    EdgeInsets? padding,
-    this.constraints,
-    Color? backgroundColor,
-    Color? textColor,
-    this.stretch = false,
-    this.multiple = false,
-    this.border = true,
-    this.height,
-  }) : assert(text == null || child == null),
-    padding = padding ?? EdgeInsets.symmetric(
-      horizontal: 20.0.w, vertical: 10.0.h,
-    ),
-    backgroundColor = backgroundColor ?? FTheme.black,
-    textColor = textColor ?? (fill ? FTheme.white : FTheme.black),
-    super(key: key);
-
-  final String? text;
-  final Widget? child;
-  final VoidCallback? onPressed;
-  final bool fill;
-  final EdgeInsets padding;
-  final BoxConstraints? constraints;
-  final Color? backgroundColor;
-  final Color? textColor;
-  final bool stretch;
-  final bool multiple;
-  final bool border;
-  final double? height;
-
-  @override
-  Widget build(BuildContext context) {
-    Widget content = Material(
-      color: fill ? backgroundColor : Colors.transparent,
-      child: InkWell(
-        onTap: onPressed,
-        onDoubleTap: onPressed,
-        child: Container(
-          height: height?.h,
-          padding: padding,
-          constraints: multiple ? null : constraints ?? BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width,
-          ),
-          decoration: BoxDecoration(
-            border: border
-                ? Border.all(color: FTheme.black, width: 1.5)
-                : const Border(),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (stretch) const Expanded(child: SizedBox()),
-              child ??
-                  FText(text!, color: textColor, style: textTheme(context).titleMedium),
-              if (stretch) const Expanded(child: SizedBox()),
-            ],
-          ),
-        ),
-      ),
-    );
-    return multiple ? Expanded(child: content) : content;
-  }
-}
-
-class PDirectButton extends StatelessWidget {
-  const PDirectButton({
-    Key? key,
-    required this.text,
-    required this.onPressed,
-  }) : super(key: key);
-
-  final String text;
-  final VoidCallback onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onPressed,
-      child: Container(
-        padding: const EdgeInsets.all(2.0),
-        decoration: const BoxDecoration(
-          border: Border(
-            bottom: BorderSide(color: FTheme.black),
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            FText(
-              text,
-              style: const TextStyle(fontSize: 13.0),
-            ),
-            const Icon(Icons.arrow_forward_ios, size: 15.0),
-          ],
-        ),
-      ),
-    );
   }
 }
 
@@ -345,23 +237,21 @@ class FIconButton extends StatelessWidget {
   }
 }
 
-class FTextButton extends StatelessWidget {
-  const FTextButton({
+class FTextButton extends StatefulWidget {
+  FTextButton({
     Key? key,
-    required this.onPressed,
     required this.text,
+    this.onPressed,
     this.style,
-    Color? color,
-    this.padding = const EdgeInsets.symmetric(
-      horizontal: 5.0,
-      vertical: 2.0,
-    ),
+    this.color = FTheme.grey,
+    EdgeInsets? padding,
     this.leading,
     this.action,
-  })  : color = color ?? FTheme.black,
-        super(key: key);
+  }) : padding = padding ?? EdgeInsets.symmetric(
+    horizontal: 20.0.w, vertical: 10.0.h,
+  ), super(key: key);
 
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final String text;
   final TextStyle? style;
   final Color? color;
@@ -370,21 +260,68 @@ class FTextButton extends StatelessWidget {
   final Icon? action;
 
   @override
+  State<FTextButton> createState() => _FTextButtonState();
+}
+
+class _FTextButtonState extends State<FTextButton> {
+  Function(TapDownDetails)? onTapDown;
+  Function(TapUpDetails)? onTapUp;
+  VoidCallback? onTapCancel;
+
+  Color backgroundColor = Colors.transparent;
+  double scale = 1.0;
+  double opacity = .0;
+  Duration duration = const Duration(milliseconds: 100);
+
+  @override
+  void initState() {
+    onTapDown = widget.onPressed == null ? null : (_) {
+      setState(() {
+        backgroundColor = FTheme.black.withOpacity(.1);
+        scale = .9; opacity = .2;
+      });
+    };
+    onTapUp = widget.onPressed == null ? null : (_) async {
+      await Future.delayed(duration, () {
+        if (!mounted) return;
+        setState(() {
+          backgroundColor = Colors.transparent;
+          scale = 1.0; opacity = .0;
+        });
+      });
+      widget.onPressed!();
+    };
+    onTapCancel = () => setState(() {
+      backgroundColor = Colors.transparent;
+      scale = 1.0;
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        onTap: onPressed,
-        borderRadius: BorderRadius.circular(5.0),
-        child: Padding(
-          padding: padding,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (leading != null) leading!,
-              FText(text, style: style, color: color),
-              if (action != null) action!,
-            ],
+    BorderRadius radius = BorderRadius.circular(12.0.r);
+
+    return AnimatedScale(
+      scale: scale,
+      duration: duration,
+      child: Material(
+        color: backgroundColor,
+        borderRadius: radius,
+        child: GestureDetector(
+          onTapDown: onTapDown,
+          onTapUp: onTapUp,
+          onTapCancel: onTapCancel,
+          child: Padding(
+            padding: widget.padding,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (widget.leading != null) widget.leading!,
+                FText(widget.text, style: widget.style, color: widget.color),
+                if (widget.action != null) widget.action!,
+              ],
+            ),
           ),
         ),
       ),

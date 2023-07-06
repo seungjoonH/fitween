@@ -18,7 +18,7 @@ class FCard extends StatefulWidget {
     this.borderColor,
     this.borderWidth,
     EdgeInsets? padding,
-  })  : padding = padding ?? EdgeInsets.all(20.0.r),
+  }) : padding = padding ?? EdgeInsets.all(20.0.r),
         super(key: key);
 
   final Widget? title;

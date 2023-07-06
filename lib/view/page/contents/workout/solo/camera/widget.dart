@@ -19,16 +19,27 @@ class CameraPainterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
-    CameraP.canvasSize = screenSize;
-    Orientation orientation = MediaQuery.of(context).orientation;
+    final screenSize = MediaQuery.of(context).size;
+    final orientation = MediaQuery.of(context).orientation;
+    bool isPortrait = orientation == Orientation.portrait;
 
-    switch (orientation) {
-      case Orientation.portrait:
-        CameraP.canvasSize = Size(screenSize.width, screenSize.width * 16 / 9); break;
-      case Orientation.landscape:
-        CameraP.canvasSize = Size(screenSize.height * 16 / 9, screenSize.height); break;
-    }
+    double ratio = screenSize.aspectRatio;
+    ratio = ratio < 1 ? 1 / ratio : ratio;
+    CameraP.canvasSize = screenSize;
+
+    double cameraRatio = 16 / 9;
+    if (isPortrait) cameraRatio = 1 / cameraRatio;
+
+    double width = screenSize.width;
+    double height = screenSize.height;
+
+    bool isFat = ratio > cameraRatio;
+    if (isPortrait) isFat = !isFat;
+
+    if (isFat) { height = width / cameraRatio; }
+    else { width = height * cameraRatio; }
+
+    CameraP.canvasSize = Size(width, height);
 
     double horizontalError = .5 * (screenSize.width - CameraP.canvasSize!.width);
     double verticalError = .5 * (screenSize.height - CameraP.canvasSize!.height);

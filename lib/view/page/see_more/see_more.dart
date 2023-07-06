@@ -2,6 +2,7 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/presenter/firebase/auth/auth.dart';
 import 'package:fitween/presenter/page/see_more/see_more.dart';
 import 'package:fitween/view/page/see_more/widget.dart';
+import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:fitween/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
@@ -16,15 +17,7 @@ class SeeMorePage extends StatelessWidget {
     final refreshCont = RefreshController();
 
     return Scaffold(
-      appBar: FAppBar(
-        title: '더보기',
-        actions: [
-          IconButton(
-            onPressed: AuthP.fLogout,
-            icon: Icon(Icons.logout, size: 20.0.r),
-          ),
-        ],
-      ),
+      appBar: const FAppBar(title: '더보기'),
       body: SmartRefresher(
         controller: refreshCont,
         onRefresh: () async {
@@ -51,12 +44,28 @@ class SeeMorePage extends StatelessWidget {
               vertical: 28.0.h,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const BadgeManagementCard(),
                 SizedBox(height: 20.0.h),
                 const GoalEditCard(),
                 SizedBox(height: 20.0.h),
                 const InfoEditCard(),
+                SizedBox(height: 20.0.h),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FTextButton(
+                      onPressed: SeeMoreP.logout,
+                      text: '로그아웃',
+                    ),
+                    SizedBox(height: 20.0.h),
+                    FTextButton(
+                      onPressed: SeeMoreP.deleteAccount,
+                      text: '계정삭제',
+                    ),
+                  ],
+                ),
                 SizedBox(height: 100.0.h),
               ],
             ),

@@ -30,7 +30,7 @@ class ExerciseHandler {
     limbs = [];
     limbs.add(Limb(Part.hipL, Part.kneeL, Part.ankleL));
     limbs.add(Limb(Part.hipR, Part.kneeR, Part.ankleR));
-    angleRanges = [AngleRange(60, 120), AngleRange(60, 120)];
+    angleRanges = [AngleRange(60, 150), AngleRange(60, 150)];
     probAvailParts = [
       Part.hipL, Part.kneeL, Part.ankleL,
       Part.hipR, Part.kneeR, Part.ankleR,

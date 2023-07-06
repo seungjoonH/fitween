@@ -99,8 +99,7 @@ class _CarouselViewState extends State<CarouselView> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              height: 50.0,
+              padding: EdgeInsets.symmetric(horizontal: 20.0.w),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
@@ -114,7 +113,7 @@ class _CarouselViewState extends State<CarouselView> {
                 ],
               ),
             ),
-            const SizedBox(height: 50.0),
+            SizedBox(height: 50.0.h),
           ],
         );
       },

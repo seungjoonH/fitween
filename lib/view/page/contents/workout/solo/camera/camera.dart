@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:fitween/presenter/page/contents/workout/solo/camera.dart';
 import 'package:fitween/view/page/contents/workout/solo/camera/widget.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/workout/handler.dart';
@@ -38,6 +41,7 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
   @override
   void initState() {
     super.initState();
+
     initAsync();
   }
 
@@ -68,6 +72,7 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
     IsolateData isolateData = IsolateData(
       cameraImage: imageStream,
       interpreterAddress: CameraP.classifier.interpreter.address,
+      orientation: MediaQuery.of(context).orientation,
     );
 
     List inferenceList = await CameraP
@@ -98,7 +103,7 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
     ExerciseHandler.checkLimbs(Inference.refinedInferences);
 
     painter = LimbPainter(
-      inferences: Inference.refinedInferences,
+      inferences: Platform.isAndroid ? inferences! : Inference.refinedInferences,
       limbs: ExerciseHandler.limbs,
       isSolo: true,
     );
@@ -128,9 +133,9 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
                 children: [
                   CameraPainterView(painter: painter),
                   Positioned(
-                    bottom: 20.0,
+                    bottom: 20.0.h,
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: EdgeInsets.all(20.0.r),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -139,27 +144,27 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SizedBox(
-                                width: 100.0,
+                                width: 100.0.w,
                                 child: Stack(
                                   children: [
                                     if (showPauseButton)
                                     FCircledButton(
                                       onPressed: workoutSoloCameraP.pauseButtonPressed,
                                       backgroundColor: FTheme.colorD,
-                                      child: const Icon(
+                                      child: Icon(
                                         Icons.pause_rounded,
                                         color: FTheme.white,
-                                        size: 50.0,
+                                        size: 50.0.r,
                                       ),
                                     ),
                                     if (showStopButton)
                                     FCircledButton(
                                       onPressed: workoutSoloCameraP.stopButtonPressed,
                                       backgroundColor: FTheme.colorB,
-                                      child: const Icon(
+                                      child: Icon(
                                         Icons.stop_rounded,
                                         color: FTheme.white,
-                                        size: 50.0,
+                                        size: 50.0.r,
                                       ),
                                     ),
                                   ],
@@ -172,30 +177,19 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
                                     && workoutSoloCameraP.state == WorkoutState.pause,
                               ),
                               SizedBox(
-                                width: 100.0,
-                                child: workoutSoloCameraP.state == WorkoutState.stop ? Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Material(
-                                      color: FTheme.lightGrey,
-                                      borderRadius: BorderRadius.circular(30.0),
-                                      child: const SizedBox(
-                                        width: 60.0,
-                                        height: 60.0,
-                                      ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        cameraP.toggleDirection();
-                                        initAsync();
-                                      },
-                                      icon: const Icon(
-                                        Icons.cameraswitch_rounded,
-                                        size: 33,
-                                        color: FTheme.background,
-                                      ),
-                                    ),
-                                  ],
+                                width: 100.0.w,
+                                child: workoutSoloCameraP.state == WorkoutState.stop ? FCircledButton(
+                                  backgroundColor: FTheme.lightGrey,
+                                  size: 70.0,
+                                  onPressed: () {
+                                    cameraP.toggleDirection();
+                                    initAsync();
+                                  },
+                                  child: Icon(
+                                    Icons.cameraswitch_rounded,
+                                    size: 34.0.r,
+                                    color: FTheme.background,
+                                  ),
                                 ) : null,
                               ),
                             ],

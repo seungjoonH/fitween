@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/friend.dart';
@@ -298,9 +299,10 @@ class RankingCard extends StatelessWidget {
           ),
           icon: const Icon(Icons.arrow_forward_ios),
           onPressed: () {
+            final globalP = Get.find<GlobalP>();
             int len = (rankingP.infos[type] ?? []).length;
             if (len > 1) { RankingP.toRanking(type); }
-            else { FriendP.toFriend(); }
+            else { globalP.navigate(1); }
           },
           constraints: BoxConstraints(minHeight: 160.0.h),
           child: Column(

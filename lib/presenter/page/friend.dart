@@ -9,6 +9,7 @@ import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -121,35 +122,33 @@ class FriendP extends GetxController {
     nicknameCont.clear();
     nicknameHintText = null;
 
-    Get.dialog(
-      FAlertDialog(
-        title: '친구 추가',
-        content: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10.0, vertical: 20.0,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              GetBuilder<FriendP>(
-                builder: (friendP) {
-                  return FInputField(
-                    controller: nicknameCont,
-                    invalid: !friendP.nicknameExist,
-                    hintText: friendP.nicknameHintText ?? '별명을 입력하세요',
-                    hintColor: friendP.nicknameHintText == null
-                        ? FTheme.darkGrey : FTheme.colorB,
-                  );
-                },
-              ),
-            ],
-          ),
+    showFDialog(
+      title: '친구 추가',
+      content: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: 10.0.r, vertical: 20.0.r,
         ),
-        type: DialogType.bi,
-        leftPressed: Get.back,
-        rightText: '추가하기',
-        rightPressed: friendInfoSubmitted,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GetBuilder<FriendP>(
+              builder: (friendP) {
+                return FInputField(
+                  controller: nicknameCont,
+                  invalid: !friendP.nicknameExist,
+                  hintText: friendP.nicknameHintText ?? '별명을 입력하세요',
+                  hintColor: friendP.nicknameHintText == null
+                      ? FTheme.darkGrey : FTheme.colorB,
+                );
+              },
+            ),
+          ],
+        ),
       ),
+      type: DialogType.bi,
+      leftPressed: Get.back,
+      rightText: '추가하기',
+      rightPressed: friendInfoSubmitted,
     );
   }
 

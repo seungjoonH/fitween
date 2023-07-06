@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'dart:math';
 
-import 'package:camera/camera.dart';
+import 'package:fitween/model/class/workout/isolate.dart';
 import 'package:fitween/presenter/widget/camera.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:tflite_flutter_helper/tflite_flutter_helper.dart';
 import 'package:image/image.dart' as image_lib;
@@ -31,16 +33,9 @@ class Classifier {
   }
 
   void loadModel([Interpreter? interpret]) async {
-    try {
-      interpreter = interpret ?? await Interpreter.fromAsset(
-        model, options: InterpreterOptions()..threads = 4,
-      );
-    } catch (e) {
-      if (kDebugMode) {
-        print("Error while creating interpreter: $e");
-      }
-    }
-
+    interpreter = interpret ?? await Interpreter.fromAsset(
+      model, options: InterpreterOptions()..threads = 4,
+    );
     outputLocations = TensorBufferFloat([1, 1, 17, 3]);
   }
 
@@ -55,16 +50,61 @@ class Classifier {
     return inputImage;
   }
 
-  void performOperations(CameraImage cameraImage) async {
+  static int yuv2rgb(int y, int u, int v) {
+    int r = (y + v * 1436 / 1024 - 179).round();
+    int g = (y - u * 46549 / 131072 + 44 - v * 93604 / 131072 + 91).round();
+    int b = (y + u * 1814 / 1024 - 227).round();
+
+    r = r.clamp(0, 255);
+    g = g.clamp(0, 255);
+    b = b.clamp(0, 255);
+
+    return 0xff000000 |
+    ((b << 16) & 0xff0000) |
+    ((g << 8) & 0xff00) |
+    (r & 0xff);
+  }
+
+  image_lib.Image convertCameraImage(IsolateData data) {
+    final cameraImage = data.cameraImage;
+    int width = cameraImage.width;
+    int height = cameraImage.height;
+    bool isPortrait = data.orientation == Orientation.portrait;
+
+    image_lib.Image image = image_lib.Image(width, height);
+
+    if (Platform.isAndroid) {
+      final int uvRowStride = cameraImage.planes[1].bytesPerRow;
+      final int? uvPixelStride = cameraImage.planes[1].bytesPerPixel;
+
+      for (int w = 0; w < width; w++) {
+        for (int h = 0; h < height; h++) {
+          final int uvIndex = uvPixelStride! * (w / 2).floor() + uvRowStride * (h / 2).floor();
+          final int index = h * width + w;
+
+          final y = cameraImage.planes[0].bytes[index];
+          final u = cameraImage.planes[1].bytes[uvIndex];
+          final v = cameraImage.planes[2].bytes[uvIndex];
+
+          image.data[index] = yuv2rgb(y, u, v);
+        }
+      }
+
+      image = image_lib.copyRotate(image, isPortrait ? 90.0 : 180.0);
+      // image = image_lib.flipHorizontal(image);
+    }
+
+    else if (Platform.isIOS) {
+      image.data = cameraImage.planes.first.bytes.buffer.asUint32List();
+    }
+
+    return image;
+  }
+
+  void performOperations(IsolateData data) async {
     stopwatch.start();
 
-    image_lib.Image convertedImage = image_lib.Image(
-      cameraImage.width,
-      cameraImage.height,
-    );
-
-    convertedImage.data = cameraImage.planes
-        .first.bytes.buffer.asUint32List();
+    image_lib.Image convertedImage = convertCameraImage(data);
 
     inputImage = TensorImage(TfLiteType.float32);
     inputImage.loadImage(convertedImage);
@@ -78,18 +118,36 @@ class Classifier {
     stopwatch.reset();
   }
 
-  List parseLandmarkData() {
+  List parseLandmarkData(Orientation orientation) {
     List<double> data = outputLocations.getDoubleList();
     List result = [];
     late int x, y;
     late double c;
 
-    double width = CameraP.presetSize.width;
-    double height = CameraP.presetSize.height;
+    late double first, second;
+
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        first = CameraP.presetSize.height;
+        second = CameraP.presetSize.width;
+        break;
+
+      case TargetPlatform.iOS:
+        first = CameraP.presetSize.width;
+        second = CameraP.presetSize.height;
+
+        if (orientation == Orientation.landscape) {
+          first = CameraP.presetSize.height;
+          second = CameraP.presetSize.width;
+        }
+        break;
+
+      default: break;
+    }
 
     for (var i = 0; i < 51; i += 3) {
-      y = (data[0 + i] * width).toInt();
-      x = (data[1 + i] * height).toInt();
+      y = (data[0 + i] * first).toInt();
+      x = (data[1 + i] * second).toInt();
       c = (data[2 + i]);
       result.add([x, y, c]);
     }

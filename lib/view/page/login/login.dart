@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:io' show Platform;
+import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/page/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/main.dart';
@@ -28,6 +30,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    super.initState();
+
     backgroundOpacity = .0;
     buttonsOpacity = .0;
     Future.delayed(const Duration(milliseconds: 500), () {
@@ -40,7 +44,6 @@ class _LoginPageState extends State<LoginPage> {
     timer = Timer.periodic(const Duration(milliseconds: 500), (_) {
       setState(() => pointCount = (pointCount + 1) % 4);
     });
-    super.initState();
   }
 
   @override
@@ -51,7 +54,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size screenSize = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
+    GlobalP.setIsTablet(size);
 
     return Scaffold(
       backgroundColor: FTheme.white,
@@ -67,7 +71,7 @@ class _LoginPageState extends State<LoginPage> {
               if (loginP.loading) Positioned(
                 bottom: 80.0.h,
                 child: SizedBox(
-                  width: screenSize.width * .9,
+                  width: size.width * .9,
                   child: LinearPercentIndicator(
                     percent: loginP.loadPercent,
                     lineHeight: 40.0.h,

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/string.dart';
 import 'package:fitween/global/theme.dart';
@@ -56,6 +58,13 @@ class GlobalP extends GetxController {
       'assets/image/widget/dialog/badge_effect2.png';
 
   int navIndex = 0;
+
+  static late bool _isTablet;
+
+  static void setIsTablet(Size size) {
+    _isTablet = max(size.width, size.height) > 600;
+  }
+  static bool get isTablet => _isTablet;
 
   static Future init() async {
     final globalP = Get.find<GlobalP>();
@@ -153,7 +162,7 @@ class GlobalP extends GetxController {
                     padding: EdgeInsets.symmetric(horizontal: 12.0.r),
                     decoration: BoxDecoration(
                       color: FTheme.lightGrey,
-                      borderRadius: BorderRadius.circular(12.0),
+                      borderRadius: BorderRadius.circular(12.0.r),
                     ),
                     child: FText(
                       '${collection.dates.length}',
@@ -163,9 +172,9 @@ class GlobalP extends GetxController {
                   ),
                 ],
               ),
-              const SizedBox(width: 20.0),
+              SizedBox(width: 20.0.w),
               Container(
-                constraints: const BoxConstraints(maxHeight: 70.0),
+                constraints: BoxConstraints(maxHeight: 70.0.h),
                 child: SingleChildScrollView(
                   child: Column(
                     children: collection.dateList.map((date) => FText(
@@ -181,21 +190,20 @@ class GlobalP extends GetxController {
               ),
             ],
           ),
-          const SizedBox(height: 10.0),
+          SizedBox(height: 10.0.h),
           Container(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0.r),
             alignment: Alignment.topLeft,
-            constraints: const BoxConstraints(minHeight: 100.0),
+            constraints: BoxConstraints(minHeight: 100.0.h),
             child: FText(
-                collection.badge!.description!,
-                style: FTheme.textTheme.titleSmall,
-                maxLines: 5,
+              collection.badge!.description!,
+              maxLines: 5,
             ),
           ),
         ],
       ),
       type: isMainBadge ? DialogType.mono : DialogType.bi,
-      leftText: isMainBadge ? null : '대표 컬렉션으로 설정',
+      leftText: isMainBadge ? null : '대표 뱃지로 설정',
       leftPressed: isMainBadge ? null : (() async {
         Get.back();
         await Future.delayed(const Duration(milliseconds: 200));
@@ -282,7 +290,7 @@ class GlobalP extends GetxController {
         ],
       ),
       type: DialogType.bi,
-      leftText: '대표 컬렉션으로 설정',
+      leftText: '대표 뱃지로 설정',
       leftPressed: () async {
         Get.back();
         await Future.delayed(const Duration(milliseconds: 200));

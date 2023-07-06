@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:device_info/device_info.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/presenter/page/login.dart';
@@ -13,6 +14,7 @@ import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/import.dart';
 import 'package:fitween/presenter/widget/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -34,6 +36,7 @@ void main() async {
     // name: 'pistachio',
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   await initializeDateFormatting();
   runApp(const Fitween());
 }

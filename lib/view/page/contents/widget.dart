@@ -122,7 +122,7 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
                       itemCount: loadingP.loading ? 2 : parties.length,
                       itemBuilder: (_, index) {
                         return loadingP.loading ? FCard(
-                          constraints: BoxConstraints(minHeight: 130.0.h),
+                          constraints: BoxConstraints(minHeight: 140.0.h),
                           child: const SizedBox(),
                         ) : ChallengeCard(
                           challenge: ChallengeJsonP.getChallenge(parties[index].challengeId!)
@@ -215,13 +215,10 @@ class ChallengeCard extends StatelessWidget {
           SizedBox(
             child: Image.asset(
               challenge.imageUrls['default'],
+              width: 100.0.w,
+              height: 140.0.h,
               fit: BoxFit.cover,
-              height: 120.0.h,
             ),
-          ),
-          Container(
-            height: 100.0.h,
-            color: FTheme.black.withOpacity(.2),
           ),
         ],
       ),
@@ -231,7 +228,7 @@ class ChallengeCard extends StatelessWidget {
       onPressed: onPressed,
       backgroundColor: FTheme.white,
       padding: EdgeInsets.zero,
-      height: 120.0.h,
+      height: 140.0.h,
       child: Row(
         children: [
           isHero ? Hero(
@@ -246,14 +243,13 @@ class ChallengeCard extends StatelessWidget {
                 children: [
                   FText(
                     challenge.title ?? '',
-                    style: textTheme(context).titleMedium,
                     maxLines: 1,
                     bold: true,
                   ),
                   SizedBox(height: 4.0.h),
                   FText(
                     challenge.descriptions['sub']!,
-                    style: textTheme(context).bodyMedium,
+                    style: textTheme(context).bodySmall,
                     color: FTheme.lightGrey,
                     maxLines: 2,
                   ),
@@ -884,7 +880,7 @@ class BattleCardView extends StatelessWidget {
                     ),
                     FText(
                       '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
-                      maxLines: 2,
+                      maxLines: 3,
                       style: textTheme(context).titleSmall,
                     ),
                     FButton(

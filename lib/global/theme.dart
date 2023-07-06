@@ -258,7 +258,7 @@ class FTheme {
     fontFamily: fontFamily,
     fontWeight: FontWeight.w700,
     fontSize: 250.0.sp,
-    height: (225 / 250),
+    height: (225.h / 250.sp),
   );
 
   static TextStyle get largeText => TextStyle(

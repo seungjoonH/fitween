@@ -68,6 +68,7 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
     IsolateData isolateData = IsolateData(
       cameraImage: imageStream,
       interpreterAddress: CameraP.classifier.interpreter.address,
+      orientation: MediaQuery.of(context).orientation,
     );
 
     List inferenceList = await CameraP

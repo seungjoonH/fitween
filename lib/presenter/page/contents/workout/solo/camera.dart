@@ -160,7 +160,7 @@ class WorkoutSoloCameraP extends GetxController {
         .every((posture) => posture == WorkoutPosture.correct);
 
     if (stage == WorkoutStage.up) postures.add(ExerciseHandler.posture);
-    if (changedDownToUp) postures = [];
+    if (changedDownToUp) { postures = []; }
     if (changedUpToDown) {
       if (isCorrect) countUp();
       postureMessage = (isCorrect

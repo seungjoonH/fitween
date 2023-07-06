@@ -96,7 +96,7 @@ class ChallengeInfoCard extends StatelessWidget {
     return GetBuilder<LoadingP>(
       builder: (loadingP) {
         return FCard(
-          height: max(size.height * .6, 500.0.h),
+          height: max(size.height * .7, 520.0.h),
           padding: EdgeInsets.zero,
           child: loadingP.loading ? Container() : Expanded(
             child: Column(
@@ -172,7 +172,7 @@ class ChallengeScoreCard extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return FCard(
-      height: max(size.height * .6, 500.0.h),
+      height: max(size.height * .7, 520.0.h),
       title: FText('점수판',
         style: textTheme(context).titleLarge,
         color: FTheme.darkGrey,
@@ -203,7 +203,7 @@ class ChallengeScoreCard extends StatelessWidget {
               ],
             ),
             Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Divider(
                   color: FTheme.lightGrey,
@@ -261,7 +261,7 @@ class ChallengeScoreCard extends StatelessWidget {
                 const SizedBox(height: 10.0),
                 FText(
                   '참여 코드를 친구에게 공유하여 함께 도전해요!',
-                  style: textTheme(context).bodyLarge,
+                  style: textTheme(context).bodyMedium,
                 ),
               ],
             ),

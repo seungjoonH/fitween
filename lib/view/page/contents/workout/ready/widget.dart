@@ -3,6 +3,7 @@ import 'package:fitween/presenter/page/contents/workout/ready.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class BattleReadyView extends StatelessWidget {
@@ -39,7 +40,7 @@ class BattleReadyView extends StatelessWidget {
             ],
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 60.0),
+            padding: EdgeInsets.only(bottom: 50.0.h),
             child: FButton(
               text: '시작하기',
               stretch: true,

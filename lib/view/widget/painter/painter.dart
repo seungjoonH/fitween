@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:fitween/presenter/page/contents/workout/battle/camera.dart';
 import 'package:fitween/presenter/page/contents/workout/solo/camera.dart';
+import 'package:fitween/presenter/widget/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
@@ -71,7 +72,7 @@ class LimbPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (!humanDetected) return;
+    // if (!humanDetected) return;
     renderEdges(canvas);
     renderPoints(canvas);
   }

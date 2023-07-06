@@ -92,8 +92,11 @@ class CarouselView extends StatelessWidget {
                     ),
                   ),
                 ),
-                const CarouselButton(),
-                const SizedBox(height: 50.0),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0.w),
+                  child: const CarouselButton(),
+                ),
+                SizedBox(height: 50.0.h),
               ],
             ),
           ],
@@ -953,20 +956,16 @@ class CarouselButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<RegisterP>(
       builder: (controller) {
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          height: 50.0,
-          child: FButton(
-            onPressed: () async {
-              if (controller.keyboardVisible) {
-                FocusScope.of(context).unfocus();
-                await Future.delayed(const Duration(milliseconds: 100));
-              }
-              controller.nextPressed();
-            },
-            text: '다음',
-            stretch: true,
-          ),
+        return FButton(
+          onPressed: () async {
+            if (controller.keyboardVisible) {
+              FocusScope.of(context).unfocus();
+              await Future.delayed(const Duration(milliseconds: 100));
+            }
+            controller.nextPressed();
+          },
+          text: '다음',
+          stretch: true,
         );
       },
     );
