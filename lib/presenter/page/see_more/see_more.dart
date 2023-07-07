@@ -38,7 +38,7 @@ class SeeMoreP extends GetxController {
       content: FText('정말 계정을 삭제하시겠습니까?', maxLines: 2),
       type: DialogType.bi,
       rightText: '삭제하기',
-      rightBackgroundColor: colorScheme(Get.context!).error,
+      rightBackgroundColor: FTheme.error,
       leftPressed: Get.back,
       rightPressed: AuthP.fDeleteAccount,
     );

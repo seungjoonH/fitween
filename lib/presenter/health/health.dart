@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:health/health.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/presenter/model/record.dart';
+import 'package:health/health.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class HealthP {
   /// static variables
@@ -14,15 +17,18 @@ class HealthP {
   // 헬스 자료형
   static const stepType = [HealthDataType.STEPS];
   static const flightType = [HealthDataType.FLIGHTS_CLIMBED];
-  static get types => stepType + flightType;
+  static get types {
+    if (Platform.isAndroid) return stepType;
+    return stepType + flightType;
+  }
 
   // 헬스 데이터 접근 방법
   static get read =>
-      List.generate(types.length, (i) => HealthDataAccess.READ);
+      List.generate(types.length, (_) => HealthDataAccess.READ);
   static get write =>
-      List.generate(types.length, (i) => HealthDataAccess.WRITE);
+      List.generate(types.length, (_) => HealthDataAccess.WRITE);
   static get readWrite =>
-      List.generate(types.length, (i) => HealthDataAccess.READ_WRITE);
+      List.generate(types.length, (_) => HealthDataAccess.READ_WRITE);
 
   // 데이터 접근 승인 여부
   static bool approved = false;
@@ -30,21 +36,19 @@ class HealthP {
   /// static methods
   // 데이터 허가 요청
   static Future requestAuth() async {
-    // bool isAndroid = defaultTargetPlatform == TargetPlatform.android;
     bool hasPermission = false;
 
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return;
-        // final permissionStatus = await Permission.activityRecognition.request();
-        // hasPermission = !(
-        //   permissionStatus.isDenied ||
-        //   permissionStatus.isPermanentlyDenied
-        // );
+        final permissionStatus = await Permission.activityRecognition.request();
+        hasPermission = !(
+          permissionStatus.isDenied ||
+          permissionStatus.isPermanentlyDenied
+        );
         // await HealthFactory.revokePermissions();
-        // break;
+        break;
       case TargetPlatform.iOS:
-        hasPermission = await HealthFactory.hasPermissions(
+        hasPermission = await health.hasPermissions(
           types, permissions: read,
         ) ?? false;
         break;

@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
-import 'package:device_info/device_info.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/presenter/page/login.dart';
@@ -14,7 +13,6 @@ import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/import.dart';
 import 'package:fitween/presenter/widget/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -89,7 +87,6 @@ class _FitweenState extends State<Fitween> {
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.light,
           theme: ThemeData(
-            colorScheme: FTheme.lightColorScheme,
             textTheme: FTheme.textTheme,
             scaffoldBackgroundColor: FTheme.background,
             appBarTheme: AppBarTheme(
@@ -99,15 +96,6 @@ class _FitweenState extends State<Fitween> {
                 size: 20.0.r,
               ),
             ),
-          ),
-          darkTheme: ThemeData(
-            useMaterial3: true,
-            // colorScheme: FTheme.darkColorScheme,
-            // textTheme: FTheme.textTheme,
-            // scaffoldBackgroundColor: FTheme.darkColorScheme.background,
-            // appBarTheme: AppBarTheme(
-            //   backgroundColor: FTheme.darkColorScheme.background,
-            // ),
           ),
           // home: const DeveloperPage(),
           home: const LoginPage(),

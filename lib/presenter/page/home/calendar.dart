@@ -1,4 +1,5 @@
 import 'dart:collection';
+import 'dart:io';
 
 import 'package:fitween/global/date.dart';
 import 'package:fitween/presenter/health/health.dart';
@@ -70,7 +71,7 @@ class CalendarP extends GetxController {
     loadingP.loadStart();
 
     await HealthP.fetchStepData(startDate, endDate);
-    await HealthP.fetchFlightsData(startDate, endDate);
+    if (Platform.isIOS) await HealthP.fetchFlightsData(startDate, endDate);
 
     loadingP.loadEnd();
 

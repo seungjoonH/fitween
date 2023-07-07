@@ -17,7 +17,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   image_picker: ^0.8.5+3
   flutter_screenutil: ^5.5.3+2
-  intl: ^0.17.0
+  intl: ^0.18.1
   pull_to_refresh: ^2.0.0
   material_tag_editor: ^0.1.2
   percent_indicator: ^4.2.2
@@ -26,16 +26,14 @@ dependencies:
   animated_flip_counter: ^0.2.4
   lottie: ^2.1.0
   syncfusion_flutter_calendar: ^21.1.38
-  dotted_border: ^2.0.0+2
   bottom_sheet_bar: ^2.3.1
-  flutter_polygon: ^0.3.0+2
   flutter_local_notifications: ^12.0.3
   dots_indicator: ^2.1.0
   flutter_shake_animated: ^0.0.5
   numberpicker: ^2.1.1
   sign_in_with_apple: ^4.1.0
   flutter_secure_storage: ^8.0.0
-  health: ^4.1.1
+  health: ^7.0.1
   permission_handler: ^10.0.0
   rive: ^0.9.1
   parallax_animation: ^0.0.3
@@ -75,7 +73,6 @@ dependencies:
   camera: ^0.9.4+5
   tflite_flutter: ^0.9.0
   tflite_flutter_helper: ^0.2.1
-  device_info: ^2.0.3
 
 dependency_overrides:
   camera_android: 0.10.4
