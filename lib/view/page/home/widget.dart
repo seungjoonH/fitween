@@ -2,7 +2,6 @@ import 'dart:math';
 import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
-import 'package:fitween/presenter/page/friend.dart';
 import 'package:fitween/presenter/page/home/calendar.dart';
 import 'package:fitween/presenter/page/home/ranking.dart';
 import 'package:fitween/view/page/home/ranking/widget.dart';

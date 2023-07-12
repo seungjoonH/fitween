@@ -19,7 +19,7 @@ class InfoEditPage extends StatelessWidget {
           icon: Icon(Icons.cancel),
           onPressed: InfoEditP.backPressed,
         ),
-        color: FTheme.white,
+        textColor: FTheme.white,
       ),
       body: GetBuilder<InfoEditP>(
         builder: (infoEditP) {

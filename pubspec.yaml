@@ -12,63 +12,58 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # authentication (firebase excluded)
   google_sign_in: ^6.0.2
-  get: ^4.6.5
-  cupertino_icons: ^1.0.2
-  image_picker: ^0.8.5+3
-  flutter_screenutil: ^5.5.3+2
-  intl: ^0.18.1
-  pull_to_refresh: ^2.0.0
-  material_tag_editor: ^0.1.2
-  percent_indicator: ^4.2.2
-  carousel_slider: ^4.1.1
-  flutter_svg: ^2.0.4
-  animated_flip_counter: ^0.2.4
-  lottie: ^2.1.0
-  syncfusion_flutter_calendar: ^21.1.38
-  bottom_sheet_bar: ^2.3.1
-  flutter_local_notifications: ^12.0.3
-  dots_indicator: ^2.1.0
-  flutter_shake_animated: ^0.0.5
-  numberpicker: ^2.1.1
   sign_in_with_apple: ^4.1.0
   flutter_secure_storage: ^8.0.0
-  health: ^7.0.1
-  permission_handler: ^10.0.0
-  rive: ^0.9.1
-  parallax_animation: ^0.0.3
+
+  # state management
+  get: ^4.6.5
+
+  # front-end
+  ## image
+  lottie: ^2.1.0
+  flutter_svg: ^2.0.4
+  flutter_gif: ^0.0.4
+
+  ## layout
+  flutter_screenutil: ^5.5.3+2
+
+  ## widget
+  pull_to_refresh: ^2.0.0
+  percent_indicator: ^4.2.2
+  dots_indicator: ^2.1.0
+  carousel_slider: ^4.1.1
+  numberpicker: ^2.1.1
+  animated_flip_counter: ^0.2.4
+  table_calendar: ^3.0.8
+  bottom_sheet_bar: ^2.3.1
+  flutter_shake_animated: ^0.0.5
   animated_text_kit: ^4.2.2
   text_scroll: ^0.2.0
-  basic_utils: ^5.4.0
-  flutter_animate: ^4.1.1+1
+  webview_flutter: ^4.2.2
+
+  # back-end
   ntp: ^2.0.0
-  super_banners: ^0.0.1
-  native_exif: ^0.4.0
-  #  webview_flutter: ^4.0.1
-  in_app_review: ^2.0.6
-  path_provider: ^2.0.8
-  indexed: ^0.0.8
-  flutter_gif: ^0.0.4
-  table_calendar: ^3.0.8
+  intl: ^0.18.1
+  health: ^7.0.1
+  basic_utils: ^5.5.4
   pausable_timer: ^1.0.0+7
+  permission_handler: ^10.0.0
+  flutter_local_notifications: ^15.0.1
   connectivity: ^3.0.6
+  in_app_review: ^2.0.6
 
-#  firebase_core: ^2.1.1
-#  cloud_firestore: ^4.0.3
-#  firebase_storage: ^11.0.3
-#  firebase_auth: ^4.1.0
-#  firebase_messaging: ^14.0.3
-#  firebase_in_app_messaging: ^0.7.0+3
-#  firebase_core_platform_interface: ^4.7.0
-
+  # firebase
+  firebase_auth: ^4.5.0
   firebase_core: ^2.11.0
   cloud_firestore: ^4.6.0
   firebase_storage: ^11.1.2
-  firebase_auth: ^4.5.0
   firebase_messaging: ^14.5.0
   firebase_in_app_messaging: ^0.7.2
   firebase_core_platform_interface: ^4.7.0
 
+  # tensorflow related: must not be changed
   image: ^3.1.0
   camera: ^0.9.4+5
   tflite_flutter: ^0.9.0
@@ -77,17 +72,14 @@ dependencies:
 dependency_overrides:
   camera_android: 0.10.4
 
-#dependency_overrides:
-#  firebase_core_platform_interface: 4.5.2
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  flutter_oss_licenses: ^2.0.1
 
 flutter:
-
   uses-material-design: true
 
   assets:

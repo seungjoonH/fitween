@@ -1,11 +1,11 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/presenter/firebase/auth/auth.dart';
+import 'package:fitween/presenter/inspection/inspection.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/text.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SeeMoreP extends GetxController {
@@ -14,6 +14,8 @@ class SeeMoreP extends GetxController {
     if (initialize) await init();
   }
   static Future init() async {
+    if (await Inspection.load()) return;
+
     final seeMoreP = Get.find<SeeMoreP>();
     final loadingP = Get.find<LoadingP>();
 

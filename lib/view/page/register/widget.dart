@@ -169,9 +169,9 @@ class UserInfoView extends StatelessWidget {
                     ShakeWidget(
                       autoPlay: controller.fields['sex']!.invalid,
                       shakeConstant: ShakeHorizontalConstant2(),
-                      child: Row(
+                      child: const Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: const [
+                        children: [
                           SexSelectionButton(sex: Sex.male),
                           SizedBox(width: 20.0),
                           SexSelectionButton(sex: Sex.female),
@@ -180,6 +180,12 @@ class UserInfoView extends StatelessWidget {
                     ),
                     SizedBox(height: 20.0.h),
                   ],
+                ),
+                SizedBox(height: 10.0.h),
+                FText(
+                  '* 생년월일과 성별을 바탕으로 일일 운동 목표량을 추천해드려요.',
+                  style: textTheme(context).bodySmall,
+                  color: FTheme.lightGrey,
                 ),
               ],
             ),
@@ -382,7 +388,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
               icon: Icon(
                 Icons.arrow_drop_up,
                 size: 30.0.r,
-                color: record.amount > widget.minValue
+                color: record.amount < widget.maxValue
                     ? FTheme.black
                     : Colors.transparent,
               ),
@@ -416,7 +422,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
               icon: Icon(
                 Icons.arrow_drop_down,
                 size: 30.0.r,
-                color: record.amount < widget.maxValue
+                color: record.amount > widget.minValue
                     ? FTheme.black
                     : Colors.transparent,
               ),

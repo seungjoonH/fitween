@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:fitween/global/date.dart';
 import 'package:fitween/presenter/health/health.dart';
+import 'package:fitween/presenter/inspection/inspection.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/widget/loading.dart';
@@ -28,6 +29,8 @@ class CalendarP extends GetxController {
   }
 
   static Future init() async {
+    if (await Inspection.load()) return;
+
     final userP = Get.find<UserInfoP>();
     final calendarP = Get.find<CalendarP>();
     final loadingP = Get.find<LoadingP>();

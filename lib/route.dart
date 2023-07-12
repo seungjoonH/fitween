@@ -6,6 +6,11 @@ import 'package:fitween/view/page/contents/workout/battle/camera/camera.dart';
 import 'package:fitween/view/page/contents/workout/battle/result/result.dart';
 import 'package:fitween/view/page/contents/workout/solo/camera/camera.dart';
 import 'package:fitween/view/page/contents/workout/solo/result/result.dart';
+import 'package:fitween/view/page/see_more/app_info/app_info.dart';
+import 'package:fitween/view/page/see_more/app_info/license/detail.dart';
+import 'package:fitween/view/page/see_more/app_info/license/license.dart';
+import 'package:fitween/view/page/see_more/app_info/version.dart';
+import 'package:fitween/view/page/see_more/app_info/web_view.dart';
 import 'package:fitween/view/page/see_more/collection/collection.dart';
 import 'package:fitween/view/page/contents/achievement/level/level.dart';
 import 'package:fitween/view/page/contents/challenge/detail/detail.dart';
@@ -58,6 +63,11 @@ class FRoute {
     '/seeMore/collection': const CollectionPage(),
     '/seeMore/goalEdit': const GoalEditPage(),
     '/seeMore/infoEdit': const InfoEditPage(),
+    '/seeMore/appInfo': const AppInfoPage(),
+    '/seeMore/appInfo/license': const OSSLicensePage(),
+    '/seeMore/appInfo/license/detail': const LicenseDetailPage(),
+    '/seeMore/appInfo/webView': const WebViewPage(),
+    '/seeMore/appInfo/version': const VersionPage(),
   };
 
   // 겟페이지 리스트

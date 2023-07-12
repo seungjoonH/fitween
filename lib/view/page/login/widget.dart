@@ -1,5 +1,6 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:fitween/main.dart';
+import 'package:fitween/presenter/inspection/inspection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -35,6 +36,7 @@ class SignInButton extends StatelessWidget {
 
     return FButton(
       onPressed: () async {
+        if (await Inspection.load()) return;
         if (networkResult == ConnectivityResult.none) {
           LoginP.showNetworkErrorDialog();
           return;

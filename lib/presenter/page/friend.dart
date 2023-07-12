@@ -2,6 +2,7 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/user/friend.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/enum/dialog.dart';
+import 'package:fitween/presenter/inspection/inspection.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
@@ -20,6 +21,8 @@ class FriendP extends GetxController {
   }
 
   static Future init() async {
+    if (await Inspection.load()) return;
+
     final friendP = Get.find<FriendP>();
     final loadingP = Get.find<LoadingP>();
 

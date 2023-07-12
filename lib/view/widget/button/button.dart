@@ -12,6 +12,7 @@ class FButton extends StatefulWidget {
     Key? key,
     this.text,
     this.child,
+    this.style,
     this.onPressed,
     this.fill = true,
     EdgeInsets? padding,
@@ -23,9 +24,10 @@ class FButton extends StatefulWidget {
     this.border = false,
     this.motion = false,
     this.height,
+    this.alignment = MainAxisAlignment.center,
   }) : assert(text == null || child == null),
     padding = padding ?? EdgeInsets.symmetric(
-      horizontal: 20.0.w, vertical: 10.0.h,
+      horizontal: 25.0.r, vertical: 12.0.r,
     ),
     backgroundColor = backgroundColor ?? FTheme.darkGrey,
     textColor = textColor ?? (fill ? FTheme.white : FTheme.black),
@@ -33,6 +35,7 @@ class FButton extends StatefulWidget {
 
   final String? text;
   final Widget? child;
+  final TextStyle? style;
   final VoidCallback? onPressed;
   final bool fill;
   final EdgeInsets padding;
@@ -44,6 +47,7 @@ class FButton extends StatefulWidget {
   final bool border;
   final bool motion;
   final double? height;
+  final MainAxisAlignment? alignment;
 
   @override
   State<FButton> createState() => _FButtonState();
@@ -97,6 +101,8 @@ class _FButtonState extends State<FButton> {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle? style = widget.style ?? textTheme(context).titleSmall;
+
     Widget content = AnimatedScale(
       scale: scale,
       duration: duration,
@@ -123,11 +129,13 @@ class _FButtonState extends State<FButton> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (widget.stretch) const Expanded(child: SizedBox()),
+                if (widget.stretch && widget.alignment != MainAxisAlignment.start)
+                const Expanded(child: SizedBox()),
                 widget.child ?? FText(widget.text!,
-                  color: widget.textColor, style: textTheme(context).titleMedium,
+                  color: widget.textColor, style: style,
                 ),
-                if (widget.stretch) const Expanded(child: SizedBox()),
+                if (widget.stretch && widget.alignment != MainAxisAlignment.end)
+                const Expanded(child: SizedBox()),
               ],
             ),
           ),
@@ -240,24 +248,27 @@ class FIconButton extends StatelessWidget {
 class FTextButton extends StatefulWidget {
   FTextButton({
     Key? key,
-    required this.text,
+    this.text,
+    this.child,
     this.onPressed,
     this.style,
     this.color = FTheme.grey,
     EdgeInsets? padding,
-    this.leading,
-    this.action,
-  }) : padding = padding ?? EdgeInsets.symmetric(
-    horizontal: 20.0.w, vertical: 10.0.h,
+    this.stretch = false,
+    this.alignment = MainAxisAlignment.center,
+  }) : assert(text == null || child == null),
+        padding = padding ?? EdgeInsets.symmetric(
+    horizontal: 25.0.r, vertical: 12.0.r,
   ), super(key: key);
 
   final VoidCallback? onPressed;
-  final String text;
+  final String? text;
+  final Widget? child;
   final TextStyle? style;
   final Color? color;
   final EdgeInsets padding;
-  final Icon? leading;
-  final Icon? action;
+  final bool stretch;
+  final MainAxisAlignment alignment;
 
   @override
   State<FTextButton> createState() => _FTextButtonState();
@@ -312,14 +323,19 @@ class _FTextButtonState extends State<FTextButton> {
           onTapDown: onTapDown,
           onTapUp: onTapUp,
           onTapCancel: onTapCancel,
-          child: Padding(
+          child: Container(
             padding: widget.padding,
+            color: Colors.transparent,
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                if (widget.leading != null) widget.leading!,
-                FText(widget.text, style: widget.style, color: widget.color),
-                if (widget.action != null) widget.action!,
+                if (widget.stretch && widget.alignment != MainAxisAlignment.start)
+                const Expanded(child: SizedBox()),
+                widget.child ?? FText(widget.text!,
+                  color: widget.color, style: widget.style,
+                ),
+                if (widget.stretch && widget.alignment != MainAxisAlignment.end)
+                const Expanded(child: SizedBox()),
               ],
             ),
           ),

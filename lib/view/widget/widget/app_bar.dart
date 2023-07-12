@@ -8,15 +8,17 @@ class FAppBar extends StatelessWidget implements PreferredSizeWidget {
   const FAppBar({
     Key? key,
     this.title,
-    this.color,
+    this.textColor,
     this.leading,
     this.actions,
+    this.backColor = FTheme.grey,
   }) : super(key: key);
 
   final String? title;
-  final Color? color;
+  final Color? textColor;
   final Widget? leading;
   final List<Widget>? actions;
+  final Color? backColor;
 
   @override
   Size get preferredSize => const Size.fromHeight(60.0);
@@ -30,8 +32,12 @@ class FAppBar extends StatelessWidget implements PreferredSizeWidget {
           title ?? '',
           style: textTheme(context).headlineSmall,
           bold: true,
+          color: textColor,
         ),
-        leading: leading,
+        leading: leading ?? IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: backColor),
+          onPressed: Get.back,
+        ),
         actions: actions,
       ),
     );

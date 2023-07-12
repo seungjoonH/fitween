@@ -5,6 +5,7 @@ import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/enum/dialog.dart';
+import 'package:fitween/presenter/inspection/inspection.dart';
 import 'package:fitween/presenter/model/json/battle.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/json/party.dart';
@@ -36,6 +37,8 @@ class ContentsP extends GetxController {
 
   /// methods
   static Future init() async {
+    if (await Inspection.load()) return;
+
     final contentsP = Get.find<ContentsP>();
     final loadingP = Get.find<LoadingP>();
 

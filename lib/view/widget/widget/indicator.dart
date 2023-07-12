@@ -1,11 +1,13 @@
+import 'package:fitween/presenter/widget/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 
-class PCircularPercentIndicator extends StatelessWidget {
-  const PCircularPercentIndicator({
+class FCircularPercentIndicator extends StatelessWidget {
+  const FCircularPercentIndicator({
     Key? key,
     required this.percent,
     required this.color,
@@ -82,26 +84,27 @@ class PCircularPercentIndicator extends StatelessWidget {
   }
 }
 
-class PCircularProgressIndicator extends StatelessWidget {
-  const PCircularProgressIndicator({
+class FCircularProgressIndicator extends StatelessWidget {
+  const FCircularProgressIndicator({
     Key? key,
-    required this.visible,
+    this.child,
   }) : super(key: key);
 
-  final bool visible;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
-    return visible ? Stack(
-      alignment: Alignment.center,
-      children: const [
-        CircularProgressIndicator(
-          color: FTheme.colorA,
-        ),
-        // Container(
-        //   color: FTheme.black.withOpacity(.3),
-        // ),
-      ],
-    ) : Container();
+    return GetBuilder<LoadingP>(
+      builder: (loadingP) {
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            child ?? Container(),
+            if (loadingP.loading)
+            const CircularProgressIndicator(color: FTheme.colorA),
+          ],
+        );
+      },
+    );
   }
 }

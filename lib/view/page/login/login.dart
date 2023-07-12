@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:fitween/presenter/global.dart';
 import 'package:fitween/presenter/page/login.dart';
+import 'package:fitween/view/widget/widget/tag.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/main.dart';
@@ -67,7 +67,8 @@ class _LoginPageState extends State<LoginPage> {
           return Stack(
             alignment: Alignment.center,
             children: [
-              const FLogo(),
+              // const FLogo(),
+              const FAppIcon(),
               if (loginP.loading) Positioned(
                 bottom: 80.0.h,
                 child: SizedBox(
@@ -109,11 +110,7 @@ class _LoginPageState extends State<LoginPage> {
               Positioned(
                 right: 25.0.w,
                 bottom: 15.0.h,
-                child: FText(
-                  version,
-                  color: FTheme.darkGrey,
-                  style: textTheme(context).titleMedium,
-                ),
+                child: const FTag(version),
               ),
             ],
           );

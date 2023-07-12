@@ -49,8 +49,6 @@
 	<array>
 		<string>_dartobservatory._tcp</string>
 	</array>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Fitween tries to access your gallery.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Fitween tries to use a camera to measure your exercise posture.</string>
 	<key>NSHealthShareUsageDescription</key>
@@ -60,16 +58,12 @@
 	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
 	<dict>
 		<key>YourPurposeKey</key>
-		<string>The example App requires temporary access to the device&apos;s precise location.</string>
+		<string>The example App requires temporary access to the device's precise location.</string>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Fitween tries to access your gallery.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>bluetooth-central</string>
-		<string>fetch</string>
-		<string>remote-notification</string>
-	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

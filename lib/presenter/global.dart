@@ -7,6 +7,7 @@ import 'package:fitween/model/class/database/collection.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/enum/dialog.dart';
+import 'package:fitween/presenter/inspection/inspection.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/json/level.dart';
@@ -37,6 +38,8 @@ import 'package:fitween/presenter/page/login.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
 import 'package:fitween/presenter/page/home/ranking.dart';
 import 'package:fitween/presenter/page/register.dart';
+import 'package:fitween/presenter/page/see_more/app_info/app_info.dart';
+import 'package:fitween/presenter/page/see_more/app_info/version.dart';
 import 'package:fitween/presenter/page/see_more/collection/collection.dart';
 import 'package:fitween/presenter/page/see_more/goal_edit/goal_edit.dart';
 import 'package:fitween/presenter/page/see_more/info_edit/info_edit.dart';
@@ -67,6 +70,8 @@ class GlobalP extends GetxController {
   static bool get isTablet => _isTablet;
 
   static Future init() async {
+    if (await Inspection.load()) return;
+
     final globalP = Get.find<GlobalP>();
     globalP.navIndex = 0;
     globalP.update();
@@ -389,5 +394,7 @@ class GlobalP extends GetxController {
     Get.put(CollectionP());
     Get.put(GoalEditP());
     Get.put(InfoEditP());
+    Get.put(AppInfoP());
+    Get.put(VersionP());
   }
 }

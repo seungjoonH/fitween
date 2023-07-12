@@ -1,4 +1,5 @@
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/presenter/firebase/auth/auth.dart';
 import 'package:get/get.dart';
 import 'package:fitween/main.dart';
 import 'package:fitween/model/enum/dialog.dart';
@@ -6,6 +7,11 @@ import 'package:fitween/view/widget/function/dialog.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 
 class LoginP extends GetxController {
+  static void toLogin() {
+    AuthP.fLogout();
+    Get.offAllNamed('/login');
+  }
+
   static void showNetworkErrorDialog() {
     showFDialog(
       title: '네트워크 에러',

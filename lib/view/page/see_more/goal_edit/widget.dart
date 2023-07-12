@@ -155,7 +155,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
               icon: Icon(
                 Icons.arrow_drop_up,
                 size: 30.0.r,
-                color: record.amount > widget.minValue
+                color: record.amount < widget.maxValue
                     ? FTheme.black
                     : Colors.transparent,
               ),
@@ -189,7 +189,7 @@ class _GoalNumberPickerState extends State<GoalNumberPicker> {
               icon: Icon(
                 Icons.arrow_drop_down,
                 size: 30.0.r,
-                color: record.amount < widget.maxValue
+                color: record.amount > widget.minValue
                     ? FTheme.black
                     : Colors.transparent,
               ),
@@ -353,7 +353,7 @@ class DistanceGoalView extends StatelessWidget {
                       children: [
                         FTexts(
                           ['하루 ', '$minute', '분이면'],
-                          colors: const [FTheme.black, FTheme.colorA, FTheme.black],
+                          colors: const [FTheme.darkGrey, FTheme.colorA, FTheme.darkGrey],
                           style: textTheme(context).displaySmall,
                           alignment: MainAxisAlignment.end,
                           space: false,
@@ -460,9 +460,9 @@ class HeightGoalView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   FTexts(['하루', '${goal.amount.round()}', '층이면'],
-                    colors: [FTheme.black, ActivityType.calorie.color, FTheme.black],
+                    colors: [FTheme.darkGrey, ActivityType.calorie.color, FTheme.darkGrey],
                     alignment: MainAxisAlignment.start,
-                    style: style(FTheme.black),
+                    style: style(FTheme.darkGrey),
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,

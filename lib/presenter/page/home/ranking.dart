@@ -2,6 +2,7 @@ import 'package:fitween/global/date.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/enum/activity_type.dart';
+import 'package:fitween/presenter/inspection/inspection.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
@@ -14,6 +15,8 @@ class RankingP extends GetxController{
     Get.toNamed('/home/ranking', arguments: type);
   }
   static Future init() async {
+    if (await Inspection.load()) return;
+
     final rankingP = Get.find<RankingP>();
     final loadingP = Get.find<LoadingP>();
 

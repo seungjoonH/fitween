@@ -19,7 +19,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:connectivity/connectivity.dart';
 
 
-const version = 'ver 0.0';
+const version = 'ver 0.0.1';
 String get versionNumber => version.replaceAll('ver ', '');
 const releaseNoteUrl =
     'https://trusted-robe-5cd.notion.site/ad4f1c130b7a45e5a86eac2cc71133d8';
@@ -93,7 +93,7 @@ class _FitweenState extends State<Fitween> {
               backgroundColor: Colors.transparent,
               iconTheme: IconThemeData(
                 color: FTheme.darkGrey,
-                size: 20.0.r,
+                size: 25.0.r,
               ),
             ),
           ),

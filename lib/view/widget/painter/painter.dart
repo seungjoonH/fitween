@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:fitween/presenter/page/contents/workout/battle/camera.dart';
 import 'package:fitween/presenter/page/contents/workout/solo/camera.dart';
-import 'package:fitween/presenter/widget/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
@@ -21,37 +20,37 @@ class LimbPainter extends CustomPainter {
 
   // COLOR PROFILES
   Paint pointBlue = Paint()
-    ..color = FTheme.colorC.withOpacity(.5)
+    ..color = Colors.blue.withOpacity(.8)
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 8;
 
   Paint edgeBlue = Paint()
-    ..color = FTheme.colorC.withOpacity(.8)
+    ..color = Colors.blue.withOpacity(.3)
     ..strokeWidth = 5;
 
   // CORRECT POSTURE COLOR PROFILE
   Paint pointGreen = Paint()
-    ..color = FTheme.colorA.withOpacity(.5)
+    ..color = Colors.green.withOpacity(.8)
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 8;
 
   Paint edgeGreen = Paint()
-    ..color = FTheme.colorA.withOpacity(.8)
+    ..color = Colors.green.withOpacity(.3)
     ..strokeWidth = 5;
 
   // INCORRECT POSTURE COLOR PROFILE
   Paint pointRed = Paint()
-    ..color = FTheme.error.withOpacity(.5)
+    ..color = Colors.red.withOpacity(.8)
     ..strokeCap = StrokeCap.round
     ..strokeWidth = 8;
 
   Paint edgeRed = Paint()
-    ..color = FTheme.error.withOpacity(.8)
+    ..color = Colors.red.withOpacity(.3)
     ..strokeWidth = 5;
 
   Paint area = Paint()
     ..style = PaintingStyle.stroke
-    ..color = FTheme.colorB
+    ..color = Colors.green
     ..strokeWidth = 5;
 
   LimbPainter({

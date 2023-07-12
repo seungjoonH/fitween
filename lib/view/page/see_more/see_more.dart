@@ -1,5 +1,5 @@
 import 'package:fitween/global/theme.dart';
-import 'package:fitween/presenter/firebase/auth/auth.dart';
+import 'package:fitween/presenter/page/see_more/app_info/app_info.dart';
 import 'package:fitween/presenter/page/see_more/see_more.dart';
 import 'package:fitween/view/page/see_more/widget.dart';
 import 'package:fitween/view/widget/button/button.dart';
@@ -17,7 +17,15 @@ class SeeMorePage extends StatelessWidget {
     final refreshCont = RefreshController();
 
     return Scaffold(
-      appBar: const FAppBar(title: '더보기'),
+      appBar: const FAppBar(
+        title: '더보기',
+        actions: [
+          IconButton(
+            onPressed: AppInfoP.toAppInfo,
+            icon: Icon(Icons.info_outline),
+          ),
+        ],
+      ),
       body: SmartRefresher(
         controller: refreshCont,
         onRefresh: () async {
@@ -58,11 +66,15 @@ class SeeMorePage extends StatelessWidget {
                     FTextButton(
                       onPressed: SeeMoreP.logout,
                       text: '로그아웃',
+                      stretch: true,
+                      alignment: MainAxisAlignment.start,
                     ),
-                    SizedBox(height: 20.0.h),
+                    SizedBox(height: 10.0.h),
                     FTextButton(
                       onPressed: SeeMoreP.deleteAccount,
                       text: '계정삭제',
+                      stretch: true,
+                      alignment: MainAxisAlignment.start,
                     ),
                   ],
                 ),

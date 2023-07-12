@@ -87,6 +87,9 @@ class BadgeJsonP extends GetxController {
 
     for (int i = 0; i < consecutive3 - count3; i++) {
       userCollectionP.awardBadge(BadgeJsonP.getBadge('1000002')!);
+      final inAppReview = InAppReview.instance;
+
+      if (await inAppReview.isAvailable()) inAppReview.requestReview();
     }
     for (int i = 0; i < consecutive7 - count7; i++) {
       userCollectionP.awardBadge(BadgeJsonP.getBadge('1000003')!);

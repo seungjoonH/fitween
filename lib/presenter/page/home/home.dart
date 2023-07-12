@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/inspection/inspection.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/home/ranking.dart';
@@ -15,6 +16,8 @@ class HomeP extends GetxController {
   }
 
   static Future init() async {
+    if (await Inspection.load()) return;
+
     final homeP = Get.find<HomeP>();
     final loadingP = Get.find<LoadingP>();
 

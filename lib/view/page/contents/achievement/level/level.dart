@@ -17,7 +17,7 @@ class AchievementLevelPage extends StatelessWidget {
       backgroundColor: FTheme.white,
       appBar: FAppBar(
         title: type.kr,
-        color: FTheme.white,
+        textColor: FTheme.white,
         leading: IconButton(
           icon: const Icon(Icons.cancel),
           onPressed: Get.back,
