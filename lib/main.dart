@@ -19,7 +19,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:connectivity/connectivity.dart';
 
 
-const version = 'ver 0.0.2';
+const version = 'ver 1.0.1';
 String get versionNumber => version.replaceAll('ver ', '');
 
 late ConnectivityResult networkResult;
