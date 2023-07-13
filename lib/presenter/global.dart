@@ -39,6 +39,8 @@ import 'package:fitween/presenter/page/onboarding.dart';
 import 'package:fitween/presenter/page/home/ranking.dart';
 import 'package:fitween/presenter/page/register.dart';
 import 'package:fitween/presenter/page/see_more/app_info/app_info.dart';
+import 'package:fitween/presenter/page/see_more/app_info/report/edit.dart';
+import 'package:fitween/presenter/page/see_more/app_info/report/report.dart';
 import 'package:fitween/presenter/page/see_more/app_info/version.dart';
 import 'package:fitween/presenter/page/see_more/collection/collection.dart';
 import 'package:fitween/presenter/page/see_more/goal_edit/goal_edit.dart';
@@ -396,5 +398,7 @@ class GlobalP extends GetxController {
     Get.put(InfoEditP());
     Get.put(AppInfoP());
     Get.put(VersionP());
+    Get.put(ReportP());
+    Get.put(ReportEditP());
   }
 }

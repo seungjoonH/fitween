@@ -10,14 +10,16 @@ class FListTile extends StatefulWidget {
     required this.title,
     this.tag,
     this.subtitle,
+    this.maxLines = 2,
     this.leading,
     this.trailing,
     this.onPressed,
   }) : super(key: key);
 
   final String title;
-  final String? tag;
+  final FTag? tag;
   final String? subtitle;
+  final int maxLines;
   final Widget? leading;
   final Widget? trailing;
   final VoidCallback? onPressed;
@@ -75,15 +77,16 @@ class _FListTileState extends State<FListTile> {
           onTapDown: onTapDown,
           onTapUp: onTapUp,
           onTapCancel: onTapCancel,
-          child: Padding(
+          child: Container(
             padding: EdgeInsets.all(15.0.r),
+            color: Colors.transparent,
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(child: FText(widget.title, bold: true)),
-                    if (widget.tag != null) FTag(widget.tag!),
+                    if (widget.tag != null) widget.tag!,
                   ],
                 ),
                 SizedBox(height: 5.0.h),
@@ -104,7 +107,7 @@ class _FListTileState extends State<FListTile> {
                             widget.subtitle ?? '',
                             color: FTheme.lightGrey,
                             style: textTheme(context).bodyMedium,
-                            maxLines: 2,
+                            maxLines: widget.maxLines,
                           ),
                         ],
                       ),

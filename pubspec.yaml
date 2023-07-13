@@ -108,10 +108,6 @@ flutter:
     - assets/model/lite-model_movenet_singlepose_lightning_3.tflite
 
   fonts:
-    - family: BMJUA
-      fonts:
-        - asset: assets/font/BMJUA/BMJUA_ttf.ttf
-
     - family: Pretendard
       fonts:
         - asset: assets/font/Pretendard/Pretendard-Medium.otf

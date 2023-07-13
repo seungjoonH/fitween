@@ -30,7 +30,7 @@ class ExerciseHandler {
   static void doWorkout() {
     switch (workout) {
       case Workout.squat: squat(); break;
-      case Workout.overheadDumbbellPress: overheadDumbbellPress(); break;
+      case Workout.shoulderPress: shoulderPress(); break;
     }
   }
 
@@ -45,7 +45,7 @@ class ExerciseHandler {
     ];
   }
 
-  static void overheadDumbbellPress() {
+  static void shoulderPress() {
     limbs = [];
     limbs.add(Limb(Part.wristL, Part.elbowL, Part.shoulderL));
     limbs.add(Limb(Part.wristR, Part.elbowR, Part.shoulderR));
@@ -66,8 +66,8 @@ class ExerciseHandler {
   static void checkLimbs(Map<Part, Inference> inference) {
     switch (workout) {
       case Workout.squat: checkSquatLimbs(inference); break;
-      case Workout.overheadDumbbellPress:
-        checkOverheadDumbbellPressLimbs(inference); break;
+      case Workout.shoulderPress:
+        checkShoulderPressLimbs(inference); break;
     }
   }
 
@@ -105,7 +105,7 @@ class ExerciseHandler {
     posture = WorkoutPosture.unbent;
   }
 
-  static void checkOverheadDumbbellPressLimbs(Map<Part, Inference> inference) {
+  static void checkShoulderPressLimbs(Map<Part, Inference> inference) {
     bool isCorrect = true;
     bent = true;
     parts = Parts(inference);

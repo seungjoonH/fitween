@@ -865,45 +865,7 @@ class BattleCardView extends StatelessWidget {
                 );
               }).toList(),
             ),
-            // FCard(
-            //   title: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       FText('오버헤드 덤벨 프레스!',
-            //         style: textTheme(context).titleLarge,
-            //         bold: true,
-            //       ),
-            //       const FTag('beta'),
-            //     ],
-            //   ),
-            //   height: 420.0.h,
-            //   child: Expanded(
-            //     child: Column(
-            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //       crossAxisAlignment: CrossAxisAlignment.stretch,
-            //       children: [
-            //         Image.asset(
-            //           'assets/image/page/contents/fight.png',
-            //           height: 180.0.h,
-            //         ),
-            //         FText(
-            //           '친구와 제한 시간 내에\n누가 더 오버헤드 덤벨 프레스를 많이 하는지 대결해요!',
-            //           maxLines: 3,
-            //           style: textTheme(context).titleSmall,
-            //         ),
-            //         FButton(
-            //           stretch: true,
-            //           text: '타임어택 하러가기',
-            //           onPressed: () {
-            //             ExerciseHandler.workout = Workout.overheadDumbbellPress;
-            //             WorkoutFriendP.toWorkoutFriend();
-            //           },
-            //         ),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            // SizedBox(height: 20.0.h),
+
             FCard(
               title: FText('스쿼트!',
                 style: textTheme(context).titleLarge,
@@ -920,7 +882,7 @@ class BattleCardView extends StatelessWidget {
                       height: 180.0.h,
                     ),
                     FText(
-                      '친구와 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
+                      '라이벌과 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
                       maxLines: 3,
                       style: textTheme(context).titleSmall,
                     ),
@@ -929,6 +891,45 @@ class BattleCardView extends StatelessWidget {
                       text: '타임어택 하러가기',
                       onPressed: () {
                         ExerciseHandler.workout = Workout.squat;
+                        WorkoutFriendP.toWorkoutFriend();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(height: 20.0.h),
+            FCard(
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  FText('숄더 프레스!',
+                    style: textTheme(context).titleLarge,
+                    bold: true,
+                  ),
+                  const FTag('Beta'),
+                ],
+              ),
+              height: 420.0.h,
+              child: Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Image.asset(
+                      'assets/image/page/contents/fight.png',
+                      height: 180.0.h,
+                    ),
+                    FText(
+                      '라이벌과 제한 시간 내에\n누가 더 숄더 프레스를 많이 하는지 대결해요!',
+                      maxLines: 3,
+                      style: textTheme(context).titleSmall,
+                    ),
+                    FButton(
+                      stretch: true,
+                      text: '타임어택 하러가기',
+                      onPressed: () {
+                        ExerciseHandler.workout = Workout.shoulderPress;
                         WorkoutFriendP.toWorkoutFriend();
                       },
                     ),

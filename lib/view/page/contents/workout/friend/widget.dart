@@ -1,4 +1,5 @@
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/model/class/workout/handler.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/page/contents/workout/friend.dart';
@@ -29,10 +30,10 @@ class BattleFriendView extends StatelessWidget {
               Column(
                 children: [
                   FText(
-                    '라이벌과 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
-                    maxLines: 2,
+                    '라이벌과 제한 시간 내에\n누가 더 ${ExerciseHandler.workout.kr}를 많이 하는지 대결해요!',
+                    maxLines: 3,
                     color: FTheme.darkGrey,
-                    style: textTheme(context).titleMedium,
+                    style: textTheme(context).titleSmall,
                   ),
                   const SizedBox(height: 50.0),
                   SizedBox(

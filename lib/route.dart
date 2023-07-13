@@ -1,4 +1,3 @@
-/* 라우트 관련 */
 import 'package:fitween/view/page/contents/workout/battle/record/record.dart';
 import 'package:fitween/view/page/contents/workout/friend/friend.dart';
 import 'package:fitween/view/page/contents/workout/ready/ready.dart';
@@ -7,6 +6,9 @@ import 'package:fitween/view/page/contents/workout/battle/result/result.dart';
 import 'package:fitween/view/page/contents/workout/solo/camera/camera.dart';
 import 'package:fitween/view/page/contents/workout/solo/result/result.dart';
 import 'package:fitween/view/page/see_more/app_info/app_info.dart';
+import 'package:fitween/view/page/see_more/app_info/report/detail.dart';
+import 'package:fitween/view/page/see_more/app_info/report/edit.dart';
+import 'package:fitween/view/page/see_more/app_info/report/report.dart';
 import 'package:fitween/view/page/see_more/app_info/license/detail.dart';
 import 'package:fitween/view/page/see_more/app_info/license/license.dart';
 import 'package:fitween/view/page/see_more/app_info/version.dart';
@@ -68,6 +70,9 @@ class FRoute {
     '/seeMore/appInfo/license/detail': const LicenseDetailPage(),
     '/seeMore/appInfo/webView': const WebViewPage(),
     '/seeMore/appInfo/version': const VersionPage(),
+    '/seeMore/appInfo/report': const ReportPage(),
+    '/seeMore/appInfo/report/detail': const ReportDetailPage(),
+    '/seeMore/appInfo/report/edit': const ReportEditPage(),
   };
 
   // 겟페이지 리스트

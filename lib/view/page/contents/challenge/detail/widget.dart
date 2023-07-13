@@ -41,7 +41,7 @@ class ChallengeDetailView extends StatelessWidget {
           backgroundColor: FTheme.darkGrey,
           child: FText(
             '챌린지 참여하기',
-            style: textTheme(context).titleSmall,
+            style: textTheme(context).bodyLarge,
             color: FTheme.white,
             bold: true,
           ),
@@ -59,7 +59,7 @@ class ChallengeDetailView extends StatelessWidget {
           multiple: isPortrait,
           child: FText(
             '챌린지 생성하기',
-            style: textTheme(context).titleSmall,
+            style: textTheme(context).bodyLarge,
             bold: true,
             color: FTheme.white,
           ),

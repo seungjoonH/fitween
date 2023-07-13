@@ -145,6 +145,7 @@ class FInputField extends StatelessWidget {
     this.completed = false,
     this.keyboardType = TextInputType.text,
     this.onEditingComplete,
+    this.maxLines = 1,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -154,6 +155,7 @@ class FInputField extends StatelessWidget {
   final bool completed;
   final TextInputType keyboardType;
   final VoidCallback? onEditingComplete;
+  final int maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -166,6 +168,7 @@ class FInputField extends StatelessWidget {
         controller: controller,
         cursorColor: FTheme.darkGrey,
         keyboardType: keyboardType,
+        maxLines: maxLines,
         onSubmitted: (_) {
           if (onEditingComplete != null) onEditingComplete!();
         },

@@ -99,16 +99,14 @@ class FriendP extends GetxController {
 
     if (nickname == null) return;
 
-    Get.dialog(
-      FAlertDialog(
-        title: '$title 신청',
-        content: FText(
-          '\'$nickname\'님께\n$title 신청 하였습니다',
-          maxLines: 2,
-        ),
-        type: DialogType.mono,
-        onPressed: Get.back,
+    showFDialog(
+      title: '$title 신청',
+      content: FText(
+        '\'$nickname\'님께\n$title 신청 하였습니다',
+        maxLines: 2,
       ),
+      type: DialogType.mono,
+      onPressed: Get.back,
     );
   }
 
@@ -176,19 +174,17 @@ class FriendP extends GetxController {
     FUserInfo? user = await UserInfoP.loadUser(uid);
     if (user == null) return;
     
-    Get.dialog(
-      FAlertDialog(
-        title: '${user.nickname}',
-        content: FText(
-          '님을 친구목록에서\n삭제하시겠습니까?',
-          maxLines: 2,
-        ),
-        type: DialogType.bi,
-        leftPressed: Get.back,
-        rightText: '삭제',
-        rightPressed: () => breakOffWith(uid),
-        rightBackgroundColor: FTheme.error,
+    showFDialog(
+      title: '${user.nickname}',
+      content: FText(
+        '님을 친구목록에서\n삭제하시겠습니까?',
+        maxLines: 2,
       ),
+      type: DialogType.bi,
+      leftPressed: Get.back,
+      rightText: '삭제',
+      rightPressed: () => breakOffWith(uid),
+      rightBackgroundColor: FTheme.error,
     );
   }
 
@@ -196,18 +192,16 @@ class FriendP extends GetxController {
     FUserInfo? user = await UserInfoP.loadUser(uid);
     if (user == null) return;
 
-    Get.dialog(
-      FAlertDialog(
-        title: '라이벌 신청',
-        content: FText(
-          '\'${user.nickname}\'님에게\n라이벌 신청을 하시겠습니까?',
-          maxLines: 2,
-        ),
-        type: DialogType.bi,
-        leftPressed: Get.back,
-        rightText: '신청하기',
-        rightPressed: () => noticeToFriend(uid, true),
+    showFDialog(
+      title: '라이벌 신청',
+      content: FText(
+        '\'${user.nickname}\'님에게\n라이벌 신청을 하시겠습니까?',
+        maxLines: 2,
       ),
+      type: DialogType.bi,
+      leftPressed: Get.back,
+      rightText: '신청하기',
+      rightPressed: () => noticeToFriend(uid, true),
     );
   }
 
@@ -228,22 +222,20 @@ class FriendP extends GetxController {
     FUserInfo? user = await UserInfoP.loadUser(uid);
     if (user == null) return;
 
-    Get.dialog(
-      FAlertDialog(
-        title: '${user.nickname}',
-        content: FText(
-          '님을 라이벌에서\n제외하시겠습니까?',
-          maxLines: 2,
-        ),
-        type: DialogType.bi,
-        leftPressed: Get.back,
-        rightText: '제외하기',
-        rightBackgroundColor: FTheme.error,
-        rightPressed: () {
-          releaseRival(uid);
-          Get.back();
-        },
+    showFDialog(
+      title: '${user.nickname}',
+      content: FText(
+        '님을 라이벌에서\n제외하시겠습니까?',
+        maxLines: 2,
       ),
+      type: DialogType.bi,
+      leftPressed: Get.back,
+      rightText: '제외하기',
+      rightBackgroundColor: FTheme.error,
+      rightPressed: () {
+        releaseRival(uid);
+        Get.back();
+      },
     );
   }
 

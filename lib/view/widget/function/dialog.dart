@@ -22,7 +22,7 @@ class DialogButtonData {
         backgroundColor = backgroundColor ?? FTheme.black;
 }
 
-void showFDialog({
+Future showFDialog({
   String? title,
   required Widget content,
   CrossAxisAlignment contentAlignment = CrossAxisAlignment.center,
@@ -72,7 +72,7 @@ void showFDialog({
   titlePadding = EdgeInsets.only(top: 20.0.r, left: 20.0.r);
   contentPadding = EdgeInsets.all(20.0.r);
 
-  Get.dialog(
+  await Get.dialog(
     FAlertDialog(
       title: title,
       content: content,

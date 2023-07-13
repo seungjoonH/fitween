@@ -1,7 +1,7 @@
 enum Workout {
-  squat, overheadDumbbellPress;
+  squat, shoulderPress;
   String get kr => [
-    '스쿼트', '오버헤드 덤벨 프레스',
+    '스쿼트', '숄더 프레스',
   ][index];
 }
 

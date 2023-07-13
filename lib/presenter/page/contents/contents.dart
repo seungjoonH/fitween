@@ -157,33 +157,35 @@ class ContentsP extends GetxController {
   /// challenges
   // 챌린지 참가 버튼 클릭 시
   void challengeJoinButtonPressed() async {
+    Get.back(); Get.back();
+
+    await Future.delayed(const Duration(milliseconds: 500));
+
     codeCont.clear();
     codeHintText = null;
 
-    Get.dialog(
-      FAlertDialog(
-        title: '챌린지 참여코드',
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GetBuilder<ContentsP>(
-              builder: (controller) {
-                return FInputField(
-                  controller: codeCont,
-                  invalid: controller.codeInvalid,
-                  hintText: controller.codeHintText ?? '참여코드를 입력해주세요',
-                  hintColor: controller.codeHintText == null
-                      ? FTheme.darkGrey
-                      : FTheme.colorB,
-                );
-              },
-            ),
-          ],
-        ),
-        type: DialogType.bi,
-        leftPressed: Get.back,
-        rightPressed: partyJoinButtonPressed,
+    showFDialog(
+      title: '챌린지 참여코드',
+      content: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          GetBuilder<ContentsP>(
+            builder: (controller) {
+              return FInputField(
+                controller: codeCont,
+                invalid: controller.codeInvalid,
+                hintText: controller.codeHintText ?? '참여코드를 입력해주세요',
+                hintColor: controller.codeHintText == null
+                    ? FTheme.darkGrey
+                    : FTheme.colorB,
+              );
+            },
+          ),
+        ],
       ),
+      type: DialogType.bi,
+      leftPressed: Get.back,
+      rightPressed: partyJoinButtonPressed,
     );
   }
 

@@ -252,9 +252,11 @@ class FTextButton extends StatefulWidget {
     this.child,
     this.onPressed,
     this.style,
+    this.height,
     this.color = FTheme.grey,
     EdgeInsets? padding,
     this.stretch = false,
+    this.border = false,
     this.alignment = MainAxisAlignment.center,
   }) : assert(text == null || child == null),
         padding = padding ?? EdgeInsets.symmetric(
@@ -265,9 +267,11 @@ class FTextButton extends StatefulWidget {
   final String? text;
   final Widget? child;
   final TextStyle? style;
+  final double? height;
   final Color? color;
   final EdgeInsets padding;
   final bool stretch;
+  final bool border;
   final MainAxisAlignment alignment;
 
   @override
@@ -325,7 +329,13 @@ class _FTextButtonState extends State<FTextButton> {
           onTapCancel: onTapCancel,
           child: Container(
             padding: widget.padding,
-            color: Colors.transparent,
+            height: widget.height,
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              border: widget.border
+                  ? Border.all(color: widget.color!, width: .5) : null,
+              borderRadius: radius,
+            ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

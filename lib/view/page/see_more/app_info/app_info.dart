@@ -1,5 +1,6 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/main.dart';
+import 'package:fitween/presenter/page/see_more/app_info/report/report.dart';
 import 'package:fitween/presenter/page/see_more/app_info/license/license.dart';
 import 'package:fitween/presenter/page/see_more/app_info/version.dart';
 import 'package:fitween/presenter/page/see_more/app_info/web_view.dart';
@@ -53,6 +54,13 @@ class AppInfoPage extends StatelessWidget {
             FTextButton(
               text: '개인정보 처리방침',
               onPressed: WebViewP.toPrivacyPolicy,
+              stretch: true,
+              alignment: MainAxisAlignment.start,
+            ),
+            SizedBox(height: 10.0.h),
+            FTextButton(
+              text: '오류 제보 / 개선 요청',
+              onPressed: ReportP.toReport,
               stretch: true,
               alignment: MainAxisAlignment.start,
             ),

@@ -17,7 +17,7 @@ class VersionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: FTheme.colorA,
-      appBar: const FAppBar(backColor: FTheme.white),
+      appBar: const FAppBar(iconColor: FTheme.white),
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 28.0.w, vertical: 28.0.h,

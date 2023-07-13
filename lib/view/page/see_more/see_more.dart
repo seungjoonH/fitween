@@ -19,6 +19,7 @@ class SeeMorePage extends StatelessWidget {
     return Scaffold(
       appBar: const FAppBar(
         title: '더보기',
+        leading: SizedBox(),
         actions: [
           IconButton(
             onPressed: AppInfoP.toAppInfo,
