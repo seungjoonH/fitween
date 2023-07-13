@@ -25,7 +25,7 @@ class LimbPainter extends CustomPainter {
     ..strokeWidth = 8;
 
   Paint edgeBlue = Paint()
-    ..color = Colors.blue.withOpacity(.3)
+    ..color = Colors.blue.withOpacity(.5)
     ..strokeWidth = 5;
 
   // CORRECT POSTURE COLOR PROFILE
@@ -35,7 +35,7 @@ class LimbPainter extends CustomPainter {
     ..strokeWidth = 8;
 
   Paint edgeGreen = Paint()
-    ..color = Colors.green.withOpacity(.3)
+    ..color = Colors.green.withOpacity(.5)
     ..strokeWidth = 5;
 
   // INCORRECT POSTURE COLOR PROFILE
@@ -45,7 +45,7 @@ class LimbPainter extends CustomPainter {
     ..strokeWidth = 8;
 
   Paint edgeRed = Paint()
-    ..color = Colors.red.withOpacity(.3)
+    ..color = Colors.red.withOpacity(.5)
     ..strokeWidth = 5;
 
   Paint area = Paint()

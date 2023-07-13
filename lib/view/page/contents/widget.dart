@@ -12,8 +12,10 @@ import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/class/json/challenge.dart';
 import 'package:fitween/model/class/json/level.dart';
+import 'package:fitween/model/class/workout/handler.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
+import 'package:fitween/model/enum/workout.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/json/level.dart';
@@ -833,7 +835,7 @@ class BattleCardView extends StatelessWidget {
                 onPressed: BattleRecordP.toBattleRecord,
               ),
             ),
-            const SizedBox(height: 20.0),
+            SizedBox(height: 20.0.h),
             Column(
               children: userBattleP.loggedUser.visibleBattles.values.map((battle) {
                 return Column(
@@ -863,6 +865,45 @@ class BattleCardView extends StatelessWidget {
                 );
               }).toList(),
             ),
+            // FCard(
+            //   title: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       FText('오버헤드 덤벨 프레스!',
+            //         style: textTheme(context).titleLarge,
+            //         bold: true,
+            //       ),
+            //       const FTag('beta'),
+            //     ],
+            //   ),
+            //   height: 420.0.h,
+            //   child: Expanded(
+            //     child: Column(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       crossAxisAlignment: CrossAxisAlignment.stretch,
+            //       children: [
+            //         Image.asset(
+            //           'assets/image/page/contents/fight.png',
+            //           height: 180.0.h,
+            //         ),
+            //         FText(
+            //           '친구와 제한 시간 내에\n누가 더 오버헤드 덤벨 프레스를 많이 하는지 대결해요!',
+            //           maxLines: 3,
+            //           style: textTheme(context).titleSmall,
+            //         ),
+            //         FButton(
+            //           stretch: true,
+            //           text: '타임어택 하러가기',
+            //           onPressed: () {
+            //             ExerciseHandler.workout = Workout.overheadDumbbellPress;
+            //             WorkoutFriendP.toWorkoutFriend();
+            //           },
+            //         ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+            // SizedBox(height: 20.0.h),
             FCard(
               title: FText('스쿼트!',
                 style: textTheme(context).titleLarge,
@@ -886,7 +927,10 @@ class BattleCardView extends StatelessWidget {
                     FButton(
                       stretch: true,
                       text: '타임어택 하러가기',
-                      onPressed: WorkoutFriendP.toWorkoutFriend,
+                      onPressed: () {
+                        ExerciseHandler.workout = Workout.squat;
+                        WorkoutFriendP.toWorkoutFriend();
+                      },
                     ),
                   ],
                 ),

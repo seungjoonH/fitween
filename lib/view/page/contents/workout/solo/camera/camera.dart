@@ -59,7 +59,7 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
     await cameraP.init();
     await cameraP.cameraController!
         .startImageStream(createIsolate);
-    ExerciseHandler.squat();
+    ExerciseHandler.doWorkout();
     setState(() {});
   }
 
@@ -103,7 +103,8 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
     ExerciseHandler.checkLimbs(Inference.refinedInferences);
 
     painter = LimbPainter(
-      inferences: Platform.isAndroid ? inferences! : Inference.refinedInferences,
+      // inferences: Platform.isAndroid ? inferences! : Inference.refinedInferences,
+      inferences: inferences!,
       limbs: ExerciseHandler.limbs,
       isSolo: true,
     );

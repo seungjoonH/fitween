@@ -1,3 +1,10 @@
+enum Workout {
+  squat, overheadDumbbellPress;
+  String get kr => [
+    '스쿼트', '오버헤드 덤벨 프레스',
+  ][index];
+}
+
 enum WorkoutState {
   stop, ready, pause, workout, complete;
   String get message => [

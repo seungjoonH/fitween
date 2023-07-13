@@ -19,10 +19,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:connectivity/connectivity.dart';
 
 
-const version = 'ver 0.0.1';
+const version = 'ver 0.0.2';
 String get versionNumber => version.replaceAll('ver ', '');
-const releaseNoteUrl =
-    'https://trusted-robe-5cd.notion.site/ad4f1c130b7a45e5a86eac2cc71133d8';
 
 late ConnectivityResult networkResult;
 
@@ -31,7 +29,7 @@ void main() async {
   CameraP.descriptions = await availableCameras();
 
   await Firebase.initializeApp(
-    // name: 'pistachio',
+    // name: 'fitween',
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
