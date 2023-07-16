@@ -1,5 +1,6 @@
 import 'package:fitween/view/page/contents/workout/battle/record/record.dart';
 import 'package:fitween/view/page/contents/workout/friend/friend.dart';
+import 'package:fitween/view/page/contents/workout/game/game.dart';
 import 'package:fitween/view/page/contents/workout/ready/ready.dart';
 import 'package:fitween/view/page/contents/workout/battle/camera/camera.dart';
 import 'package:fitween/view/page/contents/workout/battle/result/result.dart';
@@ -61,6 +62,7 @@ class FRoute {
     '/contents/workout/battle/camera': const BattleCameraPage(),
     '/contents/workout/battle/result': const BattleResultPage(),
     '/contents/workout/battle/record': const BattleRecordPage(),
+    '/contents/workout/game': const GamePage(),
     '/seeMore': const SeeMorePage(),
     '/seeMore/collection': const CollectionPage(),
     '/seeMore/goalEdit': const GoalEditPage(),

@@ -21,6 +21,7 @@ import 'package:fitween/presenter/model/user/notification.dart';
 import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/notification.dart';
+import 'package:fitween/presenter/page/contents/game/game.dart';
 import 'package:fitween/presenter/page/contents/workout/battle/record.dart';
 import 'package:fitween/presenter/page/contents/workout/battle/result.dart';
 import 'package:fitween/presenter/page/contents/workout/friend.dart';
@@ -58,9 +59,9 @@ import 'package:get/get.dart';
 
 class GlobalP extends GetxController {
   static const String effectAsset =
-      'assets/image/widget/dialog/badge_effect.png';
+      'assets/images/widget/dialog/badge_effect.png';
   static const String effect2Asset =
-      'assets/image/widget/dialog/badge_effect2.png';
+      'assets/images/widget/dialog/badge_effect2.png';
 
   int navIndex = 0;
 
@@ -391,6 +392,7 @@ class GlobalP extends GetxController {
     Get.put(BattleCameraP());
     Get.put(BattleResultP());
     Get.put(BattleRecordP());
+    Get.put(GameP());
 
     Get.put(SeeMoreP());
     Get.put(CollectionP());

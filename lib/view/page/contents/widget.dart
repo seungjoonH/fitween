@@ -29,6 +29,7 @@ import 'package:fitween/presenter/page/contents/achievement/level.dart';
 import 'package:fitween/presenter/page/contents/challenge/challenge_detail.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:fitween/presenter/page/contents/contents.dart';
+import 'package:fitween/presenter/page/contents/game/game.dart';
 import 'package:fitween/presenter/page/contents/workout/battle/record.dart';
 import 'package:fitween/presenter/page/contents/workout/battle/result.dart';
 import 'package:fitween/presenter/page/contents/workout/friend.dart';
@@ -672,7 +673,7 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
       alignment: Alignment.bottomCenter,
       children: [
         Image.asset(
-          'assets/image/page/contents/union.png',
+          'assets/images/page/contents/union.png',
           width: double.infinity,
           fit: BoxFit.cover,
         ),
@@ -686,7 +687,7 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
             child: SizedBox(
               width: 80.0.w / (isPortrait ? 1 : 2),
               child: widget.tier['current'] != null ? Image.asset(
-                'assets/image/level/${widget.type.name}/$id.png',
+                'assets/images/level/${widget.type.name}/$id.png',
                 width: 80.0.w / (isPortrait ? 1 : 2),
               ) : Container(),
             ),
@@ -878,7 +879,7 @@ class BattleCardView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Image.asset(
-                      'assets/image/page/contents/fight.png',
+                      'assets/images/page/contents/fight.png',
                       height: 180.0.h,
                     ),
                     FText(
@@ -886,13 +887,28 @@ class BattleCardView extends StatelessWidget {
                       maxLines: 3,
                       style: textTheme(context).titleSmall,
                     ),
-                    FButton(
-                      stretch: true,
-                      text: '타임어택 하러가기',
-                      onPressed: () {
-                        ExerciseHandler.workout = Workout.squat;
-                        WorkoutFriendP.toWorkoutFriend();
-                      },
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        FButton(
+                          text: '게임하기',
+                          stretch: true,
+                          multiple: true,
+                          border: true,
+                          fill: false,
+                          onPressed: GameP.toGame,
+                        ),
+                        SizedBox(width: 10.0.w),
+                        FButton(
+                          text: '타임어택',
+                          stretch: true,
+                          multiple: true,
+                          onPressed: () {
+                            ExerciseHandler.workout = Workout.squat;
+                            WorkoutFriendP.toWorkoutFriend();
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -917,7 +933,7 @@ class BattleCardView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Image.asset(
-                      'assets/image/page/contents/fight.png',
+                      'assets/images/page/contents/fight.png',
                       height: 180.0.h,
                     ),
                     FText(

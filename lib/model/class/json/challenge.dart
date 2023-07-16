@@ -5,7 +5,7 @@ import 'package:fitween/presenter/model/json/badge.dart';
 
 class Challenge {
   /// static variables
-  static String imageAsset = 'assets/image/challenge/';
+  static String imageAsset = 'assets/images/challenge/';
 
   /// static methods
   static Map<String, dynamic> idToImageUrls(String id) => {

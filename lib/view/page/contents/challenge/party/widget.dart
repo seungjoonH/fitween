@@ -498,7 +498,7 @@ class RankWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const String trophyAsset = 'assets/image/page/challenge/';
+    const String trophyAsset = 'assets/images/page/challenge/';
 
     FUserParty loggedUser = Get.find<UserPartyP>().loggedUser;
     int myRank = party.getRank(loggedUser.uid!);

@@ -53,7 +53,7 @@ class BattleResultView extends StatelessWidget {
 class WorkoutFinishCard extends StatelessWidget {
   const WorkoutFinishCard({Key? key}) : super(key: key);
 
-  static const String asset = 'assets/image/page/contents/workout/result_big.png';
+  static const String asset = 'assets/images/page/contents/workout/result_big.png';
   @override
   Widget build(BuildContext context) {
     return Padding(

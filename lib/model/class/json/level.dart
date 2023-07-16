@@ -37,7 +37,7 @@ class Level {
   }
 
   /// static variables
-  static String asset = 'assets/image/level/';
+  static String asset = 'assets/images/level/';
 
   /// static methods
   static String idToImageUrl(String id) {

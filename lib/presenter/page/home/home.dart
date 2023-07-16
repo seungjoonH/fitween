@@ -43,7 +43,7 @@ class HomeP extends GetxController {
 
   int rotationIndex = 0;
   bool allowClick = true;
-  static String rotationAsset = 'assets/image/page/home/rotation/';
+  static String rotationAsset = 'assets/images/page/home/rotation/';
   static late FlutterGifController gifCont;
   String? _gifAsset;
 

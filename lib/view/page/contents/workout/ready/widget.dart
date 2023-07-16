@@ -21,7 +21,7 @@ class BattleReadyView extends StatelessWidget {
           Column(
             children: [
               Image.asset(
-                'assets/image/page/contents/workout/focus.png',
+                'assets/images/page/contents/workout/focus.png',
                 width: 250.0,
                 fit: BoxFit.fitWidth,
               ),

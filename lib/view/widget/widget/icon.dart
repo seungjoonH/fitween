@@ -16,7 +16,7 @@ enum FIcons {
   swords,
   visibility;
 
-  static String filePath = 'assets/image/icon/';
+  static String filePath = 'assets/images/icon/';
   String get fileName =>
       '${StringUtils.camelCaseToLowerUnderscore(name)}.svg';
   String assetPath(bool selected) =>

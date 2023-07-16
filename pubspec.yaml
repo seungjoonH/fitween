@@ -68,6 +68,7 @@ dependencies:
   camera: ^0.9.4+5
   tflite_flutter: ^0.9.0
   tflite_flutter_helper: ^0.2.1
+  flame: ^1.8.1
 
 dependency_overrides:
   camera_android: 0.10.4
@@ -83,26 +84,28 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/image/badge/
-    - assets/image/challenge/complete/
-    - assets/image/challenge/default/
-    - assets/image/challenge/focus/
-    - assets/image/icon/selected/
-    - assets/image/icon/unselected/
-    - assets/image/level/distance/
-    - assets/image/level/height/
-    - assets/image/level/weight/
-    - assets/image/logo/
-    - assets/image/page/challenge/
-    - assets/image/page/contents/
-    - assets/image/page/contents/workout/
-    - assets/image/page/home/
-    - assets/image/page/home/ranking/
-    - assets/image/page/home/rotation/
-    - assets/image/page/onboarding/
-    - assets/image/page/register/
-    - assets/image/page/see_more/goal_edit/
-    - assets/image/widget/dialog/
+    - assets/images/badge/
+    - assets/images/challenge/complete/
+    - assets/images/challenge/default/
+    - assets/images/challenge/focus/
+    - assets/images/icon/selected/
+    - assets/images/icon/unselected/
+    - assets/images/level/distance/
+    - assets/images/level/height/
+    - assets/images/level/weight/
+    - assets/images/logo/
+    - assets/images/page/challenge/
+    - assets/images/page/contents/
+    - assets/images/page/contents/workout/
+    - assets/images/page/home/
+    - assets/images/page/home/ranking/
+    - assets/images/page/home/rotation/
+    - assets/images/page/onboarding/
+    - assets/images/page/register/
+    - assets/images/page/see_more/goal_edit/
+    - assets/images/widget/dialog/
+    - assets/images/game/
+    - assets/images/game/background/
     - assets/json/data/
     - assets/json/data/level/
     - assets/model/lite-model_movenet_singlepose_lightning_3.tflite

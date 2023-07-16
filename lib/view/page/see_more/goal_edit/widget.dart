@@ -38,7 +38,7 @@ class CarouselView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-    String asset = 'assets/image/page/see_more/goal_edit/';
+    String asset = 'assets/images/page/see_more/goal_edit/';
     const List<int> widthFitIndex = [2, 3];
 
     return GetBuilder<GoalEditP>(

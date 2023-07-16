@@ -104,7 +104,7 @@ class FriendCard extends StatelessWidget{
             const SizedBox(
               width: 18,
             ),
-            Image.asset('assets/image/badge/1000000.png', height: 48, width: 48),
+            Image.asset('assets/images/badge/1000000.png', height: 48, width: 48),
             const SizedBox(width: 12.0, height: 90.0),
             FText(
               name,

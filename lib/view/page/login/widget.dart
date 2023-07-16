@@ -58,7 +58,7 @@ class SignInButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              'assets/image/logo/${type.name}.svg',
+              'assets/images/logo/${type.name}.svg',
               width: 23.0.r,
               height: 23.0.r,
             ),

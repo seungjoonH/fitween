@@ -9,7 +9,7 @@ class OnboardingP extends GetxController {
     onboardingP.init();
     Get.toNamed('/onboarding');
   }
-  static String directory = 'assets/image/page/onboarding/';
+  static String directory = 'assets/images/page/onboarding/';
   static String getAsset(int index) => '${directory}carousel_$index.svg';
 
   int pageIndex = 0;

@@ -1,7 +1,7 @@
 // import 'package:get/get.dart';
 //
 // class BattleGuideP {
-//   static String asset = 'assets/image/page/workout';
+//   static String asset = 'assets/images/page/workout';
 //   static String getAsset(int index) => '$asset/squat_$index.gif';
 //   static List<String> descriptions = [
 //     '화면과 같이 빨간색 네모 안에 위치해주세요!',

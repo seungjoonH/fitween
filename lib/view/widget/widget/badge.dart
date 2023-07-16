@@ -255,7 +255,7 @@ class _FBadgeWidgetState extends State<FBadgeWidget> {
 
   String get asset {
     String filename = (widget.defeated ?? false) ? 'defeat' : 'void';
-    return 'assets/image/badge/$filename.svg';
+    return 'assets/images/badge/$filename.svg';
   }
 
   @override

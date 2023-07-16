@@ -1,7 +1,7 @@
 /* 뱃지 모델 구조 */
 class FBadge {
   /// static variables
-  static const asset = 'assets/image/badge/';
+  static const asset = 'assets/images/badge/';
 
   /// attributes
   String? id;

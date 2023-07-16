@@ -1,0 +1,1 @@
+enum PlayerState { left, right, center, rocket }

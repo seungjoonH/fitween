@@ -9,7 +9,7 @@ class FAppIcon extends StatelessWidget {
     this.border = false,
   }) : super(key: key);
 
-  static const String asset = 'assets/image/logo/app_icon.png';
+  static const String asset = 'assets/images/logo/app_icon.png';
 
   final double size;
   final bool border;
@@ -64,7 +64,7 @@ class FLogo extends StatelessWidget {
     this.size = 250.0,
   }) : super(key: key);
 
-  static const String asset = 'assets/image/logo/fitween.png';
+  static const String asset = 'assets/images/logo/fitween.png';
 
   final double size;
 

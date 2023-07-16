@@ -102,7 +102,7 @@ class RankingIndividualGraph extends StatelessWidget {
           children: [
             if (price < 4)
             SvgPicture.asset(
-              'assets/image/page/home/ranking/$price.svg',
+              'assets/images/page/home/ranking/$price.svg',
               width: 18.0.r,
             ) else Container(
               width: 18.0.w,

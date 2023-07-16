@@ -159,7 +159,7 @@ class _RotateCarouselState extends State<RotateCarousel>
                 child: GestureDetector(
                   onTap: homeP.rightButtonPressed,
                   child: SvgPicture.asset(
-                    'assets/image/page/home/left_arrow.svg',
+                    'assets/images/page/home/left_arrow.svg',
                     width: 40.0.h,
                   ),
                 ),
@@ -170,7 +170,7 @@ class _RotateCarouselState extends State<RotateCarousel>
                 child: GestureDetector(
                   onTap: homeP.leftButtonPressed,
                   child: SvgPicture.asset(
-                    'assets/image/page/home/right_arrow.svg',
+                    'assets/images/page/home/right_arrow.svg',
                     width: 40.0.h,
                   ),
                 ),
