@@ -71,7 +71,7 @@ class LimbPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // if (!humanDetected) return;
+    if (!humanDetected) return;
     renderEdges(canvas);
     renderPoints(canvas);
   }

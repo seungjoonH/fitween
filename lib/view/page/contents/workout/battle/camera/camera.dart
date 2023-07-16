@@ -45,7 +45,6 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
     super.dispose();
 
     final cameraP = Get.find<CameraP>();
-    BattleCameraP.init();
     cameraP.cameraController!.dispose();
   }
 
@@ -54,7 +53,6 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
     await cameraP.init();
     await cameraP.cameraController!
         .startImageStream(createIsolate);
-    BattleCameraP.init();
     ExerciseHandler.doWorkout();
     setState(() {});
   }

@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 
 class WorkoutSoloCameraP extends GetxController {
   static void toWorkoutSoloCamera() {
+    init();
     Get.toNamed('/contents/workout/solo/camera');
   }
 

@@ -50,7 +50,6 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
     super.dispose();
 
     final cameraP = Get.find<CameraP>();
-    WorkoutSoloCameraP.init();
     cameraP.cameraController!.dispose();
   }
 
@@ -103,8 +102,8 @@ class _WorkoutSoloCameraPage extends State<WorkoutSoloCameraPage> {
     ExerciseHandler.checkLimbs(Inference.refinedInferences);
 
     painter = LimbPainter(
-      // inferences: Platform.isAndroid ? inferences! : Inference.refinedInferences,
-      inferences: inferences!,
+      inferences: Platform.isAndroid ? inferences! : Inference.refinedInferences,
+      // inferences: inferences!,
       limbs: ExerciseHandler.limbs,
       isSolo: true,
     );

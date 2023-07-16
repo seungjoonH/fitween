@@ -14,7 +14,7 @@ import 'package:get/get.dart';
 
 class BattleCameraP extends GetxController {
   static void toBattleCamera(String id) {
-    BattleCameraP.init(id);
+    init(id);
     Get.offAllNamed('/contents/workout/battle/camera');
   }
 

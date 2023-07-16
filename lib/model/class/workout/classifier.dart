@@ -95,7 +95,8 @@ class Classifier {
     }
 
     else if (Platform.isIOS) {
-      image.data = cameraImage.planes.first.bytes.buffer.asUint32List();
+      var datum = cameraImage.planes.first.bytes.buffer.asUint32List();
+      for (int i = 0; i < width * height; i++) { image.data[i] = datum[i]; }
     }
 
     return image;
