@@ -169,7 +169,7 @@ class UserInfoView extends StatelessWidget {
                     ShakeWidget(
                       autoPlay: controller.fields['sex']!.invalid,
                       shakeConstant: ShakeHorizontalConstant2(),
-                      child: const Row(
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           SexSelectionButton(sex: Sex.male),
