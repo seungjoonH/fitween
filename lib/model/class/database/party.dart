@@ -43,7 +43,7 @@ class Party {
   int get overDays => today.difference(endDate!).inDays;
   int get remainDays => -overDays;
 
-  ActivityType get type => ChallengeJsonP.getChallenge(challengeId)!.type!;
+  ActivityType get type => challenge!.type!;
 
   // List<double> get recordValues =>
   //     records.values.map<double>((e) => e.toDouble()).toList();
