@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/presenter/page/login.dart';
@@ -27,6 +28,7 @@ late ConnectivityResult networkResult;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   CameraP.descriptions = await availableCameras();
+  await EasyLocalization.ensureInitialized();
 
   await Firebase.initializeApp(
     // name: 'fitween',
@@ -34,7 +36,15 @@ void main() async {
   );
 
   await initializeDateFormatting();
-  runApp(const Fitween());
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: ['en', 'ko'].map((l) => Locale(l)).toList(),
+      path: 'assets/translations',
+      fallbackLocale: const Locale('en'),
+      child: const Fitween(),
+    ),
+  );
 }
 
 class Fitween extends StatefulWidget {
