@@ -1,5 +1,6 @@
 import 'package:fitween/global/string.dart';
 import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/page/see_more/see_more.dart';
 import 'package:flutter/cupertino.dart';
@@ -70,11 +71,13 @@ class InfoEditP extends GetxController {
     Field nicknameField = fields['nickname']!;
     String text = nicknameField.controller.text;
 
+    String v(String text) => 'input.validate.$text';
+
     Map<String, bool> conditions = {
       '별명이 중복됩니다': await UserInfoP.duplicatedNickname(text),
       '현재와 같은 별명입니다': userP.loggedUser.nickname! == text,
-      '두 글자 이상 입력해주세요': text.length < 2,
-      '열 글자 이하 입력해주세요': text.length > 10,
+      Lang.tr(v('less-two')): text.length < 2,
+      Lang.tr(v('more-ten')): text.length > 10,
       '자음 모음은 단독으로 포함될 수 없습니다': hasSeparatedConsonantOrVowel(text),
       '공백을 포함할 수 없습니다': text.contains(' '),
       '특수문자는 포함할 수 없습니다': RegExp(r'[`~!@#$%^&*|"' r"'‘’””;:/?]").hasMatch(text),

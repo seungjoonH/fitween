@@ -2,8 +2,7 @@ import 'package:fitween/global/date.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/report.dart';
 import 'package:fitween/model/enum/report.dart';
-import 'package:fitween/presenter/page/see_more/app_info/report/detail.dart';
-import 'package:fitween/presenter/page/see_more/app_info/report/edit.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/see_more/app_info/report/report.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:fitween/view/widget/widget/card.dart';
@@ -24,7 +23,7 @@ class ReportDetailPage extends StatelessWidget {
       builder: (reportP) {
         return Scaffold(
           appBar: FAppBar(
-            title: '리포트 #${report.id}',
+            title: '${Lang.tr('report.').capitalize!} #${report.id}',
             actions: [
               if (report.stage.index < 2)
               IconButton(
@@ -51,7 +50,7 @@ class ReportDetailPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         FText(report.title ?? '', bold: true, style: textTheme(context).titleLarge),
-                        FTag(report.stage.kr, backgroundColor: report.stage.color),
+                        FTag(report.stage.locale.capitalize!, backgroundColor: report.stage.color),
                       ],
                     ),
                     child: Column(
@@ -61,17 +60,17 @@ class ReportDetailPage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             FText(
-                              '작성자: ${report.nickname}',
+                              '${Lang.tr('fw.bug-rep.writer').capitalize!}: ${report.nickname}',
                               color: FTheme.lightGrey,
                               style: textTheme(context).bodyMedium,
                             ),
                             FText(
-                              '작성일시: ${dateToString('yy.MM.dd hh:mm', report.date)}',
+                              '${Lang.tr('fw.bug-rep.date').capitalize!}: ${dateToString('yy.MM.dd hh:mm', report.date)}',
                               color: FTheme.lightGrey,
                               style: textTheme(context).bodyMedium,
                             ),
                             FText(
-                              '카테고리: ${report.type.kr}',
+                              '${Lang.tr('category').capitalize!}: ${report.type.category}',
                               color: FTheme.lightGrey,
                               style: textTheme(context).bodyMedium,
                             ),
@@ -114,14 +113,14 @@ class AdminAnswerCard extends StatelessWidget {
       case ReportStage.requested:
         return FCard(
           title: FText(
-            '개발자 답변',
+            Lang.tr('fw.bug-rep.ans'),
             bold: true,
             style: textTheme(context).titleLarge,
             color: FTheme.white,
           ),
           backgroundColor: stage.color,
           child: FText(
-            '문의가 접수 대기 중입니다.',
+            Lang.tr('fw.bug-rep.req-pend'),
             style: textTheme(context).bodyMedium,
             color: FTheme.white,
             maxLines: 10,
@@ -130,14 +129,14 @@ class AdminAnswerCard extends StatelessWidget {
       case ReportStage.accepted:
         return FCard(
           title: FText(
-            '개발자 답변',
+            Lang.tr('fw.bug-rep.ans'),
             bold: true,
             style: textTheme(context).titleLarge,
             color: FTheme.white,
           ),
           backgroundColor: stage.color,
           child: FText(
-            '문의가 접수되었습니다.\n빠른 시일 내 답장해드리겠습니다.',
+            Lang.tr('fw.bug-rep.req-recv'),
             style: textTheme(context).bodyMedium,
             color: FTheme.white,
             maxLines: 10,
@@ -146,7 +145,7 @@ class AdminAnswerCard extends StatelessWidget {
       case ReportStage.answered:
         return FCard(
           title: FText(
-            '개발자 답변',
+            Lang.tr('fw.bug-rep.ans'),
             bold: true,
             style: textTheme(context).titleLarge,
             color: FTheme.white,

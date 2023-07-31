@@ -2,6 +2,7 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/presenter/firebase/auth/auth.dart';
 import 'package:fitween/presenter/inspection/inspection.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
@@ -26,8 +27,8 @@ class SeeMoreP extends GetxController {
 
   static void logout() {
     showFDialog(
-      title: '로그아웃',
-      content: FText('정말 로그아웃 하시겠습니까?', maxLines: 2),
+      title: Lang.tr('auth.logout').capitalize!,
+      content: FText(Lang.tr('auth.logout-really'), maxLines: 2),
       type: DialogType.bi,
       leftPressed: Get.back,
       rightPressed: AuthP.fLogout,
@@ -36,10 +37,10 @@ class SeeMoreP extends GetxController {
 
   static void deleteAccount() {
     showFDialog(
-      title: '계정삭제',
-      content: FText('정말 계정을 삭제하시겠습니까?', maxLines: 2),
+      title: Lang.tr('auth.del-acc'),
+      content: FText(Lang.tr('auth.del-acc-really'), maxLines: 2),
       type: DialogType.bi,
-      rightText: '삭제하기',
+      rightText: Lang.tr('btn.delete'),
       rightBackgroundColor: FTheme.error,
       leftPressed: Get.back,
       rightPressed: AuthP.fDeleteAccount,

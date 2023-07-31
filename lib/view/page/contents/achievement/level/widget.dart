@@ -1,8 +1,10 @@
 import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/global/unit.dart';
 import 'package:fitween/model/class/json/level.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/json/level.dart';
 import 'package:fitween/presenter/model/record.dart';
 import 'package:fitween/presenter/model/user/record.dart';
@@ -55,13 +57,13 @@ class AchievementLevelView extends StatelessWidget {
           amount = record.amount;
           if (type == ActivityType.distance) amount = amount ~/ 100 * 100;
 
-          String amountString = '${toLocalString(amount)}${type.unit}';
+          String amountString = typeUnit(amount, type);
           String title = levels[index].title!;
 
-          if (title.length > 10) {
-            title = '${title.substring(0, title.length ~/ 3 * 2)}'
-                '\n${title.substring(title.length ~/ 3 * 2, title.length)}';
-          }
+          // if (title.length > 10) {
+          //   title = '${title.substring(0, title.length ~/ 3 * 2)}'
+          //       '\n${title.substring(title.length ~/ 3 * 2, title.length)}';
+          // }
 
           return FCard(
             borderColor: FTheme.stroke,
@@ -96,13 +98,13 @@ class AchievementLevelView extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20.0),
                             ),
                             child: FText(
-                              'LVL ${levels.length - index}',
+                              'LV ${levels.length - index}',
                               color: FTheme.white,
-                              style: textTheme(context).bodyLarge,
+                              style: textTheme(context).bodyMedium,
                             ),
                           ),
                           FText(
-                            '조건: $amountString',
+                            amountString,
                             color: FTheme.lightGrey,
                             style: textTheme(context).bodyMedium,
                           ),

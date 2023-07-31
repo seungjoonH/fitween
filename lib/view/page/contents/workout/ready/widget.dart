@@ -1,4 +1,6 @@
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/model/class/workout/handler.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/contents/workout/ready.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/text.dart';
@@ -27,13 +29,16 @@ class BattleReadyView extends StatelessWidget {
               ),
               const SizedBox(height: 50.0),
               FText(
-                '자세 인식',
+                Lang.tr('btl.camera.pos-det'),
                 style: textTheme(context).titleLarge,
                 color: FTheme.darkGrey,
               ),
               const SizedBox(height: 10.0),
               FText(
-                '스쿼트 횟수 계산을 위해 자세를 인식합니다',
+                Lang.tr(
+                  'btl.camera.pos-det-cmt',
+                  args: [ExerciseHandler.workout.name],
+                ),
                 style: textTheme(context).bodySmall,
                 color: FTheme.lightGrey,
               ),
@@ -42,7 +47,7 @@ class BattleReadyView extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(bottom: 50.0.h),
             child: FButton(
-              text: '시작하기',
+              text: Lang.tr('btn.start').capitalize,
               stretch: true,
               onPressed: workoutReadyP.startButtonPressed,
             ),

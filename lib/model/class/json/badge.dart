@@ -1,4 +1,6 @@
 /* 뱃지 모델 구조 */
+import 'package:fitween/presenter/lang/language.dart';
+
 class FBadge {
   /// static variables
   static const asset = 'assets/image/badge/';
@@ -23,18 +25,9 @@ class FBadge {
   /// methods
   void fromJson(Map<String, dynamic> json) {
     id = '${json['id']}';
-    title = '${json['title']}';
+    title = '${json['title'][Lang.locale]}';
     imageUrl = '$asset$id.svg';
-    description = json['description'];
+    description = json['description'][Lang.locale];
     activate = json['activate'];
-  }
-
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    json['id'] = id;
-    json['title'] = title;
-    json['description'] = description;
-    json['activate'] = activate;
-    return json;
   }
 }

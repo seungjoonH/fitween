@@ -1,5 +1,7 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/workout/handler.dart';
+import 'package:fitween/model/enum/activity_type.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/page/contents/workout/friend.dart';
@@ -29,13 +31,20 @@ class BattleFriendView extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  FText(
-                    '라이벌과 제한 시간 내에\n누가 더 ${ExerciseHandler.workout.kr}를 많이 하는지 대결해요!',
-                    maxLines: 3,
-                    color: FTheme.darkGrey,
-                    style: textTheme(context).titleSmall,
+                  FTextsT(
+                    Lang.tr(
+                      'btl.card-cmt',
+                      args: [Lang.tr('btl.${ExerciseHandler.workout.local}')],
+                    ),
+                    style: textTheme(context).titleMedium,
+                    highlightStyles: [
+                      textTheme(context).titleMedium!.copyWith(
+                        color: ActivityType.weight.color,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 50.0),
+                  SizedBox(height: 50.0.h),
                   SizedBox(
                     height: 360.0.h,
                     child: ListView.separated(
@@ -54,7 +63,12 @@ class BattleFriendView extends StatelessWidget {
                             const SizedBox(width: 20.0),
                             FText(workoutFriendP.infos[index].nickname!),
                             if (workoutFriendP.infos[index].uid == userInfoP.loggedUser.uid)
-                              const MeTag(),
+                            Row(
+                              children: [
+                                const MeTag(),
+                                FTag(Lang.tr('btl.solo')),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -66,7 +80,7 @@ class BattleFriendView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 60.0),
                 child: FButton(
-                  text: '선택완료',
+                  text: Lang.tr('btn.slct'),
                   stretch: true,
                   onPressed: WorkoutReadyP.toWorkoutReady,
                 ),

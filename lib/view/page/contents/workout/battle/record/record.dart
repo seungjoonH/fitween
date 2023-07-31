@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/user/info.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/page/contents/workout/battle/record.dart';
 import 'package:fitween/presenter/page/contents/workout/battle/result.dart';
@@ -22,7 +23,7 @@ class BattleRecordPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const FAppBar(title: '최근 전적'),
+      appBar: FAppBar(title: Lang.tr('btl.history.rcnt')),
       body: GetBuilder<BattleRecordP>(
         builder: (battleRecordP) {
           final userP = Get.find<UserInfoP>();
@@ -42,17 +43,15 @@ class BattleRecordPage extends StatelessWidget {
                       backgroundColor: FTheme.colorA.withOpacity(.5),
                       borderColor: FTheme.colorA,
                       borderWidth: 3.0,
-                      title: Row(
-                        children: [
-                          FText(
-                            userP.loggedUser.nickname!,
-                            style: textTheme(context).titleSmall,
-                            color: FTheme.darkGrey,
-                            bold: true,
-                          ),
-                          FText(' 님의 전적',
-                            style: textTheme(context).titleSmall,
-                            color: FTheme.darkGrey,
+                      title: FTextsT(
+                        Lang.tr(
+                          'btl.history.title',
+                          args: [userP.loggedUser.nickname!],
+                        ),
+                        style: textTheme(context).titleSmall,
+                        highlightStyles: [
+                          textTheme(context).titleSmall!.copyWith(
+                            fontWeight: FontWeight.bold,
                           ),
                         ],
                       ),
@@ -67,18 +66,15 @@ class BattleRecordPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
-                              FTexts(
-                                ['$win승', ':', '$draw무', ':', '$lose패'],
-                                colors: const [
-                                  FTheme.colorC, FTheme.darkGrey,
-                                  FTheme.colorD, FTheme.darkGrey,
-                                  FTheme.colorB
-                                ],
+                              FTextsT(
+                                '@{$win${Lang.tr('btl.history.win')}} : @{$draw${Lang.tr('btl.history.tie')}} : @{$lose${Lang.tr('btl.history.lose')}}',
                                 style: textTheme(context).headlineMedium,
-                                bold: true,
+                                highlightColors: const [
+                                  FTheme.colorC, FTheme.colorD, FTheme.colorB
+                                ],
                               ),
                               FText(
-                                '승률 ${(rate * 100).toStringAsFixed(1)}%',
+                                Lang.tr('btl.history.odds', args: [(rate * 100).toStringAsFixed(1)]),
                                 style: textTheme(context).titleSmall,
                                 color: FTheme.darkGrey,
                               ),
@@ -95,12 +91,7 @@ class BattleRecordPage extends StatelessWidget {
                             .keys.firstWhere((uid) => uid != myUid);
                         FUserInfo rival = battle.memberInfos[rivalUid]!;
 
-                        Duration over = now.difference(battle.genDate!);
-                        late String overString;
-                        if (over.inDays > 0) { overString = '${over.inDays}일 전'; }
-                        else if (over.inHours > 0) { overString = '${over.inHours}시간 전'; }
-                        else if (over.inMinutes > 0) { overString = '${over.inMinutes}분 전'; }
-                        else if (over.inSeconds > 0) { overString = '${over.inSeconds}초 전'; }
+                        String agoString = now.difference(battle.genDate!).ago;
 
                         late Color leftColor, rightColor;
                         if (battle.won(userP.loggedUser.uid!)) {
@@ -124,7 +115,7 @@ class BattleRecordPage extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  FText(overString,
+                                  FText(agoString,
                                     color: FTheme.lightGrey,
                                     style: textTheme(context).labelMedium,
                                   ),

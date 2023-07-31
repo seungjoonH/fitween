@@ -3,6 +3,7 @@ import 'package:fitween/view/widget/widget/bottom_bar.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class FTab extends StatelessWidget {
   const FTab(this.text, {
@@ -19,7 +20,7 @@ class FTab extends StatelessWidget {
       padding: const EdgeInsets.all(5.0),
       child: FText(
         text,
-        style: textTheme(context).titleMedium,
+        style: textTheme(context).titleSmall,
         color: selected
             ? FTheme.darkGrey
             : FTheme.lightGrey,
@@ -119,7 +120,7 @@ class _TabScaffoldState extends State<TabScaffold> with TickerProviderStateMixin
                             children: [
                               Padding(
                                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: FTab(widget.tabs[index],
+                                child: FTab(widget.tabs[index].capitalize!,
                                   selected: widget.tabs[_selectedIndex] == widget.tabs[index],
                                 ),
                               ),

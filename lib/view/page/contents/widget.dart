@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/global/unit.dart';
 import 'package:fitween/model/class/database/battle.dart';
 import 'package:fitween/model/class/database/party.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
@@ -16,6 +17,7 @@ import 'package:fitween/model/class/workout/handler.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/unit.dart';
 import 'package:fitween/model/enum/workout.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/json/level.dart';
@@ -37,8 +39,10 @@ import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/badge.dart';
 import 'package:fitween/view/widget/widget/card.dart';
 import 'package:fitween/view/widget/widget/icon.dart';
+import 'package:fitween/view/widget/widget/list_tile.dart';
 import 'package:fitween/view/widget/widget/tag.dart';
 import 'package:fitween/view/widget/widget/text.dart';
+import 'package:fitween/view/widget/widget/toggle_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -53,8 +57,6 @@ class ChallengeCardView extends StatefulWidget {
 }
 
 class _ChallengeCardViewState extends State<ChallengeCardView> {
-  bool joiningChallenge = true;
-  bool newChallenge = true;
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +87,8 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
         builder: (loadingP) {
           List<Party> parties = user.parties.values.toList();
           List<Challenge> newChallenges = ChallengeJsonP
-              .orderedChallenges.where((challenge) => !parties
+              .orderedChallenges.where((party) => !party.locked)
+              .where((challenge) => !parties
               .map((party) => party.challengeId)
               .contains(challenge.id)).toList();
 
@@ -93,95 +96,33 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (parties.isNotEmpty)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: () => setState(() {
-                        joiningChallenge = !joiningChallenge;
-                      }),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6.0.h),
-                        child: Row(
-                          children: [
-                            FText('참여 중인 챌린지'),
-                            SizedBox(width: 10.0.w),
-                            Icon(joiningChallenge
-                                ? Icons.keyboard_arrow_down_outlined
-                                : Icons.keyboard_arrow_up_outlined,
-                              size: 20.0.r,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20.0.h),
-                    if (joiningChallenge)
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: loadingP.loading ? 2 : parties.length,
-                      itemBuilder: (_, index) {
-                        return loadingP.loading ? FCard(
-                          constraints: BoxConstraints(minHeight: 140.0.h),
-                          child: const SizedBox(),
-                        ) : ChallengeCard(
-                          challenge: ChallengeJsonP.getChallenge(parties[index].challengeId!)
-                              ?? ChallengeJsonP.orderedChallenges[0],
-                          isHero: false,
-                          onPressed: () => PartyP.toParty(parties[index]),
-                          party: parties[index],
-                        );
-                      },
-                      separatorBuilder: (_, index) => SizedBox(height: 30.0.h),
-                    ),
-                  ],
+                FToggleListWidget(
+                  text: Lang.tr('party.joined'),
+                  list: parties.map((party) => loadingP.loading ? FCard(
+                    constraints: BoxConstraints(minHeight: 140.0.h),
+                    child: const SizedBox(),
+                  ) : ChallengeCard(
+                    challenge: ChallengeJsonP.getChallenge(party.challengeId!)
+                        ?? ChallengeJsonP.orderedChallenges.first,
+                    isHero: false,
+                    onPressed: () => PartyP.toParty(party),
+                    party: party,
+                  )).toList(),
+                  emptyText: Lang.tr('party.no'),
                 ),
-                SizedBox(height: 30.0.h),
-                if (newChallenges.isNotEmpty)
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InkWell(
-                      onTap: () => setState(() {
-                        newChallenge = !newChallenge;
-                      }),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6.0),
-                        child: Row(
-                          children: [
-                            FText('새로운 챌린지'),
-                            SizedBox(width: 10.0.h),
-                            Icon(newChallenge
-                                ? Icons.keyboard_arrow_down_outlined
-                                : Icons.keyboard_arrow_up_outlined,
-                              size: 20.0.h,
-                            ),
-                          ],
-                        ),
-                      ),
+                SizedBox(height: 20.0.h),
+                FToggleListWidget(
+                  text: Lang.tr('challenge.new'),
+                  list: newChallenges.map((challenge) => loadingP.loading ? FCard(
+                    constraints: BoxConstraints(minHeight: 130.0.h),
+                    child: const SizedBox(),
+                  ) : ChallengeCard(
+                    challenge: challenge,
+                    onPressed: () => ChallengeDetailP.toChallengeDetail(
+                      challenge,
                     ),
-                    SizedBox(height: 20.0.h),
-                    if (newChallenge)
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: loadingP.loading ? 2 : newChallenges.length,
-                      itemBuilder: (_, index) {
-                        return loadingP.loading ? FCard(
-                          constraints: BoxConstraints(minHeight: 130.0.h),
-                          child: const SizedBox(),
-                        ) : ChallengeCard(
-                          challenge: newChallenges[index],
-                          onPressed: () => ChallengeDetailP.toChallengeDetail(
-                            newChallenges[index],
-                          ),
-                        );
-                      },
-                      separatorBuilder: (_, index) => SizedBox(height: 30.0.h),
-                    )
-                  ],
+                  )).toList(),
+                  emptyText: Lang.tr('challenge.no'),
                 ),
               ],
             ),
@@ -191,6 +132,8 @@ class _ChallengeCardViewState extends State<ChallengeCardView> {
     );
   }
 }
+
+
 
 class ChallengeCard extends StatelessWidget {
   const ChallengeCard({
@@ -222,11 +165,24 @@ class ChallengeCard extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
+          Positioned.fill(
+            child: Container(
+              color: FTheme.black.withOpacity(.2),
+            ),
+          ),
+          Positioned(
+            left: 5.0, top: 10.0,
+            child: FTag(
+              challenge.type!.locale.capitalize!,
+              backgroundColor: challenge.type!.color,
+              bold: true,
+            ),
+          ),
         ],
       ),
     );
 
-    return challenge.locked ? Container() : FCard(
+    return FCard(
       onPressed: onPressed,
       backgroundColor: FTheme.white,
       padding: EdgeInsets.zero,
@@ -239,18 +195,21 @@ class ChallengeCard extends StatelessWidget {
           ) : imageWidget,
           Expanded(
             child: Padding(
-              padding: EdgeInsets.fromLTRB(20.0.w, 8.0.h, 8.0.w, 8.0.h),
+              padding: EdgeInsets.symmetric(
+                horizontal: 14.0.r, vertical: 5.0.r,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   FText(
                     challenge.title ?? '',
-                    maxLines: 1,
                     bold: true,
+                    maxLines: 2,
+                    style: textTheme(context).titleSmall,
                   ),
                   SizedBox(height: 4.0.h),
                   FText(
-                    challenge.descriptions['sub']!,
+                    challenge.sub,
                     style: textTheme(context).bodySmall,
                     color: FTheme.lightGrey,
                     maxLines: 2,
@@ -258,24 +217,54 @@ class ChallengeCard extends StatelessWidget {
                   SizedBox(height: 10.0.h),
                   if(party == null)
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      FTag('${challenge.levels['easy']['maxMember']}명'),
-                      FTag('${challenge.period!}일'),
-                      FTag(challenge.type!.kr),
+                      FTag(challenge.period!.d),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            color: FTheme.lightGrey,
+                            size: 20.0.r,
+                          ),
+                          FText(
+                            '${challenge.levels['easy']['maxMember']}',
+                            color: FTheme.lightGrey,
+                            style: textTheme(context).bodyLarge,
+                          ),
+                        ],
+                      ),
                     ],
                   ) else Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      FTag('${party?.memberUids.length}명'),
-                      FTag('D${withSign(party!.overDays)}'),
-                      FTag(challenge.type!.kr),
-                      Builder(
-                        builder: (context) {
-                          String text = party!.satisfy ? '완료'
-                              : (party!.over ? '실패' : '미완료');
-                          Color color = party!.satisfy ? FTheme.colorC
-                              : (party!.over ? FTheme.colorB : FTheme.lightGrey);
-                          return FTag(text, backgroundColor: color);
-                        },
+                      Row(
+                        children: [
+                          FTag('D${withSign(party!.overDays)}'),
+                          Builder(
+                            builder: (context) {
+                              String text = party!.satisfy ? Lang.tr('party.done')
+                                  : (party!.over ? Lang.tr('party.fail') : Lang.tr('party.undone'));
+                              Color color = party!.satisfy ? challenge.type!.color
+                                  : (party!.over ? FTheme.error : FTheme.lightGrey);
+                              return FTag(text.capitalize!, backgroundColor: color);
+                            },
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            color: FTheme.lightGrey,
+                            size: 20.0.r,
+                          ),
+                          FText(
+                            '${party!.memberUids.length}/${party!.maxMember}',
+                            color: FTheme.lightGrey,
+                            style: textTheme(context).bodyLarge,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -344,11 +333,11 @@ class AchievementCardView extends StatelessWidget {
           List<Level> levels = LevelJsonP.getUnlockedLevels(type, record);
           Level? next = tier['next'];
 
-          if (next == null) return Container();
+          // if (next == null) return Container();
 
           Record nextValue = Record.init(
             type,
-            next.amount!.toDouble(),
+            next!.amount!.toDouble(),
             ExerciseUnit.kilometer,
           );
 
@@ -465,7 +454,9 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
     if (widget.type == ActivityType.distance) amount = amount ~/ 100 * 100;
 
     text = widget.tier['current']?.title ?? '';
-    amountString = '${toLocalString(amount)}${widget.type.unit}';
+
+    String unit = typeUnit(amount, widget.type, onlyUnit: true);
+    amountString = '${toLocalString(amount)} @{$unit}';
 
     timer = Timer.periodic(const Duration(seconds: 5), (_) {
       setState(() => isText = !isText);
@@ -494,20 +485,22 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
     }
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          children: [
-            FText(widget.userInfo.nickname!,
-              style: textTheme(context).titleSmall,
-              bold: true,
-            ),
-            FText(' 님은 지금까지',
-              style: textTheme(context).titleSmall,
+        FTextsT(
+          Lang.tr(
+            'ctnt.lvl.${widget.type.name}.pre.${isText ? 'obj' : 'val'}',
+            args: [widget.userInfo.nickname!],
+          ),
+          textColor: FTheme.darkGrey,
+          style: textTheme(context).bodyMedium,
+          highlightStyles: [
+            textTheme(context).titleSmall!.copyWith(
+              fontWeight: FontWeight.bold,
             ),
           ],
         ),
-        SizedBox(height: 8.0.h),
+        SizedBox(height: 5.0.h),
         GestureDetector(
           onTap: () {
             setState(() => isText = !isText); timer.cancel();
@@ -518,7 +511,7 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
           child: Stack(
             children: [
               AnimatedOpacity(
-                opacity: isText ? .0 : 1.0,
+                opacity: isText ? 1.0 : .0,
                 duration: const Duration(milliseconds: 300),
                 child: Container(
                   height: 48.0.h,
@@ -542,7 +535,7 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
                 ),
               ),
               AnimatedOpacity(
-                opacity: isText ? 1.0 : .0,
+                opacity: isText ? .0 : 1.0,
                 duration: const Duration(milliseconds: 300),
                 child: Container(
                   height: 48.0.r,
@@ -551,22 +544,27 @@ class _ProgressTextWidgetState extends State<ProgressTextWidget> {
                     color: widget.type.color,
                     borderRadius: BorderRadius.circular(8.0.r),
                   ),
-                  child: FText(amountString,
-                    maxLines: 1,
-                    style: textTheme(context).displaySmall,
-                    color: FTheme.white,
-                    bold: true,
-                    align: TextAlign.center,
+                  child: FTextsT(
+                    amountString,
+                    textColor: FTheme.white,
+                    style: textTheme(context).displaySmall!.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                    highlightStyles: [
+                      textTheme(context).titleSmall!.copyWith(
+                        color: FTheme.white,
+                      ),
+                    ],
                   ),
                 ),
               ),
             ],
           ),
         ),
-        SizedBox(height: 8.0.h),
+        SizedBox(height: 5.0.h),
         FText(
-          '만큼 ${widget.type.did}!',
-          style: textTheme(context).titleSmall,
+          Lang.tr('ctnt.lvl.${widget.type.name}.post.${isText ? 'obj' : 'val'}'),
+          style: textTheme(context).bodyMedium,
         ),
         SizedBox(height: 8.0.h),
       ],
@@ -698,9 +696,9 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FText(
-                '다음 레벨까지',
-                style: textTheme(context).bodyMedium,
-                color: FTheme.darkGrey,
+                Lang.tr('ctnt.lvl.next'),
+                style: textTheme(context).bodySmall,
+                color: FTheme.lightGrey,
               ),
               SizedBox(height: 5.0.h),
               LinearPercentIndicator(
@@ -715,7 +713,7 @@ class _ProgressImageWidgetState extends State<ProgressImageWidget> {
                 curve: Curves.easeInOut,
               ),
               FText(
-                '$amountString/$totalString ${widget.type.unit}',
+                '$amountString/$totalString ${typeUnit(amount, widget.type, onlyUnit: true)}',
                 style: textTheme(context).bodyMedium,
                 color: widget.type.color,
               ),
@@ -779,13 +777,13 @@ class _LevelButtonState extends State<LevelButton> {
           color: FTheme.darkGrey,
           borderRadius: radius,
           child: Container(
-            padding: const EdgeInsets.fromLTRB(12.0, 6.0, 6.0, 6.0),
+            padding: EdgeInsets.fromLTRB(8.0.r, 4.0.r, 4.0.r, 4.0.r),
             decoration: BoxDecoration(borderRadius: radius),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                FText('Level ${widget.level}', style: textTheme(context).bodySmall, color: FTheme.white),
+                FText('Lv ${widget.level}', style: textTheme(context).bodySmall, color: FTheme.white),
                 Icon(Icons.chevron_right, size: 14.0.r, color: FTheme.white),
               ],
             ),
@@ -829,7 +827,7 @@ class BattleCardView extends StatelessWidget {
             FCard(
               constraints: BoxConstraints(minHeight: 80.0.h),
               child: FButton(
-                text: '최근 전적 보기',
+                text: Lang.tr('btn.rcnt-res'),
                 stretch: true,
                 backgroundColor: FTheme.colorD,
                 onPressed: BattleRecordP.toBattleRecord,
@@ -844,7 +842,8 @@ class BattleCardView extends StatelessWidget {
                       title: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          FText(battle.finished ? '완료' : '진행중',
+                          FText(
+                            (battle.finished ? Lang.tr('complete') : Lang.tr('in-progress')).capitalize!,
                             style: textTheme(context).titleLarge,
                             bold: true,
                           ),
@@ -867,7 +866,7 @@ class BattleCardView extends StatelessWidget {
             ),
 
             FCard(
-              title: FText('스쿼트!',
+              title: FText('${Lang.tr('btl.squat').capitalize}!',
                 style: textTheme(context).titleLarge,
                 bold: true,
               ),
@@ -881,14 +880,20 @@ class BattleCardView extends StatelessWidget {
                       'assets/image/page/contents/fight.png',
                       height: 180.0.h,
                     ),
-                    FText(
-                      '라이벌과 제한 시간 내에\n누가 더 스쿼트를 많이 하는지 대결해요!',
-                      maxLines: 3,
+                    FTextsT(
+                      Lang.tr(
+                        'btl.card-cmt',
+                        args: [Lang.tr('btl.squat')],
+                      ),
                       style: textTheme(context).titleSmall,
+                      highlightStyle: textTheme(context).titleSmall!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: ActivityType.weight.color,
+                      ),
                     ),
                     FButton(
                       stretch: true,
-                      text: '타임어택 하러가기',
+                      text: Lang.tr('btn.goto-btl'),
                       onPressed: () {
                         ExerciseHandler.workout = Workout.squat;
                         WorkoutFriendP.toWorkoutFriend();
@@ -903,7 +908,7 @@ class BattleCardView extends StatelessWidget {
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  FText('숄더 프레스!',
+                  FText('${Lang.tr('btl.sldr-press').capitalize}!',
                     style: textTheme(context).titleLarge,
                     bold: true,
                   ),
@@ -920,14 +925,20 @@ class BattleCardView extends StatelessWidget {
                       'assets/image/page/contents/fight.png',
                       height: 180.0.h,
                     ),
-                    FText(
-                      '라이벌과 제한 시간 내에\n누가 더 숄더 프레스를 많이 하는지 대결해요!',
-                      maxLines: 3,
+                    FTextsT(
+                      Lang.tr(
+                        'btl.card-cmt',
+                        args: [Lang.tr('btl.sldr-press')],
+                      ),
                       style: textTheme(context).titleSmall,
+                      highlightStyle: textTheme(context).titleSmall!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: ActivityType.weight.color,
+                      ),
                     ),
                     FButton(
                       stretch: true,
-                      text: '타임어택 하러가기',
+                      text: Lang.tr('btn.goto-btl'),
                       onPressed: () {
                         ExerciseHandler.workout = Workout.shoulderPress;
                         WorkoutFriendP.toWorkoutFriend();
@@ -978,22 +989,7 @@ class BattleCardContentWidget extends StatelessWidget {
                   badge: BadgeJsonP.getBadge(myCollection.badgeId),
                 ),
                 const SizedBox(height: 8.0),
-                SizedBox(
-                  width: 70.0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 35.0,
-                        child: FText(
-                          myInfo.nickname!,
-                          style: textTheme(context).bodyMedium,
-                        ),
-                      ),
-                      const MeTag(),
-                    ],
-                  ),
-                ),
+                const MeTag(),
               ],
             ),
             const FIcon(FIcons.swords, selected: true),
@@ -1019,7 +1015,7 @@ class BattleCardContentWidget extends StatelessWidget {
         ),
         const SizedBox(height: 20.0),
         FButton(
-          text: '결과 확인하기',
+          text: Lang.tr('btn.chk-res'),
           stretch: true,
           backgroundColor: ActivityType.weight.color,
           onPressed: () {
@@ -1057,12 +1053,14 @@ class BattleCardContentWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8.0),
-            FText('${battle.getMaxCount(myUid)}회',
+            FText(typeUnit(battle.getMaxCount(myUid), ActivityType.weight),
               color: FTheme.darkGrey,
               bold: true,
             ),
             const SizedBox(height: 5.0),
-            FText('* 남은 기회: ${battle.getRemainChance(myUid)}회',
+            FText('* ${Lang.tr('btl.rmn-cnt')}: ${
+              typeUnit(battle.getRemainChance(myUid), ActivityType.weight)
+            }',
               color: FTheme.lightGrey,
               style: textTheme(context).labelMedium,
             ),
@@ -1144,16 +1142,19 @@ class _RemainingTimeWidgetState extends State<RemainingTimeWidget> {
 
   String get timeString {
     String text = '';
-    if (hour > 0) text += ' $hour시간';
-    if (minute > 0) text += ' $minute분';
-    if (second > 0) text += ' $second초';
+    if (hour > 0) text += ' ${Lang.plural('unit.w-num.time.hour', hour)}';
+    if (minute > 0) text += ' ${Lang.plural('unit.w-num.time.minute', minute)}';
+    if (second > 0) text += ' ${Lang.plural('unit.w-num.time.second', second)}';
     return text.trim();
   }
 
   @override
   Widget build(BuildContext context) {
     return FText(
-      widget.battle.expired ? '만료' : '$timeString 남음',
+      (widget.battle.expired
+          ? Lang.tr('expired')
+          : Lang.tr('time-left', args: [timeString])
+      ).capitalize!,
       style: textTheme(context).labelMedium,
       color: FTheme.lightGrey,
     );

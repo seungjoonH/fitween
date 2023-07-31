@@ -1,6 +1,7 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/collection.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/page/see_more/collection/collection.dart';
 import 'package:fitween/presenter/page/see_more/see_more.dart';
@@ -53,7 +54,7 @@ class CollectionMainView extends StatelessWidget {
                   child: Column(
                     children: [
                       FCard(
-                        title: FText('내 대표 컬렉션'),
+                        title: FText(Lang.tr('badge.main')),
                         constraints: BoxConstraints(minHeight: 150.0.h),
                         child: Center(
                           child: FCollectionWidget(
@@ -65,7 +66,7 @@ class CollectionMainView extends StatelessWidget {
                       SizedBox(height: 20.0.h),
                       MyCollectionCard(
                         title: FText(
-                          '최근에 획득한 컬렉션이에요',
+                          Lang.tr('badge.rec-acq'),
                           style: textTheme(context).titleSmall,
                         ),
                         collections: user.orderedCollections,

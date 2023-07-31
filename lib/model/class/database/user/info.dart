@@ -46,8 +46,6 @@ class FUserInfo {
 
   /// constructors
   FUserInfo() {
-    weight = defaultWeight;
-    height = defaultHeight;
     weightVisibility = true;
     heightVisibility = true;
   }

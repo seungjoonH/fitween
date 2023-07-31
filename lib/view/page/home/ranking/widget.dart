@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/global/unit.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/enum/activity_type.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/page/home/ranking.dart';
 import 'package:fitween/view/widget/widget/card.dart';
@@ -33,8 +35,8 @@ class RankingCardView extends StatelessWidget {
       child: Column(
         children: [
           FCard(
-            title: FText('친구들의 순위를 확인해보세요!',
-              style: textTheme(context).titleMedium,
+            title: FText(Lang.tr('rnk.cmt'),
+              style: textTheme(context).titleSmall,
               bold: true,
             ),
             child: GetBuilder<RankingP>(
@@ -145,7 +147,7 @@ class RankingIndividualGraph extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(left: 8.0.w),
               child: FText(
-                '${toLocalString(amount)}${type.unit}',
+                typeUnit(amount, type, short: false),
                 style: textTheme(context).bodyMedium,
               ),
             ),

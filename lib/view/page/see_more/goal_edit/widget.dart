@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/see_more/goal_edit/goal_edit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -265,36 +266,20 @@ class DistanceRecommendView extends StatelessWidget {
           recommendTimes = [30, 50];
         }
 
-        return Padding(
-          padding: const EdgeInsets.only(left: 30.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              FTexts(
-                ['$ageGroup', '대 ', goalEditP.userInfo.sex!.kr, ' 평균'],
-                colors: const [
-                  FTheme.colorA, FTheme.black,
-                  FTheme.colorA, FTheme.black,
-                ],
-                alignment: MainAxisAlignment.start,
-                space: false,
-                style: textTheme(context).displaySmall,
-              ),
-              FTexts(
-                ['매일', '${recommendTimes.length == 1
-                    ? recommendTimes[0]
-                    : recommendTimes.join('~')}', '분',
-                ],
-                colors: [FTheme.black, ActivityType.distance.color, FTheme.black],
-                alignment: MainAxisAlignment.start,
-                style: textTheme(context).displaySmall,
-              ),
-              FText(
-                '유산소 운동이\n적당해요',
-                style: textTheme(context).displaySmall,
-                maxLines: 2,
-              ),
-            ],
+        return Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: 28.0.w,
+            vertical: 28.0.h,
+          ),
+          alignment: Alignment.topLeft,
+          child: FTextsT(
+            Lang.tr('goal-edit.distance.rcmd', namedArgs: {
+              'generation': '@{$ageGroup}',
+              'sex': '@{${Lang.tr('sex.${goalEditP.userInfo.sex!.name}')}}',
+              'minute': '@{${recommendTimes.length == 1 ? recommendTimes[0] : recommendTimes.join('~')}}'
+            }),
+            style: textTheme(context).displaySmall,
+            highlightColors: [FTheme.colorA, FTheme.colorA, ActivityType.distance.color],
           ),
         );
       },
@@ -326,20 +311,19 @@ class DistanceGoalView extends StatelessWidget {
           state: ExerciseUnit.kilometer,
         );
 
-        const Velocity velocity = Velocity(
-          pixelsPerSecond: Offset(50, 0),
-        );
-
         return Padding(
-          padding: const EdgeInsets.only(right: 30.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 28.0.w,
+            vertical: 28.0.h,
+          ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                child: Stack(
                   children: [
-                    Container(
-                      alignment: Alignment.centerLeft,
+                    Positioned(
+                      left: .0, top: .0,
                       child: GoalNumberPicker(
                         type: ActivityType.distance,
                         itemWidth: 200.0,
@@ -348,43 +332,55 @@ class DistanceGoalView extends StatelessWidget {
                         maxValue: 200,
                       ),
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        FTexts(
-                          ['하루 ', '$minute', '분이면'],
-                          colors: const [FTheme.darkGrey, FTheme.colorA, FTheme.darkGrey],
-                          style: textTheme(context).displaySmall,
-                          alignment: MainAxisAlignment.end,
-                          space: false,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Container(
-                              constraints: BoxConstraints(maxWidth: 230.0.w),
-                              child: TextScroll(
-                                distanceTitle,
-                                style: textTheme(context).displaySmall?.merge(TextStyle(
-                                  color: ActivityType.distance.color,
-                                  fontWeight: FontWeight.normal,
-                                )),
-                                velocity: velocity,
-                                intervalSpaces: 5,
-                              ),
+                    Positioned(
+                      right: .0, bottom: .0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Builder(
+                            builder: (context) {
+                              TextStyle style = textTheme(context).displaySmall!.copyWith(
+                                color: FTheme.darkGrey,
+                              );
+                              return FTextsT(
+                                Lang.tr(
+                                  'goal-edit.distance.calc',
+                                  namedArgs: {
+                                    'minute': Lang.plural('unit.w-num.time.minute', minute),
+                                    'object': '@{$distanceTitle}',
+                                    'obj-value': typeUnit(distanceValue.step, ActivityType.distance, short: false),
+                                  },
+                                ),
+                                align: TextAlign.end,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                style: textTheme(context).displaySmall,
+                                highlightStyles: [
+                                  style.copyWith(color: FTheme.colorA),
+                                  textTheme(context).displaySmall!.copyWith(
+                                    color: ActivityType.distance.color,
+                                  ),
+                                  textTheme(context).titleSmall!.copyWith(
+                                    color: style.color,
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                          FTextsT(
+                            Lang.tr(
+                              'goal-edit.distance.about',
+                              namedArgs: {
+                                'step': typeUnit(step, ActivityType.distance, short: false),
+                                'kilometer': '$kilometer',
+                              },
                             ),
-                            const SizedBox(width: 10.0),
-                            FText('(${unitDistance(distanceValue.step.round())}보)'),
-                          ],
-                        ),
-                        FText('만큼 걸을 수 있어요', style: textTheme(context).displaySmall),
-                        FTexts(['* 약 ', '${toLocalString(step)}보 (${kilometer}km)'],
-                          colors: const [FTheme.darkGrey, FTheme.colorB],
-                          space: false,
-                          alignment: MainAxisAlignment.end,
-                        ),
-                      ],
+                            style: textTheme(context).bodyMedium,
+                            textColor: FTheme.lightGrey,
+                            highlightColor: ActivityType.distance.color,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
@@ -403,21 +399,16 @@ class HeightRecommendView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FText('한 층을', style: textTheme(context).displaySmall, color: FTheme.colorA),
-          FText('오를 때마다', style: textTheme(context).displaySmall),
-          FText('건강 수명이', style: textTheme(context).displaySmall),
-          FTexts(
-            const ['1분 40초', '연장돼요'],
-            colors: [ActivityType.height.color, FTheme.black],
-            style: textTheme(context).displaySmall,
-            alignment: MainAxisAlignment.start,
-          ),
-        ],
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 28.0.w,
+        vertical: 28.0.h,
+      ),
+      alignment: Alignment.topLeft,
+      child: FTextsT(
+        Lang.tr('goal-edit.height.rcmd'),
+        style: textTheme(context).displaySmall,
+        highlightColors: const [FTheme.colorA, FTheme.colorC],
       ),
     );
   }
@@ -442,62 +433,66 @@ class HeightGoalView extends StatelessWidget {
           amount: tier['current'].amount.toDouble(),
         );
 
-        TextStyle? style(Color color) => textTheme(context).displaySmall?.merge(
-          TextStyle(
-            color: color,
-            fontWeight: FontWeight.normal,
-          ),
-        );
-
-        const velocity = Velocity(pixelsPerSecond: Offset(50, 0));
-
         return Padding(
-          padding: const EdgeInsets.only(left: 30.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 28.0.w,
+            vertical: 28.0.h,
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  FTexts(['하루', '${goal.amount.round()}', '층이면'],
-                    colors: [FTheme.darkGrey, ActivityType.calorie.color, FTheme.darkGrey],
-                    alignment: MainAxisAlignment.start,
-                    style: style(FTheme.darkGrey),
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        constraints: BoxConstraints(maxWidth: 210.0.w),
-                        child: TextScroll(
-                          heightTitle,
-                          style: style(ActivityType.height.color),
-                          velocity: velocity,
-                          intervalSpaces: 5,
-                        ),
+              Expanded(
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: .0, top: .0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          FTextsT(
+                            Lang.tr(
+                              'goal-edit.height.calc',
+                              namedArgs: {
+                                'floor': Lang.plural('unit.w-num.floor', goal.amount.round()),
+                                'object': heightTitle,
+                                'obj-value': Lang.plural(
+                                  'unit.w-num.floor',
+                                  heightValue.amount.round(),
+                                ),
+                              },
+                            ),
+                            style: textTheme(context).displaySmall,
+                            highlightStyles: [
+                              textTheme(context).displaySmall!.copyWith(color: FTheme.colorA),
+                              textTheme(context).displaySmall!.copyWith(color: ActivityType.height.color),
+                              textTheme(context).titleMedium!,
+                            ],
+                          ),
+                          SizedBox(height: 20.0.h),
+                          FTextsT(
+                            Lang.tr(
+                                'goal-edit.height.about',
+                                namedArgs: {'time': timeToString((100 * goal.amount).round())}
+                            ),
+                            style: textTheme(context).bodyMedium,
+                            textColor: FTheme.lightGrey,
+                            highlightColor: ActivityType.height.color,
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 10.0),
-                      FText('(${heightValue.amount.round()}층)'),
-                    ],
-                  ),
-                  FText('만큼 오를 수 있어요', style: textTheme(context).displaySmall),
-                  const SizedBox(height: 10.0),
-                  FTexts(
-                    ['* 수명 약', timeToString((100 * goal.amount).round()), '연장'],
-                    colors: [FTheme.darkGrey, ActivityType.height.color, FTheme.darkGrey],
-                    alignment: MainAxisAlignment.start,
-                  ),
-                ],
-              ),
-              Container(
-                alignment: Alignment.bottomRight,
-                child: GoalNumberPicker(
-                  type: ActivityType.height,
-                  itemWidth: 200.0,
-                  color: ActivityType.height.color,
-                  style: FTheme.largeText,
+                    ),
+                    Positioned(
+                      right: .0, bottom: .0,
+                      child: GoalNumberPicker(
+                        type: ActivityType.height,
+                        itemWidth: 200.0,
+                        color: ActivityType.height.color,
+                        style: FTheme.largeText,
+                      ),
+                    ),
+                  ],
                 ),
               ),
+              SizedBox(height: 30.0.h),
             ],
           ),
         );
@@ -512,28 +507,16 @@ class WeightRecommendView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FTexts(
-            const ['유산소 운동', '과'],
-            colors: [ActivityType.calorie.color, FTheme.black],
-            style: textTheme(context).displaySmall,
-            alignment: MainAxisAlignment.start,
-            space: false,
-          ),
-          FTexts(
-            const ['근력 운동', '을'],
-            colors: [ActivityType.weight.color, FTheme.black],
-            style: textTheme(context).displaySmall,
-            alignment: MainAxisAlignment.start,
-            space: false,
-          ),
-          FText('병행 해야 운동 효과가', style: textTheme(context).displaySmall),
-          FText('훨씬 좋아져요', style: textTheme(context).displaySmall),
-        ],
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 28.0.w,
+        vertical: 28.0.h,
+      ),
+      alignment: Alignment.topLeft,
+      child: FTextsT(
+        Lang.tr('goal-edit.weight.rcmd'),
+        style: textTheme(context).displaySmall,
+        highlightColors: [FTheme.colorA, ActivityType.weight.color],
       ),
     );
   }
@@ -555,72 +538,56 @@ class WeightGoalView extends StatelessWidget {
         );
 
         double count = goal.count;
-        double weight = goal.weight;
 
         String weightTitle = tier['current'].title;
         WeightRecord weightValue = WeightRecord(
           amount: tier['current'].amount.toDouble(),
-          state: ExerciseUnit.count,
+          state: ExerciseUnit.weight,
         );
 
-        const velocity = Velocity(pixelsPerSecond: Offset(50, 0));
-
         return Padding(
-          padding: const EdgeInsets.only(right: 30.0),
+          padding: EdgeInsets.symmetric(
+            horizontal: 28.0.w, vertical: 28.0.h,
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
-                alignment: Alignment.centerLeft,
-                child: GoalNumberPicker(
-                  type: ActivityType.weight,
-                  itemWidth: 200.0,
-                  color: ActivityType.weight.color,
-                  style: FTheme.largeText,
-                  maxValue: 200,
+              Expanded(
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: .0, top: .0,
+                      child: GoalNumberPicker(
+                        type: ActivityType.weight,
+                        itemWidth: 200.0,
+                        color: ActivityType.weight.color,
+                        style: FTheme.largeText,
+                        maxValue: 200,
+                      ),
+                    ),
+                    Positioned(
+                      right: .0, bottom: .0,
+                      child: FTextsT(
+                        Lang.tr(
+                          'goal-edit.weight.calc',
+                          namedArgs: {
+                            'count': Lang.plural('unit.w-num.count', count.round()).capitalize!,
+                            'object': weightTitle,
+                            'obj-value': Lang.plural('unit.w-num.count', weightValue.count.round()),
+                          },
+                        ),
+                        align: TextAlign.right,
+                        style: textTheme(context).displaySmall,
+                        highlightStyles: [
+                          textTheme(context).displaySmall!.copyWith(color: FTheme.colorA),
+                          textTheme(context).displaySmall!.copyWith(color: ActivityType.weight.color),
+                          textTheme(context).titleMedium!,
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  FTexts(
-                    ['하루 ', toLocalString(count), '회면'],
-                    colors: const [FTheme.black, FTheme.colorA, FTheme.black],
-                    style: textTheme(context).displaySmall,
-                    alignment: MainAxisAlignment.end,
-                    space: false,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        constraints: BoxConstraints(maxWidth: 230.0.w),
-                        child: TextScroll(
-                          weightTitle,
-                          style: textTheme(context).displaySmall?.merge(TextStyle(
-                            color: ActivityType.weight.color,
-                            fontWeight: FontWeight.normal,
-                          )),
-                          velocity: velocity,
-                          intervalSpaces: 5,
-                        ),
-                      ),
-                      const SizedBox(width: 10.0),
-                      FText('(${unitDistance(weightValue.count.round())}회)'),
-                    ],
-                  ),
-                  FText(
-                    '만큼 들 수 있어요',
-                    style: textTheme(context).displaySmall,
-                  ),
-                  FTexts(['* 약 ', '${toLocalString(weight)} kg'],
-                    colors: const [FTheme.darkGrey, FTheme.colorD],
-                    space: false,
-                    alignment: MainAxisAlignment.end,
-                  ),
-                ],
-              ),
+              SizedBox(height: 30.0.h),
             ],
           ),
         );
@@ -742,7 +709,7 @@ class CarouselButton extends StatelessWidget {
               }
               controller.nextPressed();
             },
-            text: '다음',
+            text: Lang.tr('btn.next').capitalize,
             stretch: true,
           ),
         );

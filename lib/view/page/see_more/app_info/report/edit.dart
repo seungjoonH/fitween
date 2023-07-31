@@ -1,5 +1,6 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/report.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/see_more/app_info/report/edit.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
@@ -17,7 +18,7 @@ class ReportEditPage extends StatelessWidget {
       builder: (reportEditP) {
         return Scaffold(
           appBar: FAppBar(
-            title: '리포트 #${reportEditP.report!.id}',
+            title: '${Lang.tr('report.').capitalize!} #${reportEditP.report!.id}',
             actions: [
               IconButton(
                 onPressed: reportEditP.saveButtonPressed,
@@ -39,7 +40,7 @@ class ReportEditPage extends StatelessWidget {
                       FButton buildButton(bool bug) {
                         bool selected = isBug ? bug : !bug;
                         return FButton(
-                          text: bug ? '오류 제보' : '개선 요청',
+                          text: Lang.tr('fw.bug-rep.${bug ? 'rep': 'req'}'),
                           border: true,
                           stretch: true,
                           multiple: true,
@@ -66,7 +67,7 @@ class ReportEditPage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        FText('카테고리', bold: true),
+                        FText(Lang.tr('category'), bold: true),
                         Container(
                           padding: EdgeInsets.symmetric(
                             horizontal: 10.0.r,
@@ -80,7 +81,7 @@ class ReportEditPage extends StatelessWidget {
                             value: reportEditP.report!.type,
                             items: ReportType.values.map((type) => DropdownMenuItem<ReportType>(
                               value: type,
-                              child: FText(type.kr),
+                              child: FText(type.category),
                             )).toList(),
                             onChanged: reportEditP.typeChanged,
                             icon: const Icon(Icons.arrow_drop_down),
@@ -94,7 +95,7 @@ class ReportEditPage extends StatelessWidget {
                   FInputField(
                     controller: reportEditP.titleCont,
                     invalid: reportEditP.titleInvalid,
-                    hintText: reportEditP.titleHintText ?? '리포트 제목',
+                    hintText: reportEditP.titleHintText ?? Lang.tr('report.title').capitalize!,
                     hintColor: reportEditP.titleHintText == null
                         ? FTheme.grey : FTheme.colorB,
                   ),
@@ -104,10 +105,10 @@ class ReportEditPage extends StatelessWidget {
                     invalid: reportEditP.contentInvalid,
                     hintText: reportEditP.contentHintText ?? (reportEditP.report!.isBug
                         ? reportEditP.report!.type.guide
-                        : '개선을 원하는 사항이 있다면 알려주세요.'),
+                        : Lang.tr('fw.bug-rep.imp-cmt')),
                     hintColor: reportEditP.contentHintText == null
                         ? FTheme.grey : FTheme.colorB,
-                    maxLines: 8,
+                    maxLines: 10,
                   ),
                   SizedBox(height: 120.0.h),
                   FButton(

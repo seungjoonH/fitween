@@ -1,1 +1,222 @@
-[{"id":"2000000","locked":false,"title":"절묘한 마라톤 바톤터치","type":"distance","word":"경기 트랙","period":14,"levels":{"easy":{"word":"103km의","goal":140000,"maxMember":2,"collection":"1050000"},"normal":{"word":"218km의","goal":294000,"maxMember":3,"collection":"1050001"},"hard":{"word":"518km의","goal":700000,"maxMember":5,"collection":"1050002"}},"descriptions":{"sub":"최고의 마라토너 최고찬에게 무슨일이?","detail":"최고찬 마라토너가 그의 마지막 경기 중 다리를 다쳐서 혼자서는 완주를 할 수 없어요. 그를 도와 ## 남은 거리를 완주하고 최고찬 마라토너에게 잊지 못할 마지막 경기를 선물해 주세요.","complete":"트랙을 다 완주했어요! 함께 이뤄낸 결실을 다같이 축하하며 즐겨요!"}},{"id":"2000001","locked":false,"title":"나비를 구해야 해!","type":"height","word":"산","period":14,"levels":{"easy":{"word":"설악산","goal":300,"maxMember":2,"collection":"1050010"},"normal":{"word":"한라산","goal":500,"maxMember":3,"collection":"1050011"},"hard":{"word":"백두산","goal":740,"maxMember":4,"collection":"1050012"}},"descriptions":{"sub":"절벽에 매달려 울고있는 나비를 구해요!","detail":" ##  절벽에 매달려 울고만 있는 고양이를 발견했어요.  스스로는 도저히 탈출할 수 없어 보이는데 이대로 가다 가는 물도 식량도 없어 고양이가 위험해요.  높이 올라 위험에 빠진 고양이를 구출해주세요.","complete":"성공적으로 구출했어요!  깜찍한 나비가 엄마 품속으로 다시 돌아갔어요!"}},{"id":"2000002","locked":true,"title":"험난한 과거시험길","type":"distance","word":"과거시험길","period":14,"levels":{"easy":{"word":"대전에서 한양까지","goal":150000,"maxMember":2,"collection":"1050020"},"normal":{"word":"포항에서 한양까지","goal":300000,"maxMember":3,"collection":"1050021"},"hard":{"word":"해남에서 한양까지","goal":750000,"maxMember":5,"collection":"1050022"}},"descriptions":{"sub":"코 앞으로 다가온 과거시험! 어서 한양으로 가야한다","detail":"몰락한 양반가의 장남 양반각씨가 한양으로 과거시험을 보러 가려고 하는데 혼자 가기에는 너무 위험해요. 그와 함께 한양으로 올라가 양반각씨가 무사히 과거시험을 볼 수 있도록 도와주세요.","complete":"한양에 도착했어요! 덕분에 과거 시험 시작전에 맞춰서 시험장에 도착했어요!"}},{"id":"2000003","locked":true,"title":"급박한 고층빌딩 화재진압 현장","type":"height","word":"빌딩","period":14,"levels":{"easy":{"word":"63빌딩","goal":300,"maxMember":2,"collection":"1050030"},"normal":{"word":"롯데타워","goal":500,"maxMember":3,"collection":"1050031"},"hard":{"word":"부르즈 할리파","goal":740,"maxMember":4,"collection":"1050032"}},"descriptions":{"sub":"어서 불을 꺼야 해!","detail":"고층 빌딩에 큰불이 났어요. 불을 끄기 위해서는 호스를 들고 높이 올라야 하는데 옮길 사람이 너무 부족해요. 소방관님과 함께 호스를 높은 곳까지 올려서 화제를 진압할 수 있도록 도와주세요..","complete":"화재 진압에 성공했어요! 덕분에 빌딩이 무너지는걸 막았어요!"}}]
+[
+  {
+    "id": "2000000",
+    "locked": false,
+    "title": {
+      "ko": "절묘한 마라톤 바톤터치",
+      "en": "Exquisite Marathon Barton Touch"
+    },
+    "type": "distance",
+    "word": {
+      "ko": "경기 트랙",
+      "en": "track"
+    },
+    "period": 14,
+    "levels": {
+      "easy": {
+        "word": {
+          "ko": "103km의",
+          "en": "103km"
+        },
+        "goal": 140000,
+        "maxMember": 2,
+        "collection": "1050000"
+      },
+      "normal": {
+        "word": {
+          "ko": "218km의",
+          "en": "218km"
+        },
+        "goal": 294000,
+        "maxMember": 3,
+        "collection": "1050001"
+      },
+      "hard": {
+        "word": {
+          "ko": "518km의",
+          "en": "518km"
+        },
+        "goal": 700000,
+        "maxMember": 5,
+        "collection": "1050002"
+      }
+    },
+    "descriptions": {
+      "ko": {
+        "sub": "최고의 마라토너 최고찬에게 무슨일이?",
+        "detail": "최고찬 마라토너가 그의 마지막 경기 중 다리를 다쳐서 혼자서는 완주를 할 수 없어요. 그를 도와 ## 남은 거리를 완주하고 최고찬 마라토너에게 잊지 못할 마지막 경기를 선물해 주세요.",
+        "complete": "트랙을 다 완주했어요! 함께 이뤄낸 결실을 다같이 축하하며 즐겨요!"
+      },
+      "en": {
+        "sub": "What happened to the best marathoner, Mr. Best?",
+        "detail": "Mr. Best injured his leg during his last game, so he can't finish the race alone. Help him finish the rest of the ## and present the best marathoner with an unforgettable last game.",
+        "complete": "You finished the track! Let's celebrate and enjoy the fruits you achieved together!"
+      }
+    }
+  },
+  {
+    "id": "2000001",
+    "locked": false,
+    "title": {
+      "ko": "나비를 구해야 해!",
+      "en": "We need to save the kitty Nabi!"
+    },
+    "type": "height",
+    "word": {
+      "ko": "산",
+      "en": "Mountain"
+    },
+    "period": 14,
+    "levels": {
+      "easy": {
+        "word": {
+          "ko": "설악산",
+          "en": "Seoraksan Mt"
+        },
+        "goal": 300,
+        "maxMember": 2,
+        "collection": "1050010"
+      },
+      "normal": {
+        "word": {
+          "ko": "한라산",
+          "en": "Hallasan Mt"
+        },
+        "goal": 500,
+        "maxMember": 3,
+        "collection": "1050011"
+      },
+      "hard": {
+        "word": {
+          "ko": "백두산",
+          "en": "Baekdusan Mt"
+        },
+        "goal": 740,
+        "maxMember": 4,
+        "collection": "1050012"
+      }
+    },
+    "descriptions": {
+      "ko": {
+        "sub": "절벽에 매달려 울고있는 나비를 구해요!",
+        "detail": " ## 절벽에 매달려 울고만 있는 고양이를 발견했어요. 스스로는 도저히 탈출할 수 없어 보이는데 이대로 가다 가는 물도 식량도 없어 고양이가 위험해요. 높이 올라 위험에 빠진 고양이를 구출해주세요.",
+        "complete": "성공적으로 구출했어요!  깜찍한 나비가 엄마 품속으로 다시 돌아갔어요!"
+      },
+      "en": {
+        "sub": "Save the Nabi that is hanging off the cliff and crying!",
+        "detail": "You've found a kitty hanging from a cliff in ##, crying and unable to escape on its own, but there's no water or food, and the it is in danger. Climb high and rescue it from danger.",
+        "complete": "Successful rescue! The kitty Nabi is back in her mom's arms!"
+      }
+    }
+  },
+  {
+    "id": "2000002",
+    "locked": true,
+    "title": {
+      "ko": "험난한 과거시험길",
+      "en": "Down the rugged state exam road"
+    },
+    "type": "distance",
+    "word": {
+      "ko": "",
+      "en": ""
+    },
+    "period": 14,
+    "levels": {
+      "easy": {
+        "word": {
+          "ko": "대전에서",
+          "en": "from Daejeon"
+        },
+        "goal": 150000,
+        "maxMember": 2,
+        "collection": "1050020"
+      },
+      "normal": {
+        "word": {
+          "ko": "부산에서",
+          "en": "from Busan"
+        },
+        "goal": 300000,
+        "maxMember": 3,
+        "collection": "1050021"
+      },
+      "hard": {
+        "word": {
+          "ko": "해남에서",
+          "en": "from Haenam"
+        },
+        "goal": 750000,
+        "maxMember": 5,
+        "collection": "1050022"
+      }
+    },
+    "descriptions": {
+      "ko": {
+        "sub": "코 앞으로 다가온 과거시험! 어서 한양으로 가야한다",
+        "detail": "몰락한 양반가의 장남 양반각씨가 ## 한양으로 과거시험을 보러 가려고 하는데 혼자 가기에는 너무 위험해요. 그와 함께 한양으로 올라가 양반각씨가 무사히 과거시험을 볼 수 있도록 도와주세요.",
+        "complete": "한양에 도착했어요! 덕분에 과거 시험 시작전에 맞춰서 시험장에 도착했어요!"
+      },
+      "en": {
+        "sub": "The state exam is just around the corner! We have to go to Hanyang now",
+        "detail": "Yangbangak, the eldest son of the fallen Yangban family, wants to go to Hanyang for a past test, but it's too dangerous to go alone. Please go up to Hanyang from ## with him and help Yangbangak take the past test safely.",
+        "complete": "한양에 도착했어요! 덕분에 과거 시험 시작전에 맞춰서 시험장에 도착했어요!"
+      }
+    }
+  },
+  {
+    "id": "2000003",
+    "locked": true,
+    "title": {
+      "ko": "급박한 고층빌딩 화재진압 현장",
+      "en": "The scene of an urgent fire suppression in a high-rise building"
+    },
+    "type": "height",
+    "word": {
+      "ko": "빌딩",
+      "en": "building"
+    },
+    "period": 14,
+    "levels": {
+      "easy": {
+        "word": {
+          "ko": "63빌딩",
+          "en": "63 Building"
+        },
+        "goal": 300,
+        "maxMember": 2,
+        "collection": "1050030"
+      },
+      "normal": {
+        "word": {
+          "ko": "롯데타워",
+          "en": "Lotte Tower"
+        },
+        "goal": 500,
+        "maxMember": 3,
+        "collection": "1050031"
+      },
+      "hard": {
+        "word": {
+          "ko": "부르즈 할리파",
+          "en": "Burj Khalifa"
+        },
+        "goal": 740,
+        "maxMember": 4,
+        "collection": "1050032"
+      }
+    },
+    "descriptions": {
+      "ko": {
+        "sub": "어서 불을 꺼야 해!",
+        "detail": " ##에 큰불이 났어요. 불을 끄기 위해서는 호스를 들고 높이 올라야 하는데 옮길 사람이 너무 부족해요. 소방관님과 함께 호스를 높은 곳까지 올려서 화제를 진압할 수 있도록 도와주세요..",
+        "complete": "화재 진압에 성공했어요! 덕분에 빌딩이 무너지는걸 막았어요!"
+      },
+      "en": {
+        "sub": "Need to put out the fire!",
+        "detail": "There's a big fire in a ## and you need to get up high with a hose to put it out, but there aren't enough people to carry it. Help the firefighters get the hose up high and put out the flames.",
+        "complete": "You succeeded in putting out the fire! You saved the building from collapsing!"
+      }
+    }
+  }
+]

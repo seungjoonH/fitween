@@ -342,6 +342,8 @@ class _FTextButtonState extends State<FTextButton> {
                 if (widget.stretch && widget.alignment != MainAxisAlignment.start)
                 const Expanded(child: SizedBox()),
                 widget.child ?? FText(widget.text!,
+                  maxLines: 3,
+                  align: TextAlign.center,
                   color: widget.color, style: widget.style,
                 ),
                 if (widget.stretch && widget.alignment != MainAxisAlignment.end)

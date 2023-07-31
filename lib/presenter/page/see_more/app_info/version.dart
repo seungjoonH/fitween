@@ -1,5 +1,6 @@
 import 'package:fitween/main.dart';
 import 'package:fitween/presenter/firebase/firebase.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:get/get.dart';
 
 class VersionP extends GetxController {
@@ -23,10 +24,10 @@ class VersionP extends GetxController {
 
     if (versions.isNotEmpty) latestVersion = versions.last;
 
-    if (latestVersion == versionNumber) { message = '최신버전을 사용 중입니다.'; }
+    if (latestVersion == versionNumber) { message = Lang.tr('fw.version.latest'); }
     else if (versions.contains(versionNumber)) {
-      message = '최신 업데이트가 있습니다.\nver $latestVersion를 사용할 수 있습니다.';
+      message = Lang.tr('fw.version.update', args: [latestVersion]);
     }
-    else { message = '지원되지 않는 버전입니다.'; }
+    else { message = Lang.tr('fw.version.no-support', args: [versionNumber]); }
   }
 }

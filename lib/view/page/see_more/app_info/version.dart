@@ -1,5 +1,6 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/main.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/see_more/app_info/version.dart';
 import 'package:fitween/presenter/page/see_more/app_info/web_view.dart';
 import 'package:fitween/view/widget/button/button.dart';
@@ -50,7 +51,7 @@ class VersionPage extends StatelessWidget {
               ),
               SizedBox(height: 40.0.h),
               FButton(
-                text: '패치노트 확인하기',
+                text: Lang.tr('fw.rel-note.show'),
                 backgroundColor: FTheme.grey,
                 onPressed: WebViewP.toPatchNote,
               ),

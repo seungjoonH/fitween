@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 import 'package:fitween/presenter/global.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/login.dart';
 import 'package:fitween/view/widget/widget/tag.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
       body: GetBuilder<LoginP>(
         builder: (loginP) {
           String text = loginP.loadPercent < 1.0
-              ? '로딩 중${'.' * pointCount}' : '  완료!';
+              ? '${Lang.tr('loading')}${'.' * pointCount}' : '  ${Lang.tr('complete')}!';
 
           return Stack(
             alignment: Alignment.center,

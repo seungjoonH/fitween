@@ -1,4 +1,6 @@
 import 'package:fitween/model/enum/activity_type.dart';
+import 'package:fitween/presenter/lang/language.dart';
+import 'package:get/get.dart';
 
 class Level {
   /// attributes
@@ -9,6 +11,8 @@ class Level {
   String? imageUrl;
   bool? activate;
 
+  ActivityType get type => ActivityType.values[int.parse(id![2])];
+
   /// constructors
   Level();
 
@@ -18,22 +22,16 @@ class Level {
 
   /// methods
   void fromJson(Map<String, dynamic> json) {
+    String locale = Get.locale!.languageCode;
+    if (locale != 'ko') locale = 'en';
+
     id = json['id']?.toString();
-    title = '${json['title']}';
+    title = json['title'][locale];
     amount = json['amount'].toDouble();
-    description = json['description'];
+    // description = json['description'];
+    description = json['description'][locale];
     imageUrl = idToImageUrl(id!);
     activate = json['activate'];
-  }
-
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    json['id'] = int.parse(json['id']);
-    json['title'] = title;
-    json['amount'] = amount;
-    json['description'] = description;
-    json['activate'] = activate;
-    return json;
   }
 
   /// static variables

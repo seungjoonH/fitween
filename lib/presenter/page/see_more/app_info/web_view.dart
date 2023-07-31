@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/widget/loading.dart';
 import 'package:get/get.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -28,9 +29,9 @@ class WebViewP extends GetxController {
     Get.toNamed('/seeMore/appInfo/webView', arguments: title);
   }
 
-  static void toFitween() { _to('피트윈'); init(fitweenUrl); }
-  static void toTerm() { _to('이용약관'); init(termUrl); }
-  static void toPrivacyPolicy() { _to('개인정보처리방침'); init(privacyPolicyUrl); }
-  static void toPatchNote() { _to('패치노트'); init(patchNoteUrl); }
-  static void toSupport() { _to('고객지원'); init(supportUrl); }
+  static void toFitween() { _to(Lang.tr('fw.')); init(fitweenUrl); }
+  static void toTerm() { _to(Lang.tr('fw.trm-srv')); init(termUrl); }
+  static void toPrivacyPolicy() { _to(Lang.tr('fw.pri-pol')); init(privacyPolicyUrl); }
+  static void toPatchNote() { _to(Lang.tr('fw.rel-note.')); init(patchNoteUrl); }
+  static void toSupport() { _to(Lang.tr('fw.support')); init(supportUrl); }
 }

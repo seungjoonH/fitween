@@ -6,6 +6,7 @@ import 'package:fitween/model/class/database/user/notification.dart';
 import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/class/database/user/battle.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
@@ -14,9 +15,7 @@ import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/model/user/battle.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/string.dart';
 import 'package:fitween/model/enum/activity_type.dart';
@@ -28,6 +27,7 @@ import 'package:fitween/presenter/model/height.dart';
 import 'package:fitween/presenter/model/record.dart';
 import 'package:fitween/presenter/model/weight.dart';
 import 'package:fitween/view/page/register/widget.dart';
+import 'package:get/get.dart';
 import 'home/home.dart';
 
 class Field {
@@ -50,7 +50,7 @@ class RegisterP extends GetxController {
 
   Map<String, Field> fields = {
     'nickname': Field(TextEditingController()),
-    'dateOfBirth': Field(TextEditingController()),
+    'birth': Field(TextEditingController()),
     'sex': Field(),
   };
 
@@ -93,6 +93,9 @@ class RegisterP extends GetxController {
     newcomerParty.uid = AuthP.uid;
     newcomerRecord.uid = AuthP.uid;
     newcomerBattle.uid = AuthP.uid;
+
+    newcomerInfo.weight = FUserInfo.defaultWeight;
+    newcomerInfo.height = FUserInfo.defaultHeight;
 
     pageIndex = 0;
 
@@ -185,7 +188,7 @@ class RegisterP extends GetxController {
 
     newcomerInfo.nickname = fields['nickname']!.controller.text;
     newcomerInfo.dateOfBirth = stringToDate(
-      fields['dateOfBirth']!.controller.text,
+      fields['birth']!.controller.text,
     );
 
     for (ActivityType type in ActivityType.activeValues) {
@@ -219,15 +222,17 @@ class RegisterP extends GetxController {
     Field nicknameField = fields['nickname']!;
     String text = nicknameField.controller.text;
 
+    String v(String text) => 'input.validate.$text';
+
     Map<String, bool> conditions = {
-      '별명이 중복됩니다': await UserInfoP.duplicatedNickname(text),
-      '두 글자 이상 입력해주세요': text.length < 2,
-      '열 글자 이하 입력해주세요': text.length > 10,
-      '자음 모음은 단독으로 포함될 수 없습니다': hasSeparatedConsonantOrVowel(text),
-      '공백을 포함할 수 없습니다': text.contains(' '),
-      '특수문자는 포함할 수 없습니다': RegExp(r'[`~!@#$%^&*|"' r"'‘’””;:/?]").hasMatch(text),
-      '영어나 한글을 포함해주세요': int.tryParse(text) != null,
-      '별명을 입력해주세요': text == '',
+      Lang.tr(v('nick-dup')): await UserInfoP.duplicatedNickname(text),
+      Lang.tr(v('less-two')): text.length < 2,
+      Lang.tr(v('more-ten')): text.length > 10,
+      Lang.tr(v('sep-cnv')): hasSeparatedConsonantOrVowel(text),
+      Lang.tr(v('has-space')): text.contains(' '),
+      Lang.tr(v('has_spchr')): RegExp(r'[`~!@#$%^&*|"' r"'‘’””;:/?]").hasMatch(text),
+      Lang.tr(v('no-enghan')): int.tryParse(text) != null,
+      Lang.tr('input.hint.nickname', args: [' your']): text == '',
     };
 
     conditions.forEach((message, condition) {
@@ -252,18 +257,20 @@ class RegisterP extends GetxController {
   }
 
   void dateOfBirthValidate() async {
-    Field dateOfBirthField = fields['dateOfBirth']!;
+    Field dateOfBirthField = fields['birth']!;
     String text = dateOfBirthField.controller.text;
     DateTime? date = stringToDate(text);
 
+    String v(String text) => 'input.validate.$text';
+
     Map<String, bool> conditions = {
-      '잘못 입력하셨습니다': (today.year - (date?.year ?? 0)) > 99,
-      '미래는 입력할 수 없습니다': today.isBefore(date ?? (today)),
-      '오늘은 입력할 수 없습니다': isSameDate(today, date ?? today),
-      '없는 날짜 입니다': date == null,
-      '여덟 글자가 아닙니다': text.length != 8,
-      '숫자만 입력해주세요': int.tryParse(text) == null,
-      '생년월일을 입력해주세요': text == '',
+      Lang.tr(v('wrg-input')): (today.year - (date?.year ?? 0)) > 99,
+      Lang.tr(v('future')): today.isBefore(date ?? (today)),
+      Lang.tr(v('today')): isSameDate(today, date ?? today),
+      Lang.tr(v('nex-date')): date == null,
+      Lang.tr(v('not-eight')): text.length != 8,
+      Lang.tr(v('has-nonun')): int.tryParse(text) == null,
+      Lang.tr('input.hint.birth'): text == '',
     };
 
     conditions.forEach((message, condition) {
@@ -332,7 +339,7 @@ class RegisterP extends GetxController {
         }
         newcomerInfo.nickname = fields['nickname']!.controller.text;
         newcomerInfo.dateOfBirth =
-            stringToDate(fields['dateOfBirth']!.controller.text);
+            stringToDate(fields['birth']!.controller.text);
         newcomerInfo.weight = WeightPresenter.getAverageWeight(
             newcomerInfo.age, newcomerInfo.sex!);
         newcomerInfo.height = HeightPresenter.getAverageHeight(

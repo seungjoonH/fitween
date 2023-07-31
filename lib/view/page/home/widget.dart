@@ -1,5 +1,8 @@
 import 'dart:math';
+import 'package:fitween/global/string.dart';
+import 'package:fitween/global/unit.dart';
 import 'package:fitween/presenter/global.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/home/calendar.dart';
@@ -72,14 +75,7 @@ class _RotateCarouselState extends State<RotateCarousel>
       builder: (homeP) {
         ActivityType type = ActivityType.activeValues[homeP.rotationIndex];
         double amount = userRecordP.loggedUser.getTodayAmounts(type);
-        String amountString = '${amount.round()}';
-
-        if (type == ActivityType.distance) {
-          amountString = amount < 1000
-              ? '${amount.round()}' : '${(amount / 1000).toStringAsFixed(
-            amount % 1000 < 100 ? 0 : 1
-          )}K';
-        }
+        String amountString = typeUnit(amount, type).txs!;
 
         return GestureDetector(
           onHorizontalDragEnd: (endDetails) {
@@ -135,17 +131,12 @@ class _RotateCarouselState extends State<RotateCarousel>
                     ],
                   ) else Positioned(
                     top: pngSize.height * .5,
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        FText(
-                          amountString,
-                          style: FTheme.largeText,
-                          color: FTheme.white,
-                        ),
-                        FText(
-                          type.unit,
-                          style: textTheme(context).displaySmall,
+                    child: FTextsT(
+                      amountString,
+                      style: FTheme.largeText,
+                      textColor: FTheme.white,
+                      highlightStyles: [
+                        textTheme(context).titleSmall!.copyWith(
                           color: FTheme.white,
                         ),
                       ],
@@ -189,7 +180,7 @@ class CalendarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FCard(
-      title: FText('기록',
+      title: FText(Lang.tr('record').capitalize!,
         style: textTheme(context).titleMedium,
         bold: true,
       ),
@@ -242,8 +233,10 @@ class WeekCalendarWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(2.0),
                   child: Column(
                     children: [
-                      FText(
-                        '월화수목금토일'[index],
+                      FText(Lang.tr('weekdays.${[
+                        'mon', 'tue', 'wed',
+                        'thu', 'fri', 'sat', 'sun'
+                      ][index]}.other'),
                         color: textColor,
                         style: textTheme(context).titleSmall,
                       ),
@@ -292,7 +285,7 @@ class RankingCard extends StatelessWidget {
         ActivityType type = ActivityType.activeValues[homeP.rotationIndex];
 
         return FCard(
-          title: FText('랭킹',
+          title: FText(Lang.tr('ranking').capitalize!,
             style: textTheme(context).titleMedium,
             bold: true,
           ),
@@ -313,9 +306,10 @@ class RankingCard extends StatelessWidget {
                   const SizedBox(height: 5.0),
                   const Divider(thickness: 2, color: FTheme.stroke),
                   FText(
-                    '친구를 라이벌로 지정하여 함께 대결해보세요!',
+                    Lang.tr('frnd.rvl'),
                     style: textTheme(context).bodyMedium,
-                    color: FTheme.darkGrey,
+                    color: FTheme.grey,
+                    maxLines: 2,
                   ),
                 ],
               ),
@@ -356,6 +350,7 @@ class RankingGraph extends StatelessWidget {
               int newIndex = firstIndex + index;
               double amount = rankingP.records[type]![newIndex]
                   .getAmounts(type, rankingP.startDate, rankingP.endDate);
+
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5.0),
                 child: RankingIndividualGraph(

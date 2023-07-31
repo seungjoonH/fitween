@@ -54,6 +54,7 @@ class _BattleCameraPageState extends State<BattleCameraPage> {
     await cameraP.cameraController!
         .startImageStream(createIsolate);
     ExerciseHandler.doWorkout();
+    if (!mounted) return;
     setState(() {});
   }
 

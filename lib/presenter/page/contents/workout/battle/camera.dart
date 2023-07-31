@@ -8,6 +8,7 @@ import 'package:fitween/model/class/workout/limb.dart';
 import 'package:fitween/model/class/workout/parts.dart';
 import 'package:fitween/model/enum/part.dart';
 import 'package:fitween/model/enum/workout.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/json/battle.dart';
 import 'package:fitween/presenter/page/contents/workout/battle/result.dart';
 import 'package:get/get.dart';
@@ -220,7 +221,7 @@ class BattleCameraP extends GetxController {
       case WorkoutState.stop: return;
       case WorkoutState.ready:
         message += '\n${distance.message}';
-        if (distance == HumanDistance.middle) message += '인식 중...';
+        if (distance == HumanDistance.middle) message += Lang.tr('btl.camera.rcgng');
         update();
         startThreeSecTimer();
         break;

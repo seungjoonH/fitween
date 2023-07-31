@@ -39,7 +39,10 @@ void main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: ['en', 'ko'].map((l) => Locale(l)).toList(),
+      supportedLocales: const [
+        Locale('en'),
+        Locale('ko'),
+      ],
       path: 'assets/translations',
       fallbackLocale: const Locale('en'),
       child: const Fitween(),
@@ -94,6 +97,9 @@ class _FitweenState extends State<Fitween> {
           title: 'Fitween',
           debugShowCheckedModeBanner: false,
           themeMode: ThemeMode.light,
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
           theme: ThemeData(
             textTheme: FTheme.textTheme,
             scaffoldBackgroundColor: FTheme.background,
@@ -105,7 +111,6 @@ class _FitweenState extends State<Fitween> {
               ),
             ),
           ),
-          // home: const DeveloperPage(),
           home: const LoginPage(),
           getPages: FRoute.getPages,
         );

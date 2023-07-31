@@ -1,5 +1,6 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/main.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/see_more/app_info/report/report.dart';
 import 'package:fitween/presenter/page/see_more/app_info/license/license.dart';
 import 'package:fitween/presenter/page/see_more/app_info/version.dart';
@@ -9,6 +10,7 @@ import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:fitween/view/widget/widget/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class AppInfoPage extends StatelessWidget {
   const AppInfoPage({Key? key}) : super(key: key);
@@ -16,7 +18,7 @@ class AppInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const FAppBar(title: '정보'),
+      appBar: FAppBar(title: Lang.tr('info.').capitalize!),
       body: Container(
         padding: EdgeInsets.symmetric(
           horizontal: 10.0.w,
@@ -29,37 +31,42 @@ class AppInfoPage extends StatelessWidget {
               onPressed: WebViewP.toFitween,
               stretch: true,
               alignment: MainAxisAlignment.start,
-              child: Row(
-                children: [
-                  FText('피트윈', bold: true, color: FTheme.darkGrey),
-                  FText('이 뭔가요?', color: FTheme.grey),
+              child: FTextsT(
+                Lang.tr('fw.what'),
+                textColor: FTheme.grey,
+                style: textTheme(context).titleSmall,
+                highlightStyles: [
+                  textTheme(context).titleSmall!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: FTheme.colorA,
+                  ),
                 ],
               ),
             ),
             SizedBox(height: 10.0.h),
             FTextButton(
-              text: '오픈소스 라이선스',
+              text: Lang.tr('fw.oss-lic'),
               onPressed: LicenseP.toLicense,
               stretch: true,
               alignment: MainAxisAlignment.start,
             ),
             SizedBox(height: 10.0.h),
             FTextButton(
-              text: '이용약관',
+              text: Lang.tr('fw.trm-srv'),
               onPressed: WebViewP.toTerm,
               stretch: true,
               alignment: MainAxisAlignment.start,
             ),
             SizedBox(height: 10.0.h),
             FTextButton(
-              text: '개인정보 처리방침',
+              text: Lang.tr('fw.pri-pol'),
               onPressed: WebViewP.toPrivacyPolicy,
               stretch: true,
               alignment: MainAxisAlignment.start,
             ),
             SizedBox(height: 10.0.h),
             FTextButton(
-              text: '오류 제보 / 개선 요청',
+              text: Lang.tr('fw.bug-rep.'),
               onPressed: ReportP.toReport,
               stretch: true,
               alignment: MainAxisAlignment.start,
@@ -72,7 +79,7 @@ class AppInfoPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    FText('버전', color: FTheme.grey),
+                    FText(Lang.tr('fw.version.'), color: FTheme.grey),
                     FText(version, style: textTheme(context).labelLarge, color: FTheme.lightGrey),
                   ],
                 ),
@@ -86,7 +93,7 @@ class AppInfoPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    FText('고객지원', color: FTheme.grey),
+                    FText(Lang.tr('fw.support'), color: FTheme.grey),
                     FText('fitween.corp@gmail.com', style: textTheme(context).labelLarge, color: FTheme.lightGrey),
                   ],
                 ),

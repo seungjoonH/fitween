@@ -98,7 +98,8 @@ class FloatingMessageWidget extends StatelessWidget {
                 child: FText(
                   soloCameraP.message,
                   style: CameraP.orientation == Orientation.portrait
-                      ? textTheme(context).headlineMedium : textTheme(context).headlineLarge,
+                      ? textTheme(context).headlineSmall
+                      : textTheme(context).headlineMedium,
                   color: FTheme.colorA,
                   maxLines: 2,
                   bold: true,

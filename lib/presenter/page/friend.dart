@@ -3,6 +3,7 @@ import 'package:fitween/model/class/database/user/friend.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/presenter/inspection/inspection.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
@@ -63,11 +64,13 @@ class FriendP extends GetxController {
     final userP = Get.find<UserInfoP>();
     String text = nicknameCont.text;
 
+    String v(String text) => 'input.validate.$text';
+
     Map<String, bool> conditions = {
-      '\'${nicknameCont.text}\'님이 없습니다': !await UserInfoP.duplicatedNickname(text),
-      '이미 등록된 친구입니다': UserFriendP.doesFriendExist(text),
-      '본인과 친구가 될 수 없습니다': text == userP.loggedUser.nickname,
-      '별명을 입력하세요': text == '',
+      Lang.tr(v('not-exist'), args: [nicknameCont.text]): !await UserInfoP.duplicatedNickname(text),
+      Lang.tr(v('aldy-frnd'), args: [nicknameCont.text]): UserFriendP.doesFriendExist(text),
+      Lang.tr(v('me')): text == userP.loggedUser.nickname,
+      Lang.tr('input.hint.nickname', args: [' friend\'s']): text == '',
     };
 
     conditions.forEach((message, condition) {
@@ -94,15 +97,17 @@ class FriendP extends GetxController {
     await userP.addNotification(userP.loggedUser.uid!, uid, isRival);
     Get.back();
 
-    String title = isRival ? '라이벌' : '친구';
     String? nickname = (await UserInfoP.loadUser(uid))?.nickname;
 
     if (nickname == null) return;
 
     showFDialog(
-      title: '$title 신청',
+      title: Lang.tr('${isRival ? 'rvl' : 'frnd'}.req'),
       content: FText(
-        '\'$nickname\'님께\n$title 신청 하였습니다',
+        Lang.tr(
+          '${isRival ? 'rvl' : 'frnd'}.requested',
+          args: [nickname],
+        ),
         maxLines: 2,
       ),
       type: DialogType.mono,
@@ -124,10 +129,10 @@ class FriendP extends GetxController {
     nicknameHintText = null;
 
     showFDialog(
-      title: '친구 추가',
+      title: Lang.tr('add-friend'),
       content: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: 10.0.r, vertical: 20.0.r,
+          horizontal: 5.0.r, vertical: 10.0.r,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,9 +142,12 @@ class FriendP extends GetxController {
                 return FInputField(
                   controller: nicknameCont,
                   invalid: !friendP.nicknameExist,
-                  hintText: friendP.nicknameHintText ?? '별명을 입력하세요',
+                  hintText: friendP.nicknameHintText ?? Lang.tr(
+                    'input.hint.nickname', args: [' friend\'s'],
+                  ),
                   hintColor: friendP.nicknameHintText == null
-                      ? FTheme.darkGrey : FTheme.colorB,
+                      ? FTheme.lightGrey : FTheme.colorB,
+                  style: textTheme(Get.context!).bodyMedium,
                 );
               },
             ),
@@ -148,7 +156,7 @@ class FriendP extends GetxController {
       ),
       type: DialogType.bi,
       leftPressed: Get.back,
-      rightText: '추가하기',
+      rightText: Lang.tr('btn.add'),
       rightPressed: friendInfoSubmitted,
     );
   }
@@ -175,14 +183,14 @@ class FriendP extends GetxController {
     if (user == null) return;
     
     showFDialog(
-      title: '${user.nickname}',
+      title: Lang.tr('frnd.del'),
       content: FText(
-        '님을 친구목록에서\n삭제하시겠습니까?',
+        Lang.tr('frnd.del-really', args: [user.nickname!]),
         maxLines: 2,
       ),
       type: DialogType.bi,
       leftPressed: Get.back,
-      rightText: '삭제',
+      rightText: Lang.tr('btn.delete'),
       rightPressed: () => breakOffWith(uid),
       rightBackgroundColor: FTheme.error,
     );
@@ -193,14 +201,14 @@ class FriendP extends GetxController {
     if (user == null) return;
 
     showFDialog(
-      title: '라이벌 신청',
+      title: Lang.tr('rvl.req'),
       content: FText(
-        '\'${user.nickname}\'님에게\n라이벌 신청을 하시겠습니까?',
+        Lang.tr('rvl.req-really', args: [user.nickname!]),
         maxLines: 2,
       ),
       type: DialogType.bi,
       leftPressed: Get.back,
-      rightText: '신청하기',
+      rightText: Lang.tr('btn.request'),
       rightPressed: () => noticeToFriend(uid, true),
     );
   }
@@ -223,14 +231,14 @@ class FriendP extends GetxController {
     if (user == null) return;
 
     showFDialog(
-      title: '${user.nickname}',
+      title: Lang.tr('rvl.del'),
       content: FText(
-        '님을 라이벌에서\n제외하시겠습니까?',
+        Lang.tr('rvl.del-really', args: [user.nickname!]),
         maxLines: 2,
       ),
       type: DialogType.bi,
       leftPressed: Get.back,
-      rightText: '제외하기',
+      rightText: Lang.tr('btn.exclude'),
       rightBackgroundColor: FTheme.error,
       rightPressed: () {
         releaseRival(uid);

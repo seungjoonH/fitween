@@ -1,4 +1,5 @@
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,7 @@ class _RegisterPageState extends State<RegisterPage> {
             backgroundColor: FTheme.white,
             // extendBodyBehindAppBar: registerP.pageIndex > 1,
             appBar: FAppBar(
-              title: registerP.pageIndex < 2 ? '정보 입력' : null,
+              title: registerP.pageIndex < 2 ? Lang.tr('reg.appbar') : null,
               leading: IconButton(
                 onPressed: registerP.backPressed,
                 icon: const Icon(Icons.arrow_back_ios_rounded),

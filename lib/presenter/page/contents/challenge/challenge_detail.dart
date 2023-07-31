@@ -1,6 +1,7 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/model/enum/difficulty.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/page/contents/challenge/party.dart';
 import 'package:fitween/presenter/widget/loading.dart';
@@ -36,7 +37,7 @@ class ChallengeDetailP {
   // 챌린지 생성 팝업
   void showChallengeCreatedDialog(String code) {
     showFDialog(
-      title: '챌린지 생성',
+      title: Lang.tr('challenge.create'),
       content: Column(
         children: [
           Center(
@@ -48,7 +49,10 @@ class ChallengeDetailP {
           ),
           Padding(
             padding: EdgeInsets.all(20.0.r),
-            child: FText('챌린지가 생성되었습니다.'),
+            child: FText(
+              Lang.tr('challenge.created'),
+              maxLines: 2,
+            ),
           ),
         ],
       ),

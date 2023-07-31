@@ -3,6 +3,7 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/notification.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/notification.dart';
@@ -38,7 +39,7 @@ class FriendPage extends StatelessWidget {
         ];
 
         return TabScaffold(
-          tabs: const ['전체', '라이벌'],
+          tabs: [Lang.tr('entire'), Lang.tr('rival')],
           hasNotifications: hasNotifications,
           controlNotifications: (index) async {
             final userP = Get.find<UserNotificationP>();
@@ -193,7 +194,7 @@ class FriendListCard extends StatelessWidget {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      FText('${isRival ? '라이벌' : '친구'} ${userInfos.length}',
+                      FText('${(isRival ? Lang.tr('rival') : Lang.tr('friend')).capitalize} ${userInfos.length}',
                         color: FTheme.lightGrey,
                         style: textTheme(context).bodyMedium,
                       ),

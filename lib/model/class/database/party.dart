@@ -95,6 +95,8 @@ class Party {
 
   FBadge get badge => BadgeJsonP.getBadge(level['collection'])!;
 
+  int get maxMember => challenge!.levels[difficulty.name]['maxMember'];
+
   /// constructors
   Party();
 

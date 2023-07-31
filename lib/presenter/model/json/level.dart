@@ -44,6 +44,13 @@ class LevelJsonP extends GetxController {
         result['percent'] = (record.amount - current) / (next - current);
       }
     }
+
+    if (result.isEmpty) {
+      result['current'] = levelList.last;
+      result['next'] = levelList.last;
+      result['percent'] = 1.0;
+    }
+
     return result;
   }
 

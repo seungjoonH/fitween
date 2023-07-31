@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/view/page/contents/challenge/party/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
@@ -10,7 +11,7 @@ class PartyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Scaffold(
-        appBar: const FAppBar(title: '내 챌린지'),
+        appBar: FAppBar(title: Lang.tr('challenge.my')),
         body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 28.0.w,

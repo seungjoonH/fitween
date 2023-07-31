@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:get/get.dart';
 import 'package:fitween/global/number.dart';
@@ -49,11 +50,19 @@ Map<ActivityType, int> get velocities => {
 //   }
 // }
 
-
-String unitDistance(int amount) {
-  if (amount > 100000) return '${toLocalString(amount ~/ 10000)}만';
-  return toLocalString(amount);
-}
-
 // 무게 변환 (회 -> kg)
 int convertWeight(int amount) => amount * userWeight;
+
+String typeUnit(
+  num amount, ActivityType type, {
+  bool short = true,
+  bool onlyUnit = false,
+  bool isKg = false,
+}) {
+  String unit = Lang.plural('unit.wo-num.${type.name}', amount);
+  String number = toLocalString(amount.toDouble());
+  if (short) number = amount.toDouble().short!;
+  if (isKg) unit = 'kg';
+  if (onlyUnit) return unit;
+  return '$number $unit';
+}

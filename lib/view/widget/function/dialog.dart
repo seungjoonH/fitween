@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -151,7 +152,7 @@ class _FAlertDialogState extends State<FAlertDialog> {
         data = [
           DialogButtonData(
             widget.type,
-            text: widget.buttonText ?? '확인',
+            text: widget.buttonText ?? Lang.tr('btn.ok'),
             backgroundColor: widget.color ?? FTheme.darkGrey,
             onPressed: widget.onPressed!,
           ),
@@ -161,14 +162,14 @@ class _FAlertDialogState extends State<FAlertDialog> {
         data = [
           DialogButtonData(
             widget.type,
-            text: widget.leftText ?? '취소',
+            text: widget.leftText ?? Lang.tr('btn.cncl'),
             textColor: widget.leftTextColor ?? FTheme.white,
             backgroundColor: widget.leftBackgroundColor ?? FTheme.lightGrey,
             onPressed: widget.leftPressed!,
           ),
           DialogButtonData(
             widget.type,
-            text: widget.rightText ?? '확인',
+            text: widget.rightText ?? Lang.tr('btn.ok'),
             textColor: widget.rightTextColor ?? FTheme.white,
             backgroundColor: widget.rightBackgroundColor ?? FTheme.darkGrey,
             onPressed: widget.rightPressed!,

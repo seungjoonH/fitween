@@ -2,11 +2,13 @@ import 'dart:math';
 
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:fitween/global/number.dart';
+import 'package:fitween/global/unit.dart';
 import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/party.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/presenter/global.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/user/party.dart';
 import 'package:fitween/presenter/model/user/info.dart';
@@ -118,13 +120,15 @@ class ChallengeInfoCard extends StatelessWidget {
                       Row(
                         children: [
                           FText(
-                            '최대인원 | ${party!.level['maxMember']}명',
+                            '${Lang.tr('challenge.max').capitalize!} | ${
+                              Lang.plural('unit.w-num.person', party!.level['maxMember'])
+                            }',
                             style: textTheme(context).bodyMedium,
                             color: FTheme.lightGrey,
                           ),
                           SizedBox(width: 40.0.w),
                           FText(
-                            '마감기한 | D${withSign(party!.overDays)}',
+                            '${Lang.tr('challenge.due').capitalize!} | D${withSign(party!.overDays)}',
                             style: textTheme(context).bodyMedium,
                             color: FTheme.lightGrey,
                           ),
@@ -139,8 +143,8 @@ class ChallengeInfoCard extends StatelessWidget {
                       ),
                       SizedBox(height: 16.0.h),
                       FText(
-                        party?.challenge?.descriptions['detail']!.replaceAll(
-                          '##', party?.level['word'],
+                        party!.challenge!.detail.replaceAll(
+                          '##', party!.challenge!.word!,
                         ),
                         style: textTheme(context).labelLarge,
                         color: FTheme.grey,
@@ -173,7 +177,7 @@ class ChallengeScoreCard extends StatelessWidget {
 
     return FCard(
       height: max(size.height * .7, 520.0.h),
-      title: FText('점수판',
+      title: FText(Lang.tr('challenge.score').capitalize!,
         style: textTheme(context).titleLarge,
         color: FTheme.darkGrey,
         bold: true,
@@ -187,7 +191,7 @@ class ChallengeScoreCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 FText(
-                  '전체 점수',
+                  Lang.tr('challenge.ent-score'),
                   style: textTheme(context).bodyMedium,
                   color: FTheme.grey,
                 ),
@@ -195,7 +199,7 @@ class ChallengeScoreCard extends StatelessWidget {
                 if (party != null) ChallengeScoreLinearIndicator(party: party!),
                 SizedBox(height: 8.0.h),
                 FText(
-                  '친구 ${party?.memberUids.length}/${party?.level['maxMember']}',
+                  '${Lang.tr('friend').capitalize!} ${party?.memberUids.length}/${party?.level['maxMember']}',
                   style: textTheme(context).bodyMedium,
                   color: FTheme.grey,
                 ),
@@ -227,14 +231,14 @@ class ChallengeScoreCard extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               FText(
-                                '복사완료',
+                                Lang.tr('challenge.copied'),
                                 style: textTheme(context).titleLarge,
                                 color: FTheme.white,
                               ),
                               SizedBox(width: 5.0.w),
                               const Icon(
                                 Icons.check,
-                                color: FTheme.black,
+                                color: FTheme.white,
                               ),
                             ],
                           ) : Row(
@@ -260,8 +264,12 @@ class ChallengeScoreCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 10.0),
                 FText(
-                  '참여 코드를 친구에게 공유하여 함께 도전해요!',
+                  Lang.tr('challenge.share'),
                   style: textTheme(context).bodyMedium,
+                  align: TextAlign.center,
+                  color: FTheme.grey,
+                  maxLines: 2,
+                  bold: true,
                 ),
               ],
             ),
@@ -313,7 +321,7 @@ class _ChallengeScoreLinearIndicatorState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         LinearPercentIndicator(
-          percent: max(amount / goal, .02),
+          percent: min(max(amount / goal, .02), 1.0),
           lineHeight: lineHeight,
           backgroundColor: FTheme.background,
           barRadius: radius,
@@ -394,7 +402,7 @@ class MyPartyRankingWidget extends StatelessWidget {
                           ],
                         ),
                         FText(
-                          '${toLocalString(amount)}${party!.type.unit}',
+                          typeUnit(amount, party!.type, short: false),
                           style: textTheme(context).bodyLarge,
                           color: FTheme.darkGrey,
                         ),
@@ -411,82 +419,84 @@ class MyPartyRankingWidget extends StatelessWidget {
   }
 }
 
-class MyScoreWidget extends StatelessWidget {
-  const MyScoreWidget({
-    Key? key,
-    required this.party,
-  }) : super(key: key);
-
-  final Party party;
-
-  @override
-  Widget build(BuildContext context) {
-    ActivityType type = party.challenge!.type!;
-
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          SizedBox(
-            height: 40.0.h,
-            child: Row(
-              children: [
-                FText(
-                  '내 활동',
-                  style: textTheme(context).headlineSmall,
-                  color: FTheme.black,
-                ),
-                const SizedBox(width: 10.0),
-                FText(
-                  '*현재 챌린지 기준',
-                  style: textTheme(context).bodySmall,
-                  color: FTheme.darkGrey,
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 30.0.h),
-          SizedBox(
-            height: 70.0.h,
-            child: GetBuilder<PartyP>(builder: (controller) {
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AnimatedFlipCounter(
-                    value: controller.value.toInt(),
-                    textStyle: textTheme(context).displayLarge?.apply(
-                      color: type.color,
-                    ),
-                  ),
-                  const SizedBox(width: 10.0),
-                  FText(
-                    type.unitAlt,
-                    style: textTheme(context).bodySmall,
-                    color: FTheme.darkGrey,
-                  ),
-                ],
-              );
-            }),
-          ),
-          SizedBox(height: 20.0.h),
-          SizedBox(
-            height: 40.0.h,
-            child: FTexts(
-              [
-                '모두가 합심하여 ',
-                '${party.recordSum.round()}${type.unitAlt}',
-                '을 ${type.did}'
-              ],
-              colors: [FTheme.darkGrey, type.color, FTheme.darkGrey],
-              space: false,
-              style: textTheme(context).headlineSmall,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// class MyScoreWidget extends StatelessWidget {
+//   const MyScoreWidget({
+//     Key? key,
+//     required this.party,
+//   }) : super(key: key);
+//
+//   final Party party;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     ActivityType type = party.challenge!.type!;
+//
+//     return Padding(
+//       padding: const EdgeInsets.all(20.0),
+//       child: Column(
+//         children: [
+//           SizedBox(
+//             height: 40.0.h,
+//             child: Row(
+//               children: [
+//                 FText(
+//                   '내 활동',
+//                   style: textTheme(context).headlineSmall,
+//                   color: FTheme.black,
+//                 ),
+//                 const SizedBox(width: 10.0),
+//                 FText(
+//                   '*현재 챌린지 기준',
+//                   style: textTheme(context).bodySmall,
+//                   color: FTheme.darkGrey,
+//                 ),
+//               ],
+//             ),
+//           ),
+//           SizedBox(height: 30.0.h),
+//           SizedBox(
+//             height: 70.0.h,
+//             child: GetBuilder<PartyP>(
+//               builder: (partyP) {
+//                 return Row(
+//                   mainAxisAlignment: MainAxisAlignment.center,
+//                   children: [
+//                     AnimatedFlipCounter(
+//                       value: partyP.value.toInt(),
+//                       textStyle: textTheme(context).displayLarge?.apply(
+//                         color: type.color,
+//                       ),
+//                     ),
+//                     const SizedBox(width: 10.0),
+//                     FText(
+//                       type.unitAlt,
+//                       style: textTheme(context).bodySmall,
+//                       color: FTheme.darkGrey,
+//                     ),
+//                   ],
+//                 );
+//               },
+//             ),
+//           ),
+//           SizedBox(height: 20.0.h),
+//           // SizedBox(
+//           //   height: 40.0.h,
+//           //   child: FTextsT(
+//           //     Lang.tr(
+//           //       'party.did.$type-all',
+//           //       namedArgs: {
+//           //         'amount': typeUnit(amount, type),
+//           //       },
+//           //     ),
+//           //     textColor: type.color,
+//           //     style: textTheme(context).headlineSmall,
+//           //   ),
+//           // ),
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 class RankWidget extends StatelessWidget {
   const RankWidget({
@@ -617,7 +627,10 @@ class RankWidget extends StatelessWidget {
                           border: Border.all(color: FTheme.black, width: .75),
                         ),
                         child: FText(
-                          '${(goal - totalRecords).round()}${party.challenge!.type!.unit}',
+                          typeUnit(
+                            goal - totalRecords,
+                            party.challenge!.type!,
+                          ),
                           color: FTheme.colorB,
                         ),
                       ),
@@ -668,7 +681,10 @@ class RankWidget extends StatelessWidget {
                     alignment: Alignment.centerRight,
                     width: 70.0.w,
                     child: FText(
-                      '${party.records[userInfo.uid!]}${party.challenge!.type!.unit}',
+                      typeUnit(
+                        party.records[userInfo.uid!]!,
+                        party.challenge!.type!,
+                      ),
                     ),
                   ),
                 ],

@@ -1,3 +1,4 @@
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/contents/contents.dart';
 import 'package:fitween/presenter/page/contents/workout/battle/result.dart';
 import 'package:fitween/view/page/contents/workout/battle/result/widget.dart';
@@ -14,7 +15,7 @@ class BattleResultPage extends StatelessWidget {
       builder: (battleResultP) {
         return Scaffold(
           appBar: FAppBar(
-            title: '타임어택 결과',
+            title: Lang.tr('btl.result'),
             leading: Container(),
             actions: [
               IconButton(

@@ -8,6 +8,7 @@ import 'package:fitween/model/class/database/user/collection.dart';
 import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/presenter/inspection/inspection.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/json/level.dart';
@@ -159,7 +160,7 @@ class GlobalP extends GetxController {
                 children: [
                   FBadgeWidget(
                     badge: collection.badge,
-                    size: 80.0,
+                    size: 68.0,
                     onPressed: () {
                       Get.back();
                       CollectionP.toCollection();
@@ -185,8 +186,11 @@ class GlobalP extends GetxController {
                 child: SingleChildScrollView(
                   child: Column(
                     children: collection.dateList.map((date) => FText(
-                        dateToString('yyyy-MM-dd 획득!', date.toDate())!,
-                        style: FTheme.textTheme.bodyMedium,
+                      Lang.tr(
+                        'badge.acq-date',
+                        args: [dateToString('yyyy.MM.dd', date.toDate())!],
+                      ),
+                        style: FTheme.textTheme.bodySmall,
                         color: date == collection.dateList.last
                             ? FTheme.colorB : FTheme.black,
                         bold: date == collection.dateList.last,
@@ -205,12 +209,13 @@ class GlobalP extends GetxController {
             child: FText(
               collection.badge!.description!,
               maxLines: 5,
+              style: textTheme(Get.context!).titleSmall,
             ),
           ),
         ],
       ),
       type: isMainBadge ? DialogType.mono : DialogType.bi,
-      leftText: isMainBadge ? null : '대표 뱃지로 설정',
+      leftText: isMainBadge ? null : Lang.tr('badge.main-set'),
       leftPressed: isMainBadge ? null : (() async {
         Get.back();
         await Future.delayed(const Duration(milliseconds: 200));
@@ -262,7 +267,7 @@ class GlobalP extends GetxController {
               Positioned(
                 top: .0,
                 child: FText(
-                  '${firstAward ? '신규' : ''} 뱃지 획득!',
+                  Lang.tr('badge.acq-${firstAward ? 'new': ''}'),
                   style: FTheme.textTheme.headlineSmall,
                 ),
               ),
@@ -273,6 +278,7 @@ class GlobalP extends GetxController {
                   dateToString('yyyy-MM-dd', now)!,
                   color: FTheme.colorB,
                   align: TextAlign.end,
+                  style: textTheme(Get.context!).bodyMedium,
                 ),
               ),
               Positioned(
@@ -297,7 +303,7 @@ class GlobalP extends GetxController {
         ],
       ),
       type: DialogType.bi,
-      leftText: '대표 뱃지로 설정',
+      leftText: Lang.tr('badge.main-set'),
       leftPressed: () async {
         Get.back();
         await Future.delayed(const Duration(milliseconds: 200));

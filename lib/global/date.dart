@@ -1,6 +1,8 @@
 /* 날짜, 시간 관련 */
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitween/presenter/lang/language.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ntp/ntp.dart';
 
@@ -86,10 +88,10 @@ String timeToString(int timeInSecs) {
 
   List<String> output = [];
 
-  if (days > 0) output.add('$days일');
-  if (hours > 0) output.add('$hours시간');
-  if (minutes > 0) output.add('$minutes분');
-  if (seconds > 0 || (days + hours + minutes == 0)) output.add('$seconds초');
+  if (days > 0) output.add(Lang.tr('unit.w-num.time.day', args: ['$days']));
+  if (hours > 0) output.add(Lang.tr('unit.w-num.time.hour', args: ['$hours']));
+  if (minutes > 0) output.add(Lang.tr('unit.w-num.time.minute', args: ['$minutes']));
+  if (seconds > 0 || (days + hours + minutes == 0)) output.add(Lang.tr('unit.w-num.time.second', args: ['$seconds']));
 
   return output.join(' ');
 }
@@ -99,4 +101,51 @@ List<DateTime> daysInRange(DateTime first, DateTime last) {
   return List.generate(
     dayCount, (index) => ignoreTime(DateTime.utc(first.year, first.month, first.day + index))!,
   );
+}
+
+extension DurationExtension on Duration {
+  String get ago {
+    late String agoString;
+
+    if (Get.locale!.languageCode == 'ko') {
+      if (inDays > 0) { agoString = '$inDays일 전'; }
+      else if (inHours > 0) { agoString = '$inHours시간 전'; }
+      else if (inMinutes > 0) { agoString = '$inMinutes분 전'; }
+      else if (inSeconds > 0) { agoString = '$inSeconds초 전'; }
+    }
+    else {
+      if (inDays > 0) { agoString = '${inDays}d ago'; }
+      else if (inHours > 0) { agoString = '${inHours}h ago'; }
+      else if (inMinutes > 0) { agoString = '${inMinutes}m ago'; }
+      else if (inSeconds > 0) { agoString = '${inSeconds}s ago'; }
+    }
+    return agoString;
+  }
+}
+
+extension IntExtension on int {
+  String get y {
+    if (Get.locale!.languageCode == 'ko') return '$this년';
+    return '${this}y';
+  }
+  String get mo {
+    if (Get.locale!.languageCode == 'ko') return '$this개월';
+    return '${this}mo';
+  }
+  String get d {
+    if (Get.locale!.languageCode == 'ko') return '$this일';
+    return '${this}d';
+  }
+  String get h {
+    if (Get.locale!.languageCode == 'ko') return '$this시간';
+    return '${this}h';
+  }
+  String get m {
+    if (Get.locale!.languageCode == 'ko') return '$this분';
+    return '${this}m';
+  }
+  String get s {
+    if (Get.locale!.languageCode == 'ko') return '$this초';
+    return '${this}s';
+  }
 }

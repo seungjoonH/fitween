@@ -2,6 +2,7 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/report.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/model/enum/report.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/see_more/app_info/report/detail.dart';
 import 'package:fitween/presenter/page/see_more/app_info/report/report.dart';
 import 'package:fitween/view/widget/function/dialog.dart';
@@ -58,8 +59,8 @@ class ReportEditP extends GetxController {
     String text = titleCont.text;
 
     Map<String, bool> conditions = {
-      '10자 이내로 입력하세요.': text.length > 10,
-      '리포트 제목을 입력하세요.': text == '',
+      Lang.tr('input.validate.more-ten'): text.length > 10,
+      Lang.tr('input.hint.rep-title', args: ['']): text == '',
     };
 
     conditions.forEach((message, condition) {
@@ -89,8 +90,8 @@ class ReportEditP extends GetxController {
     String text = contentCont.text;
 
     Map<String, bool> conditions = {
-      '100자 이내로 입력하세요.': text.length > 100,
-      '리포트 내용을 입력하세요.': text == '',
+      Lang.tr('input.validate.more-hund'): text.length > 100,
+      Lang.tr('input.validate.no-ctnt'): text == '',
     };
 
     conditions.forEach((message, condition) {
@@ -121,8 +122,8 @@ class ReportEditP extends GetxController {
     if (await contentValidate()) return;
 
     showFDialog(
-      title: '저장완료',
-      content: FText('리포트가 저장되었습니다.'),
+      title: Lang.tr('saved'),
+      content: FText(Lang.tr('fw.bug-rep.save')),
       type: DialogType.mono,
       onPressed: () async {
         Get.back();
@@ -144,9 +145,9 @@ class ReportEditP extends GetxController {
     bool submitResponded = false;
 
     await showFDialog(
-      title: '리포트 제출',
+      title: Lang.tr('fw.bug-rep.submit.'),
       content: FText(
-        '정말 리포트를 제출하시겠습니까?\n제출 후에는 리포트 수정 및 삭제가 불가능합니다.',
+        Lang.tr('fw.bug-rep.submit.really'),
         style: textTheme(Get.context!).bodyMedium,
         maxLines: 3,
       ),

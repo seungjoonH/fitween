@@ -4,7 +4,6 @@ import 'package:fitween/presenter/page/contents/workout/battle/camera.dart';
 import 'package:fitween/presenter/page/contents/workout/solo/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/workout/edge.dart';
 import 'package:fitween/model/class/workout/handler.dart';
 import 'package:fitween/model/class/workout/inference.dart';

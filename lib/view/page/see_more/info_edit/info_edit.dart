@@ -1,4 +1,5 @@
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/see_more/info_edit/info_edit.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:fitween/view/widget/widget/text.dart';
@@ -13,9 +14,9 @@ class InfoEditPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: FTheme.white,
-      appBar: const FAppBar(
-        title: '정보 수정',
-        leading: IconButton(
+      appBar: FAppBar(
+        title: Lang.tr('info.edit.'),
+        leading: const IconButton(
           icon: Icon(Icons.cancel),
           onPressed: InfoEditP.backPressed,
         ),
@@ -34,7 +35,7 @@ class InfoEditPage extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      FText('닉네임'),
+                      FText(Lang.tr('nickname').capitalize!),
                       const SizedBox(height: 10.0),
                       Builder(
                         builder: (context) {
@@ -60,7 +61,7 @@ class InfoEditPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          FText('신장'),
+                          FText(Lang.tr('height').capitalize!),
                           VisibilityButton(
                             state: infoEditP.heightVisibility,
                             onPressed: infoEditP.toggleHeightVisibility,
@@ -92,7 +93,7 @@ class InfoEditPage extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          FText('체중'),
+                          FText(Lang.tr('weight').capitalize!),
                           VisibilityButton(
                             state: infoEditP.weightVisibility,
                             onPressed: infoEditP.toggleWeightVisibility,
@@ -139,7 +140,7 @@ class VisibilityButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String text = '정보 ${state ? '표시' : '숨김'}';
+    String text = Lang.tr('info.edit.${state ? 'vis': 'hid'}');
     IconData data = state ? Icons.visibility : Icons.visibility_off;
     Color color = state ? FTheme.grey : FTheme.lightGrey;
 

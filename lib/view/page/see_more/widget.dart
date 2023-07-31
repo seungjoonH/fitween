@@ -3,9 +3,11 @@ import 'dart:math';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/global/unit.dart';
 import 'package:fitween/model/class/database/collection.dart';
 import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/enum/activity_type.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
 import 'package:fitween/presenter/model/record.dart';
 import 'package:fitween/presenter/model/user/collection.dart';
@@ -39,7 +41,7 @@ class BadgeManagementCard extends StatelessWidget {
 
         return FCard(
           title: FText(
-            '뱃지 관리',
+            Lang.tr('badge.setting'),
             style: textTheme(context).bodyMedium,
             color: FTheme.lightGrey,
             bold: true,
@@ -66,7 +68,7 @@ class BadgeManagementCard extends StatelessWidget {
                               style: textTheme(context).bodyMedium,
                             ),
                             const SizedBox(height: 5.0),
-                            const FTag('대표',
+                            FTag(Lang.tr('main').capitalize!,
                               left: false,
                               backgroundColor: FTheme.darkGrey,
                             ),
@@ -87,7 +89,7 @@ class BadgeManagementCard extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               FText(
-                                '최근',
+                                Lang.tr('badge.recent'),
                                 style: textTheme(context).bodyMedium,
                                 color: FTheme.lightGrey,
                               ),
@@ -137,7 +139,7 @@ class GoalEditCard extends StatelessWidget {
 
     return FCard(
       title: FText(
-        '목표 수정',
+        Lang.tr('goal-edit.'),
         style: textTheme(context).bodyMedium,
         color: FTheme.lightGrey,
         bold: true,
@@ -164,18 +166,20 @@ class GoalEditCard extends StatelessWidget {
                 Record goal = userRecordP.loggedUser.getGoal(type, today)!;
 
                 return SizedBox(
-                  width: 70.0.w,
+                  width: 75.0.w,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      FText(type.kr, style: textTheme(context).bodyLarge),
-                      FText('${toLocalString(newGoal.amount.round())}${type.unit}',
+                      FText(type.locale.capitalize!, style: textTheme(context).bodyMedium),
+                      FText(
+                        toLocalString(newGoal.amount),
                         color: type.color,
+                        style: textTheme(context).titleMedium,
                       ),
                       if (!registeredToday && newGoal.amount != goal.amount)
                       FText(
-                        '* 변경 예정',
+                        '* ${Lang.tr('goal-edit.be-upd')}',
                         style: textTheme(context).bodySmall,
                         color: FTheme.lightGrey,
                       ),
@@ -186,7 +190,7 @@ class GoalEditCard extends StatelessWidget {
               separatorBuilder: (context, index) => VerticalDivider(
                 color: FTheme.stroke,
                 thickness: .5,
-                width: 25.0.w,
+                width: 20.0.w,
               ),
             ),
           ),
@@ -206,7 +210,7 @@ class InfoEditCard extends StatelessWidget {
 
     return FCard(
       title: FText(
-        '정보 수정',
+        Lang.tr('info.edit.'),
         style: textTheme(context).bodyMedium,
         color: FTheme.lightGrey,
         bold: true,
@@ -220,7 +224,11 @@ class InfoEditCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FText('닉네임', style: textTheme(context).bodyMedium, color: FTheme.lightGrey),
+              FText(
+                Lang.tr('nickname').capitalize!,
+                style: textTheme(context).bodyMedium,
+                color: FTheme.lightGrey,
+              ),
               SizedBox(height: 5.0.h),
               FText(userP.loggedUser.nickname!),
             ],
@@ -229,7 +237,11 @@ class InfoEditCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FText('신장', style: textTheme(context).bodyMedium, color: FTheme.lightGrey),
+              FText(
+                Lang.tr('height').capitalize!,
+                style: textTheme(context).bodyMedium,
+                color: FTheme.lightGrey,
+              ),
               SizedBox(height: 5.0.h),
               Stack(
                 children: [
@@ -251,7 +263,11 @@ class InfoEditCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FText('체중', style: textTheme(context).bodyMedium, color: FTheme.lightGrey),
+              FText(
+                Lang.tr('weight').capitalize!,
+                style: textTheme(context).bodyMedium,
+                color: FTheme.lightGrey,
+              ),
               SizedBox(height: 5.0.h),
               Stack(
                 children: [

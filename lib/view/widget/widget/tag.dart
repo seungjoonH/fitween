@@ -8,12 +8,14 @@ class FTag extends StatelessWidget {
     Key? key,
     this.textColor = FTheme.white,
     this.backgroundColor = FTheme.lightGrey,
+    this.bold = false,
     this.left = true,
   }) : super(key: key);
 
   final String text;
   final Color textColor;
   final Color backgroundColor;
+  final bool bold;
   final bool left;
 
   @override
@@ -31,6 +33,7 @@ class FTag extends StatelessWidget {
       ),
       child: FText(text,
         style: textTheme(context).labelMedium,
+        bold: bold,
         color: textColor,
       ),
     );

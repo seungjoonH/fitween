@@ -1,9 +1,11 @@
 import 'package:animated_flip_counter/animated_flip_counter.dart';
+import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/class/database/battle.dart';
 import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/presenter/global.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/friend.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/page/contents/workout/battle/result.dart';
@@ -36,8 +38,8 @@ class BattleResultView extends StatelessWidget {
           return Column(
             children: [
               if (result) const BattleResultCard()
-              else Column(
-                children: const [
+              else const Column(
+                children: [
                   WorkoutFinishCard(),
                   MyAchievementCard(),
                 ],
@@ -155,7 +157,7 @@ class BattleResultCard extends StatelessWidget {
 
           return FCard(
             title: FText(
-              '대결 결과',
+              Lang.tr('btl.result'),
               style: textTheme(context).titleLarge,
               color: FTheme.darkGrey,
               bold: true,
@@ -166,8 +168,9 @@ class BattleResultCard extends StatelessWidget {
               children: [
                 Builder(
                   builder: (context) {
-                    String text = battle.tied ? '비겼어요!'
-                        : '${winnerInfo!.nickname!} 님이 승리하셨어요!';
+                    String text = battle.tied ? Lang.tr('tied')
+                        : Lang.tr('win', args: [winnerInfo!.nickname!]);
+                    text = '${text.capitalize!}!';
                     return FText(text,
                       style: textTheme(context).bodyLarge,
                       color: FTheme.grey,
@@ -201,11 +204,22 @@ class BattleResultCard extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 5.0),
-                              FText(
-                                '${battle.getMaxCount(myUid)}회',
-                                bold: !battle.defeated(myUid),
-                                color: battle.defeated(myUid)
-                                    ? FTheme.lightGrey : FTheme.darkGrey,
+                              FTextsT(
+                                '${toLocalString(battle.getMaxCount(myUid))} @{${
+                                  Lang.plural('unit.wo-num.weight', battle.getMaxCount(myUid))
+                                }}',
+                                style: textTheme(context).titleSmall!.copyWith(
+                                  fontWeight: !battle.defeated(myUid)
+                                      ? FontWeight.bold : FontWeight.normal,
+                                  color: battle.defeated(myUid)
+                                      ? FTheme.lightGrey : FTheme.darkGrey
+                                ),
+                                highlightStyles: [
+                                  textTheme(context).bodyMedium!.copyWith(
+                                    fontWeight: !battle.defeated(myUid)
+                                        ? FontWeight.bold : FontWeight.normal,
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -220,11 +234,22 @@ class BattleResultCard extends StatelessWidget {
                               const SizedBox(height: 3.0),
                               FText(rival.nickname!, style: textTheme(context).bodyLarge),
                               const SizedBox(height: 5.0),
-                              FText(
-                                '${battle.getMaxCount(rivalUid)}회',
-                                bold: !battle.defeated(rivalUid),
-                                color: battle.defeated(rivalUid)
-                                    ? FTheme.lightGrey : FTheme.darkGrey,
+                              FTextsT(
+                                '${toLocalString(battle.getMaxCount(myUid))} @{${
+                                    Lang.plural('unit.wo-num.weight', battle.getMaxCount(myUid))
+                                }}',
+                                style: textTheme(context).titleSmall!.copyWith(
+                                    fontWeight: !battle.defeated(rivalUid)
+                                        ? FontWeight.bold : FontWeight.normal,
+                                    color: battle.defeated(rivalUid)
+                                        ? FTheme.lightGrey : FTheme.darkGrey
+                                ),
+                                highlightStyles: [
+                                  textTheme(context).bodyMedium!.copyWith(
+                                    fontWeight: !battle.defeated(rivalUid)
+                                        ? FontWeight.bold : FontWeight.normal,
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -244,7 +269,10 @@ class BattleResultCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         FText(
-                          '상대와의 전적',
+                          Lang.tr(
+                            'btl.history.opnt',
+                            args: [rival.nickname!],
+                          ),
                           style: textTheme(context).bodyLarge,
                         ),
                         const SizedBox(height: 15.0),

@@ -1,7 +1,9 @@
 import 'package:fitween/model/class/json/badge.dart';
 import 'package:fitween/model/enum/activity_type.dart';
 import 'package:fitween/model/enum/difficulty.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/json/badge.dart';
+import 'package:get/get.dart';
 
 class Challenge {
   /// static variables
@@ -35,6 +37,10 @@ class Challenge {
   String? get titleOneLine => title?.replaceAll('\n', ' ');
   Map<String, dynamic>? getLevel(Difficulty diff) => levels[diff.name];
 
+  String get sub => descriptions[Lang.locale]['sub'];
+  String get detail => descriptions[Lang.locale]['detail'];
+  String get complete => descriptions[Lang.locale]['complete'];
+
   /// constructors
   Challenge();
 
@@ -44,12 +50,15 @@ class Challenge {
 
   /// methods
   void fromJson(Map<String, dynamic> json) {
+    String locale = Get.locale!.languageCode;
+    if (locale != 'ko') locale = 'en';
+
     locked = json['locked'];
     id = json['id'];
-    title = json['title'];
+    title = json['title'][locale];
     imageUrls = idToImageUrls(id!);
     type = ActivityType.toEnum(json['type']);
-    word = json['word'];
+    word = json['word'][locale];
     levels = json['levels'];
     period = json['period'];
     descriptions = json['descriptions'];
@@ -59,15 +68,15 @@ class Challenge {
     });
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    json['id'] = id;
-    json['title'] = title;
-    json['type'] = type?.name;
-    json['word'] = word;
-    json['levels'] = levels;
-    json['period'] = period;
-    json['descriptions'] = descriptions;
-    return json;
-  }
+  // Map<String, dynamic> toJson() {
+  //   Map<String, dynamic> json = {};
+  //   json['id'] = id;
+  //   json['title'] = title;
+  //   json['type'] = type?.name;
+  //   json['word'] = word;
+  //   json['levels'] = levels;
+  //   json['period'] = period;
+  //   json['descriptions'] = descriptions;
+  //   return json;
+  // }
 }

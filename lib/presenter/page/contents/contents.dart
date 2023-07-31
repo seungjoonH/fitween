@@ -6,6 +6,7 @@ import 'package:fitween/model/class/database/user/info.dart';
 import 'package:fitween/model/class/database/user/record.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/presenter/inspection/inspection.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/json/battle.dart';
 import 'package:fitween/presenter/model/json/challenge.dart';
 import 'package:fitween/presenter/model/json/party.dart';
@@ -165,7 +166,7 @@ class ContentsP extends GetxController {
     codeHintText = null;
 
     showFDialog(
-      title: '챌린지 참여코드',
+      title: Lang.tr('challenge.code'),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -174,7 +175,7 @@ class ContentsP extends GetxController {
               return FInputField(
                 controller: codeCont,
                 invalid: controller.codeInvalid,
-                hintText: controller.codeHintText ?? '참여코드를 입력해주세요',
+                hintText: controller.codeHintText ?? Lang.tr('input.hint.code'),
                 hintColor: controller.codeHintText == null
                     ? FTheme.darkGrey
                     : FTheme.colorB,

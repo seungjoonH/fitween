@@ -94,12 +94,15 @@ class _FCardState extends State<FCard> {
                 duration: duration,
                 constraints: widget.constraints,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (widget.title != null && !loadingP.loading)
                     Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Row(
+                          mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(child: widget.title!),
@@ -114,7 +117,8 @@ class _FCardState extends State<FCard> {
                         SizedBox(height: 20.0.h),
                       ],
                     ),
-                    if (!loadingP.loading) widget.child,
+                    if (!loadingP.loading)
+                    widget.child,
                   ],
                 ),
               ),

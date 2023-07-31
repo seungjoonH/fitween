@@ -242,55 +242,55 @@ class FTheme {
 
   static TextStyle get veryLargeText => TextStyle(
     fontFamily: fontFamily,
-    fontWeight: FontWeight.w700,
+    fontWeight: FontWeight.w600,
     fontSize: 250.0.sp,
     height: (225.h / 250.sp),
   );
 
   static TextStyle get largeText => TextStyle(
     fontFamily: fontFamily,
-    fontWeight: FontWeight.w700,
-    fontSize: 70.0.sp,
-    height: (60.h / 70.sp),
+    fontWeight: FontWeight.w600,
+    fontSize: 58.0.sp,
+    height: (62.h / 58.sp),
   );
 
   static TextTheme get textTheme => TextTheme(
     //Display
     displayLarge: TextStyle(
       fontFamily: fontFamily,
-      fontWeight: FontWeight.w700,
-      fontSize: 57.0.sp,
-      height: (64.h / 57.sp),
+      fontWeight: FontWeight.w600,
+      fontSize: 52.0.sp,
+      height: (60.h / 52.sp),
     ),
     displayMedium: TextStyle(
       fontFamily: fontFamily,
-      fontWeight: FontWeight.w700,
-      fontSize: 45.0.sp,
-      height: (52.h / 45.sp),
+      fontWeight: FontWeight.w600,
+      fontSize: 36.0.sp,
+      height: (48.h / 36.sp),
     ),
     displaySmall: TextStyle(
       fontFamily: fontFamily,
-      fontWeight: FontWeight.w700,
-      fontSize: 36.0.sp,
-      height: (40.h / 36.sp),
+      fontWeight: FontWeight.w600,
+      fontSize: 28.0.sp,
+      height: (35.h / 28.sp),
     ),
 
     //Headline
     headlineLarge: TextStyle(
       fontFamily: fontFamily,
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w600,
       fontSize: 32.0.sp,
       height: (40.h / 32.sp),
     ),
     headlineMedium: TextStyle(
       fontFamily: fontFamily,
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w600,
       fontSize: 28.0.sp,
       height: (36.h / 28.sp),
     ),
     headlineSmall: TextStyle(
       fontFamily: fontFamily,
-      fontWeight: FontWeight.w700,
+      fontWeight: FontWeight.w600,
       fontSize: 24.0.sp,
       height: (32 / 24),
     ),

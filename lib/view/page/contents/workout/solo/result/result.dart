@@ -1,6 +1,8 @@
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/global/unit.dart';
 import 'package:fitween/model/enum/activity_type.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/contents/workout/solo/result.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/app_bar.dart';
@@ -17,7 +19,7 @@ class WorkoutSoloResultPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const FAppBar(title: '운동 결과'),
+      appBar: FAppBar(title: Lang.tr('btl.result.ex-rslt')),
       body: Padding(
         padding: EdgeInsets.symmetric(
           horizontal: 28.0.w, vertical: 28.0.h,
@@ -28,7 +30,8 @@ class WorkoutSoloResultPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 FCard(
-                  title: FText('나의 기록',
+                  title: FText(
+                    Lang.tr('btl.result.my-rcd'),
                     style: textTheme(context).titleLarge,
                     color: FTheme.darkGrey,
                     bold: true,
@@ -37,7 +40,7 @@ class WorkoutSoloResultPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       FText(
-                        '무게 기록 상승!',
+                        Lang.tr('btl.result.rcd-inc'),
                         style: textTheme(context).bodyLarge,
                         color: FTheme.grey,
                       ),
@@ -48,14 +51,17 @@ class WorkoutSoloResultPage extends StatelessWidget {
                         children: [
                           AnimatedFlipCounter(
                             value: workoutSoloResultP.amount,
-                            suffix: '회',
+                            suffix: Lang.locale == 'ko' ? '회' : null,
                             thousandSeparator: ',',
                             textStyle: textTheme(context).displayLarge?.copyWith(
                               color: ActivityType.weight.color,
                             ),
                           ),
                           FText(
-                            '/ ${workoutSoloResultP.goal.round()}회',
+                            '/${typeUnit(
+                              workoutSoloResultP.goal,
+                              ActivityType.weight,
+                            )}',
                             color: FTheme.lightGrey,
                           ),
                         ],
@@ -95,10 +101,13 @@ class WorkoutSoloResultPage extends StatelessWidget {
                                   children: [
                                     Expanded(flex: leftFlex, child: const SizedBox()),
                                     Container(
-                                      width: 80.0,
+                                      width: 90.0.w,
                                       alignment: Alignment.center,
                                       child: FText(
-                                        '+${workoutSoloResultP.addedWeight.amount.round()}회',
+                                        '+${typeUnit(
+                                          workoutSoloResultP.addedWeight.amount,
+                                          ActivityType.weight,
+                                        )}',
                                         color: FTheme.darkGrey,
                                         style: textTheme(context).bodyLarge,
                                       ),
@@ -118,7 +127,7 @@ class WorkoutSoloResultPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 60.0),
                   child: FButton(
-                    text: '완료하기',
+                    text: Lang.tr('btn.finish'),
                     stretch: true,
                     onPressed: workoutSoloResultP.submitButtonPressed,
                   ),

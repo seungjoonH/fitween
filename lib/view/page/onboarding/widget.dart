@@ -1,14 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/presenter/page/onboarding.dart';
 import 'package:fitween/presenter/page/register.dart';
 import 'package:fitween/view/widget/button/button.dart';
 import 'package:fitween/view/widget/widget/text.dart';
+import 'package:get/get.dart';
 
 class CarouselView extends StatefulWidget {
   const CarouselView({Key? key}) : super(key: key);
@@ -57,7 +58,8 @@ class _CarouselViewState extends State<CarouselView> {
                         children: [
                           Column(
                             children: [
-                              FText(messages[index],
+                              FText(/*messages[index],*/
+                                Lang.tr('onb.title.page-${index + 1}'),
                                 maxLines: 3,
                                 style: textTheme(context).headlineSmall,
                                 align: TextAlign.center,
@@ -67,8 +69,8 @@ class _CarouselViewState extends State<CarouselView> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 8.0),
                                 child: FText(
-                                  '목표는 언제든지 수정이 가능해요',
-                                  style: textTheme(context).labelSmall,
+                                  Lang.tr('onb.cmt'),
+                                  style: textTheme(context).bodySmall,
                                   color: FTheme.lightGrey,
                                 ),
                               ),
@@ -107,7 +109,7 @@ class _CarouselViewState extends State<CarouselView> {
                   if (controller.visible)
                   FButton(
                     onPressed: RegisterP.toRegister,
-                    text: '시작하기',
+                    text: Lang.tr('btn.start').capitalize,
                     stretch: true,
                   ),
                 ],

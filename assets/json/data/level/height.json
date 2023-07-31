@@ -1,233 +1,431 @@
 [
   {
     "id": 3020000,
-    "title": "길바닥",
+    "title": {
+      "ko": "길바닥",
+      "en": "Ground"
+    },
     "amount": 0,
-    "description": "길바닥에서 벗어나 더 높은 곳으로 올라보세요!",
+    "description": {
+      "ko": "길바닥에서 벗어나 더 높은 곳으로 올라보세요!",
+      "en": "Get off the ground and go higher!"
+    },
     "activate": true
   },
   {
     "id": 3020001,
-    "title": "파르테논 신전",
+    "title": {
+      "ko": "파르테논 신전",
+      "en": "Parthenon"
+    },
     "amount": 5,
-    "description": "그리스 아테네의 아크로폴리스에 있는 파르테논 신전은 아테나 여신을 숭배하기 위해 지어진 신전입니다. 기원전 480년경 페르시아의 침공으로 파괴되었으며 현재도 보수가 진행 중입니다.",
+    "description": {
+      "ko": "그리스 아테네의 아크로폴리스에 있는 파르테논 신전은 아테나 여신을 숭배하기 위해 지어진 신전입니다. 기원전 480년경 페르시아의 침공으로 파괴되었으며 현재도 보수가 진행 중입니다.",
+      "en": "The Parthenon, located on the Acropolis in Athens, Greece, is a temple built to worship the goddess Athena. It was destroyed during the Persian invasion around 480 BC and is still undergoing renovations."
+    },
     "activate": false
   },
   {
     "id": 3020002,
-    "title": "국회의사당",
+    "title": {
+      "ko": "국회의사당",
+      "en": "Korean Capitol"
+    },
     "amount": 7,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020003,
-    "title": "자유의 여신상",
+    "title": {
+      "ko": "자유의 여신상",
+      "en": "Statue of Liberty"
+    },
     "amount": 16,
-    "description": "미국 뉴욕 리버티섬에 있는 자유의 여신상은 19세기 말 프랑스가 미국의 독립 100주년을 축하하기 위해 ‘세상을 밝히는 자유’라는 명칭으로 제작하여 선물한 동상입니다.",
+    "description": {
+      "ko": "미국 뉴욕 리버티섬에 있는 자유의 여신상은 19세기 말 프랑스가 미국의 독립 100주년을 축하하기 위해 ‘세상을 밝히는 자유’라는 명칭으로 제작하여 선물한 동상입니다.",
+      "en": "The Statue of Liberty, located on Liberty Island in New York City, USA, was a gift from France in the late 19th century to celebrate the 100th anniversary of the United States' independence as \"Liberty to Light the World\"."
+    },
     "activate": true
   },
   {
     "id": 3020004,
-    "title": "피사의 사탑",
+    "title": {
+      "ko": "피사의 사탑",
+      "en": "Leaning Tower of Pisa"
+    },
     "amount": 19,
-    "description": "피사의 사탑은 이탈리아 서부 토스카나주의 피사에 있는 피사 대성당의 종루로 기울어진 탑으로 유명합니다. [출처: 위키백과]",
+    "description": {
+      "ko": "피사의 사탑은 이탈리아 서부 토스카나주의 피사에 있는 피사 대성당의 종루로 기울어진 탑으로 유명합니다. [출처: 위키백과]",
+      "en": "The Leaning Tower of Pisa is a leaning tower that is the bell tower of the Pisa Cathedral in Pisa, Tuscany, western Italy."
+    },
     "activate": false
   },
   {
     "id": 3020005,
-    "title": "빅 벤",
+    "title": {
+      "ko": "빅 벤",
+      "en": "Big Ben"
+    },
     "amount": 33,
-    "description": "빅 벤은 영국 런던 웨스트민스터 궁전에 있는 대형 시계탑의 이름이라고 알려져 있지만 해당 시계탑의 정식 명칭은 엘리자베스 타워이며 빅 벤은 그곳에 설치되어 있는 대종의 이름입니다.",
+    "description": {
+      "ko": "빅 벤은 영국 런던 웨스트민스터 궁전에 있는 대형 시계탑의 이름이라고 알려져 있지만 해당 시계탑의 정식 명칭은 엘리자베스 타워이며 빅 벤은 그곳에 설치되어 있는 대종의 이름입니다.",
+      "en": "Big Ben is said to be the name of the large clock tower in the Palace of Westminster in London, England, but the official name of the tower is the Elizabeth Tower, and Big Ben is the name of the bell that is installed there."
+    },
     "activate": true
   },
   {
     "id": 3020006,
-    "title": "뉴욕 파크로우 빌딩",
+    "title": {
+      "ko": "파크로우 빌딩",
+      "en": "Parkrow Building"
+    },
     "amount": 40,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020007,
-    "title": "63빌딩",
+    "title": {
+      "ko": "63빌딩",
+      "en": "63 Building"
+    },
     "amount": 60,
-    "description": "서울 여의도에 위치한 63빌딩은 약 20년동안 초고층 마천루의 자리를 지키며 한국을 대표하는 마천루가 되었습니다. 원래는 금으로 코팅된 유리창을 사용하였으나 2011년에 모두 교체되었습니다.",
+    "description": {
+      "ko": "서울 여의도에 위치한 63빌딩은 약 20년동안 초고층 마천루의 자리를 지키며 한국을 대표하는 마천루가 되었습니다. 원래는 금으로 코팅된 유리창을 사용하였으나 2011년에 모두 교체되었습니다.",
+      "en": "Located in Yeouido, Seoul, Building 63 has been a skyscraper for nearly 20 years, becoming one of the most iconic skyscrapers in Korea. It originally used gold-coated glass windows, but they were all replaced in 2011."
+    },
     "activate": true
   },
   {
     "id": 3020008,
-    "title": "남산서울타워",
+    "title": {
+      "ko": "남산서울타워",
+      "en": "Namsan Seoul Tower"
+    },
     "amount": 80,
-    "description": "서울특별시 남산에 있는 남산서울타워는 송신탑이자 서울의 랜드마크이며 전망대에는 망원경이 설치되어있지만 청와대가 보일 수 있다는 문제가 제기되어 해당 방향에만 망원경이 없습니다.",
+    "description": {
+      "ko": "서울특별시 남산에 있는 남산서울타워는 송신탑이자 서울의 랜드마크이며 전망대에는 망원경이 설치되어있지만 청와대가 보일 수 있다는 문제가 제기되어 해당 방향에만 망원경이 없습니다.",
+      "en": "Located in Namsan, Seoul, South Korea, Namsan Seoul Tower is a transmission tower and a landmark in Seoul. Its observation deck overlooks the entire city of Seoul and is a well-known tourist attraction."
+    },
     "activate": true
   },
   {
     "id": 3020009,
-    "title": "에펠탑",
+    "title": {
+      "ko": "에펠탑",
+      "en": "Eiffel Tower"
+    },
     "amount": 111,
-    "description": "프랑스 파리의 에펠탑은 프랑스 혁명 100주년을 맞아 개최된 파리만국박람회를 기념하기 위해 만들어졌습니다. 현재와 달리 착공 초기부터 미관을 해친다며 철거 위기에 처할 정도로 많은 비난을 받았습니다.",
+    "description": {
+      "ko": "프랑스 파리의 에펠탑은 프랑스 혁명 100주년을 맞아 개최된 파리만국박람회를 기념하기 위해 만들어졌습니다. 현재와 달리 착공 초기부터 미관을 해친다며 철거 위기에 처할 정도로 많은 비난을 받았습니다.",
+      "en": "The Eiffel Tower in Paris, France, was built to commemorate the Paris Exposition Universelle, held to mark the 100th anniversary of the French Revolution. Unlike its current incarnation, it was criticized from the beginning of its construction as an eyesore, to the point where it was threatened with demolition."
+    },
     "activate": true
   },
   {
     "id": 3020010,
-    "title": "엠파이어 스테이트 빌딩",
+    "title": {
+      "ko": "엠파이어 스테이트 빌딩",
+      "en": "Empire State Building"
+    },
     "amount": 128,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020011,
-    "title": "센트럴파크 타워",
+    "title": {
+      "ko": "센트럴파크 타워",
+      "en": "Central Park Tower"
+    },
     "amount": 158,
-    "description": "미국 뉴욕 맨해튼에 위치한 센트럴 파크 타워는 초호화 초고층 주상복합 아파트 건물이며 주거용 건물로는 세계에서 가장 높은 건물로 선정되었습니다.",
+    "description": {
+      "ko": "미국 뉴욕 맨해튼에 위치한 센트럴 파크 타워는 초호화 초고층 주상복합 아파트 건물이며 주거용 건물로는 세계에서 가장 높은 건물로 선정되었습니다.",
+      "en": "Central Park Tower, located in Manhattan, New York City, United States, is an ultra-luxury high-rise residential apartment building and is ranked as the world's tallest residential building."
+    },
     "activate": true
   },
   {
     "id": 3020012,
-    "title": "타이페이 101",
+    "title": {
+      "ko": "타이페이 101",
+      "en": "Taipei 101"
+    },
     "amount": 170,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020013,
-    "title": "세계무역센터",
+    "title": {
+      "ko": "세계무역센터",
+      "en": "World Trade Center"
+    },
     "amount": 181,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020014,
-    "title": "롯데타워",
+    "title": {
+      "ko": "롯데타워",
+      "en": "Lotte Tower"
+    },
     "amount": 186,
-    "description": "서울 송파구에 위치한 롯데타워는 한국 최초로 100층이 넘는 건물이자 세계에서 5번째로 높은 건물이며, OECD 국가에 존재하는 가장 높은 건물입니다.",
+    "description": {
+      "ko": "서울 송파구에 위치한 롯데타워는 한국 최초로 100층이 넘는 건물이자 세계에서 5번째로 높은 건물이며, OECD 국가에 존재하는 가장 높은 건물입니다.",
+      "en": "Located in Songpa-gu, Seoul, Lotte Tower is South Korea's first building over 100 stories, the fifth tallest building in the world, and the tallest building in an OECD country."
+    },
     "activate": true
   },
   {
     "id": 3020015,
-    "title": "알베이트 타워",
+    "title": {
+      "ko": "알베이트 타워",
+      "en": "Abraj Al Bait Towers"
+    },
     "amount": 201,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020016,
-    "title": "상하이 타워",
+    "title": {
+      "ko": "상하이 타워",
+      "en": "Shanghai Tower"
+    },
     "amount": 211,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020017,
-    "title": "메르데카 118",
+    "title": {
+      "ko": "메르데카 118",
+      "en": "Merdeka Tower"
+    },
     "amount": 227,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020018,
-    "title": "베르동 협곡",
+    "title": {
+      "ko": "베르동 협곡",
+      "en": "Gorges du Verdon"
+    },
     "amount": 233,
-    "description": "프랑스 무스티에 생트마리에 있는 베르동 협곡은 유럽에서 가장 아름다운 협곡 중 하나로 여겨지며 호수에 석회암 성분이 녹아 있어 날씨에 따라 에메랄드나 코발트와 같이 다채로운 색을 띠는 것으로 유명하다.",
+    "description": {
+      "ko": "프랑스 무스티에 생트마리에 있는 베르동 협곡은 유럽에서 가장 아름다운 협곡 중 하나로 여겨지며 호수에 석회암 성분이 녹아 있어 날씨에 따라 에메랄드나 코발트와 같이 다채로운 색을 띠는 것으로 유명합니다.",
+      "en": "The Verdon Gorge in Mustieres-Saint-Marie, France, is considered one of the most beautiful gorges in Europe and is famous for its limestone composition, which dissolves in the lake, giving it a variety of colors, such as emerald or cobalt, depending on the weather."
+    },
     "activate": true
   },
   {
     "id": 3020019,
-    "title": "대운산",
+    "title": {
+      "ko": "대운산",
+      "en": "Daeunsan Mt"
+    },
     "amount": 248,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020020,
-    "title": "부르즈 할리파",
+    "title": {
+      "ko": "부르즈 할리파",
+      "en": "Burj Khalifa"
+    },
     "amount": 277,
-    "description": "아랍에미리트 두바이에 위치한 부르즈 할리파는 높이 828m의 마천루이며 인간이 만든 건축물 중 높이가 가장 높다. 두번째로 높은 건축물인 높이 508m의 타이페이 101와 상당한 차이가 납니다.",
+    "description": {
+      "ko": "아랍에미리트 두바이에 위치한 부르즈 할리파는 높이 828m의 마천루이며 인간이 만든 건축물 중 높이가 가장 높습니다. 두번째로 높은 건축물인 높이 508m의 타이페이 101와 상당한 차이가 납니다.",
+      "en": "Burj Khalifa, located in Dubai, United Arab Emirates, is a skyscraper that stands 828 meters tall and is the tallest man-made structure. It's quite a distance from the second tallest building, Taipei 101, which is 508 meters tall."
+    },
     "activate": true
   },
   {
     "id": 3020021,
-    "title": "제다 타워",
+    "title": {
+      "ko": "제다 타워",
+      "en": ""
+    },
     "amount": 336,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020022,
-    "title": "테이블 마운틴",
+    "title": {
+      "ko": "테이블 마운틴",
+      "en": ""
+    },
     "amount": 363,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020023,
-    "title": "그랜드캐니언 스카이 워크",
+    "title": {
+      "ko": "그랜드캐니언 스카이 워크",
+      "en": ""
+    },
     "amount": 401,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020024,
-    "title": "벤 네비스",
+    "title": {
+      "ko": "벤 네비스",
+      "en": ""
+    },
     "amount": 449,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020025,
-    "title": "타이산",
+    "title": {
+      "ko": "타이산",
+      "en": ""
+    },
     "amount": 512,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020026,
-    "title": "태백산",
+    "title": {
+      "ko": "태백산",
+      "en": ""
+    },
     "amount": 523,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020027,
-    "title": "설악산",
+    "title": {
+      "ko": "설악산",
+      "en": ""
+    },
     "amount": 570,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020028,
-    "title": "한라산",
+    "title": {
+      "ko": "한라산",
+      "en": ""
+    },
     "amount": 650,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020029,
-    "title": "백두산",
+    "title": {
+      "ko": "백두산",
+      "en": ""
+    },
     "amount": 915,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020030,
-    "title": "후지산",
+    "title": {
+      "ko": "후지산",
+      "en": ""
+    },
     "amount": 1259,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020031,
-    "title": "킬리만자로산",
+    "title": {
+      "ko": "킬리만자로산",
+      "en": ""
+    },
     "amount": 1966,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": false
   },
   {
     "id": 3020032,
-    "title": "에베레스트",
+    "title": {
+      "ko": "에베레스트",
+      "en": "Everest Mt"
+    },
     "amount": 2943,
-    "description": "",
+    "description": {
+      "ko": "",
+      "en": ""
+    },
     "activate": true
   }
 ]

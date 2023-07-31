@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:fitween/global/date.dart';
+import 'package:fitween/global/unit.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/record.dart';
 import 'package:fitween/presenter/page/home/calendar.dart';
 import 'package:fitween/view/widget/widget/card.dart';
@@ -190,7 +192,7 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                       color: FTheme.black,
                     ),
                   ),
-                  locale: 'ko_Kr',
+                  locale: Get.locale!.languageCode,
                 ),
               ),
               SizedBox(height: 20.0.h),
@@ -202,7 +204,14 @@ class _MyCalendarViewState extends State<MyCalendarView> {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        FText(DateFormat('MM월 dd일').format(_focusedDay), style: textTheme(context).bodyLarge),
+                        Builder(
+                          builder: (context) {
+                            return FText(
+                              DateFormat.MMMd(Get.locale!.languageCode).format(_focusedDay),
+                              style: textTheme(context).bodyLarge,
+                            );
+                          },
+                        ),
                         SizedBox(height: 20.0.h),
                         Column(
                           children: ActivityType.activeValues.map((type) => TodayRecordLinearIndicator(
@@ -270,7 +279,7 @@ class _TodayRecordLinearIndicatorState extends State<TodayRecordLinearIndicator>
           animationDuration: 800,
         ),
         FText(
-          '$amount / $goal ${widget.type.unit}',
+          '$amount / $goal ${typeUnit(amount, widget.type, onlyUnit: true)}',
           color: color,
           style: textTheme(context).bodyMedium,
         ),

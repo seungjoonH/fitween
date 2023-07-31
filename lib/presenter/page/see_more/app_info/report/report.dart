@@ -1,6 +1,7 @@
 import 'package:fitween/model/class/database/report.dart';
 import 'package:fitween/model/enum/dialog.dart';
 import 'package:fitween/presenter/firebase/firebase.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/model/user/info.dart';
 import 'package:fitween/presenter/page/see_more/app_info/report/edit.dart';
 import 'package:fitween/presenter/widget/loading.dart';
@@ -82,8 +83,8 @@ class ReportP extends GetxController {
     bool deleteResponded = false;
 
     await showFDialog(
-      title: '리포트 삭제',
-      content: FText('정말 리포트를 삭제하시겠습니까?', maxLines: 2),
+      title: Lang.tr('fw.bug-rep.del.'),
+      content: FText(Lang.tr('fw.bug-rep.del.really'), maxLines: 2),
       type: DialogType.bi,
       leftPressed: Get.back,
       rightPressed: () {
@@ -95,8 +96,8 @@ class ReportP extends GetxController {
     if (!deleteResponded) return;
 
     showFDialog(
-      title: '리포트 삭제됨',
-      content: FText('리포트가 삭제되었습니다.', maxLines: 2),
+      title: Lang.tr('fw.bug-rep.del.deleted'),
+      content: FText(Lang.tr('fw.bug-rep.del.deleted-cmt'), maxLines: 2),
       type: DialogType.mono,
       onPressed: () async {
         await deleteReport(report);

@@ -1,4 +1,5 @@
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/see_more/app_info/app_info.dart';
 import 'package:fitween/presenter/page/see_more/see_more.dart';
 import 'package:fitween/view/page/see_more/widget.dart';
@@ -7,6 +8,7 @@ import 'package:fitween/view/widget/widget/app_bar.dart';
 import 'package:fitween/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SeeMorePage extends StatelessWidget {
@@ -17,10 +19,10 @@ class SeeMorePage extends StatelessWidget {
     final refreshCont = RefreshController();
 
     return Scaffold(
-      appBar: const FAppBar(
-        title: '더보기',
-        leading: SizedBox(),
-        actions: [
+      appBar: FAppBar(
+        title: Lang.tr('see-more'),
+        leading: const SizedBox(),
+        actions: const [
           IconButton(
             onPressed: AppInfoP.toAppInfo,
             icon: Icon(Icons.info_outline),
@@ -66,14 +68,14 @@ class SeeMorePage extends StatelessWidget {
                   children: [
                     FTextButton(
                       onPressed: SeeMoreP.logout,
-                      text: '로그아웃',
+                      text: Lang.tr('auth.logout').capitalize!,
                       stretch: true,
                       alignment: MainAxisAlignment.start,
                     ),
                     SizedBox(height: 10.0.h),
                     FTextButton(
                       onPressed: SeeMoreP.deleteAccount,
-                      text: '계정삭제',
+                      text: Lang.tr('auth.acc-del').capitalize!,
                       stretch: true,
                       alignment: MainAxisAlignment.start,
                     ),

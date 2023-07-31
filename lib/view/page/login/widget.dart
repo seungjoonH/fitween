@@ -1,10 +1,10 @@
 import 'package:connectivity/connectivity.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fitween/main.dart';
 import 'package:fitween/presenter/inspection/inspection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:intl/intl.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/model/enum/login_type.dart';
 import 'package:fitween/presenter/firebase/auth/auth.dart';
@@ -64,7 +64,7 @@ class SignInButton extends StatelessWidget {
             ),
             SizedBox(width: 10.0.w),
             FText(
-              'Continue with ${toBeginningOfSentenceCase(type.name)}',
+              'sign-in.${type.name}'.tr(),
               style: textTheme(context).titleSmall,
               color: textColors[type],
             ),

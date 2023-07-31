@@ -1,6 +1,7 @@
 /* 챌린지 디테일 위젯 */
 
-import 'package:fitween/global/number.dart';
+import 'package:fitween/global/date.dart';
+import 'package:fitween/presenter/lang/language.dart';
 import 'package:fitween/presenter/page/contents/challenge/challenge_detail.dart';
 import 'package:fitween/presenter/page/contents/contents.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class ChallengeDetailView extends StatelessWidget {
           multiple: isPortrait,
           backgroundColor: FTheme.darkGrey,
           child: FText(
-            '챌린지 참여하기',
+            Lang.tr('btn.prty-join'),
             style: textTheme(context).bodyLarge,
             color: FTheme.white,
             bold: true,
@@ -58,7 +59,7 @@ class ChallengeDetailView extends StatelessWidget {
           backgroundColor: challenge.type!.color,
           multiple: isPortrait,
           child: FText(
-            '챌린지 생성하기',
+            Lang.tr('btn.prty-crt'),
             style: textTheme(context).bodyLarge,
             bold: true,
             color: FTheme.white,
@@ -83,14 +84,16 @@ class ChallengeDetailView extends StatelessWidget {
               Row(
                 children: [
                   FText(
-                    '최대인원 | ${challenge.levels['easy']['maxMember']}명',
-                    style: textTheme(context).bodyMedium,
+                    '${Lang.tr('challenge.max').capitalize!} | ${
+                      Lang.plural('unit.w-num.person', challenge.levels['easy']['maxMember'])
+                    }',
+                    style: textTheme(context).bodySmall,
                     color: FTheme.lightGrey,
                   ),
-                  SizedBox(width: 20.0.w),
+                  SizedBox(width: 40.0.w),
                   FText(
-                    '마감기한 | D${withSign(challenge.period!)}',
-                    style: textTheme(context).bodyMedium,
+                    '${Lang.tr('challenge.due').capitalize!} | ${challenge.period!.d}',
+                    style: textTheme(context).bodySmall,
                     color: FTheme.lightGrey,
                   ),
                 ],
@@ -98,17 +101,16 @@ class ChallengeDetailView extends StatelessWidget {
               SizedBox(height: 4.0.h),
               FText(
                 challenge.title!,
-                style: textTheme(context).titleLarge,
+                style: textTheme(context).titleMedium,
                 bold: true,
-                color: FTheme.black,
+                color: FTheme.darkGrey,
                 maxLines: 2,
               ),
               SizedBox(height: 12.0.h),
               FText(
-                challenge.descriptions['detail']!
-                    .replaceAll('##', challenge.word),
-                style: textTheme(context).bodyLarge,
-                color: FTheme.black,
+                challenge.detail.replaceAll('##', challenge.word!),
+                style: textTheme(context).bodyMedium,
+                color: FTheme.grey,
                 maxLines: 5,
               ),
               SizedBox(height: 20.0.h),

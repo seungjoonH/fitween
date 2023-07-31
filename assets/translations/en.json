@@ -1,3 +1,429 @@
 {
-
+  "sign-in": {
+    "_text": "Continue with",
+    "google": "@:sign-in._text Google",
+    "apple": "@:sign-in._text Apple"
+  },
+  "onb": {
+    "title": {
+      "page-1": "Logging your daily workouts,\nHow do you keep track?",
+      "page-2": "Just type!\nWe'll make it meaningful.",
+      "page-3": "Log weight, cardio,\nand even stairs climbed!",
+      "page-4": "Set a goal for the day\neasier to manage!"
+    },
+    "cmt": "Goals can be modified at any time"
+  },
+  "btn": {
+    "start": "start",
+    "next": "next",
+    "rcnt-res": "Show history",
+    "chk-res": "Check result",
+    "goto-btl": "Go to battle",
+    "slct": "Select",
+    "cncl": "Cancel",
+    "ok": "OK",
+    "add": "Add",
+    "prty-crt": "Create Party",
+    "prty-join": "Join Party",
+    "delete": "Delete",
+    "exclude": "Exclude",
+    "request": "Request",
+    "finish": "Finish"
+  },
+  "nickname": "nickname",
+  "birth": "date of birth",
+  "weight": "weight",
+  "height": "height",
+  "input": {
+    "hint": {
+      "_text": "Type{}",
+      "nickname": "@:input.hint._text @:nickname",
+      "birth": "@:input.hint._text @:birth",
+      "code": "@:input.hint._text join code",
+      "rep-title": "@:input.hint._text report title"
+    },
+    "validate": {
+      "nick-dup": "Nickname duplicates",
+      "less-two": "Enter at least two characters",
+      "more-ten": "Enter at most ten characters",
+      "more-hund": "Enter at most a hundred characters",
+      "sep-cnv": "Hangul letter cannot stand alone",
+      "has-space": "Cannot contain whitespace",
+      "has_spchr": "Cannot contain special characters",
+      "no-enghan": "Please include English or Hangul",
+      "wrg-input": "Wrong input entered",
+      "future": "Future cannot be entered",
+      "today": "Today cannot be entered",
+      "nex-date": "Date does not exist",
+      "not-eight": "Not eight letters",
+      "has-nonum": "Please enter only numbers",
+      "not-exist": "{} does not exists",
+      "aldy-frnd": "{} is already friend",
+      "me": "Cannot be friends with yourself",
+      "no-ctnt": "Type your content"
+    }
+  },
+  "sex": {
+    "": "sex",
+    "male": "male",
+    "female": "female",
+    "men": "men",
+    "women": "women"
+  },
+  "reg": {
+    "appbar": "Information",
+    "cmt": {
+      "page-1": "Fitween recommends daily exercise goals\nbased on your date of birth and gender.",
+      "page-2": "Weight and height are used only for simple calculations and not elsewhere."
+    }
+  },
+  "goal-edit": {
+    "": "Edit Goals",
+    "first": "Now,\nshall we set your\n@{Daily Goal}?",
+    "distance": {
+      "rcmd": "It is appropriate\nfor {generation}'s {sex},\n{minute} minutes of\naerobic exercise\nevery day on average",
+      "calc": "In @{{minute}} a day,\nyou can walk\nas much as\n{object}\n@{({obj-value})}\n",
+      "about": "* About @{{step} ({kilometer}km)}"
+    },
+    "height": {
+      "rcmd": "Every time\nyou climb @{a floor},\nyour health life\nis extended by\n@{1 min and 40 secs}",
+      "calc": "In @{{floor}} a day,\nyou can go up\nas much as\n@{{object}}\n@{({obj-value})}",
+      "about": "* About @{{time}} lifetime extended"
+    },
+    "weight": {
+      "rcmd": "Combine @{cardio} and\n@{strength} training\nto get the most\nout of your workout",
+      "calc": "@{{count}} a day\ncan lift\nas heavy as\n@{{object}}\n@{({obj-value})}"
+    },
+    "be-upd": "Be updated"
+  },
+  "unit": {
+    "w-num": {
+      "time": {
+        "day": "{}d",
+        "hour": "{}h",
+        "minute": "{}m",
+        "second": "{}s"
+      },
+      "minute": {
+        "zero": "zero minutes",
+        "one": "1 minute",
+        "many": "{} minutes",
+        "other": "{} minutes"
+      },
+      "step": {
+        "zero": "0 steps",
+        "one": "1 step",
+        "many": "{} steps",
+        "other": "{} steps"
+      },
+      "floor": {
+        "zero": "0 floors",
+        "one": "1 floor",
+        "many": "{} floors",
+        "other": "{} floors"
+      },
+      "count": {
+        "zero": "zero times",
+        "one": "once",
+        "two": "twice",
+        "many": "{} times",
+        "other": "{} times"
+      },
+      "person": {
+        "other": "{}"
+      }
+    },
+    "wo-num": {
+      "distance": {
+        "one": "step",
+        "other": "steps"
+      },
+      "height": {
+        "one": "floor",
+        "other": "floors"
+      },
+      "weight": {
+        "one": "time",
+        "other": "times"
+      }
+    }
+  },
+  "loading": "loading",
+  "complete": "complete",
+  "record": "record",
+  "ranking": "ranking",
+  "month": {
+    "1": {
+      "long": "January",
+      "other": "Jan"
+    },
+    "2": {
+      "long": "February",
+      "other": "Feb"
+    },
+    "3": {
+      "long": "March",
+      "other": "Mar"
+    },
+    "4": {
+      "long": "April",
+      "other": "Apr"
+    },
+    "5": {
+      "long": "May",
+      "other": "May"
+    },
+    "6": {
+      "long": "June",
+      "other": "Jun"
+    },
+    "7": {
+      "long": "July",
+      "other": "Jul"
+    },
+    "8": {
+      "long": "August",
+      "other": "Aug"
+    },
+    "9": {
+      "long": "September",
+      "other": "Sep"
+    },
+    "10": {
+      "long": "October",
+      "other": "Oct"
+    },
+    "11": {
+      "long": "November",
+      "other": "Nov"
+    },
+    "12": {
+      "long": "December",
+      "other": "Dec"
+    }
+  },
+  "weekdays": {
+    "mon": {
+      "long": "Monday",
+      "short": "Mon",
+      "other": "M"
+    },
+    "tue": {
+      "long": "Tuesday",
+      "short": "Tue",
+      "other": "T"
+    },
+    "wed": {
+      "long": "Wednesday",
+      "short": "Wed",
+      "other": "W"
+    },
+    "thu": {
+      "long": "Thursday",
+      "short": "Thu",
+      "other": "T"
+    },
+    "fri": {
+      "long": "Friday",
+      "short": "Fri",
+      "other": "F"
+    },
+    "sat": {
+      "long": "Saturday",
+      "short": "Sat",
+      "other": "S"
+    },
+    "sun": {
+      "long": "Sunday",
+      "short": "Sun",
+      "other": "S"
+    }
+  },
+  "level": "level",
+  "entire": "entire",
+  "rival": "rival",
+  "friend": "friend",
+  "frnd": {
+    "req": "Request Friend",
+    "requested": "Requested to {} for a friend.",
+    "del": "Delete Friend",
+    "del-really": "Are you sure you want to delete {} from your friend?",
+    "rvl": "Let's compete together by designating friends as rivals."
+  },
+  "rvl": {
+    "req": "Request Rival",
+    "req-really": "Are you sure you want to request {} for a rival?",
+    "requested": "Requested to {} for a rival.",
+    "del": "Delete Rival",
+    "del-really": "Do you want to exclude {} from your rival?"
+  },
+  "challenge": {
+    "": "challenge",
+    "my": "My Challenge",
+    "new": "New challenges",
+    "no": "There are no new challenges",
+    "max": "max occupancy",
+    "due": "due",
+    "score": "score",
+    "ent-score": "Entire Score",
+    "copied": "Copied",
+    "share": "Share your participation code with your friends and challenge them together!",
+    "code": "Challenge join code",
+    "create": "Create Challenge",
+    "created": "Challenge has been created"
+  },
+  "party": {
+    "": "party",
+    "joined": "Joined parties",
+    "no": "There are no parties\nyou've joined",
+    "done": "done",
+    "undone": "undone",
+    "fail": "fail"
+  },
+  "battle": "battle",
+  "rnk": {
+    "cmt": "Check out how your Rivals Rank!"
+  },
+  "ctnt": {
+    "lvl": {
+      "next": "Until next level",
+      "distance": {
+        "pre": {
+          "obj": "@{YOU} have walked further than",
+          "val": "@{YOU} have walked"
+        },
+        "post": {
+          "obj": "so far!",
+          "val": "so far!"
+        }
+      },
+      "height": {
+        "pre": {
+          "obj": "@{YOU} have climbed higher than",
+          "val": "@{YOU} have climbed"
+        },
+        "post": {
+          "obj": "so far!",
+          "val": "so far!"
+        }
+      },
+      "weight": {
+        "pre": {
+          "obj": "@{YOU} have lifted heavier than",
+          "val": "@{YOU} have lifted"
+        },
+        "post": {
+          "obj": "so far!",
+          "val": "so far!"
+        }
+      }
+    }
+  },
+  "add-friend": "Add a Friend",
+  "expired": "expired",
+  "time-left": "{} left",
+  "btl": {
+    "squat": "squat",
+    "sldr-press": "shoulder press",
+    "card-cmt": "Battle with your rival to check\nwho can do the most\n@{{}} in the time limit!",
+    "history": {
+      "rcnt": "Recent History",
+      "title": "@{{}}'s history",
+      "opnt": "With {}",
+      "win": "W",
+      "tie": "T",
+      "lose": "L",
+      "odds": "Odds: {}%"
+    },
+    "solo": "Solo Play",
+    "camera": {
+      "pos-det": "Posture Detection",
+      "pos-det-cmt": "Recognizes posture\nfor calculating the number of {}",
+      "rcgng": "Recognizing..."
+    },
+    "rmn-cnt": "Remaining counts",
+    "result": {
+      "ex-rslt": "Workout Result",
+      "my-rcd": "My Record",
+      "rcd-inc": "Weight record increased!"
+    }
+  },
+  "see-more": "See More",
+  "main": "main",
+  "badge": {
+    "": "badge",
+    "main": "Main badge",
+    "main-set": "Set as Main",
+    "acq": "Earned badge",
+    "acq-new": "Earned new badge",
+    "setting": "Badge Settings",
+    "recent": "Recent Badges",
+    "rec-acq": "Recently earned badges",
+    "acq-date": "Get it on {}!"
+  },
+  "info": {
+    "": "information",
+    "edit": {
+      "": "Edit Info",
+      "vis": "Display info",
+      "hid": "Hide info"
+    }
+  },
+  "auth": {
+    "login": "login",
+    "logout": "logout",
+    "logout-really": "Are you sure you want to logout?",
+    "acc-del": "delete account",
+    "acc-del-really": "Are you sure you want to delete your account?"
+  },
+  "report": {
+    "": "report",
+    "title": "@:report. title"
+  },
+  "category": "category",
+  "fw": {
+    "": "Fitween",
+    "what": "What is @{@:fw.}?",
+    "oss-lic": "Open Source Licenses",
+    "trm-srv": "Terms of Service",
+    "pri-pol": "Privacy Policy",
+    "bug-rep": {
+      "": "Bug Reports",
+      "bug": "Bug reports",
+      "imp": "Improvement requests",
+      "rep": "Reports",
+      "req": "Requests",
+      "write": "Report bugs &\nRequest improvements",
+      "imp-cmt": "Let us know if there's anything you'd like to see improved.",
+      "save": "Report saved.",
+      "writer": "writer",
+      "date": "date",
+      "ans": "Answer of Dev.",
+      "req-pend": "Your inquiry is pending.",
+      "req-recv": "Your inquiry has been received.\nWe will reply as soon as possible.",
+      "submit": {
+        "": "Submit Report",
+        "really": "Are you sure you want to submit the report? Cannot be edited or deleted after submission."
+      },
+      "del": {
+        "": "Delete Report",
+        "really": "Are you sure you want to delete the report?",
+        "deleted": "Report Deleted",
+        "deleted-cmt": "Report has been successfully deleted."
+      }
+    },
+    "version": {
+      "": "Version",
+      "latest": "You are using the latest version.",
+      "update": "There's the latest update.\nYou can update ver {}",
+      "no-support": "This version {} is no longer supported."
+    },
+    "support": "Support",
+    "rel-note": {
+      "": "Release Note",
+      "show": "Show @:fw.rel-note."
+    }
+  },
+  "saved": "saved",
+  "submit": "submit"
 }

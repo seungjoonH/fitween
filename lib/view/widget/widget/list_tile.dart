@@ -13,6 +13,7 @@ class FListTile extends StatefulWidget {
     this.maxLines = 2,
     this.leading,
     this.trailing,
+    this.color = FTheme.background,
     this.onPressed,
   }) : super(key: key);
 
@@ -22,6 +23,7 @@ class FListTile extends StatefulWidget {
   final int maxLines;
   final Widget? leading;
   final Widget? trailing;
+  final Color color;
   final VoidCallback? onPressed;
 
   @override
@@ -72,7 +74,7 @@ class _FListTileState extends State<FListTile> {
       duration: duration,
       child: Material(
         borderRadius: radius,
-        color: backgroundColor,
+        color: Color.alphaBlend(backgroundColor, widget.color),
         child: GestureDetector(
           onTapDown: onTapDown,
           onTapUp: onTapUp,

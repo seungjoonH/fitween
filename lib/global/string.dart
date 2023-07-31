@@ -44,3 +44,10 @@ bool hasSeparatedConsonantOrVowel(String input) {
 bool hasKorean(String input) {
   return input.split('').any((char) => isKorean(char));
 }
+
+extension StringExtension on String {
+  String? get txs {
+    Iterable<String> s = split(' ');
+    return '${s.first}@{ ${s.last}}';
+  }
+}

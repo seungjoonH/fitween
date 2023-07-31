@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 var f = NumberFormat('###,###,###,###');
@@ -25,3 +26,26 @@ List<double> toDoubleList(List<num> list) {
 
 String sign(num n) => n < 0 ? '-' : '+';
 String withSign(num n) => '${sign(n)}${(n).abs()}';
+
+extension DoubleExtension on double {
+  String? get round1 {
+    String string = toStringAsFixed(1);
+    Iterable<String> split = string.split('.');
+    if (split.last == '0') return split.first;
+    return string;
+  }
+
+  String? get short {
+    double amount = this;
+    if (Get.locale!.languageCode == 'ko') {
+      if (amount >= 100000000) { return '${((amount / 10000000).toDouble() / 10).round1}억'; }
+      if (amount >= 10000) { return '${((amount / 1000).toDouble() / 10).round1}만'; }
+    }
+    else {
+      if (amount >= 1000000000) { return '${((amount / 100000000).toDouble() / 10).round1}B'; }
+      else if (amount >= 1000000) { return '${((amount / 100000).toDouble() / 10).round1}M'; }
+      else if (amount >= 1000) { return '${((amount / 100).toDouble() / 10).round1}K'; }
+    }
+    return toLocalString(amount.toInt());
+  }
+}

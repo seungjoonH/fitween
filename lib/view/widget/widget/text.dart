@@ -73,6 +73,86 @@ class FText extends StatelessWidget {
   }
 }
 
+class FTextsT extends StatelessWidget {
+  FTextsT(this.text, {
+    super.key,
+    TextStyle? style,
+    this.textColor = FTheme.darkGrey,
+    this.highlightColor,
+    this.highlightStyle,
+    this.highlightColors,
+    this.highlightStyles,
+    this.align = TextAlign.start,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+  }) : style = style ?? FTheme.textTheme.titleSmall?.copyWith(color: textColor);
+
+  final String text;
+  final TextStyle? style;
+  final Color textColor;
+  final Color? highlightColor;
+  final TextStyle? highlightStyle;
+  final List<Color>? highlightColors;
+  final List<TextStyle>? highlightStyles;
+  final TextAlign align;
+  final MainAxisAlignment mainAxisAlignment;
+
+  @override
+  Widget build(BuildContext context) {
+    List<String> texts = text.split(RegExp(r'@{|}'));
+    List<TextStyle> hStyles = [];
+
+    assert([
+      highlightColor, highlightStyle,
+      highlightColors, highlightStyles,
+    ].where((e) => e != null).length == 1);
+    if (highlightColor != null) {
+      hStyles = List.generate(
+        texts.length ~/ 2, (_) => style!
+          .copyWith(color: highlightColor!),
+      );
+    }
+    else if (highlightColors != null) {
+      assert(highlightColors!.length == texts.length ~/ 2);
+      hStyles = highlightColors!
+          .map((color) => style!
+          .copyWith(color: color)).toList();
+    }
+    else if (highlightStyle != null) {
+      hStyles = List.generate(
+        texts.length ~/ 2, (_) => highlightStyle!,
+      );
+    }
+    else if (highlightStyles != null) {
+      assert(highlightStyles!.length == texts.length ~/ 2);
+      hStyles = highlightStyles!;
+    }
+
+    TextStyle? textStyle = style?.copyWith(color: textColor);
+
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: mainAxisAlignment,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        RichText(
+          textAlign: align,
+          text: TextSpan(
+            style: textStyle,
+            children: List.generate(
+              texts.length, (i) => TextSpan(
+                text: texts[i],
+                style: i % 2 == 0
+                    ? textStyle : hStyles[i ~/ 2],
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
 class FTexts extends StatelessWidget {
   FTexts(this.texts, {
     Key? key,
@@ -141,6 +221,7 @@ class FInputField extends StatelessWidget {
     required this.controller,
     this.hintText,
     this.hintColor = FTheme.lightGrey,
+    this.style,
     this.invalid = false,
     this.completed = false,
     this.keyboardType = TextInputType.text,
@@ -151,6 +232,7 @@ class FInputField extends StatelessWidget {
   final TextEditingController controller;
   final String? hintText;
   final Color hintColor;
+  final TextStyle? style;
   final bool invalid;
   final bool completed;
   final TextInputType keyboardType;
@@ -159,12 +241,13 @@ class FInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle? textStyle = style ?? textTheme(context).bodyMedium;
 
     return ShakeWidget(
       autoPlay: invalid,
       shakeConstant: ShakeHorizontalConstant2(),
       child: TextField(
-        style: textTheme(context).bodyLarge?.copyWith(color: FTheme.darkGrey),
+        style: textStyle?.copyWith(color: FTheme.darkGrey),
         controller: controller,
         cursorColor: FTheme.darkGrey,
         keyboardType: keyboardType,
@@ -190,7 +273,7 @@ class FInputField extends StatelessWidget {
             ),
           ),
           hintText: hintText,
-          hintStyle: textTheme(context).bodyLarge?.apply(
+          hintStyle: textTheme(context).bodyMedium?.copyWith(
             color: completed && hintText != null
                 ? FTheme.colorA : hintColor,
           ),
