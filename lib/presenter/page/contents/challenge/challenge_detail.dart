@@ -37,7 +37,7 @@ class ChallengeDetailP {
   // 챌린지 생성 팝업
   void showChallengeCreatedDialog(String code) {
     showFDialog(
-      title: Lang.tr('challenge.create'),
+      title: Lang.tr('party.create'),
       content: Column(
         children: [
           Center(
@@ -50,7 +50,7 @@ class ChallengeDetailP {
           Padding(
             padding: EdgeInsets.all(20.0.r),
             child: FText(
-              Lang.tr('challenge.created'),
+              Lang.tr('party.created'),
               maxLines: 2,
             ),
           ),

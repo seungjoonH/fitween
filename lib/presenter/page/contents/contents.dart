@@ -166,7 +166,7 @@ class ContentsP extends GetxController {
     codeHintText = null;
 
     showFDialog(
-      title: Lang.tr('challenge.code'),
+      title: Lang.tr('party.code'),
       content: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -175,7 +175,7 @@ class ContentsP extends GetxController {
               return FInputField(
                 controller: codeCont,
                 invalid: controller.codeInvalid,
-                hintText: controller.codeHintText ?? Lang.tr('input.hint.code'),
+                hintText: controller.codeHintText ?? Lang.tr('input.hint.code', args: ['']),
                 hintColor: controller.codeHintText == null
                     ? FTheme.darkGrey
                     : FTheme.colorB,

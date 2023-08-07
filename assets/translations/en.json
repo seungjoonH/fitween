@@ -39,7 +39,7 @@
       "_text": "Type{}",
       "nickname": "@:input.hint._text @:nickname",
       "birth": "@:input.hint._text @:birth",
-      "code": "@:input.hint._text join code",
+      "code": "@:input.hint._text joining code",
       "rep-title": "@:input.hint._text report title"
     },
     "validate": {
@@ -259,7 +259,6 @@
   },
   "challenge": {
     "": "challenge",
-    "my": "My Challenge",
     "new": "New challenges",
     "no": "There are no new challenges",
     "max": "max occupancy",
@@ -267,14 +266,15 @@
     "score": "score",
     "ent-score": "Entire Score",
     "copied": "Copied",
-    "share": "Share your participation code with your friends and challenge them together!",
-    "code": "Challenge join code",
-    "create": "Create Challenge",
-    "created": "Challenge has been created"
+    "share": "Share your participation code with your friends and challenge them together!"
   },
   "party": {
     "": "party",
+    "my": "My Party",
     "joined": "Joined parties",
+    "code": "Party join code",
+    "create": "Create Party",
+    "created": "Party has been created",
     "no": "There are no parties\nyou've joined",
     "done": "done",
     "undone": "undone",

@@ -11,7 +11,7 @@ class PartyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Scaffold(
-        appBar: FAppBar(title: Lang.tr('challenge.my')),
+        appBar: FAppBar(title: Lang.tr('party.my')),
         body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 28.0.w,

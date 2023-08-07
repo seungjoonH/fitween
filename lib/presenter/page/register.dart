@@ -270,7 +270,7 @@ class RegisterP extends GetxController {
       Lang.tr(v('nex-date')): date == null,
       Lang.tr(v('not-eight')): text.length != 8,
       Lang.tr(v('has-nonun')): int.tryParse(text) == null,
-      Lang.tr('input.hint.birth'): text == '',
+      Lang.tr('input.hint.birth', args: [' your']): text == '',
     };
 
     conditions.forEach((message, condition) {
