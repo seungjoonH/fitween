@@ -37,8 +37,8 @@ class SeeMoreP extends GetxController {
 
   static void deleteAccount() {
     showFDialog(
-      title: Lang.tr('auth.del-acc'),
-      content: FText(Lang.tr('auth.del-acc-really'), maxLines: 2),
+      title: Lang.tr('auth.accdel'),
+      content: FText(Lang.tr('auth.accdel-really'), maxLines: 2),
       type: DialogType.bi,
       rightText: Lang.tr('btn.delete'),
       rightBackgroundColor: FTheme.error,

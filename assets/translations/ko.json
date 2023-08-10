@@ -288,7 +288,8 @@
     "login": "로그인",
     "logout": "로그아웃",
     "logout-really": "정말 로그아웃 하시겠습니까?",
-    "acc-del": "계정삭제"
+    "accdel": "계정삭제",
+    "accdel-really": "정말 계정을 삭제하시겠습니까?"
   },
   "report": {
     "": "리포트",
