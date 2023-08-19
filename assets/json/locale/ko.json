@@ -1,0 +1,144 @@
+{
+  "button": {
+    "sign-in": "{} 계정으로 로그인",
+    "start": "시작",
+    "next": "다음",
+    "sure": "맞아요!"
+  },
+  "appbar": {
+    "register": "회원가입"
+  },
+  "hint": {
+    "your-nickname": "별명을 입력하세요",
+    "friends-nickname": "별명을 입력하세요",
+    "date-of-birth": "YYYYMMDD"
+  },
+  "validate": {
+    "is-duplicated": "별명이 중복됩니다",
+    "less-than-two": "두 글자 이상 입력해주세요",
+    "greater-than-eight": "여덟 글자 이내로 입력해주세요",
+    "not-eight": "여덟 글자가 아닙니다",
+    "greater-than-hundred": "100자 이내로 입력해주세요",
+    "has-jamo": "자음 모음은 단독으로 포함될 수 없습니다",
+    "has-space": "공백을 포함할 수 없습니다",
+    "has-special-char": "특수문자는 포함할 수 없습니다",
+    "only-number": "영어나 한글을 포함해주세요",
+    "wrong-input": "잘못 입력하셨습니다",
+    "is-future": "미래는 입력할 수 없습니다",
+    "is-today": "오늘은 입력할 수 없습니다",
+    "non-existence-date": "없는 날짜 입니다",
+    "has-no-number": "숫자만 입력해주세요",
+    "": "없는 날짜 입니다",
+    "empty": {
+      "your-nickname": "@:hint.your-nickname",
+      "date-of-birth": "@:hint.date-of-birth"
+    }
+  },
+  "word": {
+    "google": "구글",
+    "apple": "애플",
+    "nickname": "별명",
+    "date-of-birth": "생년월일",
+    "sex": "성별",
+    "male": "남성",
+    "female": "여성",
+    "weight": "체중",
+    "height": "신장"
+  },
+  "unit": {
+    "step": "[]보",
+    "floor": "[]층",
+    "count": "[]회",
+    "hour": "{}시간",
+    "hr": "{}시간",
+    "h": "{}시간",
+    "minute": "{}분",
+    "min": "{}분",
+    "m": "{}분",
+    "second": "{}초",
+    "sec": "{}초",
+    "s": "{}초"
+  },
+  "weekdays": {
+    "mon": {
+      "l": "월요일",
+      "m": "월",
+      "s": "월"
+    },
+    "tue": {
+      "l": "화요일",
+      "m": "화",
+      "s": "화"
+    },
+    "wed":{
+      "l": "수요일",
+      "m": "수",
+      "s": "수"
+    },
+    "thu": {
+      "l": "목요일",
+      "m": "목",
+      "s": "목"
+    },
+    "fri": {
+      "l": "금요일",
+      "m": "금",
+      "s": "금"
+    },
+    "sat": {
+      "l": "토요일",
+      "m": "토",
+      "s": "토"
+    },
+    "sun": {
+      "l": "일요일",
+      "m": "일",
+      "s": "일"
+    }
+  },
+  "type": {
+    "distance": "거리",
+    "height": "높이",
+    "weight": "무게"
+  },
+  "login": {
+    "loading": "로딩 중"
+  },
+  "onboarding": {
+    "messages": {
+      "0": "일상 운동 기록,\n어떻게 관리하시나요?",
+      "1": "입력만 하세요!\n피트윈이 의미있게\n만들어 드릴게요",
+      "2": "무게, 유산소\n계단 오르기까지 기록 가능해요!",
+      "3": "오늘의 목표 설정을 통해\n더 쉽게 관리 해보세요!"
+    },
+    "comment": "목표는 언제든지 수정이 가능해요"
+  },
+  "register": {
+    "comments": {
+      "0": "생년월일과 성별을 바탕으로\n일일 운동 목표량을 추천해드려요.",
+      "1": "체중과 신장은 간편한 계산을 위해서만 사용될 뿐\n다른 곳에는 이용되지 않아요."
+    }
+  },
+  "goal-setting": {
+    "texts": {
+      "0": "자,\n이제 @{일일 목표}를\n설정하러 가볼까요?",
+      "1": "@{{generation}}대 @{{sex}} 평균\n매일 @{{minute}}분 \n유산소 운동이\n적당해요",
+      "2": "하루 @{{minute}}이면,\n@{{object}}\n@{({obj-value})}\n만큼 걸을 수 있어요",
+      "3": "@{한 층}을\n오를 때마다\n건강 수명이\n@{1분 40초} 연장돼요",
+      "4": "하루 @{{floor}}이면\n@{{object}}\n@{({obj-value})}\n만큼 오를 수 있어요",
+      "5": "@{유산소 운동}과\n@{근력 운동}을\n병행해야 운동 효과가\n좋아져요",
+      "6": "하루 @{{count}}이면\n@{{object}}\n@{({obj-value})}\n만큼 들 수 있어요",
+      "7": "@{{nickname}}님은 하루에\n@{{minute}} 동안 걷고,\n@{{floor}}을 오르고,\n@{{count}}를 들고자 해요\n\n맞나요?"
+    },
+    "comments": {
+      "2": "약 @{{step} ({kilometer})}",
+      "4": "수명 약 @{{time}} 연장",
+      "6": "약 @{{kilogram}}",
+      "7": "목표는 언제든지 다시 수정할 수 있어요!"
+    }
+  },
+  "home": {
+    "record": "기록",
+    "ranking": "랭킹"
+  }
+}

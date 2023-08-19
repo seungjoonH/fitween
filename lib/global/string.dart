@@ -1,3 +1,4 @@
+import 'dart:math';
 
 bool hasBottomConsonant(String input) {
   return (input.runes.last - 0xAC00) % 28 != 0;
@@ -46,8 +47,33 @@ bool hasKorean(String input) {
 }
 
 extension StringExtension on String {
+  num? get toNum {
+    try { return double.parse(this); }
+    catch(_) { return null; }
+  }
+
+  String get short {
+    const int max = 4;
+    if (length <= max) return this;
+    return '${substring(0, 4)}...';
+  }
+  String get hideAll => '*' * length;
+  String get hidePart {
+    String string = this;
+    int low = max(length ~/ 3, 1);
+    int high = max(low * 2, 2);
+    String sub = string.substring(low, high);
+    string = string.replaceAll(sub, '*' * sub.length);
+    return string;
+  }
+
   String? get txs {
     Iterable<String> s = split(' ');
     return '${s.first}@{ ${s.last}}';
+  }
+
+  String get toDashed {
+    final exp = RegExp('(?<=[a-z])[A-Z]');
+    return replaceAllMapped(exp, (m) => '-${m.group(0)}').toLowerCase();
   }
 }

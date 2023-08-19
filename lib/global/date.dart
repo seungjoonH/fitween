@@ -1,7 +1,11 @@
 /* 날짜, 시간 관련 */
 
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:fitween/presenter/lang/language.dart';
+import 'package:fitween/global/global.dart';
+import 'package:fitween/global/operator.dart';
+import 'package:fitween/src/controller/lang.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ntp/ntp.dart';
@@ -23,7 +27,7 @@ void setTimeError() async {
 DateTime get now => DateTime.now();
 
 // 오늘 날짜 (시간 미포함)
-DateTime get today => ignoreTime(now)!;
+DateTime get today => now.ignoreTime;
 
 // 어제 날짜`
 DateTime get yesterday => today.subtract(const Duration(days: 1));
@@ -31,39 +35,9 @@ DateTime get yesterday => today.subtract(const Duration(days: 1));
 // 내일 날짜
 final tomorrow = today.add(const Duration(days: 1));
 
-/// global functions
-DateTime oneSecondBefore(DateTime date) => date.subtract(const Duration(seconds: 1));
-DateTime nextDay(DateTime date) => oneSecondBefore(date.add(const Duration(days: 1)));
-
-DateTime firstDayOfMonth([DateTime? date]) {
-  date ??= today;
-  return DateTime(date.year, date.month, 1);
-}
-
-DateTime firstDayOfWeek([DateTime? date]) {
-  date ??= today;
-  return date.subtract(Duration(days: (date.weekday + 6) % 7));
-}
-
-bool isSameDate(DateTime date1, DateTime date2) {
-  return date1.year == date2.year
-      && date1.month == date2.month
-      && date1.day == date2.day;
-}
-
-// 날짜에서 시간을 제외하여 반환
-DateTime? ignoreTime(DateTime? date) => date == null
-    ? null : DateTime(date.year, date.month, date.day);
-
-// DateTime 형식을 Timestamp 형식으로 변환
-Timestamp? toTimestamp(DateTime? date) => date == null
-    ? null : Timestamp.fromDate(date);
-
-// 날짜를 문자열 형태로 변환
 String? dateToString(String format, DateTime? date) => date == null
     ? null : DateFormat(format).format(date);
 
-// 문자열을 날짜 형태로 변환
 DateTime? stringToDate(String string) {
   if (DateTime.tryParse(string) == null) return null;
   DateTime? date = DateTime.parse(string);
@@ -88,10 +62,10 @@ String timeToString(int timeInSecs) {
 
   List<String> output = [];
 
-  if (days > 0) output.add(Lang.tr('unit.w-num.time.day', args: ['$days']));
-  if (hours > 0) output.add(Lang.tr('unit.w-num.time.hour', args: ['$hours']));
-  if (minutes > 0) output.add(Lang.tr('unit.w-num.time.minute', args: ['$minutes']));
-  if (seconds > 0 || (days + hours + minutes == 0)) output.add(Lang.tr('unit.w-num.time.second', args: ['$seconds']));
+  if (days > 0) output.add('$days일');
+  if (hours > 0) output.add('$hours시간');
+  if (minutes > 0) output.add('$minutes분');
+  if (seconds > 0 || (days + hours + minutes == 0)) output.add('$seconds초');
 
   return output.join(' ');
 }
@@ -99,8 +73,32 @@ String timeToString(int timeInSecs) {
 List<DateTime> daysInRange(DateTime first, DateTime last) {
   final dayCount = last.difference(first).inDays + 1;
   return List.generate(
-    dayCount, (index) => ignoreTime(DateTime.utc(first.year, first.month, first.day + index))!,
+    dayCount, (index) => DateTime.utc(first.year, first.month, first.day + index).ignoreTime,
   );
+}
+
+Future delay(Duration d, [VoidCallback? f]) async => await Future.delayed(d, f);
+
+DateTime earlier(DateTime a, DateTime b) => a.isBefore(b) ? a : b;
+DateTime later(DateTime a, DateTime b) => a.isAfter(b) ? a : b;
+
+extension DateTimeExtension on DateTime {
+  Timestamp? get toTimestamp => nullOrB(this, Timestamp.fromDate(this));
+
+  bool sameDay(DateTime other) => year == other.year && month == other.month && day == other.day;
+
+  DateTime get ignoreTime => nullOrB(this, DateTime(year, month, day));
+  DateTime get oneSecBefore => subtract(1.s);
+  DateTime get lastTimeOfDay => add(1.d).oneSecBefore;
+
+  DateTime get firstDayOfMonth => DateTime(year, month, 1);
+  DateTime get lastDayOfMonth => DateTime(year, month + 1, 1).subtract(1.d);
+  DateTime get firstDayOfWeek => subtract(wd.index.d);
+
+  int get age => now.difference(this).inDays ~/ 365.25;
+  int get generation => age ~/ 10 * 10;
+
+  Weekday get wd => Weekday.values[weekday - 1];
 }
 
 extension DurationExtension on Duration {
@@ -123,29 +121,10 @@ extension DurationExtension on Duration {
   }
 }
 
-extension IntExtension on int {
-  String get y {
-    if (Get.locale!.languageCode == 'ko') return '$this년';
-    return '${this}y';
-  }
-  String get mo {
-    if (Get.locale!.languageCode == 'ko') return '$this개월';
-    return '${this}mo';
-  }
-  String get d {
-    if (Get.locale!.languageCode == 'ko') return '$this일';
-    return '${this}d';
-  }
-  String get h {
-    if (Get.locale!.languageCode == 'ko') return '$this시간';
-    return '${this}h';
-  }
-  String get m {
-    if (Get.locale!.languageCode == 'ko') return '$this분';
-    return '${this}m';
-  }
-  String get s {
-    if (Get.locale!.languageCode == 'ko') return '$this초';
-    return '${this}s';
-  }
+enum Weekday {
+  mon, tue, wed, thu, fri, sat, sun;
+  String get _tr => 'weekdays.$name';
+  String get long => LangCont.tr('$_tr.l');
+  String get mid => LangCont.tr('$_tr.m');
+  String get short => LangCont.tr('$_tr.s');
 }

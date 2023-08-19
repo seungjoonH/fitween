@@ -1,0 +1,1 @@
+dynamic nullOrB(a, b) => a == null ? null : b;

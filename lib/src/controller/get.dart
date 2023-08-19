@@ -1,0 +1,29 @@
+import 'package:fitween/src/controller/controller.dart';
+import 'package:get/get.dart';
+
+class GetCont {
+  static void _initPageConts() {
+    Get.put(LoginPageCont());
+    Get.put(OnboardingPageCont());
+    Get.put(RegisterPageCont());
+    Get.put(GoalSettingPageCont());
+    Get.put(HomePageCont());
+  }
+
+  static void _initValidatorConts() {
+    Get.put(NicknameValidatorCont());
+    Get.put(DateOfBirthValidatorCont());
+  }
+
+  static void _etcConts() {
+    Get.put(LoadingCont());
+    Get.put(CalendarCont());
+    Get.put(RankingCont());
+  }
+
+  static void initConts() {
+    _initPageConts();
+    _initValidatorConts();
+    _etcConts();
+  }
+}

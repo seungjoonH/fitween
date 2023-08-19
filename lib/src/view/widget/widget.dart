@@ -1,0 +1,52 @@
+import 'package:fitween/src/controller/page.dart';
+import 'package:flutter/material.dart';
+
+export './button/button.dart';
+export './button/check.dart';
+export './button/icon.dart';
+export './button/pressable.dart';
+export './button/selection.dart';
+export './button/text.dart';
+
+export './effect/effect.dart';
+
+export './function/dialog.dart';
+export './function/modal_bottom_sheet.dart';
+export './function/snack_bar.dart';
+
+export './widget/app_bar.dart';
+export './widget/card.dart';
+export './widget/drawer.dart';
+export './widget/icon.dart';
+export './widget/indicator.dart';
+export './widget/list_tile.dart';
+export './widget/logo.dart';
+export './widget/rank.dart';
+export './widget/scaffold.dart';
+export './widget/slider.dart';
+export './widget/tag.dart';
+export './widget/text.dart';
+
+abstract class FWidget extends StatefulWidget {
+  const FWidget({super.key});
+
+  @override
+  FWidgetState createState();
+}
+
+abstract class FWidgetState<T extends FWidget> extends State<T> {
+  @override
+  void dispose() {
+    super.dispose();
+    PageCont.removeContext();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    PageCont.context = context;
+    PageCont.mediaQuery = MediaQuery.of(context);
+    return buildWidget(context);
+  }
+
+  Widget buildWidget(BuildContext context);
+}

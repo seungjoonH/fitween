@@ -1,0 +1,178 @@
+{
+  "button": {
+    "sign-in": "Continue with {}",
+    "start": "Start",
+    "next": "Next",
+    "sure": "Sure!"
+  },
+  "appbar": {
+    "register": "Register"
+  },
+  "hint": {
+    "your-nickname": "Input your nickname",
+    "friends-nickname": "Input friend's nickname",
+    "date-of-birth": "YYYYMMDD"
+  },
+  "validate": {
+    "is-duplicated": "Nickname duplicates",
+    "less-than-two": "Enter at least two characters",
+    "greater-than-eight": "Enter at most eight characters",
+    "not-eight": "Not eight letters",
+    "greater-than-hundred": "Enter at most a hundred characters",
+    "has-jamo": "Hangul letter cannot stand alone",
+    "has-space": "Cannot contain whitespace",
+    "has-special-char": "Cannot contain special characters",
+    "only-number": "Include English or Hangul",
+    "wrong-input": "Wrong input entered",
+    "is-future": "Future cannot be entered",
+    "is-today": "Today cannot be entered",
+    "non-existence-date": "Date does not exist",
+    "has-no-number": "Please enter only numbers",
+    "empty": {
+      "your-nickname": "@:hint.your-nickname",
+      "date-of-birth": "@:hint.date-of-birth"
+    }
+  },
+  "word": {
+    "google": "google",
+    "apple": "apple",
+    "nickname": "nickname",
+    "date-of-birth": "date of birth",
+    "sex": "sex",
+    "male": "male",
+    "female": "female",
+    "weight": "weight",
+    "height": "height"
+  },
+  "unit": {
+    "step": {
+      "one": "[] step",
+      "other": "[] steps"
+    },
+    "floor": {
+      "one": "[] floor",
+      "other": "[] floors"
+    },
+    "count": {
+      "one": "once",
+      "two": "twice",
+      "other": "[] times"
+    },
+    "hour": {
+      "one": "{} hour",
+      "other": "{} hours"
+    },
+    "hr": {
+      "one": "{} hr",
+      "other": "{} hrs"
+    },
+    "h": {
+      "other": "{}h"
+    },
+    "minute": {
+      "one": "{} minute",
+      "other": "{} minutes"
+    },
+    "min": {
+      "one": "{} min",
+      "other": "{} mins"
+    },
+    "m": {
+      "other": "{}m"
+    },
+    "second": {
+      "one": "{} second",
+      "other": "{} seconds"
+    },
+    "sec": {
+      "one": "{} sec",
+      "many": "{} secs",
+      "other": "{} secs"
+    },
+    "s": {
+      "other": "{}s"
+    }
+  },
+  "weekdays": {
+    "mon": {
+      "l": "Monday",
+      "m": "Mon",
+      "s": "M"
+    },
+    "tue": {
+      "l": "Tuesday",
+      "m": "Tue",
+      "s": "T"
+    },
+    "wed":{
+      "l": "Wednesday",
+      "m": "Wed",
+      "s": "W"
+    },
+    "thu": {
+      "l": "Thursday",
+      "m": "Thu",
+      "s": "T"
+    },
+    "fri": {
+      "l": "Friday",
+      "m": "Fri",
+      "s": "F"
+    },
+    "sat": {
+      "l": "Saturday",
+      "m": "Sat",
+      "s": "S"
+    },
+    "sun": {
+      "l": "Sunday",
+      "m": "Sun",
+      "s": "S"
+    }
+  },
+  "type": {
+    "distance": "distance",
+    "height": "height",
+    "weight": "weight"
+  },
+  "login": {
+    "loading": "loading"
+  },
+  "onboarding": {
+    "messages": {
+      "0": "Logging your daily workouts,\nHow do you keep track?",
+      "1": "Just type!\nWe'll make it meaningful.",
+      "2": "Log weight, cardio,\nand even stairs climbed!",
+      "3": "Set a goal for the day\neasier to manage!"
+    },
+    "comment": "Set a goal for the day\neasier to manage!"
+  },
+  "register": {
+    "comments": {
+      "0": "Fitween recommends daily exercise goals\nbased on your date of birth and gender.",
+      "1": "Weight and height are used only for\nsimple calculations and not elsewhere."
+    }
+  },
+  "goal-setting": {
+    "texts": {
+      "0": "Now,\nshall we set your\n@{Daily Goal}?",
+      "1": "It is appropriate\nfor @{{generation}}'s @{{sex}},\n@{{minute}} minutes of\naerobic exercise\nevery day on average",
+      "2": "In @{{minute}} a day,\nyou can walk\nas much as\n@{{object}}\n@{({obj-value})}",
+      "3": "Every time\nyou climb @{a floor},\nyour health life\nis extended by\n@{1 min and 40 secs}",
+      "4": "In @{{floor}} a day,\nyou can go up\nas much as\n@{{object}}\n@{({obj-value})}",
+      "5": "Combine @{cardio} and\n@{strength} training\nto get the most\nout of your workout",
+      "6": "@{{count}} a day\ncan lift\nas heavy as\n@{{object}}\n@{({obj-value})}",
+      "7": "@{{nickname}} will walk for\n@{{minute}},\nclimb @{{floor}},\nand lift @{{count}} a day\n\nIs that right?"
+    },
+    "comments": {
+      "2": "About @{{step} ({kilometer})}",
+      "4": "About @{{time}} lifetime extended",
+      "6": "About @{{kilogram}}",
+      "7": "Goals can be revised again anytime!"
+    }
+  },
+  "home": {
+    "record": "Record",
+    "ranking": "Ranking"
+  }
+}

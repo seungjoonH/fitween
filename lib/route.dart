@@ -1,33 +1,5 @@
-import 'package:fitween/view/page/contents/workout/battle/record/record.dart';
-import 'package:fitween/view/page/contents/workout/friend/friend.dart';
-import 'package:fitween/view/page/contents/workout/ready/ready.dart';
-import 'package:fitween/view/page/contents/workout/battle/camera/camera.dart';
-import 'package:fitween/view/page/contents/workout/battle/result/result.dart';
-import 'package:fitween/view/page/contents/workout/solo/camera/camera.dart';
-import 'package:fitween/view/page/contents/workout/solo/result/result.dart';
-import 'package:fitween/view/page/see_more/app_info/app_info.dart';
-import 'package:fitween/view/page/see_more/app_info/report/detail.dart';
-import 'package:fitween/view/page/see_more/app_info/report/edit.dart';
-import 'package:fitween/view/page/see_more/app_info/report/report.dart';
-import 'package:fitween/view/page/see_more/app_info/license/detail.dart';
-import 'package:fitween/view/page/see_more/app_info/license/license.dart';
-import 'package:fitween/view/page/see_more/app_info/version.dart';
-import 'package:fitween/view/page/see_more/app_info/web_view.dart';
-import 'package:fitween/view/page/see_more/collection/collection.dart';
-import 'package:fitween/view/page/contents/achievement/level/level.dart';
-import 'package:fitween/view/page/contents/challenge/detail/detail.dart';
-import 'package:fitween/view/page/contents/challenge/party/party.dart';
-import 'package:fitween/view/page/contents/contents.dart';
-import 'package:fitween/view/page/friend/friend.dart';
-import 'package:fitween/view/page/home/calendar/calendar.dart';
-import 'package:fitween/view/page/home/home.dart';
-import 'package:fitween/view/page/home/ranking/ranking.dart';
-import 'package:fitween/view/page/login/login.dart';
-import 'package:fitween/view/page/onboarding/onboarding.dart';
-import 'package:fitween/view/page/register/register.dart';
-import 'package:fitween/view/page/see_more/goal_edit/goal_edit.dart';
-import 'package:fitween/view/page/see_more/info_edit/info_edit.dart';
-import 'package:fitween/view/page/see_more/see_more.dart';
+import 'package:fitween/src/view/page/abs/page.dart';
+import 'package:fitween/src/view/page/concrete/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -43,47 +15,67 @@ class FRoute {
   /// static methods
   // 라우트 문자열, 페이지 매핑
   static Map<String, Widget> get pages => {
-    '/login': const LoginPage(),
+    '/': const LoginPage(),
     '/onboarding': const OnboardingPage(),
     '/register': const RegisterPage(),
+    '/goal-setting': const GoalSettingPage(),
     '/home': const HomePage(),
-    '/home/calendar': const CalendarPage(),
-    '/home/ranking': const RankingPage(),
-    '/friend': const FriendPage(),
-    '/contents': const ContentsPage(),
-    '/contents/challengeDetail': const ChallengeDetailPage(),
-    '/contents/party': const PartyPage(),
-    '/contents/achievementLevel': const AchievementLevelPage(),
-    '/contents/workout/friend': const WorkoutFriendPage(),
-    '/contents/workout/ready': const WorkoutReadyPage(),
-    '/contents/workout/solo/camera': const WorkoutSoloCameraPage(),
-    '/contents/workout/solo/result': const WorkoutSoloResultPage(),
-    '/contents/workout/battle/camera': const BattleCameraPage(),
-    '/contents/workout/battle/result': const BattleResultPage(),
-    '/contents/workout/battle/record': const BattleRecordPage(),
-    '/seeMore': const SeeMorePage(),
-    '/seeMore/collection': const CollectionPage(),
-    '/seeMore/goalEdit': const GoalEditPage(),
-    '/seeMore/infoEdit': const InfoEditPage(),
-    '/seeMore/appInfo': const AppInfoPage(),
-    '/seeMore/appInfo/license': const OSSLicensePage(),
-    '/seeMore/appInfo/license/detail': const LicenseDetailPage(),
-    '/seeMore/appInfo/webView': const WebViewPage(),
-    '/seeMore/appInfo/version': const VersionPage(),
-    '/seeMore/appInfo/report': const ReportPage(),
-    '/seeMore/appInfo/report/detail': const ReportDetailPage(),
-    '/seeMore/appInfo/report/edit': const ReportEditPage(),
+
+    // '/onboarding': const OnboardingPage(),
+    // '/register': const RegisterPage(),
+    // '/home': const HomePage(),
+    // '/home/calendar': const CalendarPage(),
+    // '/home/ranking': const RankingPage(),
+    // '/friend': const FriendPage(),
+    // '/contents': const ContentsPage(),
+    // '/contents/challengeDetail': const ChallengeDetailPage(),
+    // '/contents/party': const PartyPage(),
+    // '/contents/achievementLevel': const AchievementLevelPage(),
+    // '/contents/workout/friend': const WorkoutFriendPage(),
+    // '/contents/workout/ready': const WorkoutReadyPage(),
+    // '/contents/workout/solo/camera': const WorkoutSoloCameraPage(),
+    // '/contents/workout/solo/result': const WorkoutSoloResultPage(),
+    // '/contents/workout/battle/camera': const BattleCameraPage(),
+    // '/contents/workout/battle/result': const BattleResultPage(),
+    // '/contents/workout/battle/record': const BattleRecordPage(),
+    // '/seeMore': const SeeMorePage(),
+    // '/seeMore/collection': const CollectionPage(),
+    // '/seeMore/goalEdit': const GoalEditPage(),
+    // '/seeMore/infoEdit': const InfoEditPage(),
+    // '/seeMore/appInfo': const AppInfoPage(),
+    // '/seeMore/appInfo/license': const OSSLicensePage(),
+    // '/seeMore/appInfo/license/detail': const LicenseDetailPage(),
+    // '/seeMore/appInfo/webView': const WebViewPage(),
+    // '/seeMore/appInfo/version': const VersionPage(),
+    // '/seeMore/appInfo/report': const ReportPage(),
+    // '/seeMore/appInfo/report/detail': const ReportDetailPage(),
+    // '/seeMore/appInfo/report/edit': const ReportEditPage(),
   };
 
-  // 겟페이지 리스트
+  // static List<GetPage> get getPages => pages.entries.map((page) {
+  //   return GetPage(
+  //     name: page.key,
+  //     page: () => page.value,
+  //     transition: transition,
+  //     transitionDuration: page.key == '/contents/challengeDetail'
+  //         ? const Duration(milliseconds: 500)
+  //         : duration,
+  //   );
+  // }).toList();
+
   static List<GetPage> get getPages => pages.entries.map((page) {
     return GetPage(
       name: page.key,
       page: () => page.value,
       transition: transition,
-      transitionDuration: page.key == '/contents/challengeDetail'
-          ? const Duration(milliseconds: 500)
-          : duration,
+      transitionDuration: duration,
     );
   }).toList();
+
+
+  static void toLogin() => Get.offAllNamed('/');
+  static void toOnboarding() => Get.toNamed('/onboarding');
+  static void toRegister() => Get.toNamed('/register');
+  static void toGoalSetting() => Get.toNamed('/goal-setting');
+  static void toHome() => Get.offAllNamed('/home');
 }
