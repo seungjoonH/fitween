@@ -19,6 +19,7 @@ class GetCont {
     Get.put(LoadingCont());
     Get.put(CalendarCont());
     Get.put(RankingCont());
+    Get.put(BottomBarCont());
   }
 
   static void initConts() {

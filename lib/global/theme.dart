@@ -99,8 +99,8 @@ class FTheme {
   static TextStyle get largeText => const TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w700,
-    fontSize: 65.0,
-    height: (70 / 65),
+    fontSize: 70.0,
+    height: (74 / 70),
   );
 
   static TextTheme get textTheme => const TextTheme(

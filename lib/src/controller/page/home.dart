@@ -1,6 +1,6 @@
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/controller/lang.dart';
-import 'package:fitween/src/controller/user/auth.dart';
+import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:get/get.dart';
@@ -20,6 +20,11 @@ class HomePageCont extends GetxController {
 
   final _refreshCont = RefreshController();
   RefreshController get refreshCont => _refreshCont;
+
+  String getMarbleCenterText(FType type) {
+    num record = _logged.getOneDayRecord(today)[type]!;
+    return type.withUnit(record, decimal: false, txs: true);
+  }
 
   CalendarCont get calendarCont => Get.find<CalendarCont>();
   RankingCont get rankingCont => Get.find<RankingCont>();

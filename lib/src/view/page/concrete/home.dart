@@ -4,6 +4,7 @@ import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:fitween/src/view/page/abs/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
+import 'package:fitween/src/view/widget/widget/bottom_bar.dart';
 import 'package:fitween/src/view/widget/widget/calendar.dart';
 import 'package:fitween/src/view/widget/widget/carousel.dart';
 import 'package:flutter/material.dart';
@@ -32,12 +33,20 @@ class _HomePageState extends FPageState {
       onChanged: cont.onChanged,
       leftWidget: SvgPicture.asset(cont.leftArrowAsset),
       rightWidget: SvgPicture.asset(cont.rightArrowAsset),
-      children: FType.activeValues
-          .map((type) => Marble(
-        type: type,
-        smile: type == cont.activeType,
-        tagVisible: true,
-      )).toList(),
+      children: FType.activeValues.map((type) {
+        bool isActive = type == cont.activeType;
+        return Marble(
+          type: type,
+          center: isActive ? FTexts(
+            cont.getMarbleCenterText(type),
+            textColor: FTheme.backgroundAlt,
+            style: FTheme.titleMedium,
+            highlightStyle: FTheme.largeText,
+          ) : null,
+          smile: isActive,
+          tagVisible: isActive,
+        );
+      }).toList(),
     ));
   }
 
@@ -159,7 +168,7 @@ class _HomePageState extends FPageState {
 
   @override
   Widget buildPage(BuildContext context) {
-    return FRefreshScaffold(
+    return FMainScaffold(
       autoPadding: false,
       refreshController: cont.refreshCont,
       onRefresh: cont.init,
@@ -187,11 +196,13 @@ class Marble extends FWidget {
   const Marble({
     super.key,
     required this.type,
+    this.center,
     this.smile = false,
     this.tagVisible = false,
   });
 
   final FType type;
+  final Widget? center;
   final bool smile;
   final bool tagVisible;
 
@@ -212,20 +223,21 @@ class _MarbleState extends FWidgetState<Marble> {
         shape: BoxShape.circle,
       ),
       child: Stack(
-        alignment: Alignment.bottomCenter,
+        alignment: Alignment.center,
         children: [
           Positioned.fill(
             child: widget.smile
                 ? SvgPicture.asset(asset)
                 : Container(),
           ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 10.0.h),
+          Positioned(
+            bottom: 10.0.h,
             child: widget.tagVisible ? FTag(widget.type.locale.capitalize!,
               backgroundColor: FTheme.achro90.withOpacity(.3),
               textColor: FTheme.achro90,
             ) : Container(),
           ),
+          Container(child: widget.center),
         ],
       ),
     );

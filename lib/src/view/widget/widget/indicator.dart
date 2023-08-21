@@ -147,7 +147,7 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
   int get animationDuration => 500;
 
   @override
-  Curve get curve => Curves.linear;
+  Curve get curve => Curves.easeInOut;
 
   @override
   Widget? get center => FText(

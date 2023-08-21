@@ -10,7 +10,10 @@ class DateRange {
   }
 
   int get days => end.difference(start).inDays + 1;
-  bool inRange(DateTime date) => start.isBefore(date) && end.isAfter(date);
+  bool inRange(DateTime date) {
+    bool same = date.isAtSameMomentAs(start) || date.isAtSameMomentAs(end);
+    return same || date.isAfter(start) && date.isBefore(end);
+  }
   List<DateTime> get dates {
     DateTime getDate(int i) => DateTime.utc(start.year, start.month, start.day + i).ignoreTime;
     return List.generate(days, getDate);

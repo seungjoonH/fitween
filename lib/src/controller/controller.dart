@@ -1,6 +1,7 @@
 export './page/page.dart';
 export './user/user.dart';
 export './validator/validator.dart';
+export './bottom_bar.dart';
 export './calendar.dart';
 export './dialog.dart';
 export './get.dart';

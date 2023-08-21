@@ -2,6 +2,7 @@ import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/src/controller/page.dart';
+import 'package:fitween/src/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -15,6 +16,7 @@ class FScaffold extends Scaffold {
     super.drawerScrimColor,
     super.backgroundColor,
     super.extendBodyBehindAppBar,
+    super.bottomNavigationBar,
     this.autoPadding = true,
     this.bottomWidget,
     this.bottomPadding,
@@ -99,6 +101,7 @@ class FRefreshScaffold extends FScaffold {
     super.autoPadding,
     super.bottomWidget,
     super.bottomPadding,
+    super.bottomNavigationBar,
     required this.refreshController,
     required this.onRefresh,
   });
@@ -126,6 +129,24 @@ class FRefreshScaffold extends FScaffold {
   );
 }
 
+class FMainScaffold extends FRefreshScaffold {
+  const FMainScaffold({
+    super.key,
+    super.appBar,
+    super.body,
+    super.drawer,
+    super.drawerScrimColor,
+    super.autoPadding,
+    super.bottomWidget,
+    super.bottomPadding,
+    required super.refreshController,
+    required super.onRefresh,
+  });
+
+  @override
+  Widget? get bottomNavigationBar => const FBottomNavigationBar();
+}
+
 class FKeyboardUsableScaffold extends StatelessWidget {
   const FKeyboardUsableScaffold({
     super.key,
@@ -136,6 +157,7 @@ class FKeyboardUsableScaffold extends StatelessWidget {
     this.drawer,
     this.drawerScrimColor,
     this.bottomWidget,
+    this.bottomNavigationBar,
   });
 
   final bool autoPadding;
@@ -145,12 +167,13 @@ class FKeyboardUsableScaffold extends StatelessWidget {
   final Drawer? drawer;
   final Color? drawerScrimColor;
   final Widget? bottomWidget;
+  final Widget? bottomNavigationBar;
 
   bool _keyboardVisible(BuildContext context) {
-    return MediaQuery.of(context).viewInsets.bottom != 0;
+    return PageCont.mediaQuery.viewInsets.bottom != 0;
   }
 
-  void _hideKeyboard(BuildContext context) => FocusScope.of(context).unfocus;
+  void _hideKeyboard(BuildContext context) => FocusScope.of(context).unfocus();
 
   @override
   Widget build(BuildContext context) {
@@ -162,8 +185,8 @@ class FKeyboardUsableScaffold extends StatelessWidget {
         appBar: appBar,
         body: body,
         bottomWidget: bottomWidget,
-        bottomPadding: _keyboardVisible(context)
-            ? 20.0.h : null,
+        bottomPadding: _keyboardVisible(context) ? 20.0.h : null,
+        bottomNavigationBar: bottomNavigationBar,
       ),
     );
   }

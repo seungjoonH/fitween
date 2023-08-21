@@ -28,9 +28,9 @@ class CalendarDots extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 30.0.r,
+      width: 25.0.r,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: FType.activeValues.map((type) {
           Color color = Colors.transparent;
           if (startedTypes.contains(type)) { color = FTheme.comment; }

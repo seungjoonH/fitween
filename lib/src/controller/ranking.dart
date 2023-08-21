@@ -49,12 +49,12 @@ class RankingCont extends GetxController {
     for (String uid in _rivalsWithMe.keys) {
       amounts.add(getAmountOf(type, uid));
     }
-    return amounts..sort();
+    return amounts..sort((a, b) => b.compareTo(a));
   }
 
   List<String> getRanks(FType type) {
     num getNum(String uid) => _recordAmountsOfRivalsWithMe[uid]!.byType(type);
-    int compare(String a, String b) => getNum(a).compareTo(getNum(b));
+    int compare(String a, String b) => getNum(b).compareTo(getNum(a));
     List<String> uids = [..._recordAmountsOfRivalsWithMe.keys];
     return uids..sort(compare);
   }

@@ -54,7 +54,7 @@ class FUserRecord extends FUser {
     for (FType type in FType.values) {
       num amount = records[type]!;
       amount += _inputRecords.getAmounts(type, DateRange(fromDate, toDate));
-      amount += _inputRecords.getAmounts(type, DateRange(fromDate, toDate));
+      amount += _records.getAmounts(type, DateRange(fromDate, toDate));
       records[type] = amount;
     }
 
@@ -197,8 +197,10 @@ class _RecordsData extends Model {
   num getAmounts(FType type, DateRange range) {
     List<_RecordData>? dataList = _data[type];
     if (dataList == null) return .0;
-    Iterable<_RecordData> filtered = dataList.where((c) => range.inRange(c.date));
-    return sum(filtered.map((a) => a._amount)).toDouble();
+    Iterable<_RecordData> filtered = dataList.where((c) {
+      return range.inRange(c.date);
+    });
+    return sum(filtered.map((a) => a._amount));
   }
 
   _RecordsData();

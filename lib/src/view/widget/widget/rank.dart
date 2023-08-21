@@ -22,7 +22,10 @@ class _RankIconState extends FWidgetState<RankIcon> {
 
   @override
   Widget buildWidget(BuildContext context) {
-    return widget.rank > 4 ? Container(
+    return widget.rank > 3 ? Container(
+      width: 20.0.r,
+      height: 20.0.r,
+      alignment: Alignment.topCenter,
       decoration: BoxDecoration(
         color: FTheme.text,
         shape: BoxShape.circle,
@@ -30,7 +33,7 @@ class _RankIconState extends FWidgetState<RankIcon> {
       child: FText(
         '${widget.rank}',
         color: FTheme.background,
-        style: FTheme.bodySmall,
+        style: FTheme.bodyLarge,
       ),
     ) : SvgPicture.asset(
       '$asset${widget.rank}.svg',

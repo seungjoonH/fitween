@@ -36,7 +36,7 @@ class _CircularCarouselState extends State<CircularCarousel> {
   double get _height => _orbitHeight + _itemSize;
   double get _itemSize => widget.itemSize ?? _width * .5;
   double get _orbitWidth => _width * .6;
-  double get _orbitHeight => max(widget.height ?? .001, .001);
+  double get _orbitHeight => max(widget.height ?? .005, .005);
   double get _a => _orbitWidth * .5;
   double get _b => _orbitHeight * .5;
 
@@ -89,6 +89,10 @@ class _CircularCarouselState extends State<CircularCarousel> {
     _moveByAngle(details.delta.dx * .005);
   }
 
+  bool _buttonVisible = true;
+  void _hideButtons() => setState(() => _buttonVisible = false);
+  void _showButtons() => setState(() => _buttonVisible = true);
+
   void _fitPos(double angle) {
     Timer.periodic(10.ms, (timer) {
       double err = angle - _angle;
@@ -100,6 +104,7 @@ class _CircularCarouselState extends State<CircularCarousel> {
           int index = _index;
           if (_index == 0) index += _length;
           widget.onChanged!(_length - index);
+          _showButtons();
         }
         return;
       }
@@ -141,11 +146,13 @@ class _CircularCarouselState extends State<CircularCarousel> {
   }
 
   void _leftButtonPressed() {
+    _hideButtons();
     int next = (_index + 1) % _length;
     _fitPos(_dAngle * next);
   }
 
   void _rightButtonPressed() {
+    _hideButtons();
     int next = (_index - 1) % _length;
     _fitPos(_dAngle * next);
   }
@@ -179,7 +186,7 @@ class _CircularCarouselState extends State<CircularCarousel> {
                   child: Stack(children: _widgets),
                 ),
               ),
-              if (widget.leftWidget != null)
+              if (_buttonVisible && widget.leftWidget != null)
               Positioned(
                 left: leftArrowPos, top: _height * .4,
                 child: GestureDetector(
@@ -187,7 +194,7 @@ class _CircularCarouselState extends State<CircularCarousel> {
                   child: widget.leftWidget!,
                 ),
               ),
-              if (widget.rightWidget != null)
+              if (_buttonVisible && widget.rightWidget != null)
               Positioned(
                 right: rightArrowPos, top: _height * .4,
                 child: GestureDetector(

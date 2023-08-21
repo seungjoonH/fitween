@@ -108,8 +108,8 @@ mixin DarkPressable<T extends StatefulWidget> on State<T> {
       setState(() {
         if (_withTapDown != null) _withTapDown!();
         _scale = .97;
-        _opacity = .05;
-        _tintColor = FTheme.textAlt;
+        _opacity = .1;
+        _tintColor = FTheme.text;
       });
     };
   }
