@@ -1,9 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/page.dart';
-import 'package:fitween/src/controller/page/page.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
-import 'package:fitween/src/view/page/abs/page.dart';
+import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -403,6 +402,12 @@ class _GoalSettingPageState extends FPageState {
     _buildWeightGoalCarouselWidget(context),
     _buildFinalCheckCarouselWidget(context),
   ].map((w) => Padding(padding: _padding, child: w)).toList();
+
+  @override
+  void initState() {
+    super.initState();
+    cont.init();
+  }
 
   @override
   Widget buildPage(BuildContext context) {

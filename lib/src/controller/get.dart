@@ -8,6 +8,10 @@ class GetCont {
     Get.put(RegisterPageCont());
     Get.put(GoalSettingPageCont());
     Get.put(HomePageCont());
+    Get.put(CalendarPageCont());
+    Get.put(FriendPageCont());
+    Get.put(ContentsPageCont());
+    Get.put(SeeMorePageCont());
   }
 
   static void _initValidatorConts() {

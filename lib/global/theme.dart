@@ -52,13 +52,13 @@ class FTheme {
   static Color get textAlt => isLightMode ? achro10 : achro90;
   static Color get hintText => isLightMode ? achro60 : achro40;
   static Color get comment => isLightMode ? achro50 : achro50;
-  static Color get card => isLightMode ? achro95 : achro30;
+  static Color get card => isLightMode ? achro95 : achro20;
   static Color get background => isLightMode ? achro90 : achro10;
   static Color get backgroundAlt => isLightMode ? achro95 : achro5;
   static Color get stroke => isLightMode ? achro60 : achro40;
-  static Color get selected => isLightMode ? achro40 : achro60;
+  static Color get selected => isLightMode ? achro30 : achro70;
   static Color get unselected => achro50;
-  static Color get shimmer => isLightMode ? achro30 : achro70;
+  static Color get shimmer => achro50;
   static Color get bar => isLightMode ? achro60 : achro40;
   static Color get surface => isLightMode ? achro90 : achro10;
   static Color get outline => isLightMode ? achro40 : achro60;
@@ -99,8 +99,8 @@ class FTheme {
   static TextStyle get largeText => const TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w700,
-    fontSize: 70.0,
-    height: (74 / 70),
+    fontSize: 64.0,
+    height: (70 / 64),
   );
 
   static TextTheme get textTheme => const TextTheme(

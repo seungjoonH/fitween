@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/lang.dart';
 import 'package:fitween/src/controller/user/auth.dart';
-import 'package:fitween/src/view/page/abs/page.dart';
+import 'package:fitween/src/view/page/page.dart';
 import 'package:get/get.dart';
 
 class LoginPageCont extends GetxController {

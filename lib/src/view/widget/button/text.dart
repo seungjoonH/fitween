@@ -14,6 +14,7 @@ class FTextButton extends StatefulWidget {
     this.onPressed,
     this.alignment,
     this.stretch = false,
+    this.padding,
   });
 
   final String? text;
@@ -25,6 +26,7 @@ class FTextButton extends StatefulWidget {
   final VoidCallback? onPressed;
   final ButtonAlignment? alignment;
   final bool stretch;
+  final EdgeInsets? padding;
 
   @override
   State<FTextButton> createState() => _FTextButtonState();
@@ -44,6 +46,7 @@ class _FTextButtonState extends State<FTextButton> with DarkPressable<FTextButto
       onPressed: widget.onPressed,
       alignment: widget.alignment,
       stretch: widget.stretch,
+      padding: widget.padding,
       child: widget.child,
     );
   }

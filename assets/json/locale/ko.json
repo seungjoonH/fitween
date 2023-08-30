@@ -6,7 +6,10 @@
     "sure": "맞아요!"
   },
   "appbar": {
-    "register": "회원가입"
+    "register": "회원가입",
+    "friend": "친구",
+    "see-more": "더보기",
+    "calendar": "기록"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -139,6 +142,28 @@
   },
   "home": {
     "record": "기록",
+    "record-card": {
+      "view-today": "오늘 보기"
+    },
     "ranking": "랭킹"
+  },
+  "friend": {
+    "count": {
+      "other": "친구 {}"
+    },
+    "no-friends": "친구가 없습니다"
+  },
+  "see-more": {
+    "badge": {
+      "title": "내 뱃지",
+      "main": "대표",
+      "recent": "최근"
+    },
+    "goal-setting": {
+      "title": "목표 수정"
+    },
+    "info-setting": {
+      "title": "정보 수정"
+    }
   }
 }

@@ -68,10 +68,10 @@ class FCircularPercentIndicator extends StatelessWidget {
             animationDuration: duration,
             onAnimationEnd: onAnimationEnd,
             curve: Curves.easeInOut,
-            center: FText(centerText,
+            center: FText(
+              centerText,
               color: textColorAlt,
               style: FTheme.titleLarge,
-              borderWidth: 1.0,
               maxLines: 2,
               align: TextAlign.center
             ),
@@ -124,12 +124,13 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
     super.backgroundColor,
     super.progressColor,
     super.curve,
+    super.animateFromLastPercent,
   });
 
   String? centerText;
 
   @override
-  double get percent => max(super.percent, .015);
+  double get percent => max(super.percent, .02);
 
   @override
   EdgeInsets get padding => EdgeInsets.zero;

@@ -3,7 +3,7 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/lang.dart';
-import 'package:fitween/src/controller/page/page.dart';
+import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/controller/user/auth.dart';
 import 'package:get/get.dart';
 

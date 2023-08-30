@@ -12,19 +12,44 @@ class FUserFriend extends FUser {
   @override
   Map<String, FUser> rivals = {};
 
-  Future loadFriends() async {
+  Future loadFriends({FUserLoadCont? cont}) async {
     for (String uid in _friendsData.keys) {
-      FUser? loaded = await FUserDAO().loadOne(uid, loadRecord: true);
+      FUser? loaded = await FUserDAO().loadOne(uid, cont: cont);
 
       if (loaded == null) {
         print('[ERROR] User($uid) load failed');
         return;
       }
 
-      friends[uid] = loaded;
-      if (_friendsData[uid]!._rival) rivals[uid] = loaded;
+      friends[uid] = FUser.combine(friends[uid], loaded);
+      if (_friendsData[uid]!._rival) rivals[uid] = FUser.combine(rivals[uid], loaded);
     }
   }
+
+  Future deleteFriend(String uid) async {
+    if (friends[uid] == null) return;
+
+    _friendsData.remove(uid);
+    friends.remove(uid);
+    rivals.remove(uid);
+
+    await FUserFriendDAO().saveOne(this);
+  }
+
+  // Future deleteFriend(String uid) async {
+  //   if (friends[uid] == null) return;
+  //
+  //   _friendsData.remove(uid);
+  //   friends.remove(uid);
+  //   rivals.remove(uid);
+  //
+  //   await FUserFriendDAO().saveOne(this);
+  //   FUserFriend friend = (await FUserFriendDAO().loadOne(uid))!;
+  //
+  //   await friend.loadFriends(cont: FUserLoadCont.onlyFriend());
+  //   await friend.deleteFriend(key);
+  //   await FUserFriendDAO().saveOne(friend);
+  // }
 
   FUserFriend(super.key) : super();
   FUserFriend.fromJson(super.json) : super.fromJson();

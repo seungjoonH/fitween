@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween/global/global.dart';
-import 'package:fitween/global/operator.dart';
 import 'package:fitween/src/controller/lang.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

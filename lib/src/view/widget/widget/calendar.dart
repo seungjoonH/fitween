@@ -34,7 +34,7 @@ class CalendarDots extends StatelessWidget {
         children: FType.activeValues.map((type) {
           Color color = Colors.transparent;
           if (startedTypes.contains(type)) { color = FTheme.comment; }
-          else if (completedTypes.contains(type)) { color = type.color; }
+          if (completedTypes.contains(type)) { color = type.color; }
           if (completedTypes.length == 3) color = FTheme.colorA;
           return _buildDotWidget(context, color);
         }).toList(),

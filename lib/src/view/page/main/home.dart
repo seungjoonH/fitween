@@ -1,8 +1,9 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
-import 'package:fitween/src/view/page/abs/page.dart';
+import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:fitween/src/view/widget/widget/bottom_bar.dart';
 import 'package:fitween/src/view/widget/widget/calendar.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomePage extends FPage {
   const HomePage({super.key});
@@ -31,6 +33,7 @@ class _HomePageState extends FPageState {
       height: 100.0.h,
       itemSize: 200.0.r,
       onChanged: cont.onChanged,
+      defaultIndex: cont.activeIndex,
       leftWidget: SvgPicture.asset(cont.leftArrowAsset),
       rightWidget: SvgPicture.asset(cont.rightArrowAsset),
       children: FType.activeValues.map((type) {
@@ -39,61 +42,134 @@ class _HomePageState extends FPageState {
           type: type,
           center: isActive ? FTexts(
             cont.getMarbleCenterText(type),
-            textColor: FTheme.backgroundAlt,
+            textColor: FTheme.achro90,
             style: FTheme.titleMedium,
             highlightStyle: FTheme.largeText,
           ) : null,
           smile: isActive,
           tagVisible: isActive,
+          met: calendarCont.allCompleted,
+          selected: cont.activeType == type,
         );
       }).toList(),
     ));
   }
 
   Widget _buildDayCalendarWidget(BuildContext context, DateTime date) {
-    bool isToday = date.wd == today.wd;
-    Color backgroundColor = isToday
-        ? FTheme.selected
-        : Colors.transparent;
-    return Container(
-      width: 38.0.r,
-      height: 38.0.r,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        shape: BoxShape.circle,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          FText(
-            date.wd.short,
-            style: FTheme.titleMedium,
-            color: isToday
-                ? FTheme.backgroundAlt
-                : FTheme.comment,
+    return Obx(() {
+      bool selected = date.isAtSameMomentAs(calendarCont.selectedDay);
+      bool isToday = date.isAtSameMomentAs(today);
+      void onTap() => calendarCont.selectDay(date, date);
+      String dayText = '${date.day}';
+      if (date.day == 1) dayText = '${date.month}/$dayText';
+
+      return GestureDetector(
+        onTap: onTap,
+        child: Container(
+          width: 37.0.r,
+          height: 37.0.r,
+          padding: EdgeInsets.all(1.0.r),
+          decoration: BoxDecoration(
+            color: selected
+                ? FTheme.selected
+                : Colors.transparent,
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: isToday
+                  ? FTheme.selected
+                  : Colors.transparent,
+              width: 3.0.r,
+            ),
           ),
-          CalendarDots(
-            completedTypes: calendarCont.completedTypes(date),
-            startedTypes: calendarCont.startedTypes(date),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              FText(
+                dayText,
+                style: FTheme.commentStyle,
+                color: selected
+                    ? FTheme.backgroundAlt
+                    : FTheme.comment,
+              ),
+              CalendarDots(
+                completedTypes: calendarCont.completedTypes(date),
+                startedTypes: calendarCont.startedTypes(date),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      );
+    });
+  }
+
+  Widget _buildWeeklyCalendarHeaderWidget(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: Weekday.values.map((wd) => SizedBox(
+        width: 37.0.r,
+        child: FText(
+          wd.short,
+          style: FTheme.bodyMedium,
+          color: FTheme.comment,
+          align: TextAlign.center,
+        ),
+      )).toList(),
     );
   }
 
   Widget _buildWeeklyCalendarWidget(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: List.generate(
-        Weekday.values.length, (i) => _buildDayCalendarWidget(
-        context, today.firstDayOfWeek.add(i.d),
-      )),
+    return CarouselSlider(
+      carouselController: cont.carouselCont,
+      items: List.generate(
+        cont.carouselCount, (i) => Column(
+          children: [
+            _buildWeeklyCalendarHeaderWidget(context),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: List.generate(
+                Weekday.values.length, (j) => _buildDayCalendarWidget(
+                  context, cont.firstDay.firstDayOfWeek.add((i * 7 + j).d).ignoreTime,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      options: CarouselOptions(
+        viewportFraction: 1.0,
+        height: 55.0.h,
+        enableInfiniteScroll: false,
+      ),
     );
+  }
+
+  Widget _buildViewTodayButtonWidget(BuildContext context) {
+    return Obx(() {
+      return calendarCont.isToday ? Container() : Padding(
+        padding: EdgeInsets.only(left: 10.0.r),
+        child: FTextButton(
+          text: cont.viewTodayText,
+          padding: EdgeInsets.symmetric(
+            horizontal: 8.0.r,
+            vertical: 4.0.r,
+          ),
+          style: FTheme.bodyMedium,
+          textColor: FTheme.comment,
+          onPressed: cont.selectToday,
+        ),
+      );
+    });
   }
 
   Widget _buildRecordCardWidget(BuildContext context) {
     return FCard(
-      title: FText(cont.recordCardTitle, style: FTheme.cardTitleStyle),
+      title: Row(
+        children: [
+          FText(cont.recordCardTitle, style: FTheme.cardTitleStyle),
+          _buildViewTodayButtonWidget(context),
+        ],
+      ),
+      pressMode: FCardPressMode.icon,
       onPressed: cont.onRecordCardPressed,
       child: _buildWeeklyCalendarWidget(context),
     );
@@ -144,7 +220,7 @@ class _HomePageState extends FPageState {
         children.add(widget);
       }
 
-      return Column(children: children.separate(10.0.h));
+      return Column(children: children.separateH(height: 10.0.h));
     });
   }
 
@@ -152,6 +228,7 @@ class _HomePageState extends FPageState {
     return FCard(
       title: FText(cont.rankingCardTitle, style: FTheme.cardTitleStyle),
       onPressed: cont.onRankingCardPressed,
+      pressMode: FCardPressMode.icon,
       child: _buildRankingCardContentWidget(context),
     );
   }
@@ -163,14 +240,14 @@ class _HomePageState extends FPageState {
   @override
   void initState() {
     super.initState();
-    cont.init();
+    cont.initState();
   }
 
   @override
   Widget buildPage(BuildContext context) {
-    return FMainScaffold(
+    return FRefreshScaffold(
       autoPadding: false,
-      refreshController: cont.refreshCont,
+      refreshController: RefreshController(),
       onRefresh: cont.init,
       body: Stack(
         children: [
@@ -188,6 +265,7 @@ class _HomePageState extends FPageState {
           ),
         ],
       ),
+      bottomNavigationBar: const FBottomNavigationBar(),
     );
   }
 }
@@ -199,12 +277,16 @@ class Marble extends FWidget {
     this.center,
     this.smile = false,
     this.tagVisible = false,
+    this.met = false,
+    this.selected = false,
   });
 
   final FType type;
   final Widget? center;
   final bool smile;
   final bool tagVisible;
+  final bool met;
+  final bool selected;
 
   @override
   FWidgetState<FWidget> createState() => _MarbleState();
@@ -213,16 +295,37 @@ class Marble extends FWidget {
 class _MarbleState extends FWidgetState<Marble> {
   static const asset = 'assets/image/page/home/marble.svg';
 
+  LoadingCont get cont => LoadingCont.to;
+
+  Color get _color {
+    Color color = cont.loading
+        ? cont.color
+        : widget.type.color;
+
+    final tintColor = FTheme.achro95.withOpacity(.15);
+
+    if (widget.met) {
+      color = FTheme.colorA;
+      if (!widget.selected) color = Color.alphaBlend(tintColor, color);
+      return color;
+    }
+    return color;
+  }
+
+  Color get _tagColor => widget.met
+      ? widget.type.color
+      : FTheme.achro90.withOpacity(.3);
+
   @override
   Widget buildWidget(BuildContext context) {
-    return Container(
+    return Obx(() => Container(
       width: 200.0.r,
       height: 200.0.r,
       decoration: BoxDecoration(
-        color: widget.type.color,
+        color: _color,
         shape: BoxShape.circle,
       ),
-      child: Stack(
+      child: cont.loading ? null : Stack(
         alignment: Alignment.center,
         children: [
           Positioned.fill(
@@ -233,13 +336,13 @@ class _MarbleState extends FWidgetState<Marble> {
           Positioned(
             bottom: 10.0.h,
             child: widget.tagVisible ? FTag(widget.type.locale.capitalize!,
-              backgroundColor: FTheme.achro90.withOpacity(.3),
+              backgroundColor: _tagColor,
               textColor: FTheme.achro90,
             ) : Container(),
           ),
           Container(child: widget.center),
         ],
       ),
-    );
+    ));
   }
 }

@@ -40,39 +40,25 @@ class FUserDAO {
   Map<String, FUserParty> get parties => _partyDAO.list;
   Map<String, FUserRecord> get records => _recordDAO.list;
 
-  Future loadAll({bool lightMode = true}) async {
-    await _battleDAO.loadAll(lightMode: lightMode);
-    await _collectionDAO.loadAll(lightMode: lightMode);
-    await _friendDAO.loadAll(lightMode: lightMode);
-    await _infoDAO.loadAll(lightMode: lightMode);
-    await _notificationDAO.loadAll(lightMode: lightMode);
-    await _partyDAO.loadAll(lightMode: lightMode);
-    await _recordDAO.loadAll(lightMode: lightMode);
+  Future loadAll() async {
+    await _battleDAO.loadAll();
+    await _collectionDAO.loadAll();
+    await _friendDAO.loadAll();
+    await _infoDAO.loadAll();
+    await _notificationDAO.loadAll();
+    await _partyDAO.loadAll();
+    await _recordDAO.loadAll();
   }
 
   Future<FUser?> loadOneAll(String uid) async {
-    return await loadOne(
-      uid,
-      loadBattle: true,
-      loadCollection: true,
-      loadFriend: true,
-      loadInfo: true,
-      loadNotification: true,
-      loadParty: true,
-      loadRecord: true,
-    );
+    return await loadOne(uid, cont: FUserLoadCont.all());
   }
 
   Future<FUser?> loadOne(
-    String uid, {
-      bool loadBattle = false,
-      bool loadCollection = false,
-      bool loadFriend = false,
-      bool loadInfo = true,
-      bool loadNotification = false,
-      bool loadParty = false,
-      bool loadRecord = false,
-    }) async {
+    String uid, {FUserLoadCont? cont}
+  ) async {
+    cont ??= FUserLoadCont.lightest();
+
     FUserBattle? battle;
     FUserCollection? collection;
     FUserFriend? friend;
@@ -81,21 +67,21 @@ class FUserDAO {
     FUserParty? party;
     FUserRecord? record;
 
-    if (loadBattle) battle = await _battleDAO.loadOne(uid);
-    if (loadCollection) collection = await _collectionDAO.loadOne(uid);
-    if (loadFriend) friend = await _friendDAO.loadOne(uid);
-    if (loadInfo) info = await _infoDAO.loadOne(uid);
-    if (loadNotification) notification = await _notificationDAO.loadOne(uid);
-    if (loadParty) party = await _partyDAO.loadOne(uid);
-    if (loadRecord) record = await _recordDAO.loadOne(uid);
+    if (cont.battle) battle = await _battleDAO.loadOne(uid);
+    if (cont.collection) collection = await _collectionDAO.loadOne(uid);
+    if (cont.friend) friend = await _friendDAO.loadOne(uid);
+    if (cont.info) info = await _infoDAO.loadOne(uid);
+    if (cont.notification) notification = await _notificationDAO.loadOne(uid);
+    if (cont.party) party = await _partyDAO.loadOne(uid);
+    if (cont.record) record = await _recordDAO.loadOne(uid);
 
-    if (loadBattle && battle == null) return null;
-    if (loadCollection && collection == null) return null;
-    if (loadFriend && friend == null) return null;
-    if (loadInfo && info == null) return null;
-    if (loadNotification && notification == null) return null;
-    if (loadParty && party == null) return null;
-    if (loadRecord && record == null) return null;
+    if (cont.battle && battle == null) return null;
+    if (cont.collection && collection == null) return null;
+    if (cont.friend && friend == null) return null;
+    if (cont.info && info == null) return null;
+    if (cont.notification && notification == null) return null;
+    if (cont.party && party == null) return null;
+    if (cont.record && record == null) return null;
 
     FUserBuilder builder = FUserBuilder()
       ..uid = uid

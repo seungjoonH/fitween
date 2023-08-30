@@ -6,7 +6,10 @@
     "sure": "Sure!"
   },
   "appbar": {
-    "register": "Register"
+    "register": "Register",
+    "friend": "Friend",
+    "see-more": "See More",
+    "calendar": "Calendar"
   },
   "hint": {
     "your-nickname": "Input your nickname",
@@ -173,6 +176,29 @@
   },
   "home": {
     "record": "Record",
+    "record-card": {
+      "view-today": "View Today"
+    },
     "ranking": "Ranking"
+  },
+  "friend": {
+    "count": {
+      "one": "{} friend",
+      "other": "{} friends"
+    },
+    "no-friends": "There's no friends"
+  },
+  "see-more": {
+    "badge": {
+      "title": "My Badges",
+      "main": "Main",
+      "recent": "Recently Acquired"
+    },
+    "goal-setting": {
+      "title": "Goal Settings"
+    },
+    "info-setting": {
+      "title": "Info Settings"
+    }
   }
 }

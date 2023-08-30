@@ -17,6 +17,7 @@ class FButton extends StatefulWidget {
     this.onPressed,
     this.alignment,
     this.stretch = false,
+    this.padding,
   }) : assert(text == null || child == null),
         assert(stretch || alignment == null);
 
@@ -31,6 +32,7 @@ class FButton extends StatefulWidget {
   final VoidCallback? onPressed;
   final ButtonAlignment? alignment;
   final bool stretch;
+  final EdgeInsets? padding;
 
   static final ancestorKey = GlobalKey();
 
@@ -39,6 +41,10 @@ class FButton extends StatefulWidget {
 }
 
 class _FButtonState extends State<FButton> with ScalePressable<FButton> {
+  EdgeInsets get _padding => widget.padding ?? EdgeInsets.symmetric(
+    horizontal: 25.0.r, vertical: 12.0.r,
+  );
+
   @override
   Widget buildContent(BuildContext context) {
     Color textColorAlt = widget.textColor ?? FTheme.backgroundAlt;
@@ -64,10 +70,7 @@ class _FButtonState extends State<FButton> with ScalePressable<FButton> {
     final rightPadding = widget.stretch && widget.alignment != ButtonAlignment.right;
 
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 25.0.r,
-        vertical: 12.0.r,
-      ),
+      padding: _padding,
       decoration: BoxDecoration(
         border: border,
         borderRadius: radius,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/dialog.dart';
@@ -9,9 +10,10 @@ class LoadingCont extends GetxController {
   static LoadingCont get to => Get.find<LoadingCont>();
 
   static bool _delayActive = false;
-  final Color _mainColor = FTheme.bar;
-  Color _color = FTheme.bar;
-  int _count = 0;
+  final Color _mainColor = FTheme.shimmer;
+  final _color = FTheme.shimmer.obs;
+  final _count = 0.obs;
+  final _opacity = .2.obs;
   Timer? _timer;
 
   static final _refreshQueue = <String>[].obs;
@@ -19,42 +21,47 @@ class LoadingCont extends GetxController {
   static bool start([String? id, int? sec]) => to.loadStart(id, sec);
   static void end() => to.loadEnd();
 
-  bool get loading => _count > 0;
-  Color get color => _color;
+  bool get loading => _count.value > 0;
+  Color get color => _color.value;
+
+  void _increaseCount() { _count(_count.value + 1); update(); }
+  void _decreaseCount() { _count(max(_count.value + 1, 0)); update(); }
 
   bool loadStart([String? id, int? sec]) {
+    _count(0);
     if (_refreshQueue.contains(id)) return false;
     if (id != null) _refreshQueue.add(id);
 
-    final int countHistory = _count;
-    _count++;
+    final int countHistory = _count.value;
+    _increaseCount();
     _delayActive = true;
-    double opacity = .2;
+    _opacity(.2);
 
-    delay(5000.ms, () async {
+    delay(5.s, () async {
       if (_delayActive) return;
       await DialogCont.showResponseTimeoutErrorDialog();
       _delayActive = false;
-      _count--;
+      _decreaseCount();
     });
 
     _timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
-      if (countHistory == _count) { timer.cancel(); update(); return; }
-      opacity = ((opacity * 1000 + 3) % 200) / 1000;
-      _color = _mainColor.withOpacity(.2 + opacity);
+      if (countHistory == _count.value) { timer.cancel(); update(); return; }
+      _opacity(((_opacity.value * 1000 + 3) % 200) / 1000);
+      _color(Color.alphaBlend(
+        _mainColor.withOpacity(.2 + _opacity.value),
+        FTheme.background,
+      ));
       update();
     });
 
-    delay((sec ?? 0 * 1).s, () {
-      _refreshQueue.remove(id);
-    });
+    delay((sec ?? 0 * 1).s, () => _refreshQueue.remove(id));
     return true;
   }
 
   void loadEnd() async {
     delay(100.ms, () {
       _timer?.cancel();
-      _count--;
+      _count(_count.value - 1);
       update();
     });
   }

@@ -35,8 +35,11 @@ class FUserInfo extends FUser {
   DateTime get dateOfBirth => _dateOfBirth.toDate();
   @override
   Sex get sex => _sex;
-
   @override
+  num get height => _height;
+  @override
+  num get weight => _weight;
+
   bool get isAdmin => _AdminInfo.isAdmin(email);
   @override
   bool get isAppleInspector => _AdminInfo.isAppleInspector(email);
@@ -65,8 +68,8 @@ class FUserInfo extends FUser {
     _name = json['name'];
     _nickname = json['nickname'];
     _email = json['email'];
-    _weight = json['weight'].toDouble();
-    _height = json['height'].toDouble();
+    _weight = json['weight'];
+    _height = json['height'];
     _weightVisibility = json['weightVisibility'] ?? false;
     _heightVisibility = json['heightVisibility'] ?? false;
     _sex = Sex.toEnum(json['sex'])!;
@@ -90,6 +93,19 @@ class FUserInfo extends FUser {
     json['dateOfBirth'] = _dateOfBirth;
     return json;
   }
+
+  FUserInfoBuilder toBuilder() => FUserInfoBuilder()
+    ..uid = uid
+    ..name = _name
+    ..nickname = _nickname
+    ..email = _email
+    ..weight = _weight
+    ..height = _height
+    ..weightVisibility = _weightVisibility
+    ..heightVisibility = _heightVisibility
+    ..sex = _sex
+    ..regDate = regDate
+    ..dateOfBirth = dateOfBirth;
 }
 
 class _AdminInfo {

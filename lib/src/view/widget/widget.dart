@@ -21,6 +21,7 @@ export './widget/icon.dart';
 export './widget/indicator.dart';
 export './widget/list_tile.dart';
 export './widget/logo.dart';
+export './widget/profile.dart';
 export './widget/rank.dart';
 export './widget/scaffold.dart';
 export './widget/slider.dart';
@@ -38,7 +39,7 @@ abstract class FWidgetState<T extends FWidget> extends State<T> {
   @override
   void dispose() {
     super.dispose();
-    PageCont.removeContext();
+    PageCont.removeContext(context);
   }
 
   @override

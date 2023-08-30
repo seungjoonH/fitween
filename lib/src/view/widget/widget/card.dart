@@ -5,6 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:get/get.dart';
 
+enum FCardPressMode { entire, icon }
+
 class FCard extends StatefulWidget {
   const FCard({
     Key? key,
@@ -13,6 +15,7 @@ class FCard extends StatefulWidget {
     required this.child,
     this.backgroundColor,
     this.onPressed,
+    this.pressMode = FCardPressMode.entire,
     this.width,
     this.height,
     this.constraints,
@@ -26,6 +29,7 @@ class FCard extends StatefulWidget {
   final Widget child;
   final Color? backgroundColor;
   final VoidCallback? onPressed;
+  final FCardPressMode? pressMode;
   final double? width;
   final double? height;
   final BoxConstraints? constraints;
@@ -42,40 +46,61 @@ class _FCardState extends State<FCard> with DarkPressable {
       ?? EdgeInsets.all(20.0.r);
   BoxConstraints? get constraints => widget.constraints
       ?? BoxConstraints(minHeight: 60.0.h);
+
+  @override
+  bool get allowPressEffect => widget.pressMode == FCardPressMode.entire;
+
   Widget get icon {
     final Color color = FTheme.comment;
     final double size = 20.0.r;
 
+    Icon rightArrowIcon = Icon(
+      Icons.arrow_forward_ios,
+      color: color, size: size,
+    );
+
+    VoidCallback? iconPressed = widget.pressMode == FCardPressMode.icon
+        ? widget.onPressed : null;
+
     if (widget.icon == null) {
       if (widget.onPressed != null) {
-        return Icon(
-          Icons.keyboard_arrow_right_outlined,
-          color: color, size: size,
+        return FIconButton(
+          onPressed: iconPressed,
+          icon: rightArrowIcon,
+          iconColor: FTheme.comment,
         );
       }
       return Container();
     }
 
-    return Icon(
-      widget.icon!.icon,
-      color: color, size: size,
+    return FIconButton(
+      icon: Icon(
+        widget.icon!.icon,
+        size: size,
+      ),
+      iconColor: color,
+      onPressed: iconPressed,
     );
   }
   Widget get child => Padding(
-    padding: EdgeInsets.only(top: 20.0.h),
+    padding: widget.title == null
+        ? EdgeInsets.zero
+        : EdgeInsets.only(top: 20.0.h),
     child: widget.child,
   );
 
   @override
   Color get backgroundColor => widget.backgroundColor ?? FTheme.card;
 
+  LoadingCont get cont => LoadingCont.to;
+
   @override
   Widget buildContent(BuildContext context) {
     final radius = BorderRadius.circular(12.0.r);
-
-    return GetBuilder<LoadingCont>(
-      builder: (cont) {
-        return Container(
+    return Obx(() => Stack(
+      alignment: Alignment.topRight,
+      children: [
+        Container(
           padding: padding,
           decoration: BoxDecoration(
             color: cont.loading
@@ -95,27 +120,21 @@ class _FCardState extends State<FCard> with DarkPressable {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (widget.title != null && !cont.loading)
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(child: widget.title!),
-                      icon,
-                    ],
-                  ),
-                ],
-              ),
+                widget.title!,
               if (!cont.loading) child,
             ],
           ),
-        );
-      },
-    );
+        ),
+        if (!cont.loading) icon,
+      ],
+    ));
   }
 
   @override
-  VoidCallback? get onPressed => widget.onPressed;
+  VoidCallback? get onPressed {
+    if (widget.pressMode != FCardPressMode.entire) return null;
+    return widget.onPressed;
+  }
 }
 
 class FCollapsibleCard extends FCard {

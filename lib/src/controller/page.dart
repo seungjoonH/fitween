@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class PageCont {
+export 'page/main/home/calendar.dart';
+export 'page/main/home.dart';
+export 'page/main/friend.dart';
+export 'page/main/contents.dart';
+export 'page/main/see_more.dart';
+export 'page/main.dart';
+export 'page/carousel.dart';
+export 'page/goal_setting.dart';
+export 'page/login.dart';
+export 'page/onboarding.dart';
+export 'page/register.dart';
+
+abstract class PageCont extends GetxController {
   static final List<BuildContext> _contexts = [];
-  static set context(BuildContext cont) => _contexts.add(cont);
+  static List<BuildContext> get contexts => _contexts;
+  static set context(BuildContext cont) {
+    if (_contexts.contains(cont)) return;
+    _contexts.add(cont);
+  }
   static BuildContext get context => _contexts.last;
-  static removeContext() => _contexts.removeLast();
+  static removeContext(context) {
+    return _contexts.remove(context);
+  }
 
   static late MediaQueryData mediaQuery;
   static Size get size => mediaQuery.size;
@@ -13,4 +32,10 @@ class PageCont {
   static bool get isPortrait => orientation == Orientation.portrait;
   static bool get isLandscape => orientation == Orientation.landscape;
 
+  void initState() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) async => await init());
+  }
+
+  Future init();
 }

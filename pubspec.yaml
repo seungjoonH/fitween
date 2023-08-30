@@ -91,7 +91,8 @@ flutter:
     - assets/image/challenge/complete/
     - assets/image/challenge/default/
     - assets/image/challenge/focus/
-    - assets/image/icon/selected/
+    - assets/image/icon/selected/dark/
+    - assets/image/icon/selected/light/
     - assets/image/icon/unselected/
     - assets/image/level/distance/
     - assets/image/level/height/

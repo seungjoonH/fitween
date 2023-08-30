@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
+import 'package:fitween/src/model/enum/ftype.dart';
+import 'package:flutter/material.dart';
 
 class FUserCollection extends FUser {
   @override
@@ -11,11 +14,17 @@ class FUserCollection extends FUser {
 
   String? get badgeId => _badgeId;
 
+  @override
+  FBadge? get badge => FBadgeLocal().get(badgeId);
+
   List<Collection> get ordered {
     List<Collection> cols = [...collections.values];
     cols.sort((a, b) => a.dates.last!.isBefore(b.dates.last!) ? 1 : -1);
     return cols;
   }
+
+  @override
+  Color get badgeColor => FType.values[uid.codeUnitAt(1) % 4].color;
 
   FUserCollection(super.key) : super();
   FUserCollection.fromJson(super.json) : super.fromJson();

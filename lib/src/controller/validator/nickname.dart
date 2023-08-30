@@ -53,7 +53,7 @@ class NicknameValidatorCont extends InputFieldValidatorCont {
   }
 
   void loadNicknames() async {
-    await FUserInfoDAO().loadAll(lightMode: true);
+    await FUserInfoDAO().loadAll();
     _nicknames = FUserInfoDAO().list.values.map((user) => user.nickname).toList();
   }
 

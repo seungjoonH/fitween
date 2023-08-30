@@ -42,7 +42,7 @@ extension NumExtension on num {
   String get round1 => toStringAsFixed(1);
   String get round2 => toStringAsFixed(2);
 
-  String localizing({bool thouSep = true, bool scaling = true, bool decimal = true, bool txs = false}) {
+  String localizing({bool thouSep = true, bool scaling = true, bool txs = false}) {
     num number = this;
     String scale = '';
     String? numberString;
@@ -59,7 +59,7 @@ extension NumExtension on num {
       }
     }
 
-    if (decimal) {
+    if (scale != '') {
       if (number < 10) { numberString = number.round2; }
       else if (number < 100) { numberString = number.round1; }
     }

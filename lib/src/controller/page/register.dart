@@ -6,7 +6,7 @@ import 'package:fitween/src/controller/page/carousel.dart';
 import 'package:fitween/src/controller/page/goal_setting.dart';
 import 'package:fitween/src/controller/validator/validator.dart';
 import 'package:fitween/src/model/class/model.dart';
-import 'package:fitween/src/view/page/abs/page.dart';
+import 'package:fitween/src/view/page/page.dart';
 import 'package:get/get.dart';
 
 class RegisterPageCont extends CarouselPageCont {

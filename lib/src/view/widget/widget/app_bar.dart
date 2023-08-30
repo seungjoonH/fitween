@@ -1,6 +1,8 @@
+import 'package:fitween/route.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fitween/global/theme.dart';
+import 'package:get/get.dart';
 
 class FAppBar extends AppBar {
   FAppBar({
@@ -27,11 +29,14 @@ class FAppBar extends AppBar {
   );
 
   @override
-  Widget? get leading => backPressed == null
-      ? super.leading : IconButton(
-    onPressed: backPressed,
-    icon: const Icon(Icons.arrow_back_ios),
-  );
+  Widget? get leading {
+    if (FRoute.previousPage == null) return null;
+    VoidCallback onPressed = backPressed ?? Get.back;
+    return FIconButton(
+      onPressed: onPressed,
+      icon: const Icon(Icons.arrow_back_ios_new),
+    );
+  }
 
   @override
   Color? get backgroundColor => Colors.transparent;

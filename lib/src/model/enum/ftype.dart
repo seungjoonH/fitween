@@ -11,10 +11,10 @@ enum FType {
   Color get color => [FTheme.colorA, FTheme.colorB, FTheme.colorC, FTheme.colorD][index];
   bool get active => activeValues.contains(this);
 
-  String withUnit(num value, {bool thouSep = true, bool scaling = true, bool decimal = true, bool txs = false}) {
+  String withUnit(num value, {bool thouSep = true, bool scaling = true, bool txs = false}) {
     String unit = LangCont.plural('unit.$_unitKey', value);
     return unit.replaceAll('[]', value.localizing(
-      thouSep: thouSep, scaling: scaling, decimal: decimal, txs: txs,
+      thouSep: thouSep, scaling: scaling, txs: txs,
     ));
   }
 

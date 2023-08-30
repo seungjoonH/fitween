@@ -15,6 +15,7 @@ class CircularCarousel extends StatefulWidget {
     this.leftWidget,
     this.rightWidget,
     this.onChanged,
+    this.defaultIndex = 0,
   });
 
   final List<Widget> children;
@@ -24,6 +25,7 @@ class CircularCarousel extends StatefulWidget {
   final Widget? leftWidget;
   final Widget? rightWidget;
   final Function(int)? onChanged;
+  final int defaultIndex;
 
   @override
   State<CircularCarousel> createState() => _CircularCarouselState();
@@ -36,23 +38,12 @@ class _CircularCarouselState extends State<CircularCarousel> {
   double get _height => _orbitHeight + _itemSize;
   double get _itemSize => widget.itemSize ?? _width * .5;
   double get _orbitWidth => _width * .6;
-  double get _orbitHeight => max(widget.height ?? .005, .005);
+  double get _orbitHeight => max(widget.height ?? .001, .001);
   double get _a => _orbitWidth * .5;
   double get _b => _orbitHeight * .5;
 
   late double velocity;
   int get _index => (_angle / _dAngle).round();
-
-  void _setPos(double x, double y) {
-    setState(() {
-      _angle = asin(x / _a);
-      if (x.sign > 0 && y.sign < 0) { _angle = pi - _angle; }
-      else if (x.sign < 0) {
-        if (y.sign > 0) { _angle = 2 * pi + _angle; }
-        else { _angle = _angle.abs() + pi; }
-      }
-    });
-  }
 
   Offset _getPos(int index) {
     double angle = (_angle + _dAngle * index) % (2 * pi);
@@ -79,13 +70,11 @@ class _CircularCarouselState extends State<CircularCarousel> {
   }
 
   void _setPosByAngle(double angle) {
-    double x = _a * sin(angle);
-    double y = _b * cos(angle);
-    _setPos(x, y);
     setState(() => _angle = angle);
   }
 
   void _onHorizontalDragUpdate(DragUpdateDetails details) {
+    _hideButtons();
     _moveByAngle(details.delta.dx * .005);
   }
 
@@ -104,8 +93,8 @@ class _CircularCarouselState extends State<CircularCarousel> {
           int index = _index;
           if (_index == 0) index += _length;
           widget.onChanged!(_length - index);
-          _showButtons();
         }
+        _showButtons();
         return;
       }
       _moveByAngle(.05 * err.sign);
@@ -114,7 +103,7 @@ class _CircularCarouselState extends State<CircularCarousel> {
 
   void _onHorizontalDragEnd(DragEndDetails details) async {
     velocity = details.primaryVelocity!;
-    if (velocity.abs() < 8000) { _fitPos(_nearAngle); return; }
+    if (velocity.abs() == 0) { _fitPos(_nearAngle); return; }
 
     velocity *= .00001;
 
@@ -160,7 +149,7 @@ class _CircularCarouselState extends State<CircularCarousel> {
   @override
   void initState() {
     super.initState();
-    _setPos(0, _b);
+    _setPosByAngle((_length - widget.defaultIndex) * _dAngle);
   }
 
   @override

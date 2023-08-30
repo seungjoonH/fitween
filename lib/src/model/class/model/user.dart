@@ -1,9 +1,8 @@
 import 'package:fitween/global/date.dart';
-import 'package:fitween/src/controller/lang.dart';
-import 'package:fitween/src/model/class/amount/amount.dart';
-import 'package:fitween/src/model/class/dao.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 enum Sex {
@@ -16,82 +15,84 @@ enum Sex {
 
 class FUser extends Model {
   late final String uid;
-  FUserBattle? _battle;
-  FUserCollection? _collection;
-  FUserFriend? _friend;
-  FUserInfo? _info;
-  FUserNotification? _notification;
-  FUserParty? _party;
-  FUserRecord? _record;
-
-  FUserBattle? get battle => _battle;
-  FUserCollection? get collection => _collection;
-  FUserFriend? get friend => _friend;
-  FUserInfo? get info => _info;
-  FUserNotification? get notification => _notification;
-  FUserParty? get party => _party;
-  FUserRecord? get record => _record;
+  FUserBattle? battle;
+  FUserCollection? collection;
+  FUserFriend? friend;
+  FUserInfo? info;
+  FUserNotification? notification;
+  FUserParty? party;
+  FUserRecord? record;
 
   // battle
-  Map<String, Battle> get battles => _battle!.battles;
+  Map<String, Battle> get battles => battle!.battles;
 
   // collection
   Collection? get profileCollection => collections[collection!.badgeId];
-  Map<String, Collection> get collections => _collection!.collections;
-  List<Collection> get orderedCollections => _collection!.ordered;
+  Map<String, Collection> get collections => collection!.collections;
+  List<Collection> get orderedCollections => collection!.ordered;
+
+  FBadge? get badge => collection!.badge;
+  Color get badgeColor => collection!.badgeColor;
 
   // friend
-  Map<String, FUser> get friends => _friend!.friends;
-  Map<String, FUser> get rivals => _friend!.rivals;
+  Map<String, FUser> get friends => friend!.friends;
+  Map<String, FUser> get rivals => friend!.rivals;
 
   // info
-  String? get name => _info!.name;
-  String
-  get nickname => _info!.nickname;
-  DateTime get regDate => _info!.regDate;
-  String get email => _info!.email;
-  DateTime get dateOfBirth => _info!.dateOfBirth;
-  Sex get sex => _info!.sex;
-  num get weight => _info!.weight;
-  num get height => _info!.height;
-  bool get isAdmin => _info!.isAdmin;
-  bool get isAppleInspector => _info!.isAppleInspector;
+  String? get name => info!.name;
+  String get nickname => info!.nickname;
+  DateTime get regDate => info!.regDate;
+  String get email => info!.email;
+  DateTime get dateOfBirth => info!.dateOfBirth;
+  Sex get sex => info!.sex;
+  num get weight => info!.weight;
+  num get height => info!.height;
+  bool get isAmin => info!.isAdmin;
+  bool get isAppleInspector => info!.isAppleInspector;
 
   int get age => dateOfBirth.age;
   int get generation => dateOfBirth.generation;
   bool get isMale => sex == Sex.male;
   bool get isFemale => sex == Sex.female;
 
+  int get weekCount => today.difference(regDate).inDays ~/ 7;
+
   // party
-  Map<String, Party> get parties => _party!.parties;
+  Map<String, Party> get parties => party!.parties;
 
   // record
-  Goal get goal => _record!.goal;
-  Map<FType, num> getOneDayRecord(DateTime date) => _record!.getOneDayRecord(date);
-  Map<FType, num> getOneWeekRecord(DateTime date) => _record!.getOneWeekRecord(date);
-  Map<FType, num> getOneMonthRecord(DateTime date) => _record!.getOneMonthRecord(date);
-  Map<FType, num> getFromRecord(DateTime from) => _record!.getFromRecord(from);
-  Map<FType, num> getToRecord(DateTime to) => _record!.getToRecord(to);
-  Map<FType, num> getRecord(DateTime from, DateTime to) => _record!.getRecord(from, to);
-  Map<FType, num> get allRecord => _record!.allRecord;
+  bool get visible => record!.visible;
+  void toggleVisibility() => record!.toggleVisibility();
 
-  bool completed(FType type, DateTime date) => _record!.completed(type, date);
-  bool started(FType type, DateTime date) => _record!.started(type, date);
+  Goal get goal => record!.goal;
+  Map<FType, num> getOneDayRecord(DateTime date) => record!.getOneDayRecord(date);
+  Map<FType, num> getOneWeekRecord(DateTime date) => record!.getOneWeekRecord(date);
+  Map<FType, num> getOneMonthRecord(DateTime date) => record!.getOneMonthRecord(date);
+  Map<FType, num> getFromRecord(DateTime from) => record!.getFromRecord(from);
+  Map<FType, num> getToRecord(DateTime to) => record!.getToRecord(to);
+  Map<FType, num> getRecord(DateTime from, DateTime to) => record!.getRecord(from, to);
+  Map<FType, num> get allRecord => record!.allRecord;
+  Map<DateTime, List<CalendarEvent>> get events => record!.events;
 
-  List<DateTime> get logDates => _record!.logDates;
-  DateTime get latestLogDate => _record!.latestLogDate;
+  bool completed(FType type, DateTime date) => record!.completed(type, date);
+  bool started(FType type, DateTime date) => record!.started(type, date);
+
+  List<DateTime> get logDates => record!.logDates;
+  DateTime get latestLogDate => record!.latestLogDate;
 
   FUser(String key) : uid = key;
 
-  FUser.builder(FUserBuilder builder)
-    : uid = builder.uid,
-    _battle = builder.battle,
-    _collection = builder.collection,
-    _friend = builder.friend,
-    _info = builder.info,
-    _notification = builder.notification,
-    _party = builder.party,
-    _record = builder.record!.._info = builder.info;
+  FUser.builder(FUserBuilder builder) {
+    uid = builder.uid;
+    battle = builder.battle;
+    collection = builder.collection;
+    friend = builder.friend;
+    info = builder.info;
+    notification = builder.notification;
+    party = builder.party;
+    if (builder.record == null) return;
+    record = builder.record!..info = builder.info;
+  }
 
   FUser.fromJson(Map<String, dynamic> json) {
     fromJson(json);
@@ -100,26 +101,43 @@ class FUser extends Model {
   @override
   void fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
-    _battle = FUserBattle.fromJson(json);
-    _collection = FUserCollection.fromJson(json);
-    _friend = FUserFriend.fromJson(json);
-    _info = FUserInfo.fromJson(json);
-    _notification = FUserNotification.fromJson(json);
-    _party = FUserParty.fromJson(json);
-    _record = FUserRecord.fromJson(json);
+    battle = FUserBattle.fromJson(json);
+    collection = FUserCollection.fromJson(json);
+    friend = FUserFriend.fromJson(json);
+    info = FUserInfo.fromJson(json);
+    notification = FUserNotification.fromJson(json);
+    party = FUserParty.fromJson(json);
+    record = FUserRecord.fromJson(json);
   }
 
   @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
-    json.addAll(_battle?.toJson() ?? {});
-    json.addAll(_collection?.toJson() ?? {});
-    json.addAll(_friend?.toJson() ?? {});
-    json.addAll(_info?.toJson() ?? {});
-    json.addAll(_notification?.toJson() ?? {});
-    json.addAll(_party?.toJson() ?? {});
-    json.addAll(_record?.toJson() ?? {});
+    json.addAll(battle?.toJson() ?? {});
+    json.addAll(collection?.toJson() ?? {});
+    json.addAll(friend?.toJson() ?? {});
+    json.addAll(info?.toJson() ?? {});
+    json.addAll(notification?.toJson() ?? {});
+    json.addAll(party?.toJson() ?? {});
+    json.addAll(record?.toJson() ?? {});
     return json;
+  }
+
+  static FUser combine(FUser? a, FUser? b) {
+    assert(a != null || b != null);
+    if (a == null) return b!;
+    if (b == null) return a;
+    return a..merge(b);
+  }
+
+  void merge(FUser user) {
+    battle = user.battle ?? battle;
+    collection = user.collection ?? collection;
+    friend = user.friend ?? friend;
+    info = user.info ?? info;
+    notification = user.notification ?? notification;
+    party = user.party ?? party;
+    record = user.record ?? record;
   }
 
   @override
@@ -136,4 +154,70 @@ class FUserBuilder {
   FUserNotification? notification;
   FUserParty? party;
   FUserRecord? record;
+}
+
+class FUserLoadCont {
+  late bool battle;
+  late bool collection;
+  late bool friend;
+  late bool info;
+  late bool notification;
+  late bool party;
+  late bool record;
+
+  FUserLoadCont({
+    this.battle = false,
+    this.collection = false,
+    this.friend = false,
+    this.info = true,
+    this.notification = false,
+    this.party = false,
+    this.record = false,
+  });
+
+  static FUserLoadCont lightest() => FUserLoadCont();
+  static FUserLoadCont onlyBattle() {
+    FUserLoadCont cont = lightest();
+    cont.battle = true;
+    return cont;
+  }
+
+  static FUserLoadCont onlyCollection() {
+    FUserLoadCont cont = lightest();
+    cont.collection = true;
+    return cont;
+  }
+
+  static FUserLoadCont onlyFriend() {
+    FUserLoadCont cont = lightest();
+    cont.friend = true;
+    return cont;
+  }
+
+  static FUserLoadCont onlyNotification() {
+    FUserLoadCont cont = lightest();
+    cont.notification = true;
+    return cont;
+  }
+
+  static FUserLoadCont onlyParty() {
+    FUserLoadCont cont = lightest();
+    cont.party = true;
+    return cont;
+  }
+
+  static FUserLoadCont onlyRecord() {
+    FUserLoadCont cont = lightest();
+    cont.record = true;
+    return cont;
+  }
+
+  FUserLoadCont.all()
+      : battle = true,
+        collection = true,
+        friend = true,
+        info = true,
+        notification = true,
+        party = true,
+        record = true;
 }

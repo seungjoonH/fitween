@@ -42,6 +42,14 @@ class GoalSettingPageCont extends CarouselPageCont {
     userRecord = record ?? FUserRecordBuilder()..uid = info.uid;
   }
 
+  @override
+  void init() {
+    if (!AuthCont.isLogged) return;
+    userInfo = AuthCont.logged!.info!.toBuilder();
+    userRecord = FUserRecordBuilder()..uid = userInfo.uid;
+    super.init();
+  }
+
   int get generation => userInfo.dateOfBirth!.generation;
   Sex get sex => userInfo.sex!;
   int get _recommendMin {

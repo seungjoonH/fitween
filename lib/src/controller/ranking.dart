@@ -18,7 +18,8 @@ class RankingCont extends GetxController {
   Future init() async => await loadRivalData();
 
   Future loadRivalData() async {
-    await _logged.friend!.loadFriends();
+    FUserLoadCont cont = FUserLoadCont.onlyRecord();
+    await _logged.friend!.loadFriends(cont: cont);
     _rivalsWithMe.clear();
     _rivalsWithMe[_logged.uid] = _logged;
     _rivalsWithMe.addAll(_logged.rivals);
@@ -102,18 +103,6 @@ class RankingCont extends GetxController {
 
     return newRanks;
   }
-
-  // int rankOfMe(FType type) => rankOf(type, _logged.uid);
-  // int rankOf(FType type, String uid) {
-  //   List<num> amounts = _rivalRecordAmounts
-  //       .values.map((r) => r.byType(type)).toList(growable: true);
-  //   print(amounts);
-  //   amounts = amounts.reversed.toList();
-  //   return amounts.indexWhere((amount) {
-  //     return amount == _rivalRecordAmounts[_logged.uid]!.byType(type);
-  //   });
-  // }
-
 }
 
 class RivalRecord {

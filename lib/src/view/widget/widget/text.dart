@@ -1,5 +1,3 @@
-/* 커스텀 텍스트 위젯 */
-
 import 'package:fitween/src/controller/validator/validator.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
@@ -15,11 +13,7 @@ class FText extends StatelessWidget {
     this.maxLines = 1,
     this.bold = false,
     this.italic = false,
-    this.border = false,
-    this.borderWidth = .8,
-    this.borderColor,
     this.align = TextAlign.left,
-    this.shadows,
   }) : super(key: key);
 
   final String data;
@@ -28,11 +22,7 @@ class FText extends StatelessWidget {
   final int maxLines;
   final bool bold;
   final bool italic;
-  final bool border;
-  final double borderWidth;
-  final Color? borderColor;
   final TextAlign align;
-  final List<Shadow>? shadows;
 
   FText copy({
     String? data,
@@ -41,11 +31,7 @@ class FText extends StatelessWidget {
     int? maxLines,
     bool? bold,
     bool? italic,
-    bool? border,
-    double? borderWidth,
-    Color? borderColor,
     TextAlign? align,
-    List<Shadow>? shadows,
   }) {
     return FText(
       data ?? this.data,
@@ -54,56 +40,32 @@ class FText extends StatelessWidget {
       maxLines: maxLines ?? this.maxLines,
       bold: bold ?? this.bold,
       italic: italic ?? this.italic,
-      border: border ?? this.border,
-      borderWidth: borderWidth ?? this.borderWidth,
-      borderColor: borderColor ?? this.borderColor,
       align: align ?? this.align,
-      shadows: shadows ?? this.shadows,
     );
   }
 
-  TextStyle? getDefaultStyle(BuildContext context) => FTheme.titleSmall;
+  TextStyle? get defaultStyle => FTheme.titleSmall;
 
   @override
   Widget build(BuildContext context) {
     Color colorAlt = color ?? FTheme.text;
-    Color borderColorAlt = borderColor ?? FTheme.textAlt;
-    TextStyle? textStyle = style ?? getDefaultStyle(context);
+    TextStyle? textStyle = style ?? defaultStyle;
     TextStyle mergeStyle = TextStyle(
       fontWeight: bold
           ? FontWeight.bold
-          : FontWeight.normal,
+          : textStyle?.fontWeight,
       fontStyle: italic
           ? FontStyle.italic
-          : FontStyle.normal,
+          : textStyle?.fontStyle,
+      color: colorAlt,
     );
 
-    return Stack(
-      children: [
-        Text(data,
-          textAlign: align,
-          maxLines: maxLines,
-          overflow: TextOverflow.ellipsis,
-          style: mergeStyle.merge(textStyle).apply(
-            color: colorAlt,
-            shadows: shadows,
-          ),
-        ),
-        if (border)
-        Text(data,
-          textAlign: align,
-          maxLines: maxLines,
-          overflow: TextOverflow.ellipsis,
-          style: textStyle?.merge(mergeStyle).merge(TextStyle(
-            shadows: shadows,
-            foreground: border ? (Paint()
-              ..style = PaintingStyle.stroke
-              ..strokeWidth = borderWidth
-              ..color = borderColorAlt
-            ) : null,
-          )),
-        ),
-      ],
+    return Text(
+      data,
+      textAlign: align,
+      maxLines: maxLines,
+      overflow: TextOverflow.ellipsis,
+      style: textStyle?.merge(mergeStyle),
     );
   }
 }
@@ -122,7 +84,7 @@ class FCommentText extends FText {
   Color? get color => FTheme.comment;
 
   @override
-  TextStyle? getDefaultStyle(context) => FTheme.commentStyle;
+  TextStyle? get defaultStyle => FTheme.commentStyle;
 }
 
 class FTexts extends StatelessWidget {

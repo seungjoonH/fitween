@@ -8,6 +8,7 @@ class FIconButton extends StatefulWidget {
     super.key,
     this.icon,
     this.onPressed,
+    this.size,
     this.iconColor,
     this.iconSize,
     this.backgroundColor,
@@ -15,6 +16,7 @@ class FIconButton extends StatefulWidget {
 
   final Icon? icon;
   final VoidCallback? onPressed;
+  final double? size;
   final Color? iconColor;
   final double? iconSize;
   final Color? backgroundColor;
@@ -25,14 +27,20 @@ class FIconButton extends StatefulWidget {
 
 class _FIconButtonState extends State<FIconButton> with DarkPressable {
   @override
+  double get pressedScale => .85;
+
+  @override
+  bool get isCircle => true;
+
+  @override
   Widget buildContent(BuildContext context) {
     Color iconColorAlt = widget.iconColor ?? FTheme.text;
-    radius = BorderRadius.circular(50.0.r);
+    double size = widget.size ?? 60.0.r;
 
     return Container(
-      padding: EdgeInsets.all(20.0.r),
+      width: size,
+      height: size,
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
         color: widget.backgroundColor,
       ),
       child: Icon(

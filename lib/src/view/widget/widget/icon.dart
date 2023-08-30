@@ -6,8 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 enum FIcons {
   home,
-  friends,
-  challenge,
+  friend,
+  contents,
   seeMore,
   ///
   homeHouse,
@@ -17,10 +17,12 @@ enum FIcons {
   visibility;
 
   static String filePath = 'assets/image/icon/';
-  String get fileName =>
-      '${StringUtils.camelCaseToLowerUnderscore(name)}.svg';
-  String assetPath(bool selected) =>
-      '$filePath${selected ? '' : 'un'}selected/$fileName';
+  String get fileName => '${StringUtils.camelCaseToLowerUnderscore(name)}.svg';
+  String assetPath(bool selected) {
+    String theme = FTheme.isLightMode ? 'light' : 'dark';
+    if (!selected) return '${filePath}unselected/$fileName';
+    return '${filePath}selected/$theme/$fileName';
+  }
   String get label => ['Home', 'Friends', 'Challenge', 'See More'][index];
 }
 

@@ -1,6 +1,6 @@
 import 'package:fitween/global/number.dart';
 import 'package:fitween/src/controller/lang.dart';
-import 'package:fitween/src/controller/page/page.dart';
+import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/controller/user/auth.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 
@@ -80,7 +80,7 @@ class HeightAmount extends LengthAmount {
   num get floor => m / 3;
   num get lTime => floor * 100;
 
-  String get floorUnit => FType.height.withUnit(floor, scaling: false, decimal: false);
+  String get floorUnit => FType.height.withUnit(floor, scaling: false);
   String get lTimeUnit {
     num t = lTime;
     int h = t ~/ 3600; t %= 3600;
@@ -118,7 +118,7 @@ class WeightAmount extends Amount {
   String get kgUnit => '${kg.round1} kg';
   String get tUnit => '${t.round1} t';
   String get lbUnit => '${lb.round1} lb';
-  String get cntUnit => FType.weight.withUnit(cnt, scaling: false, decimal: false);
+  String get cntUnit => FType.weight.withUnit(cnt, scaling: false);
 
   set mg(num v) => g = v / 1000;
   set g(num v) => value = v;

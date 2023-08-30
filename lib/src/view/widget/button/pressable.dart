@@ -1,4 +1,5 @@
 import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -18,11 +19,14 @@ mixin ScalePressable<T extends StatefulWidget> on State<T> {
   final Duration _duration = const Duration(milliseconds: 100);
   double _scale = 1.0;
 
+  bool get allowPressEffect => true;
+  double get pressedScale => .97;
+
   void _setOnTapDown() {
     _onTapDown = onPressed == null ? null : (_) {
       setState(() {
         if (_withTapDown != null) _withTapDown!();
-        _scale = .95;
+        if (allowPressEffect) _scale = pressedScale;
       });
     };
   }
@@ -33,7 +37,7 @@ mixin ScalePressable<T extends StatefulWidget> on State<T> {
         if (!mounted) return;
         setState(() {
           if (_withTapUp != null) _withTapUp!();
-          _scale = 1.0;
+          if (allowPressEffect) _scale = 1.0;
         });
       });
       onPressed!();
@@ -43,7 +47,7 @@ mixin ScalePressable<T extends StatefulWidget> on State<T> {
   void _setOnTapCancel() {
     _onTapCancel = () => setState(() {
       if (_withTapCancel != null) _withTapCancel!();
-      _scale = 1.0;
+      if (allowPressEffect) _scale = 1.0;
     });
   }
 
@@ -59,6 +63,12 @@ mixin ScalePressable<T extends StatefulWidget> on State<T> {
   void setState(VoidCallback fn) {
     if (!mounted) return;
     super.setState(fn);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    PageCont.removeContext(context);
   }
 
   VoidCallback? get onPressed;
@@ -85,9 +95,12 @@ mixin DarkPressable<T extends StatefulWidget> on State<T> {
   Function(TapUpDetails)? _onTapUp;
   VoidCallback? _onTapCancel;
 
-  late BorderRadius _radius;
-
-  set radius(BorderRadius r) => _radius = r;
+  bool get isCircle => false;
+  BoxShape get _boxShape => isCircle ? BoxShape.circle : BoxShape.rectangle;
+  BorderRadius? get _radius {
+    if (isCircle) return null;
+    return BorderRadius.circular(10.0.r);
+  }
 
   VoidCallback? _withTapDown;
   VoidCallback? _withTapUp;
@@ -102,14 +115,19 @@ mixin DarkPressable<T extends StatefulWidget> on State<T> {
   Color _tintColor = Colors.transparent;
   double _opacity = .0;
 
+  bool get allowPressEffect => true;
+  double get pressedScale => .97;
+
   void _setOnTapDown() {
     if (onPressed == null) return;
     _onTapDown = (_) {
       setState(() {
         if (_withTapDown != null) _withTapDown!();
-        _scale = .97;
-        _opacity = .1;
-        _tintColor = FTheme.text;
+        if (allowPressEffect) {
+          _scale = pressedScale;
+          _opacity = .1;
+          _tintColor = FTheme.text;
+        }
       });
     };
   }
@@ -121,9 +139,11 @@ mixin DarkPressable<T extends StatefulWidget> on State<T> {
         if (!mounted) return;
         setState(() {
           if (_withTapUp != null) _withTapUp!();
-          _scale = 1.0;
-          _opacity = .0;
-          _tintColor = Colors.transparent;
+          if (allowPressEffect) {
+            _scale = 1.0;
+            _opacity = .0;
+            _tintColor = Colors.transparent;
+          }
         });
       });
       onPressed!();
@@ -134,9 +154,11 @@ mixin DarkPressable<T extends StatefulWidget> on State<T> {
     _onTapCancel = () => setState(() {
       if (_withTapCancel != null) _withTapCancel!();
       setState(() {
-        _scale = 1.0;
-        _opacity = .0;
-        _tintColor = Colors.transparent;
+        if (allowPressEffect) {
+          _scale = 1.0;
+          _opacity = .0;
+          _tintColor = Colors.transparent;
+        }
       });
     });
   }
@@ -144,7 +166,6 @@ mixin DarkPressable<T extends StatefulWidget> on State<T> {
   @override
   void initState() {
     super.initState();
-    _radius = BorderRadius.circular(10.0.r);
     _setOnTapDown();
     _setOnTapUp();
     _setOnTapCancel();
@@ -165,6 +186,7 @@ mixin DarkPressable<T extends StatefulWidget> on State<T> {
         child: AnimatedContainer(
           duration: _duration,
           decoration: BoxDecoration(
+            shape: _boxShape,
             borderRadius: _radius,
             color: Color.alphaBlend(
               _tintColor.withOpacity(_opacity),

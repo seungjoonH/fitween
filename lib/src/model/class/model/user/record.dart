@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/class/date_range.dart';
 import 'package:fitween/src/model/class/model.dart';
@@ -13,6 +14,14 @@ class FUserRecord extends FUser {
   late _RecordsData _goals;
   late _RecordsData _inputRecords;
   late _RecordsData _records;
+
+  late bool _visible;
+
+  @override
+  bool get visible => _visible;
+
+  @override
+  void toggleVisibility() => _visible = !_visible;
 
   @override
   Goal get goal => Goal._fromRecordsData(_goals);
@@ -48,10 +57,10 @@ class FUserRecord extends FUser {
     DateTime toDate = earlier(to.lastTimeOfDay, now);
 
     Map<FType, num> records = Map.fromEntries(
-      FType.values.map((type) => MapEntry(type, .0)),
+      FType.activeValues.map((type) => MapEntry(type, .0)),
     );
 
-    for (FType type in FType.values) {
+    for (FType type in FType.activeValues) {
       num amount = records[type]!;
       amount += _inputRecords.getAmounts(type, DateRange(fromDate, toDate));
       amount += _records.getAmounts(type, DateRange(fromDate, toDate));
@@ -75,6 +84,25 @@ class FUserRecord extends FUser {
       }
       return MapEntry(type, amount);
     });
+  }
+
+  @override
+  Map<DateTime, List<CalendarEvent>> get events {
+    DateTime startDate = regDate;
+    DateTime endDate = now;
+
+    Map<DateTime, List<CalendarEvent>> eventMap = {};
+
+    for (DateTime date in daysInRange(startDate, endDate)) {
+      date = date.ignoreTime;
+      eventMap[date] = FType.activeValues.map((type) {
+        num goalValue = goal.byDate(date, type);
+        num record = getOneDayRecord(date)[type]!;
+        return CalendarEvent(goalValue, record);
+      }).toList();
+    }
+
+    return eventMap;
   }
 
   @override
@@ -106,6 +134,7 @@ class FUserRecord extends FUser {
   @override
   void fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
+    _visible = json['visible'] ?? false;
     _goals = _RecordsData.fromJson(json['goals']);
     _inputRecords = _RecordsData.fromJson(json['inputRecords']);
     _records = _RecordsData.fromJson(json['records']);
@@ -115,6 +144,7 @@ class FUserRecord extends FUser {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
     json['uid'] = uid;
+    json['visible'] = _visible;
     json['goals'] = _goals.toJson();
     json['inputRecords'] = _inputRecords.toJson();
     json['records'] = _records.toJson();
@@ -123,6 +153,11 @@ class FUserRecord extends FUser {
 }
 
 class Goal {
+  late List<_RecordData> _calorieData;
+  late List<_RecordData> _distanceData;
+  late List<_RecordData> _heightData;
+  late List<_RecordData> _weightData;
+
   late num _calorie;
   late num _distance;
   late num _height;
@@ -133,33 +168,47 @@ class Goal {
   num get height => _height;
   num get weight => _weight;
 
+  List<_RecordData> _getDataByType(FType type) => [
+    _calorieData, _distanceData, _heightData, _weightData,
+  ][type.index];
+
   num byType(FType type) => [
     _calorie, _distance, _height, _weight
   ][type.index];
+
+  num byDate(DateTime date, FType type) {
+    List<_RecordData> list = _getDataByType(type);
+    num value = list.last._amount;
+    for (_RecordData data in list.reversed) {
+      if (data.date.isAfter(date)) break;
+      value = data._amount;
+    }
+    return value;
+  }
 
   Goal._fromRecordsData(_RecordsData data) {
     _fromRecordsData(data);
   }
 
   void _fromRecordsData(_RecordsData data) {
-    List<_RecordData> calories = [...data._calories];
-    List<_RecordData> distance = [...data._distances];
-    List<_RecordData> height = [...data._heights];
-    List<_RecordData> weight = [...data._weights];
+    _calorieData = [...data._calories];
+    _distanceData = [...data._distances];
+    _heightData = [...data._heights];
+    _weightData = [...data._weights];
 
-    int callback(_RecordData a, _RecordData b) {
+    int compare(_RecordData a, _RecordData b) {
       return a.date.difference(b.date).inSeconds;
     }
 
-    calories.sort(callback);
-    distance.sort(callback);
-    height.sort(callback);
-    weight.sort(callback);
+    _calorieData.sort(compare);
+    _distanceData.sort(compare);
+    _heightData.sort(compare);
+    _weightData.sort(compare);
 
-    _calorie = calories.isEmpty ? _calorie = 0 : calories.last._amount;
-    _distance = distance.isEmpty ? _distance = 0 : distance.last._amount;
-    _height = height.isEmpty ? _height = 0 : height.last._amount;
-    _weight = weight.isEmpty ? _weight = 0 : weight.last._amount;
+    _calorie = _calorieData.isEmpty ? _calorie = 0 : _calorieData.last._amount;
+    _distance = _distanceData.isEmpty ? _distance = 0 : _distanceData.last._amount;
+    _height = _heightData.isEmpty ? _height = 0 : _heightData.last._amount;
+    _weight = _weightData.isEmpty ? _weight = 0 : _weightData.last._amount;
   }
 }
 
@@ -176,8 +225,7 @@ class _RecordsData extends Model {
   set _heights(List<_RecordData> data) => _data[FType.height] = data;
   set _weights(List<_RecordData> data) => _data[FType.weight] = data;
 
-  void setData(FType type, List<_RecordData> data) {
-    [
+  void setData(FType type, List<_RecordData> data) {[
       _calories = data,
       _distances = data,
       _heights = data,
@@ -221,6 +269,10 @@ class _RecordsData extends Model {
   @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
+    _calories.removeWhere((data) => data._amount == 0);
+    _distances.removeWhere((data) => data._amount == 0);
+    _heights.removeWhere((data) => data._amount == 0);
+    _weights.removeWhere((data) => data._amount == 0);
     json['calorie'] = _calories.isNotEmpty ? _calories.map((data) => data.toJson()).toList() : [];
     json['distance'] = _distances.isNotEmpty ? _distances.map((data) => data.toJson()).toList() : [];
     json['height'] = _heights.isNotEmpty ? _heights.map((data) => data.toJson()).toList(): [];

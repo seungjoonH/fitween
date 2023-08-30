@@ -4,7 +4,7 @@ import 'package:fitween/src/controller/user/sign_in.dart';
 import 'package:fitween/src/controller/user/storage.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
-import 'package:fitween/src/view/page/abs/page.dart';
+import 'package:fitween/src/view/page/page.dart';
 
 class AuthCont {
   static FUserInfoBuilder? stranger;
@@ -14,7 +14,15 @@ class AuthCont {
   static FUser? get logged => _logged;
   static String? get uid => _logged?.key;
 
+  static Future reloadFromDB() async {
+    _logged = await FUserDAO().loadOneAll(uid!);
+  }
+
   static void setUser(FUser user) => _logged = user;
+  static void setUserRecord(FUserRecord record) {
+    _logged!.record = record;
+    _logged!.record!.info = _logged!.info;
+  }
 
   static fLogin(LoginType type) async {
     String? loadedUid = await StorageCont.load();
