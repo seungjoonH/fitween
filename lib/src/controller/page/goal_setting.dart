@@ -16,7 +16,7 @@ class GoalSettingPageCont extends CarouselPageCont {
 
   final _carouselCont = CarouselController();
 
-  late bool _isFirstSetting;
+  bool _isFirstSetting = false;
 
   @override
   int get pageCount => 8;
@@ -36,6 +36,23 @@ class GoalSettingPageCont extends CarouselPageCont {
   late FUserInfoBuilder userInfo;
   late FUserRecordBuilder userRecord;
 
+  late FUser _user;
+
+  void _setNewcomer() {
+    userInfo.regDate = now;
+
+    FUserInfo info = userInfo.build();
+    FUserRecord record = userRecord.build();
+    FUserBuilder builder = FUserBuilder()
+      ..uid = info.key
+      ..info = info
+      ..record = record;
+
+    _user = FUser.builder(builder);
+  }
+
+  void _setLogged() => _user = AuthCont.logged!;
+
   void setUser(FUserInfoBuilder info, [FUserRecordBuilder? record]) {
     _isFirstSetting = record == null;
     userInfo = info;
@@ -45,8 +62,9 @@ class GoalSettingPageCont extends CarouselPageCont {
   @override
   void init() {
     if (!AuthCont.isLogged) return;
-    userInfo = AuthCont.logged!.info!.toBuilder();
-    userRecord = FUserRecordBuilder()..uid = userInfo.uid;
+    _setLogged();
+    userInfo = _user.info!.toBuilder();
+    userRecord = FUserRecordBuilder()..setBuilder(_user.record!);
     super.init();
   }
 
@@ -216,27 +234,20 @@ class GoalSettingPageCont extends CarouselPageCont {
 
   @override
   void eighthPageSubmit() async {
-    _setUser();
-    if (_isFirstSetting) login();
-    await FUserDAO().saveOne(_user);
+    if (_isFirstSetting) {
+      _setNewcomer(); login();
+      await FUserDAO().saveOne(_user);
+    }
+    else {
+      _user.record!.updateGoalData(userRecord.build());
+      await FUserInfoDAO().saveOne(_user.info!);
+      await FUserRecordDAO().saveOne(_user.record!);
+    }
+
     FRoute.toHome();
   }
 
-  late FUser _user;
-
-  void _setUser() {
-    userInfo.regDate = now;
-
-    FUserInfo info = userInfo.build();
-    FUserRecord record = userRecord.build();
-    FUserBuilder builder = FUserBuilder()
-      ..uid = info.key
-      ..info = info
-      ..record = record;
-
-    _user = FUser.builder(builder);
-  }
-
   void login() => AuthCont.setUser(_user);
+
 
 }

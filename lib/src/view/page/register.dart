@@ -283,6 +283,13 @@ class _RegisterPageState extends FPageState {
     _buildWHCarouselWidget(context),
   ].map((w) => Padding(padding: _padding, child: w)).toList();
 
+
+  @override
+  void initState() {
+    super.initState();
+    cont.init();
+  }
+
   @override
   Widget buildPage(BuildContext context) {
     return FKeyboardUsableScaffold(

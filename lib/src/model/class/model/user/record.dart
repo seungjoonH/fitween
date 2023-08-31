@@ -26,6 +26,8 @@ class FUserRecord extends FUser {
   @override
   Goal get goal => Goal._fromRecordsData(_goals);
 
+  void updateGoalData(FUserRecord other) { _goals = other._goals; }
+
   @override
   Map<FType, num> getOneDayRecord(DateTime date) => getRecord(date, date);
 
@@ -225,11 +227,11 @@ class _RecordsData extends Model {
   set _heights(List<_RecordData> data) => _data[FType.height] = data;
   set _weights(List<_RecordData> data) => _data[FType.weight] = data;
 
-  void setData(FType type, List<_RecordData> data) {[
-      _calories = data,
-      _distances = data,
-      _heights = data,
-      _weights = data,
+  void setData(FType type, _RecordData data) {[
+      _calories.add(data),
+      _distances.add(data),
+      _heights.add(data),
+      _weights.add(data),
     ][type.index];
   }
 
@@ -315,13 +317,19 @@ class _RecordData extends Model {
 class FUserRecordBuilder {
   late String uid;
 
-  final _goals = _RecordsData();
-  final _inputRecords = _RecordsData();
-  final _records = _RecordsData();
+  _RecordsData _goals = _RecordsData();
+  _RecordsData _inputRecords = _RecordsData();
+  _RecordsData _records = _RecordsData();
 
   void setGoal(FType type, num value) {
-    List<_RecordData> data = [_RecordData(value, today)];
+    _RecordData data = _RecordData(value, today);
     _goals.setData(type, data);
+  }
+
+  void setBuilder(FUserRecord other) {
+    _goals = other._goals;
+    _inputRecords = other._inputRecords;
+    _records = other._records;
   }
 
   FUserRecord build() {

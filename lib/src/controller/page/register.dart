@@ -27,12 +27,6 @@ class RegisterPageCont extends CarouselPageCont {
   @override
   int get pageCount => 2;
 
-  @override
-  void onInit() {
-    super.onInit();
-    init();
-  }
-
   bool get invalid => _validators.values
       .map((v) => v.invalid).any((e) => e);
 

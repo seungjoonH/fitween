@@ -25,7 +25,16 @@ class FRoute {
     );
   }).toList();
 
+  static const _offAllRoutes = ['/', '/home', '/contents', '/see-more'];
+
   static String? get previousPage {
+    String current = Get.currentRoute;
+    List<String> sublist = _offAllRoutes.sublist(1, _offAllRoutes.length);
+
+    bool contains = _offAllRoutes.contains(current);
+    contains |= sublist.any((r) => current.contains(r));
+    if (!contains) return Get.previousRoute;
+
     List<String> routes = Get.currentRoute.split('/');
     String previous = routes.sublist(0, routes.length - 1).join('/');
     return previous.isNotEmpty ? previous : null;

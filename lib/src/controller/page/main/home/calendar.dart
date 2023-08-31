@@ -1,4 +1,7 @@
 import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/model/class/model.dart';
+import 'package:fitween/src/view/widget/function/dialog.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CalendarEvent {
@@ -14,5 +17,12 @@ class CalendarEvent {
 class CalendarPageCont extends GetxController {
   static CalendarPageCont get to => Get.find<CalendarPageCont>();
 
+  FUser? _rival;
+  FUser get rival => _rival!;
+
+  void setRival(FUser rival) => _rival = rival;
+
   String get appBarText => LangCont.tr('appbar.calendar');
+
+
 }

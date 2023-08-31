@@ -6,6 +6,7 @@ import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SeeMorePage extends FPage {
@@ -35,11 +36,16 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
     return Expanded(
       child: Column(
         children: [
-          FText(type.locale, style: FTheme.titleSmall),
           FText(
+            type.locale.capitalize!,
+            style: FTheme.titleSmall,
+          ),
+          FTexts(
             cont.getGoalTextOf(type),
-            style: FTheme.titleMedium,
-            color: type.color,
+            style: FTheme.bodyMedium,
+            textColor: type.color,
+            highlightStyle: FTheme.titleMedium
+                ?.apply(color: type.color),
           ),
         ],
       ),
