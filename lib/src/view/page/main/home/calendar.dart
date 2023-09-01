@@ -27,12 +27,12 @@ class _CalendarPageState extends FPageState<CalendarPage> {
     TextStyle? selectedTextStyle = FTheme.bodyLarge?.copyWith(
       color: calendarCont.isAllFinished(calendarCont.selectedDay)
           ? FTheme.colorA
-          : FTheme.backgroundAlt
+          : FTheme.backgroundAlt,
     );
     TextStyle? todayTextStyle = FTheme.bodyLarge?.copyWith(
       color: calendarCont.isAllFinished(today)
           ? FTheme.colorA
-          : FTheme.textAlt
+          : FTheme.textAlt,
     );
 
     return CalendarStyle(
@@ -95,7 +95,7 @@ class _CalendarPageState extends FPageState<CalendarPage> {
       calendarFormat: CalendarFormat.month,
       eventLoader: calendarCont.getEventsForDay,
       startingDayOfWeek: StartingDayOfWeek.monday,
-      rowHeight: 38.0.h,
+      rowHeight: 42.0.h,
       daysOfWeekHeight: 30.0.h,
       pageJumpingEnabled: true,
       calendarStyle: _calendarStyle,

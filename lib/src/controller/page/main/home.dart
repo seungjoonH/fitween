@@ -42,6 +42,7 @@ class HomePageCont extends MainPageCont {
   String get recordCardTitle => LangCont.tr('home.record');
   String get viewTodayText => LangCont.tr('home.record-card.view-today');
   String get rankingCardTitle => LangCont.tr('home.ranking');
+  String get noFriendsText => LangCont.tr('friend.no-friends');
 
   DateTime get firstDay => _logged.regDate;
 

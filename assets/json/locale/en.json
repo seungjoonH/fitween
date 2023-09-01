@@ -186,7 +186,7 @@
       "one": "{} friend",
       "other": "{} friends"
     },
-    "no-friends": "There's no friends"
+    "no-friends": "There's no friends yet\nAdd friends first!"
   },
   "see-more": {
     "badge": {

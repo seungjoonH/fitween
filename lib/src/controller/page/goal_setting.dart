@@ -64,7 +64,9 @@ class GoalSettingPageCont extends CarouselPageCont {
     if (!AuthCont.isLogged) return;
     _setLogged();
     userInfo = _user.info!.toBuilder();
-    userRecord = FUserRecordBuilder()..setBuilder(_user.record!);
+    userRecord = FUserRecordBuilder()
+      ..setBuilder(_user.record!)
+      ..uid = _user.uid;
     super.init();
   }
 
@@ -245,6 +247,7 @@ class GoalSettingPageCont extends CarouselPageCont {
     }
 
     FRoute.toHome();
+    pageIndex = 0;
   }
 
   void login() => AuthCont.setUser(_user);

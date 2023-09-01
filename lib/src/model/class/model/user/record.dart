@@ -23,10 +23,15 @@ class FUserRecord extends FUser {
   @override
   void toggleVisibility() => _visible = !_visible;
 
-  @override
-  Goal get goal => Goal._fromRecordsData(_goals);
+  late Goal _goal;
 
-  void updateGoalData(FUserRecord other) { _goals = other._goals; }
+  @override
+  Goal get goal => _goal;
+
+  void updateGoalData(FUserRecord other) {
+    _goals = other._goals;
+    _goal = Goal._fromRecordsData(_goals);
+  }
 
   @override
   Map<FType, num> getOneDayRecord(DateTime date) => getRecord(date, date);
@@ -91,7 +96,7 @@ class FUserRecord extends FUser {
   @override
   Map<DateTime, List<CalendarEvent>> get events {
     DateTime startDate = regDate;
-    DateTime endDate = now;
+    DateTime endDate = tomorrow.add(1.d).ignoreTime;
 
     Map<DateTime, List<CalendarEvent>> eventMap = {};
 
@@ -140,6 +145,7 @@ class FUserRecord extends FUser {
     _goals = _RecordsData.fromJson(json['goals']);
     _inputRecords = _RecordsData.fromJson(json['inputRecords']);
     _records = _RecordsData.fromJson(json['records']);
+    _goal = Goal._fromRecordsData(_goals);
   }
 
   @override
@@ -170,22 +176,14 @@ class Goal {
   num get height => _height;
   num get weight => _weight;
 
-  List<_RecordData> _getDataByType(FType type) => [
-    _calorieData, _distanceData, _heightData, _weightData,
-  ][type.index];
+  final _data = <FType, Map<DateTime, num>>{};
 
   num byType(FType type) => [
     _calorie, _distance, _height, _weight
   ][type.index];
 
   num byDate(DateTime date, FType type) {
-    List<_RecordData> list = _getDataByType(type);
-    num value = list.last._amount;
-    for (_RecordData data in list.reversed) {
-      if (data.date.isAfter(date)) break;
-      value = data._amount;
-    }
-    return value;
+    return _data[type]![date.ignoreTime]!;
   }
 
   Goal._fromRecordsData(_RecordsData data) {
@@ -211,6 +209,29 @@ class Goal {
     _distance = _distanceData.isEmpty ? _distance = 0 : _distanceData.last._amount;
     _height = _heightData.isEmpty ? _height = 0 : _heightData.last._amount;
     _weight = _weightData.isEmpty ? _weight = 0 : _weightData.last._amount;
+
+    _data[FType.calorie] = _convertToMap(_calorieData);
+    _data[FType.distance] = _convertToMap(_distanceData);
+    _data[FType.height] = _convertToMap(_heightData);
+    _data[FType.weight] = _convertToMap(_weightData);
+  }
+
+  Map<DateTime, num> _convertToMap(List<_RecordData> data) {
+    Map<DateTime, num> map = Map.fromEntries(data.map((d) => MapEntry(d.date.ignoreTime, d._amount)));
+    if (data.isEmpty) return {};
+
+    DateTime startDate = data.first.date.ignoreTime;
+    DateTime endDate = tomorrow.add(1.d).ignoreTime;
+    DateRange range = DateRange(startDate, endDate);
+
+    num value = data.first._amount;
+    for (DateTime date in range.dates) {
+      date = date.ignoreTime;
+      value = map[date] ?? value;
+      map[date] = value;
+    }
+
+    return map;
   }
 }
 
@@ -227,12 +248,19 @@ class _RecordsData extends Model {
   set _heights(List<_RecordData> data) => _data[FType.height] = data;
   set _weights(List<_RecordData> data) => _data[FType.weight] = data;
 
-  void setData(FType type, _RecordData data) {[
-      _calories.add(data),
-      _distances.add(data),
-      _heights.add(data),
-      _weights.add(data),
-    ][type.index];
+  void setGoalData(FType type, _RecordData data) {
+    List<_RecordData> dataList = _data[type]!;
+
+    for (int i = 0; i < dataList.length; i++) {
+      if (dataList[i].date.isAtSameMomentAs(data.date)) {
+        dataList.removeAt(i);
+        dataList.insert(i, data);
+        return;
+      }
+    }
+
+    if (dataList.last._amount == data._amount) return;
+    _data[type] = dataList..add(data);
   }
 
   List<DateTime> get doneDates {
@@ -323,7 +351,7 @@ class FUserRecordBuilder {
 
   void setGoal(FType type, num value) {
     _RecordData data = _RecordData(value, today);
-    _goals.setData(type, data);
+    _goals.setGoalData(type, data);
   }
 
   void setBuilder(FUserRecord other) {

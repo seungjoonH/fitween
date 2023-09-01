@@ -75,10 +75,16 @@ class FCommentText extends FText {
     super.key,
     super.maxLines,
     super.align,
+    this.withAsterisk = true,
   });
 
+  final bool withAsterisk;
+
   @override
-  String get data => '* ${super.data}';
+  String get data {
+    String prefix = withAsterisk ? '*' : '';
+    return '$prefix ${super.data}';
+  }
 
   @override
   Color? get color => FTheme.comment;

@@ -54,6 +54,8 @@ class _FriendPageState extends FPageState<FriendPage> {
           child: FText(
             cont.noFriendsText,
             color: FTheme.comment,
+            align: TextAlign.center,
+            maxLines: 2,
           ),
         ),
       ) : Column(

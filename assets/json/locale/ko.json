@@ -151,7 +151,7 @@
     "count": {
       "other": "친구 {}"
     },
-    "no-friends": "친구가 없습니다"
+    "no-friends": "아직 친구가 없습니다\n친구를 먼저 추가해보세요!"
   },
   "see-more": {
     "badge": {

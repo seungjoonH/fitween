@@ -421,11 +421,11 @@ class _GoalSettingPageState extends FPageState {
         items: _buildCarouselWidgets(context),
         options: cont.carouselOptions,
       ),
-      bottomWidget: FButton(
+      bottomWidget: Obx(() => FButton(
         text: cont.nextButtonText,
         stretch: true,
         onPressed: cont.nextButtonPressed,
-      ),
+      )),
     );
   }
 }

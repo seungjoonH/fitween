@@ -14,6 +14,7 @@ class RankingCont extends GetxController {
   FUser getUser(String uid) => _rivalsWithMe[uid]!;
 
   FUser get _logged => AuthCont.logged!;
+  bool get hasFriend => _logged.friends.isNotEmpty;
 
   Future init() async => await loadRivalData();
 

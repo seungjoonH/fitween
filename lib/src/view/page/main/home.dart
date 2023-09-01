@@ -220,7 +220,20 @@ class _HomePageState extends FPageState {
         children.add(widget);
       }
 
-      return Column(children: children.separateH(height: 10.0.h));
+      return rankingCont.hasFriend
+          ? Column(children: children.separateH(height: 10.0.h))
+          : Center(
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 20.0.h),
+          child: FText(
+            cont.noFriendsText,
+            color: FTheme.comment,
+            style: FTheme.titleSmall,
+            align: TextAlign.center,
+            maxLines: 2,
+          ),
+        ),
+      );
     });
   }
 

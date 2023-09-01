@@ -30,7 +30,6 @@ class FAppBar extends AppBar {
 
   @override
   Widget? get leading {
-    print(FRoute.previousPage);
     if (FRoute.previousPage == null) return null;
     VoidCallback onPressed = backPressed ?? Get.back;
     return FIconButton(
