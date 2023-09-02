@@ -94,6 +94,32 @@ class FUserRecord extends FUser {
   }
 
   @override
+  void setRecord(FType type, Amount amount, DateTime date) {
+    num value = .0;
+
+    switch (type) {
+      case FType.distance: value = (amount as DistanceAmount).step; break;
+      case FType.height: value = (amount as HeightAmount).floor; break;
+      case FType.weight: value = (amount as WeightAmount).cnt; break;
+      default: break;
+    }
+    setRecordByValue(type, value, date);
+  }
+  @override
+  void setRecordByValue(FType type, num value, DateTime date) {
+    _RecordData data = _RecordData(value, date);
+    _records.setRecordData(type, data);
+  }
+  @override
+  void setTodayRecord(FType type, Amount amount) {
+    setRecord(type, amount, today);
+  }
+  @override
+  void setTodayRecordByValue(FType type, num value) {
+    setRecordByValue(type, value, today);
+  }
+
+  @override
   Map<DateTime, List<CalendarEvent>> get events {
     DateTime startDate = regDate;
     DateTime endDate = tomorrow.add(1.d).ignoreTime;
@@ -270,6 +296,11 @@ class _RecordsData extends Model {
     for (var r in _heights) { dates.add(r.date.ignoreTime); }
     for (var r in _weights) { dates.add(r.date.ignoreTime); }
     return dates.toList(growable: true);
+  }
+
+  void setRecordData(FType type, _RecordData data) {
+    List<_RecordData> dataList = _data[type]!;
+    _data[type] = dataList..add(data);
   }
 
   num getAmounts(FType type, DateRange range) {

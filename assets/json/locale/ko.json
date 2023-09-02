@@ -105,7 +105,8 @@
     "weight": "무게"
   },
   "login": {
-    "loading": "로딩 중"
+    "loading": "로딩 중",
+    "complete": "완료"
   },
   "onboarding": {
     "messages": {
@@ -151,7 +152,7 @@
     "count": {
       "other": "친구 {}"
     },
-    "no-friends": "아직 친구가 없습니다\n친구를 먼저 추가해보세요!"
+    "no-friends": "아직 친구가 없습니다\n친구를 먼저 팔로우 해보세요!"
   },
   "see-more": {
     "badge": {

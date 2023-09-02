@@ -1,5 +1,10 @@
+import 'dart:async';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
+import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/controller/health/health.dart';
 import 'package:fitween/src/controller/user/sign_in.dart';
 import 'package:fitween/src/controller/user/storage.dart';
 import 'package:fitween/src/model/class/dao.dart';
@@ -13,6 +18,8 @@ class AuthCont {
   static bool get isLogged => _logged != null;
   static FUser? get logged => _logged;
   static String? get uid => _logged?.key;
+
+  static LoginPageCont get loginPageCont => LoginPageCont.to;
 
   static Future reloadFromDB() async {
     _logged = await FUserDAO().loadOneAll(uid!);
@@ -40,7 +47,13 @@ class AuthCont {
       email = credential.user!.email!;
     }
 
+    HealthDataCont.requestPermission();
+
+    loginPageCont.startLoading();
+
     _logged = await FUserDAO().loadOneAll(loadedUid);
+    loginPageCont.p = .7;
+
     bool isNewcomer = _logged == null;
 
     if (isNewcomer) {
@@ -52,6 +65,14 @@ class AuthCont {
       FRoute.toOnboarding(); return;
     }
 
-    FRoute.toHome();
+    await HealthDataCont.fetchDataAfterLogin();
+    loginPageCont.p = .95;
+
+    Timer.periodic(10.ms, (timer) {
+      if (!loginPageCont.loading) {
+        FRoute.toHome();
+        timer.cancel(); return;
+      }
+    });
   }
 }

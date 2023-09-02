@@ -139,7 +139,8 @@
     "weight": "weight"
   },
   "login": {
-    "loading": "loading"
+    "loading": "Loading",
+    "complete": "Complete"
   },
   "onboarding": {
     "messages": {
@@ -186,7 +187,7 @@
       "one": "{} friend",
       "other": "{} friends"
     },
-    "no-friends": "There's no friends yet\nAdd friends first!"
+    "no-friends": "There's no friends yet\nFollow friends first!"
   },
   "see-more": {
     "badge": {

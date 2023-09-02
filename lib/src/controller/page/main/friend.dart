@@ -21,7 +21,7 @@ class FriendPageCont extends MainPageCont {
 
   @override
   Future init() async {
-    if (LoadingCont.start('friend', 20)) {
+    if (LoadingCont.start('friend', 60)) {
       FUserLoadCont cont = FUserLoadCont.onlyCollection();
       await _logged.friend!.loadFriends(cont: cont);
       _syncFriends();

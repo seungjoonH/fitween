@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/lang.dart';
@@ -7,7 +8,7 @@ import 'package:fitween/src/view/page/page.dart';
 import 'package:get/get.dart';
 
 class LoginPageCont extends GetxController {
-  static get to => Get.find<LoginPageCont>();
+  static LoginPageCont get to => Get.find<LoginPageCont>();
 
   @override
   void onInit() {
@@ -50,17 +51,34 @@ class LoginPageCont extends GetxController {
     });
   }
 
-  final _loading = false.obs;
-  final _loadPercent = .0.obs;
+  final _loadingState = false.obs;
+  final _loadedPercentage = .0.obs;
+  bool get loading => _loadingState.value;
+  set p(double percent) => _loadedPercentage(percent);
+  double get p => _loadedPercentage.value;
+  Timer? _loadingTimer;
 
-  set percent(double p) => _loadPercent(p);
-  double get percent => _loadPercent.value;
-  bool get loading => _loading.value;
+  void startLoading() {
+    p = .0; _loadingState(true);
+    _loadingTimer = Timer.periodic(10.ms, (_) async {
+      p = min(1, p + .01);
+      if (p == 1) {
+        await delay(500.ms);
+        endLoading();
+        return;
+      }
+    });
+  }
 
-  void loadStart() { percent = .0; _loading(true); }
-  void loadEnd() { percent = 1.0; _loading(false); }
+  void endLoading() {
+    _loadingState(false);
+    _loadingTimer?.cancel();
+  }
 
-  String get loadingText => LangCont.tr('word.loading');
+  String get loadingText {
+    String key = p < 1 ? 'loading' : 'complete';
+    return LangCont.tr('login.$key');
+  }
 
   void onPressed(LoginType type) {
     // if (await Inspection.load()) return;

@@ -30,13 +30,13 @@ class _LoginPageState extends FPageState {
   LoginPageCont get cont => LoginPageCont.to;
 
   Widget _buildProgramLoadingIndicatorWidget() {
-    return FLinearPercentIndicator(
-      percent: cont.percent,
+    return Obx(() => FLinearPercentIndicator(
+      percent: cont.p,
       backgroundColor: FTheme.background,
       progressColor: FTheme.colorA,
-      curve: Curves.linear,
+      animation: false,
       centerText: cont.loadingText,
-    );
+    ));
   }
 
   Widget _buildSignInButtonWidget() {

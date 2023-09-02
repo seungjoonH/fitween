@@ -73,13 +73,20 @@ class _FCardState extends State<FCard> with DarkPressable {
       return Container();
     }
 
-    return FIconButton(
-      icon: Icon(
-        widget.icon!.icon,
-        size: size,
-      ),
+    Icon icon = Icon(
+      widget.icon!.icon,
+      size: size,
+      color: color,
+    );
+
+    return widget.pressMode == FCardPressMode.icon
+        ? FIconButton(
+      icon: icon,
       iconColor: color,
-      onPressed: iconPressed,
+      onPressed: widget.onPressed,
+    ) : SizedBox(
+      width: 60.0.r, height:  60.0.r,
+      child: icon,
     );
   }
   Widget get child => Padding(

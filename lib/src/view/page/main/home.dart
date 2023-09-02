@@ -86,7 +86,7 @@ class _HomePageState extends FPageState {
             children: [
               FText(
                 dayText,
-                style: FTheme.commentStyle,
+                style: FTheme.bodyMedium,
                 color: selected
                     ? FTheme.backgroundAlt
                     : FTheme.comment,
@@ -137,7 +137,7 @@ class _HomePageState extends FPageState {
       ),
       options: CarouselOptions(
         viewportFraction: 1.0,
-        height: 55.0.h,
+        height: 58.0.h,
         enableInfiniteScroll: false,
       ),
     );

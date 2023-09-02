@@ -124,6 +124,7 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
     super.backgroundColor,
     super.progressColor,
     super.curve,
+    super.animation,
     super.animateFromLastPercent,
   });
 
@@ -140,9 +141,6 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
 
   @override
   Radius? get barRadius => Radius.circular(6.0.r);
-
-  @override
-  bool get animation => true;
 
   @override
   int get animationDuration => 500;

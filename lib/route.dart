@@ -25,7 +25,7 @@ class FRoute {
     );
   }).toList();
 
-  static const _offAllRoutes = ['/', '/home', '/contents', '/see-more'];
+  static const _offAllRoutes = ['/', '/home', '/friend', '/contents', '/see-more'];
 
   static String? get previousPage {
     String current = Get.currentRoute;

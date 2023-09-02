@@ -29,7 +29,7 @@ class HomePageCont extends MainPageCont {
 
   @override
   Future init() async {
-    if (LoadingCont.start('home', 20)) {
+    if (LoadingCont.start('home', 60)) {
       await calendarCont.init();
       await rankingCont.init();
     }
