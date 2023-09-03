@@ -46,7 +46,9 @@
     "male": "남성",
     "female": "여성",
     "weight": "체중",
-    "height": "신장"
+    "height": "신장",
+    "follow": "팔로우",
+    "unfollow": "팔로우 취소"
   },
   "unit": {
     "step": "[]보",
@@ -153,6 +155,9 @@
       "other": "친구 {}"
     },
     "no-friends": "아직 친구가 없습니다\n친구를 먼저 팔로우 해보세요!"
+  },
+  "search": {
+    "hint-text": "닉네임을 검색하세요"
   },
   "see-more": {
     "badge": {

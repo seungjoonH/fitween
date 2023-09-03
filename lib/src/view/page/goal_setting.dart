@@ -404,12 +404,6 @@ class _GoalSettingPageState extends FPageState {
   ].map((w) => Padding(padding: _padding, child: w)).toList();
 
   @override
-  void initState() {
-    super.initState();
-    cont.init();
-  }
-
-  @override
   Widget buildPage(BuildContext context) {
     return FScaffold(
       autoPadding: false,

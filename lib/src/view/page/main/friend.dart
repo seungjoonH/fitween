@@ -21,10 +21,7 @@ class _FriendPageState extends FPageState<FriendPage> {
   FriendPageCont get cont => FriendPageCont.to;
 
   @override
-  void initState() {
-    super.initState();
-    cont.initState();
-  }
+  bool get unconditionallyRefresh => Get.arguments as bool;
 
   Widget _buildEachFriendListTileWidget(BuildContext context, FUser friend) {
     return Obx(() => Stack(
@@ -32,13 +29,9 @@ class _FriendPageState extends FPageState<FriendPage> {
       children: [
         FProfileWidget(
           user: friend,
+          showFollowButton: cont.editMode,
           onPressed: cont.profileWidgetPressed,
-        ),
-        if (cont.editMode)
-        FIconButton(
-          icon: const Icon(Icons.delete),
-          size: 50.0.r,
-          onPressed: () => cont.friendDeleteButtonPressed(friend),
+          followButtonPressed: cont.followButtonPressed,
         ),
       ],
     ));
@@ -67,31 +60,40 @@ class _FriendPageState extends FPageState<FriendPage> {
   }
 
   Widget _buildFriendsCardWidget(BuildContext context) {
-    return Obx(() => FCard(
-      title: FText(
-        cont.friendsCountText,
-        color: FTheme.comment,
-        style: FTheme.commentStyle,
-      ),
-      icon: Icon(cont.editMode ? Icons.clear : Icons.edit),
-      onPressed: cont.toggleMode,
-      pressMode: FCardPressMode.icon,
-      child: _buildFriendsCardContentWidget(context),
-    ));
+    return Obx(() {
+        IconData iconData = Icons.edit;
+
+        if (cont.editMode) {
+          iconData = cont.changed
+              ? Icons.save : Icons.close;
+        }
+
+        return FCard(
+        title: FText(
+          cont.friendsCountText,
+          color: FTheme.comment,
+          style: FTheme.commentStyle,
+        ),
+        icon: Icon(iconData),
+        onPressed: cont.toggleMode,
+        pressMode: FCardPressMode.icon,
+        child: _buildFriendsCardContentWidget(context),
+      );
+    });
   }
 
   @override
   Widget buildPage(BuildContext context) {
     return FMainScaffold(
       refreshController: RefreshController(),
-      onRefresh: cont.init,
+      onRefresh: cont.onRefresh,
       appBar: FAppBar(
         text: cont.appBarTitle,
         actions: [
           FIconButton(
-            icon: const Icon(Icons.person_add_alt_1),
+            icon: const Icon(Icons.search),
             iconColor: FTheme.text,
-            onPressed: () {},
+            onPressed: cont.friendSearchButtonPressed,
           ),
         ],
       ),

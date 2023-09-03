@@ -88,7 +88,7 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
   Widget buildPage(BuildContext context) {
     return FMainScaffold(
       refreshController: RefreshController(),
-      onRefresh: cont.init,
+      onRefresh: cont.onRefresh,
       appBar: FAppBar(text: cont.appBarTitle),
       body: Column(
         children: [

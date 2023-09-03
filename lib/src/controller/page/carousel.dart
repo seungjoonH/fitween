@@ -1,11 +1,11 @@
 import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:fitween/src/controller/lang.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-abstract class CarouselPageCont extends GetxController {
+abstract class CarouselPageCont extends PageCont {
   String get nextButtonText => LangCont.tr('button.next');
 
   final _pageIndex = 0.obs;
@@ -48,7 +48,8 @@ abstract class CarouselPageCont extends GetxController {
     Get.back();
   }
 
-  void init() {
+  @override
+  Future load() async {
     if (isLastPage) return;
     [ firstPageInit,
       secondPageInit,

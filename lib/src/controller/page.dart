@@ -1,8 +1,10 @@
+import 'package:fitween/src/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 export 'page/main/home/calendar.dart';
 export 'page/main/home.dart';
+export 'page/main/friend/search.dart';
 export 'page/main/friend.dart';
 export 'page/main/contents.dart';
 export 'page/main/see_more.dart';
@@ -32,10 +34,27 @@ abstract class PageCont extends GetxController {
   static bool get isPortrait => orientation == Orientation.portrait;
   static bool get isLandscape => orientation == Orientation.landscape;
 
-  void initState() {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) async => await init());
+  void initState({bool reload = false}) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      return reload ? await onRefresh() : await init();
+    });
   }
 
-  Future init();
+  String get loadKey;
+
+  Future init() async {
+    if (LoadingCont.start(loadKey, 60)) {
+      await load();
+      LoadingCont.end();
+    }
+  }
+
+  Future onRefresh() async {
+    if (LoadingCont.start()) {
+      await load();
+      LoadingCont.end();
+    }
+  }
+
+  Future load();
 }

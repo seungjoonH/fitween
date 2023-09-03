@@ -7,7 +7,7 @@ import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/controller/user/auth.dart';
 import 'package:get/get.dart';
 
-class OnboardingPageCont extends GetxController {
+class OnboardingPageCont extends PageCont {
   static OnboardingPageCont get to => Get.find<OnboardingPageCont>();
   static const _imageDir = 'assets/image/page/onboarding/';
   static get tr => 'onboarding';
@@ -26,12 +26,10 @@ class OnboardingPageCont extends GetxController {
   bool get buttonVisible => _buttonVisible.value;
 
   @override
-  void onInit() {
-    super.onInit();
-    init();
-  }
+  String get loadKey => 'onboarding';
 
-  void init() async {
+  @override
+  Future load() async {
     _pageIndex(0);
     _buttonVisible(false);
     delay(Duration.zero, () => _opacity(1.0));

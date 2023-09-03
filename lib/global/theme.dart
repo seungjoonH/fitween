@@ -42,7 +42,7 @@ class FTheme {
   static const Color achro40 = Color(0xFF73796E);
   static const Color achro50 = Color(0xFFAAAAAA);
   static const Color achro60 = Color(0xFFB4B4B4);
-  static const Color achro70 = Color(0xFFE9E9E9);
+  static const Color achro70 = Color(0xFFDEDEDE);
   static const Color achro80 = Color(0xFFEEEEEE);
   static const Color achro90 = Color(0xFFF4F4F4);
   static const Color achro95 = Color(0xFFFDFDFD);
@@ -59,7 +59,7 @@ class FTheme {
   static Color get selected => isLightMode ? achro30 : achro70;
   static Color get unselected => achro50;
   static Color get shimmer => achro50;
-  static Color get bar => isLightMode ? achro60 : achro40;
+  static Color get bar => isLightMode ? achro70 : achro30;
   static Color get surface => isLightMode ? achro90 : achro10;
   static Color get outline => isLightMode ? achro40 : achro60;
 

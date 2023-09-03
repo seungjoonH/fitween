@@ -224,3 +224,41 @@ class FInputField extends StatelessWidget {
     ));
   }
 }
+
+class FSearchField extends StatelessWidget {
+  const FSearchField({
+    super.key,
+    required this.controller,
+    this.onChanged,
+    this.hintText,
+  });
+
+  final TextEditingController controller;
+  final Function(String)? onChanged;
+  final String? hintText;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 10.0.w, vertical: 5.0.h,
+      ),
+      decoration: BoxDecoration(
+        color: FTheme.bar,
+        borderRadius: BorderRadius.circular(10.0.r),
+      ),
+      child: TextField(
+        controller: controller,
+        onChanged: onChanged,
+        cursorColor: FTheme.text,
+        decoration: InputDecoration(
+          isCollapsed: true,
+          border: InputBorder.none,
+          hintText: hintText,
+          hintStyle: FTheme.titleMedium
+              ?.apply(color: FTheme.comment),
+        ),
+      ),
+    );
+  }
+}

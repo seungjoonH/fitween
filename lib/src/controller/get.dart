@@ -10,8 +10,13 @@ class GetCont {
     Get.put(HomePageCont());
     Get.put(CalendarPageCont());
     Get.put(FriendPageCont());
+    Get.put(FriendSearchPageCont());
     Get.put(ContentsPageCont());
     Get.put(SeeMorePageCont());
+  }
+
+  static void _userConts() {
+    Get.put(FollowCont());
   }
 
   static void _initValidatorConts() {
@@ -28,6 +33,7 @@ class GetCont {
 
   static void initConts() {
     _initPageConts();
+    _userConts();
     _initValidatorConts();
     _etcConts();
   }

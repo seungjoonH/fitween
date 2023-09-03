@@ -12,6 +12,7 @@ class FRoute {
     '/home': const HomePage(),
     '/home/calendar': const CalendarPage(),
     '/friend': const FriendPage(),
+    '/friend/search': const FriendSearchPage(),
     '/contents': const ContentsPage(),
     '/see-more': const SeeMorePage(),
   };
@@ -46,7 +47,8 @@ class FRoute {
   static void toGoalSetting() => Get.toNamed('/goal-setting');
   static void toHome() => Get.offAllNamed('/home');
   static void toCalendar() => Get.toNamed('/home/calendar');
-  static void toFriend() => Get.offAllNamed('/friend');
+  static void toFriend({bool reload = false}) => Get.offAllNamed('/friend', arguments: reload);
+  static void toFriendSearch() => Get.toNamed('/friend/search');
   static void toContents() => Get.offAllNamed('/contents');
   static void toSeeMore() => Get.offAllNamed('/see-more');
 }

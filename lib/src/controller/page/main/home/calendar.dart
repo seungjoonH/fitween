@@ -12,15 +12,21 @@ class CalendarEvent {
   double get percent => amount / goal;
 }
 
-class CalendarPageCont extends GetxController {
+class CalendarPageCont extends PageCont {
   static CalendarPageCont get to => Get.find<CalendarPageCont>();
 
   FUser? _rival;
   FUser get rival => _rival!;
 
+  CalendarCont get calendarCont => CalendarCont.to;
+
+  @override
+  String get loadKey => 'calendar';
+
+  @override
+  Future load() async => await calendarCont.init();
+
   void setRival(FUser rival) => _rival = rival;
 
   String get appBarText => LangCont.tr('appbar.calendar');
-
-
 }

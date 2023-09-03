@@ -8,6 +8,7 @@ class FAppBar extends AppBar {
   FAppBar({
     super.key,
     this.text,
+    this.child,
     super.leading,
     super.actions,
     this.textColor,
@@ -15,6 +16,7 @@ class FAppBar extends AppBar {
   });
 
   final String? text;
+  final Widget? child;
   final Color? textColor;
   final VoidCallback? backPressed;
 
@@ -22,11 +24,17 @@ class FAppBar extends AppBar {
   double? get elevation => .0;
 
   @override
-  Widget? get title => FText(
-    text ?? '',
-    style: FTheme.headlineMedium,
-    color: textColor ?? FTheme.text,
-  );
+  Widget? get title {
+    assert(text == null || child == null);
+    if (text != null) {
+      return FText(
+        text!,
+        style: FTheme.headlineMedium,
+        color: textColor ?? FTheme.text,
+      );
+    }
+    return child ?? Container();
+  }
 
   @override
   Widget? get leading {

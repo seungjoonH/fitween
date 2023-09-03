@@ -251,17 +251,11 @@ class _HomePageState extends FPageState {
   );
 
   @override
-  void initState() {
-    super.initState();
-    cont.initState();
-  }
-
-  @override
   Widget buildPage(BuildContext context) {
     return FRefreshScaffold(
       autoPadding: false,
       refreshController: RefreshController(),
-      onRefresh: cont.init,
+      onRefresh: cont.onRefresh,
       body: Stack(
         children: [
           _buildMarbleCarouselWidget(context),

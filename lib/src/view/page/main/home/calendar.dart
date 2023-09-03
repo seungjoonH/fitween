@@ -156,12 +156,6 @@ class _CalendarPageState extends FPageState<CalendarPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    calendarCont.init();
-  }
-
-  @override
   Widget buildPage(BuildContext context) {
     return FRefreshScaffold(
       refreshController: RefreshController(),

@@ -1,6 +1,7 @@
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
+import 'package:fitween/src/view/widget/button/follow.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:fitween/src/view/widget/widget/badge.dart';
 import 'package:flutter/material.dart';
@@ -10,11 +11,15 @@ class FProfileWidget extends StatefulWidget {
   const FProfileWidget({
     super.key,
     this.user,
+    this.showFollowButton = false,
     this.onPressed,
+    this.followButtonPressed,
   });
 
   final FUser? user;
   final Function(FUser)? onPressed;
+  final bool showFollowButton;
+  final Function(FUser)? followButtonPressed;
 
   @override
   State<FProfileWidget> createState() => _FProfileWidgetState();
@@ -27,16 +32,26 @@ class _FProfileWidgetState extends State<FProfileWidget> with DarkPressable {
   Widget buildContent(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(5.0.r),
-      child: Row(
+      child: Stack(
+        alignment: Alignment.centerRight,
         children: [
-          FBadgeWidget(
-            badge: user.badge,
-            backgroundColor: user.badgeColor,
+          Row(
+            children: [
+              FBadgeWidget(
+                badge: user.badge,
+                backgroundColor: user.badgeColor,
+              ),
+              SizedBox(width: 15.0.w),
+              FText(
+                user.nickname,
+                style: textTheme(context).titleLarge,
+              ),
+            ],
           ),
-          SizedBox(width: 15.0.w),
-          FText(
-            user.nickname,
-            style: textTheme(context).titleLarge,
+          if (widget.showFollowButton)
+          FollowButton(
+            user: user,
+            onPressed: widget.followButtonPressed,
           ),
         ],
       ),
@@ -44,5 +59,8 @@ class _FProfileWidgetState extends State<FProfileWidget> with DarkPressable {
   }
 
   @override
-  VoidCallback? get onPressed => () => widget.onPressed!(user);
+  VoidCallback? get onPressed {
+    if (widget.onPressed == null) return null;
+    return () => widget.onPressed!(user);
+  }
 }

@@ -5,5 +5,8 @@ class ContentsPageCont extends MainPageCont {
   static ContentsPageCont get to => Get.find<ContentsPageCont>();
 
   @override
-  Future init() async {}
+  String get loadKey => 'contents';
+
+  @override
+  Future load() async {}
 }

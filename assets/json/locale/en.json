@@ -45,7 +45,9 @@
     "male": "male",
     "female": "female",
     "weight": "weight",
-    "height": "height"
+    "height": "height",
+    "follow": "Follow",
+    "unfollow": "Unfollow"
   },
   "unit": {
     "step": {
@@ -188,6 +190,9 @@
       "other": "{} friends"
     },
     "no-friends": "There's no friends yet\nFollow friends first!"
+  },
+  "search": {
+    "hint-text": "Search nickname"
   },
   "see-more": {
     "badge": {

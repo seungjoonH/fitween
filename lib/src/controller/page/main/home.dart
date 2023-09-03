@@ -28,12 +28,12 @@ class HomePageCont extends MainPageCont {
   RankingCont get rankingCont => RankingCont.to;
 
   @override
-  Future init() async {
-    if (LoadingCont.start('home', 60)) {
-      await calendarCont.init();
-      await rankingCont.init();
-    }
-    LoadingCont.end();
+  String get loadKey => 'home';
+
+  @override
+  Future load() async {
+    await calendarCont.init();
+    await rankingCont.init();
     delay(500.ms, gotoSelectedWeek);
   }
 

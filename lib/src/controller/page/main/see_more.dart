@@ -12,8 +12,10 @@ class SeeMorePageCont extends MainPageCont {
   String get infoSettingCardTitle => LangCont.tr('see-more.info-setting.title');
 
   @override
-  Future init() async {
-  }
+  String get loadKey => 'see-more';
+
+  @override
+  Future load() async {}
 
   FUser get _logged => AuthCont.logged!;
 

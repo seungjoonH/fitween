@@ -2,19 +2,12 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:fitween/global/global.dart';
-import 'package:fitween/src/controller/lang.dart';
-import 'package:fitween/src/controller/user/auth.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:get/get.dart';
 
-class LoginPageCont extends GetxController {
+class LoginPageCont extends PageCont {
   static LoginPageCont get to => Get.find<LoginPageCont>();
-
-  @override
-  void onInit() {
-    super.onInit();
-    init();
-  }
 
   @override
   void dispose() {
@@ -31,7 +24,11 @@ class LoginPageCont extends GetxController {
   Timer? _timer;
   final _pointCount = 0.obs;
 
-  void init() {
+  @override
+  String get loadKey => 'login';
+
+  @override
+  Future load() async {
     _backgroundOpacity(.0);
     _buttonsOpacity(.0);
 

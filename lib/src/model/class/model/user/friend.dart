@@ -26,7 +26,16 @@ class FUserFriend extends FUser {
     }
   }
 
-  Future deleteFriend(String uid) async {
+  Future follow(String uid) async {
+    if (friends[uid] != null) return;
+
+    _friendsData[uid] = FriendData();
+    friends[uid] = (await FUserDAO().loadOne(uid))!;
+
+    await FUserFriendDAO().saveOne(this);
+  }
+
+  Future unfollow(String uid) async {
     if (friends[uid] == null) return;
 
     _friendsData.remove(uid);
@@ -104,6 +113,7 @@ class FriendData extends Model {
   bool _rival = false;
   _TimeAttack? _timeAttack;
 
+  FriendData() : _rival = false;
   FriendData.fromJson(super.json) : super.fromJson();
 
   @override

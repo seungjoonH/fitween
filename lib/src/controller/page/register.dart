@@ -31,6 +31,9 @@ class RegisterPageCont extends CarouselPageCont {
       .map((v) => v.invalid).any((e) => e);
 
   @override
+  String get loadKey => 'register';
+
+  @override
   void nextButtonPressed() {
     submit(); init();
     if (invalid) return;

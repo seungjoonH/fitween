@@ -19,7 +19,7 @@ class _ContentsPageState extends FPageState<ContentsPage> {
   Widget buildPage(BuildContext context) {
     return FMainScaffold(
       refreshController: RefreshController(),
-      onRefresh: cont.init,
+      onRefresh: cont.onRefresh,
     );
   }
 

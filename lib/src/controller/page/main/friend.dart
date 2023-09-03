@@ -1,3 +1,4 @@
+import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:get/get.dart';
@@ -14,32 +15,50 @@ class FriendPageCont extends MainPageCont {
   final _friends = <FUser>[].obs;
   List<FUser> get friends => _friends;
 
+  List<String> get _friendUids => _friends.map((f) => f.key).toList();
+
+  final _changed = false.obs;
+  bool get changed => _changed.value;
+
+  FollowCont get _followCont => FollowCont.to;
+
+  void _setChanged() {
+    _changed(!_followCont.hasSameMembers(_friendUids));
+  }
+
   void _syncFriends() {
-    _friends.clear();
-    _friends.addAll(_logged.friends.values);
+    _followCont.saveFollowingState();
+    _friends.assignAll(_logged.friends.values);
   }
 
   @override
-  Future init() async {
-    if (LoadingCont.start('friend', 60)) {
-      FUserLoadCont cont = FUserLoadCont.onlyCollection();
-      await _logged.friend!.loadFriends(cont: cont);
-      _syncFriends();
-      LoadingCont.end();
-    }
+  String get loadKey => 'friend';
+
+  @override
+  Future load() async {
+    _changed(false);
+    _editMode(false);
+    FUserLoadCont cont = FUserLoadCont.onlyCollection();
+    await _logged.friend!.loadFriends(cont: cont);
+    FollowCont.to.init();
+    _syncFriends();
   }
 
   final _editMode = false.obs;
   bool get editMode => _editMode.value;
 
-  void toggleMode() => _editMode(!_editMode.value);
+  void toggleMode() {
+    if (editMode && changed) _syncFriends();
+    _editMode(!_editMode.value);
+  }
+
+  void friendSearchButtonPressed() => FRoute.toFriendSearch();
 
   void profileWidgetPressed(FUser user) {
 
   }
 
-  void friendDeleteButtonPressed(FUser friend) async {
-    await _logged.friend!.deleteFriend(friend.key);
-    _syncFriends();
+  void followButtonPressed(FUser friend) {
+    _setChanged();
   }
 }

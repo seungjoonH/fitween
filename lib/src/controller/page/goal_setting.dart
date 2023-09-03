@@ -60,7 +60,10 @@ class GoalSettingPageCont extends CarouselPageCont {
   }
 
   @override
-  void init() {
+  String get loadKey => 'goal-setting';
+
+  @override
+  Future load() async {
     if (!AuthCont.isLogged) return;
     _setLogged();
     userInfo = _user.info!.toBuilder();
