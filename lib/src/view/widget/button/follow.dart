@@ -34,7 +34,7 @@ class FollowButton extends StatelessWidget {
         horizontal: 8.0.r,
         vertical: 4.0.r,
       ),
-      style: FTheme.bodyMedium,
+      style: FTheme.bodySmall,
       textColor: textColor,
       backgroundColor: backgroundColor,
       onPressed: () {

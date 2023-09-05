@@ -20,11 +20,15 @@ class FScaffold extends Scaffold {
     this.autoPadding = true,
     this.bottomWidget,
     this.bottomPadding,
+    this.width,
+    this.height,
   });
 
   final bool autoPadding;
   final Widget? bottomWidget;
   final double? bottomPadding;
+  final double? width;
+  final double? height;
 
   EdgeInsets get _padding => EdgeInsets.symmetric(
     horizontal: 28.0.w, vertical: 28.0.h,
@@ -71,7 +75,7 @@ class FScaffold extends Scaffold {
         child: super.body ?? Container(),
       ),
       if (bottomWidget != null)
-        IntrinsicHeight(
+      IntrinsicHeight(
         child: Container(
           width: PageCont.size.width * .5,
           padding: _bottomWidgetPadding,
@@ -81,10 +85,13 @@ class FScaffold extends Scaffold {
     ],
   );
 
+  double get pageWidth => width ?? PageCont.size.width;
+  double get pageHeight => height ?? PageCont.size.height;
+
   @override
   Widget? get body => SizedBox(
-    width: PageCont.size.width,
-    height: PageCont.size.height,
+    width: pageWidth,
+    height: pageHeight,
     child: PageCont.isPortrait
         ? _portraitBody
         : _landscapeBody,
@@ -102,6 +109,8 @@ class FRefreshScaffold extends FScaffold {
     super.bottomWidget,
     super.bottomPadding,
     super.bottomNavigationBar,
+    super.width,
+    super.height,
     required this.refreshController,
     required this.onRefresh,
   });
@@ -125,7 +134,7 @@ class FRefreshScaffold extends FScaffold {
       backgroundColor: FTheme.surface,
       offset: 40.0.h,
     ),
-    child: super.body,
+    child: SingleChildScrollView(child: super.body),
   );
 }
 
@@ -139,6 +148,8 @@ class FMainScaffold extends FRefreshScaffold {
     super.autoPadding,
     super.bottomWidget,
     super.bottomPadding,
+    super.width,
+    super.height,
     required super.refreshController,
     required super.onRefresh,
   });
@@ -158,6 +169,8 @@ class FKeyboardUsableScaffold extends StatelessWidget {
     this.drawerScrimColor,
     this.bottomWidget,
     this.bottomNavigationBar,
+    this.width,
+    this.height,
   });
 
   final bool autoPadding;
@@ -168,6 +181,8 @@ class FKeyboardUsableScaffold extends StatelessWidget {
   final Color? drawerScrimColor;
   final Widget? bottomWidget;
   final Widget? bottomNavigationBar;
+  final double? width;
+  final double? height;
 
   bool _keyboardVisible(BuildContext context) {
     return PageCont.mediaQuery.viewInsets.bottom != 0;
@@ -187,6 +202,8 @@ class FKeyboardUsableScaffold extends StatelessWidget {
         bottomWidget: bottomWidget,
         bottomPadding: _keyboardVisible(context) ? 20.0.h : null,
         bottomNavigationBar: bottomNavigationBar,
+        width: width,
+        height: height,
       ),
     );
   }

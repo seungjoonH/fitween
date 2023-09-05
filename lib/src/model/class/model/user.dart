@@ -56,7 +56,7 @@ class FUser extends Model {
   bool get isMale => sex == Sex.male;
   bool get isFemale => sex == Sex.female;
 
-  int get weekCount => today.difference(regDate).inDays ~/ 7;
+  int get weekCount => tomorrow.difference(regDate.firstDayOfWeek).inDays ~/ 7;
 
   // party
   Map<String, Party> get parties => party!.parties;

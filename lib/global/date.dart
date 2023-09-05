@@ -92,7 +92,8 @@ extension DateTimeExtension on DateTime {
 
   DateTime get firstDayOfMonth => DateTime(year, month, 1);
   DateTime get lastDayOfMonth => DateTime(year, month + 1, 1).subtract(1.d);
-  DateTime get firstDayOfWeek => subtract(wd.index.d);
+  DateTime get firstDayOfWeek => subtract(wd.index.d).ignoreTime;
+  DateTime get lastDayOfWeek => firstDayOfWeek.add(6.d);
 
   int get age => now.difference(this).inDays ~/ 365.25;
   int get generation => age ~/ 10 * 10;
@@ -101,23 +102,39 @@ extension DateTimeExtension on DateTime {
 }
 
 extension DurationExtension on Duration {
-  String get ago {
-    late String agoString;
+  int get inFormatDays => inDays;
+  int get inFormatHours => inHours - inDays * 24;
+  int get inFormatMinutes => inMinutes - inHours * 60;
+  int get inFormatSeconds => inSeconds - inMinutes * 60;
 
-    if (Get.locale!.languageCode == 'ko') {
-      if (inDays > 0) { agoString = '$inDays일 전'; }
-      else if (inHours > 0) { agoString = '$inHours시간 전'; }
-      else if (inMinutes > 0) { agoString = '$inMinutes분 전'; }
-      else if (inSeconds > 0) { agoString = '$inSeconds초 전'; }
-    }
-    else {
-      if (inDays > 0) { agoString = '${inDays}d ago'; }
-      else if (inHours > 0) { agoString = '${inHours}h ago'; }
-      else if (inMinutes > 0) { agoString = '${inMinutes}m ago'; }
-      else if (inSeconds > 0) { agoString = '${inSeconds}s ago'; }
-    }
-    return agoString;
+  String get inDaysUnit => LangCont.plural('unit.d', inDays);
+  String get inHoursUnit => LangCont.plural('unit.h', inHours);
+  String get inMinutesUnit => LangCont.plural('unit.m', inMinutes);
+  String get inSecondsUnit => LangCont.plural('unit.s', inSeconds);
+
+  String get inFormatDaysUnit => LangCont.plural('unit.d', inFormatDays);
+  String get inFormatHoursUnit => LangCont.plural('unit.h', inFormatHours);
+  String get inFormatMinutesUnit => LangCont.plural('unit.m', inFormatMinutes);
+  String get inFormatSecondsUnit => LangCont.plural('unit.s', inFormatSeconds);
+
+  String get format {
+    String str = '';
+    if (inFormatDays > 0) str += '$inFormatDaysUnit ';
+    if (inFormatHours > 0) str += '$inFormatHoursUnit ';
+    if (inFormatMinutes > 0) str += '$inFormatMinutesUnit ';
+    if (inFormatSeconds > 0) str += '$inFormatSecondsUnit ';
+    return str;
   }
+
+  String get withUnit {
+    if (inDays > 0) { return inDaysUnit; }
+    else if (inHours > 0) { return inHoursUnit; }
+    else if (inMinutes > 0) { return inMinutesUnit; }
+    return inSecondsUnit;
+  }
+
+  String get left => '$format${LangCont.tr('time.left')}';
+  String get ago => '$withUnit ${LangCont.tr('time.ago')}';
 }
 
 enum Weekday {

@@ -300,7 +300,9 @@ class _RecordsData extends Model {
 
   void setRecordData(FType type, _RecordData data) {
     List<_RecordData> dataList = _data[type]!;
-    _data[type] = dataList..add(data);
+    int i = dataList.indexWhere((d) => d.date.isAtSameMomentAs(data.date));
+    if (i < 0) _data[type] = dataList..add(data);
+    _data[type]![i] = data;
   }
 
   num getAmounts(FType type, DateRange range) {

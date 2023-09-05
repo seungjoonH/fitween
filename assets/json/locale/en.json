@@ -36,6 +36,16 @@
       "date-of-birth": "@:hint.date-of-birth"
     }
   },
+  "time": {
+    "left": "left",
+    "ago": "ago"
+  },
+  "period": {
+    "daily": "daily",
+    "weekly": "weekly",
+    "monthly": "monthly",
+    "yearly": "yearly"
+  },
   "word": {
     "google": "google",
     "apple": "apple",
@@ -62,6 +72,13 @@
       "one": "once",
       "two": "twice",
       "other": "[] times"
+    },
+    "day": {
+      "one": "{} day",
+      "other": "{} days"
+    },
+    "d": {
+      "other": "{}d"
     },
     "hour": {
       "one": "{} hour",

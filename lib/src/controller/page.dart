@@ -43,10 +43,11 @@ abstract class PageCont extends GetxController {
   String get loadKey;
 
   Future init() async {
-    if (LoadingCont.start(loadKey, 60)) {
+    if (LoadingCont.start(loadKey, 180)) {
       await load();
       LoadingCont.end();
     }
+    afterRoute();
   }
 
   Future onRefresh() async {
@@ -54,7 +55,9 @@ abstract class PageCont extends GetxController {
       await load();
       LoadingCont.end();
     }
+    afterRoute();
   }
 
   Future load();
+  Future afterRoute() async {}
 }

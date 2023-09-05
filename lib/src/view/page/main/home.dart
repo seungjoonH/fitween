@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
+import 'package:fitween/src/model/enum/enum.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
@@ -31,7 +32,7 @@ class _HomePageState extends FPageState {
     return Obx(() => CircularCarousel(
       width: PageCont.size.width * (PageCont.isPortrait ? 1.2 : .6),
       height: 100.0.h,
-      itemSize: 200.0.r,
+      itemSize: 180.0.r,
       onChanged: cont.onChanged,
       defaultIndex: cont.activeIndex,
       leftWidget: SvgPicture.asset(cont.leftArrowAsset),
@@ -44,7 +45,8 @@ class _HomePageState extends FPageState {
             cont.getMarbleCenterText(type),
             textColor: FTheme.achro90,
             style: FTheme.titleMedium,
-            highlightStyle: FTheme.largeText,
+            highlightStyle: FTheme.displayLarge
+                ?.copyWith(color: FTheme.achro90),
           ) : null,
           smile: isActive,
           tagVisible: isActive,
@@ -58,10 +60,15 @@ class _HomePageState extends FPageState {
   Widget _buildDayCalendarWidget(BuildContext context, DateTime date) {
     return Obx(() {
       bool selected = date.isAtSameMomentAs(calendarCont.selectedDay);
+      bool passed = !date.isAfter(today);
       bool isToday = date.isAtSameMomentAs(today);
       void onTap() => calendarCont.selectDay(date, date);
       String dayText = '${date.day}';
       if (date.day == 1) dayText = '${date.month}/$dayText';
+
+      Color textColor = Colors.transparent;
+      if (passed) textColor = FTheme.comment;
+      if (selected) textColor = FTheme.background;
 
       return GestureDetector(
         onTap: onTap,
@@ -87,9 +94,7 @@ class _HomePageState extends FPageState {
               FText(
                 dayText,
                 style: FTheme.bodyMedium,
-                color: selected
-                    ? FTheme.backgroundAlt
-                    : FTheme.comment,
+                color: textColor,
               ),
               CalendarDots(
                 completedTypes: calendarCont.completedTypes(date),
@@ -149,10 +154,7 @@ class _HomePageState extends FPageState {
         padding: EdgeInsets.only(left: 10.0.r),
         child: FTextButton(
           text: cont.viewTodayText,
-          padding: EdgeInsets.symmetric(
-            horizontal: 8.0.r,
-            vertical: 4.0.r,
-          ),
+          shrinkWrap: true,
           style: FTheme.bodyMedium,
           textColor: FTheme.comment,
           onPressed: cont.selectToday,
@@ -201,10 +203,37 @@ class _HomePageState extends FPageState {
         FLinearPercentIndicator(
           percent: rankingCont.getPercentOf(type, user.uid),
           backgroundColor: Colors.transparent,
+          animation: true,
+          animateFromLastPercent: true,
           progressColor: isMe
               ? cont.activeType.color
               : FTheme.unselected,
         ),
+      ],
+    );
+  }
+
+  Widget _buildRankingCardContentHeaderWidget(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: Period.values.map((period) {
+            bool isSelected = period == rankingCont.period;
+            return FTextButton(
+              text: period.locale.capitalize!,
+              bold: isSelected,
+              shrinkWrap: true,
+              style: FTheme.titleSmall,
+              textColor: isSelected
+                  ? cont.activeType.color
+                  : FTheme.comment,
+              onPressed: () => rankingCont.changePeriod(period),
+            );
+          }).toList(),
+        ),
+        SizedBox(height: 10.0.h),
       ],
     );
   }
@@ -214,6 +243,9 @@ class _HomePageState extends FPageState {
       FType type = cont.activeType;
       List<String> uids = rankingCont.getRanksFocusedOnMe(type, 3);
       List<Widget> children = [];
+
+      children.add(_buildRankingCardContentHeaderWidget(context));
+
       for (int i = 0; i < uids.length; i++) {
         FUser user = rankingCont.getUser(uids[i]);
         Widget widget = _buildRankingIndividualGraphWidget(context, user);
@@ -239,7 +271,17 @@ class _HomePageState extends FPageState {
 
   Widget _buildRankingCardWidget(BuildContext context) {
     return FCard(
-      title: FText(cont.rankingCardTitle, style: FTheme.cardTitleStyle),
+      title: Obx(() => Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          FText(cont.rankingCardTitle, style: FTheme.cardTitleStyle),
+          SizedBox(width: 10.0.w),
+          FCommentText(
+            rankingCont.leftTime.left,
+            withAsterisk: false,
+          ),
+        ],
+      )),
       onPressed: cont.onRankingCardPressed,
       pressMode: FCardPressMode.icon,
       child: _buildRankingCardContentWidget(context),
@@ -252,27 +294,30 @@ class _HomePageState extends FPageState {
 
   @override
   Widget buildPage(BuildContext context) {
-    return FRefreshScaffold(
+    return FMainScaffold(
       autoPadding: false,
       refreshController: RefreshController(),
       onRefresh: cont.onRefresh,
+      height: PageCont.size.height * 1.1,
       body: Stack(
         children: [
-          _buildMarbleCarouselWidget(context),
-          Padding(
-            padding: _padding,
-            child: Column(
-              children: [
-                SizedBox(height: 250.0.h),
-                _buildRecordCardWidget(context),
-                SizedBox(height: 20.0.h),
-                _buildRankingCardWidget(context),
-              ],
+          Positioned.fill(
+            child: Padding(
+              padding: _padding,
+              child: Column(
+                children: [
+                  SizedBox(height: 220.0.h),
+                  _buildRecordCardWidget(context),
+                  SizedBox(height: 20.0.h),
+                  _buildRankingCardWidget(context),
+                  SizedBox(height: 20.0.h),
+                ],
+              ),
             ),
           ),
+          _buildMarbleCarouselWidget(context),
         ],
       ),
-      bottomNavigationBar: const FBottomNavigationBar(),
     );
   }
 }
@@ -326,8 +371,8 @@ class _MarbleState extends FWidgetState<Marble> {
   @override
   Widget buildWidget(BuildContext context) {
     return Obx(() => Container(
-      width: 200.0.r,
-      height: 200.0.r,
+      width: 180.0.r,
+      height: 180.0.r,
       decoration: BoxDecoration(
         color: _color,
         shape: BoxShape.circle,

@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/controller/health/health.dart';
+import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
@@ -19,6 +21,7 @@ class CalendarCont extends GetxController {
     _user = AuthCont.logged!;
     await loadRecord();
     _events = _user!.events;
+    HealthDataCont.fetchOneDayStepData(selectedDay.ignoreTime);
   }
 
   Future loadRecord() async {
@@ -27,12 +30,21 @@ class CalendarCont extends GetxController {
     AuthCont.setUserRecord(record);
   }
 
+  num _getFetchedData(FType type) {
+    return HealthDataCont.getDataByType(type, selectedDay);
+  }
+
+  String getInsufficientAmountText(FType type) {
+    num reflected = _user!.getOneDayRecord(selectedDay)[type]!;
+    num real = _getFetchedData(type);
+    return type.withUnit(max(real - reflected, 0));
+  }
+
   bool get visible => _user!.visible;
   void toggleVisibility() { _user!.toggleVisibility(); }
 
   final Rx<DateTime> _focusedDay = today.obs;
   final Rx<DateTime> _selectedDay = today.obs;
-
 
   DateTime get firstDay => _user!.regDate;
   DateTime get lastDay => today;
@@ -73,9 +85,11 @@ class CalendarCont extends GetxController {
     focusedDay = focusedDay.ignoreTime;
     if (selectedDay.isBefore(_user!.regDate)) return;
     if (selectedDay.isAfter(today)) return;
-    _selectedDay(selectedDay);
     if (focusedDay.isBefore(_user!.regDate)) return;
     if (focusedDay.isAfter(today)) return;
+
+    HealthDataCont.fetchOneDayStepData(selectedDay);
+    _selectedDay(selectedDay);
     _focusedDay(focusedDay);
   }
 

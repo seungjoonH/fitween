@@ -247,17 +247,25 @@ class FSearchField extends StatelessWidget {
         color: FTheme.bar,
         borderRadius: BorderRadius.circular(10.0.r),
       ),
-      child: TextField(
-        controller: controller,
-        onChanged: onChanged,
-        cursorColor: FTheme.text,
-        decoration: InputDecoration(
-          isCollapsed: true,
-          border: InputBorder.none,
-          hintText: hintText,
-          hintStyle: FTheme.titleMedium
-              ?.apply(color: FTheme.comment),
-        ),
+      child: Row(
+        children: [
+          Icon(Icons.search, color: FTheme.comment),
+          SizedBox(width: 10.0.w),
+          Expanded(
+            child: TextField(
+              controller: controller,
+              onChanged: onChanged,
+              cursorColor: FTheme.text,
+              decoration: InputDecoration(
+                isCollapsed: true,
+                border: InputBorder.none,
+                hintText: hintText,
+                hintStyle: FTheme.titleMedium
+                    ?.apply(color: FTheme.comment),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

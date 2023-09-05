@@ -1,40 +1,64 @@
-import 'package:fitween/global/date.dart';
+import 'dart:async';
+
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
-import 'package:fitween/src/model/enum/ftype.dart';
+import 'package:fitween/src/model/enum/enum.dart';
 import 'package:get/get.dart';
 
 class RankingCont extends GetxController {
   static RankingCont get to => Get.find<RankingCont>();
 
-  final _rivalsWithMe = <String, FUser>{};
-  final _recordAmountsOfRivalsWithMe = <String, RivalRecord>{};
+  final _friendsWithMe = <String, FUser>{}.obs;
+  final _recordAmountsOfFriendsWithMe = <String, Map<Period, FriendRecord>>{}.obs;
 
-  FUser getUser(String uid) => _rivalsWithMe[uid]!;
+  FUser getUser(String uid) => _friendsWithMe[uid]!;
 
   FUser get _logged => AuthCont.logged!;
   bool get hasFriend => _logged.friends.isNotEmpty;
 
-  Future init() async => await loadRivalData();
+  final _period = Period.daily.obs;
+  Period get period => _period.value;
 
-  Future loadRivalData() async {
+  Future init() async {
+    await loadFriendData();
+    _startLeftTimer();
+  }
+
+  Future loadFriendData() async {
     FUserLoadCont cont = FUserLoadCont.onlyRecord();
     await _logged.friend!.loadFriends(cont: cont);
-    _rivalsWithMe.clear();
-    _rivalsWithMe[_logged.uid] = _logged;
-    _rivalsWithMe.addAll(_logged.rivals);
+    _friendsWithMe.clear();
+    _recordAmountsOfFriendsWithMe.clear();
+    _friendsWithMe[_logged.uid] = _logged;
+    _friendsWithMe.addAll(_logged.friends);
 
-    for (String uid in _rivalsWithMe.keys) {
-      Map<FType, num> amounts = _rivalsWithMe[uid]!
-          .getOneWeekRecord(today.firstDayOfWeek);
-      _recordAmountsOfRivalsWithMe[uid] = RivalRecord(uid,
-        distance: amounts[FType.distance]!,
-        height: amounts[FType.height]!,
-        weight: amounts[FType.weight]!,
-      );
+    for (String uid in _friendsWithMe.keys) {
+      FUser user = _friendsWithMe[uid]!;
+      _recordAmountsOfFriendsWithMe[uid] = {};
+
+      for (Period p in Period.values) {
+        late Map<FType, num> amounts;
+
+        switch (p) {
+          case Period.daily:
+            amounts = user.getOneDayRecord(today); break;
+          case Period.weekly:
+            amounts = user.getOneWeekRecord(today.firstDayOfWeek); break;
+          case Period.monthly:
+            amounts = user.getOneMonthRecord(today.firstDayOfMonth); break;
+        }
+
+        _recordAmountsOfFriendsWithMe[uid]![p] = FriendRecord(uid,
+          distance: amounts[FType.distance]!,
+          height: amounts[FType.height]!,
+          weight: amounts[FType.weight]!,
+        );
+      }
     }
   }
+
+  void changePeriod(Period p) => _period(p);
 
   double getPercentOf(FType type, String uid) {
     num maxAmount = getAmounts(type).first;
@@ -43,30 +67,30 @@ class RankingCont extends GetxController {
   }
 
   num getAmountOf(FType type, String uid) {
-    return _recordAmountsOfRivalsWithMe[uid]!.byType(type);
+    return _recordAmountsOfFriendsWithMe[uid]![period]!.byType(type);
   }
 
   List<num> getAmounts(FType type) {
     List<num> amounts = [];
-    for (String uid in _rivalsWithMe.keys) {
+    for (String uid in _friendsWithMe.keys) {
       amounts.add(getAmountOf(type, uid));
     }
     return amounts..sort((a, b) => b.compareTo(a));
   }
 
   List<String> getRanks(FType type) {
-    num getNum(String uid) => _recordAmountsOfRivalsWithMe[uid]!.byType(type);
+    num getNum(String uid) => _recordAmountsOfFriendsWithMe[uid]![period]!.byType(type);
     int compare(String a, String b) => getNum(b).compareTo(getNum(a));
-    List<String> uids = [..._recordAmountsOfRivalsWithMe.keys];
+    List<String> uids = [..._recordAmountsOfFriendsWithMe.keys];
     return uids..sort(compare);
   }
 
   List<String> getRanksFocusedOnMe(FType type, int count) {
     List<String> ranks = [...getRanks(type)];
-    List<String> newRanks = [];
 
     if (ranks.length < count) return ranks;
 
+    List<String> newRanks = [];
     int myIndex = ranks.indexWhere((uid) => uid == _logged.uid);
 
     newRanks.add(_logged.uid);
@@ -104,16 +128,45 @@ class RankingCont extends GetxController {
 
     return newRanks;
   }
+
+  Map<Period, DateTime> get _endTimes => {
+    Period.daily: today.lastTimeOfDay,
+    Period.weekly: today.lastDayOfWeek.lastTimeOfDay,
+    Period.monthly: today.lastDayOfMonth.lastTimeOfDay,
+  };
+
+  final _leftTimes = <Period, Duration>{
+    Period.daily: Duration.zero,
+    Period.weekly: Duration.zero,
+    Period.monthly: Duration.zero,
+  }.obs;
+
+  Timer? _leftTimer;
+  Duration get leftTime => _leftTimes[period]!;
+
+  void _startLeftTimer() {
+    _leftTimer = Timer.periodic(500.ms, (_) {
+      for (Period p in Period.values) {
+        _leftTimes[p] = _endTimes[p]!.difference(now);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _leftTimer?.cancel();
+  }
 }
 
-class RivalRecord {
+class FriendRecord {
   late String uid;
   late num calorie;
   late num distance;
   late num height;
   late num weight;
 
-  RivalRecord(
+  FriendRecord(
     this.uid, {
     this.calorie = .0,
     this.distance = .0,

@@ -34,6 +34,10 @@ class HomePageCont extends MainPageCont {
   Future load() async {
     await calendarCont.init();
     await rankingCont.init();
+  }
+
+  @override
+  Future afterRoute() async {
     delay(500.ms, gotoSelectedWeek);
   }
 

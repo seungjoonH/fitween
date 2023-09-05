@@ -37,6 +37,16 @@
       "date-of-birth": "@:hint.date-of-birth"
     }
   },
+  "period": {
+    "daily": "일일",
+    "weekly": "주간",
+    "monthly": "월간",
+    "yearly": "연간"
+  },
+  "time": {
+    "left": "남음",
+    "ago": "전"
+  },
   "word": {
     "google": "구글",
     "apple": "애플",
@@ -54,6 +64,8 @@
     "step": "[]보",
     "floor": "[]층",
     "count": "[]회",
+    "day": "{}일",
+    "d": "{}일",
     "hour": "{}시간",
     "hr": "{}시간",
     "h": "{}시간",
@@ -157,7 +169,7 @@
     "no-friends": "아직 친구가 없습니다\n친구를 먼저 팔로우 해보세요!"
   },
   "search": {
-    "hint-text": "닉네임을 검색하세요"
+    "hint-text": "별명을 검색하세요"
   },
   "see-more": {
     "badge": {

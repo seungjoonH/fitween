@@ -75,7 +75,8 @@ class _CalendarPageState extends FPageState<CalendarPage> {
     formatButtonVisible: false,
     headerPadding: EdgeInsets.zero,
     titleCentered: true,
-    titleTextStyle: FTheme.titleLarge!,
+    titleTextStyle: FTheme.titleMedium!
+        .apply(color: FTheme.text),
     leftChevronIcon: Icon(
       Icons.chevron_left,
       color: FTheme.textAlt,
@@ -129,6 +130,7 @@ class _CalendarPageState extends FPageState<CalendarPage> {
           percent: percent,
           backgroundColor: Colors.transparent,
           progressColor: color,
+          animation: true,
           animateFromLastPercent: true,
         ),
         FText(
@@ -150,7 +152,19 @@ class _CalendarPageState extends FPageState<CalendarPage> {
 
   Widget _buildDayRecordsWidget(BuildContext context) {
     return Obx(() => FCard(
-      title: FText(calendarCont.dayRecordGraphCardTitle),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          FText(calendarCont.dayRecordGraphCardTitle),
+          Row(
+            children: [
+              FText('${calendarCont.getInsufficientAmountText(FType.distance)}'),
+              SizedBox(width: 10.0.w),
+              FText('${calendarCont.getInsufficientAmountText(FType.height)}'),
+            ],
+          ),
+        ],
+      ),
       child: _buildDayRecordWidget(context),
     ));
   }
