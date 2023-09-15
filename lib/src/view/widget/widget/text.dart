@@ -46,6 +46,8 @@ class FText extends StatelessWidget {
 
   TextStyle? get defaultStyle => FTheme.titleSmall;
 
+  bool get textWrap => maxLines == 0;
+
   @override
   Widget build(BuildContext context) {
     Color colorAlt = color ?? FTheme.text;
@@ -63,8 +65,10 @@ class FText extends StatelessWidget {
     return Text(
       data,
       textAlign: align,
-      maxLines: maxLines,
-      overflow: TextOverflow.ellipsis,
+      maxLines: textWrap ? null : maxLines,
+      overflow: textWrap
+          ? TextOverflow.visible
+          : TextOverflow.ellipsis,
       style: textStyle?.merge(mergeStyle),
     );
   }

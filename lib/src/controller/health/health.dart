@@ -1,9 +1,7 @@
-import 'dart:collection';
 import 'dart:io';
 
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/date_range.dart';
 import 'package:fitween/src/model/class/model.dart';
@@ -76,15 +74,15 @@ class HealthDataCont extends GetxController {
   }
 
   static Future setRecordByType(FType type, DateTime startTime, DateTime endTime) async {
-    startTime = later(startTime, _logged.regDate).ignoreTime;
-    endTime = earlier(endTime.lastTimeOfDay, now).ignoreTime;
+    startTime = later(startTime, _logged.regDate);
+    endTime = earlier(endTime.lastTimeOfDay, now);
     DateRange range = DateRange(startTime, endTime);
 
     for (DateTime date in range.dates) {
       if (!_byType(type)!.keys.contains(date)) continue;
       _logged.setRecordByValue(type, _byType(type)![date]!, date);
     }
-    await FUserRecordDAO().loadOne(_logged.key);
+    await FUserRecordDAO().saveOne(_logged.record!);
   }
 
   static Future setOneDayRecordByType(FType type, DateTime date) async {
@@ -102,18 +100,17 @@ class HealthDataCont extends GetxController {
 
   static Future fetchDataAfterLogin() async {
      await fetchTodayStepData();
-    bool fetched = _fetchedSteps == null;
+    bool fetched = _fetchedSteps != null;
     if (Platform.isIOS) {
       await fetchTodayFlightsData();
-      fetched &= _fetchedFlights == null;
+      fetched &= _fetchedFlights != null;
     }
 
     if (!fetched) {
       List<String> gotError = [];
       if (_fetchedSteps == null) gotError.add('step');
       if (_fetchedFlights == null) gotError.add('flights');
-      print('[ERROR] Health data (${gotError.join(', ')}) fetching error');
-      return;
+      throw Exception('[ERROR] Health data (${gotError.join(', ')}) fetching error');
     }
 
     await setTodayRecord();
@@ -122,32 +119,31 @@ class HealthDataCont extends GetxController {
   static Future fetchAllStepData() async {
     DateTime startTime = _logged.regDate;
     DateTime endTime = now;
-    return await fetchStepData(startTime, endTime);
+    await fetchStepData(startTime, endTime);
   }
   
   static Future fetchOneDayStepData(DateTime date) async {
-    return await fetchStepData(date, date);
+    await fetchStepData(date, date);
   }
 
   static Future fetchTodayStepData() async {
-    return await fetchOneDayStepData(today);
+    await fetchOneDayStepData(today);
   }
   
-  static Future<Map<DateTime, num>?> fetchStepData(DateTime startTime, DateTime endTime) async {
-    startTime = later(startTime, _logged.regDate).ignoreTime;
-    endTime = earlier(endTime.lastTimeOfDay, now).ignoreTime;
+  static Future fetchStepData(DateTime startTime, DateTime endTime) async {
+    startTime = later(startTime, _logged.regDate);
+    endTime = earlier(endTime.lastTimeOfDay, now);
 
     num value = 0;
 
     if (!_approved) _fetchedSteps = null;
     _fetchedSteps = {};
 
-    DateRange range = DateRange(startTime, endTime);
-    for (DateTime date in range.dates) {
+    DateRange dateRange = DateRange(startTime, endTime);
+    for (DateTime date in dateRange.dates) {
       num? fetchedValue = await _health.getTotalStepsInInterval(date, date.lastTimeOfDay);
-      if (fetchedValue == null || fetchedValue == 0) continue;
+      if (fetchedValue == null || fetchedValue > 28796) continue;
       value = fetchedValue;
-
       _fetchedSteps![date] = value;
     }
   }
@@ -155,20 +151,20 @@ class HealthDataCont extends GetxController {
   static Future fetchAllFlightsData() async {
     DateTime startTime = _logged.regDate;
     DateTime endTime = now;
-    return await fetchFlightsData(startTime, endTime);
+    await fetchFlightsData(startTime, endTime);
   }
 
   static Future fetchOneDayFlightsData(DateTime date) async {
-    return await fetchFlightsData(date, date);
+    await fetchFlightsData(date, date);
   }
 
   static Future fetchTodayFlightsData() async {
-    return await fetchOneDayFlightsData(today);
+    await fetchOneDayFlightsData(today);
   }
 
   static Future fetchFlightsData(DateTime startTime, DateTime endTime) async {
-    startTime = later(startTime, _logged.regDate).ignoreTime;
-    endTime = earlier(endTime.lastTimeOfDay, now).ignoreTime;
+    startTime = later(startTime, _logged.regDate);
+    endTime = earlier(endTime.lastTimeOfDay, now);
 
     List<HealthDataPoint> flightsData = [];
 

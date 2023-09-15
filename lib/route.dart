@@ -11,6 +11,7 @@ class FRoute {
     '/goal-setting': const GoalSettingPage(),
     '/home': const HomePage(),
     '/home/calendar': const CalendarPage(),
+    '/home/ranking': const RankingPage(),
     '/friend': const FriendPage(),
     '/friend/search': const FriendSearchPage(),
     '/contents': const ContentsPage(),
@@ -28,6 +29,7 @@ class FRoute {
 
   static const _offAllRoutes = ['/', '/home', '/friend', '/contents', '/see-more'];
 
+  static String get currentPage => Get.currentRoute;
   static String? get previousPage {
     String current = Get.currentRoute;
     List<String> sublist = _offAllRoutes.sublist(1, _offAllRoutes.length);
@@ -47,6 +49,7 @@ class FRoute {
   static void toGoalSetting() => Get.toNamed('/goal-setting');
   static void toHome() => Get.offAllNamed('/home');
   static void toCalendar() => Get.toNamed('/home/calendar');
+  static void toRanking() => Get.toNamed('/home/ranking');
   static void toFriend({bool reload = false}) => Get.offAllNamed('/friend', arguments: reload);
   static void toFriendSearch() => Get.toNamed('/friend/search');
   static void toContents() => Get.offAllNamed('/contents');

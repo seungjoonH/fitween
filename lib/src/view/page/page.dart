@@ -1,13 +1,13 @@
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 export 'login.dart';
 export 'onboarding.dart';
 export 'register.dart';
 export 'goal_setting.dart';
 export 'main/home/calendar.dart';
+export 'main/home/ranking.dart';
 export 'main/home.dart';
 export 'main/friend/search.dart';
 export 'main/friend.dart';

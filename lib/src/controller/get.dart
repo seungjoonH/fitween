@@ -9,6 +9,7 @@ class GetCont {
     Get.put(GoalSettingPageCont());
     Get.put(HomePageCont());
     Get.put(CalendarPageCont());
+    Get.put(RankingPageCont());
     Get.put(FriendPageCont());
     Get.put(FriendSearchPageCont());
     Get.put(ContentsPageCont());

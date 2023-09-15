@@ -1,3 +1,4 @@
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -159,6 +160,9 @@ class FAlertDialog extends StatefulWidget {
 }
 
 class _FAlertDialogState extends State<FAlertDialog> {
+  String get _ok => LangCont.tr('dialog.ok');
+  String get _cancel => LangCont.tr('dialog.cancel');
+
   @override
   Widget build(BuildContext context) {
     List<DialogButtonData> data = [];
@@ -169,7 +173,7 @@ class _FAlertDialogState extends State<FAlertDialog> {
         data = [
           DialogButtonData(
             widget.type,
-            text: widget.buttonText ?? '확인',
+            text: widget.buttonText ?? _ok,
             backgroundColor: widget.color ?? FTheme.text,
             onPressed: widget.onPressed!,
           ),
@@ -179,14 +183,14 @@ class _FAlertDialogState extends State<FAlertDialog> {
         data = [
           DialogButtonData(
             widget.type,
-            text: widget.leftText ?? '취소',
+            text: widget.leftText ?? _cancel,
             textColor: widget.leftTextColor ?? FTheme.backgroundAlt,
             backgroundColor: widget.leftBackgroundColor ?? FTheme.bar,
             onPressed: widget.leftPressed!,
           ),
           DialogButtonData(
             widget.type,
-            text: widget.rightText ?? '확인',
+            text: widget.rightText ?? _ok,
             textColor: widget.rightTextColor ?? FTheme.backgroundAlt,
             backgroundColor: widget.rightBackgroundColor ?? FTheme.text,
             onPressed: widget.rightPressed!,

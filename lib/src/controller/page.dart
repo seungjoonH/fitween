@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 export 'page/main/home/calendar.dart';
+export 'page/main/home/ranking.dart';
 export 'page/main/home.dart';
 export 'page/main/friend/search.dart';
 export 'page/main/friend.dart';

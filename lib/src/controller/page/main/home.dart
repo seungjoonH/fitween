@@ -64,6 +64,6 @@ class HomePageCont extends MainPageCont {
   }
 
   void onRecordCardPressed() => FRoute.toCalendar();
-  void onRankingCardPressed() {}
+  void onRankingCardPressed() => FRoute.toRanking();
 
 }

@@ -1,4 +1,4 @@
-import 'package:fitween/global/date.dart';
+import 'package:fitween/global/global.dart';
 
 class DateRange {
   late DateTime start;
@@ -17,5 +17,10 @@ class DateRange {
   List<DateTime> get dates {
     DateTime getDate(int i) => DateTime.utc(start.year, start.month, start.day + i).ignoreTime;
     return List.generate(days, getDate);
+  }
+
+  List<DateTime> get times {
+    DateTime getTime(int i) => start.ignoreTime.add(i.h);
+    return List.generate(24, getTime);
   }
 }

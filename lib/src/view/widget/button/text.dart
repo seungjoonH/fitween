@@ -1,7 +1,6 @@
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FTextButton extends StatefulWidget {
   const FTextButton({
@@ -36,10 +35,6 @@ class FTextButton extends StatefulWidget {
 }
 
 class _FTextButtonState extends State<FTextButton> with DarkPressable<FTextButton> {
-  EdgeInsets? get padding => widget.shrinkWrap ? EdgeInsets.symmetric(
-    horizontal: 8.0.r, vertical: 4.0.r,
-  ) : widget.padding;
-
   @override
   Widget buildContent(BuildContext context) {
     return FButton(
@@ -52,7 +47,8 @@ class _FTextButtonState extends State<FTextButton> with DarkPressable<FTextButto
       onPressed: widget.onPressed,
       alignment: widget.alignment,
       stretch: widget.stretch,
-      padding: padding,
+      padding: widget.padding,
+      shrinkWrap: widget.shrinkWrap,
       child: widget.child,
     );
   }

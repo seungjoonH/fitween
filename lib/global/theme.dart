@@ -13,6 +13,7 @@ class FTheme {
   static const Color colorB = Color(0xFFFB656A);
   static const Color colorC = Color(0xFF29A9FA);
   static const Color colorD = Color(0xFFFFB164);
+  static const Color colorE = Color(0xFFD782FF);
 
   // static const Color black = Color(0xFF1F1F1F);
   // static const Color darkGrey = Color(0xFF494D45);
@@ -63,12 +64,16 @@ class FTheme {
   static Color get surface => isLightMode ? achro90 : achro10;
   static Color get outline => isLightMode ? achro40 : achro60;
 
+  static Color get point => colorE;
   static const Color error = Color(0xFFBA1A1A);
 
   /// typography
   static const fontFamily = 'Pretendard';
 
-  static TextTheme get _textTheme => Theme.of(PageCont.context).textTheme;
+  static TextTheme get _textTheme {
+    try { return Theme.of(PageCont.context).textTheme; }
+    catch (_) { return Theme.of(PageCont.contexts.first).textTheme; }
+  }
 
   static TextStyle? get cardTitleStyle => headlineSmall;
   static TextStyle? get commentStyle => bodyLarge;

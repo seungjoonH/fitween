@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/lang.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -39,8 +40,8 @@ String withSign(num n) => '${sign(n)}${(n).abs()}';
 extension NumExtension on num {
   // num get sign => this == 0 ? 0 : this > 0 ? 1 : -1;
   String get thouSep => NumberFormat('###,###,###,###').format(this);
-  String get round1 => toStringAsFixed(1);
-  String get round2 => toStringAsFixed(2);
+  String get round1 => ((this * 10).round() / 10).toStringAsFixed(1);
+  String get round2 => ((this * 100).round() / 100).toStringAsFixed(2);
 
   String localizing({bool thouSep = true, bool scaling = true, bool txs = false}) {
     num number = this;
@@ -60,8 +61,8 @@ extension NumExtension on num {
     }
 
     if (scale != '') {
-      if (number < 10) { numberString = number.round2; }
-      else if (number < 100) { numberString = number.round1; }
+      if (number < 10) { numberString = number.round2.removeLastZeroOfDecimal; }
+      else if (number < 100) { numberString = number.round1.removeLastZeroOfDecimal; }
     }
 
     numberString ??= thouSep

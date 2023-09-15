@@ -2,7 +2,7 @@ import 'package:fitween/global/date.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/class/model.dart';
-import 'package:fitween/src/model/enum/ftype.dart';
+import 'package:fitween/src/model/enum/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -39,6 +39,8 @@ class FUser extends Model {
   Map<String, FUser> get friends => friend!.friends;
   Map<String, FUser> get rivals => friend!.rivals;
 
+  DateTime followedDate(String uid) => friend!.followedDate(uid);
+
   // info
   String? get name => info!.name;
   String get nickname => info!.nickname;
@@ -62,6 +64,7 @@ class FUser extends Model {
   Map<String, Party> get parties => party!.parties;
 
   // record
+  Map<Period, List<RankingData>> get rankings => record!.rankings;
   bool get visible => record!.visible;
   void toggleVisibility() => record!.toggleVisibility();
 
@@ -78,6 +81,8 @@ class FUser extends Model {
   void setRecordByValue(FType type, num value, DateTime date) => record!.setRecordByValue(type, value, date);
   void setTodayRecord(FType type, Amount amount) => record!.setTodayRecord(type, amount);
   void setTodayRecordByValue(FType type, num value) => record!.setTodayRecordByValue(type, value);
+
+  void setRankedData(Period period, RankingData data) => record!.setRankedData(period, data);
 
   Map<DateTime, List<CalendarEvent>> get events => record!.events;
 

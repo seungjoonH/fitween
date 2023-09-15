@@ -164,9 +164,13 @@ class GoalSettingPageCont extends CarouselPageCont {
     );
   }
 
-  final _distanceValue = 60.obs;
-  final _heightValue = 10.obs;
-  final _weightValue = 50.obs;
+  static final DistanceAmount defaultDis = DistanceAmount()..min = 60;
+  static final HeightAmount defaultHei = HeightAmount()..floor = 10;
+  static final WeightAmount defaultWei = WeightAmount()..cnt = 50;
+
+  final _distanceValue = defaultDis.min.toInt().obs;
+  final _heightValue = defaultHei.floor.toInt().obs;
+  final _weightValue = defaultWei.cnt.toInt().obs;
 
   static const _distanceMin = 10;
   static const _distanceMax = 200;

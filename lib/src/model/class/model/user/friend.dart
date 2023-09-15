@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitween/global/date.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
 
@@ -12,14 +14,14 @@ class FUserFriend extends FUser {
   @override
   Map<String, FUser> rivals = {};
 
+  @override
+  DateTime followedDate(String uid) => _friendsData[uid]!.time;
+
   Future loadFriends({FUserLoadCont? cont}) async {
     for (String uid in _friendsData.keys) {
       FUser? loaded = await FUserDAO().loadOne(uid, cont: cont);
 
-      if (loaded == null) {
-        print('[ERROR] User($uid) load failed');
-        return;
-      }
+      if (loaded == null) throw Exception('[ERROR] User($uid) load failed');
 
       friends[uid] = FUser.combine(friends[uid], loaded);
       if (_friendsData[uid]!._rival) rivals[uid] = FUser.combine(rivals[uid], loaded);
@@ -110,14 +112,19 @@ class _TimeAttack extends Model {
 }
 
 class FriendData extends Model {
+  late Timestamp _time;
   bool _rival = false;
   _TimeAttack? _timeAttack;
 
-  FriendData() : _rival = false;
+  FriendData() : _time = now.toTimestamp!, _rival = false;
   FriendData.fromJson(super.json) : super.fromJson();
+
+  DateTime get time => _time.toDate();
+  set date(DateTime time) => _time = time.toTimestamp!;
 
   @override
   void fromJson(Map<String, dynamic> json) {
+    _time = json['time'] ?? now.toTimestamp;
     _rival = json['rival'] ?? false;
     _timeAttack = _TimeAttack.fromJson(json['timeAttack'] ?? {});
   }
@@ -125,6 +132,7 @@ class FriendData extends Model {
   @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
+    json['time'] = _time;
     json['rival'] = _rival;
     json['timeAttack'] = _timeAttack?.toJson() ?? _TimeAttack().toJson();
     return json;

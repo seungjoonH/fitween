@@ -3,10 +3,8 @@ import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
-import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
-import 'package:fitween/src/view/widget/widget/bottom_bar.dart';
 import 'package:fitween/src/view/widget/widget/calendar.dart';
 import 'package:fitween/src/view/widget/widget/carousel.dart';
 import 'package:flutter/material.dart';
@@ -183,10 +181,11 @@ class _HomePageState extends FPageState {
   ) {
     FType type = cont.activeType;
     bool isMe = user.uid == AuthCont.uid;
+    DateTime startTime = rankingCont.getStartTime(today);
 
-    List<num> amounts = rankingCont.getAmounts(type);
+    List<num> amounts = rankingCont.getAmounts(type, startTime);
     int rank = 1 + amounts.indexWhere((a) {
-      return a == rankingCont.getAmountOf(type, user.uid);
+      return a == rankingCont.getAmountOf(type, user.uid, startTime);
     });
 
     return Column(
@@ -201,7 +200,8 @@ class _HomePageState extends FPageState {
         ),
         SizedBox(height: 5.0.h),
         FLinearPercentIndicator(
-          percent: rankingCont.getPercentOf(type, user.uid),
+          centerText: rankingCont.getAmountTextOf(type, user.uid, startTime),
+          percent: rankingCont.getPercentOf(type, user.uid, startTime),
           backgroundColor: Colors.transparent,
           animation: true,
           animateFromLastPercent: true,
@@ -271,17 +271,18 @@ class _HomePageState extends FPageState {
 
   Widget _buildRankingCardWidget(BuildContext context) {
     return FCard(
-      title: Obx(() => Row(
+      title: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FText(cont.rankingCardTitle, style: FTheme.cardTitleStyle),
           SizedBox(width: 10.0.w),
-          FCommentText(
-            rankingCont.leftTime.left,
-            withAsterisk: false,
-          ),
+          Obx(() => FText(
+            rankingCont.getLeftTime(rankingCont.getStartTime(today)).left,
+            style: FTheme.bodyMedium,
+            color: FTheme.comment,
+          )),
         ],
-      )),
+      ),
       onPressed: cont.onRankingCardPressed,
       pressMode: FCardPressMode.icon,
       child: _buildRankingCardContentWidget(context),

@@ -22,6 +22,7 @@ class _RankIconState extends FWidgetState<RankIcon> {
 
   @override
   Widget buildWidget(BuildContext context) {
+    if (widget.rank == 0) return Container();
     return widget.rank > 3 ? Container(
       width: 20.0.r,
       height: 20.0.r,

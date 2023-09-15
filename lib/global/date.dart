@@ -5,33 +5,22 @@ import 'dart:ui';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/lang.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:ntp/ntp.dart';
 
 /// enums
-// 날짜 형식 { 시작일, 종료일 }
 enum DateType { start, end }
 
 /// global variables
 late Duration timeError;
 
-// 시간 오차 설정
 void setTimeError() async {
   timeError = (await NTP.now()).difference(DateTime.now());
 }
 
-// 현재 시각
-// DateTime get now => DateTime.now().add(timeError);
 DateTime get now => DateTime.now();
-
-// 오늘 날짜 (시간 미포함)
 DateTime get today => now.ignoreTime;
-
-// 어제 날짜`
 DateTime get yesterday => today.subtract(const Duration(days: 1));
-
-// 내일 날짜
 final tomorrow = today.add(const Duration(days: 1));
 
 String? dateToString(String format, DateTime? date) => date == null
@@ -88,12 +77,19 @@ extension DateTimeExtension on DateTime {
 
   DateTime get ignoreTime => nullOrB(this, DateTime(year, month, day));
   DateTime get oneSecBefore => subtract(1.s);
+  DateTime get lastMinuteOfHour => add(1.h).oneSecBefore;
   DateTime get lastTimeOfDay => add(1.d).oneSecBefore;
 
   DateTime get firstDayOfMonth => DateTime(year, month, 1);
   DateTime get lastDayOfMonth => DateTime(year, month + 1, 1).subtract(1.d);
   DateTime get firstDayOfWeek => subtract(wd.index.d).ignoreTime;
   DateTime get lastDayOfWeek => firstDayOfWeek.add(6.d);
+
+  DateTime get firstDayOfLastWeek => subtract(1.w).firstDayOfWeek;
+  DateTime get firstDayOfLastMonth {
+    int days = lastDayOfMonth.difference(firstDayOfMonth).inDays;
+    return subtract(days.d).firstDayOfMonth.ignoreTime;
+  }
 
   int get age => now.difference(this).inDays ~/ 365.25;
   int get generation => age ~/ 10 * 10;
@@ -133,7 +129,9 @@ extension DurationExtension on Duration {
     return inSecondsUnit;
   }
 
-  String get left => '$format${LangCont.tr('time.left')}';
+  String get left => this == Duration.zero
+      ? LangCont.tr('word.finished')
+      : '$format${LangCont.tr('time.left')}';
   String get ago => '$withUnit ${LangCont.tr('time.ago')}';
 }
 

@@ -158,9 +158,9 @@ class _CalendarPageState extends FPageState<CalendarPage> {
           FText(calendarCont.dayRecordGraphCardTitle),
           Row(
             children: [
-              FText('${calendarCont.getInsufficientAmountText(FType.distance)}'),
+              FText(calendarCont.getInsufficientAmountText(FType.distance)),
               SizedBox(width: 10.0.w),
-              FText('${calendarCont.getInsufficientAmountText(FType.height)}'),
+              FText(calendarCont.getInsufficientAmountText(FType.height)),
             ],
           ),
         ],

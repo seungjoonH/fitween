@@ -21,6 +21,7 @@ export './widget/icon.dart';
 export './widget/indicator.dart';
 export './widget/list_tile.dart';
 export './widget/logo.dart';
+export './widget/point.dart';
 export './widget/profile.dart';
 export './widget/rank.dart';
 export './widget/scaffold.dart';

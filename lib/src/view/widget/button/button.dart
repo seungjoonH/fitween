@@ -18,6 +18,7 @@ class FButton extends StatefulWidget {
     this.alignment,
     this.stretch = false,
     this.padding,
+    this.shrinkWrap = false,
   }) : assert(text == null || child == null),
         assert(stretch || alignment == null);
 
@@ -33,6 +34,7 @@ class FButton extends StatefulWidget {
   final ButtonAlignment? alignment;
   final bool stretch;
   final EdgeInsets? padding;
+  final bool shrinkWrap;
 
   static final ancestorKey = GlobalKey();
 
@@ -41,9 +43,16 @@ class FButton extends StatefulWidget {
 }
 
 class _FButtonState extends State<FButton> with ScalePressable<FButton> {
-  EdgeInsets get _padding => widget.padding ?? EdgeInsets.symmetric(
-    horizontal: 25.0.r, vertical: 12.0.r,
-  );
+  EdgeInsets? get _padding {
+    if (widget.shrinkWrap) {
+      return EdgeInsets.symmetric(
+        horizontal: 8.0.r, vertical: 4.0.r,
+      );
+    }
+    return widget.padding ?? EdgeInsets.symmetric(
+      horizontal: 25.0.r, vertical: 12.0.r,
+    );
+  }
 
   @override
   Widget buildContent(BuildContext context) {
@@ -56,7 +65,7 @@ class _FButtonState extends State<FButton> with ScalePressable<FButton> {
     final border = widget.border
         ? Border.all(color: borderColorAlt, width: 1.0)
         : const Border();
-    final radius = BorderRadius.circular(15.0.r);
+    final radius = BorderRadius.circular(widget.shrinkWrap ? 10.0.r : 15.0.r);
 
     Widget? child = widget.child;
     child ??= FText(

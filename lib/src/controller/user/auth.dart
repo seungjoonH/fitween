@@ -19,14 +19,12 @@ class AuthCont {
 
   static LoginPageCont get loginPageCont => LoginPageCont.to;
 
-  static Future reloadFromDB() async {
-    _logged = await FUserDAO().loadOneAll(uid!);
-  }
+  static void setInfoInRecord() => _logged!.record!.info = _logged!.info;
 
   static void setUser(FUser user) => _logged = user;
+  static void updateUser(FUser user) => _logged!.merge(user);
   static void setUserRecord(FUserRecord record) {
-    _logged!.record = record;
-    _logged!.record!.info = _logged!.info;
+    _logged!.record = record; setInfoInRecord();
   }
 
   static fLogin(LoginType type) async {

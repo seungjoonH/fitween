@@ -5,7 +5,7 @@ import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/class/date_range.dart';
 import 'package:fitween/src/model/class/model.dart';
-import 'package:fitween/src/model/enum/ftype.dart';
+import 'package:fitween/src/model/enum/enum.dart';
 
 class FUserRecord extends FUser {
   @override
@@ -14,6 +14,11 @@ class FUserRecord extends FUser {
   late _RecordsData _goals;
   late _RecordsData _inputRecords;
   late _RecordsData _records;
+
+  Map<Period, List<RankingData>> _rankings = {};
+
+  @override
+  Map<Period, List<RankingData>> get rankings => _rankings;
 
   late bool _visible;
 
@@ -158,8 +163,31 @@ class FUserRecord extends FUser {
     dates.addAll(_records.doneDates);
     return dates.toList(growable: true);
   }
+
   @override
   DateTime get latestLogDate => logDates.last;
+
+  DateTime? getLatestRankedDate(Period period) {
+    DateTime? latest;
+    for (RankingData data in _rankings[period]!) {
+      latest = later(data.date, latest ?? regDate);
+    }
+    return latest;
+  }
+
+  @override
+  void setRankedData(Period period, RankingData data) async {
+    DateTime date = data.date;
+    int index = rankings[period]!
+        .indexWhere((ranking) => date.isAtSameMomentAs(ranking.date));
+    if (index < 0) { rankings[period]!.add(data); return; }
+
+    RankingData rankedData = rankings[period]![index];
+    if (rankedData.finished) return;
+
+    rankings[period]!.removeAt(index);
+    rankings[period]!.insert(index, rankedData);
+  }
 
   FUserRecord(super.key) : super();
   FUserRecord.fromJson(super.json) : super.fromJson();
@@ -172,6 +200,14 @@ class FUserRecord extends FUser {
     _inputRecords = _RecordsData.fromJson(json['inputRecords']);
     _records = _RecordsData.fromJson(json['records']);
     _goal = Goal._fromRecordsData(_goals);
+    _rankings = Map.fromIterables(
+      json['rankings']?.keys
+          .map<Period>((e) => Period.toEnum(e)!).toList() ?? Period.values,
+      json['rankings']?.values
+          .map<List<RankingData>>((list) => (list as List<dynamic>)
+          .map<RankingData>((e) => RankingData.fromJson((e as Map<String, dynamic>)))
+          .toList()).toList() ?? Period.values.map((e) => []),
+    );
   }
 
   @override
@@ -182,6 +218,10 @@ class FUserRecord extends FUser {
     json['goals'] = _goals.toJson();
     json['inputRecords'] = _inputRecords.toJson();
     json['records'] = _records.toJson();
+    json['rankings'] = Map.fromIterables(
+      _rankings.keys.map((e) => e.name),
+      _rankings.values.map((list) => list.map((e) => e.toJson())),
+    );
     return json;
   }
 }
@@ -301,7 +341,7 @@ class _RecordsData extends Model {
   void setRecordData(FType type, _RecordData data) {
     List<_RecordData> dataList = _data[type]!;
     int i = dataList.indexWhere((d) => d.date.isAtSameMomentAs(data.date));
-    if (i < 0) _data[type] = dataList..add(data);
+    if (i < 0) { _data[type] = dataList..add(data); return; }
     _data[type]![i] = data;
   }
 
@@ -374,6 +414,130 @@ class _RecordData extends Model {
   @override
   String get key => '';
 }
+
+class RankingData extends Model {
+  late Timestamp _date;
+  late int _point;
+  late bool _finished;
+  late bool _received;
+
+  Map<String, RankingPersonalData> _distance = {};
+  Map<String, RankingPersonalData> _height = {};
+  Map<String, RankingPersonalData> _weight = {};
+
+  bool get finished => _finished;
+
+  DateTime get date => _date.toDate();
+  set date(DateTime d) => _date = d.toTimestamp!;
+
+  void receive() => _received = true;
+
+  void setPoint(int point) => _point = point;
+  void addPoint(int point) => _point += point;
+
+  void setDataByType(FType type, String uid, RankingPersonalData data) {
+    assert(type != FType.calorie);
+    switch (type) {
+      case FType.distance: _distance[uid] = data; break;
+      case FType.height: _height[uid] = data; break;
+      case FType.weight: _weight[uid] = data; break;
+      default: break;
+    }
+  }
+
+  Map<String, RankingPersonalData> getDataByType(FType type) {
+    assert(type != FType.calorie);
+    return [_distance, _height, _weight][type.index - 1];
+  }
+
+  RankingData({
+    required DateTime date,
+    int fPoint = 0,
+    bool finished = false,
+    bool received = false,
+  }) {
+    this.date = date;
+    _point = fPoint;
+    _finished = finished;
+    _received = received;
+  }
+  RankingData.fromJson(super.json) : super.fromJson();
+
+  @override
+  void fromJson(Map<String, dynamic> json) {
+    _date = json['date'];
+    _point = json['point'];
+    _finished = json['finished'];
+    _received = json['received'];
+
+    _distance = Map.fromIterables(
+      json['distance'].keys,
+      json['distance'].values.map<RankingPersonalData>((d) => RankingPersonalData.fromJson(d)).toList(),
+    );
+    _height = Map.fromIterables(
+      json['height'].keys,
+      json['height'].values.map<RankingPersonalData>((d) => RankingPersonalData.fromJson(d)).toList(),
+    );
+    _weight = Map.fromIterables(
+      json['weight'].keys,
+      json['weight'].values.map<RankingPersonalData>((d) => RankingPersonalData.fromJson(d)).toList(),
+    );
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    json['date'] = _date;
+    json['point'] = _point;
+    json['finished'] = _finished;
+    json['received'] = _received;
+    json['distance'] = Map.fromIterables(
+      _distance.keys,
+      _distance.values.map((d) => d.toJson()),
+    );
+    json['height'] = Map.fromIterables(
+      _height.keys,
+      _height.values.map((d) => d.toJson()),
+    );
+    json['weight'] = Map.fromIterables(
+      _weight.keys,
+      _weight.values.map((d) => d.toJson()),
+    );
+    return json;
+  }
+
+  @override
+  String get key => throw UnimplementedError();
+}
+
+class RankingPersonalData extends Model {
+  late num _amount;
+  late int _rank;
+
+  RankingPersonalData(num amount, int rank) {
+    _amount = amount;
+    _rank = rank;
+  }
+  RankingPersonalData.fromJson(super.json) : super.fromJson();
+
+  @override
+  void fromJson(Map<String, dynamic> json) {
+    _amount = json['amount'];
+    _rank = json['rank'];
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    json['amount'] = _amount;
+    json['rank'] = _rank;
+    return json;
+  }
+
+  @override
+  String get key => throw UnimplementedError();
+}
+
 
 class FUserRecordBuilder {
   late String uid;

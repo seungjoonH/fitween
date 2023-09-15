@@ -9,7 +9,8 @@
     "register": "회원가입",
     "friend": "친구",
     "see-more": "더보기",
-    "calendar": "기록"
+    "calendar": "기록",
+    "ranking": "랭킹"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -58,7 +59,8 @@
     "weight": "체중",
     "height": "신장",
     "follow": "팔로우",
-    "unfollow": "팔로우 취소"
+    "unfollow": "팔로우 취소",
+    "finished": "종료"
   },
   "unit": {
     "step": "[]보",
@@ -118,6 +120,10 @@
     "height": "높이",
     "weight": "무게"
   },
+  "dialog": {
+    "cancel": "취소",
+    "ok": "확인"
+  },
   "login": {
     "loading": "로딩 중",
     "complete": "완료"
@@ -161,6 +167,12 @@
       "view-today": "오늘 보기"
     },
     "ranking": "랭킹"
+  },
+  "ranking": {
+    "fpoint-dialog": {
+      "title": "추산 FP",
+      "content": "{} 후에 획득할 수 있는 FP(피트윈포인트) 입니다. 높은 목표 설정, 목표 달성, 높은 순위 달성을 통해 더 많은 FP 획득에 도전해보세요!"
+    }
   },
   "friend": {
     "count": {

@@ -120,7 +120,9 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
   FLinearPercentIndicator({
     super.key,
     super.percent,
+    super.center,
     this.centerText,
+    this.height,
     super.backgroundColor,
     super.progressColor,
     super.curve,
@@ -129,6 +131,7 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
   });
 
   String? centerText;
+  final double? height;
 
   @override
   double get percent => max(super.percent, .02);
@@ -137,7 +140,7 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
   EdgeInsets get padding => EdgeInsets.zero;
 
   @override
-  double get lineHeight => 40.0.h;
+  double get lineHeight => height ?? 40.0.h;
 
   @override
   Radius? get barRadius => Radius.circular(6.0.r);
@@ -148,12 +151,16 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
   @override
   Curve get curve => Curves.easeInOut;
 
+  bool get _completed => percent == 1.0;
+
   @override
-  Widget? get center => FText(
+  Widget? get center => super.center ?? FText(
     centerText ?? '',
     style: FTheme.labelLarge,
-    color: FTheme.text,
-    bold: percent == 1.0,
+    color: _completed
+        ? FTheme.backgroundAlt
+        : FTheme.text,
+    bold: _completed,
   );
 
 }

@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/controller/health/health.dart';
-import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
@@ -17,11 +16,12 @@ class CalendarCont extends GetxController {
   bool get _loadComplete => _user != null;
 
   Future init() async {
-    await AuthCont.reloadFromDB();
+    HealthDataCont.fetchAllStepData();
+    HealthDataCont.fetchAllFlightsData();
     _user = AuthCont.logged!;
+    AuthCont.updateUser((await FUserRecordDAO().loadOne(_user!.key))!);
     await loadRecord();
     _events = _user!.events;
-    HealthDataCont.fetchOneDayStepData(selectedDay.ignoreTime);
   }
 
   Future loadRecord() async {

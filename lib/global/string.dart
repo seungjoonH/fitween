@@ -52,6 +52,20 @@ extension StringExtension on String {
     catch(_) { return null; }
   }
 
+  String? get removeLastZeroOfDecimal {
+    try {
+      int index = length - 1;
+      while (index > 0) {
+        if (this[index] != '0') break;
+        index--;
+      }
+
+      if (this[index] == '.') return substring(0, index);
+      return substring(0, index + 1);
+    }
+    catch(_) { return null; }
+  }
+
   String get short {
     const int max = 4;
     if (length <= max) return this;

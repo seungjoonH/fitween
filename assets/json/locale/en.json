@@ -9,7 +9,8 @@
     "register": "Register",
     "friend": "Friend",
     "see-more": "See More",
-    "calendar": "Calendar"
+    "calendar": "Calendar",
+    "ranking": "Ranking"
   },
   "hint": {
     "your-nickname": "Input your nickname",
@@ -57,7 +58,8 @@
     "weight": "weight",
     "height": "height",
     "follow": "Follow",
-    "unfollow": "Unfollow"
+    "unfollow": "Unfollow",
+    "finished": "Finished"
   },
   "unit": {
     "step": {
@@ -157,6 +159,10 @@
     "height": "height",
     "weight": "weight"
   },
+  "dialog": {
+    "cancel": "Cancel",
+    "ok": "OK"
+  },
   "login": {
     "loading": "Loading",
     "complete": "Complete"
@@ -200,6 +206,12 @@
       "view-today": "View Today"
     },
     "ranking": "Ranking"
+  },
+  "ranking": {
+    "fpoint-dialog": {
+      "title": "Estimated FP",
+      "content": "FPs (Fitween points) that can be earned {} later. Challenge yourself to get more FP by setting high goals, achieving goals, and being ranked high!"
+    }
   },
   "friend": {
     "count": {
