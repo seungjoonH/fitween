@@ -48,6 +48,7 @@ class LoginPageCont extends PageCont {
     });
   }
 
+  final _textKey = ''.obs;
   final _loadingState = false.obs;
   final _loadedPercentage = .0.obs;
   bool get loading => _loadingState.value;
@@ -55,26 +56,25 @@ class LoginPageCont extends PageCont {
   double get p => _loadedPercentage.value;
   Timer? _loadingTimer;
 
-  void startLoading() {
+  void startLoading([String? text]) {
+    _textKey(text);
     p = .0; _loadingState(true);
-    _loadingTimer = Timer.periodic(10.ms, (_) async {
-      p = min(1, p + .01);
-      if (p == 1) {
-        await delay(500.ms);
-        endLoading();
-        return;
-      }
-    });
+    _loadingTimer = Timer.periodic(5.ms, (_) => p = min(1, p + .01));
   }
 
-  void endLoading() {
-    _loadingState(false);
+  Future endLoading() async {
     _loadingTimer?.cancel();
+    _loadingTimer = Timer.periodic(5.ms, (_) => p = min(1, p + .01));
+    await delay(300.ms);
+    _loadingTimer?.cancel();
+    delay(1.s, () => _loadingState(false));
   }
 
   String get loadingText {
-    String key = p < 1 ? 'loading' : 'complete';
-    return LangCont.tr('login.$key');
+    String key = 'login.${_textKey.value}-';
+    key += p < 1 ? 'loading' : 'complete';
+    String percent = '${(p * 100).round()}' + '%';
+    return '${LangCont.tr(key)} ($percent)';
   }
 
   void onPressed(LoginType type) {

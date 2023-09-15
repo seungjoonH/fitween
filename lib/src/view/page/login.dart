@@ -34,7 +34,6 @@ class _LoginPageState extends FPageState {
       percent: cont.p,
       backgroundColor: FTheme.background,
       progressColor: FTheme.colorA,
-      animation: false,
       centerText: cont.loadingText,
     ));
   }

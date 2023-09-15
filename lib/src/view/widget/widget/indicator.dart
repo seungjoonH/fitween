@@ -98,20 +98,17 @@ class FCircularProgressIndicator extends StatelessWidget {
 
   final Widget? child;
 
+  LoadingCont get cont => LoadingCont.to;
+
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<LoadingCont>(
-      builder: (loadingP) {
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            child ?? Container(),
-            if (loadingP.loading)
-            const CircularProgressIndicator(color: FTheme.colorA),
-          ],
-        );
-      },
-    );
+    return Obx(() => Stack(
+      alignment: Alignment.center,
+      children: [
+        child ?? Container(),
+        if (cont.loading) const CircularProgressIndicator(color: FTheme.colorA),
+      ],
+    ));
   }
 }
 

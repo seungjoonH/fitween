@@ -45,10 +45,9 @@ class AuthCont {
 
     HealthDataCont.requestPermission();
 
-    loginPageCont.startLoading();
-
+    loginPageCont.startLoading('user');
     _logged = await FUserDAO().loadOneAll(loadedUid);
-    loginPageCont.p = .7;
+    await loginPageCont.endLoading();
 
     bool isNewcomer = _logged == null;
 
@@ -61,8 +60,9 @@ class AuthCont {
       FRoute.toOnboarding(); return;
     }
 
+    loginPageCont.startLoading('fetch');
     await HealthDataCont.fetchDataAfterLogin();
-    loginPageCont.p = .95;
+    await loginPageCont.endLoading();
 
     Timer.periodic(10.ms, (timer) {
       if (!loginPageCont.loading) {

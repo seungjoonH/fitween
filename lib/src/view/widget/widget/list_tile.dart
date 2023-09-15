@@ -29,64 +29,62 @@ class FListTile extends StatefulWidget {
 
 class _FListTileState extends State<FListTile> with DarkPressable<FListTile> {
 
+  LoadingCont get cont => LoadingCont.to;
+
   @override
   Widget buildContent(BuildContext context) {
-    return GetBuilder<LoadingCont>(
-      builder: (loadingP) {
-        return Container(
-          padding: EdgeInsets.all(15.0.r),
-          height: 100.0.h,
-          decoration: BoxDecoration(
-            color: loadingP.loading
-                ? loadingP.color
-                : Colors.transparent,
-            borderRadius: BorderRadius.circular(12.0.r),
+    return Obx(() => Container(
+      padding: EdgeInsets.all(15.0.r),
+      height: 100.0.h,
+      decoration: BoxDecoration(
+        color: cont.loading
+            ? cont.color
+            : Colors.transparent,
+        borderRadius: BorderRadius.circular(12.0.r),
+      ),
+      child: cont.loading ? Container() : Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          if (widget.leading != null)
+          Container(
+            constraints: BoxConstraints(minWidth: 30.0.w),
+            padding: EdgeInsets.only(right: 10.0.w),
+            child: widget.leading,
           ),
-          child: loadingP.loading ? Container() : Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              if (widget.leading != null)
-              Container(
-                constraints: BoxConstraints(minWidth: 30.0.w),
-                padding: EdgeInsets.only(right: 10.0.w),
-                child: widget.leading,
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FText(
-                      widget.title ?? '',
-                      color: FTheme.text,
-                      bold: true,
-                    ),
-                    if (widget.subtitle != null)
-                    FText(
-                      widget.subtitle!,
-                      color: FTheme.comment,
-                      style: FTheme.bodyMedium,
-                    ),
-                    if (widget.tags != null)
-                    Row(
-                      children: widget.tags?.map((FTag tag) => Padding(
-                        padding: EdgeInsets.only(right: 5.0.w),
-                        child: tag,
-                      )).toList() ?? [],
-                    ),
-                  ],
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                FText(
+                  widget.title ?? '',
+                  color: FTheme.text,
+                  bold: true,
                 ),
-              ),
-              if (widget.trailing != null)
-              Container(
-                padding: EdgeInsets.only(left: 10.0.w),
-                child: Row(children: widget.trailing!),
-              ),
-            ],
+                if (widget.subtitle != null)
+                FText(
+                  widget.subtitle!,
+                  color: FTheme.comment,
+                  style: FTheme.bodyMedium,
+                ),
+                if (widget.tags != null)
+                Row(
+                  children: widget.tags?.map((FTag tag) => Padding(
+                    padding: EdgeInsets.only(right: 5.0.w),
+                    child: tag,
+                  )).toList() ?? [],
+                ),
+              ],
+            ),
           ),
-        );
-      }
-    );
+          if (widget.trailing != null)
+            Container(
+              padding: EdgeInsets.only(left: 10.0.w),
+              child: Row(children: widget.trailing!),
+            ),
+        ],
+      ),
+    ));
   }
 
   @override

@@ -125,8 +125,10 @@
     "ok": "확인"
   },
   "login": {
-    "loading": "로딩 중",
-    "complete": "완료"
+    "user-loading": "사용자 데이터 불러오는 중",
+    "user-complete": "사용자 데이터 불러오기 완료",
+    "fetch-loading": "건강 데이터 불러오는 중",
+    "fetch-complete": "건강 데이터 불러오기 완료"
   },
   "onboarding": {
     "messages": {
