@@ -33,7 +33,7 @@ class _RankingPageState extends FPageState<RankingPage> {
 
     List<num> amounts = rankingCont.getAmounts(type, date);
     int rank = 1 + amounts.indexWhere((a) {
-      return a == rankingCont.getAmountOf(type, user.uid, date);
+      return a == rankingCont.getAmountOf(rankingCont.period, type, user.uid, date);
     });
 
     String centerText = rankingCont
@@ -135,7 +135,7 @@ class _RankingPageState extends FPageState<RankingPage> {
   }
 
   CarouselOptions get _options => CarouselOptions(
-    height: PageCont.size.height * .7,
+    height: PageCont.size.height * .55,
     viewportFraction: 1.0,
     enableInfiniteScroll: false,
     initialPage: cont.count,
@@ -143,49 +143,62 @@ class _RankingPageState extends FPageState<RankingPage> {
   );
 
   Widget _buildRankingCarouselWidget(BuildContext context) {
-    return Obx(() => CarouselSlider(
-      carouselController: cont.carouselCont,
-      items: rankingCont.getRankings(rankingCont.period).map((ranking) {
-        FType type = homeCont.activeType;
-        List<String> uids = rankingCont.getRanks(type, ranking.date);
-        List<Widget> children = [];
+    return Obx(() {
+      Period p = rankingCont.period;
+      return CarouselSlider(
+        carouselController: cont.carouselCont,
+        items: rankingCont.getRankings(p).map((ranking) {
+          FType type = homeCont.activeType;
+          List<String> uids = rankingCont.getRanks(p, type, ranking.date);
+          List<Widget> children = [];
 
-        for (int i = 0; i < uids.length; i++) {
-          FUser user = rankingCont.getUser(uids[i]);
-          Widget widget = _buildRankingIndividualGraphWidget(context, user, ranking.date);
-          children.add(widget);
-        }
+          for (int i = 0; i < uids.length; i++) {
+            FUser user = rankingCont.getUser(uids[i]);
+            Widget widget = _buildRankingIndividualGraphWidget(context, user, ranking.date);
+            children.add(widget);
+          }
 
-        return Padding(
-          padding: EdgeInsets.symmetric(horizontal: 28.0.w),
-          child: FCard(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  _buildDateIndicatorWidget(context, ranking),
-                  ...children.separateH(height: 10.0.h),
-                ],
+          return Padding(
+            padding: EdgeInsets.symmetric(horizontal: 28.0.w),
+            child: FCard(
+              child: SizedBox(
+                height: PageCont.size.height * .5,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      _buildDateIndicatorWidget(context, ranking),
+                      ...children.separateH(height: 10.0.h),
+                    ],
+                  ),
+                ),
               ),
             ),
-          ),
-        );
-      }).toList(),
-      options: _options,
+          );
+        }).toList(),
+        options: _options,
+      );
+    });
+  }
+
+  Widget _buildFPointButton(BuildContext context) {
+    return Obx(() => FPointButton(
+      amount: rankingCont.estimatedFPoint,
+      received: rankingCont.received,
+      finished: rankingCont.finished,
+      onPressed: cont.fPointButtonPressed,
     ));
   }
 
   Widget _buildRankingWidget(BuildContext context) {
     return Obx(() {
       return rankingCont.hasFriend
-          ? Container(
-        constraints: BoxConstraints(maxHeight: PageCont.size.height * .8),
-        child: Column(
-          children: [
-            _buildPeriodTabWidget(context),
-            SizedBox(height: 10.0.h),
-            _buildRankingCarouselWidget(context),
-          ],
-        )) : Center(
+          ? Column(
+            children: [
+              _buildPeriodTabWidget(context),
+              SizedBox(height: 10.0.h),
+              _buildRankingCarouselWidget(context),
+            ],
+          ) : Center(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 20.0.h),
           child: FText(
@@ -207,21 +220,9 @@ class _RankingPageState extends FPageState<RankingPage> {
       appBar: FAppBar(
         text: cont.appBarTitle,
         backPressed: FRoute.toHome,
-        actions: [
-          // Obx(() => Padding(
-          //   padding: EdgeInsets.all(10.0.r),
-          //   child: FPointAmountWidget(
-          //     amount: rankingCont.estimatedFPoint,
-          //     onPressed: cont.fPointButtonPressed,
-          //   ),
-          // )),
-        ],
       ),
-      body: Column(
-        children: [
-          _buildRankingWidget(context),
-        ],
-      ),
+      body: _buildRankingWidget(context),
+      bottomWidget: _buildFPointButton(context),
     );
   }
 

@@ -124,6 +124,15 @@
     "cancel": "취소",
     "ok": "확인"
   },
+  "fpoint": {
+    "progression": "진행",
+    "goal": "목표",
+    "achievement": "성취",
+    "top": "상위",
+    "period": "기간",
+    "success": "성공",
+    "fail": "실패"
+  },
   "login": {
     "user-loading": "사용자 데이터 불러오는 중",
     "user-complete": "사용자 데이터 불러오기 완료",

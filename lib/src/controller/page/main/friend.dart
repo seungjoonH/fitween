@@ -1,5 +1,6 @@
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:get/get.dart';
 
@@ -26,9 +27,11 @@ class FriendPageCont extends MainPageCont {
     _changed(!_followCont.hasSameMembers(_friendUids));
   }
 
-  void _syncFriends() {
+  Future _syncFriends() async {
     _followCont.saveFollowingState();
     _friends.assignAll(_logged.friends.values);
+    await FUserFriendDAO().saveOne(_logged.friend!);
+    await RankingCont.to.init();
   }
 
   @override
@@ -41,14 +44,16 @@ class FriendPageCont extends MainPageCont {
     FUserLoadCont cont = FUserLoadCont.onlyCollection();
     await _logged.friend!.loadFriends(cont: cont);
     FollowCont.to.init();
-    _syncFriends();
+    await _syncFriends();
   }
 
   final _editMode = false.obs;
   bool get editMode => _editMode.value;
 
-  void toggleMode() {
-    if (editMode && changed) _syncFriends();
+  void toggleMode() async {
+    if (editMode && changed) {
+      _syncFriends();
+    }
     _editMode(!_editMode.value);
   }
 

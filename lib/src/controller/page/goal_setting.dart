@@ -64,9 +64,13 @@ class GoalSettingPageCont extends CarouselPageCont {
 
   @override
   Future load() async {
-    if (!AuthCont.isLogged) return;
-    _setLogged();
-    userInfo = _user.info!.toBuilder();
+    if (!AuthCont.isLogged) {
+      userInfo = AuthCont.logged!.info!.toBuilder();
+    }
+    else {
+      _setLogged();
+      userInfo = _user.info!.toBuilder();
+    }
     userRecord = FUserRecordBuilder()
       ..setBuilder(_user.record!)
       ..uid = _user.uid;

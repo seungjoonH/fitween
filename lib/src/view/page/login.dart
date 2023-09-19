@@ -29,7 +29,7 @@ class _LoginPageState extends FPageState {
   @override
   LoginPageCont get cont => LoginPageCont.to;
 
-  Widget _buildProgramLoadingIndicatorWidget() {
+  Widget _buildProgramLoadingIndicatorWidget(BuildContext context) {
     return Obx(() => FLinearPercentIndicator(
       percent: cont.p,
       backgroundColor: FTheme.background,
@@ -38,7 +38,7 @@ class _LoginPageState extends FPageState {
     ));
   }
 
-  Widget _buildSignInButtonWidget() {
+  Widget _buildSignInButtonWidget(BuildContext context) {
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
@@ -82,8 +82,8 @@ class _LoginPageState extends FPageState {
         children: [
           const Expanded(child: SizedBox()),
           cont.loading
-              ? _buildProgramLoadingIndicatorWidget()
-              : _buildSignInButtonWidget(),
+              ? _buildProgramLoadingIndicatorWidget(context)
+              : _buildSignInButtonWidget(context),
           SizedBox(height: 50.0.h),
           const FTag(version),
         ],

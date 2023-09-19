@@ -73,7 +73,7 @@ class LoginPageCont extends PageCont {
   String get loadingText {
     String key = 'login.${_textKey.value}-';
     key += p < 1 ? 'loading' : 'complete';
-    String percent = '${(p * 100).round()}' + '%';
+    String percent = '${(p * 100).round()}%';
     return '${LangCont.tr(key)} ($percent)';
   }
 

@@ -23,10 +23,10 @@ class HealthDataCont extends GetxController {
 
   static get _read =>
       List.generate(_types.length, (_) => HealthDataAccess.READ);
-  static get _write =>
-      List.generate(_types.length, (_) => HealthDataAccess.WRITE);
-  static get _readWrite =>
-      List.generate(_types.length, (_) => HealthDataAccess.READ_WRITE);
+  // static get _write =>
+  //     List.generate(_types.length, (_) => HealthDataAccess.WRITE);
+  // static get _readWrite =>
+  //     List.generate(_types.length, (_) => HealthDataAccess.READ_WRITE);
 
 
   static bool _approved = false;

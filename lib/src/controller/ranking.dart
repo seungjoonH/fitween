@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:fitween/global/global.dart';
-import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/controller/point.dart';
 import 'package:fitween/src/model/class/dao.dart';
@@ -20,8 +19,15 @@ class RankingCont extends GetxController {
     return _logged.rankings[period]!..sort(compare);
   }
 
+  RankingData? get selectedRanking {
+    List<RankingData> data = getRankings(period);
+    return data.firstWhereOrNull((d) => d.date
+        .isAtSameMomentAs(rankingPageCont.selectedDate));
+  }
+
   final _friendsWithMe = <String, FUser>{}.obs;
   final _recordAmountsOfFriendsWithMe = <Period, Map<DateTime, Map<String, FriendRecord>>>{}.obs;
+  final _entireCount = 1.obs;
 
   int get friendsCount => _friendsWithMe.length;
 
@@ -36,7 +42,9 @@ class RankingCont extends GetxController {
   Future init() async {
     await loadFriendData();
     _startLeftTimer(today);
-    _calculateFPoints();
+    await _saveRankingsData();
+    rankingPageCont.setSelectedDate(0);
+    calculateFPoints();
   }
 
   bool isAvailableFriend(String uid, DateTime date) {
@@ -49,7 +57,8 @@ class RankingCont extends GetxController {
     _recordAmountsOfFriendsWithMe[p]![date] = {};
 
     for (String uid in _friendsWithMe.keys) {
-      if (!isAvailableFriend(uid, date)) continue;
+      bool finished = !date.isAtSameMomentAs(_getStartTimes(today)[p]!);
+      if (finished && !isAvailableFriend(uid, date)) continue;
 
       FUser user = _friendsWithMe[uid]!;
       late Map<FType, num> amounts;
@@ -77,7 +86,7 @@ class RankingCont extends GetxController {
     _friendsWithMe.clear();
     _recordAmountsOfFriendsWithMe.clear();
     _friendsWithMe[_logged.uid] = _logged;
-    _friendsWithMe.addAll(_logged.friends);
+    _friendsWithMe.addAll(_logged.allFriends);
 
     for (Period p in Period.values) {
       _recordAmountsOfFriendsWithMe[p] = {};
@@ -90,26 +99,32 @@ class RankingCont extends GetxController {
       DateTime beforeDate = p.getBeforeDate(today, 1);
       DateTime currentDate = p.getCurrentDate(today);
 
+      _recordAmountsOfFriendsWithMe[p]![beforeDate] = {};
+      _recordAmountsOfFriendsWithMe[p]![currentDate] = {};
       _loadFriendDataByDate(p, beforeDate);
       _loadFriendDataByDate(p, currentDate);
     }
-    _saveRankingsData();
+    await _saveRankingsData();
   }
 
   void _saveRankingsDataByDate(Period p, DateTime date) {
     RankingData? data = getRankings(p)
         .firstWhereOrNull((ranking) => ranking.date.isAtSameMomentAs(date));
 
-    data ??= RankingData(
-      date: date,
-      finished: !date.isAtSameMomentAs(today),
-    );
+    data ??= RankingData(date: date);
+
+    if (!data.date.isAtSameMomentAs(_getStartTimes(today)[p]!)) {
+      data.finish();
+    }
+
     int myRank = -1;
+    _entireCount(1);
 
     for (FType type in FType.activeValues) {
       for (String uid in _recordAmountsOfFriendsWithMe[p]![date]!.keys) {
-        num amount = getAmountOf(type, uid, date);
-        int rank = getRankOf(type, uid, date);
+        num amount = getAmountOf(p, type, uid, date);
+        int rank = getRankOf(p, type, uid, date);
+        if (amount > 0) _entireCount(_entireCount.value + 1);
         if (uid == _logged.key) myRank = rank;
         RankingPersonalData personalData = RankingPersonalData(amount, rank);
         data.setDataByType(type, uid, personalData);
@@ -117,71 +132,86 @@ class RankingCont extends GetxController {
 
       FPointCalculator calculator = FPointCalculator(
         goal: _logged.goal.byType(type),
-        does: getAmountOf(type, _logged.key, date),
+        does: getAmountOf(p, type, _logged.key, date),
         type: type,
+        period: period,
       );
 
-      data.setPoint(calculator.getPeriodlyRankedFPoint(period, myRank));
+      int point = calculator.getRankedFPoint(
+        myRank, _entireCount.value,
+      );
+
+      data.setPoint(point);
+      // if (point == 0) data.receive(type);
     }
+
 
     _logged.setRankedData(p, data);
   }
 
-  void _saveRankingsData() {
+  Future _saveRankingsData() async {
     for (Period p in Period.values) {
-      _saveRankingsDataByDate(p, p.getBeforeDate(today, 1));
-      _saveRankingsDataByDate(p, p.getCurrentDate(today));
+      List<RankingData> dataList = getRankings(p);
+      if (dataList.isEmpty) {
+        _saveRankingsDataByDate(p, p.getBeforeDate(today, 1));
+        _saveRankingsDataByDate(p, p.getCurrentDate(today));
+        continue;
+      }
+      for (RankingData data in dataList) {
+        _saveRankingsDataByDate(p, data.date);
+      }
     }
-    FUserRecordDAO().saveOne(_logged.record!);
+    await FUserRecordDAO().saveOne(_logged.record!);
   }
 
   void changePeriod(Period p) {
     _period(p);
     rankingPageCont.gotoLastPage();
-    _calculateFPoints();
+    calculateFPoints();
   }
 
   String getAmountTextOf(FType type, String uid, DateTime date, {bool scaling = true}) {
-    num amount = getAmountOf(type, uid, date);
+    num amount = getAmountOf(period, type, uid, date);
     return type.withUnit(amount, scaling: scaling);
   }
   
   double getPercentOf(FType type, String uid, DateTime date) {
     num maxAmount = getAmounts(type, date).first;
-    num amount = getAmountOf(type, uid, date);
+    num amount = getAmountOf(period, type, uid, date);
     return maxAmount == 0 ? .0 : amount / maxAmount;
   }
 
-  num getAmountOf(FType type, String uid, DateTime date) {
+  num getAmountOf(Period p, FType type, String uid, DateTime date) {
     if (_recordAmountsOfFriendsWithMe.isEmpty) return .0;
-    if (_recordAmountsOfFriendsWithMe[period]![date] == null) return .0;
-    return _recordAmountsOfFriendsWithMe[period]![date]![uid]!.byType(type);
+    if (_recordAmountsOfFriendsWithMe[p]![date] == null) return .0;
+    return _recordAmountsOfFriendsWithMe[p]![date]![uid]!.byType(type);
   }
 
   List<num> getAmounts(FType type, DateTime date) {
     List<num> amounts = [];
     for (String uid in _friendsWithMe.keys) {
       if (!isAvailableFriend(uid, date)) continue;
-      amounts.add(getAmountOf(type, uid, date));
+      amounts.add(getAmountOf(period, type, uid, date));
     }
     return amounts..sort((a, b) => b.compareTo(a));
   }
 
-  int getRankOf(FType type, String uid, DateTime date) {
-    return getRanks(type, date).indexWhere((u) => u == uid);
+  int getRankOf(Period p, FType type, String uid, DateTime date) {
+    return getRanks(p, type, date).indexWhere((u) => u == uid);
   }
 
-  List<String> getRanks(FType type, DateTime date) {
+  List<String> getRanks(Period p, FType type, DateTime date) {
     if (_recordAmountsOfFriendsWithMe.isEmpty) return [];
-    if (_recordAmountsOfFriendsWithMe[period]![date] == null) return [];
-    num getNum(String uid) => _recordAmountsOfFriendsWithMe[period]![date]![uid]!.byType(type);
+    if (_recordAmountsOfFriendsWithMe[p]![date] == null) return [];
+    num getNum(String uid) => _recordAmountsOfFriendsWithMe[p]![date]![uid]!.byType(type);
     int compare(String a, String b) => getNum(b).compareTo(getNum(a));
-    List<String> uids = [..._recordAmountsOfFriendsWithMe[period]![date]!.keys];
+    List<String> uids = [..._recordAmountsOfFriendsWithMe[p]![date]!.keys];
+    uids.removeWhere((uid) => !_logged.friend!.isFollowingOrMe(uid));
     return uids..sort(compare);
   }
 
   List<String> getRanksFocusedOnMe(FType type, int count) {
-    List<String> ranks = [...getRanks(type, getStartTime(today))];
+    List<String> ranks = [...getRanks(period, type, getStartTime(today))];
 
     if (ranks.length < count) return ranks;
 
@@ -262,29 +292,43 @@ class RankingCont extends GetxController {
   void _startLeftTimer(DateTime date) {
     _leftTimer = Timer.periodic(500.ms, (_) {
       for (Period p in Period.values) {
-        _leftTimes[p] = _getEndTimes(date)[p]!.difference(now);
+        DateTime startTime = _getStartTimes(today)[p]!;
+        DateTime endTime = _getEndTimes(today)[p]!;
+        _leftTimes[p] = endTime.difference(now);
+
+        bool currentRankingExist = getRankings(p)
+            .any((e) => e.date.isAtSameMomentAs(startTime));
+
+        if (!currentRankingExist) _saveRankingsData();
       }
     });
   }
 
+  bool get received => selectedRanking
+      ?.getReceived(homePageCont.activeType) ?? false;
+  bool get finished => selectedRanking?.finished ?? false;
+
   final _estimatedFPoint = 0.obs;
   int get estimatedFPoint => _estimatedFPoint.value;
+  late FPointCalculator calculator;
 
-  void _calculateFPoints() {
+  void calculateFPoints() {
     String uid = _logged.key;
     int point = 0;
 
-    for (FType type in FType.activeValues) {
-      FPointCalculator calculator = FPointCalculator(
-        goal: _logged.goal.byType(type),
-        does: getAmountOf(type, uid, rankingPageCont.selectedDate),
-        type: type,
-      );
+    FType type = homePageCont.activeType;
+    DateTime date = rankingPageCont.selectedDate;
 
-      point += calculator.getPeriodlyRankedFPoint(
-        period, getRankOf(type, uid, rankingPageCont.selectedDate),
-      );
-    }
+    calculator = FPointCalculator(
+      goal: _logged.goal.byType(type),
+      does: getAmountOf(period, type, uid, date),
+      type: type,
+      period: period,
+    );
+
+    point = calculator.getRankedFPoint(
+      getRankOf(period, type, uid, date), _entireCount.value,
+    );
 
     _estimatedFPoint(point);
   }

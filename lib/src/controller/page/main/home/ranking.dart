@@ -39,14 +39,23 @@ class RankingPageCont extends PageCont {
   void gotoLastPage() {
     if (FRoute.currentPage != '/home/ranking') return;
     int lastPageIndex = count - 1;
-    _pageIndex(lastPageIndex);
     carouselCont.jumpToPage(lastPageIndex);
+    _pageIndex(lastPageIndex);
+    setSelectedDate(lastPageIndex);
+    rankingCont.calculateFPoints();
   }
 
   void onPageChanged(int index, CarouselPageChangedReason reason) {
     _pageIndex(index);
+    setSelectedDate(index);
+    rankingCont.calculateFPoints();
+  }
+
+  void setSelectedDate(int index) {
     Period p = rankingCont.period;
-    _selectedDate(p.getBeforeDate(p.getCurrentDate(today), count - index - 1));
+    List<RankingData> data = rankingCont.getRankings(p);
+    DateTime time = data[index].date;
+    _selectedDate(time);
   }
 
   @override
@@ -59,11 +68,11 @@ class RankingPageCont extends PageCont {
         children: [
           FPointAmountWidget(amount: rankingCont.estimatedFPoint),
           SizedBox(height: 20.0.h),
-          Obx(() => FText(
-            fPointDialogContent,
+          FText(
+            rankingCont.calculator.pointText,
             maxLines: 0,
             color: FTheme.comment,
-          )),
+          ),
         ],
       ),
       type: DialogType.mono,

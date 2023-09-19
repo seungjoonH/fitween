@@ -208,6 +208,7 @@ class FUserRecord extends FUser {
           .map<RankingData>((e) => RankingData.fromJson((e as Map<String, dynamic>)))
           .toList()).toList() ?? Period.values.map((e) => []),
     );
+
   }
 
   @override
@@ -419,18 +420,22 @@ class RankingData extends Model {
   late Timestamp _date;
   late int _point;
   late bool _finished;
-  late bool _received;
+  late Map<FType, bool> _received;
 
   Map<String, RankingPersonalData> _distance = {};
   Map<String, RankingPersonalData> _height = {};
   Map<String, RankingPersonalData> _weight = {};
 
+  int get point => _point;
+
   bool get finished => _finished;
+  bool getReceived(FType type) => _received[type]!;
+
+  void finish() => _finished = true;
+  void receive(FType type) => _received[type] = true;
 
   DateTime get date => _date.toDate();
   set date(DateTime d) => _date = d.toTimestamp!;
-
-  void receive() => _received = true;
 
   void setPoint(int point) => _point = point;
   void addPoint(int point) => _point += point;
@@ -454,12 +459,11 @@ class RankingData extends Model {
     required DateTime date,
     int fPoint = 0,
     bool finished = false,
-    bool received = false,
   }) {
     this.date = date;
     _point = fPoint;
     _finished = finished;
-    _received = received;
+    _received = { for (var key in FType.activeValues) key : false };
   }
   RankingData.fromJson(super.json) : super.fromJson();
 
@@ -468,8 +472,10 @@ class RankingData extends Model {
     _date = json['date'];
     _point = json['point'];
     _finished = json['finished'];
-    _received = json['received'];
-
+    _received = Map.fromIterables(
+      json['received'].keys.map<FType>((e) => FType.toEnum(e!)!).toList(),
+      json['received'].values.toList().cast<bool>(),
+    );
     _distance = Map.fromIterables(
       json['distance'].keys,
       json['distance'].values.map<RankingPersonalData>((d) => RankingPersonalData.fromJson(d)).toList(),
@@ -490,7 +496,10 @@ class RankingData extends Model {
     json['date'] = _date;
     json['point'] = _point;
     json['finished'] = _finished;
-    json['received'] = _received;
+    json['received'] = Map.fromIterables(
+      _received.keys.map((type) => type.name).toList(),
+      _received.values,
+    );
     json['distance'] = Map.fromIterables(
       _distance.keys,
       _distance.values.map((d) => d.toJson()),

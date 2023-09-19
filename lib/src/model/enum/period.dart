@@ -9,6 +9,8 @@ enum Period {
   static Period? toEnum(String? string) =>
       values.firstWhereOrNull((period) => period.name == string);
 
+  int get days => [1, 7, 30][index];
+
   DateTime getCurrentDate(DateTime date) => [
     date, date.firstDayOfWeek, date.firstDayOfMonth
   ][index].ignoreTime;

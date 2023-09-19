@@ -5,13 +5,20 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class FPointWidget extends StatelessWidget {
-  const FPointWidget({super.key});
+  const FPointWidget({
+    super.key,
+    this.isWhite = false,
+  });
 
-  static const _asset = 'assets/image/logo/point.svg';
+  final bool isWhite;
+
+  static const _asset = 'assets/image/logo/point';
+  static const _purple = '${_asset}_purple.svg';
+  static const _white = '${_asset}_white.svg';
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(_asset, width: 18.0.w);
+    return SvgPicture.asset(isWhite ? _white : _purple, width: 18.0.w);
   }
 }
 
@@ -40,6 +47,56 @@ class FPointAmountWidget extends StatelessWidget {
             '$amount FP',
             style: FTheme.bodyLarge,
             color: FTheme.point,
+            bold: true,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class FPointButton extends StatelessWidget {
+  const FPointButton({
+    super.key,
+    required this.amount,
+    this.received = false,
+    this.finished = false,
+    this.onPressed,
+  });
+
+  final int amount;
+  final bool received;
+  final bool finished;
+  final VoidCallback? onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    Color textColor = finished
+        ? FTheme.achro90
+        : FTheme.colorE;
+    Color? borderColor;
+    Color backgroundColor = received
+        ? FTheme.unselected
+        : FTheme.colorE;
+
+    if (!finished) {
+      borderColor = FTheme.colorE;
+      backgroundColor = FTheme.backgroundAlt;
+    }
+
+    return FButton(
+      stretch: true,
+      borderColor: borderColor,
+      backgroundColor: backgroundColor,
+      onPressed: onPressed,
+      child: Row(
+        children: [
+          FPointWidget(isWhite: finished),
+          SizedBox(width: 2.0.w),
+          FText(
+            '${amount.thouSep} FP',
+            style: FTheme.titleSmall,
+            color: textColor,
             bold: true,
           ),
         ],

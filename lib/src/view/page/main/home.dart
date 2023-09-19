@@ -185,7 +185,9 @@ class _HomePageState extends FPageState {
 
     List<num> amounts = rankingCont.getAmounts(type, startTime);
     int rank = 1 + amounts.indexWhere((a) {
-      return a == rankingCont.getAmountOf(type, user.uid, startTime);
+      return a == rankingCont.getAmountOf(
+        rankingCont.period, type, user.uid, startTime,
+      );
     });
 
     return Column(

@@ -70,29 +70,24 @@ class FTheme {
   /// typography
   static const fontFamily = 'Pretendard';
 
-  static TextTheme get _textTheme {
-    try { return Theme.of(PageCont.context).textTheme; }
-    catch (_) { return Theme.of(PageCont.contexts.first).textTheme; }
-  }
-
   static TextStyle? get cardTitleStyle => headlineSmall;
   static TextStyle? get commentStyle => bodyLarge;
 
-  static TextStyle? get displayLarge => _textTheme.displayLarge;
-  static TextStyle? get displayMedium => _textTheme.displayMedium;
-  static TextStyle? get displaySmall => _textTheme.displaySmall;
-  static TextStyle? get headlineLarge => _textTheme.headlineLarge;
-  static TextStyle? get headlineMedium => _textTheme.headlineMedium;
-  static TextStyle? get headlineSmall => _textTheme.headlineSmall;
-  static TextStyle? get titleLarge => _textTheme.titleLarge;
-  static TextStyle? get titleMedium => _textTheme.titleMedium;
-  static TextStyle? get titleSmall => _textTheme.titleSmall;
-  static TextStyle? get bodyLarge => _textTheme.bodyLarge;
-  static TextStyle? get bodyMedium => _textTheme.bodyMedium;
-  static TextStyle? get bodySmall => _textTheme.bodySmall;
-  static TextStyle? get labelLarge => _textTheme.labelLarge;
-  static TextStyle? get labelMedium => _textTheme.labelMedium;
-  static TextStyle? get labelSmall => _textTheme.labelSmall;
+  static TextStyle? get displayLarge => textTheme.displayLarge;
+  static TextStyle? get displayMedium => textTheme.displayMedium;
+  static TextStyle? get displaySmall => textTheme.displaySmall;
+  static TextStyle? get headlineLarge => textTheme.headlineLarge;
+  static TextStyle? get headlineMedium => textTheme.headlineMedium;
+  static TextStyle? get headlineSmall => textTheme.headlineSmall;
+  static TextStyle? get titleLarge => textTheme.titleLarge;
+  static TextStyle? get titleMedium => textTheme.titleMedium;
+  static TextStyle? get titleSmall => textTheme.titleSmall;
+  static TextStyle? get bodyLarge => textTheme.bodyLarge;
+  static TextStyle? get bodyMedium => textTheme.bodyMedium;
+  static TextStyle? get bodySmall => textTheme.bodySmall;
+  static TextStyle? get labelLarge => textTheme.labelLarge;
+  static TextStyle? get labelMedium => textTheme.labelMedium;
+  static TextStyle? get labelSmall => textTheme.labelSmall;
 
   static TextStyle get veryLargeText => const TextStyle(
     fontFamily: fontFamily,

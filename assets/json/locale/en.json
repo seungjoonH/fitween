@@ -163,6 +163,15 @@
     "cancel": "Cancel",
     "ok": "OK"
   },
+  "fpoint": {
+    "progression": "Prog.",
+    "goal": "Goal",
+    "achievement": "Achv.",
+    "top": "Top",
+    "period": "Period",
+    "success": "Success",
+    "fail": "Fail"
+  },
   "login": {
     "loading": "Loading",
     "complete": "Complete",

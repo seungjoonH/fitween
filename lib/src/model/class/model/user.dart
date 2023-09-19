@@ -36,8 +36,8 @@ class FUser extends Model {
   Color get badgeColor => collection!.badgeColor;
 
   // friend
+  Map<String, FUser> get allFriends => friend!.allFriends;
   Map<String, FUser> get friends => friend!.friends;
-  Map<String, FUser> get rivals => friend!.rivals;
 
   DateTime followedDate(String uid) => friend!.followedDate(uid);
 
