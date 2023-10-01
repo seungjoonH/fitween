@@ -71,4 +71,6 @@ class AuthCont {
       }
     });
   }
+
+  static fLogout() => _logged = null;
 }

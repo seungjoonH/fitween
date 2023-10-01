@@ -104,7 +104,7 @@ class RankingCont extends GetxController {
       _loadFriendDataByDate(p, beforeDate);
       _loadFriendDataByDate(p, currentDate);
     }
-    await _saveRankingsData();
+    // await _saveRankingsData();
   }
 
   void _saveRankingsDataByDate(Period p, DateTime date) {
@@ -296,10 +296,8 @@ class RankingCont extends GetxController {
         DateTime endTime = _getEndTimes(today)[p]!;
         _leftTimes[p] = endTime.difference(now);
 
-        bool currentRankingExist = getRankings(p)
-            .any((e) => e.date.isAtSameMomentAs(startTime));
-
-        if (!currentRankingExist) _saveRankingsData();
+        // bool currentRankingExist = getRankings(p)
+        //     .any((e) => e.date.isAtSameMomentAs(startTime));
       }
     });
   }

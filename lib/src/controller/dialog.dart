@@ -2,6 +2,7 @@ import 'package:fitween/global/string.dart';
 import 'package:fitween/global/theme.dart';
 import 'package:fitween/main.dart';
 import 'package:fitween/route.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/controller/loading.dart';
 import 'package:fitween/src/model/class/dao.dart';
@@ -118,6 +119,7 @@ class DialogCont {
       ),
       type: DialogType.mono,
     );
-    FRoute.toHome();
+    AuthCont.fLogout();
+    FRoute.toLogin();
   }
 }

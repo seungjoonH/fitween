@@ -55,6 +55,10 @@ class LoadingCont extends GetxController {
     });
 
     delay((sec ?? 0 * 1).s, () => _refreshQueue.remove(id));
+    // delay((sec ?? 0 * 1).s, () {
+    //   if (id != null) _refreshQueue.remove(id); // Remove id if it's not null
+    // });
+
     return true;
   }
 
