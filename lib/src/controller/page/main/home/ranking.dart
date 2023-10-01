@@ -59,7 +59,9 @@ class RankingPageCont extends PageCont {
   }
 
   @override
-  Future load() async {}
+  Future load() async {
+    await rankingCont.init();
+  }
 
   void fPointButtonPressed() {
     showFDialog(

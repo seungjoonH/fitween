@@ -145,18 +145,15 @@ class RankingCont extends GetxController {
       // if (point == 0) data.receive(type);
     }
 
-
     _logged.setRankedData(p, data);
   }
 
   Future _saveRankingsData() async {
     for (Period p in Period.values) {
       List<RankingData> dataList = getRankings(p);
-      if (dataList.isEmpty) {
-        _saveRankingsDataByDate(p, p.getBeforeDate(today, 1));
-        _saveRankingsDataByDate(p, p.getCurrentDate(today));
-        continue;
-      }
+      _saveRankingsDataByDate(p, p.getBeforeDate(today, 1));
+      _saveRankingsDataByDate(p, p.getCurrentDate(today));
+
       for (RankingData data in dataList) {
         _saveRankingsDataByDate(p, data.date);
       }
