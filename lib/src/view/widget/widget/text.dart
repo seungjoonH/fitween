@@ -108,6 +108,7 @@ class FTexts extends StatelessWidget {
     this.highlightStyles,
     this.align = TextAlign.start,
     this.mainAxisAlignment = MainAxisAlignment.start,
+    this.wordWrap = false,
   });
 
   final String text;
@@ -119,6 +120,7 @@ class FTexts extends StatelessWidget {
   final List<TextStyle>? highlightStyles;
   final TextAlign align;
   final MainAxisAlignment mainAxisAlignment;
+  final bool wordWrap;
 
   @override
   Widget build(BuildContext context) {
@@ -155,25 +157,24 @@ class FTexts extends StatelessWidget {
 
     TextStyle? textStyle = styleAlt?.copyWith(color: textColorAlt);
 
-    return Row(
+    RichText textWidget = RichText(
+      textAlign: align,
+      text: TextSpan(
+        style: textStyle,
+        children: List.generate(
+            texts.length, (i) => TextSpan(
+          text: texts[i],
+          style: i % 2 == 0
+              ? textStyle : hStyles[i ~/ 2],
+        )),
+      ),
+    );
+
+    return wordWrap ? textWidget : Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: mainAxisAlignment,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        RichText(
-          textAlign: align,
-          text: TextSpan(
-            style: textStyle,
-            children: List.generate(
-              texts.length, (i) => TextSpan(
-              text: texts[i],
-              style: i % 2 == 0
-                  ? textStyle : hStyles[i ~/ 2],
-            ),
-            ),
-          ),
-        ),
-      ],
+      children: [ textWidget ],
     );
   }
 }

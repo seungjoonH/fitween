@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/enum/enum.dart';
 import 'package:get/get.dart';

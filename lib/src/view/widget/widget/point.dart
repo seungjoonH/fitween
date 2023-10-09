@@ -8,9 +8,11 @@ class FPointWidget extends StatelessWidget {
   const FPointWidget({
     super.key,
     this.isWhite = false,
+    this.grey = false,
   });
 
   final bool isWhite;
+  final bool grey;
 
   static const _asset = 'assets/image/logo/point';
   static const _purple = '${_asset}_purple.svg';
@@ -18,7 +20,19 @@ class FPointWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(isWhite ? _white : _purple, width: 18.0.w);
+    return ColorFiltered(
+      colorFilter: grey ? ColorFilter.mode(
+        FTheme.comment,
+        BlendMode.saturation,
+      ) : const ColorFilter.mode(
+        Colors.transparent,
+        BlendMode.multiply,
+      ),
+      child: SvgPicture.asset(
+        isWhite ? _white : _purple,
+        width: 18.0.w,
+      ),
+    );
   }
 }
 

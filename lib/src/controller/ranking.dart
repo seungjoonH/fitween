@@ -289,12 +289,8 @@ class RankingCont extends GetxController {
   void _startLeftTimer(DateTime date) {
     _leftTimer = Timer.periodic(500.ms, (_) {
       for (Period p in Period.values) {
-        DateTime startTime = _getStartTimes(today)[p]!;
         DateTime endTime = _getEndTimes(today)[p]!;
         _leftTimes[p] = endTime.difference(now);
-
-        // bool currentRankingExist = getRankings(p)
-        //     .any((e) => e.date.isAtSameMomentAs(startTime));
       }
     });
   }

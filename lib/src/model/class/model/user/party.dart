@@ -1,3 +1,4 @@
+import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model/party.dart';
 import 'package:fitween/src/model/class/model/user.dart';
 
@@ -9,6 +10,20 @@ class FUserParty extends FUser {
 
   @override
   Map<String, Party> parties = {};
+
+  Future loadParties() async {
+    for (String id in _partyIds) {
+      Party? loaded = await PartyDAO().loadOne(id);
+
+      if (loaded == null) throw Exception('[ERROR] Party($id) load failed');
+      parties[id] = loaded;
+    }
+  }
+
+  void addParty(Party party) {
+    _partyIds.add(party.key);
+    parties[party.key] = party;
+  }
 
   void removeParty(String partyId) {
     _partyIds.remove(partyId);

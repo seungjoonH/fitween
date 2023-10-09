@@ -13,6 +13,13 @@ class GetCont {
     Get.put(FriendPageCont());
     Get.put(FriendSearchPageCont());
     Get.put(ContentsPageCont());
+    Get.put(ChallengePageCont());
+    Get.put(PartyPageCont());
+    Get.put(ChallengeDetailPageCont());
+    Get.put(PartyCreatePageCont());
+    Get.put(WeightPageCont());
+    Get.put(BattlePageCont());
+    Get.put(ContentsPageCont());
     Get.put(SeeMorePageCont());
   }
 

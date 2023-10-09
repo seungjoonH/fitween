@@ -1,7 +1,17 @@
+import 'package:fitween/global/global.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/view/widget/widget.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fitween/global/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+enum ButtonAlignment {
+  left, right, center;
+  CrossAxisAlignment get translate {
+    return CrossAxisAlignment.values[index];
+  }
+}
 
 class FButton extends StatefulWidget {
   const FButton({
@@ -61,7 +71,7 @@ class _FButtonState extends State<FButton> with ScalePressable<FButton> {
     Color borderColorAlt = widget.borderColor ?? FTheme.stroke;
 
     final style = widget.style
-        ?? FTheme.bodyLarge;
+        ?? FTheme.titleSmall;
     final border = widget.border
         ? Border.all(color: borderColorAlt, width: 1.0)
         : const Border();
@@ -100,12 +110,74 @@ class _FButtonState extends State<FButton> with ScalePressable<FButton> {
   VoidCallback? get onPressed => widget.onPressed;
 }
 
-enum ButtonAlignment {
-  left, right, center;
-  CrossAxisAlignment get translate {
-    return CrossAxisAlignment.values[index];
+class FCopyButton extends StatefulWidget {
+  const FCopyButton({super.key, required this.text});
+
+  final String text;
+
+  @override
+  State<FCopyButton> createState() => _FCopyButtonState();
+}
+
+class _FCopyButtonState extends State<FCopyButton> {
+  bool _copied = false;
+
+  void _copy() async {
+    setState(() => _copied = true);
+    Clipboard.setData(ClipboardData(text: widget.text));
+    await delay(1.s, () => setState(() => _copied = false));
+  }
+
+  Widget _buildBeforeCopyWidget(BuildContext context) {
+    return Row(
+      children: [
+        FText(
+          widget.text,
+          style: FTheme.titleLarge,
+          color: FTheme.backgroundAlt,
+          bold: true,
+        ),
+        SizedBox(width: 10.0.w),
+        Icon(
+          Icons.copy,
+          color: FTheme.backgroundAlt,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildCopiedWidget(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          Icons.check,
+          color: FTheme.backgroundAlt,
+        ),
+        SizedBox(width: 10.0.w),
+        FText(
+          LangCont.tr('word.copied').capitalize!,
+          style: FTheme.titleLarge,
+          color: FTheme.backgroundAlt,
+          bold: true,
+        ),
+      ],
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FButton(
+      onPressed: _copy,
+      stretch: true,
+      shrinkWrap: true,
+      backgroundColor: FTheme.outline,
+      child: _copied
+          ? _buildCopiedWidget(context)
+          : _buildBeforeCopyWidget(context),
+    );
   }
 }
+
 
 // class FCircledButton extends StatefulWidget {
 //   const FCircledButton({

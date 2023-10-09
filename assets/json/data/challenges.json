@@ -20,7 +20,8 @@
         },
         "goal": 140000,
         "maxMember": 2,
-        "collection": "1050000"
+        "badgeId": "1050000",
+        "point": 200
       },
       "normal": {
         "word": {
@@ -29,7 +30,8 @@
         },
         "goal": 294000,
         "maxMember": 3,
-        "collection": "1050001"
+        "badgeId": "1050001",
+        "point": 450
       },
       "hard": {
         "word": {
@@ -38,7 +40,8 @@
         },
         "goal": 700000,
         "maxMember": 5,
-        "collection": "1050002"
+        "badgeId": "1050002",
+        "point": 1000
       }
     },
     "descriptions": {
@@ -75,7 +78,8 @@
         },
         "goal": 300,
         "maxMember": 2,
-        "collection": "1050010"
+        "badgeId": "1050010",
+        "point": 200
       },
       "normal": {
         "word": {
@@ -84,7 +88,8 @@
         },
         "goal": 500,
         "maxMember": 3,
-        "collection": "1050011"
+        "badgeId": "1050011",
+        "point": 450
       },
       "hard": {
         "word": {
@@ -93,13 +98,14 @@
         },
         "goal": 740,
         "maxMember": 4,
-        "collection": "1050012"
+        "badgeId": "1050012",
+        "point": 800
       }
     },
     "descriptions": {
       "ko": {
         "sub": "절벽에 매달려 울고있는 나비를 구해요!",
-        "detail": " ## 절벽에 매달려 울고만 있는 고양이를 발견했어요. 스스로는 도저히 탈출할 수 없어 보이는데 이대로 가다 가는 물도 식량도 없어 고양이가 위험해요. 높이 올라 위험에 빠진 고양이를 구출해주세요.",
+        "detail": " ## 절벽에 매달려 울고만 있는 고양이를 발견했어요. 스스로는 도저히 탈출할 수 없어 보이는데 이대로 가다가는 물도 식량도 없어 고양이가 위험해요. 높이 올라 위험에 빠진 고양이를 구출해주세요.",
         "complete": "성공적으로 구출했어요!  깜찍한 나비가 엄마 품속으로 다시 돌아갔어요!"
       },
       "en": {
@@ -111,7 +117,7 @@
   },
   {
     "id": "2000002",
-    "locked": true,
+    "locked": false,
     "title": {
       "ko": "험난한 과거시험길",
       "en": "Down the rugged state exam road"
@@ -130,7 +136,8 @@
         },
         "goal": 150000,
         "maxMember": 2,
-        "collection": "1050020"
+        "badgeId": "1050020",
+        "point": 200
       },
       "normal": {
         "word": {
@@ -139,7 +146,8 @@
         },
         "goal": 300000,
         "maxMember": 3,
-        "collection": "1050021"
+        "badgeId": "1050021",
+        "point": 450
       },
       "hard": {
         "word": {
@@ -148,7 +156,8 @@
         },
         "goal": 750000,
         "maxMember": 5,
-        "collection": "1050022"
+        "badgeId": "1050022",
+        "point": 1000
       }
     },
     "descriptions": {
@@ -159,14 +168,14 @@
       },
       "en": {
         "sub": "The state exam is just around the corner! We have to go to Hanyang now",
-        "detail": "Yangbangak, the eldest son of the fallen Yangban family, wants to go to Hanyang for a past test, but it's too dangerous to go alone. Please go up to Hanyang from ## with him and help Yangbangak take the past test safely.",
+        "detail": "Yangbangak, the eldest son of the fallen Yangban family, wants to go to Hanyang for a past test, but it's too dangerous to go alone. Please go up to Hanyang ## with him and help Yangbangak take the past test safely.",
         "complete": "한양에 도착했어요! 덕분에 과거 시험 시작전에 맞춰서 시험장에 도착했어요!"
       }
     }
   },
   {
     "id": "2000003",
-    "locked": true,
+    "locked": false,
     "title": {
       "ko": "급박한 고층빌딩 화재진압 현장",
       "en": "The scene of an urgent fire suppression in a high-rise building"
@@ -185,7 +194,8 @@
         },
         "goal": 300,
         "maxMember": 2,
-        "collection": "1050030"
+        "badgeId": "1050030",
+        "point": 200
       },
       "normal": {
         "word": {
@@ -194,7 +204,8 @@
         },
         "goal": 500,
         "maxMember": 3,
-        "collection": "1050031"
+        "badgeId": "1050031",
+        "point": 450
       },
       "hard": {
         "word": {
@@ -203,19 +214,78 @@
         },
         "goal": 740,
         "maxMember": 4,
-        "collection": "1050032"
+        "badgeId": "1050032",
+        "point": 800
       }
     },
     "descriptions": {
       "ko": {
         "sub": "어서 불을 꺼야 해!",
-        "detail": " ##에 큰불이 났어요. 불을 끄기 위해서는 호스를 들고 높이 올라야 하는데 옮길 사람이 너무 부족해요. 소방관님과 함께 호스를 높은 곳까지 올려서 화제를 진압할 수 있도록 도와주세요..",
+        "detail": " ##에 큰불이 났어요. 불을 끄기 위해서는 호스를 들고 높이 올라야 하는데 옮길 사람이 너무 부족해요. 소방관님과 함께 호스를 높은 곳까지 올려서 화재를 진압할 수 있도록 도와주세요.",
         "complete": "화재 진압에 성공했어요! 덕분에 빌딩이 무너지는걸 막았어요!"
       },
       "en": {
         "sub": "Need to put out the fire!",
         "detail": "There's a big fire in a ## and you need to get up high with a hose to put it out, but there aren't enough people to carry it. Help the firefighters get the hose up high and put out the flames.",
         "complete": "You succeeded in putting out the fire! You saved the building from collapsing!"
+      }
+    }
+  },
+  {
+    "id": "2000004",
+    "locked": false,
+    "title": {
+      "ko": "고래에게 무슨 일이?",
+      "en": "What happened to the whale?"
+    },
+    "type": "weight",
+    "word": {
+      "ko": "고래",
+      "en": "whale"
+    },
+    "period": 14,
+    "levels": {
+      "easy": {
+        "word": {
+          "ko": "아기 고래",
+          "en": "baby whale"
+        },
+        "goal": 5000,
+        "maxMember": 2,
+        "badgeId": "1050040",
+        "point": 200
+      },
+      "normal": {
+        "word": {
+          "ko": "엄마 고래",
+          "en": "mother whale"
+        },
+        "goal": 15000,
+        "maxMember": 3,
+        "badgeId": "1050041",
+        "point": 450
+      },
+      "hard": {
+        "word": {
+          "ko": "아빠 고래",
+          "en": "father whale"
+        },
+        "goal": 40000,
+        "maxMember": 4,
+        "badgeId": "1050042",
+        "point": 800
+      }
+    },
+    "descriptions": {
+      "ko": {
+        "sub": "고래 가족이 위험해요!",
+        "detail": "쓰레기를 먹고 배탈이 난 고래 가족이 해변으로 떠내려 왔어요! 가까스로 치료는 했지만 ##가 너무 무거워서 바다로 돌려보내지 못하고 있어요. 여러분의 도움이 절실해요! 우리의 힘으로 ##를 바다로 돌려보내줄까요?",
+        "complete": "여러분 덕분에 ##가 무사히 바다로 돌아갔어요! ##가 고맙다고 인사하네요!"
+      },
+      "en": {
+        "sub": "Whale Family Is in Danger!",
+        "detail": "A family of whales who had an upset stomach after eating trash washed up on the beach! The ## is only been cured, but too heavy to be sent back to the ocean. We desperately need your help! Why don't you send the ## back to the ocean?",
+        "complete": "Thanks to you, ## has safely returned to the ocean! The ## appreciates you."
       }
     }
   }

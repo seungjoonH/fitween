@@ -83,9 +83,20 @@ Future<bool> showFDialog({
   titlePadding = EdgeInsets.only(top: 20.0.r, left: 20.0.r);
   contentPadding = EdgeInsets.all(20.0.r);
 
-  leftPressed = () => Get.back(result: false);
-  rightPressed = () => Get.back(result: true);
-  onPressed = rightPressed;
+  void leftPressedWithClosingDialog() {
+    Get.back();
+    if (leftPressed != null) leftPressed();
+  }
+
+  void rightPressedWithClosingDialog() {
+    Get.back();
+    if (rightPressed != null) rightPressed();
+  }
+
+  void onPressedWithClosingDialog() {
+    Get.back();
+    if (onPressed != null) onPressed();
+  }
 
   if (content is FText) {
     content = content.copy(style: FTheme.textTheme.bodyLarge);
@@ -100,12 +111,12 @@ Future<bool> showFDialog({
       contentPadding: contentPadding,
       type: type,
       buttonText: buttonText,
-      onPressed: onPressed,
+      onPressed: onPressedWithClosingDialog,
       color: color,
       leftText: leftText,
       rightText: rightText,
-      leftPressed: leftPressed,
-      rightPressed: rightPressed,
+      leftPressed: leftPressedWithClosingDialog,
+      rightPressed: rightPressedWithClosingDialog,
       leftTextColor: leftTextColor,
       rightTextColor: rightTextColor,
       leftBackgroundColor: leftBackgroundColor,
@@ -185,7 +196,7 @@ class _FAlertDialogState extends State<FAlertDialog> {
             widget.type,
             text: widget.leftText ?? _cancel,
             textColor: widget.leftTextColor ?? FTheme.backgroundAlt,
-            backgroundColor: widget.leftBackgroundColor ?? FTheme.bar,
+            backgroundColor: widget.leftBackgroundColor ?? FTheme.unselected,
             onPressed: widget.leftPressed!,
           ),
           DialogButtonData(

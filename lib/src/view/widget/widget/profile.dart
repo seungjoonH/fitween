@@ -12,6 +12,7 @@ class FProfileWidget extends StatefulWidget {
     super.key,
     this.user,
     this.showFollowButton = false,
+    this.showMeTag = false,
     this.onPressed,
     this.followButtonPressed,
   });
@@ -19,6 +20,7 @@ class FProfileWidget extends StatefulWidget {
   final FUser? user;
   final Function(FUser)? onPressed;
   final bool showFollowButton;
+  final bool showMeTag;
   final Function(FUser)? followButtonPressed;
 
   @override
@@ -27,6 +29,7 @@ class FProfileWidget extends StatefulWidget {
 
 class _FProfileWidgetState extends State<FProfileWidget> with DarkPressable {
   FUser get user => widget.user ?? AuthCont.logged!;
+  bool get isMe => user.key == AuthCont.logged!.key;
 
   @override
   Widget buildContent(BuildContext context) {
@@ -41,12 +44,12 @@ class _FProfileWidgetState extends State<FProfileWidget> with DarkPressable {
                 badge: user.badge,
                 backgroundColor: user.badgeColor,
               ),
-              SizedBox(width: 15.0.w),
               FText(
                 user.nickname,
-                style: textTheme(context).titleLarge,
+                style: textTheme(context).titleMedium,
               ),
-            ],
+              if (widget.showMeTag && isMe) const MeTag(),
+            ].separateW(width: 10.0.w),
           ),
           if (widget.showFollowButton)
           FollowButton(

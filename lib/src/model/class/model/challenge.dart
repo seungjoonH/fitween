@@ -3,6 +3,37 @@ import 'package:fitween/src/model/class/local/badge.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 
+class _ChallengeLevel extends Model {
+  late String _word;
+  late num _goal;
+  late int _maxMemberCount;
+  late String _badgeId;
+  late int _point;
+
+  String get word => _word;
+
+  FBadge? get badge => FBadgeLocal().get(_badgeId);
+
+  _ChallengeLevel.fromJson(super.json) : super.fromJson();
+
+  @override
+  void fromJson(Map<String, dynamic> json) {
+    _word = json['word'][LangCont.locale];
+    _goal = json['goal'];
+    _maxMemberCount = json['maxMember'];
+    _badgeId = json['badgeId'];
+    _point = json['point'];
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    throw UnimplementedError();
+  }
+
+  @override
+  String get key => throw UnimplementedError();
+}
+
 class Challenge extends Model {
   static const String _assetDir = 'assets/image/challenge/';
 
@@ -14,17 +45,47 @@ class Challenge extends Model {
   late int _period;
 
   Map<String, dynamic> _descriptions = {};
-  Map<String, dynamic> _levels = {};
+  Map<Difficulty, _ChallengeLevel> _levels = {};
 
-  final Map<Difficulty, FBadge> _badges = {};
-
-  Map<String, String> get imageUrls => {
+  Map<String, String> get _imageUrls => {
     'default': '${_assetDir}default/$_id.png',
     'complete': '${_assetDir}complete/$_id.png',
     'focus': '${_assetDir}focus/$_id.png',
   };
 
+  String get title => _title;
   FType get type => _type;
+  String get word => _word;
+  int get period => _period;
+
+  String get subDescription => _descriptions['sub'].replaceAll('##', word);
+  String getDetailDescription({Difficulty? difficulty, bool txs = false}) {
+    _ChallengeLevel? level = _levels[difficulty];
+    String replace = level == null ? word : level._word;
+    if (txs) replace = '@{$replace}';
+    return _descriptions['detail']
+        .replaceAll('##', replace)
+        .replaceAll('  ', ' ').trim();
+  }
+  String getCompleteDescription({Difficulty? difficulty, bool txs = false}) {
+    _ChallengeLevel? level = _levels[difficulty];
+    String replace = level == null ? word : level._word;
+    if (txs) replace = '@{$replace}';
+    return _descriptions['complete']
+        .replaceAll('##', replace)
+        .replaceAll('  ', ' ').trim();
+  }
+
+  int getMaxMemberCount(Difficulty d) => _levels[d]!._maxMemberCount;
+
+  String get _emptyImageUrl => '${_assetDir}empty.png';
+  String get defaultImageUrl => _imageUrls['default'] ?? _emptyImageUrl;
+  String get completeImageUrl => _imageUrls['complete'] ?? _emptyImageUrl;
+  String get focusImageUrl => _imageUrls['focus']!;
+
+  num getGoal(Difficulty d) => _levels[d]!._goal;
+
+  int getPoint(Difficulty d) => _levels[d]!._point;
 
   Challenge.fromJson(super.json) : super.fromJson();
 
@@ -35,27 +96,26 @@ class Challenge extends Model {
     _title = json['title'][LangCont.locale];
     _type = FType.toEnum(json['type'])!;
     _word = json['word'][LangCont.locale];
-    _levels = json['levels'];
+    _levels = Map.fromIterables(
+      json['levels']?.keys.map<Difficulty>((string) => Difficulty.toEnum(string)),
+      json['levels']?.values.map<_ChallengeLevel>((v) => _ChallengeLevel.fromJson(v)),
+    );
     _period = json['period'];
     _descriptions = json['descriptions'][LangCont.locale];
-    _levels.forEach((string, level) {
-      String id = level['collection'];
-      _badges[Difficulty.toEnum(string)] = FBadgeLocal().get(id)!;
-    });
   }
 
   @override
   Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    json['id'] = _id;
-    json['locked'] = _locked;
-    json['title'] = _title;
-    json['type'] = _type.name;
-    json['word'] = _word;
-    json['levels'] = _levels;
-    json['period'] = _period;
-    json['descriptions'] = _descriptions;
-    return json;
+    throw UnimplementedError();
+    // Map<String, dynamic> json = {};
+    // json['id'] = _id;
+    // json['locked'] = _locked;
+    // json['title'] = _title;
+    // json['type'] = _type.name;
+    // json['levels'] = _levels;
+    // json['period'] = _period;
+    // json['descriptions'] = _descriptions;
+    // return json;
   }
 
   @override

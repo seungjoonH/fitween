@@ -120,6 +120,7 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
     super.center,
     this.centerText,
     this.height,
+    this.radius,
     super.backgroundColor,
     super.progressColor,
     super.curve,
@@ -129,6 +130,7 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
 
   String? centerText;
   final double? height;
+  final double? radius;
 
   @override
   double get percent => max(super.percent, .02);
@@ -140,7 +142,7 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
   double get lineHeight => height ?? 40.0.h;
 
   @override
-  Radius? get barRadius => Radius.circular(6.0.r);
+  Radius? get barRadius => Radius.circular(radius ?? 6.0.r);
 
   @override
   int get animationDuration => 500;

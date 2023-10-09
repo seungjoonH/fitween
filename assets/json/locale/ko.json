@@ -3,7 +3,8 @@
     "sign-in": "{} 계정으로 로그인",
     "start": "시작",
     "next": "다음",
-    "sure": "맞아요!"
+    "sure": "맞아요!",
+    "give-up": "포기하기"
   },
   "appbar": {
     "register": "회원가입",
@@ -11,7 +12,11 @@
     "see-more": "더보기",
     "calendar": "기록",
     "ranking": "랭킹",
-    "contents": "컨텐츠"
+    "contents": "컨텐츠",
+    "challenge": "챌린지",
+    "weight": "웨이트",
+    "battle": "배틀",
+    "party": "파티"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -49,6 +54,11 @@
     "left": "남음",
     "ago": "전"
   },
+  "difficulty": {
+    "easy": "쉬움",
+    "normal": "보통",
+    "hard": "어려움"
+  },
   "word": {
     "google": "구글",
     "apple": "애플",
@@ -61,12 +71,22 @@
     "height": "신장",
     "follow": "팔로우",
     "unfollow": "팔로우 취소",
-    "finished": "종료"
+    "finished": "종료",
+    "member": "멤버",
+    "copied": "복사완료",
+    "max-member": "최대인원",
+    "due": "마감기한",
+    "goal": "목표",
+    "period": "기간",
+    "difficulty": "난이도",
+    "description": "설명",
+    "info": "정보"
   },
   "unit": {
     "step": "[]보",
     "floor": "[]층",
     "count": "[]회",
+    "kg": "[] kg",
     "day": "{}일",
     "d": "{}일",
     "hour": "{}시간",
@@ -206,6 +226,45 @@
     },
     "info-setting": {
       "title": "정보 수정"
+    }
+  },
+  "contents": {
+    "card-title": {
+      "challenge": "챌린지",
+      "weight": "웨이트",
+      "battle": "배틀"
+    }
+  },
+  "challenge": {
+    "empty": {
+      "title": "챌린지 없음",
+      "description": "아직 챌린지가 없습니다"
+    }
+  },
+  "party": {
+    "progress": "진행도",
+    "entire": "전체",
+    "share": "참여 코드를 친구에게 공유하여 함께 도전해요!",
+    "dialog": {
+      "really-title": "파티 포기",
+      "really-text": "정말 파티를 포기하시겠습니까?",
+      "given-up-title": "파티 포기 완료",
+      "given-up-text": "파티를 포기했습니다"
+    }
+  },
+  "challenge-detail": {
+    "join-party": "파티 참여하기",
+    "create-party": "파티 생성하기",
+    "go-party": "내 파티 바로가기"
+  },
+  "party-create": {
+    "join-party": "파티 참여하기",
+    "create-party": "파티 생성하기",
+    "dialog": {
+      "really-title": "파티 생성",
+      "really-text": "파티를 정말 생성하시겠습니까?",
+      "created-title": "파티 생성 완료",
+      "created-text": "파티가 생성되었습니다!"
     }
   }
 }

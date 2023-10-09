@@ -1,4 +1,5 @@
 import 'package:fitween/global/global.dart';
+import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,6 +16,12 @@ class FRoute {
     '/friend': const FriendPage(),
     '/friend/search': const FriendSearchPage(),
     '/contents': const ContentsPage(),
+    '/contents/challenge/party': const PartyPage(),
+    '/contents/challenge/party/create': const PartyCreatePage(),
+    '/contents/challenge/detail': const ChallengeDetailPage(),
+    '/contents/challenge': const ChallengePage(),
+    '/contents/weight': const WeightPage(),
+    '/contents/battle': const BattlePage(),
     '/see-more': const SeeMorePage(),
   };
 
@@ -53,5 +60,11 @@ class FRoute {
   static void toFriend({bool reload = false}) => Get.offAllNamed('/friend', arguments: reload);
   static void toFriendSearch() => Get.toNamed('/friend/search');
   static void toContents() => Get.offAllNamed('/contents');
+  static void toParty({Party? party}) => Get.toNamed('/contents/challenge/party', arguments: party);
+  static void toPartyCreate({Challenge? challenge}) => Get.toNamed('/contents/challenge/party/create', arguments: challenge);
+  static void toChallengeDetail({Challenge? challenge}) => Get.toNamed('/contents/challenge/detail', arguments: challenge);
+  static void toChallenge() => Get.toNamed('/contents/challenge');
+  static void toWeight() => Get.toNamed('/contents/weight');
+  static void toBattle() => Get.toNamed('/contents/battle');
   static void toSeeMore() => Get.offAllNamed('/see-more');
 }

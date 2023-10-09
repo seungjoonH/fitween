@@ -16,16 +16,20 @@ export './function/snack_bar.dart';
 
 export './widget/app_bar.dart';
 export './widget/card.dart';
+export './widget/carousel.dart';
+export './widget/challenge.dart';
 export './widget/drawer.dart';
 export './widget/icon.dart';
 export './widget/indicator.dart';
 export './widget/list_tile.dart';
 export './widget/logo.dart';
+export './widget/party.dart';
 export './widget/point.dart';
 export './widget/profile.dart';
 export './widget/rank.dart';
 export './widget/scaffold.dart';
 export './widget/slider.dart';
+export './widget/tab.dart';
 export './widget/tag.dart';
 export './widget/text.dart';
 

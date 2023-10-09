@@ -30,7 +30,7 @@ class FTagState extends FWidgetState<FTag> {
     if (widget.leftMargin) margin = EdgeInsets.only(left: 5.0.r);
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: 5.0.r, vertical: 2.0.r,
+        horizontal: 5.0.r, vertical: 1.0.r,
       ),
       margin: margin,
       decoration: BoxDecoration(

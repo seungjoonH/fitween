@@ -3,8 +3,6 @@ import 'package:fitween/global/theme.dart';
 import 'package:fitween/main.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/controller/page.dart';
-import 'package:fitween/src/controller/loading.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/widget/widget.dart';

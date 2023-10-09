@@ -5,6 +5,7 @@ export './bottom_bar.dart';
 export './calendar.dart';
 export './dialog.dart';
 export './get.dart';
+export './image.dart';
 export './lang.dart';
 export './loading.dart';
 export './ranking.dart';

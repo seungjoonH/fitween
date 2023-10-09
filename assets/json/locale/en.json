@@ -3,7 +3,8 @@
     "sign-in": "Continue with {}",
     "start": "Start",
     "next": "Next",
-    "sure": "Sure!"
+    "sure": "Sure!",
+    "give-up": "Give Up!"
   },
   "appbar": {
     "register": "Register",
@@ -11,7 +12,11 @@
     "see-more": "See More",
     "calendar": "Calendar",
     "ranking": "Ranking",
-    "contents": "Contents"
+    "contents": "Contents",
+    "challenge": "Challenge",
+    "weight": "Weight",
+    "battle": "Battle",
+    "party": "Party"
   },
   "hint": {
     "your-nickname": "Input your nickname",
@@ -48,6 +53,11 @@
     "monthly": "monthly",
     "yearly": "yearly"
   },
+  "difficulty": {
+    "easy": "easy",
+    "normal": "normal",
+    "hard": "hard"
+  },
   "word": {
     "google": "google",
     "apple": "apple",
@@ -60,7 +70,16 @@
     "height": "height",
     "follow": "Follow",
     "unfollow": "Unfollow",
-    "finished": "Finished"
+    "finished": "Finished",
+    "member": "members",
+    "copied": "copied",
+    "max-member": "Max",
+    "due": "Due",
+    "goal": "Goal",
+    "period": "Period",
+    "difficulty": "difficulty",
+    "description": "description",
+    "info": "info"
   },
   "unit": {
     "step": {
@@ -76,6 +95,7 @@
       "two": "twice",
       "other": "[] times"
     },
+    "kg": "[] kg",
     "day": {
       "one": "{} day",
       "other": "{} days"
@@ -248,6 +268,45 @@
     },
     "info-setting": {
       "title": "Info Settings"
+    }
+  },
+  "contents": {
+    "card-title": {
+      "challenge": "Challenge",
+      "weight": "Weight",
+      "battle": "Battle"
+    }
+  },
+  "challenge": {
+    "empty": {
+      "title": "No Challenges",
+      "description": "Challenges have not been added yet"
+    }
+  },
+  "party": {
+    "progress": "Progress",
+    "entire": "Entire",
+    "share": "Let's share the participation code with friends and challenge together!",
+    "dialog": {
+      "really-title": "Give up Party",
+      "really-text": "Are you sure to give up this party?",
+      "given-up-title": "Party abandoned",
+      "given-up-text": "The party has been abandoned"
+    }
+  },
+  "challenge-detail": {
+    "join-party": "Join Party",
+    "create-party": "Create Party",
+    "go-party": "Go to my Party"
+  },
+  "party-create": {
+    "join-party": "Join Party",
+    "create-party": "Create Party",
+    "dialog": {
+      "really-title": "Create Party",
+      "really-text": "Are you sure you want to create a party?",
+      "created-title": "Party Created",
+      "created-text": "Party has been created!"
     }
   }
 }

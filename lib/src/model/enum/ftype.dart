@@ -8,11 +8,19 @@ enum FType {
 
   String get locale => LangCont.tr('type.$name');
   String get _unitKey => ['', 'step', 'floor', 'count'][index];
+  String get _altUnitKey => ['', 'step', 'floor', 'kg'][index];
   Color get color => [FTheme.colorA, FTheme.colorB, FTheme.colorC, FTheme.colorD][index];
   bool get active => activeValues.contains(this);
 
   String withUnit(num value, {bool thouSep = true, bool scaling = true, bool txs = false}) {
     String unit = LangCont.plural('unit.$_unitKey', value);
+    return unit.replaceAll('[]', value.localizing(
+      thouSep: thouSep, scaling: scaling, txs: txs,
+    ));
+  }
+
+  String withAltUnit(num value, {bool thouSep = true, bool scaling = true, bool txs = false}) {
+    String unit = LangCont.plural('unit.$_altUnitKey', value);
     return unit.replaceAll('[]', value.localizing(
       thouSep: thouSep, scaling: scaling, txs: txs,
     ));
