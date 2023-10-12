@@ -15,6 +15,10 @@ class FTheme {
   static const Color colorD = Color(0xFFFFB164);
   static const Color colorE = Color(0xFFD782FF);
 
+  static const Color gold = Color(0xFFFFAB48);
+  static const Color silver = Color(0xFFD7D7D7);
+  static const Color bronze = Color(0xFFB78250);
+
   // static const Color black = Color(0xFF1F1F1F);
   // static const Color darkGrey = Color(0xFF494D45);
   // static const Color grey = Color(0xFF73796E);
@@ -156,7 +160,7 @@ class FTheme {
       fontFamily: fontFamily,
       fontWeight: FontWeight.w500,
       fontSize: 18.0,
-      height: (22 / 18),
+      height: (26 / 18),
     ),
     labelLarge: TextStyle(
       fontFamily: fontFamily,
@@ -180,7 +184,7 @@ class FTheme {
       fontFamily: fontFamily,
       fontWeight: FontWeight.w400,
       fontSize: 16.0,
-      height: (24 / 16),
+      height: (22 / 16),
     ),
     bodyMedium: TextStyle(
       fontFamily: fontFamily,

@@ -9,18 +9,23 @@ class FListTile extends StatefulWidget {
   const FListTile({
     Key? key,
     this.title,
+    this.titleWidget,
     this.tags,
     this.subtitle,
+    this.subtitleWidget,
     this.leading,
     this.trailing,
     this.onPressed,
     this.padding,
     this.backgroundColor,
-  }) : super(key: key);
+  }) : assert(title == null || titleWidget == null),
+        assert(subtitle == null || subtitleWidget == null), super(key: key);
 
   final String? title;
-  final List<FTag>? tags;
+  final Widget? titleWidget;
+  final List<Widget>? tags;
   final String? subtitle;
+  final Widget? subtitleWidget;
   final Widget? leading;
   final List<Widget>? trailing;
   final VoidCallback? onPressed;
@@ -65,14 +70,13 @@ class _FListTileState extends State<FListTile> with DarkPressable<FListTile> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  FText(
+                  widget.titleWidget ?? FText(
                     widget.title ?? '',
                     color: FTheme.text,
                     bold: true,
                     maxLines: 2,
                   ),
-                  if (widget.subtitle != null)
-                  FText(
+                  widget.subtitleWidget ?? FText(
                     widget.subtitle!,
                     color: FTheme.comment,
                     style: FTheme.bodyMedium,
@@ -80,7 +84,7 @@ class _FListTileState extends State<FListTile> with DarkPressable<FListTile> {
                   ),
                   if (widget.tags != null)
                   Row(
-                    children: widget.tags?.map((FTag tag) => Padding(
+                    children: widget.tags?.map((tag) => Padding(
                       padding: EdgeInsets.only(right: 5.0.w),
                       child: tag,
                     )).toList() ?? [],

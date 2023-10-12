@@ -39,9 +39,18 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
                   );
                 },
               ),
-              Positioned.fill(
-                child: Container(
-                  color: FTheme.achro5.withOpacity(.4),
+              Container(
+                height: PageCont.size.height,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    colors: [
+                      FTheme.achro95,
+                      FTheme.achro5.withOpacity(.4),
+                    ],
+                    stops: const [.0, .6],
+                  ),
                 ),
               ),
             ],
@@ -63,8 +72,8 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
         SizedBox(height: 10.0.h),
         FText(
           cont.challenge!.getDetailDescription(),
-          style: FTheme.titleMedium,
-          color: FTheme.comment,
+          style: FTheme.titleSmall,
+          color: FTheme.outline,
           maxLines: 0,
         ),
       ],
@@ -72,72 +81,120 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
   }
 
   Widget _buildChallengeButtonWidget(BuildContext context) {
-    Color leftButtonColor = FTheme.text;
-    Color rightButtonColor = cont.challenge!.type.color;
+    return Obx(() {
+      Color leftButtonColor = FTheme.text;
+      Color rightButtonColor = cont.challenge!.type.color;
 
-    if (!cont.isBookmarkedChallenge) {
-      if (cont.isBookmarkedTypeOfChallenge) {
-        leftButtonColor = FTheme.unselected;
-        rightButtonColor = FTheme.unselected;
+      if (!cont.isBookmarkedChallenge) {
+        if (cont.isBookmarkedTypeOfChallenge) {
+          leftButtonColor = FTheme.unselected;
+          rightButtonColor = FTheme.unselected;
+        }
       }
-    }
 
-    if (cont.isBookmarkedChallenge) {
-      return FButton(
-        text: cont.goPartyText,
-        backgroundColor: rightButtonColor,
-        onPressed: cont.goToMyPartyButtonPressed,
-        stretch: true,
+      if (cont.isBookmarkedChallenge) {
+        return FButton(
+          text: cont.goPartyText,
+          backgroundColor: rightButtonColor,
+          onPressed: cont.goToMyPartyButtonPressed,
+          stretch: true,
+        );
+      }
+
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            child: FButton(
+              text: cont.searchPartyText,
+              backgroundColor: leftButtonColor,
+              stretch: true,
+              onPressed: cont.searchPartyButtonPressed,
+            ),
+          ),
+          SizedBox(width: 15.0.w),
+          Expanded(
+            child: FButton(
+              text: cont.createPartyText,
+              backgroundColor: rightButtonColor,
+              stretch: true,
+              onPressed: cont.createPartyButtonPressed,
+            ),
+          ),
+        ],
       );
-    }
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: FButton(
-            text: cont.joinPartyText,
-            backgroundColor: leftButtonColor,
-            stretch: true,
-          ),
-        ),
-        SizedBox(width: 20.0.w),
-        Expanded(
-          child: FButton(
-            text: cont.createPartyText,
-            backgroundColor: rightButtonColor,
-            stretch: true,
-            onPressed: cont.isBookmarkedTypeOfChallenge
-                ? null : cont.createPartyButtonPressed,
-          ),
-        ),
-      ],
-    );
+    });
   }
 
   Widget _buildModalBottomSheetWidget(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.fromLTRB(20.0.r, .0, 20.0.r, 50.0.r),
-      decoration: BoxDecoration(
-        color: FTheme.backgroundAlt,
-        border: Border.all(color: FTheme.outline),
-        borderRadius: BorderRadius.vertical(top: Radius.circular(10.0.r)),
-      ),
-      child: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 20.0.h),
-            width: 100.0.h, height: 10.0.w,
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: Container(
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0.r),
-              color: FTheme.bar,
+              border: Border.all(color: FTheme.outline),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(20.0.r)),
+            ),
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Positioned.fill(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(20.0.r)),
+                    child: ColorFiltered(
+                      colorFilter: ColorFilter.mode(
+                        FTheme.backgroundAlt.withOpacity(.9),
+                        BlendMode.modulate,
+                      ),
+                      child: Stack(
+                        alignment: Alignment.topCenter,
+                        children: [
+                          Positioned.fill(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: FTheme.backgroundAlt.withOpacity(.9),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 20.0.h),
+                            width: 100.0.w, height: 10.0.h,
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              borderRadius: BorderRadius.circular(10.0.r),
+                              backgroundBlendMode: BlendMode.clear,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 20.0.h),
+                  width: 100.0.w, height: 10.0.h,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: FTheme.outline),
+                    borderRadius: BorderRadius.circular(10.0.r),
+                  ),
+                ),
+              ],
             ),
           ),
-          _buildChallengeInfoWidget(context),
-          SizedBox(height: 30.0.h),
-          _buildChallengeButtonWidget(context),
-        ],
-      ),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 28.0.w, vertical: 50.0.h,
+          ),
+          child: Column(
+            children: [
+              _buildChallengeInfoWidget(context),
+              SizedBox(height: 30.0.h),
+              _buildChallengeButtonWidget(context),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -172,4 +229,19 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
     );
   }
 
+}
+
+
+class HandlerClipper extends CustomClipper<Rect> {
+  @override
+  Rect getClip(Size size) {
+    return Rect.fromCenter(
+      center: Offset(size.width * .5, 10.0.h),
+      width: 100.0.w,
+      height: 10.0.h,
+    );
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Rect> oldClipper) => false;
 }

@@ -4,7 +4,10 @@
     "start": "시작",
     "next": "다음",
     "sure": "맞아요!",
-    "give-up": "포기하기"
+    "give-up": "포기하기",
+    "delegate-leader": "파티장 위임",
+    "poke": "콕 찌르기",
+    "banish": "추방하기"
   },
   "appbar": {
     "register": "회원가입",
@@ -16,7 +19,8 @@
     "challenge": "챌린지",
     "weight": "웨이트",
     "battle": "배틀",
-    "party": "파티"
+    "party": "파티",
+    "member-setting": "멤버 관리"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -76,11 +80,14 @@
     "copied": "복사완료",
     "max-member": "최대인원",
     "due": "마감기한",
+    "type": "종류",
     "goal": "목표",
     "period": "기간",
     "difficulty": "난이도",
     "description": "설명",
-    "info": "정보"
+    "info": "정보",
+    "leader": "파티장",
+    "party-title": "파티명"
   },
   "unit": {
     "step": "[]보",
@@ -213,7 +220,8 @@
     "no-friends": "아직 친구가 없습니다\n친구를 먼저 팔로우 해보세요!"
   },
   "search": {
-    "hint-text": "별명을 검색하세요"
+    "nickname": "별명 검색",
+    "party": "파티 검색 (파티장/제목)"
   },
   "see-more": {
     "badge": {
@@ -246,25 +254,48 @@
     "entire": "전체",
     "share": "참여 코드를 친구에게 공유하여 함께 도전해요!",
     "dialog": {
-      "really-title": "파티 포기",
-      "really-text": "정말 파티를 포기하시겠습니까?",
-      "given-up-title": "파티 포기 완료",
-      "given-up-text": "파티를 포기했습니다"
+      "give-up": {
+        "really-title": "파티 포기",
+        "really-text": "정말 파티를 포기하시겠습니까?",
+        "really-only-text": "@:party.dialog.give-up.really-text\n@{파티가 삭제되며 다시 복구할 수 없습니다}",
+        "really-leader-text": "@:party.dialog.give-up.really-text\n@{멤버 중 가장 기여도가 높은 사람에게 파티장이 위임됩니다}",
+        "really-member-text": "@:party.dialog.give-up.really-text",
+        "given-up-title": "파티 포기 완료",
+        "given-up-text": "파티를 포기했습니다",
+        "removed-title": "파티 삭제 완료",
+        "removed-text": "파티를 삭제했습니다"
+      }
     }
   },
   "challenge-detail": {
-    "join-party": "파티 참여하기",
+    "search-party": "파티 검색하기",
     "create-party": "파티 생성하기",
     "go-party": "내 파티 바로가기"
   },
   "party-create": {
-    "join-party": "파티 참여하기",
+    "search-party": "파티 검색하기",
     "create-party": "파티 생성하기",
     "dialog": {
       "really-title": "파티 생성",
       "really-text": "파티를 정말 생성하시겠습니까?",
       "created-title": "파티 생성 완료",
       "created-text": "파티가 생성되었습니다!"
+    }
+  },
+  "member-setting": {
+    "dialog": {
+      "delegate": {
+        "really-title": "파티장 위임",
+        "really-text": "@{{nickname}} 님에게 정말 파티장을 위임하시겠습니까?",
+        "complete-title": "파티장 변경됨",
+        "complete-text": "@{{nickname}} 님이 파티장이 되었습니다"
+      },
+      "banish": {
+        "really-title": "멤버 추방",
+        "really-text": "@{{nickname}} 님을 추방하시겠습니까?",
+        "complete-title": "멤버 추방됨",
+        "complete-text": "@{{nickname}} 님이 추방되었습니다"
+      }
     }
   }
 }

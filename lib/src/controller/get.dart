@@ -17,6 +17,8 @@ class GetCont {
     Get.put(PartyPageCont());
     Get.put(ChallengeDetailPageCont());
     Get.put(PartyCreatePageCont());
+    Get.put(PartyMemberSettingPageCont());
+    Get.put(PartySearchPageCont());
     Get.put(WeightPageCont());
     Get.put(BattlePageCont());
     Get.put(ContentsPageCont());

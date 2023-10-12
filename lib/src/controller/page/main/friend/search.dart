@@ -14,7 +14,7 @@ class FriendSearchPageCont extends PageCont {
   final _users = <String, FUser>{}.obs;
   List<FUser?> get users => _infos.map((info) => _users[info.key]).toList();
 
-  String get searchHintText => LangCont.tr('search.hint-text');
+  String get searchHintText => LangCont.tr('search.nickname');
 
   final textEditingCont = TextEditingController();
   final _keyword = ''.obs;
@@ -29,7 +29,11 @@ class FriendSearchPageCont extends PageCont {
     _keyword('');
   }
 
-  void backPressed() => FRoute.toFriend(reload: true);
+  void backPressed() {
+    textEditingCont.clear();
+    _keyword('');
+    FRoute.toFriend(reload: true);
+  }
 
   void onChanged(String text) async {
     _keyword(text);

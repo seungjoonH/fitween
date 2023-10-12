@@ -266,44 +266,46 @@ class FImageCard extends FCard {
   }
 
   @override
-  Widget? get title => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      LayoutBuilder(
-        builder: (context, constraints) {
-          double width = constraints.maxWidth;
-          if (imageUrl == null) {
-            return Container(
-              color: FTheme.bar,
-              width: width,
-              height: width * .6,
+  Widget? get title {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        LayoutBuilder(
+          builder: (context, constraints) {
+            double width = constraints.maxWidth;
+            if (imageUrl == null) {
+              return Container(
+                color: FTheme.bar,
+                width: width,
+                height: width * .6,
+              );
+            }
+            return Hero(
+              tag: imageUrl!,
+              child: Image.asset(
+                imageUrl!,
+                fit: BoxFit.cover,
+                width: width,
+                height: width * .6,
+                errorBuilder: (context, error, stackTrace) {
+                  return Image.asset(
+                    ImageCont.emptyAssetPath,
+                    fit: BoxFit.cover,
+                    width: width,
+                    height: width * .6,
+                  );
+                },
+              ),
             );
-          }
-          return Hero(
-            tag: imageUrl!,
-            child: Image.asset(
-              imageUrl!,
-              fit: BoxFit.cover,
-              width: width,
-              height: width * .6,
-              errorBuilder: (context, error, stackTrace) {
-                return Image.asset(
-                  ImageCont.emptyAssetPath,
-                  fit: BoxFit.cover,
-                  width: width,
-                  height: width * .6,
-                );
-              },
-            ),
-          );
-        },
-      ),
-      Container(
-        padding: EdgeInsets.fromLTRB(20.0.r, 20.0.r, 20.0.r, .0),
-        child: super.title,
-      ),
-    ],
-  );
+          },
+        ),
+        Container(
+          padding: EdgeInsets.fromLTRB(20.0.r, 20.0.r, 20.0.r, .0),
+          child: super.title,
+        ),
+      ],
+    );
+  }
 
   @override
   Widget? get child => Container(

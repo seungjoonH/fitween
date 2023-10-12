@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart' as local_lib;
 
 class LangCont {
   static const List<String> _supports = ['en', 'ko'];
-  static const String _asset = 'assets/json/locale/';
+  static const String _asset = 'assets/json/locale';
   static const String _fallback = 'en';
 
   static Widget equipLocalization(Widget child) {

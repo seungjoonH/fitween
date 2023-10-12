@@ -1,5 +1,5 @@
 import 'package:fitween/global/global.dart';
-import 'package:fitween/src/controller/page.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
@@ -26,12 +26,20 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
         Image.asset(
           cont.challenge!.defaultImageUrl,
           width: PageCont.size.width,
-          height: PageCont.size.height * .2,
+          height: PageCont.size.height * .25,
           fit: BoxFit.fitWidth,
+          errorBuilder: (context, object, stacktrace) {
+            return Image.asset(
+              ImageCont.emptyAssetPath,
+              width: PageCont.size.width,
+              height: PageCont.size.height * .25,
+              fit: BoxFit.fitWidth,
+            );
+          },
         ),
         Container(
           width: PageCont.size.width,
-          height: PageCont.size.height * .2,
+          height: PageCont.size.height * .25,
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.bottomCenter,
@@ -43,8 +51,8 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
             ),
           ),
         ),
-        Positioned(
-          left: 28.0.w,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 28.0.w),
           child: FText(
             cont.challenge!.title,
             style: FTheme.headlineMedium,
@@ -61,6 +69,20 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
       children: [
         FText(text, style: FTheme.commentStyle, color: FTheme.bar, bold: true),
         Divider(thickness: .5, color: FTheme.comment),
+      ],
+    );
+  }
+
+  Widget _buildPartyTitleFieldWidget(BuildContext context) {
+    return Column(
+      children: [
+        _buildHeaderWidget(context, cont.partyTitleHeaderText),
+        FTextField(
+          controller: cont.partyTitleCont,
+          hintText: cont.hintTitle,
+          onChanged: cont.onFieldChanged,
+          clearPressed: cont.clearTitleField,
+        ),
       ],
     );
   }
@@ -231,38 +253,41 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
   Widget _buildBody(BuildContext context) {
     return Obx(() {
       if (cont.challenge == null) return Container();
-      return Column(
-        children: [
-          _buildChallengeTitleWidget(context),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: 28.0.w, vertical: 28.0.h,
+      return SingleChildScrollView(
+        child: Column(
+          children: [
+            _buildChallengeTitleWidget(context),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: 28.0.w, vertical: 28.0.h,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildPartyTitleFieldWidget(context),
+                  _buildDifficultySelectionWidget(context),
+                  _buildDescriptionWidget(context),
+                  _buildInfoWidget(context),
+                  SizedBox(height: 20.0.h),
+                  FButton(
+                    text: cont.createPartyText,
+                    backgroundColor: cont.challenge!.type.color,
+                    onPressed: cont.createPartyButtonPressed,
+                    stretch: true,
+                  ),
+                ].separateH(height: 20.0.h),
+              ),
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildDifficultySelectionWidget(context),
-                _buildDescriptionWidget(context),
-                SizedBox(height: 10.0.h),
-                _buildInfoWidget(context),
-              ].separateH(height: 10.0.h),
-            ),
-          ),
-        ],
+          ],
+        ),
       );
     });
   }
 
-  Widget _buildBottomWidget(BuildContext context) {
-    return Obx(() {
-      if (cont.challenge == null) return Container();
-      return FButton(
-        text: cont.createPartyText,
-        backgroundColor: cont.challenge!.type.color,
-        onPressed: cont.createPartyButtonPressed,
-        stretch: true,
-      );
-    });
+  @override
+  void initState() {
+    super.initState();
+    cont.initState(reload: true);
   }
 
   @override
@@ -272,7 +297,6 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
       extendBodyBehindAppBar: true,
       autoPadding: false,
       body: _buildBody(context),
-      bottomWidget: _buildBottomWidget(context),
     );
   }
 }

@@ -389,10 +389,7 @@ class _MarbleState extends FWidgetState<Marble> {
           ),
           Positioned(
             bottom: 10.0.h,
-            child: widget.tagVisible ? FTag(widget.type.locale.capitalize!,
-              backgroundColor: _tagColor,
-              textColor: FTheme.achro90,
-            ) : Container(),
+            child: widget.tagVisible ? FTypeTag(type: widget.type) : Container(),
           ),
           Container(child: widget.center),
         ],

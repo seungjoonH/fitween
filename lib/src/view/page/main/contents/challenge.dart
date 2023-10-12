@@ -1,4 +1,5 @@
 import 'package:fitween/global/global.dart';
+import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
@@ -66,7 +67,15 @@ class _ChallengePageState extends FPageState<ChallengePage> {
     return FRefreshScaffold(
       refreshController: RefreshController(),
       onRefresh: cont.onRefresh,
-      appBar: FAppBar(text: cont.appBarTitle),
+      appBar: FAppBar(
+        text: cont.appBarTitle,
+        actions: const [
+          FIconButton(
+            icon: Icon(Icons.search),
+            onPressed: FRoute.toPartySearch,
+          ),
+        ],
+      ),
       body: Column(
         children: [
           _buildMyPartiesWidget(context),

@@ -3,6 +3,51 @@ import 'package:fitween/src/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+class ScalePressableWidget extends StatefulWidget {
+  const ScalePressableWidget({
+    super.key,
+    required this.child,
+    this.onPressed,
+  });
+
+  final Widget child;
+  final VoidCallback? onPressed;
+
+  @override
+  State<ScalePressableWidget> createState() => _ScalePressableWidgetState();
+}
+
+class _ScalePressableWidgetState extends State<ScalePressableWidget> with ScalePressable {
+  @override
+  Widget buildContent(BuildContext context) => widget.child;
+
+  @override
+  VoidCallback? get onPressed => widget.onPressed;
+}
+
+class DarkPressableWidget extends StatefulWidget {
+  const DarkPressableWidget({
+    super.key,
+    required this.child,
+    this.onPressed,
+  });
+
+  final Widget child;
+  final VoidCallback? onPressed;
+
+  @override
+  State<DarkPressableWidget> createState() => _DarkPressableWidgetState();
+}
+
+class _DarkPressableWidgetState extends State<DarkPressableWidget> with DarkPressable {
+  @override
+  Widget buildContent(BuildContext context) => widget.child;
+
+  @override
+  VoidCallback? get onPressed => widget.onPressed;
+}
+
+
 mixin ScalePressable<T extends StatefulWidget> on State<T> {
   Function(TapDownDetails)? _onTapDown;
   Function(TapUpDetails)? _onTapUp;

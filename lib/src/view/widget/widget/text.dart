@@ -1,4 +1,5 @@
 import 'package:fitween/src/controller/validator/validator.dart';
+import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
 import 'package:fitween/global/theme.dart';
@@ -179,6 +180,60 @@ class FTexts extends StatelessWidget {
   }
 }
 
+class FTextField extends StatelessWidget {
+  const FTextField({
+    super.key,
+    required this.controller,
+    this.prefixIcon,
+    this.hintText,
+    this.onChanged,
+    this.clearPressed,
+  });
+
+  final TextEditingController controller;
+  final Widget? prefixIcon;
+  final String? hintText;
+  final Function(String)? onChanged;
+  final VoidCallback? clearPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: controller,
+      onChanged: onChanged,
+      cursorColor: FTheme.text,
+      style: FTheme.titleMedium,
+      autofocus: true,
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: FTheme.titleMedium?.apply(color: FTheme.comment),
+        prefixIcon: prefixIcon ?? Icon(Icons.edit, size: 18.0.r),
+        prefixIconColor: FTheme.comment,
+        suffixIcon: FIconButton(
+          icon: const Icon(Icons.cancel),
+          size: 18.0.r,
+          iconSize: 17.0.r,
+          iconColor: FTheme.comment,
+          onPressed: clearPressed,
+        ),
+        isDense: true,
+        border: UnderlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0.r),
+          borderSide: BorderSide.none,
+        ),
+        focusedBorder: UnderlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0.r),
+          borderSide: BorderSide.none,
+        ),
+        filled: true,
+        fillColor: FTheme.bar,
+        focusColor: FTheme.bar,
+      ),
+    );
+  }
+}
+
+
 class FInputField extends StatelessWidget {
   const FInputField({
     super.key,
@@ -261,6 +316,8 @@ class FSearchField extends StatelessWidget {
               controller: controller,
               onChanged: onChanged,
               cursorColor: FTheme.text,
+              style: FTheme.titleMedium
+                  ?.apply(color: FTheme.text),
               decoration: InputDecoration(
                 isCollapsed: true,
                 border: InputBorder.none,

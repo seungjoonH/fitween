@@ -1,0 +1,110 @@
+import 'package:fitween/global/global.dart';
+import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/model/class/local.dart';
+import 'package:fitween/src/model/class/model.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+enum PartySearchedType { title, leaderNickname, challengeTitle }
+
+class PartySearchPageCont extends PageCont {
+  static PartySearchPageCont get to => Get.find<PartySearchPageCont>();
+
+  final collections = f.collection('parties');
+  final _searchedParties = <PartySearchedType, List<Party>>{}.obs;
+  List<Party> get parties {
+    Map<String, Party> map = {};
+    int compare(Party a, Party b) => b.leftDays - a.leftDays;
+
+    for (List<Party> partyList in _searchedParties.values) {
+      for (Party p in partyList) { map[p.key] = p; }
+    }
+    List<Party> sorted = [...map.values]..sort(compare);
+    return sorted;
+  }
+
+  String get searchHintText => LangCont.tr('search.party');
+
+  final textEditingCont = TextEditingController();
+  final _keyword = ''.obs;
+  String get keyword => _keyword.value;
+
+  PartySearchedType? getSearchedType(String id) {
+    for (var type in PartySearchedType.values) {
+      if (!_searchedParties[type]!.map((p) => p.key).contains(id)) continue;
+      return type;
+    }
+    return null;
+  }
+
+  @override
+  Future load() async {
+    for (var type in PartySearchedType.values) {
+      _searchedParties[type] = <Party>[];
+    }
+    String word = Get.arguments as String;
+
+    _keyword('');
+    textEditingCont.clear();
+    textEditingCont.text = word;
+
+    onChanged(word);
+  }
+
+  @override
+  String get loadKey => 'party-search';
+
+  void onChanged(String text) => _keyword(text);
+
+  @override
+  void onInit() {
+    super.onInit();
+    ever(_keyword, (_) => streaming());
+  }
+
+  void streaming() async {
+    if (keyword.trim().isEmpty) {
+      for (var type in PartySearchedType.values) {
+        _searchedParties[type]!.clear();
+      }
+      return;
+    }
+
+    List<String> searchingIds = ['@'];
+    for (Challenge c in ChallengeLocal().list) {
+      if (c.title.contains(keyword)) searchingIds.add(c.key);
+    }
+
+    var cols = collections
+        .where('challengeId', whereIn: searchingIds);
+
+    cols.snapshots().listen((snapshot) {
+      _searchedParties[PartySearchedType.challengeTitle] = [
+        ...snapshot.docs.map((doc) => Party.fromJson(doc.data())),
+      ];
+    });
+
+    cols = collections
+        .orderBy('title')
+        .startAt([keyword])
+        .endAt(['$keyword\uf8ff']);
+
+    cols.snapshots().listen((snapshot) {
+      _searchedParties[PartySearchedType.title] = [
+        ...snapshot.docs.map((doc) => Party.fromJson(doc.data())),
+      ];
+    });
+
+    cols = collections
+        .orderBy('leaderNickname')
+        .startAt([keyword])
+        .endAt(['$keyword\uf8ff']);
+
+    cols.snapshots().listen((snapshot) {
+      _searchedParties[PartySearchedType.leaderNickname] = [
+        ...snapshot.docs.map((doc) => Party.fromJson(doc.data())),
+      ];
+    });
+
+  }
+}

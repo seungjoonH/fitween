@@ -1,7 +1,6 @@
-import 'package:fitween/global/date.dart';
-import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
@@ -9,9 +8,6 @@ import 'package:get/get.dart';
 
 class ChallengePageCont extends PageCont {
   static ChallengePageCont get to => Get.find<ChallengePageCont>();
-
-  @override
-  String get loadKey => 'challenge';
 
   String get appBarTitle => LangCont.tr('appbar.challenge');
 
@@ -26,7 +22,9 @@ class ChallengePageCont extends PageCont {
   List<Party?> get parties => _parties;
 
   List<Challenge> challengesByType(FType type) {
-    return _challenges.where((c) => c.type == type).toList();
+    List<Challenge> list = [..._challenges.where((c) => c.type == type)];
+    int compare(Challenge a, Challenge b) => isBookmarkedChallenge(b) ? 1 : -1;
+    return list..sort(compare);
   }
 
   bool isBookmarkedChallenge(Challenge challenge) {
@@ -40,11 +38,17 @@ class ChallengePageCont extends PageCont {
   FUser get _logged => AuthCont.logged!;
 
   @override
+  String get loadKey => 'challenge';
+
+  @override
   Future load() async {
+    _logged.party = await FUserPartyDAO().loadOne(_logged.key);
     await _logged.party!.loadParties();
     _challenges.assignAll(ChallengeLocal().list);
     _parties.assignAll(List.generate(FType.activeValues.length, (i) => null));
-    for (Party p in _logged.parties.values) {
+
+    List<Party> partyList = [..._logged.parties.values];
+    for (Party p in partyList) {
       int toReplace = p.type.index - 1;
       await p.loadMembers();
       _parties.removeAt(toReplace);

@@ -10,7 +10,7 @@ class FBadgeWidget extends StatefulWidget {
     super.key,
     this.badge,
     this.onPressed,
-    this.size = 45.0,
+    this.size = 40.0,
     this.backgroundColor,
   });
 

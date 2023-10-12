@@ -42,7 +42,10 @@ abstract class DAO<T extends Model> {
     await _collection.doc(one.key).set(one.toJson());
   }
 
+  Future beforeRemove(T one) async {}
+
   Future removeOne(T one) async {
+    await beforeRemove(one);
     await _collection.doc(one.key).delete();
   }
 

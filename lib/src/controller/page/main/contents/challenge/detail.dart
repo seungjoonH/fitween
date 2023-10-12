@@ -16,7 +16,7 @@ class ChallengeDetailPageCont extends PageCont {
 
   String get _tr => 'challenge-detail';
   String get goPartyText => LangCont.tr('$_tr.go-party');
-  String get joinPartyText => LangCont.tr('$_tr.join-party');
+  String get searchPartyText => LangCont.tr('$_tr.search-party');
   String get createPartyText => LangCont.tr('$_tr.create-party');
 
   bool get isBookmarkedChallenge {
@@ -36,7 +36,13 @@ class ChallengeDetailPageCont extends PageCont {
     FRoute.toParty(party: getPartyFromChallenge());
   }
 
+  void searchPartyButtonPressed() {
+    if (isBookmarkedTypeOfChallenge) return;
+    FRoute.toPartySearch(keyword: challenge!.title);
+  }
+
   void createPartyButtonPressed() {
+    if (isBookmarkedTypeOfChallenge) return;
     FRoute.toPartyCreate(challenge: challenge);
   }
 

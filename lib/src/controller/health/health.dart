@@ -79,7 +79,7 @@ class HealthDataCont extends GetxController {
     DateRange range = DateRange(startTime, endTime);
 
     for (DateTime date in range.dates) {
-      if (!_byType(type)!.keys.contains(date)) continue;
+      if (!(_byType(type)?.keys.contains(date) ?? false)) continue;
       _logged.setRecordByValue(type, _byType(type)![date]!, date);
     }
     await FUserRecordDAO().saveOne(_logged.record!);
@@ -182,6 +182,5 @@ class HealthDataCont extends GetxController {
       _fetchedFlights![flight.dateFrom.ignoreTime] = value;
     }
   }
-
 
 }

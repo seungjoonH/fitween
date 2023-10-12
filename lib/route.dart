@@ -18,6 +18,8 @@ class FRoute {
     '/contents': const ContentsPage(),
     '/contents/challenge/party': const PartyPage(),
     '/contents/challenge/party/create': const PartyCreatePage(),
+    '/contents/challenge/party/member-setting': const PartyMemberSettingPage(),
+    '/contents/challenge/party/search': const PartySearchPage(),
     '/contents/challenge/detail': const ChallengeDetailPage(),
     '/contents/challenge': const ChallengePage(),
     '/contents/weight': const WeightPage(),
@@ -62,6 +64,9 @@ class FRoute {
   static void toContents() => Get.offAllNamed('/contents');
   static void toParty({Party? party}) => Get.toNamed('/contents/challenge/party', arguments: party);
   static void toPartyCreate({Challenge? challenge}) => Get.toNamed('/contents/challenge/party/create', arguments: challenge);
+  static void toPartyMemberSetting({Party? party}) => Get.toNamed('/contents/challenge/party/member-setting', arguments: party);
+  static void toPartySearch({String keyword = ''}) => Get.toNamed('/contents/challenge/party/search', arguments: keyword);
+  static void toPartyApplicants({Party? party}) => Get.toNamed('/contents/challenge/party/applicants', arguments: party);
   static void toChallengeDetail({Challenge? challenge}) => Get.toNamed('/contents/challenge/detail', arguments: challenge);
   static void toChallenge() => Get.toNamed('/contents/challenge');
   static void toWeight() => Get.toNamed('/contents/weight');

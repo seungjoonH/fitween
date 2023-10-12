@@ -28,7 +28,7 @@ class _ContentsPageState extends FPageState<ContentsPage> {
       title: FText(
         content.cardTitle,
         style: FTheme.cardTitleStyle,
-        color: FTheme.background,
+        color: FTheme.achro95,
       ),
       iconColor: FTheme.achro95,
       onPressed: () => cont.contentCardPressed(content),

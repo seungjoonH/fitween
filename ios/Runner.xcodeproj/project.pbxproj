@@ -11,7 +11,7 @@
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		52C778012A5F8BEB0043E4F1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 52C778032A5F8BEB0043E4F1 /* InfoPlist.strings */; };
 		52D533352AC94060003C2FB2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52D533342AC94060003C2FB2 /* GoogleService-Info.plist */; };
-		60B548A3299624FD00C84718 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		60B548A3299624FD00C84718 /* (null) in Resources */ = {isa = PBXBuildFile; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
@@ -203,7 +203,7 @@
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
 				52C778012A5F8BEB0043E4F1 /* InfoPlist.strings in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
-				60B548A3299624FD00C84718 /* BuildFile in Resources */,
+				60B548A3299624FD00C84718 /* (null) in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 				52D533352AC94060003C2FB2 /* GoogleService-Info.plist in Resources */,
@@ -578,7 +578,7 @@
 				249021D3217E4FDB00AE95B9 /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 		97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */ = {
 			isa = XCConfigurationList;
@@ -588,7 +588,7 @@
 				249021D4217E4FDB00AE95B9 /* Profile */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};

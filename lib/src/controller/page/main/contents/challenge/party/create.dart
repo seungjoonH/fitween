@@ -11,6 +11,9 @@ import 'package:get/get.dart';
 class PartyCreatePageCont extends PageCont {
   static PartyCreatePageCont get to => Get.find<PartyCreatePageCont>();
 
+  final TextEditingController partyTitleCont = TextEditingController();
+
+  String get partyTitleHeaderText => LangCont.tr('word.party-title').capitalize!;
   String get difficultyHeaderText => LangCont.tr('word.difficulty').capitalize!;
   String get descriptionHeaderText => LangCont.tr('word.description').capitalize!;
   String get infoHeaderText => LangCont.tr('word.info').capitalize!;
@@ -22,6 +25,8 @@ class PartyCreatePageCont extends PageCont {
 
   final _challenge = Rx<Challenge?>(null);
   Challenge? get challenge => _challenge.value;
+
+  String hintTitle = '';
 
   String get goalTitle => LangCont.tr('word.goal');
   String get goalValueText => challenge!.type.withAltUnit(challenge!.getGoal(difficulty));
@@ -46,14 +51,18 @@ class PartyCreatePageCont extends PageCont {
   void createPartyButtonPressed() {
     showFDialog(
       title: reallyDialogTitle,
-      content: FText(reallyDialogText),
+      content: FText(reallyDialogText, maxLines: 0),
       type: DialogType.bi,
       rightPressed: createParty,
     );
   }
 
   void createParty() async {
+    String partyTitle = partyTitleCont.text;
+    if (partyTitle.trim().isEmpty) partyTitle = hintTitle;
+
     Party newParty = Party(
+      title: partyTitle,
       challengeId: challenge!.key,
       difficulty: difficulty,
       leader: AuthCont.logged!,
@@ -63,7 +72,7 @@ class PartyCreatePageCont extends PageCont {
       title: createdDialogTitle,
       content: Column(
         children: [
-          FText(createdDialogText),
+          FText(createdDialogText, maxLines: 0),
           SizedBox(height: 10.0.h),
           FCopyButton(text: newParty.key),
         ],
@@ -80,11 +89,19 @@ class PartyCreatePageCont extends PageCont {
     FRoute.toChallenge();
   }
 
+  void onFieldChanged(String text) {
+    if (partyTitleCont.text.trim().isNotEmpty) return;
+    partyTitleCont.clear();
+  }
+  void clearTitleField() => partyTitleCont.clear();
+
   FUser get _logged => AuthCont.logged!;
 
   @override
   Future load() async {
     _challenge.value = await Get.arguments as Challenge;
+    hintTitle = challenge!.title;
+    partyTitleCont.text = hintTitle;
   }
 
   @override

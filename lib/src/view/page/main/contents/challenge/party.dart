@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:fitween/global/global.dart';
+import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
@@ -68,29 +69,45 @@ class _PartyPageState extends FPageState<PartyPage> {
 
   Widget _buildMembersProgressIndicatorWidget(BuildContext context) {
     return Obx(() => Column(
-      children: cont.members.map((member) => Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Stack(
-            alignment: Alignment.topLeft,
-            children: [
-              FProfileWidget(user: member, showMeTag: true),
-              Transform.rotate(
-                angle: cont.getRank(member.key) < 3 ? -pi / 4 : 0,
-                child: RankIcon(rank: cont.getRank(member.key)),
-              ),
-            ],
+      children: cont.members.map((member) {
+        bool isLeader = member.key == cont.party!.leaderUid;
+        return DarkPressableWidget(
+          onPressed: () => cont.memberTilePressed(member),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 5.0.w),
+            color: isLeader
+                ? Colors.transparent
+                : cont.party!.type.color,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Stack(
+                  alignment: Alignment.topLeft,
+                  children: [
+                    FProfileWidget(user: member, showMeTag: true),
+                    Transform.rotate(
+                      angle: cont.getRank(member.key) < 3 ? -pi / 4 : 0,
+                      child: RankIcon(rank: cont.getRank(member.key)),
+                    ),
+                  ],
+                ),
+                Stack(
+                  alignment: Alignment.centerRight,
+                  children: MemberProgressTextMode.values.map((mode) => AnimatedOpacity(
+                    opacity: cont.mode == mode ? 1.0 : .0,
+                    duration: 300.ms,
+                    child: FTexts(
+                      cont.getMemberProgressText(member.key, mode),
+                      style: FTheme.bodySmall,
+                      highlightStyle: FTheme.titleSmall,
+                    ),
+                  )).toList(),
+                ),
+              ],
+            ),
           ),
-          Stack(
-            alignment: Alignment.centerRight,
-            children: MemberProgressTextMode.values.map((mode) => AnimatedOpacity(
-              opacity: cont.mode == mode ? 1.0 : .0,
-              duration: 300.ms,
-              child: FText(cont.getMemberProgressText(member.key, mode)),
-            )).toList(),
-          ),
-        ],
-      )).separateH(height: 10.0.h),
+        );
+      }).separateH(height: 10.0.h),
     ));
   }
 
@@ -116,18 +133,38 @@ class _PartyPageState extends FPageState<PartyPage> {
   }
 
   Widget _buildProgressRankingWidget(BuildContext context) {
-    return Column(
+    return Obx(() => Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FText(
-          cont.memberCountText,
-          style: FTheme.titleSmall,
-          color: FTheme.comment,
+        Row(
+          children: [
+            FText(
+              cont.memberCountText,
+              style: FTheme.titleSmall,
+              color: FTheme.comment,
+            ),
+            if (cont.isLeader && !cont.isOnly)
+            FIconButton(
+              icon: const Icon(Icons.settings),
+              size: 35.0.r,
+              iconColor: FTheme.comment,
+              onPressed: cont.memberSettingButtonPressed,
+            ),
+          ].separateW(width: 5.0.r),
         ),
         SizedBox(height: 20.0.h),
         _buildMembersProgressIndicatorWidget(context),
+        if (!cont.party!.isFull)
         _buildCopyButtonWidget(context),
       ],
+    ));
+  }
+
+  Widget _buildCompleteButtonWidget(BuildContext context) {
+    return FPointButton(
+      amount: cont.point,
+      finished: cont.party!.completed,
+      onPressed: (){}//cont.completeButtonPressed,
     );
   }
 
@@ -145,9 +182,17 @@ class _PartyPageState extends FPageState<PartyPage> {
       if (cont.party == null) return Container();
       return Column(
         children: [
-          PartyCard(party: cont.party),
+          PartyCard(
+            party: cont.party,
+            titleController: cont.partyTitleCont,
+            titleEditMode: cont.partyTitleEditMode,
+            onTitleChanged: cont.onTitleFieldChanged,
+            toggleTitleMode: cont.toggleTitleMode,
+          ),
           _buildProgressCardWidget(context),
-          _buildGiveUpButtonWidget(context),
+          cont.party!.completed
+              ? _buildCompleteButtonWidget(context)
+              : _buildGiveUpButtonWidget(context),
         ].separateH(height: 20.0.h),
       );
     });
@@ -164,10 +209,17 @@ class _PartyPageState extends FPageState<PartyPage> {
     return FRefreshScaffold(
       refreshController: RefreshController(),
       onRefresh: cont.onRefresh,
-      appBar: FAppBar(text: cont.appBarTitle),
-      height: PageCont.size.height * 1.4,
+      appBar: FAppBar(
+        text: cont.appBarTitle,
+        actions: [
+          FIconButton(
+            icon: const Icon(Icons.people_alt),
+            onPressed: FRoute.toPartyApplicants,
+          ),
+        ],
+      ),
+      height: PageCont.size.height * 1.6,
       body: _buildBody(context),
     );
   }
-
 }

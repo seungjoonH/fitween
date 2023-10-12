@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_controller.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/controller/health/health.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:get/get.dart';
@@ -34,6 +35,7 @@ class HomePageCont extends MainPageCont {
   Future load() async {
     await calendarCont.init();
     await rankingCont.init();
+    await HealthDataCont.fetchDataAfterLogin();
   }
 
   @override

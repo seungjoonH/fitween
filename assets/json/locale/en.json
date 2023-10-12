@@ -4,7 +4,10 @@
     "start": "Start",
     "next": "Next",
     "sure": "Sure!",
-    "give-up": "Give Up!"
+    "give-up": "Give Up",
+    "delegate-leader": "Leader",
+    "poke": "Poke",
+    "banish": "Banish"
   },
   "appbar": {
     "register": "Register",
@@ -16,7 +19,8 @@
     "challenge": "Challenge",
     "weight": "Weight",
     "battle": "Battle",
-    "party": "Party"
+    "party": "Party",
+    "member-setting": "Member Settings"
   },
   "hint": {
     "your-nickname": "Input your nickname",
@@ -73,13 +77,16 @@
     "finished": "Finished",
     "member": "members",
     "copied": "copied",
-    "max-member": "Max",
-    "due": "Due",
-    "goal": "Goal",
-    "period": "Period",
+    "max-member": "max",
+    "due": "due",
+    "goal": "goal",
+    "type": "type",
+    "period": "period",
     "difficulty": "difficulty",
     "description": "description",
-    "info": "info"
+    "info": "info",
+    "leader": "leader",
+    "party-title": "party title"
   },
   "unit": {
     "step": {
@@ -255,7 +262,8 @@
     "no-friends": "There's no friends yet\nFollow friends first!"
   },
   "search": {
-    "hint-text": "Search nickname"
+    "nickname": "Nickname",
+    "party": "Party (leader/title)"
   },
   "see-more": {
     "badge": {
@@ -288,25 +296,48 @@
     "entire": "Entire",
     "share": "Let's share the participation code with friends and challenge together!",
     "dialog": {
-      "really-title": "Give up Party",
-      "really-text": "Are you sure to give up this party?",
-      "given-up-title": "Party abandoned",
-      "given-up-text": "The party has been abandoned"
+      "give-up": {
+        "really-title": "Give up Party",
+        "really-text": "Are you sure to give up this party?",
+        "really-only-text": "@:party.dialog.give-up.really-text\n@{The party would be removed and cannot be recovered}",
+        "really-leader-text": "@:party.dialog.give-up.really-text\n@{The leader is delegated to the person with the highest contribution of the party}",
+        "really-member-text": "@:party.dialog.give-up.really-text",
+        "given-up-title": "Party abandoned",
+        "given-up-text": "The party has been abandoned",
+        "removed-title": "Party removed",
+        "removed-text": "The pary has been removed"
+      }
     }
   },
   "challenge-detail": {
-    "join-party": "Join Party",
+    "search-party": "Search Party",
     "create-party": "Create Party",
     "go-party": "Go to my Party"
   },
   "party-create": {
-    "join-party": "Join Party",
+    "search-party": "Search Party",
     "create-party": "Create Party",
     "dialog": {
       "really-title": "Create Party",
       "really-text": "Are you sure you want to create a party?",
       "created-title": "Party Created",
       "created-text": "Party has been created!"
+    }
+  },
+  "member-setting": {
+    "dialog": {
+      "delegate": {
+        "really-title": "Delegate Leader",
+        "complete-title": "Leader Delegated",
+        "really-text": "Are you sure to delegate the leader to @{{nickname}}?",
+        "complete-text": "@{{nickname}} has become the leader"
+      },
+      "banish": {
+        "really-title": "Banish Member",
+        "really-text": "Are you sure to banish @{{nickname}}?",
+        "complete-title": "Member banished",
+        "complete-text": "@{{nickname}} has been banished"
+      }
     }
   }
 }

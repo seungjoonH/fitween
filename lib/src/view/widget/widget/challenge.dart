@@ -74,7 +74,11 @@ class ChallengeCard extends StatelessWidget {
   }
 
   String get imageUrl => challenge!.defaultImageUrl;
-  String get title => challenge!.title;
+  Widget get title => FText(
+    challenge!.title,
+    style: FTheme.cardTitleStyle,
+    maxLines: 2,
+  );
   String get description => challenge!.subDescription;
 
   @override
@@ -89,11 +93,7 @@ class ChallengeCard extends StatelessWidget {
           bookmarked: bookmarked,
           iconColor: challenge!.type.color,
           onPressed: onPressed,
-          title: FText(
-            title,
-            style: FTheme.cardTitleStyle,
-            maxLines: 2,
-          ),
+          title: title,
           child: buildCardContent(context),
         ),
       ],

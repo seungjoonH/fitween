@@ -51,7 +51,7 @@ class DialogCont {
           FText(
             '해당 ${withEulReul(text)}\n정말 삭제하시겠습니까?',
             style: FTheme.titleSmall!,
-            maxLines: 2,
+            maxLines: 0,
           ),
           if (underContent != null)
           Column(
@@ -75,7 +75,7 @@ class DialogCont {
 
     await showFDialog(
     title: '$text 삭제 완료',
-    content: FText('${withIGa(text)} 삭제되었습니다'),
+    content: FText('${withIGa(text)} 삭제되었습니다', maxLines: 0),
     type: DialogType.mono,
     );
   }
