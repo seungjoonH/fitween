@@ -1,6 +1,7 @@
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/model/class/model.dart';
+import 'package:fitween/src/model/enum/enum.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,38 @@ class _PartySearchPageState extends FPageState<PartySearchPage> {
   @override
   PartySearchPageCont get cont => PartySearchPageCont.to;
 
+  Widget _buildTypeButtonWidget(BuildContext context, FType type) {
+    return DarkPressableWidget(
+      onPressed: () => cont.updateTypeState(type),
+      child: Row(
+        children: [
+          Checkbox(
+            value: cont.isActive(type),
+            onChanged: (_) => cont.updateTypeState(type),
+            activeColor: type.color,
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 10.0.w),
+            child: FText(
+              type.locale,
+              color: type.color,
+              bold: true,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTypeFilterWidget(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: FType.activeValues
+          .map((type) => _buildTypeButtonWidget(context, type))
+          .separateW(width: 10.0.w),
+    );
+  }
+
   Widget _buildPartyWidget(BuildContext context, Party party) {
     PartySearchedType? type = cont.getSearchedType(party.key);
     if (type == null) return Container();
@@ -30,12 +63,18 @@ class _PartySearchPageState extends FPageState<PartySearchPage> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Obx(() => SingleChildScrollView(
-      child: Column(
-        children: cont.parties
-            .map((party) => _buildPartyWidget(context, party))
-            .separateH(height: 10.0.h),
-      ),
+    return Obx(() => Column(
+      children: [
+        _buildTypeFilterWidget(context),
+        SizedBox(height: 10.0.h),
+        SingleChildScrollView(
+          child: Column(
+            children: cont.parties
+                .map((party) => _buildPartyWidget(context, party))
+                .separateH(height: 10.0.h),
+          ),
+        ),
+      ],
     ));
   }
 

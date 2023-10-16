@@ -3,6 +3,7 @@ import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
+import 'package:fitween/src/model/enum/enum.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,6 +11,12 @@ enum PartySearchedType { code, title, leaderNickname, challengeTitle }
 
 class PartySearchPageCont extends PageCont {
   static PartySearchPageCont get to => Get.find<PartySearchPageCont>();
+
+  final _activeTypes = <FType, bool>{}.obs;
+  Map<FType, bool> get activeTypes => _activeTypes;
+
+  bool isActive(FType type) => activeTypes[type] ?? true;
+  void updateTypeState(FType type) => activeTypes[type] = !isActive(type);
 
   final collections = f.collection('parties');
   final _searchedParties = <PartySearchedType, List<Party>>{}.obs;
@@ -46,9 +53,11 @@ class PartySearchPageCont extends PageCont {
 
   @override
   Future load() async {
-    for (var type in PartySearchedType.values) {
-      _searchedParties[type] = <Party>[];
-    }
+    _activeTypes.assignAll({for (var type in FType.values) type : true});
+    _searchedParties.assignAll({
+      for (var type in PartySearchedType.values) type : <Party>[]
+    });
+
     String word = Get.arguments as String;
 
     _keyword('');
@@ -66,13 +75,14 @@ class PartySearchPageCont extends PageCont {
   @override
   void onInit() {
     super.onInit();
+    ever(_activeTypes, (_) => streaming());
     ever(_keyword, (_) => streaming());
   }
 
   void streaming() async {
     if (keyword.trim().isEmpty) {
       for (var type in PartySearchedType.values) {
-        _searchedParties[type]!.clear();
+        _searchedParties[type] = <Party>[];
       }
       return;
     }
@@ -87,7 +97,8 @@ class PartySearchPageCont extends PageCont {
 
     cols.snapshots().listen((snapshot) {
       _searchedParties[PartySearchedType.code] = [
-        ...snapshot.docs.map((doc) => Party.fromJson(doc.data())),
+        ...snapshot.docs.map((doc) => Party.fromJson(doc.data()))
+          ..where((party) => isActive(party.type)),
       ];
     });
 
@@ -96,7 +107,8 @@ class PartySearchPageCont extends PageCont {
 
     cols.snapshots().listen((snapshot) {
       _searchedParties[PartySearchedType.challengeTitle] = [
-        ...snapshot.docs.map((doc) => Party.fromJson(doc.data())),
+        ...snapshot.docs.map((doc) => Party.fromJson(doc.data()))
+            .where((party) => isActive(party.type)),
       ];
     });
 
@@ -107,7 +119,8 @@ class PartySearchPageCont extends PageCont {
 
     cols.snapshots().listen((snapshot) {
       _searchedParties[PartySearchedType.title] = [
-        ...snapshot.docs.map((doc) => Party.fromJson(doc.data())),
+        ...snapshot.docs.map((doc) => Party.fromJson(doc.data()))
+            .where((party) => isActive(party.type)),
       ];
     });
 
@@ -118,7 +131,8 @@ class PartySearchPageCont extends PageCont {
 
     cols.snapshots().listen((snapshot) {
       _searchedParties[PartySearchedType.leaderNickname] = [
-        ...snapshot.docs.map((doc) => Party.fromJson(doc.data())),
+        ...snapshot.docs.map((doc) => Party.fromJson(doc.data()))
+            .where((party) => isActive(party.type)),
       ];
     });
 
