@@ -281,11 +281,11 @@ class PartyPageCont extends PageCont {
     showMemberChart(member);
   }
 
-  final _chartDataOfMembers = <String, List<ChartData>>{}.obs;
-  Map<String, List<ChartData>> get chartDataOfMembers => _chartDataOfMembers;
+  final _chartDataOfMembers = <String, Map<FType, List<ChartData>>>{}.obs;
+  Map<String, Map<FType, List<ChartData>>> get chartDataOfMembers => _chartDataOfMembers;
 
   List<ChartData> _getChartData(FUser member) {
-    List<ChartData>? data = chartDataOfMembers[member.key];
+    List<ChartData>? data = chartDataOfMembers[member.key]?[party!.type];
     if (data != null) return data;
 
     List<ChartData> list = [];
@@ -300,7 +300,10 @@ class PartyPageCont extends PageCont {
       list.add(ChartData(date, amount));
     }
 
-    _chartDataOfMembers[member.key] = [...list];
+    if (_chartDataOfMembers[member.key] == null) {
+      _chartDataOfMembers[member.key] = <FType, List<ChartData>>{};
+    }
+    _chartDataOfMembers[member.key]![party!.type] = [...list];
 
     return list;
   }
