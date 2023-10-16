@@ -1,11 +1,12 @@
 import 'package:fitween/global/global.dart';
+import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-enum PartySearchedType { title, leaderNickname, challengeTitle }
+enum PartySearchedType { code, title, leaderNickname, challengeTitle }
 
 class PartySearchPageCont extends PageCont {
   static PartySearchPageCont get to => Get.find<PartySearchPageCont>();
@@ -36,6 +37,12 @@ class PartySearchPageCont extends PageCont {
     }
     return null;
   }
+
+  void partyListTilePressed(Party party) {
+    FRoute.toParty(party: party); party.view(_logged.key);
+  }
+
+  FUser get _logged => AuthCont.logged!;
 
   @override
   Future load() async {
@@ -76,6 +83,15 @@ class PartySearchPageCont extends PageCont {
     }
 
     var cols = collections
+        .where('id', isEqualTo: keyword);
+
+    cols.snapshots().listen((snapshot) {
+      _searchedParties[PartySearchedType.code] = [
+        ...snapshot.docs.map((doc) => Party.fromJson(doc.data())),
+      ];
+    });
+
+    cols = collections
         .where('challengeId', whereIn: searchingIds);
 
     cols.snapshots().listen((snapshot) {

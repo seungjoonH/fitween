@@ -34,7 +34,7 @@ class FUserCollection extends FUser {
     _collectionsData = {};
     uid = json['uid'];
     _badgeId = json['badgeId'];
-    for (var data in json['collectionsData']) {
+    for (var data in json['collectionsData'] ?? json['collections']) {
       _collectionsData[data['badgeId']] = _CollectionData.fromJson(data);
     }
   }

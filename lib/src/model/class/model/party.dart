@@ -22,6 +22,36 @@ enum Difficulty {
   static List<Difficulty> get activeValues => [easy, normal, hard];
 }
 
+class ApplicantData extends Model {
+  late Timestamp _date;
+  late bool _checked;
+
+  DateTime get date => _date.toDate();
+  set date(DateTime d) => _date = d.toTimestamp!;
+
+  void check() => _checked = true;
+
+  ApplicantData() { date = now; _checked = false; }
+  ApplicantData.fromJson(super.json) : super.fromJson();
+
+  @override
+  void fromJson(Map<String, dynamic> json) {
+    _date = json['date'];
+    _checked = json['checked'];
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    json['date'] = _date;
+    json['checked'] = _checked;
+    return json;
+  }
+
+  @override
+  String get key => throw UnimplementedError();
+}
+
 class Party extends Model {
   late String _id;
   late String _title;
@@ -33,9 +63,12 @@ class Party extends Model {
   bool _complete = false;
   Timestamp? _startDate;
   Timestamp? _endDate;
+  Map<String, ApplicantData> _applicantsData = {};
+  int? _views;
 
   late FUser leader;
   Map<String, FUser> members = {};
+  Map<String, FUser> applicants = {};
 
   Difficulty get difficulty => _difficulty;
 
@@ -46,6 +79,7 @@ class Party extends Model {
   DateTime? get endDate => _endDate?.toDate();
   set startDate(DateTime? date) => _startDate = date?.toTimestamp;
   set endDate(DateTime? date) => _endDate = date?.toTimestamp;
+  int get views => _views ?? 0;
 
   void updateTitle(String title) => _title = title;
 
@@ -66,10 +100,16 @@ class Party extends Model {
 
   int get memberCount => members.length;
   int get maxMemberCount => challenge!.getMaxMemberCount(_difficulty);
+  int get applicantCount => applicants.length;
+  int get notCheckedApplicantCount {
+    return _applicantsData.values.where((data) => !data._checked).length;
+  }
 
   int get point => challenge!.getPoint(_difficulty);
 
   bool get isFull => memberUids.length == maxMemberCount;
+  bool isMember(String uid) => memberUids.contains(uid);
+  bool isApplied(String uid) => applicants.keys.contains(uid);
 
   Future loadMembers() async {
     FUserLoadCont cont = FUserLoadCont(collection: true, record: true);
@@ -83,10 +123,14 @@ class Party extends Model {
     _leaderNickname = leader.nickname;
   }
 
+  Future addMember(FUser user) async {
+    memberUids.add(user.key);
+    members[user.key] = user;
+  }
+
   Future removeMember(String uid) async {
     memberUids.remove(uid);
     members.remove(uid);
-    await PartyDAO().saveOne(this);
   }
 
   num getAmounts(String uid) {
@@ -132,6 +176,45 @@ class Party extends Model {
 
   void delegateLeaderToBestMember() => delegateLeaderTo(bestMemberWithoutLeader!.key);
 
+
+  bool get notCheckedApplicantsExist {
+    return _applicantsData.values.where((data) => data._checked).isNotEmpty;
+  }
+
+  void checkAllApplicants() {
+    for (var uid in _applicantsData.keys) { _applicantsData[uid]!.check(); }
+  }
+
+  void apply(FUser applicant) {
+    _applicantsData[applicant.key] = ApplicantData();
+    applicants[applicant.key] = applicant;
+  }
+
+  void cancel(FUser applicant) {
+    _applicantsData.remove(applicant.key);
+    applicants.remove(applicant.key);
+  }
+
+  void view(String uid) async {
+    if (isMember(uid)) return;
+    int value = _views ?? 0; _views = ++value;
+    await PartyDAO().saveOne(this);
+  }
+
+  Future loadApplicants() async {
+    FUserLoadCont cont = FUserLoadCont(collection: true, party: true);
+    for (var uid in _applicantsData.keys) {
+      FUser? loaded = await FUserDAO().loadOne(uid, cont: cont);
+      if (loaded == null) throw Exception('[ERROR] User($uid) load failed');
+      applicants[uid] = loaded;
+    }
+  }
+
+  void removeApplicant(String uid) async {
+    _applicantsData.remove(uid);
+    applicants.remove(uid);
+  }
+
   Party({
     required String title,
     required String challengeId,
@@ -150,9 +233,7 @@ class Party extends Model {
     endDate = today.add(challenge!.period.d);
   }
 
-  Party.fromJson(Map<String, dynamic> json) {
-    fromJson(json);
-  }
+  Party.fromJson(super.json) : super.fromJson();
 
   @override
   void fromJson(Map<String, dynamic> json) {
@@ -166,6 +247,11 @@ class Party extends Model {
     _complete = json['complete'];
     _startDate = json['startDate'];
     _endDate = json['endDate'];
+    _applicantsData = Map.fromIterables(
+      json['applicantsData'].keys,
+      json['applicantsData'].values.map<ApplicantData>((data) => ApplicantData.fromJson(data)).toList(),
+    );
+    _views = json['views'];
   }
 
   @override
@@ -181,6 +267,11 @@ class Party extends Model {
     json['complete'] = _complete;
     json['startDate'] = _startDate;
     json['endDate'] = _endDate;
+    json['applicantsData'] = Map.fromIterables(
+      _applicantsData.keys,
+      _applicantsData.values.map((data) => data.toJson()),
+    );
+    json['views'] = _views;
     return json;
   }
 

@@ -56,7 +56,7 @@ class PartyListTile extends StatelessWidget {
       subtitleWidget: subtitleWidget,
       tags: [
         FTypeTag(type: party!.type),
-        FTag(
+        FTextTag(
           party!.deadline,
           backgroundColor: party!.over ? null : FTheme.text,
         ),
@@ -208,6 +208,7 @@ class PartyCard extends ChallengeCard {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   buildText('$maxMemberText | ${party!.maxMemberCount}'),
+                  SizedBox(height: 3.0.h),
                   buildText('$dueText | ${party!.deadline}'),
                 ],
               ),
@@ -220,6 +221,7 @@ class PartyCard extends ChallengeCard {
                       DifficultyTag(difficulty: party!.difficulty),
                     ],
                   ),
+                  SizedBox(height: 3.0.h),
                   Row(
                     children: [
                       buildText('$typeText | '),

@@ -149,16 +149,16 @@ class _FCopyButtonState extends State<FCopyButton> {
   Widget _buildCopiedWidget(BuildContext context) {
     return Row(
       children: [
-        Icon(
-          Icons.check,
-          color: FTheme.backgroundAlt,
-        ),
-        SizedBox(width: 10.0.w),
         FText(
           LangCont.tr('word.copied').capitalize!,
           style: FTheme.titleLarge,
           color: FTheme.backgroundAlt,
           bold: true,
+        ),
+        SizedBox(width: 10.0.w),
+        Icon(
+          Icons.check,
+          color: FTheme.backgroundAlt,
         ),
       ],
     );

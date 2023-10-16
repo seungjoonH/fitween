@@ -7,7 +7,11 @@
     "give-up": "Give Up",
     "delegate-leader": "Leader",
     "poke": "Poke",
-    "banish": "Banish"
+    "banish": "Banish",
+    "accept": "Accept",
+    "reject": "Reject",
+    "apply": "Apply",
+    "cancel": "Cancel Application"
   },
   "appbar": {
     "register": "Register",
@@ -20,7 +24,8 @@
     "weight": "Weight",
     "battle": "Battle",
     "party": "Party",
-    "member-setting": "Member Settings"
+    "member-setting": "Member Settings",
+    "applicants": "Applicants"
   },
   "hint": {
     "your-nickname": "Input your nickname",
@@ -86,7 +91,8 @@
     "description": "description",
     "info": "info",
     "leader": "leader",
-    "party-title": "party title"
+    "party-title": "party title",
+    "list": "list"
   },
   "unit": {
     "step": {
@@ -305,14 +311,31 @@
         "given-up-title": "Party abandoned",
         "given-up-text": "The party has been abandoned",
         "removed-title": "Party removed",
-        "removed-text": "The pary has been removed"
+        "removed-text": "The party has been removed"
+      },
+      "apply": {
+        "really-title": "Party Application",
+        "really-text": "Are you sure to join the @{{party-title}} party?",
+        "applied-title": "Party Applied",
+        "applied-text": "Successfully applied",
+        "canceled-title": "Party Application Canceled",
+        "canceled-text": "Party application has been canceled",
+        "disabled-title": "Failed to Apply",
+        "disabled-text": "It can only be applied for one party of the same type"
       }
     }
   },
   "challenge-detail": {
     "search-party": "Search Party",
     "create-party": "Create Party",
-    "go-party": "Go to my Party"
+    "my-party": "Go to my Party",
+    "applied-party": "Go to Applied Party",
+    "dialog": {
+      "unbookmark-title": "Party Duplicated",
+      "unbookmark-text": "The same type of party is already in progress. Please complete the existing party first.",
+      "cancel-title": "Applied Party Duplicated",
+      "cancel-text": "The same type of party is already applied. Only one party can be applied in one type."
+    }
   },
   "party-create": {
     "search-party": "Search Party",
@@ -337,6 +360,27 @@
         "really-text": "Are you sure to banish @{{nickname}}?",
         "complete-title": "Member banished",
         "complete-text": "@{{nickname}} has been banished"
+      }
+    }
+  },
+  "party-applicants": {
+    "no-applicants": "There's no applicants",
+    "dialog": {
+      "full": {
+        "title": "Party is Full",
+        "text": "Nobody can join the party anymore"
+      },
+      "accept": {
+        "really-title": "Request Acceptance",
+        "really-text": "Are you sure to add @{{nickname}} to the party member?",
+        "complete-title": "Request Accepted",
+        "complete-text": "@{{nickname}} has become a new party member"
+      },
+      "reject": {
+        "really-title": "Request Rejection",
+        "really-text": "Are you sure to reject the request from @{{nickname}}?",
+        "complete-title": "Request Rejected",
+        "complete-text": "The request of @{{nickname}} is rejected"
       }
     }
   }

@@ -12,6 +12,7 @@ class FIconButton extends StatefulWidget {
     this.iconColor,
     this.iconSize,
     this.backgroundColor,
+    this.notifications,
   });
 
   final Icon? icon;
@@ -20,6 +21,7 @@ class FIconButton extends StatefulWidget {
   final Color? iconColor;
   final double? iconSize;
   final Color? backgroundColor;
+  final int? notifications;
 
   @override
   State<FIconButton> createState() => _FIconButtonState();
@@ -32,22 +34,43 @@ class _FIconButtonState extends State<FIconButton> with DarkPressable {
   @override
   bool get isCircle => true;
 
+  String? get notifications {
+    if (widget.notifications == null) return null;
+    if (widget.notifications == 0) return null;
+    int value = widget.notifications!;
+    if (value > 99) return '99+';
+    return ' $value ';
+  }
+
   @override
   Widget buildContent(BuildContext context) {
     Color iconColorAlt = widget.iconColor ?? FTheme.text;
     double size = widget.size ?? 60.0.r;
 
-    return Container(
-      width: size,
-      height: size,
-      decoration: BoxDecoration(
-        color: widget.backgroundColor,
-      ),
-      child: Icon(
-        widget.icon?.icon,
-        size: widget.iconSize,
-        color: iconColorAlt,
-      ),
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(
+          width: size,
+          height: size,
+          decoration: BoxDecoration(
+            color: widget.backgroundColor,
+          ),
+          child: Icon(
+            widget.icon?.icon,
+            size: widget.iconSize,
+            color: iconColorAlt,
+          ),
+        ),
+        if (notifications != null)
+        Positioned(
+          top: 5.r, right: 5.r,
+          child: FTextTag(
+            notifications!,
+            backgroundColor: FTheme.error,
+          ),
+        ),
+      ],
     );
   }
 

@@ -1,15 +1,20 @@
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model/party.dart';
 import 'package:fitween/src/model/class/model/user.dart';
+import 'package:fitween/src/model/enum/enum.dart';
 
 class FUserParty extends FUser {
   @override
   FUserParty? get party => this;
 
   List<String> _partyIds = [];
+  List<String> _appliedPartyIds = [];
 
   @override
   Map<String, Party> parties = {};
+
+  @override
+  Map<String, Party> appliedParties = {};
 
   Future loadParties() async {
     for (String id in _partyIds) {
@@ -20,14 +25,40 @@ class FUserParty extends FUser {
     }
   }
 
+  Future loadAppliedParties() async {
+    for (String id in _appliedPartyIds) {
+      Party? loaded = await PartyDAO().loadOne(id);
+
+      if (loaded == null) throw Exception('[ERROR] Applied Party($id) load failed');
+      appliedParties[id] = loaded;
+    }
+  }
+
   void addParty(Party party) {
-    _partyIds.add(party.key);
     parties[party.key] = party;
+    if (_partyIds.contains(party.key)) return;
+    _partyIds.add(party.key);
   }
 
   void removeParty(String partyId) {
     _partyIds.remove(partyId);
     parties.remove(partyId);
+  }
+
+  void addToAppliedParties(Party party) {
+    appliedParties[party.key] = party;
+    if (_appliedPartyIds.contains(party.key)) return;
+    _appliedPartyIds.add(party.key);
+  }
+
+  void removeFromAppliedParties(String partyId) {
+    _appliedPartyIds.remove(partyId);
+    appliedParties.remove(partyId);
+  }
+
+  bool hasAppliedPartyOf(FType type) {
+    List<Party> list = appliedParties.values.toList();
+    return list.indexWhere((party) => party.type == type) >= 0;
   }
 
   FUserParty(super.key) : super();
@@ -37,6 +68,7 @@ class FUserParty extends FUser {
   void fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
     _partyIds = (json['partyIds'] ?? []).cast<String>();
+    _appliedPartyIds = (json['appliedPartyIds'] ?? []).cast<String>();
   }
 
   @override
@@ -44,6 +76,7 @@ class FUserParty extends FUser {
     Map<String, dynamic> json = {};
     json['uid'] = uid;
     json['partyIds'] = _partyIds;
+    json['appliedPartyIds'] = _appliedPartyIds;
     return json;
   }
 

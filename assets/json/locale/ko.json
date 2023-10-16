@@ -7,7 +7,11 @@
     "give-up": "포기하기",
     "delegate-leader": "파티장 위임",
     "poke": "콕 찌르기",
-    "banish": "추방하기"
+    "banish": "추방하기",
+    "accept": "승인",
+    "reject": "거절",
+    "apply": "신청하기",
+    "cancel": "신청취소"
   },
   "appbar": {
     "register": "회원가입",
@@ -20,7 +24,8 @@
     "weight": "웨이트",
     "battle": "배틀",
     "party": "파티",
-    "member-setting": "멤버 관리"
+    "member-setting": "멤버 관리",
+    "applicants": "지원자"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -87,7 +92,8 @@
     "description": "설명",
     "info": "정보",
     "leader": "파티장",
-    "party-title": "파티명"
+    "party-title": "파티명",
+    "list": "리스트"
   },
   "unit": {
     "step": "[]보",
@@ -264,13 +270,30 @@
         "given-up-text": "파티를 포기했습니다",
         "removed-title": "파티 삭제 완료",
         "removed-text": "파티를 삭제했습니다"
+      },
+      "apply": {
+        "really-title": "파티 참가 신청",
+        "really-text": "정말 @{{party-title}} 파티에 참가 신청 하시겠습니까?",
+        "applied-title": "파티 참가 신청됨",
+        "applied-text": "파티 신청되었습니다",
+        "canceled-title": "파티 참가 신청 취소",
+        "canceled-text": "파티 참가 신청이 취소되었습니다",
+        "disabled-title": "파티 참가 신청 실패",
+        "disabled-text": "동일한 종류의 파티는 하나만 신청할 수 있습니다"
       }
     }
   },
   "challenge-detail": {
     "search-party": "파티 검색하기",
     "create-party": "파티 생성하기",
-    "go-party": "내 파티 바로가기"
+    "my-party": "내 파티 바로가기",
+    "applied-party": "신청 파티 바로가기",
+    "dialog": {
+      "unbookmark-title": "파티 중복",
+      "unbookmark-text": "동일한 종류의 파티가 이미 진행 중입니다. 먼저 기존 파티를 완료해주세요.",
+      "cancel-title": "참가 신청 파티 중복",
+      "cancel-text": "동일한 종류의 파티에 이미 참가 신청하였습니다. 종류 당 하나의 파티만 참여할 수 있습니다."
+    }
   },
   "party-create": {
     "search-party": "파티 검색하기",
@@ -295,6 +318,27 @@
         "really-text": "@{{nickname}} 님을 추방하시겠습니까?",
         "complete-title": "멤버 추방됨",
         "complete-text": "@{{nickname}} 님이 추방되었습니다"
+      }
+    }
+  },
+  "party-applicants": {
+    "no-applicants": "지원자가 없습니다",
+    "dialog": {
+      "full": {
+        "title": "파티가 가득참",
+        "text": "더 이상 파티에 참여할 수 없습니다"
+      },
+      "accept": {
+        "really-title": "요청 수락",
+        "really-text": "@{{nickname}} 님을 파티원에 추가하시겠습니까?",
+        "complete-title": "요청 수락됨",
+        "complete-text": "@{{nickname}} 님이 새로운 파티원이 되었습니다"
+      },
+      "reject": {
+        "really-title": "요청 거절",
+        "really-text": "@{{nickname}} 님의 요청을 거절하시겠습니까?",
+        "complete-title": "요청 거절됨",
+        "complete-text": "@{{nickname}} 님의 요청을 거절했습니다"
       }
     }
   }

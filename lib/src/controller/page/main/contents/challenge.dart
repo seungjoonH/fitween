@@ -44,6 +44,7 @@ class ChallengePageCont extends PageCont {
   Future load() async {
     _logged.party = await FUserPartyDAO().loadOne(_logged.key);
     await _logged.party!.loadParties();
+    await _logged.party!.loadAppliedParties();
     _challenges.assignAll(ChallengeLocal().list);
     _parties.assignAll(List.generate(FType.activeValues.length, (i) => null));
 

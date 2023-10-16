@@ -19,6 +19,7 @@ class GetCont {
     Get.put(PartyCreatePageCont());
     Get.put(PartyMemberSettingPageCont());
     Get.put(PartySearchPageCont());
+    Get.put(PartyApplicantsPageCont());
     Get.put(WeightPageCont());
     Get.put(BattlePageCont());
     Get.put(ContentsPageCont());

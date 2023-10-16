@@ -33,6 +33,16 @@ class PartyPageCont extends PageCont {
   Party? get party => _party.value;
   void setParty(Party party) => _party.value = party;
 
+  final _applicantCount = 0.obs;
+  int get applicantCount => _applicantCount.value;
+  void setApplicantCount() => _applicantCount(party!.applicantCount);
+
+  void partyApplicantButtonPressed() async {
+    party!.checkAllApplicants();
+    await PartyDAO().saveOne(party!);
+    FRoute.toPartyApplicants(party: party);
+  }
+
   final _partyTitleEditMode = false.obs;
   bool get partyTitleEditMode => _partyTitleEditMode.value;
 
@@ -91,7 +101,10 @@ class PartyPageCont extends PageCont {
   @override
   Future load() async {
     _party.value = Get.arguments as Party;
+    await PartyDAO().loadOne(party!.key);
     await party!.loadMembers();
+    await party!.loadApplicants();
+    setApplicantCount();
     _percent(party!.percent);
     _members.assignAll(party!.members.values);
     sortMembers();
@@ -116,25 +129,25 @@ class PartyPageCont extends PageCont {
 
   String get giveUpText => LangCont.tr('button.give-up');
   String get _dialogTr => 'party.dialog';
-  String get reallyTitle => LangCont.tr('$_dialogTr.give-up.really-title');
-  String get reallyOnlyText => LangCont.tr('$_dialogTr.give-up.really-only-text');
-  String get reallyLeaderText => LangCont.tr('$_dialogTr.give-up.really-leader-text');
-  String get reallyMemberText => LangCont.tr('$_dialogTr.give-up.really-member-text');
+  String get reallyGiveUpTitle => LangCont.tr('$_dialogTr.give-up.really-title');
+  String get reallyGiveUpOnlyText => LangCont.tr('$_dialogTr.give-up.really-only-text');
+  String get reallyGiveUpLeaderText => LangCont.tr('$_dialogTr.give-up.really-leader-text');
+  String get reallyGiveUpMemberText => LangCont.tr('$_dialogTr.give-up.really-member-text');
   String get givenUpTitle => LangCont.tr('$_dialogTr.give-up.given-up-title');
   String get givenUpText => LangCont.tr('$_dialogTr.give-up.given-up-text');
   String get removedTitle => LangCont.tr('$_dialogTr.give-up.removed-title');
   String get removedText => LangCont.tr('$_dialogTr.give-up.removed-text');
 
-  bool get isLeader => party!.leaderUid == _logged.key;
-  bool get isOnly => party!.memberUids.length == 1;
+  bool get isLeader => party?.leaderUid == _logged.key;
+  bool get isOnly => party?.memberUids.length == 1;
 
   void giveUpButtonPressed() {
-    String text = reallyMemberText;
-    if (isLeader) text = reallyLeaderText;
-    if (isOnly) text = reallyOnlyText;
+    String text = reallyGiveUpMemberText;
+    if (isLeader) text = reallyGiveUpLeaderText;
+    if (isOnly) text = reallyGiveUpOnlyText;
 
     showFDialog(
-      title: reallyTitle,
+      title: reallyGiveUpTitle,
       content: FTexts(
         text,
         style: FTheme.titleSmall,
@@ -146,11 +159,11 @@ class PartyPageCont extends PageCont {
       rightText: giveUpText,
       rightTextColor: FTheme.achro95,
       rightBackgroundColor: FTheme.error,
-      rightPressed: giveUpParty,
+      rightPressed: _giveUpParty,
     );
   }
 
-  void giveUpParty() async {
+  void _giveUpParty() async {
     String title = givenUpTitle;
     String text = givenUpText;
 
@@ -167,16 +180,101 @@ class PartyPageCont extends PageCont {
 
     _logged.party!.removeParty(party!.key);
 
-    if (isOnly) { await PartyDAO().removeOne(party!); }
+    if (isOnly) {
+      for (FUser applicant in party!.applicants.values) {
+        applicant.party!.removeFromAppliedParties(party!.key);
+        await FUserPartyDAO().saveOne(applicant.party!);
+      }
+      await PartyDAO().removeOne(party!);
+    }
     else {
       if (isLeader) { party!.delegateLeaderToBestMember(); }
       await party!.removeMember(_logged.key);
     }
 
+    await PartyDAO().saveOne(party!);
     await FUserPartyDAO().saveOne(_logged.party!);
 
     FRoute.toContents();
     FRoute.toChallenge();
+  }
+
+  String get applyButtonText => LangCont.tr('button.apply');
+  String get cancelButtonText => LangCont.tr('button.cancel');
+  String get reallyApplyTitle => LangCont.tr('$_dialogTr.apply.really-title');
+  String get reallyApplyText => LangCont.tr(
+    '$_dialogTr.apply.really-text',
+    namedArgs: {'party-title': party!.title},
+  );
+  String get appliedTitle => LangCont.tr('$_dialogTr.apply.applied-title');
+  String get appliedText => LangCont.tr('$_dialogTr.apply.applied-text');
+
+  String get canceledTitle => LangCont.tr('$_dialogTr.apply.canceled-title');
+  String get canceledText => LangCont.tr('$_dialogTr.apply.canceled-text');
+
+  String get disabledTitle => LangCont.tr('$_dialogTr.apply.disabled-title');
+  String get disabledText => LangCont.tr('$_dialogTr.apply.disabled-text');
+
+  bool get hasSameTypeOfAppliedParty {
+    return _logged.party!.hasAppliedPartyOf(party!.type);
+  }
+
+  void applyButtonPressed() {
+    showFDialog(
+      title: reallyApplyTitle,
+      content: FTexts(
+        reallyApplyText,
+        style: FTheme.titleSmall,
+        highlightStyle: FTheme.titleSmall
+            ?.copyWith(color: partyColor),
+        wordWrap: true,
+      ),
+      type: DialogType.bi,
+      rightPressed: _apply,
+    );
+  }
+
+  void _apply() async {
+    await showFDialog(
+      title: appliedTitle,
+      content: FText(appliedText, maxLines: 0),
+      type: DialogType.mono,
+      rightPressed: Get.back,
+    );
+
+    party!.apply(_logged);
+    await PartyDAO().saveOne(party!);
+
+    _logged.party!.addToAppliedParties(party!);
+    await FUserPartyDAO().saveOne(_logged.party!);
+
+    await onRefresh();
+  }
+
+  void cancelButtonPressed() => cancel();
+
+  void cancel() async {
+    await showFDialog(
+      title: canceledTitle,
+      content: FText(canceledText, maxLines: 0),
+      type: DialogType.mono,
+    );
+
+    party!.cancel(_logged);
+    PartyDAO().saveOne(party!);
+
+    _logged.party!.removeFromAppliedParties(party!.key);
+    FUserPartyDAO().saveOne(_logged.party!);
+
+    await onRefresh();
+  }
+
+  void disabledButtonPressed() {
+    showFDialog(
+      title: disabledTitle,
+      content: FText(disabledText, maxLines: 0),
+      type: DialogType.mono,
+    );
   }
 
   void memberTilePressed(FUser member) {
@@ -234,11 +332,11 @@ class PartyPageCont extends PageCont {
         child: SfCartesianChart(
           primaryXAxis: CategoryAxis(
             majorGridLines: const MajorGridLines(width: 0),
-            labelStyle: FTheme.bodyMedium?.apply(color: FTheme.comment),
+            labelStyle: FTheme.bodyMedium?.copyWith(color: FTheme.comment),
             interval: 2,
           ),
           primaryYAxis: NumericAxis(
-            labelStyle: FTheme.bodyMedium?.apply(color: FTheme.comment),
+            labelStyle: FTheme.bodyMedium?.copyWith(color: FTheme.comment),
             labelFormat: format,
           ),
           series: <ChartSeries>[

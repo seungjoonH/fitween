@@ -20,46 +20,9 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
   PartyCreatePageCont get cont => PartyCreatePageCont.to;
 
   Widget _buildChallengeTitleWidget(BuildContext context) {
-    return Obx(() => Stack(
-      alignment: Alignment.bottomLeft,
-      children: [
-        Image.asset(
-          cont.challenge!.defaultImageUrl,
-          width: PageCont.size.width,
-          height: PageCont.size.height * .25,
-          fit: BoxFit.fitWidth,
-          errorBuilder: (context, object, stacktrace) {
-            return Image.asset(
-              ImageCont.emptyAssetPath,
-              width: PageCont.size.width,
-              height: PageCont.size.height * .25,
-              fit: BoxFit.fitWidth,
-            );
-          },
-        ),
-        Container(
-          width: PageCont.size.width,
-          height: PageCont.size.height * .25,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-              colors: [
-                FTheme.background.withOpacity(1.0),
-                FTheme.background.withOpacity(.0),
-              ],
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 28.0.w),
-          child: FText(
-            cont.challenge!.title,
-            style: FTheme.headlineMedium,
-            maxLines: 0,
-          ),
-        ),
-      ],
+    return Obx(() => TopImage(
+      imageUrl: cont.challenge!.defaultImageUrl,
+      title: cont.challenge!.title,
     ));
   }
 
@@ -275,6 +238,7 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
                     onPressed: cont.createPartyButtonPressed,
                     stretch: true,
                   ),
+                  SizedBox(height: 100.0.h),
                 ].separateH(height: 20.0.h),
               ),
             ),

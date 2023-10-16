@@ -85,20 +85,28 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
       Color leftButtonColor = FTheme.text;
       Color rightButtonColor = cont.challenge!.type.color;
 
-      if (!cont.isBookmarkedChallenge) {
-        if (cont.isBookmarkedTypeOfChallenge) {
-          leftButtonColor = FTheme.unselected;
-          rightButtonColor = FTheme.unselected;
-        }
-      }
-
       if (cont.isBookmarkedChallenge) {
         return FButton(
-          text: cont.goPartyText,
+          text: cont.goToMyPartyText,
           backgroundColor: rightButtonColor,
           onPressed: cont.goToMyPartyButtonPressed,
           stretch: true,
         );
+      }
+
+      if (cont.isAppliedChallenge) {
+        return FButton(
+          text: cont.goToAppliedPartyText,
+          backgroundColor: rightButtonColor,
+          onPressed: cont.goToAppliedPartyButtonPressed,
+          stretch: true,
+        );
+      }
+
+      if (cont.isBookmarkedTypeOfChallenge
+          || cont.isAppliedTypeOfChallenge) {
+        leftButtonColor = FTheme.unselected;
+        rightButtonColor = FTheme.unselected;
       }
 
       return Row(

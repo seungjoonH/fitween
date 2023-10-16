@@ -85,7 +85,7 @@ class _LoginPageState extends FPageState {
               ? _buildProgramLoadingIndicatorWidget(context)
               : _buildSignInButtonWidget(context),
           SizedBox(height: 50.0.h),
-          const FTag(version),
+          const FTextTag(version),
         ],
       )),
       bottomPadding: 30.0.h,

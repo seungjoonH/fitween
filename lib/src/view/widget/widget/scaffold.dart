@@ -113,10 +113,12 @@ class FRefreshScaffold extends FScaffold {
     super.height,
     required this.refreshController,
     required this.onRefresh,
+    this.scrollController,
   });
 
   final RefreshController refreshController;
   final Future Function() onRefresh;
+  final ScrollController? scrollController;
 
   @override
   Widget? get body => SmartRefresher(
@@ -134,7 +136,10 @@ class FRefreshScaffold extends FScaffold {
       backgroundColor: FTheme.surface,
       offset: 40.0.h,
     ),
-    child: SingleChildScrollView(child: super.body),
+    child: SingleChildScrollView(
+      controller: scrollController,
+      child: super.body,
+    ),
   );
 }
 

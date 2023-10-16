@@ -30,7 +30,7 @@ class _PartyMemberSettingPageState extends FPageState<PartyMemberSettingPage> {
       if (isMe) return const SizedBox();
       return FButton(
         text: text,
-        style: FTheme.bodyLarge,
+        style: FTheme.bodyMedium,
         backgroundColor: backgroundColor,
         textColor: textColor,
         stretch: true,

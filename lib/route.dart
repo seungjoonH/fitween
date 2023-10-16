@@ -20,6 +20,7 @@ class FRoute {
     '/contents/challenge/party/create': const PartyCreatePage(),
     '/contents/challenge/party/member-setting': const PartyMemberSettingPage(),
     '/contents/challenge/party/search': const PartySearchPage(),
+    '/contents/challenge/party/applicants': const PartyApplicantsPage(),
     '/contents/challenge/detail': const ChallengeDetailPage(),
     '/contents/challenge': const ChallengePage(),
     '/contents/weight': const WeightPage(),

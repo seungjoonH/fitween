@@ -76,7 +76,7 @@ class _CalendarPageState extends FPageState<CalendarPage> {
     headerPadding: EdgeInsets.zero,
     titleCentered: true,
     titleTextStyle: FTheme.titleMedium!
-        .apply(color: FTheme.text),
+        .copyWith(color: FTheme.text),
     leftChevronIcon: Icon(
       Icons.chevron_left,
       color: FTheme.textAlt,

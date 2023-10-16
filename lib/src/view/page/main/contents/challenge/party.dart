@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
-import 'package:fitween/src/controller/page.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +20,23 @@ class PartyPage extends FPage {
 class _PartyPageState extends FPageState<PartyPage> {
   @override
   PartyPageCont get cont => PartyPageCont.to;
+  LoadingCont get loadingCont => LoadingCont.to;
+
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
+    return FAppBar(
+      text: cont.appBarTitle,
+      actions: [
+        Obx(() {
+          if (!cont.isLeader) return Container();
+          return FIconButton(
+            icon: const Icon(Icons.people_alt),
+            notifications: cont.applicantCount,
+            onPressed: cont.partyApplicantButtonPressed,
+          );
+        }),
+      ],
+    );
+  }
 
   Widget _buildProgressCardWidget(BuildContext context) {
     return FCard(
@@ -73,18 +90,28 @@ class _PartyPageState extends FPageState<PartyPage> {
         bool isLeader = member.key == cont.party!.leaderUid;
         return DarkPressableWidget(
           onPressed: () => cont.memberTilePressed(member),
-          child: Container(
+          child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5.0.w),
-            color: isLeader
-                ? Colors.transparent
-                : cont.party!.type.color,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Stack(
                   alignment: Alignment.topLeft,
                   children: [
-                    FProfileWidget(user: member, showMeTag: true),
+                    Row(
+                      children: [
+                        FProfileWidget(user: member, showMeTag: true),
+                        if (isLeader)
+                        FTag(
+                          backgroundColor: cont.party!.type.color,
+                          child: Icon(
+                            Icons.flag,
+                            color: FTheme.achro95,
+                            size: 16.0.r,
+                          ),
+                        ),
+                      ],
+                    ),
                     Transform.rotate(
                       angle: cont.getRank(member.key) < 3 ? -pi / 4 : 0,
                       child: RankIcon(rank: cont.getRank(member.key)),
@@ -177,23 +204,89 @@ class _PartyPageState extends FPageState<PartyPage> {
     );
   }
 
+  Widget _buildApplyButtonWidget(BuildContext context) {
+    return FButton(
+      text: cont.applyButtonText,
+      stretch: true,
+      backgroundColor: FTheme.selected,
+      onPressed: cont.applyButtonPressed,
+    );
+  }
+
+  Widget _buildCancelButtonWidget(BuildContext context) {
+    return FButton(
+      text: cont.cancelButtonText,
+      stretch: true,
+      backgroundColor: FTheme.selected,
+      onPressed: cont.cancelButtonPressed,
+    );
+  }
+
+  Widget _buildDisabledButtonWidget(BuildContext context) {
+    return FButton(
+      text: cont.applyButtonText,
+      stretch: true,
+      backgroundColor: FTheme.unselected,
+      onPressed: cont.disabledButtonPressed,
+    );
+  }
+
+  Widget _buildButtonWidget(BuildContext context) {
+    return Obx(() {
+      String myUid = AuthCont.logged!.key;
+      if (cont.party!.isMember(myUid)) {
+        return cont.party!.completed
+            ? _buildCompleteButtonWidget(context)
+            : _buildGiveUpButtonWidget(context);
+      }
+
+      if (cont.party!.isApplied(myUid)) {
+        return _buildCancelButtonWidget(context);
+      }
+
+      return cont.hasSameTypeOfAppliedParty
+          ? _buildDisabledButtonWidget(context)
+          : _buildApplyButtonWidget(context);
+    });
+  }
+
   Widget _buildBody(BuildContext context) {
     return Obx(() {
       if (cont.party == null) return Container();
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          PartyCard(
-            party: cont.party,
-            titleController: cont.partyTitleCont,
-            titleEditMode: cont.partyTitleEditMode,
-            onTitleChanged: cont.onTitleFieldChanged,
-            toggleTitleMode: cont.toggleTitleMode,
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.remove_red_eye,
+                color: FTheme.comment,
+              ),
+              SizedBox(width: 5.0.r),
+              FText(
+                cont.party!.views.localizing(),
+                color: FTheme.comment,
+              ),
+            ],
           ),
-          _buildProgressCardWidget(context),
-          cont.party!.completed
-              ? _buildCompleteButtonWidget(context)
-              : _buildGiveUpButtonWidget(context),
-        ].separateH(height: 20.0.h),
+          SizedBox(height: 10.0.h),
+          Column(
+            children: [
+              PartyCard(
+                party: cont.party,
+                titleController: cont.partyTitleCont,
+                titleEditMode: cont.partyTitleEditMode,
+                onTitleChanged: cont.onTitleFieldChanged,
+                toggleTitleMode: cont.toggleTitleMode,
+              ),
+              _buildProgressCardWidget(context),
+              if (!loadingCont.loading)
+              _buildButtonWidget(context),
+            ].separateH(height: 20.0.h),
+          ),
+        ],
       );
     });
   }
@@ -209,15 +302,7 @@ class _PartyPageState extends FPageState<PartyPage> {
     return FRefreshScaffold(
       refreshController: RefreshController(),
       onRefresh: cont.onRefresh,
-      appBar: FAppBar(
-        text: cont.appBarTitle,
-        actions: [
-          FIconButton(
-            icon: const Icon(Icons.people_alt),
-            onPressed: FRoute.toPartyApplicants,
-          ),
-        ],
-      ),
+      appBar: _buildAppBar(context),
       height: PageCont.size.height * 1.6,
       body: _buildBody(context),
     );

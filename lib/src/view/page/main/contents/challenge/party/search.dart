@@ -25,6 +25,7 @@ class _PartySearchPageState extends FPageState<PartySearchPage> {
       party: party,
       keyword: cont.keyword,
       searchedType: type,
+      onPressed: () => cont.partyListTilePressed(party),
     ));
   }
 
