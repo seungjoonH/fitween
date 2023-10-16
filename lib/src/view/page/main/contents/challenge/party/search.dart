@@ -62,17 +62,39 @@ class _PartySearchPageState extends FPageState<PartySearchPage> {
     ));
   }
 
+  Widget _buildSearchedPartyWidget(BuildContext context) {
+    if (cont.parties.isEmpty) {
+      return Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          border: Border.all(color: FTheme.bar, width: 1.0.r),
+          borderRadius: BorderRadius.circular(10.0.r),
+        ),
+        padding: EdgeInsets.all(30.0.r),
+        margin: EdgeInsets.only(top: 10.0.h),
+        alignment: Alignment.center,
+        child: FText(
+          cont.notFoundText,
+          color: FTheme.bar,
+          style: FTheme.titleMedium,
+        ),
+      );
+    }
+
+    return Column(
+      children: cont.parties
+          .map((party) => _buildPartyWidget(context, party))
+          .separateH(height: 10.0.h),
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     return Obx(() => Column(
       children: [
         _buildTypeFilterWidget(context),
         SizedBox(height: 10.0.h),
         SingleChildScrollView(
-          child: Column(
-            children: cont.parties
-                .map((party) => _buildPartyWidget(context, party))
-                .separateH(height: 10.0.h),
-          ),
+          child: _buildSearchedPartyWidget(context),
         ),
       ],
     ));

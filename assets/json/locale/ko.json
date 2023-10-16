@@ -283,6 +283,7 @@
       }
     }
   },
+  "party-search": { "not-found": "검색 결과가 없습니다" },
   "challenge-detail": {
     "search-party": "파티 검색하기",
     "create-party": "파티 생성하기",

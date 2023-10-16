@@ -325,6 +325,7 @@
       }
     }
   },
+  "party-search": { "not-found": "Party not found" },
   "challenge-detail": {
     "search-party": "Search Party",
     "create-party": "Create Party",

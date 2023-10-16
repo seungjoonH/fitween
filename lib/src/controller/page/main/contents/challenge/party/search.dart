@@ -12,6 +12,8 @@ enum PartySearchedType { code, title, leaderNickname, challengeTitle }
 class PartySearchPageCont extends PageCont {
   static PartySearchPageCont get to => Get.find<PartySearchPageCont>();
 
+  String get notFoundText => LangCont.tr('party-search.not-found');
+
   final _activeTypes = <FType, bool>{}.obs;
   Map<FType, bool> get activeTypes => _activeTypes;
 
