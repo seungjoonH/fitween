@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
+import 'package:fitween/src/model/enum/enum.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,10 +15,12 @@ class PartyListTile extends StatelessWidget {
     super.key,
     this.party,
     this.onPressed,
+    this.showPercent = false,
   });
 
   final Party? party;
   final VoidCallback? onPressed;
+  final bool showPercent;
 
   Widget get titleWidget => FText(
     party!.title,
@@ -27,12 +30,11 @@ class PartyListTile extends StatelessWidget {
   );
 
   Widget get subtitleWidget {
-    String title = party!.challenge!.title;
     String leader = LangCont.tr('word.leader');
     String nickname = party!.leaderNickname;
 
     return FText(
-      '$title\n$leader: $nickname',
+      '$leader: $nickname',
       color: FTheme.comment,
       style: FTheme.bodyMedium,
       maxLines: 3,
@@ -63,6 +65,14 @@ class PartyListTile extends StatelessWidget {
         DifficultyTag(difficulty: party!.difficulty),
       ],
       backgroundColor: FTheme.backgroundAlt,
+      trailing: [
+        if (showPercent)
+        FCircularPercentIndicator(
+          percent: min(party!.percent, 1.0),
+          progressColor: party!.type.color,
+          enableCenter: true,
+        ),
+      ],
     );
   }
 }
@@ -266,14 +276,19 @@ class PartyCard extends ChallengeCard {
 class PartyWidget extends StatefulWidget {
   const PartyWidget({
     super.key,
+    this.type,
     this.party,
     this.onPressed,
   });
 
+  final FType? type;
   final Party? party;
   final VoidCallback? onPressed;
 
-  Color get defaultColor => FTheme.bar;
+  Color get defaultColor => Color.alphaBlend(
+    type?.color.withOpacity(.35) ?? FTheme.bar,
+    FTheme.backgroundAlt,
+  );
   IconData? get iconData => Icons.add;
 
   @override
@@ -341,6 +356,6 @@ class PartyHistoryWidget extends PartyWidget {
   IconData? get iconData => Icons.history;
 
   @override
-  Color get defaultColor => FTheme.unselected;
+  Color get defaultColor => FTheme.bar;
 
 }

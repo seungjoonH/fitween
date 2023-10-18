@@ -66,12 +66,11 @@ class _PartySearchPageState extends FPageState<PartySearchPage> {
     if (cont.parties.isEmpty) {
       return Container(
         width: double.infinity,
+        height: 110.0.h,
         decoration: BoxDecoration(
           border: Border.all(color: FTheme.bar, width: 1.0.r),
           borderRadius: BorderRadius.circular(10.0.r),
         ),
-        padding: EdgeInsets.all(30.0.r),
-        margin: EdgeInsets.only(top: 10.0.h),
         alignment: Alignment.center,
         child: FText(
           cont.notFoundText,
@@ -92,7 +91,7 @@ class _PartySearchPageState extends FPageState<PartySearchPage> {
     return Obx(() => Column(
       children: [
         _buildTypeFilterWidget(context),
-        SizedBox(height: 10.0.h),
+        SizedBox(height: 20.0.h),
         SingleChildScrollView(
           child: _buildSearchedPartyWidget(context),
         ),

@@ -31,6 +31,7 @@ class _ChallengePageState extends FPageState<ChallengePage> {
             children: FType.activeValues.map((type) {
               Party? party = cont.getPartyByType(type);
               return PartyWidget(
+                type: type,
                 party: party,
                 onPressed: () => cont.partyWidgetPressed(type),
               );

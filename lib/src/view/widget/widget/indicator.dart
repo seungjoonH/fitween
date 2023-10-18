@@ -10,85 +10,138 @@ import 'package:percent_indicator/percent_indicator.dart';
 
 class FCircularPercentIndicator extends StatelessWidget {
   const FCircularPercentIndicator({
-    Key? key,
+    super.key,
     required this.percent,
-    required this.color,
-    this.textColor,
-    this.borderColor,
+    this.radius,
+    this.lineWidth,
     this.backgroundColor,
-    this.radius = 55.0,
-    this.lineWidth = 16.0,
-    this.centerText = '',
-    this.onAnimationEnd,
-    this.visible = true,
-    this.duration = 1000,
-    this.animation = true,
-  }) : super(key: key);
+    this.progressColor,
+    this.animation,
+    this.animationDuration,
+    this.enableCenter = false,
+    this.centerColor,
+  });
 
   final double percent;
-  final Color color;
-  final Color? textColor;
-  final Color? borderColor;
+  final double? radius;
+  final double? lineWidth;
   final Color? backgroundColor;
-  final double radius;
-  final double lineWidth;
-  final String centerText;
-  final VoidCallback? onAnimationEnd;
-  final bool visible;
-  final int duration;
-  final bool animation;
+  final Color? progressColor;
+  final bool? animation;
+  final int? animationDuration;
+  final bool enableCenter;
+  final Color? centerColor;
+
+  String get _centerText => enableCenter
+      ? '@{${(percent * 100).round()}} %' : '';
+
+  Color get _progressColor => progressColor ?? FTheme.colorA;
+
+  Widget? get _center => enableCenter ? FTexts(
+    _centerText,
+    textColor: centerColor ?? _progressColor,
+    style: FTheme.bodySmall,
+    highlightStyle: FTheme.titleLarge,
+  ) : null;
 
   @override
   Widget build(BuildContext context) {
-    Color textColorAlt = textColor ?? FTheme.text;
-    Color borderColorAlt = borderColor ?? FTheme.text;
-    Color backgroundColorAlt = backgroundColor ?? FTheme.background;
-
-    final border = Border.all(
-      color: borderColorAlt,
-      width: 1.5,
-    );
-
-    if (!visible) return Container();
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            border: border,
-            shape: BoxShape.circle,
-          ),
-          child: CircularPercentIndicator(
-            radius: radius.r,
-            lineWidth: lineWidth.r,
-            percent: percent,
-            backgroundColor: backgroundColorAlt,
-            progressColor: color,
-            animation: animation,
-            animationDuration: duration,
-            onAnimationEnd: onAnimationEnd,
-            curve: Curves.easeInOut,
-            center: FText(
-              centerText,
-              color: textColorAlt,
-              style: FTheme.titleLarge,
-              maxLines: 2,
-              align: TextAlign.center
-            ),
-          ),
-        ),
-        Container(
-          width: (radius - lineWidth).r * 2,
-          height: (radius - lineWidth).r * 2,
-          decoration: BoxDecoration(
-            border: border,
-            shape: BoxShape.circle,
-          ),
-        ),
-      ],
+    return CircularPercentIndicator(
+      percent: percent,
+      radius: radius ?? 35.0.r,
+      lineWidth: lineWidth ?? 8.0.r,
+      backgroundColor: backgroundColor ?? FTheme.background,
+      progressColor: _progressColor,
+      animation: animation ?? true,
+      animationDuration: animationDuration ?? 500,
+      circularStrokeCap: CircularStrokeCap.round,
+      center: _center,
     );
   }
 }
+
+
+// class FCircularPercentIndicator extends StatelessWidget {
+//   const FCircularPercentIndicator({
+//     Key? key,
+//     required this.percent,
+//     required this.color,
+//     this.textColor,
+//     this.borderColor,
+//     this.backgroundColor,
+//     this.radius = 55.0,
+//     this.lineWidth = 16.0,
+//     this.centerText = '',
+//     this.onAnimationEnd,
+//     this.visible = true,
+//     this.duration = 1000,
+//     this.animation = true,
+//   }) : super(key: key);
+//
+//   final double percent;
+//   final Color color;
+//   final Color? textColor;
+//   final Color? borderColor;
+//   final Color? backgroundColor;
+//   final double radius;
+//   final double lineWidth;
+//   final String centerText;
+//   final VoidCallback? onAnimationEnd;
+//   final bool visible;
+//   final int duration;
+//   final bool animation;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     Color textColorAlt = textColor ?? FTheme.text;
+//     Color borderColorAlt = borderColor ?? FTheme.text;
+//     Color backgroundColorAlt = backgroundColor ?? FTheme.background;
+//
+//     final border = Border.all(
+//       color: borderColorAlt,
+//       width: 1.5,
+//     );
+//
+//     if (!visible) return Container();
+//     return Stack(
+//       alignment: Alignment.center,
+//       children: [
+//         Container(
+//           decoration: BoxDecoration(
+//             border: border,
+//             shape: BoxShape.circle,
+//           ),
+//           child: CircularPercentIndicator(
+//             radius: radius.r,
+//             lineWidth: lineWidth.r,
+//             percent: percent,
+//             backgroundColor: backgroundColorAlt,
+//             progressColor: color,
+//             animation: animation,
+//             animationDuration: duration,
+//             onAnimationEnd: onAnimationEnd,
+//             curve: Curves.easeInOut,
+//             center: FText(
+//               centerText,
+//               color: textColorAlt,
+//               style: FTheme.titleLarge,
+//               maxLines: 2,
+//               align: TextAlign.center
+//             ),
+//           ),
+//         ),
+//         Container(
+//           width: (radius - lineWidth).r * 2,
+//           height: (radius - lineWidth).r * 2,
+//           decoration: BoxDecoration(
+//             border: border,
+//             shape: BoxShape.circle,
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class FCircularProgressIndicator extends StatelessWidget {
   const FCircularProgressIndicator({

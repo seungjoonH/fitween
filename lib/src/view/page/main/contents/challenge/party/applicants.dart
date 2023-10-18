@@ -88,7 +88,7 @@ class _PartyApplicantsPageState extends FPageState<PartyApplicantsPage> {
           children: [
             PartyListTile(
               party: cont.party,
-              onPressed: () {},
+              showPercent: true,
             ),
             SizedBox(height: 20.0.h),
             Column(

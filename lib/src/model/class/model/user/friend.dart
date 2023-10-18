@@ -12,6 +12,7 @@ class FUserFriend extends FUser {
 
   @override
   Map<String, FUser> allFriends = {};
+
   @override
   Map<String, FUser> friends = {};
 
