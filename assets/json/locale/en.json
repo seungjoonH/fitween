@@ -25,7 +25,8 @@
     "battle": "Battle",
     "party": "Party",
     "member-setting": "Member Settings",
-    "applicants": "Applicants"
+    "applicants": "Applicants",
+    "history": "History"
   },
   "hint": {
     "your-nickname": "Input your nickname",

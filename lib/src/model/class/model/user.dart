@@ -63,6 +63,7 @@ class FUser extends Model {
   // party
   Map<String, Party> get parties => party!.parties;
   Map<String, Party> get appliedParties => party!.appliedParties;
+  Map<String, Party> get finishedParties => party!.finishedParties;
 
   // record
   Map<Period, List<RankingData>> get rankings => record!.rankings;

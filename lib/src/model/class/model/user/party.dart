@@ -9,12 +9,22 @@ class FUserParty extends FUser {
 
   List<String> _partyIds = [];
   List<String> _appliedPartyIds = [];
+  List<String> _finishedPartyIds = [];
 
   @override
   Map<String, Party> parties = {};
 
   @override
   Map<String, Party> appliedParties = {};
+
+  @override
+  Map<String, Party> finishedParties = {};
+
+  Future loadAllParties() async {
+    await loadParties();
+    await loadAppliedParties();
+    await loadFinishedParties();
+  }
 
   Future loadParties() async {
     for (String id in _partyIds) {
@@ -31,6 +41,15 @@ class FUserParty extends FUser {
 
       if (loaded == null) throw Exception('[ERROR] Applied Party($id) load failed');
       appliedParties[id] = loaded;
+    }
+  }
+
+  Future loadFinishedParties() async {
+    for (String id in _finishedPartyIds) {
+      Party? loaded = await PartyDAO().loadOne(id);
+
+      if (loaded == null) throw Exception('[ERROR] Finished Party($id) load failed');
+      finishedParties[id] = loaded;
     }
   }
 
@@ -69,6 +88,7 @@ class FUserParty extends FUser {
     uid = json['uid'];
     _partyIds = (json['partyIds'] ?? []).cast<String>();
     _appliedPartyIds = (json['appliedPartyIds'] ?? []).cast<String>();
+    _finishedPartyIds = (json['finishedPartyIds'] ?? []).cast<String>();
   }
 
   @override
@@ -77,6 +97,7 @@ class FUserParty extends FUser {
     json['uid'] = uid;
     json['partyIds'] = _partyIds;
     json['appliedPartyIds'] = _appliedPartyIds;
+    json['finishedPartyIds'] = _finishedPartyIds;
     return json;
   }
 

@@ -21,6 +21,7 @@ class FRoute {
     '/contents/challenge/party/member-setting': const PartyMemberSettingPage(),
     '/contents/challenge/party/search': const PartySearchPage(),
     '/contents/challenge/party/applicants': const PartyApplicantsPage(),
+    '/contents/challenge/party/history': const PartyHistoryPage(),
     '/contents/challenge/detail': const ChallengeDetailPage(),
     '/contents/challenge': const ChallengePage(),
     '/contents/weight': const WeightPage(),
@@ -68,6 +69,7 @@ class FRoute {
   static void toPartyMemberSetting({Party? party}) => Get.toNamed('/contents/challenge/party/member-setting', arguments: party);
   static void toPartySearch({String keyword = ''}) => Get.toNamed('/contents/challenge/party/search', arguments: keyword);
   static void toPartyApplicants({Party? party}) => Get.toNamed('/contents/challenge/party/applicants', arguments: party);
+  static void toPartyHistory() => Get.toNamed('/contents/challenge/party/history');
   static void toChallengeDetail({Challenge? challenge}) => Get.toNamed('/contents/challenge/detail', arguments: challenge);
   static void toChallenge() => Get.toNamed('/contents/challenge');
   static void toWeight() => Get.toNamed('/contents/weight');

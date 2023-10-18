@@ -170,7 +170,7 @@ class _PartyPageState extends FPageState<PartyPage> {
               style: FTheme.titleSmall,
               color: FTheme.comment,
             ),
-            if (cont.isLeader && !cont.isOnly)
+            if ( cont.isLeader && !cont.isOnly)
             FIconButton(
               icon: const Icon(Icons.settings),
               size: 35.0.r,

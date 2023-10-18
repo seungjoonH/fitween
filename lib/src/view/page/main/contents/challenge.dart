@@ -23,14 +23,23 @@ class _ChallengePageState extends FPageState<ChallengePage> {
   ChallengePageCont get cont => ChallengePageCont.to;
 
   Widget _buildMyPartiesWidget(BuildContext context) {
-    return Obx(() => Row(
-      children: FType.activeValues.map((type) {
-        Party? party = cont.getPartyByType(type);
-        return PartyWidget(
-          party: party,
-          onPressed: () => cont.partyWidgetPressed(type),
-        );
-      }).separateW(width: 10.0.w),
+    return Obx(() => SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          Row(
+            children: FType.activeValues.map((type) {
+              Party? party = cont.getPartyByType(type);
+              return PartyWidget(
+                party: party,
+                onPressed: () => cont.partyWidgetPressed(type),
+              );
+            }).separateW(width: 10.0.w),
+          ),
+          SizedBox(width: 10.0.w),
+          PartyHistoryWidget(onPressed: cont.partyHistoryButtonPressed),
+        ],
+      ),
     ));
   }
 

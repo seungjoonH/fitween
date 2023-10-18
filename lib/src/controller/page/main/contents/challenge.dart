@@ -75,5 +75,7 @@ class ChallengePageCont extends PageCont {
   void challengeCardPressed(Challenge challenge) {
     FRoute.toChallengeDetail(challenge: challenge);
   }
+
+  void partyHistoryButtonPressed() => FRoute.toPartyHistory();
 }
 

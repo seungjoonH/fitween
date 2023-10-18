@@ -25,7 +25,8 @@
     "battle": "배틀",
     "party": "파티",
     "member-setting": "멤버 관리",
-    "applicants": "지원자"
+    "applicants": "지원자",
+    "history": "히스토리"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",

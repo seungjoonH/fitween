@@ -273,6 +273,9 @@ class PartyWidget extends StatefulWidget {
   final Party? party;
   final VoidCallback? onPressed;
 
+  Color get defaultColor => FTheme.bar;
+  IconData? get iconData => Icons.add;
+
   @override
   State<PartyWidget> createState() => _PartyWidgetState();
 }
@@ -283,17 +286,17 @@ class _PartyWidgetState extends State<PartyWidget> with ScalePressable {
     double size = 70.0.r;
     double percent = min(widget.party?.percent ?? .0, 1.0);
     if (widget.party == null) percent = .02;
-    Color color = widget.party?.type.color ?? FTheme.bar;
+    Color color = widget.party?.type.color ?? widget.defaultColor;
 
     Widget imageWidget = widget.party == null ? Container(
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: FTheme.bar,
+        color: widget.defaultColor,
         shape: BoxShape.circle,
       ),
       child: Icon(
-        Icons.add,
+        widget.iconData,
         size: 35.0.r,
         color: FTheme.background,
       ),
@@ -316,7 +319,7 @@ class _PartyWidgetState extends State<PartyWidget> with ScalePressable {
           lineWidth: 5.0.r,
           percent: percent,
           animation: true,
-          backgroundColor: FTheme.bar,
+          backgroundColor: widget.defaultColor,
           progressColor: color,
           circularStrokeCap: CircularStrokeCap.round,
         ),
@@ -326,4 +329,18 @@ class _PartyWidgetState extends State<PartyWidget> with ScalePressable {
 
   @override
   VoidCallback? get onPressed => widget.onPressed;
+}
+
+class PartyHistoryWidget extends PartyWidget {
+  const PartyHistoryWidget({
+    super.key,
+    super.onPressed,
+  });
+
+  @override
+  IconData? get iconData => Icons.history;
+
+  @override
+  Color get defaultColor => FTheme.unselected;
+
 }

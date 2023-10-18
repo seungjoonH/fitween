@@ -15,6 +15,7 @@ export 'main/contents/challenge/party/create.dart';
 export 'main/contents/challenge/party/member_setting.dart';
 export 'main/contents/challenge/party/search.dart';
 export 'main/contents/challenge/party/applicants.dart';
+export 'main/contents/challenge/party/history.dart';
 export 'main/contents/challenge/party.dart';
 export 'main/contents/challenge/detail.dart';
 export 'main/contents/challenge.dart';
