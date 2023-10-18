@@ -13,6 +13,7 @@ class FUserDAO {
   final FUserInfoDAO _infoDAO = FUserInfoDAO();
   final FUserNotificationDAO _notificationDAO = FUserNotificationDAO();
   final FUserPartyDAO _partyDAO = FUserPartyDAO();
+  final FUserPointDAO _pointDAO = FUserPointDAO();
   final FUserRecordDAO _recordDAO = FUserRecordDAO();
 
   Map<String, FUser> get users {
@@ -26,6 +27,7 @@ class FUserDAO {
         ..friend = friends[uid]
         ..notification = notifications[uid]
         ..party = parties[uid]
+        ..point = points[uid]
         ..record = records[uid];
 
       list[uid] = FUser.builder(builder);
@@ -38,6 +40,7 @@ class FUserDAO {
   Map<String, FUserInfo> get infos => _infoDAO.list;
   Map<String, FUserNotification> get notifications => _notificationDAO.list;
   Map<String, FUserParty> get parties => _partyDAO.list;
+  Map<String, FUserPoint> get points => _pointDAO.list;
   Map<String, FUserRecord> get records => _recordDAO.list;
 
   Future loadAll() async {
@@ -47,6 +50,7 @@ class FUserDAO {
     await _infoDAO.loadAll();
     await _notificationDAO.loadAll();
     await _partyDAO.loadAll();
+    await _pointDAO.loadAll();
     await _recordDAO.loadAll();
   }
 
@@ -65,6 +69,7 @@ class FUserDAO {
     FUserInfo? info;
     FUserNotification? notification;
     FUserParty? party;
+    FUserPoint? point;
     FUserRecord? record;
 
     if (cont.battle) battle = await _battleDAO.loadOne(uid);
@@ -73,6 +78,7 @@ class FUserDAO {
     if (cont.info) info = await _infoDAO.loadOne(uid);
     if (cont.notification) notification = await _notificationDAO.loadOne(uid);
     if (cont.party) party = await _partyDAO.loadOne(uid);
+    if (cont.point) point = await _pointDAO.loadOne(uid);
     if (cont.record) record = await _recordDAO.loadOne(uid);
 
     if (cont.battle && battle == null) return null;
@@ -81,6 +87,7 @@ class FUserDAO {
     if (cont.info && info == null) return null;
     if (cont.notification && notification == null) return null;
     if (cont.party && party == null) return null;
+    if (cont.point && point == null) return null;
     if (cont.record && record == null) return null;
 
     FUserBuilder builder = FUserBuilder()
@@ -91,6 +98,7 @@ class FUserDAO {
       ..info = info
       ..notification = notification
       ..party = party
+      ..point = point
       ..record = record;
 
     return FUser.builder(builder);
@@ -104,6 +112,7 @@ class FUserDAO {
     await _infoDAO.saveOne(user.info ?? FUserInfo(uid));
     await _notificationDAO.saveOne(user.notification ?? FUserNotification(uid));
     await _partyDAO.saveOne(user.party ?? FUserParty(uid));
+    await _pointDAO.saveOne(user.point ?? FUserPoint(uid));
     await _recordDAO.saveOne(user.record ?? FUserRecord(uid));
   }
 }

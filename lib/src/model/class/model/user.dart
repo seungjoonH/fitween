@@ -22,6 +22,7 @@ class FUser extends Model {
   FUserInfo? info;
   FUserNotification? notification;
   FUserParty? party;
+  FUserPoint? point;
   FUserRecord? record;
 
   // battle
@@ -64,6 +65,10 @@ class FUser extends Model {
   Map<String, Party> get parties => party!.parties;
   Map<String, Party> get appliedParties => party!.appliedParties;
   Map<String, Party> get finishedParties => party!.finishedParties;
+
+  // point
+  int get points => point!.points;
+  List<PointHistoryData> get pointHistory => point!.pointHistory;
 
   // record
   Map<Period, List<RankingData>> get rankings => record!.rankings;
@@ -167,6 +172,7 @@ class FUserBuilder {
   FUserInfo? info;
   FUserNotification? notification;
   FUserParty? party;
+  FUserPoint? point;
   FUserRecord? record;
 }
 
@@ -177,6 +183,7 @@ class FUserLoadCont {
   late bool info;
   late bool notification;
   late bool party;
+  late bool point;
   late bool record;
 
   FUserLoadCont({
@@ -186,6 +193,7 @@ class FUserLoadCont {
     this.info = true,
     this.notification = false,
     this.party = false,
+    this.point = false,
     this.record = false,
   });
 
@@ -220,6 +228,12 @@ class FUserLoadCont {
     return cont;
   }
 
+  static FUserLoadCont onlyPoint() {
+    FUserLoadCont cont = lightest();
+    cont.point = true;
+    return cont;
+  }
+
   static FUserLoadCont onlyRecord() {
     FUserLoadCont cont = lightest();
     cont.record = true;
@@ -233,5 +247,6 @@ class FUserLoadCont {
         info = true,
         notification = true,
         party = true,
+        point = true,
         record = true;
 }

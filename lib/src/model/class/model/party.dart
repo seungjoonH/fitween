@@ -238,8 +238,8 @@ class Party extends Model {
   @override
   void fromJson(Map<String, dynamic> json) {
     _id = json['id'];
-    _title = json['title'];
     _challengeId = json['challengeId'];
+    _title = json['title'] ?? challenge!.title;
     _difficulty = Difficulty.toEnum(json['difficulty']);
     _memberUids = json['memberUids'].cast<String>();
     _leaderUid = json['leaderUid'];
@@ -248,8 +248,8 @@ class Party extends Model {
     _startDate = json['startDate'];
     _endDate = json['endDate'];
     _applicantsData = Map.fromIterables(
-      json['applicantsData'].keys,
-      json['applicantsData'].values.map<ApplicantData>((data) => ApplicantData.fromJson(data)).toList(),
+      json['applicantsData']?.keys ?? [],
+      json['applicantsData']?.values.map<ApplicantData>((data) => ApplicantData.fromJson(data)).toList() ?? [],
     );
     _views = json['views'];
   }
@@ -258,8 +258,8 @@ class Party extends Model {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
     json['id'] = _id;
-    json['title'] = _title;
     json['challengeId'] = _challengeId;
+    json['title'] = _title;
     json['difficulty'] = _difficulty.name;
     json['memberUids'] = _memberUids;
     json['leaderUid'] = _leaderUid;

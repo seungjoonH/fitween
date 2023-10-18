@@ -11,6 +11,7 @@ export './model/user/friend.dart';
 export './model/user/info.dart';
 export './model/user/notification.dart';
 export './model/user/party.dart';
+export './model/user/point.dart';
 export './model/user/record.dart';
 
 abstract class Model {

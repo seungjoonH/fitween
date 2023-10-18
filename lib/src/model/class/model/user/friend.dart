@@ -21,6 +21,7 @@ class FUserFriend extends FUser {
 
   Future loadFriends({FUserLoadCont? cont}) async {
     for (String uid in _friendsData.keys) {
+      if (!_friendsData[uid]!._followed) continue;
       FUser? loaded = await FUserDAO().loadOne(uid, cont: cont);
 
       if (loaded == null) throw Exception('[ERROR] User($uid) load failed');

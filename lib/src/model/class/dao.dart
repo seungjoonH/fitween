@@ -10,6 +10,7 @@ export './dao/user/friend.dart';
 export './dao/user/info.dart';
 export './dao/user/notification.dart';
 export './dao/user/party.dart';
+export './dao/user/point.dart';
 export './dao/user/record.dart';
 
 abstract class DAO<T extends Model> {

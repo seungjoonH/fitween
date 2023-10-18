@@ -79,7 +79,7 @@ class _RankingPageState extends FPageState<RankingPage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Row(
+          Obx(() => Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: Period.values.map<Widget>((period) {
               bool isSelected = period == rankingCont.period;
@@ -93,7 +93,7 @@ class _RankingPageState extends FPageState<RankingPage> {
                 onPressed: () => rankingCont.changePeriod(period),
               );
             }).toList(),
-          ),
+          )),
         ],
       ),
     );
@@ -190,27 +190,33 @@ class _RankingPageState extends FPageState<RankingPage> {
   }
 
   Widget _buildRankingWidget(BuildContext context) {
-    return Obx(() {
-      return rankingCont.hasFriend
-          ? Column(
-            children: [
-              _buildPeriodTabWidget(context),
-              SizedBox(height: 10.0.h),
-              _buildRankingCarouselWidget(context),
-            ],
-          ) : Center(
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 20.0.h),
-          child: FText(
-            homeCont.noFriendsText,
-            color: FTheme.comment,
-            style: FTheme.titleSmall,
-            align: TextAlign.center,
-            maxLines: 2,
-          ),
+    return Column(
+      children: [
+        _buildPeriodTabWidget(context),
+        SizedBox(height: 10.0.h),
+        _buildRankingCarouselWidget(context),
+      ],
+    );
+
+    return rankingCont.hasFriend
+        ? Column(
+      children: [
+        _buildPeriodTabWidget(context),
+        SizedBox(height: 10.0.h),
+        _buildRankingCarouselWidget(context),
+      ],
+    ) : Center(
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 20.0.h),
+        child: FText(
+          homeCont.noFriendsText,
+          color: FTheme.comment,
+          style: FTheme.titleSmall,
+          align: TextAlign.center,
+          maxLines: 2,
         ),
-      );
-    });
+      ),
+    );
   }
 
   @override
