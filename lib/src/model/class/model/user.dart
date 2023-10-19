@@ -240,6 +240,15 @@ class FUserLoadCont {
     return cont;
   }
 
+  FUserLoadCont.prevAll()
+      : battle = true,
+        collection = true,
+        friend = true,
+        info = true,
+        notification = true,
+        party = true,
+        record = true;
+
   FUserLoadCont.all()
       : battle = true,
         collection = true,

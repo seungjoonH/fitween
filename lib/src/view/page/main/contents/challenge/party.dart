@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:fitween/global/global.dart';
-import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';

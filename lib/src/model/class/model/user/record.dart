@@ -377,6 +377,9 @@ class _RecordsData extends Model {
     _distances.removeWhere((data) => data._amount == 0);
     _heights.removeWhere((data) => data._amount == 0);
     _weights.removeWhere((data) => data._amount == 0);
+    int compare(_RecordData a, _RecordData b) => a.date.compareTo(b.date);
+    _calories.sort(compare); _distances.sort(compare);
+    _heights.sort(compare); _weights.sort(compare);
     json['calorie'] = _calories.isNotEmpty ? _calories.map((data) => data.toJson()).toList() : [];
     json['distance'] = _distances.isNotEmpty ? _distances.map((data) => data.toJson()).toList() : [];
     json['height'] = _heights.isNotEmpty ? _heights.map((data) => data.toJson()).toList(): [];

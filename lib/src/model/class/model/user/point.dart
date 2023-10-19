@@ -78,7 +78,7 @@ class FUserPoint extends FUser {
     uid = json['uid'];
     _points = json['points'] ?? 0;
     _history = json['history']
-        ?.map((data) => PointHistoryData.fromJson(data));
+        ?.map((data) => PointHistoryData.fromJson(data)) ?? [];
   }
 
   @override

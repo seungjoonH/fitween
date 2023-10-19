@@ -5,6 +5,7 @@ import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/controller/health/health.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class HomePageCont extends MainPageCont {
@@ -59,7 +60,10 @@ class HomePageCont extends MainPageCont {
       .selectedDay.firstDayOfWeek
       .difference(firstDay).inDays ~/ 7;
 
-  void gotoSelectedWeek() => carouselCont.animateToPage(selectedWeekIndex);
+  void gotoSelectedWeek() => carouselCont.animateToPage(
+    selectedWeekIndex,
+    curve: Curves.easeInOut,
+  );
   void selectToday() {
     calendarCont.selectDay(today, today);
     carouselCont.animateToPage(carouselCount - 1);

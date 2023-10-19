@@ -1,7 +1,6 @@
 
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
-import 'package:fitween/src/model/class/model/party.dart';
 
 class PartyDAO extends DAO<Party> {
   static final PartyDAO _instance = PartyDAO._();

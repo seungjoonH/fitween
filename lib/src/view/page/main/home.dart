@@ -225,7 +225,6 @@ class _HomePageState extends FPageState {
             return FTextButton(
               text: period.locale.capitalize!,
               bold: isSelected,
-              shrinkWrap: true,
               style: FTheme.titleSmall,
               textColor: isSelected
                   ? cont.activeType.color

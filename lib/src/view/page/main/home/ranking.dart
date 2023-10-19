@@ -197,26 +197,6 @@ class _RankingPageState extends FPageState<RankingPage> {
         _buildRankingCarouselWidget(context),
       ],
     );
-
-    return rankingCont.hasFriend
-        ? Column(
-      children: [
-        _buildPeriodTabWidget(context),
-        SizedBox(height: 10.0.h),
-        _buildRankingCarouselWidget(context),
-      ],
-    ) : Center(
-      child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20.0.h),
-        child: FText(
-          homeCont.noFriendsText,
-          color: FTheme.comment,
-          style: FTheme.titleSmall,
-          align: TextAlign.center,
-          maxLines: 2,
-        ),
-      ),
-    );
   }
 
   @override

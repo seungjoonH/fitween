@@ -27,7 +27,6 @@ class RankingCont extends GetxController {
 
   final _friendsWithMe = <String, FUser>{}.obs;
   final _recordAmountsOfFriendsWithMe = <Period, Map<DateTime, Map<String, FriendRecord>>>{}.obs;
-  final _entireCount = 1.obs;
 
   int get friendsCount => _friendsWithMe.length;
 
@@ -86,7 +85,7 @@ class RankingCont extends GetxController {
     _friendsWithMe.clear();
     _recordAmountsOfFriendsWithMe.clear();
     _friendsWithMe[_logged.uid] = _logged;
-    _friendsWithMe.addAll(_logged.allFriends);
+    _friendsWithMe.addAll(_logged.friends);
 
     for (Period p in Period.values) {
       _recordAmountsOfFriendsWithMe[p] = {};
@@ -107,6 +106,15 @@ class RankingCont extends GetxController {
     // await _saveRankingsData();
   }
 
+  int _getEntireCount(FType type, Period p, DateTime date) {
+    int count = 1;
+    for (String uid in _recordAmountsOfFriendsWithMe[p]![date]!.keys) {
+      num amount = getAmountOf(p, type, uid, date);
+      if (amount > 0 && _logged.key != uid) count++;
+    }
+    return count;
+  }
+
   void _saveRankingsDataByDate(Period p, DateTime date) {
     RankingData? data = getRankings(p)
         .firstWhereOrNull((ranking) => ranking.date.isAtSameMomentAs(date));
@@ -118,13 +126,11 @@ class RankingCont extends GetxController {
     }
 
     int myRank = -1;
-    _entireCount(1);
 
     for (FType type in FType.activeValues) {
       for (String uid in _recordAmountsOfFriendsWithMe[p]![date]!.keys) {
         num amount = getAmountOf(p, type, uid, date);
         int rank = getRankOf(p, type, uid, date);
-        if (amount > 0) _entireCount(_entireCount.value + 1);
         if (uid == _logged.key) myRank = rank;
         RankingPersonalData personalData = RankingPersonalData(amount, rank);
         data.setDataByType(type, uid, personalData);
@@ -138,7 +144,7 @@ class RankingCont extends GetxController {
       );
 
       int point = calculator.getRankedFPoint(
-        myRank, _entireCount.value,
+        myRank, _getEntireCount(type, p, date),
       );
 
       data.setPoint(point);
@@ -181,7 +187,7 @@ class RankingCont extends GetxController {
   num getAmountOf(Period p, FType type, String uid, DateTime date) {
     if (_recordAmountsOfFriendsWithMe.isEmpty) return .0;
     if (_recordAmountsOfFriendsWithMe[p]![date] == null) return .0;
-    return _recordAmountsOfFriendsWithMe[p]![date]![uid]!.byType(type);
+    return _recordAmountsOfFriendsWithMe[p]![date]![uid]?.byType(type) ?? .0;
   }
 
   List<num> getAmounts(FType type, DateTime date) {
@@ -318,7 +324,8 @@ class RankingCont extends GetxController {
     );
 
     point = calculator.getRankedFPoint(
-      getRankOf(period, type, uid, date), _entireCount.value,
+      getRankOf(period, type, uid, date),
+      _getEntireCount(type, period, date),
     );
 
     _estimatedFPoint(point);

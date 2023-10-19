@@ -1,7 +1,6 @@
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
-import 'package:fitween/src/view/widget/function/dialog.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:get/get.dart';
 

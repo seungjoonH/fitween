@@ -55,7 +55,9 @@ class FUserDAO {
   }
 
   Future<FUser?> loadOneAll(String uid) async {
-    return await loadOne(uid, cont: FUserLoadCont.all());
+    FUser? user = await loadOne(uid, cont: FUserLoadCont.all());
+    if (user == null) return await loadOne(uid, cont: FUserLoadCont.prevAll());
+    return user;
   }
 
   Future<FUser?> loadOne(
