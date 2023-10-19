@@ -29,6 +29,7 @@ class GetCont {
 
   static void _userConts() {
     Get.put(FollowCont());
+    Get.put(FPointCont());
   }
 
   static void _initValidatorConts() {

@@ -9,7 +9,7 @@ class PointHistoryData extends Model {
   late Timestamp _date;
 
   DateTime get date => _date.toDate();
-  set date(DateTime d) => d.toTimestamp;
+  set date(DateTime d) => _date = d.toTimestamp!;
 
   String get _tr => 'point';
   String get content => LangCont.tr('$_tr.$_content');
@@ -78,7 +78,8 @@ class FUserPoint extends FUser {
     uid = json['uid'];
     _points = json['points'] ?? 0;
     _history = json['history']
-        ?.map((data) => PointHistoryData.fromJson(data)) ?? [];
+        ?.map<PointHistoryData>((data) => PointHistoryData.fromJson(data)).toList()
+        ?? <PointHistoryData>[];
   }
 
   @override

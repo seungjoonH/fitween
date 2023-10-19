@@ -87,14 +87,14 @@ class FPointButton extends StatelessWidget {
   Widget build(BuildContext context) {
     Color textColor = finished
         ? FTheme.achro90
-        : FTheme.colorE;
+        : FTheme.point;
     Color? borderColor;
     Color backgroundColor = received
         ? FTheme.unselected
-        : FTheme.colorE;
+        : FTheme.point;
 
     if (!finished) {
-      borderColor = FTheme.colorE;
+      borderColor = FTheme.point;
       backgroundColor = FTheme.backgroundAlt;
     }
 

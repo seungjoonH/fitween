@@ -189,6 +189,19 @@ class FUserRecord extends FUser {
     rankings[period]!.insert(index, rankedData);
   }
 
+  RankingData? getRankingData(Period period, DateTime date) {
+    for (RankingData data in rankings[period]!) {
+      if (data.date.isAtSameMomentAs(date)) return data;
+    }
+    return null;
+  }
+
+  void receivePoint(Period period, DateTime date, FType type) {
+    RankingData? data = getRankingData(period, date);
+    if (data == null) return;
+    data.receive(type);
+  }
+
   FUserRecord(super.key) : super();
   FUserRecord.fromJson(super.json) : super.fromJson();
 

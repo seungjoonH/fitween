@@ -13,15 +13,26 @@ class RankingPageCont extends PageCont {
   static RankingPageCont get to => Get.find<RankingPageCont>();
 
   static RankingCont get rankingCont => RankingCont.to;
+  static FPointCont get fPointCont => FPointCont.to;
 
   @override
   String get loadKey => 'ranking';
 
   String get appBarTitle => LangCont.tr('appbar.ranking');
-  String get fPointDialogTitle => LangCont.tr('ranking.fpoint-dialog.title');
-  String get fPointDialogContent => LangCont.tr(
-    'ranking.fpoint-dialog.content',
-    args: [rankingCont.getLeftTime(selectedDate).format],
+
+  String get _dialogTr => 'ranking.dialog';
+
+  String get fPointTitle => LangCont.tr('$_dialogTr.fpoint.title');
+  String get fPointText => LangCont.tr(
+    '$_dialogTr.fpoint.text',
+    namedArgs: {'duration': rankingCont.getLeftTime(selectedDate).format.trim()},
+  );
+  String get receivedText => LangCont.tr('$_dialogTr.fpoint.received-text');
+
+  String get earnedTitle => LangCont.tr('$_dialogTr.earned.title');
+  String get earnedText => LangCont.tr(
+    '$_dialogTr.earned.text',
+    namedArgs: {'point': '${rankingCont.estimatedFPoint}'},
   );
 
   FUser get _logged => AuthCont.logged!;
@@ -63,22 +74,74 @@ class RankingPageCont extends PageCont {
     await rankingCont.init();
   }
 
+  bool get receivable {
+    bool finished = rankingCont.finished;
+    bool received = rankingCont.received;
+    return finished && !received;
+  }
+
   void fPointButtonPressed() {
+    String? rightText;
+    Color? rightColor;
+
+    if (receivable) {
+      rightText = '${rankingCont.estimatedFPoint} FP';
+      rightColor = FTheme.point;
+    }
+
     showFDialog(
-      title: fPointDialogTitle,
+      title: fPointTitle,
       content: Column(
         children: [
           FPointAmountWidget(amount: rankingCont.estimatedFPoint),
-          SizedBox(height: 20.0.h),
           FText(
             rankingCont.calculator.pointText,
             maxLines: 0,
-            color: FTheme.comment,
+            color: FTheme.outline,
+            style: FTheme.bodyLarge,
           ),
-        ],
+          Obx(() {
+            String? contentText;
+            if (rankingCont.received) contentText = receivedText;
+            if (!rankingCont.finished) contentText = fPointText;
+
+            if (contentText == null) return Container();
+
+            return FText(
+              contentText,
+              color: FTheme.comment,
+              style: FTheme.commentStyle,
+            );
+          }),
+        ].separateH(height: 10.0.h),
+      ),
+      type: receivable
+          ? DialogType.bi
+          : DialogType.mono,
+      rightText: rightText,
+      rightBackgroundColor: rightColor,
+      rightPressed: earnFPoints,
+    );
+  }
+
+  void earnFPoints() async {
+    if (!receivable) return;
+
+    await showFDialog(
+      title: earnedTitle,
+      content: FTexts(
+        earnedText,
+        style: FTheme.bodyLarge,
+        textColor: FTheme.outline,
+        highlightColor: FTheme.point,
+        wordWrap: true,
       ),
       type: DialogType.mono,
-      onPressed: Get.back,
     );
+
+    rankingCont.receivePoint();
+    int point = rankingCont.estimatedFPoint;
+    Period period = rankingCont.period;
+    fPointCont.earn(point, 'ranking-${period.name}');
   }
 }

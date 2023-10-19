@@ -256,10 +256,17 @@
     "ranking": "Ranking"
   },
   "ranking": {
-    "fpoint-dialog": {
-      "title": "Estimated FP",
-      "content": "FPs (Fitween points) that can be earned {} later. Challenge yourself to get more FP by setting high goals, achieving goals, and being ranked high!"
-    }
+    "dialog": {
+      "fpoint": {
+        "title": "Estimated FP",
+        "text": "FPs (Fitween points) that can be earned {duration} later. Challenge yourself to get more FP by setting high goals, achieving goals, and being ranked high!",
+        "received-text": "Already received"
+      },
+      "earned": {
+        "title": "Earned FP",
+        "text": "You earned @{{point} FP}!"
+      }
+    },
   },
   "friend": {
     "count": {

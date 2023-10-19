@@ -301,9 +301,16 @@ class RankingCont extends GetxController {
     });
   }
 
-  bool get received => selectedRanking
-      ?.getReceived(homePageCont.activeType) ?? false;
-  bool get finished => selectedRanking?.finished ?? false;
+  final _received = false.obs;
+  final _finished = false.obs;
+
+  bool get received => _received.value;
+  bool get finished => _finished.value;
+
+  void updateReceived() => _received(selectedRanking
+      ?.getReceived(homePageCont.activeType) ?? false);
+  void updateFinished() => _finished(selectedRanking
+      ?.finished ?? false);
 
   final _estimatedFPoint = 0.obs;
   int get estimatedFPoint => _estimatedFPoint.value;
@@ -329,6 +336,19 @@ class RankingCont extends GetxController {
     );
 
     _estimatedFPoint(point);
+    updateReceived();
+    updateFinished();
+  }
+
+  void receivePoint() async {
+    FType type = homePageCont.activeType;
+    DateTime date = rankingPageCont.selectedDate;
+    selectedRanking!.receive(type);
+    _logged.record!.receivePoint(period, date, type);
+    updateReceived();
+    updateFinished();
+
+    await FUserRecordDAO().saveOne(_logged.record!);
   }
 
   @override

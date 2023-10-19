@@ -109,6 +109,7 @@ class FUser extends Model {
     info = builder.info;
     notification = builder.notification;
     party = builder.party;
+    point = builder.point;
     if (builder.record == null) return;
     record = builder.record!..info = builder.info;
   }
@@ -126,6 +127,7 @@ class FUser extends Model {
     info = FUserInfo.fromJson(json);
     notification = FUserNotification.fromJson(json);
     party = FUserParty.fromJson(json);
+    point = FUserPoint.fromJson(json);
     record = FUserRecord.fromJson(json);
   }
 
@@ -138,6 +140,7 @@ class FUser extends Model {
     json.addAll(info?.toJson() ?? {});
     json.addAll(notification?.toJson() ?? {});
     json.addAll(party?.toJson() ?? {});
+    json.addAll(point?.toJson() ?? {});
     json.addAll(record?.toJson() ?? {});
     return json;
   }
@@ -156,6 +159,7 @@ class FUser extends Model {
     info = user.info ?? info;
     notification = user.notification ?? notification;
     party = user.party ?? party;
+    point = user.point ?? point;
     record = user.record ?? record;
   }
 
