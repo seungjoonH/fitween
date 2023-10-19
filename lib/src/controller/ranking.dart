@@ -42,7 +42,7 @@ class RankingCont extends GetxController {
     await loadFriendData();
     _startLeftTimer(today);
     await _saveRankingsData();
-    rankingPageCont.setSelectedDate(0);
+    rankingPageCont.setSelectedDateToLatest();
     calculateFPoints();
   }
 

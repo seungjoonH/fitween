@@ -69,6 +69,8 @@ class RankingPageCont extends PageCont {
     _selectedDate(time);
   }
 
+  void setSelectedDateToLatest() => setSelectedDate(count - 1);
+
   @override
   Future load() async {
     await rankingCont.init();
