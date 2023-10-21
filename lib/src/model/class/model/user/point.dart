@@ -11,6 +11,8 @@ class PointHistoryData extends Model {
   DateTime get date => _date.toDate();
   set date(DateTime d) => _date = d.toTimestamp!;
 
+  String get amountWithSign => withSign(_amount);
+
   String get _tr => 'point';
   String get content => LangCont.tr('$_tr.$_content');
 
@@ -48,11 +50,11 @@ class FUserPoint extends FUser {
   @override
   FUserPoint? get point => this;
 
-  late int _points;
+  late int _fPoint;
   List<PointHistoryData> _history = [];
 
   @override
-  int get points => _points;
+  int get fPoint => _fPoint;
 
   @override
   List<PointHistoryData> get pointHistory => _history;
@@ -61,12 +63,12 @@ class FUserPoint extends FUser {
   List<PointHistoryData> get spentHistory => _history.where((h) => h.spent).toList();
 
   void earn(int fp, String content) {
-    _points += fp;
+    _fPoint += fp;
     _history.add(PointHistoryData(amount: fp, content: content));
   }
 
   void spend(int fp, String content) {
-    _points -= fp;
+    _fPoint -= fp;
     _history.add(PointHistoryData(amount: -fp, content: content));
   }
 
@@ -76,7 +78,7 @@ class FUserPoint extends FUser {
   @override
   void fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
-    _points = json['points'] ?? 0;
+    _fPoint = json['fPoint'] ?? 0;
     _history = json['history']
         ?.map<PointHistoryData>((data) => PointHistoryData.fromJson(data)).toList()
         ?? <PointHistoryData>[];
@@ -86,7 +88,7 @@ class FUserPoint extends FUser {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
     json['uid'] = uid;
-    json['points'] = _points;
+    json['fPoint'] = _fPoint;
     json['history'] = _history.map((data) => data.toJson());
     return json;
   }

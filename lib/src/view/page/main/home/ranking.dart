@@ -206,6 +206,12 @@ class _RankingPageState extends FPageState<RankingPage> {
       appBar: FAppBar(
         text: cont.appBarTitle,
         backPressed: FRoute.toHome,
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: 10.0.w),
+            child: const FPointAmountWidget(onPressed: FRoute.toFPoint),
+          ),
+        ],
       ),
       body: _buildRankingWidget(context),
       bottomWidget: _buildFPointButton(context),

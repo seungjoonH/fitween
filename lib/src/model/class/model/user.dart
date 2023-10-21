@@ -67,7 +67,7 @@ class FUser extends Model {
   Map<String, Party> get finishedParties => party!.finishedParties;
 
   // point
-  int get points => point!.points;
+  int get points => point!.fPoint;
   List<PointHistoryData> get pointHistory => point!.pointHistory;
 
   // record

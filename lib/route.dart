@@ -27,6 +27,8 @@ class FRoute {
     '/contents/weight': const WeightPage(),
     '/contents/battle': const BattlePage(),
     '/see-more': const SeeMorePage(),
+    '/fpoint': const FPointPage(),
+    '/fpoint/history': const FPointHistoryPage(),
   };
 
   static List<GetPage> get getPages => pages.entries.map((page) {
@@ -75,4 +77,6 @@ class FRoute {
   static void toWeight() => Get.toNamed('/contents/weight');
   static void toBattle() => Get.toNamed('/contents/battle');
   static void toSeeMore() => Get.offAllNamed('/see-more');
+  static void toFPoint() => Get.toNamed('/fpoint');
+  static void toFPointHistory() => Get.toNamed('/fpoint/history');
 }

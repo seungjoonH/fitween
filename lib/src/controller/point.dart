@@ -24,8 +24,8 @@ class FPointCalculator {
   static num get _weiDefault => GoalSettingPageCont.defaultWei.cnt;
 
   static const num _dailyWeight = 1;
-  static const num _weeklyWeight = 3;
-  static const num _monthlyWeight = 10;
+  static const num _weeklyWeight = 2;
+  static const num _monthlyWeight = 5;
 
   num get _adjustedValue {
     assert(type != FType.calorie);
@@ -43,9 +43,9 @@ class FPointCalculator {
 
   num get _periodicalGoal => goal * period.days;
   bool get _met => _periodicalGoal <= does;
-  num get _progressPoint => (5 * does / _adjustedValue).round();
+  num get _progressPoint => (2 * does / _adjustedValue).round();
   num get _goalPoint => (_met ? (goal - _default) * 5 : .0).round();
-  num get _metPoint => (_met ? 50.0 : .0).round();
+  num get _metPoint => (_met ? 30.0 : .0).round();
   late int rank, entire;
   num get _rankPoint => 2 - (rank + 1) / entire;
 

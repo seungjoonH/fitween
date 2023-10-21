@@ -26,7 +26,8 @@
     "party": "Party",
     "member-setting": "Member Settings",
     "applicants": "Applicants",
-    "history": "History"
+    "history": "History",
+    "fpoint": "FPoints"
   },
   "hint": {
     "your-nickname": "Input your nickname",
@@ -56,6 +57,11 @@
   "time": {
     "left": "left",
     "ago": "ago"
+  },
+  "point": {
+    "ranking-daily": "Daily Ranking Earned FP",
+    "ranking-weekly": "Weekly Ranking Earned FP",
+    "ranking-monthly": "Monthly Ranking Earned FP"
   },
   "period": {
     "daily": "daily",

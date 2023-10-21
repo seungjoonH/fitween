@@ -1,18 +1,21 @@
 import 'package:fitween/global/global.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class FPointWidget extends StatelessWidget {
-  const FPointWidget({
+class FPointIcon extends StatelessWidget {
+  const FPointIcon({
     super.key,
     this.isWhite = false,
     this.grey = false,
+    this.size = 18.0,
   });
 
   final bool isWhite;
   final bool grey;
+  final double size;
 
   static const _asset = 'assets/image/logo/point';
   static const _purple = '${_asset}_purple.svg';
@@ -30,41 +33,50 @@ class FPointWidget extends StatelessWidget {
       ),
       child: SvgPicture.asset(
         isWhite ? _white : _purple,
-        width: 18.0.w,
+        width: size,
       ),
     );
   }
 }
 
-
 class FPointAmountWidget extends StatelessWidget {
   const FPointAmountWidget({
     super.key,
-    required this.amount,
+    this.amount,
     this.onPressed,
   });
 
-  final int amount;
+  final int? amount;
   final VoidCallback? onPressed;
+
+  FPointCont get cont => FPointCont.to;
+
+  int get _amount => amount ?? cont.fPoint;
 
   @override
   Widget build(BuildContext context) {
-    return FButton(
-      onPressed: onPressed,
-      shrinkWrap: true,
-      backgroundColor: FTheme.backgroundAlt,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const FPointWidget(),
-          FText(
-            '$amount FP',
-            style: FTheme.bodyLarge,
-            color: FTheme.point,
-            bold: true,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        FButton(
+          onPressed: onPressed,
+          backgroundColor: FTheme.backgroundAlt,
+          shrinkWrap: true,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const FPointIcon(),
+              FText(
+                '$_amount FP',
+                style: FTheme.bodyLarge,
+                color: FTheme.point,
+                bold: true,
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
@@ -105,7 +117,7 @@ class FPointButton extends StatelessWidget {
       onPressed: onPressed,
       child: Row(
         children: [
-          FPointWidget(isWhite: finished),
+          FPointIcon(isWhite: finished),
           SizedBox(width: 2.0.w),
           FText(
             '${amount.thouSep} FP',

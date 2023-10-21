@@ -113,6 +113,7 @@ class RankingPageCont extends PageCont {
               contentText,
               color: FTheme.comment,
               style: FTheme.commentStyle,
+              maxLines: 0,
             );
           }),
         ].separateH(height: 10.0.h),

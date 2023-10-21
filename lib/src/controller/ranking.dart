@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
@@ -44,6 +45,7 @@ class RankingCont extends GetxController {
     await _saveRankingsData();
     rankingPageCont.setSelectedDateToLatest();
     calculateFPoints();
+    await FPointCont.to.load();
   }
 
   bool isAvailableFriend(String uid, DateTime date) {
@@ -108,7 +110,10 @@ class RankingCont extends GetxController {
 
   int _getEntireCount(FType type, Period p, DateTime date) {
     int count = 1;
-    for (String uid in _recordAmountsOfFriendsWithMe[p]![date]!.keys) {
+    Map<String, FriendRecord>? records = _recordAmountsOfFriendsWithMe[p]![date];
+    if (records == null) return count;
+
+    for (String uid in records.keys) {
       num amount = getAmountOf(p, type, uid, date);
       if (amount > 0 && _logged.key != uid) count++;
     }
@@ -289,7 +294,8 @@ class RankingCont extends GetxController {
     return _getEndTimes(date)[period]!.difference(_getStartTimes(date)[period]!);
   }
   double getLeftPercent(DateTime date) {
-    return 1 - getLeftTime(date).inMilliseconds / _getEntireDuration(date).inMilliseconds;
+    double percent = 1 - getLeftTime(date).inMilliseconds / _getEntireDuration(date).inMilliseconds;
+    return max(min(percent, 1.0), .0);
   }
 
   void _startLeftTimer(DateTime date) {

@@ -73,4 +73,10 @@ class AuthCont {
   }
 
   static fLogout() => _logged = null;
+
+  static Future load(FUserLoadCont cont) async {
+    FUser? loaded = await FUserDAO().loadOne(_logged!.key, cont: cont);
+    if (loaded == null) throw Exception('User load failed');
+    _logged!.merge(loaded);
+  }
 }

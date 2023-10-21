@@ -26,7 +26,8 @@
     "party": "파티",
     "member-setting": "멤버 관리",
     "applicants": "지원자",
-    "history": "히스토리"
+    "history": "히스토리",
+    "fpoint": "FPoints"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -53,6 +54,11 @@
       "your-nickname": "@:hint.your-nickname",
       "date-of-birth": "@:hint.date-of-birth"
     }
+  },
+  "point": {
+    "ranking-daily": "일일 랭킹 획득 FP",
+    "ranking-weekly": "주간 랭킹 획득 FP",
+    "ranking-monthly": "월간 랭킹 획득 FP"
   },
   "period": {
     "daily": "일일",

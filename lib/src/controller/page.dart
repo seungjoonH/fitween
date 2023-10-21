@@ -20,6 +20,8 @@ export 'page/main/contents/battle.dart';
 export 'page/main/contents.dart';
 export 'page/main/see_more.dart';
 export 'page/main.dart';
+export 'page/fpoint/history.dart';
+export 'page/fpoint.dart';
 export 'page/carousel.dart';
 export 'page/goal_setting.dart';
 export 'page/login.dart';

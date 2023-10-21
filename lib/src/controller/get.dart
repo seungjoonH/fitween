@@ -21,6 +21,8 @@ class GetCont {
     Get.put(PartySearchPageCont());
     Get.put(PartyApplicantsPageCont());
     Get.put(PartyHistoryPageCont());
+    Get.put(FPointPageCont());
+    Get.put(FPointHistoryPageCont());
     Get.put(WeightPageCont());
     Get.put(BattlePageCont());
     Get.put(ContentsPageCont());

@@ -77,7 +77,7 @@ class _FListTileState extends State<FListTile> with DarkPressable<FListTile> {
                     maxLines: 2,
                   ),
                   widget.subtitleWidget ?? FText(
-                    widget.subtitle!,
+                    widget.subtitle ?? '',
                     color: FTheme.comment,
                     style: FTheme.bodyMedium,
                     maxLines: 3,

@@ -129,7 +129,7 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
         ),
         Row(
           children: [
-            const FPointWidget(grey: true),
+            const FPointIcon(grey: true),
             SizedBox(width: 5.0.w),
             FText(
               cont.pointTitle,
