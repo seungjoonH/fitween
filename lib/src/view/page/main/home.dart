@@ -41,7 +41,7 @@ class _HomePageState extends FPageState {
           center: isActive ? FTexts(
             cont.getMarbleCenterText(type),
             textColor: FTheme.achro90,
-            style: FTheme.titleMedium,
+            style: FTheme.bodyLarge,
             highlightStyle: FTheme.displayLarge
                 ?.copyWith(color: FTheme.achro90),
           ) : null,
@@ -225,6 +225,7 @@ class _HomePageState extends FPageState {
             return FTextButton(
               text: period.locale.capitalize!,
               bold: isSelected,
+              shrinkWrap: true,
               style: FTheme.titleSmall,
               textColor: isSelected
                   ? cont.activeType.color
@@ -388,7 +389,9 @@ class _MarbleState extends FWidgetState<Marble> {
           ),
           Positioned(
             bottom: 10.0.h,
-            child: widget.tagVisible ? FTypeTag(type: widget.type) : Container(),
+            child: widget.tagVisible
+                ? FTypeTag(type: widget.type, color: _tagColor)
+                : Container(),
           ),
           Container(child: widget.center),
         ],

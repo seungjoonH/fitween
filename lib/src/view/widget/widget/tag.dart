@@ -74,16 +74,18 @@ class FTypeTag extends StatelessWidget {
   const FTypeTag({
     super.key,
     required this.type,
+    this.color,
   });
 
   final FType type;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
     return FTextTag(
       type.locale.capitalize!,
       textColor: FTheme.achro95,
-      backgroundColor: type.color,
+      backgroundColor: color ?? type.color,
     );
   }
 }
