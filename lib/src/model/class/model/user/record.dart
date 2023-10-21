@@ -445,7 +445,10 @@ class RankingData extends Model {
   int get point => _point;
 
   bool get finished => _finished;
-  bool getReceived(FType type) => _received[type]!;
+  bool getReceived(FType type) {
+    if (point == 0) return true;
+    return _received[type]!;
+  }
 
   void finish() => _finished = true;
   void receive(FType type) => _received[type] = true;
@@ -469,6 +472,10 @@ class RankingData extends Model {
   Map<String, RankingPersonalData> getDataByType(FType type) {
     assert(type != FType.calorie);
     return [_distance, _height, _weight][type.index - 1];
+  }
+
+  RankingPersonalData getOnesDataByType(FType type, String uid) {
+    return getDataByType(type)[uid]!;
   }
 
   RankingData({
@@ -538,6 +545,8 @@ class RankingData extends Model {
 class RankingPersonalData extends Model {
   late num _amount;
   late int _rank;
+
+  num get amount => _amount;
 
   RankingPersonalData(num amount, int rank) {
     _amount = amount;

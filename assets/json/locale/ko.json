@@ -225,7 +225,8 @@
       "fpoint": {
         "title": "추산 FP",
         "text": "{duration} 후에 획득할 수 있는 FP(피트윈포인트) 입니다. 높은 목표 설정, 목표 달성, 높은 순위 달성을 통해 더 많은 FP 획득에 도전해보세요!",
-        "received-text": "이미 획득했습니다"
+        "received-text": "이미 획득했습니다",
+        "zero-text": "획득할 FP 가 없습니다"
       },
       "earned": {
         "title": "FP 획득",

@@ -28,6 +28,7 @@ class RankingPageCont extends PageCont {
     namedArgs: {'duration': rankingCont.getLeftTime(selectedDate).format.trim()},
   );
   String get receivedText => LangCont.tr('$_dialogTr.fpoint.received-text');
+  String get zeroText => LangCont.tr('$_dialogTr.fpoint.zero-text');
 
   String get earnedTitle => LangCont.tr('$_dialogTr.earned.title');
   String get earnedText => LangCont.tr(
@@ -106,13 +107,14 @@ class RankingPageCont extends PageCont {
             String? contentText;
             if (rankingCont.received) contentText = receivedText;
             if (!rankingCont.finished) contentText = fPointText;
+            if (rankingCont.hasNoAmount) contentText = zeroText;
 
             if (contentText == null) return Container();
 
             return FText(
               contentText,
               color: FTheme.comment,
-              style: FTheme.commentStyle,
+              style: FTheme.bodyMedium,
               maxLines: 0,
             );
           }),
