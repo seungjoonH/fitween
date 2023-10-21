@@ -47,14 +47,17 @@ class _CalendarPageState extends FPageState<CalendarPage> {
         border: Border.all(color: FTheme.text, width: 3.0.r),
       ),
       todayTextStyle: todayTextStyle!,
-      cellMargin: EdgeInsets.all(2.0.r),
-      cellAlignment: Alignment.center,
+      cellMargin: EdgeInsets.all(1.0.r),
+      cellAlignment: Alignment.topCenter,
+      cellPadding: EdgeInsets.only(top: 5.0.h),
     );
   }
 
   Widget? _defaultBuilder(BuildContext context, DateTime date, DateTime event) {
     return Container(
-      alignment: Alignment.center,
+      padding: EdgeInsets.only(top: 5.0.h),
+      margin: EdgeInsets.all(1.0.r),
+      alignment: Alignment.topCenter,
       child: FText('${date.day}',
         color: calendarCont.isAllFinished(date)
             ? FTheme.colorA
@@ -65,9 +68,12 @@ class _CalendarPageState extends FPageState<CalendarPage> {
   }
 
   Widget _markerBuilder(BuildContext context, DateTime date, List<CalendarEvent> event) {
-    return CalendarDots(
-      completedTypes: calendarCont.completedTypes(date), 
-      startedTypes: calendarCont.startedTypes(date),
+    return Container(
+      margin: EdgeInsets.only(bottom: 5.0.h),
+      child: CalendarDots(
+        completedTypes: calendarCont.completedTypes(date),
+        startedTypes: calendarCont.startedTypes(date),
+      ),
     );
   }
 
