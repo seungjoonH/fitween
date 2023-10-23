@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:fitween/global/global.dart';
@@ -16,10 +17,11 @@ class CalendarCont extends GetxController {
   bool get _loadComplete => _user != null;
 
   Future init() async {
-    HealthDataCont.fetchAllStepData();
-    HealthDataCont.fetchAllFlightsData();
+    await HealthDataCont.fetchAllStepData();
+    await HealthDataCont.fetchAllFlightsData();
     _user = AuthCont.logged!;
-    AuthCont.updateUser((await FUserRecordDAO().loadOne(_user!.key))!);
+    // AuthCont.updateUser((await FUserRecordDAO().loadOne(_user!.key))!);
+    await AuthCont.load(FUserLoadCont.onlyRecord());
     await loadRecord();
     _events = _user!.events;
   }
@@ -30,18 +32,32 @@ class CalendarCont extends GetxController {
     AuthCont.setUserRecord(record);
   }
 
-  num _getFetchedData(FType type) {
-    return HealthDataCont.getDataByType(type, selectedDay);
+  num _getFetchedData(FType type, DateTime date) {
+    return HealthDataCont.getDataByType(type, date);
+  }
+
+  num getUnreflectedAmount(FType type, DateTime date) {
+    num reflected = _user!.getOneDayRecord(date)[type]!;
+    num real = _getFetchedData(type, date);
+    return max(real - reflected, 0);
+  }
+
+  bool typeHasUnreflectedAmount(FType type) {
+    return getUnreflectedAmount(type, selectedDay) > 0;
+  }
+
+  bool dateHasUnreflectedAmount(DateTime date) {
+    num dis = getUnreflectedAmount(FType.distance, date);
+    num hei = getUnreflectedAmount(FType.height, date);
+    return dis + hei > 0;
   }
 
   String getInsufficientAmountText(FType type) {
-    num reflected = _user!.getOneDayRecord(selectedDay)[type]!;
-    num real = _getFetchedData(type);
-    return type.withUnit(max(real - reflected, 0));
+    return type.withUnit(getUnreflectedAmount(type, selectedDay));
   }
 
   bool get visible => _user!.visible;
-  void toggleVisibility() { _user!.toggleVisibility(); }
+  void toggleVisibility() => _user!.toggleVisibility();
 
   final Rx<DateTime> _focusedDay = today.obs;
   final Rx<DateTime> _selectedDay = today.obs;
@@ -79,16 +95,17 @@ class CalendarCont extends GetxController {
     return FType.activeValues.where((type) => started(type, date)).toList();
   }
 
-  void selectDay(DateTime selectedDay, DateTime focusedDay) {
+  void selectDay(DateTime selectedDay, DateTime focusedDay) async {
     if (!_loadComplete) return;
     selectedDay = selectedDay.ignoreTime;
     focusedDay = focusedDay.ignoreTime;
     if (selectedDay.isBefore(_user!.regDate)) return;
     if (selectedDay.isAfter(today)) return;
-    if (focusedDay.isBefore(_user!.regDate)) return;
-    if (focusedDay.isAfter(today)) return;
+    // if (focusedDay.isBefore(_user!.regDate)) return;
+    // if (focusedDay.isAfter(today)) return;
 
-    HealthDataCont.fetchOneDayStepData(selectedDay);
+    await HealthDataCont.fetchOneDayStepData(selectedDay);
+    if (Platform.isIOS) await HealthDataCont.fetchOneDayFlightsData(selectedDay);
     _selectedDay(selectedDay);
     _focusedDay(focusedDay);
   }
@@ -128,6 +145,9 @@ class CalendarCont extends GetxController {
 
   String getDayRecordGraphTextByType(FType type) {
     String amountText = getAmount(type).thouSep;
+    if (typeHasUnreflectedAmount(type)) {
+      amountText += ' @{+${getUnreflectedAmount(type, selectedDay).thouSep}}';
+    }
     String withUnit = type.withUnit(getGoal(type), scaling: false);
     return '$amountText / $withUnit';
   }

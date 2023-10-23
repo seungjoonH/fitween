@@ -1,7 +1,6 @@
 import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class FPointHistoryPage extends FPage {
   const FPointHistoryPage({super.key});

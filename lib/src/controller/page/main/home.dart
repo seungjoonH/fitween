@@ -36,7 +36,6 @@ class HomePageCont extends MainPageCont {
   Future load() async {
     await calendarCont.init();
     await rankingCont.init();
-    await HealthDataCont.fetchDataAfterLogin();
   }
 
   @override

@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitween/global/global.dart';
-import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
@@ -203,16 +202,7 @@ class _RankingPageState extends FPageState<RankingPage> {
   Widget buildPage(BuildContext context) {
     return FScaffold(
       autoPadding: false,
-      appBar: FAppBar(
-        text: cont.appBarTitle,
-        backPressed: FRoute.toHome,
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 10.0.w),
-            child: const FPointAmountWidget(onPressed: FRoute.toFPoint),
-          ),
-        ],
-      ),
+      appBar: FPointAppBar(text: cont.appBarTitle),
       body: _buildRankingWidget(context),
       bottomWidget: _buildFPointButton(context),
     );

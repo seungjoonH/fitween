@@ -2,6 +2,7 @@ import 'package:fitween/route.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fitween/global/theme.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class FAppBar extends AppBar {
@@ -49,6 +50,25 @@ class FAppBar extends AppBar {
   @override
   Color? get backgroundColor => Colors.transparent;
 }
+
+
+
+class FPointAppBar extends FAppBar {
+  FPointAppBar({
+    super.key,
+    super.text,
+    super.backPressed,
+  });
+
+  @override
+  List<Widget>? get actions => [
+    Padding(
+      padding: EdgeInsets.only(right: 10.0.w),
+      child: const FPointAmountWidget(onPressed: FRoute.toFPoint),
+    ),
+  ];
+}
+
 //
 // class FAppBar extends StatelessWidget implements PreferredSizeWidget {
 //   const FAppBar({

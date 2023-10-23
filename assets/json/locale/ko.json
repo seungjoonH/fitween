@@ -11,7 +11,8 @@
     "accept": "승인",
     "reject": "거절",
     "apply": "신청하기",
-    "cancel": "신청취소"
+    "cancel": "신청취소",
+    "fetch": "연동하기"
   },
   "appbar": {
     "register": "회원가입",
@@ -55,10 +56,13 @@
       "date-of-birth": "@:hint.date-of-birth"
     }
   },
-  "point": {
-    "ranking-daily": "일일 랭킹 획득 FP",
-    "ranking-weekly": "주간 랭킹 획득 FP",
-    "ranking-monthly": "월간 랭킹 획득 FP"
+  "point-history": {
+    "ranking-daily": "일일 랭킹 보상",
+    "ranking-weekly": "주간 랭킹 보상",
+    "ranking-monthly": "월간 랭킹 보상",
+    "fetch-data-all": "건강 데이터 연동 (거리, 높이)",
+    "fetch-data-distance": "건강 데이터 연동 (거리)",
+    "fetch-data-height": "건강 데이터 연동 (높이)"
   },
   "period": {
     "daily": "일일",
@@ -219,6 +223,18 @@
       "view-today": "오늘 보기"
     },
     "ranking": "랭킹"
+  },
+  "calendar": {
+    "dialog": {
+      "fetch": {
+        "info-title": "데이터 마저 연동하기",
+        "info-text": "지난 건강 데이터를 연동하고 싶나요? FP를 소모하여 연동해보세요. 하루 전 데이터까지는 @{무료}이지만, 더 늦춰질수록 더 많은 FP가 필요합니다. 더 늦게 전에 연동하여 보세요.",
+        "really-title": "데이터 연동",
+        "really-text": "정말 @{{fpoint} FP}를 소모하여 건강 데이터 ({amount}) 를 연동하시겠습니까?",
+        "complete-title": "데이터 연동됨",
+        "complete-text": "데이터가 연동되었습니다"
+      }
+    }
   },
   "ranking": {
     "dialog": {

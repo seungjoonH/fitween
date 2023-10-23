@@ -13,7 +13,7 @@ class PointHistoryData extends Model {
 
   String get amountWithSign => withSign(_amount);
 
-  String get _tr => 'point';
+  String get _tr => 'point-history';
   String get content => LangCont.tr('$_tr.$_content');
 
   bool get earned => _amount > 0;

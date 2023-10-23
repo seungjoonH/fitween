@@ -59,18 +59,28 @@ class HealthDataCont extends GetxController {
 
   static FUser get _logged => AuthCont.logged!;
 
-  static Map<DateTime, num>? _fetchedSteps;
-  static Map<DateTime, num>? _fetchedFlights;
+  static Map<DateTime, num> _fetchedSteps = {};
+  static Map<DateTime, num> _fetchedFlights = {};
 
-  static num getStepsData(DateTime date) => _fetchedSteps![date] ?? .0;
-  static num getFlightsData(DateTime date) => _fetchedFlights![date] ?? .0;
+  static void initStepsData(DateTime startTime, DateTime endTime) {
+    DateRange range = DateRange(startTime, endTime);
+    for (DateTime date in range.dates) { _fetchedSteps[date] = .0; }
+  }
+
+  static void initFlightsData(DateTime startTime, DateTime endTime) {
+    DateRange range = DateRange(startTime, endTime);
+    for (DateTime date in range.dates) { _fetchedFlights[date] = .0; }
+  }
+
+  static num getStepsData(DateTime date) => _fetchedSteps[date] ?? .0;
+  static num getFlightsData(DateTime date) => _fetchedFlights[date] ?? .0;
   static num getDataByType(FType type, DateTime date) {
     return _byType(type)![date] ?? .0;
   }
 
   static Map<DateTime, num>? _byType(FType type) {
-    assert(type == FType.distance || type == FType.height);
-    return [_fetchedSteps, _fetchedFlights][type.index - 1];
+    assert(FType.activeValues.contains(type));
+    return [_fetchedSteps, _fetchedFlights, <DateTime, num>{}][type.index - 1];
   }
 
   static Future setRecordByType(FType type, DateTime startTime, DateTime endTime) async {
@@ -99,20 +109,8 @@ class HealthDataCont extends GetxController {
   }
 
   static Future fetchDataAfterLogin() async {
-     await fetchTodayStepData();
-    bool fetched = _fetchedSteps != null;
-    if (Platform.isIOS) {
-      await fetchTodayFlightsData();
-      fetched &= _fetchedFlights != null;
-    }
-
-    if (!fetched) {
-      List<String> gotError = [];
-      if (_fetchedSteps == null) gotError.add('step');
-      if (_fetchedFlights == null) gotError.add('flights');
-      throw Exception('[ERROR] Health data (${gotError.join(', ')}) fetching error');
-    }
-
+    await fetchTodayStepData();
+    if (Platform.isIOS) await fetchTodayFlightsData();
     await setTodayRecord();
   }
 
@@ -134,17 +132,18 @@ class HealthDataCont extends GetxController {
     startTime = later(startTime, _logged.regDate);
     endTime = earlier(endTime.lastTimeOfDay, now);
 
+    initStepsData(startTime, endTime);
+
     num value = 0;
 
-    if (!_approved) _fetchedSteps = null;
-    _fetchedSteps = {};
+    if (!_approved) _fetchedSteps = {};
 
     DateRange dateRange = DateRange(startTime, endTime);
     for (DateTime date in dateRange.dates) {
       num? fetchedValue = await _health.getTotalStepsInInterval(date, date.lastTimeOfDay);
-      if (fetchedValue == null || fetchedValue > 28796) continue;
+      if (fetchedValue == null || fetchedValue > 28796) fetchedValue = .0;
       value = fetchedValue;
-      _fetchedSteps![date] = value;
+      _fetchedSteps[date] = value;
     }
   }
 
@@ -166,10 +165,11 @@ class HealthDataCont extends GetxController {
     startTime = later(startTime, _logged.regDate);
     endTime = earlier(endTime.lastTimeOfDay, now);
 
+    initFlightsData(startTime, endTime);
+
     List<HealthDataPoint> flightsData = [];
 
-    if (!_approved) _fetchedFlights = null;
-    _fetchedFlights = {};
+    if (!_approved) _fetchedFlights = {};
 
     flightsData = await _health
         .getHealthDataFromTypes(startTime, endTime, _flightType);
@@ -177,9 +177,11 @@ class HealthDataCont extends GetxController {
     flightsData = HealthFactory.removeDuplicates(flightsData);
 
     for (var flight in flightsData) {
-      num value = _fetchedFlights![flight.dateFrom.ignoreTime] ?? .0;
+      DateTime date = flight.dateFrom.ignoreTime;
+      num value = _fetchedFlights[date] ?? .0;
       value += double.parse(flight.value.toString());
-      _fetchedFlights![flight.dateFrom.ignoreTime] = value;
+      _fetchedFlights[date] = value;
+      print('${flight.dateFrom}: $value');
     }
   }
 

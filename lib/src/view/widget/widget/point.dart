@@ -4,6 +4,7 @@ import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class FPointIcon extends StatelessWidget {
   const FPointIcon({
@@ -51,33 +52,35 @@ class FPointAmountWidget extends StatelessWidget {
 
   FPointCont get cont => FPointCont.to;
 
-  int get _amount => amount ?? cont.fPoint;
-
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        FButton(
-          onPressed: onPressed,
-          backgroundColor: FTheme.backgroundAlt,
-          shrinkWrap: true,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const FPointIcon(),
-              FText(
-                '$_amount FP',
-                style: FTheme.bodyLarge,
-                color: FTheme.point,
-                bold: true,
-              ),
-            ],
+    return Obx(() {
+      int value = amount ?? cont.fPoint;
+
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FButton(
+            onPressed: onPressed,
+            backgroundColor: FTheme.backgroundAlt,
+            shrinkWrap: true,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const FPointIcon(),
+                FText(
+                  '$value FP',
+                  style: FTheme.bodyLarge,
+                  color: FTheme.point,
+                  bold: true,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 }
 

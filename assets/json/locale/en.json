@@ -11,7 +11,8 @@
     "accept": "Accept",
     "reject": "Reject",
     "apply": "Apply",
-    "cancel": "Cancel Application"
+    "cancel": "Cancel Application",
+    "fetch": "Fetch"
   },
   "appbar": {
     "register": "Register",
@@ -58,10 +59,13 @@
     "left": "left",
     "ago": "ago"
   },
-  "point": {
-    "ranking-daily": "Daily Ranking Earned FP",
-    "ranking-weekly": "Weekly Ranking Earned FP",
-    "ranking-monthly": "Monthly Ranking Earned FP"
+  "point-history": {
+    "ranking-daily": "Daily Ranking Rewarded",
+    "ranking-weekly": "Weekly Ranking Rewarded",
+    "ranking-monthly": "Monthly Ranking Rewarded",
+    "fetch-data-all": "Data Fetched (Distance, Height)",
+    "fetch-data-distance": "Data Fetched (Distance)",
+    "fetch-data-height": "Data Fetched (Height)"
   },
   "period": {
     "daily": "daily",
@@ -260,6 +264,18 @@
       "view-today": "View Today"
     },
     "ranking": "Ranking"
+  },
+  "calendar": {
+    "dialog": {
+      "fetch": {
+        "info-title": "Fetch Remaining Data",
+        "info-text": "Do you want to fetch your remaining health data? Try fetching by spending FP. Health data up to yesterday is @{FREE}, but the further the delay, the more FP is required. Try fetching before it is too late.",
+        "really-title": "Fetching Data",
+        "really-text": "Are you sure to spend @{{fpoint} FP} to fetch health data ({amount})?",
+        "complete-title": "Data Fetched",
+        "complete-text": "Data successfully fetched"
+      }
+    }
   },
   "ranking": {
     "dialog": {

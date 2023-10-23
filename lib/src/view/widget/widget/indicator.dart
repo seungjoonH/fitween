@@ -216,3 +216,67 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
   );
 
 }
+
+class FOverlappedLinearPercentIndicator extends StatelessWidget {
+  const FOverlappedLinearPercentIndicator({
+    super.key,
+    this.backPercent,
+    this.forePercent,
+    this.height,
+    this.radius,
+    this.backgroundColor,
+    this.backProgressColor,
+    this.foreProgressColor,
+    this.curve,
+    this.animation,
+    this.animateFromLastPercent,
+  });
+
+  final double? backPercent;
+  final double? forePercent;
+  final double? height;
+  final double? radius;
+  final Color? backgroundColor;
+  final Color? backProgressColor;
+  final Color? foreProgressColor;
+  final Curve? curve;
+  final bool? animation;
+  final bool? animateFromLastPercent;
+
+  double get _backPercent => max(min(backPercent ?? .0, 1.0), .0);
+  double get _forePercent => max(min(forePercent ?? .0, 1.0), .0);
+
+  Curve get _curve => curve ?? Curves.easeInOut;
+
+  bool get _animation => animation ?? false;
+  bool get _animateFromLastPercent => animateFromLastPercent ?? false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.centerLeft,
+      children: [
+        FLinearPercentIndicator(
+          percent: _backPercent,
+          height: height,
+          radius: radius,
+          backgroundColor: backgroundColor,
+          progressColor: backProgressColor,
+          curve: _curve,
+          animation: _animation,
+          animateFromLastPercent: _animateFromLastPercent,
+        ),
+        FLinearPercentIndicator(
+          percent: _forePercent,
+          height: height,
+          radius: radius,
+          backgroundColor: backgroundColor,
+          progressColor: foreProgressColor,
+          curve: _curve,
+          animation: _animation,
+          animateFromLastPercent: _animateFromLastPercent,
+        ),
+      ],
+    );
+  }
+}

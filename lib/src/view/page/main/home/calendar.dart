@@ -1,5 +1,4 @@
 import 'package:fitween/global/global.dart';
-import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:fitween/src/view/widget/widget/calendar.dart';
@@ -22,48 +21,90 @@ class _CalendarPageState extends FPageState<CalendarPage> {
   @override
   CalendarPageCont get cont => CalendarPageCont.to;
   CalendarCont get calendarCont => CalendarCont.to;
+  HomePageCont get homePageCont => HomePageCont.to;
 
   CalendarStyle get _calendarStyle {
-    TextStyle? selectedTextStyle = FTheme.bodyLarge?.copyWith(
-      color: calendarCont.isAllFinished(calendarCont.selectedDay)
-          ? FTheme.colorA
-          : FTheme.backgroundAlt,
-    );
-    TextStyle? todayTextStyle = FTheme.bodyLarge?.copyWith(
-      color: calendarCont.isAllFinished(today)
-          ? FTheme.colorA
-          : FTheme.textAlt,
-    );
-
     return CalendarStyle(
       isTodayHighlighted: true,
-      selectedDecoration: BoxDecoration(
-        color: FTheme.text,
-        shape: BoxShape.circle,
-      ),
-      selectedTextStyle: selectedTextStyle!,
-      todayDecoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(color: FTheme.text, width: 3.0.r),
-      ),
-      todayTextStyle: todayTextStyle!,
       cellMargin: EdgeInsets.all(1.0.r),
       cellAlignment: Alignment.topCenter,
       cellPadding: EdgeInsets.only(top: 5.0.h),
     );
   }
 
+  Widget _buildBuilder(
+    BuildContext context, {
+    required DateTime date,
+    Color? color,
+    TextStyle? style,
+    BoxDecoration? decoration,
+  }) {
+    date = date.ignoreTime;
+    return Stack(
+      alignment: Alignment.topLeft,
+      children: [
+        Container(
+          padding: EdgeInsets.only(top: 5.0.h),
+          margin: EdgeInsets.all(1.0.r),
+          alignment: Alignment.topCenter,
+          decoration: decoration,
+          child: FText('${date.day}',
+            color: color,
+            style: style,
+          ),
+        ),
+        if (calendarCont.dateHasUnreflectedAmount(date))
+        Container(
+          width: 5.0.r, height: 5.0.r,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: FTheme.point,
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget? _defaultBuilder(BuildContext context, DateTime date, DateTime event) {
-    return Container(
-      padding: EdgeInsets.only(top: 5.0.h),
-      margin: EdgeInsets.all(1.0.r),
-      alignment: Alignment.topCenter,
-      child: FText('${date.day}',
-        color: calendarCont.isAllFinished(date)
-            ? FTheme.colorA
-            : FTheme.text,
-        style: FTheme.bodyMedium,
-      ),
+    Color textColor = calendarCont.isAllFinished(date)
+        ? FTheme.colorA : FTheme.text;
+    return _buildBuilder(
+      context,
+      date: date,
+      color: textColor,
+      style: FTheme.bodyMedium,
+    );
+  }
+
+  Widget? _todayBuilder(BuildContext context, DateTime date, DateTime event) {
+    Color textColor = calendarCont.isAllFinished(today)
+        ? FTheme.colorA : FTheme.textAlt;
+    BoxDecoration decoration = BoxDecoration(
+      shape: BoxShape.circle,
+      border: Border.all(color: FTheme.text, width: 3.0.r),
+    );
+    return _buildBuilder(
+      context,
+      date: date,
+      color: textColor,
+      style: FTheme.bodyLarge,
+      decoration: decoration,
+    );
+  }
+
+  Widget? _selectedBuilder(BuildContext context, DateTime date, DateTime event) {
+    Color textColor = calendarCont.isAllFinished(calendarCont.selectedDay)
+        ? FTheme.colorA : FTheme.backgroundAlt;
+    BoxDecoration decoration = BoxDecoration(
+      color: FTheme.text,
+      shape: BoxShape.circle,
+    );
+    return _buildBuilder(
+      context,
+      date: date,
+      color: textColor,
+      style: FTheme.bodyLarge,
+      decoration: decoration,
     );
   }
 
@@ -108,6 +149,8 @@ class _CalendarPageState extends FPageState<CalendarPage> {
       calendarStyle: _calendarStyle,
       calendarBuilders: CalendarBuilders(
         defaultBuilder: _defaultBuilder,
+        todayBuilder: _todayBuilder,
+        selectedBuilder: _selectedBuilder,
         markerBuilder: _markerBuilder,
       ),
       onDaySelected: calendarCont.selectDay,
@@ -117,35 +160,53 @@ class _CalendarPageState extends FPageState<CalendarPage> {
   }
 
   Widget _buildCalendarCardWidget(BuildContext context) {
-    return FCard(
-      child: _buildTableCalendarWidget(context),
-    );
+    return FCard(child: _buildTableCalendarWidget(context));
   }
 
-  Widget _buildDayRecordGraphWidget(BuildContext context, FType type) {
-    double percent = calendarCont.getPercent(type);
-    Color color = percent == 1.0
-        ? type.color
-        : FTheme.unselected;
-    if (calendarCont.allCompleted) color = FTheme.colorA;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        FLinearPercentIndicator(
-          percent: percent,
-          backgroundColor: Colors.transparent,
-          progressColor: color,
-          animation: true,
-          animateFromLastPercent: true,
+
+  Widget _buildDayRecordGraphWidget(BuildContext context, FType type) {
+    return Obx(() {
+      double forePercent = calendarCont.getPercent(type);
+      num amount = calendarCont.getAmount(type);
+      num goal = calendarCont.getGoal(type);
+
+      Color color = forePercent == 1.0 ? type.color : FTheme.unselected;
+      if (calendarCont.allCompleted) color = FTheme.colorA;
+
+      DateTime date = calendarCont.selectedDay;
+      num unreflected = calendarCont.getUnreflectedAmount(type, date);
+      double backPercent = (unreflected + amount) / goal;
+
+      if (forePercent >= 1.0 && unreflected != 0) forePercent = .95;
+
+      return ScalePressableWidget(
+        onPressed: () => cont.linearPercentIndicatorWidgetPressed(type),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            FOverlappedLinearPercentIndicator(
+              forePercent: forePercent,
+              backPercent: backPercent,
+              backgroundColor: Colors.transparent,
+              foreProgressColor: color,
+              backProgressColor: FTheme.point.withOpacity(.7),
+              animation: true,
+              animateFromLastPercent: true,
+            ),
+            FTexts(
+              calendarCont.getDayRecordGraphTextByType(type),
+              style: FTheme.bodyMedium,
+              textColor: color,
+              highlightStyle: FTheme.bodyMedium?.copyWith(
+                color: FTheme.point,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
-        FText(
-          calendarCont.getDayRecordGraphTextByType(type),
-          style: FTheme.bodyMedium,
-          color: color,
-        ),
-      ],
-    );
+      );
+    });
   }
 
   Widget _buildDayRecordWidget(BuildContext context) {
@@ -157,22 +218,33 @@ class _CalendarPageState extends FPageState<CalendarPage> {
   }
 
   Widget _buildDayRecordsWidget(BuildContext context) {
-    return Obx(() => FCard(
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          FText(calendarCont.dayRecordGraphCardTitle),
-          Row(
+    return Obx(() {
+      Widget title = FText(calendarCont.dayRecordGraphCardTitle);
+      Widget child = _buildDayRecordWidget(context);
+
+      if (calendarCont.dateHasUnreflectedAmount(calendarCont.selectedDay)) {
+        return FCard(
+          icon: const Icon(Icons.info_outline),
+          iconColor: FTheme.point,
+          pressMode: FCardPressMode.icon,
+          onPressed: cont.reflectInformationButtonPressed,
+          title: title,
+          child: Column(
             children: [
-              FText(calendarCont.getInsufficientAmountText(FType.distance)),
-              SizedBox(width: 10.0.w),
-              FText(calendarCont.getInsufficientAmountText(FType.height)),
+              child,
+              SizedBox(height: 40.0.h),
+              FButton(
+                text: cont.fetchButtonText,
+                stretch: true,
+                backgroundColor: FTheme.point,
+                onPressed: cont.fetchButtonPressed,
+              ),
             ],
           ),
-        ],
-      ),
-      child: _buildDayRecordWidget(context),
-    ));
+        );
+      }
+      return FCard(title: title, child: child);
+    });
   }
 
   @override
@@ -180,10 +252,8 @@ class _CalendarPageState extends FPageState<CalendarPage> {
     return FRefreshScaffold(
       refreshController: RefreshController(),
       onRefresh: calendarCont.init,
-      appBar: FAppBar(
-        text: cont.appBarText,
-        backPressed: FRoute.toHome,
-      ),
+      height: PageCont.size.height * 1.2,
+      appBar: FPointAppBar(text: cont.appBarTitle),
       body: Column(
         children: [
           _buildCalendarCardWidget(context),
