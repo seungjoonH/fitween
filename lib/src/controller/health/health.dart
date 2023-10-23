@@ -176,12 +176,14 @@ class HealthDataCont extends GetxController {
 
     flightsData = HealthFactory.removeDuplicates(flightsData);
 
+    Map<DateTime, num> data = {};
     for (var flight in flightsData) {
       DateTime date = flight.dateFrom.ignoreTime;
-      num value = _fetchedFlights[date] ?? .0;
+      num value = data[date] ?? .0;
       value += double.parse(flight.value.toString());
-      _fetchedFlights[date] = value;
+      data[date] = value;
     }
+    _fetchedFlights.addAll(data);
   }
 
 }

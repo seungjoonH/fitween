@@ -16,7 +16,7 @@ class DateRange {
   }
   List<DateTime> get dates {
     DateTime getDate(int i) => DateTime.utc(start.year, start.month, start.day + i).ignoreTime;
-    return List.generate(days + 1, getDate);
+    return List.generate(days, getDate);
   }
 
   List<DateTime> get times {
