@@ -85,7 +85,7 @@ class _RankingPageState extends FPageState<RankingPage> {
               return FTextButton(
                 text: period.locale.capitalize!,
                 bold: isSelected,
-                style: FTheme.titleSmall,
+                style: FTheme.bodyLarge,
                 textColor: isSelected
                     ? homeCont.activeType.color
                     : FTheme.comment,

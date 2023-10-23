@@ -226,7 +226,7 @@ class _HomePageState extends FPageState {
               text: period.locale.capitalize!,
               bold: isSelected,
               shrinkWrap: true,
-              style: FTheme.titleSmall,
+              style: FTheme.bodyLarge,
               textColor: isSelected
                   ? cont.activeType.color
                   : FTheme.comment,
