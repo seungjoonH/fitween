@@ -14,9 +14,9 @@ class FPointPageCont extends PageCont {
 
   void animateFPoint(int fp) async {
     _fPoint(0);
-    await delay(20.ms, () => _fPoint(fp ~/ 1000));
-    await delay(20.ms, () => _fPoint(fp ~/ 100));
-    await delay(20.ms, () => _fPoint(fp ~/ 10));
+    await delay(20.ms, () => _fPoint(fp ~/ 1000 * 1000));
+    await delay(20.ms, () => _fPoint(fp ~/ 100 * 100));
+    await delay(20.ms, () => _fPoint(fp ~/ 10 * 10));
     await delay(20.ms, () => _fPoint(fp));
   }
 

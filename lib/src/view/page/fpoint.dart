@@ -105,14 +105,14 @@ class _FPointPageState extends FPageState<FPointPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
-              width: 50.0.w,
+              width: 60.0.w,
               child: FText(
                 now.difference(h.date).ago,
                 style: FTheme.bodyMedium,
                 color: FTheme.comment,
               ),
             ),
-            SizedBox(width: 10.0.w),
+            SizedBox(width: 15.0.w),
             Expanded(
               child: FText(
                 h.content,
@@ -121,6 +121,7 @@ class _FPointPageState extends FPageState<FPointPage> {
                 maxLines: 0,
               ),
             ),
+            SizedBox(width: 15.0.w),
             _buildLeadingCircleWidget(context, h),
           ],
         ),
