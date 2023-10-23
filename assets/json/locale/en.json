@@ -281,7 +281,7 @@
     "dialog": {
       "fpoint": {
         "title": "Estimated FP",
-        "text": "FPs (Fitween points) that can be earned {duration} later. Challenge yourself to get more FP by setting high goals, achieving goals, and being ranked high!",
+        "text": "FPs (Fitween points) that can be earned {duration} later.\nChallenge yourself to get more FP by setting high goals, achieving goals, and being ranked high!",
         "received-text": "Already received",
         "zero-text": "No FP to receive"
       },

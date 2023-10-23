@@ -445,10 +445,7 @@ class RankingData extends Model {
   int get point => _point;
 
   bool get finished => _finished;
-  bool getReceived(FType type) {
-    if (point == 0) return true;
-    return _received[type]!;
-  }
+  bool getReceived(FType type) => _received[type]!;
 
   void finish() => _finished = true;
   void receive(FType type) => _received[type] = true;

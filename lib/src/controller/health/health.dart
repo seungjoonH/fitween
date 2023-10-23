@@ -181,7 +181,6 @@ class HealthDataCont extends GetxController {
       num value = _fetchedFlights[date] ?? .0;
       value += double.parse(flight.value.toString());
       _fetchedFlights[date] = value;
-      print('${flight.dateFrom}: $value');
     }
   }
 

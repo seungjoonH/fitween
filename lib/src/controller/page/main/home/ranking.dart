@@ -77,17 +77,11 @@ class RankingPageCont extends PageCont {
     await rankingCont.init();
   }
 
-  bool get receivable {
-    bool finished = rankingCont.finished;
-    bool received = rankingCont.received;
-    return finished && !received;
-  }
-
   void fPointButtonPressed() {
     String? rightText;
     Color? rightColor;
 
-    if (receivable) {
+    if (rankingCont.receivable) {
       rightText = '${rankingCont.estimatedFPoint} FP';
       rightColor = FTheme.point;
     }
@@ -120,7 +114,7 @@ class RankingPageCont extends PageCont {
           }),
         ].separateH(height: 10.0.h),
       ),
-      type: receivable
+      type: rankingCont.receivable
           ? DialogType.bi
           : DialogType.mono,
       rightText: rightText,
@@ -130,7 +124,7 @@ class RankingPageCont extends PageCont {
   }
 
   void earnFPoints() async {
-    if (!receivable) return;
+    if (!rankingCont.receivable) return;
 
     await showFDialog(
       title: earnedTitle,

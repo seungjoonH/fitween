@@ -52,35 +52,36 @@ class FPointAmountWidget extends StatelessWidget {
 
   FPointCont get cont => FPointCont.to;
 
+  Widget _buildWidget(BuildContext context, int amount) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        FButton(
+          onPressed: onPressed,
+          backgroundColor: FTheme.backgroundAlt,
+          shrinkWrap: true,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const FPointIcon(),
+              FText(
+                '$amount FP',
+                style: FTheme.bodyLarge,
+                color: FTheme.point,
+                bold: true,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      int value = amount ?? cont.fPoint;
-
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          FButton(
-            onPressed: onPressed,
-            backgroundColor: FTheme.backgroundAlt,
-            shrinkWrap: true,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const FPointIcon(),
-                FText(
-                  '$value FP',
-                  style: FTheme.bodyLarge,
-                  color: FTheme.point,
-                  bold: true,
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
-    });
+    if (amount != null) _buildWidget(context, amount!);
+    return Obx(() => _buildWidget(context, cont.fPoint));
   }
 }
 
@@ -98,15 +99,17 @@ class FPointButton extends StatelessWidget {
   final bool finished;
   final VoidCallback? onPressed;
 
+  bool get _receivable => !received && finished && amount != 0;
+
   @override
   Widget build(BuildContext context) {
     Color textColor = finished
         ? FTheme.achro90
         : FTheme.point;
     Color? borderColor;
-    Color backgroundColor = received
-        ? FTheme.unselected
-        : FTheme.point;
+    Color backgroundColor = _receivable
+        ? FTheme.point
+        : FTheme.unselected;
 
     if (!finished) {
       borderColor = FTheme.point;

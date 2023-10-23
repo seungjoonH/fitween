@@ -106,11 +106,11 @@ class _FPointPageState extends FPageState<FPointPage> {
           children: [
             SizedBox(
               width: 60.0.w,
-              child: FText(
-                now.difference(h.date).ago,
+              child: Obx(() => FText(
+                cont.now.difference(h.date).ago,
                 style: FTheme.bodyMedium,
                 color: FTheme.comment,
-              ),
+              )),
             ),
             SizedBox(width: 15.0.w),
             Expanded(

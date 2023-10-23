@@ -315,6 +315,7 @@ class RankingCont extends GetxController {
   bool get hasNoAmount => selectedRanking!
       .getOnesDataByType(homePageCont.activeType, _logged.key).amount == 0;
 
+  bool get receivable => !received && finished && !hasNoAmount;
 
   void updateReceived() => _received(selectedRanking
       ?.getReceived(homePageCont.activeType) ?? false);

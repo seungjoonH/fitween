@@ -164,7 +164,7 @@ class CalendarPageCont extends PageCont {
 
     int w = type == null && dis && hei ? 2 : 1;
     if (diff < 2) return 0;
-    return w * min(300 + 50 * (max(diff - 1, 0)), 10000);
+    return w * min(100 + 50 * (max(diff - 1, 0)), 10000);
   }
 
   @override
