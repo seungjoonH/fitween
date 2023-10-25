@@ -139,22 +139,26 @@ class CalendarPageCont extends PageCont {
   }
 
   void _fetchData(FType type) async {
+    if (getSpendingFPoint(type) == 0) return;
+    bool spent = await FPointCont.to.spend(getSpendingFPoint(type), 'fetch-data-${type.name}');
+
+    if (!spent) return;
+
     await _showReflectedDialog();
     await HealthDataCont.setOneDayRecordByType(type, _selectedDay);
     await onRefresh();
-
-    if (getSpendingFPoint(type) == 0) return;
-    FPointCont.to.spend(getSpendingFPoint(type), 'fetch-data-${type.name}');
   }
 
   void _fetchAllTypeOfData() async {
+    if (getSpendingFPoint() == 0) return;
+    bool spent = await FPointCont.to.spend(getSpendingFPoint(), 'fetch-data-all');
+
+    if (!spent) return;
+
     await _showReflectedDialog();
     await HealthDataCont.setOneDayRecordByType(FType.distance, _selectedDay);
     await HealthDataCont.setOneDayRecordByType(FType.height, _selectedDay);
     await onRefresh();
-
-    if (getSpendingFPoint() == 0) return;
-    FPointCont.to.spend(getSpendingFPoint(), 'fetch-data-all');
   }
 
   int getSpendingFPoint([FType? type]) {

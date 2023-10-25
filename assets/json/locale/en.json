@@ -216,7 +216,11 @@
     "top": "Top",
     "period": "Period",
     "success": "Success",
-    "fail": "Fail"
+    "fail": "Fail",
+    "dialog": {
+      "insufficient-title": "Lack of FPoints",
+      "insufficient-text": "You don't have enough FPoints"
+    }
   },
   "login": {
     "loading": "Loading",

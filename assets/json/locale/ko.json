@@ -177,7 +177,11 @@
     "top": "상위",
     "period": "기간",
     "success": "성공",
-    "fail": "실패"
+    "fail": "실패",
+    "dialog": {
+      "insufficient-title": "FPoint 부족",
+      "insufficient-text": "FPoint 가 부족합니다."
+    }
   },
   "login": {
     "user-loading": "사용자 데이터 불러오는 중",

@@ -81,6 +81,7 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
       ),
       onPressed: FRoute.toGoalSetting,
       icon: const Icon(Icons.edit),
+      pressMode: FCardPressMode.icon,
       child: _buildGoalsWidget(context),
     );
   }

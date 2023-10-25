@@ -33,16 +33,19 @@ class GoalSettingPageCont extends CarouselPageCont {
   static const String dir = 'assets/image/page/goal_setting/';
   List<String> get assets => List.generate(pageCount, (i) => '${dir}carousel_$i.svg');
 
-  late FUserInfoBuilder userInfo;
-  late FUserRecordBuilder userRecord;
+  final _userInfo = Rx<FUserInfoBuilder?>(null);
+  final _userRecord = Rx<FUserRecordBuilder?>(null);
+
+  FUserInfoBuilder? get userInfo => _userInfo.value;
+  FUserRecordBuilder? get userRecord => _userRecord.value;
 
   late FUser _user;
 
   void _setNewcomer() {
-    userInfo.regDate = now;
+    _userInfo.value!.regDate = now;
 
-    FUserInfo info = userInfo.build();
-    FUserRecord record = userRecord.build();
+    FUserInfo info = userInfo!.build();
+    FUserRecord record = userRecord!.build();
     FUserBuilder builder = FUserBuilder()
       ..uid = info.key
       ..info = info
@@ -55,8 +58,8 @@ class GoalSettingPageCont extends CarouselPageCont {
 
   void setUser(FUserInfoBuilder info, [FUserRecordBuilder? record]) {
     _isFirstSetting = record == null;
-    userInfo = info;
-    userRecord = record ?? FUserRecordBuilder()..uid = info.uid;
+    _userInfo.value = info;
+    _userRecord.value = record ?? FUserRecordBuilder()..uid = info.uid;
   }
 
   @override
@@ -66,8 +69,8 @@ class GoalSettingPageCont extends CarouselPageCont {
   Future load() async {
     if (AuthCont.isLogged) {
       _setLogged();
-      userInfo = _user.info!.toBuilder();
-      userRecord = FUserRecordBuilder()
+      _userInfo.value = _user.info!.toBuilder();
+      _userRecord.value = FUserRecordBuilder()
         ..setBuilder(_user.record!)
         ..uid = _user.uid;
     }
@@ -75,8 +78,8 @@ class GoalSettingPageCont extends CarouselPageCont {
     super.init();
   }
 
-  int get generation => userInfo.dateOfBirth!.generation;
-  Sex get sex => userInfo.sex!;
+  int get generation => userInfo!.dateOfBirth!.generation;
+  Sex get sex => userInfo!.sex!;
   int get _recommendMin {
     if (generation < 20) { return 60; }
     else if (generation < 60) { return 20; }
@@ -130,7 +133,7 @@ class GoalSettingPageCont extends CarouselPageCont {
       namedArgs['obj-value'] = (curWei.amount as WeightAmount).cntUnit;
     }
     else if (i == 7) {
-      namedArgs['nickname'] = userInfo.nickname ?? '';
+      namedArgs['nickname'] = userInfo!.nickname ?? '';
       namedArgs['minute'] = dis.minuteUnit;
       namedArgs['floor'] = hei.floorUnit;
       namedArgs['count'] = wei.cntUnit;
@@ -214,7 +217,7 @@ class GoalSettingPageCont extends CarouselPageCont {
 
   @override
   void thirdPageSubmit() {
-    userRecord.setGoal(FType.distance, dis.step);
+    userRecord!.setGoal(FType.distance, dis.step);
   }
 
   @override
@@ -225,7 +228,7 @@ class GoalSettingPageCont extends CarouselPageCont {
 
   @override
   void fifthPageSubmit() {
-    userRecord.setGoal(FType.height, hei.floor);
+    userRecord!.setGoal(FType.height, hei.floor);
   }
 
   @override
@@ -236,7 +239,7 @@ class GoalSettingPageCont extends CarouselPageCont {
 
   @override
   void seventhPageSubmit() {
-    userRecord.setGoal(FType.weight, wei.cnt);
+    userRecord!.setGoal(FType.weight, wei.cnt);
   }
 
   @override
@@ -246,7 +249,7 @@ class GoalSettingPageCont extends CarouselPageCont {
       await FUserDAO().saveOne(_user);
     }
     else {
-      _user.record!.updateGoalData(userRecord.build());
+      _user.record!.updateGoalData(userRecord!.build());
       await FUserInfoDAO().saveOne(_user.info!);
       await FUserRecordDAO().saveOne(_user.record!);
     }

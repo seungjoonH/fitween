@@ -403,6 +403,23 @@ class _GoalSettingPageState extends FPageState {
     _buildFinalCheckCarouselWidget(context),
   ].map((w) => Padding(padding: _padding, child: w)).toList();
 
+  Widget? _buildBody(BuildContext context) {
+    return Obx(() {
+      if (cont.userInfo == null) return Container();
+      return CarouselSlider(
+        carouselController: cont.carouselCont,
+        items: _buildCarouselWidgets(context),
+        options: cont.carouselOptions,
+      );
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cont.initState(reload: true);
+  }
+
   @override
   Widget buildPage(BuildContext context) {
     return FScaffold(
@@ -410,11 +427,7 @@ class _GoalSettingPageState extends FPageState {
       backgroundColor: FTheme.backgroundAlt,
       appBar: FAppBar(backPressed: cont.backButtonPressed),
       extendBodyBehindAppBar: true,
-      body: CarouselSlider(
-        carouselController: cont.carouselCont,
-        items: _buildCarouselWidgets(context),
-        options: cont.carouselOptions,
-      ),
+      body: _buildBody(context),
       bottomWidget: Obx(() => FButton(
         text: cont.nextButtonText,
         stretch: true,

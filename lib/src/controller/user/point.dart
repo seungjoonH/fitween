@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
+import 'package:fitween/src/view/widget/function/dialog.dart';
+import 'package:fitween/src/view/widget/widget.dart';
 import 'package:get/get.dart';
 
 class FPointCont extends GetxController {
@@ -33,9 +35,26 @@ class FPointCont extends GetxController {
     await FUserPointDAO().saveOne(_logged.point!);
   }
 
-  void spend(int fp, String content) async {
+  Future<bool> spend(int fp, String content) async {
+    if (_logged.point!.fPoint < fp) {
+      _showInsufficientPointDialog();
+      return false;
+    }
+
     _logged.point!.spend(fp, content);
     _syncFP();
     await FUserPointDAO().saveOne(_logged.point!);
+    return true;
+  }
+
+  String get fPointInsufficientTitle => LangCont.tr('fpoint.dialog.insufficient-title');
+  String get fPointInsufficientText => LangCont.tr('fpoint.dialog.insufficient-text');
+
+  void _showInsufficientPointDialog() {
+    showFDialog(
+      title: fPointInsufficientTitle,
+      content: FText(fPointInsufficientText, maxLines: 0),
+      type: DialogType.mono,
+    );
   }
 }
