@@ -55,9 +55,7 @@ class FUserDAO {
   }
 
   Future<FUser?> loadOneAll(String uid) async {
-    FUser? user = await loadOne(uid, cont: FUserLoadCont.all());
-    if (user == null) return await loadOne(uid, cont: FUserLoadCont.prevAll());
-    return user;
+    return await loadOne(uid, cont: FUserLoadCont.all());
   }
 
   Future<FUser?> loadOne(
@@ -83,14 +81,35 @@ class FUserDAO {
     if (cont.point) point = await _pointDAO.loadOne(uid);
     if (cont.record) record = await _recordDAO.loadOne(uid);
 
-    if (cont.battle && battle == null) return null;
-    if (cont.collection && collection == null) return null;
-    if (cont.friend && friend == null) return null;
+    if (cont.battle && battle == null) {
+      battle = FUserBattle(uid);
+      _battleDAO.saveOne(battle);
+    }
+    if (cont.collection && collection == null) {
+      collection = FUserCollection(uid);
+      _collectionDAO.saveOne(collection);
+    }
+    if (cont.friend && friend == null) {
+      friend = FUserFriend(uid);
+      _friendDAO.saveOne(friend);
+    }
     if (cont.info && info == null) return null;
-    if (cont.notification && notification == null) return null;
-    if (cont.party && party == null) return null;
-    if (cont.point && point == null) return null;
-    if (cont.record && record == null) return null;
+    if (cont.notification && notification == null) {
+      notification = FUserNotification(uid);
+      _notificationDAO.saveOne(notification);
+    }
+    if (cont.party && party == null) {
+      party = FUserParty(uid);
+      _partyDAO.saveOne(party);
+    }
+    if (cont.point && point == null) {
+      point = FUserPoint(uid);
+      _pointDAO.saveOne(point);
+    }
+    if (cont.record && record == null) {
+      record = FUserRecord(uid, info: info);
+      _recordDAO.saveOne(record);
+    }
 
     FUserBuilder builder = FUserBuilder()
       ..uid = uid

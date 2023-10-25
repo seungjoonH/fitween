@@ -210,7 +210,7 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
     centerText ?? '',
     style: FTheme.labelLarge,
     color: _completed
-        ? FTheme.backgroundAlt
+        ? FTheme.achro95
         : FTheme.text,
     bold: _completed,
   );

@@ -40,10 +40,14 @@ class FUserFriend extends FUser {
       return;
     }
 
+    FUser? toFollow = await FUserDAO().loadOne(uid);
+    if (toFollow == null) throw Exception('User ($uid) load failed');
+
     _friendsData[uid] = FriendData();
-    allFriends[uid] = (await FUserDAO().loadOne(uid))!;
+    allFriends[uid] = toFollow;
 
     await FUserFriendDAO().saveOne(this);
+
     await RankingCont.to.init();
   }
 

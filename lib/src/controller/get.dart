@@ -27,6 +27,7 @@ class GetCont {
     Get.put(BattlePageCont());
     Get.put(ContentsPageCont());
     Get.put(SeeMorePageCont());
+    Get.put(NotificationPageCont());
   }
 
   static void _userConts() {
@@ -42,6 +43,7 @@ class GetCont {
   static void _etcConts() {
     Get.put(LoadingCont());
     Get.put(CalendarCont());
+    Get.put(NotificationCont());
     Get.put(RankingCont());
     Get.put(BottomBarCont());
   }

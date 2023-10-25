@@ -190,7 +190,7 @@ class _PartyPageState extends FPageState<PartyPage> {
     return FPointButton(
       amount: cont.point,
       finished: cont.party!.completed,
-      onPressed: (){}//cont.completeButtonPressed,
+      onPressed: () {}//cont.completeButtonPressed,
     );
   }
 
@@ -198,6 +198,7 @@ class _PartyPageState extends FPageState<PartyPage> {
     return FButton(
       text: cont.giveUpText,
       stretch: true,
+      textColor: FTheme.achro95,
       backgroundColor: FTheme.error,
       onPressed: cont.giveUpButtonPressed,
     );

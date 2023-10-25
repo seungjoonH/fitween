@@ -19,13 +19,13 @@ class AuthCont {
 
   static LoginPageCont get loginPageCont => LoginPageCont.to;
 
-  static void setInfoInRecord() => _logged!.record!.info = _logged!.info;
+  // static void setInfoInRecord() => _logged!.record!.info = _logged!.info;
 
   static void setUser(FUser user) => _logged = user;
   static void updateUser(FUser user) => _logged!.merge(user);
-  static void setUserRecord(FUserRecord record) {
-    _logged!.record = record; setInfoInRecord();
-  }
+  // static void setUserRecord(FUserRecord record) {
+  //   _logged!.record = record; setInfoInRecord();
+  // }
 
   static fLogin(LoginType type) async {
     String? loadedUid = await StorageCont.load();

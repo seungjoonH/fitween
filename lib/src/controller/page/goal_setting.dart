@@ -64,16 +64,14 @@ class GoalSettingPageCont extends CarouselPageCont {
 
   @override
   Future load() async {
-    if (!AuthCont.isLogged) {
-      userInfo = AuthCont.logged!.info!.toBuilder();
-    }
-    else {
+    if (AuthCont.isLogged) {
       _setLogged();
       userInfo = _user.info!.toBuilder();
+      userRecord = FUserRecordBuilder()
+        ..setBuilder(_user.record!)
+        ..uid = _user.uid;
     }
-    userRecord = FUserRecordBuilder()
-      ..setBuilder(_user.record!)
-      ..uid = _user.uid;
+
     super.init();
   }
 
@@ -168,13 +166,9 @@ class GoalSettingPageCont extends CarouselPageCont {
     );
   }
 
-  static final DistanceAmount defaultDis = DistanceAmount()..min = 60;
-  static final HeightAmount defaultHei = HeightAmount()..floor = 10;
-  static final WeightAmount defaultWei = WeightAmount()..cnt = 50;
-
-  final _distanceValue = defaultDis.min.toInt().obs;
-  final _heightValue = defaultHei.floor.toInt().obs;
-  final _weightValue = defaultWei.cnt.toInt().obs;
+  final _distanceValue = Goal.defaultDis.min.toInt().obs;
+  final _heightValue = Goal.defaultHei.floor.toInt().obs;
+  final _weightValue = Goal.defaultWei.cnt.toInt().obs;
 
   static const _distanceMin = 10;
   static const _distanceMax = 200;
@@ -261,7 +255,10 @@ class GoalSettingPageCont extends CarouselPageCont {
     pageIndex = 0;
   }
 
-  void login() => AuthCont.setUser(_user);
+  void login() {
+    _user.construct();
+    AuthCont.setUser(_user);
+  }
 
 
 }

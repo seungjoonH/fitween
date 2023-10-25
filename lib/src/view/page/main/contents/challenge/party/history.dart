@@ -32,7 +32,7 @@ class _PartyHistoryPageState extends FPageState<PartyHistoryPage> {
           Padding(
             padding: EdgeInsets.only(right: 10.0.w),
             child: FText(
-              type.locale,
+              type.locale.substring(0, 3).toUpperCase(),
               color: type.color,
               bold: true,
             ),

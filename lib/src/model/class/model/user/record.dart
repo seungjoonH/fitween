@@ -202,13 +202,26 @@ class FUserRecord extends FUser {
     data.receive(type);
   }
 
-  FUserRecord(super.key) : super();
+  void _initRanking() {
+    for (Period p in Period.values) {
+      _rankings[p] = [ RankingData(date: p.getCurrentDate(today)) ];
+    }
+  }
+
+  FUserRecord(super.key, {FUserInfo? info}) {
+    this.info = info;
+    _visible = true;
+    _goals = _RecordsData.initGoal(regDate.ignoreTime);
+    _inputRecords = _RecordsData();
+    _records = _RecordsData();
+    _initRanking();
+  }
   FUserRecord.fromJson(super.json) : super.fromJson();
 
   @override
   void fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
-    _visible = json['visible'] ?? false;
+    _visible = json['visible'] ?? true;
     _goals = _RecordsData.fromJson(json['goals']);
     _inputRecords = _RecordsData.fromJson(json['inputRecords']);
     _records = _RecordsData.fromJson(json['records']);
@@ -241,6 +254,10 @@ class FUserRecord extends FUser {
 }
 
 class Goal {
+  static final DistanceAmount defaultDis = DistanceAmount()..min = 60;
+  static final HeightAmount defaultHei = HeightAmount()..floor = 10;
+  static final WeightAmount defaultWei = WeightAmount()..cnt = 50;
+
   late List<_RecordData> _calorieData;
   late List<_RecordData> _distanceData;
   late List<_RecordData> _heightData;
@@ -328,8 +345,31 @@ class _RecordsData extends Model {
   set _heights(List<_RecordData> data) => _data[FType.height] = data;
   set _weights(List<_RecordData> data) => _data[FType.weight] = data;
 
+  // set _calorie(_RecordData data) {
+  //   if (_data[FType.calorie] == null) _data[FType.calorie] = [];
+  //   _data[FType.calorie]!.add(data);
+  // }
+  // set _distance(_RecordData data) {
+  //   if (_data[FType.distance] == null) _data[FType.distance] = [];
+  //   _data[FType.distance]!.add(data);
+  // }
+  // set _height(_RecordData data) {
+  //   if (_data[FType.height] == null) _data[FType.height] = [];
+  //   _data[FType.height]!.add(data);
+  // }
+  // set _weight(_RecordData data) {
+  //   if (_data[FType.weight] == null) _data[FType.weight] = [];
+  //   _data[FType.weight]!.add(data);
+  // }
+
+  void setInitGoalData(DateTime regDate) {
+    setGoalData(FType.distance, _RecordData(Goal.defaultDis.step, regDate));
+    setGoalData(FType.height, _RecordData(Goal.defaultHei.floor, regDate));
+    setGoalData(FType.weight, _RecordData(Goal.defaultWei.cnt, regDate));
+  }
+
   void setGoalData(FType type, _RecordData data) {
-    List<_RecordData> dataList = _data[type]!;
+    List<_RecordData> dataList = _data[type] ?? <_RecordData>[];
 
     for (int i = 0; i < dataList.length; i++) {
       if (dataList[i].date.isAtSameMomentAs(data.date)) {
@@ -339,7 +379,7 @@ class _RecordsData extends Model {
       }
     }
 
-    if (dataList.last._amount == data._amount) return;
+    if (dataList.isNotEmpty && dataList.last._amount == data._amount) return;
     _data[type] = dataList..add(data);
   }
 
@@ -368,7 +408,12 @@ class _RecordsData extends Model {
     return sum(filtered.map((a) => a._amount));
   }
 
-  _RecordsData();
+  void init() {
+    for (FType type in FType.values) { _data[type] = <_RecordData>[]; }
+  }
+
+  _RecordsData() { init(); }
+  _RecordsData.initGoal(DateTime regDate) { init(); setInitGoalData(regDate); }
   _RecordsData.fromJson(super.json) : super.fromJson();
 
   @override

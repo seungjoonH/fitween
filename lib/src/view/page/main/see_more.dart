@@ -19,6 +19,7 @@ class SeeMorePage extends FPage {
 class _SeeMorePageState extends FPageState<SeeMorePage> {
   @override
   SeeMorePageCont get cont => SeeMorePageCont.to;
+  NotificationCont get notificationCont => NotificationCont.to;
 
   Widget _buildMyBadgeCardWidget(BuildContext context) {
     return FCard(
@@ -89,7 +90,16 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
     return FMainScaffold(
       refreshController: RefreshController(),
       onRefresh: cont.onRefresh,
-      appBar: FAppBar(text: cont.appBarTitle),
+      appBar: FAppBar(
+        text: cont.appBarTitle,
+        actions: [
+          FIconButton(
+            icon: const Icon(Icons.notifications),
+            notifications: notificationCont.uncheckedCount,
+            onPressed: cont.notificationButtonPressed,
+          ),
+        ],
+      ),
       body: Column(
         children: [
           _buildMyBadgeCardWidget(context),

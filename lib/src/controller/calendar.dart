@@ -29,7 +29,7 @@ class CalendarCont extends GetxController {
   Future loadRecord() async {
     FUserRecord? record = await FUserRecordDAO().loadOne(AuthCont.uid!);
     if (record == null) return;
-    AuthCont.setUserRecord(record);
+    // AuthCont.setUserRecord(record);
   }
 
   num _getFetchedData(FType type, DateTime date) {

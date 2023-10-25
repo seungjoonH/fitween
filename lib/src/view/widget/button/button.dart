@@ -71,7 +71,7 @@ class _FButtonState extends State<FButton> with ScalePressable<FButton> {
     Color borderColorAlt = widget.borderColor ?? FTheme.stroke;
 
     final style = widget.style
-        ?? FTheme.titleSmall;
+        ?? FTheme.bodyLarge;
     final border = widget.border
         ? Border.all(color: borderColorAlt, width: 1.0)
         : const Border();

@@ -182,12 +182,7 @@ class _HomePageState extends FPageState {
     bool isMe = user.uid == AuthCont.uid;
     DateTime startTime = rankingCont.getStartTime(today);
 
-    List<num> amounts = rankingCont.getAmounts(type, startTime);
-    int rank = 1 + amounts.indexWhere((a) {
-      return a == rankingCont.getAmountOf(
-        rankingCont.period, type, user.uid, startTime,
-      );
-    });
+    int rank = 1 + rankingCont.getRankOf(rankingCont.period, type, user.uid, startTime);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

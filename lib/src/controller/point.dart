@@ -1,4 +1,5 @@
 import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
 import 'package:get/get.dart';
 
@@ -19,9 +20,9 @@ class FPointCalculator {
   static const num _heiAdj = 2;
   static const num _weiAdj = 8;
 
-  static num get _disDefault => GoalSettingPageCont.defaultDis.step;
-  static num get _heiDefault => GoalSettingPageCont.defaultHei.floor;
-  static num get _weiDefault => GoalSettingPageCont.defaultWei.cnt;
+  static num get _disDefault => Goal.defaultDis.step;
+  static num get _heiDefault => Goal.defaultHei.floor;
+  static num get _weiDefault => Goal.defaultWei.cnt;
 
   static const num _dailyWeight = 1;
   static const num _weeklyWeight = 2;

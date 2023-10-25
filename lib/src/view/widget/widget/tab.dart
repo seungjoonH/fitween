@@ -40,7 +40,7 @@ class _FTabWidgetState extends State<FTabWidget> with ScalePressable {
       ? widget.data.color
       : FTheme.bar;
 
-  Color get _textColor =>  widget.selected
+  Color get _textColor => widget.selected
       ? FTheme.achro95
       : FTheme.comment;
 
@@ -54,7 +54,7 @@ class _FTabWidgetState extends State<FTabWidget> with ScalePressable {
         alignment: Alignment.center,
         child: FText(
           widget.data.text,
-          style: FTheme.titleMedium,
+          style: FTheme.titleSmall,
           align: TextAlign.center,
           bold: widget.selected,
           color: _textColor,

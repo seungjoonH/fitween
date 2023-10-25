@@ -28,7 +28,8 @@
     "member-setting": "멤버 관리",
     "applicants": "지원자",
     "history": "히스토리",
-    "fpoint": "FPoints"
+    "fpoint": "FPoints",
+    "notification": "알림"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -373,5 +374,10 @@
         "complete-text": "@{{nickname}} 님의 요청을 거절했습니다"
       }
     }
+  },
+  "notification": {
+    "followed": "@{{object}}님이 팔로우 했습니다",
+    "party-applied": "@{{object}} 파티에 지원자가 있습니다",
+    "poke": "@{{object}}님이 콕 찔렀습니다"
   }
 }

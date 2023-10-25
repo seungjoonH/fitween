@@ -18,6 +18,7 @@ export 'page/main/contents/challenge.dart';
 export 'page/main/contents/weight.dart';
 export 'page/main/contents/battle.dart';
 export 'page/main/contents.dart';
+export 'page/main/see_more/notification.dart';
 export 'page/main/see_more.dart';
 export 'page/main.dart';
 export 'page/fpoint/history.dart';

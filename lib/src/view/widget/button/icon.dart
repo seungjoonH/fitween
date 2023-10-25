@@ -67,6 +67,7 @@ class _FIconButtonState extends State<FIconButton> with DarkPressable {
           top: 5.r, right: 5.r,
           child: FTextTag(
             notifications!,
+            textColor: FTheme.achro95,
             backgroundColor: FTheme.error,
           ),
         ),

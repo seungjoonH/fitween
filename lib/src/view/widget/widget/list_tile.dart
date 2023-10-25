@@ -93,11 +93,7 @@ class _FListTileState extends State<FListTile> with DarkPressable<FListTile> {
               ),
             ),
             if (widget.trailing != null)
-            Container(
-              alignment: Alignment.center,
-              padding: EdgeInsets.symmetric(horizontal: 10.0.w),
-              child: Row(children: widget.trailing!),
-            ),
+            Center(child: Row(children: widget.trailing!)),
           ],
         ),
       ),

@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/controller/point.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
@@ -17,7 +16,8 @@ class RankingCont extends GetxController {
 
   List<RankingData> getRankings(Period period) {
     int compare(RankingData a, RankingData b) => a.date.compareTo(b.date);
-    return _logged.rankings[period]!..sort(compare);
+    List<RankingData> list = _logged.rankings[period] ?? [];
+    return list..sort(compare);
   }
 
   RankingData? get selectedRanking {

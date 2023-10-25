@@ -72,7 +72,7 @@ class FUserPoint extends FUser {
     _history.add(PointHistoryData(amount: -fp, content: content));
   }
 
-  FUserPoint(super.key) : super();
+  FUserPoint(super.key) { _fPoint = 0; }
   FUserPoint.fromJson(super.json) : super.fromJson();
 
   @override

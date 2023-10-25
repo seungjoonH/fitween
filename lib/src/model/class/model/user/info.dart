@@ -163,7 +163,7 @@ class FUserInfoBuilder {
     json['weightVisibility'] = weightVisibility ?? false;
     json['heightVisibility'] = heightVisibility ?? false;
     json['sex'] = sex!.name;
-    json['regDate'] = _regDate!;
+    json['regDate'] = _regDate ?? now.toTimestamp;
     json['dateOfBirth'] = _dateOfBirth!;
 
     return FUserInfo.fromJson(json);

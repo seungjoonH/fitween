@@ -1,4 +1,4 @@
-export 'page.dart';
+export './page.dart';
 export './user/user.dart';
 export './validator/validator.dart';
 export './bottom_bar.dart';
@@ -8,4 +8,6 @@ export './get.dart';
 export './image.dart';
 export './lang.dart';
 export './loading.dart';
+export './notification.dart';
+export './point.dart';
 export './ranking.dart';

@@ -29,10 +29,12 @@ class DarkPressableWidget extends StatefulWidget {
   const DarkPressableWidget({
     super.key,
     required this.child,
+    this.rounded = false,
     this.onPressed,
   });
 
   final Widget child;
+  final bool rounded;
   final VoidCallback? onPressed;
 
   @override
@@ -42,6 +44,11 @@ class DarkPressableWidget extends StatefulWidget {
 class _DarkPressableWidgetState extends State<DarkPressableWidget> with DarkPressable {
   @override
   Widget buildContent(BuildContext context) => widget.child;
+
+  @override
+  BorderRadius? get radius => widget.rounded
+      ? super.radius
+      : BorderRadius.zero;
 
   @override
   VoidCallback? get onPressed => widget.onPressed;
@@ -142,7 +149,7 @@ mixin DarkPressable<T extends StatefulWidget> on State<T> {
 
   bool get isCircle => false;
   BoxShape get _boxShape => isCircle ? BoxShape.circle : BoxShape.rectangle;
-  BorderRadius? get _radius {
+  BorderRadius? get radius {
     if (isCircle) return null;
     return BorderRadius.circular(10.0.r);
   }
@@ -232,7 +239,7 @@ mixin DarkPressable<T extends StatefulWidget> on State<T> {
           duration: _duration,
           decoration: BoxDecoration(
             shape: _boxShape,
-            borderRadius: _radius,
+            borderRadius: radius,
             color: Color.alphaBlend(
               _tintColor.withOpacity(_opacity),
               backgroundColor,

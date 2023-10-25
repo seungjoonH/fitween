@@ -51,9 +51,7 @@ class FriendPageCont extends MainPageCont {
   bool get editMode => _editMode.value;
 
   void toggleMode() async {
-    if (editMode && changed) {
-      _syncFriends();
-    }
+    if (editMode && changed) _syncFriends();
     _editMode(!_editMode.value);
   }
 
@@ -63,7 +61,9 @@ class FriendPageCont extends MainPageCont {
 
   }
 
-  void followButtonPressed(FUser friend) {
+  void followButtonPressed(FUser friend) async {
+    if (_followCont.getFollowed(friend.key)) return;
+    await _followCont.followAndNotifyFollowing(friend.key);
     _setChanged();
   }
 }

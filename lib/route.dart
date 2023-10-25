@@ -27,6 +27,7 @@ class FRoute {
     '/contents/weight': const WeightPage(),
     '/contents/battle': const BattlePage(),
     '/see-more': const SeeMorePage(),
+    '/see-more/notification': const NotificationPage(),
     '/fpoint': const FPointPage(),
     '/fpoint/history': const FPointHistoryPage(),
   };
@@ -77,6 +78,7 @@ class FRoute {
   static void toWeight() => Get.toNamed('/contents/weight');
   static void toBattle() => Get.toNamed('/contents/battle');
   static void toSeeMore() => Get.offAllNamed('/see-more');
+  static void toNotification() => Get.toNamed('/see-more/notification');
   static void toFPoint() => Get.toNamed('/fpoint');
   static void toFPointHistory() => Get.toNamed('/fpoint/history');
 }

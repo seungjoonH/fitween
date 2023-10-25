@@ -22,6 +22,7 @@ export 'main/contents/challenge.dart';
 export 'main/contents/weight.dart';
 export 'main/contents/battle.dart';
 export 'main/contents.dart';
+export 'main/see_more/notification.dart';
 export 'main/see_more.dart';
 export 'fpoint/history.dart';
 export 'fpoint.dart';

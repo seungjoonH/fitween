@@ -1,3 +1,4 @@
+import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
@@ -23,4 +24,6 @@ class SeeMorePageCont extends MainPageCont {
     num goal = _logged.goal.byType(type);
     return type.withUnit(goal, scaling: false, txs: true);
   }
+
+  void notificationButtonPressed() => FRoute.toNotification();
 }

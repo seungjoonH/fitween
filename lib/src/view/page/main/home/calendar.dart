@@ -122,7 +122,7 @@ class _CalendarPageState extends FPageState<CalendarPage> {
     formatButtonVisible: false,
     headerPadding: EdgeInsets.zero,
     titleCentered: true,
-    titleTextStyle: FTheme.titleMedium!
+    titleTextStyle: FTheme.titleSmall!
         .copyWith(color: FTheme.text),
     leftChevronIcon: Icon(
       Icons.chevron_left,
@@ -236,6 +236,7 @@ class _CalendarPageState extends FPageState<CalendarPage> {
               FButton(
                 text: cont.fetchButtonText,
                 stretch: true,
+                textColor: FTheme.achro95,
                 backgroundColor: FTheme.point,
                 onPressed: cont.fetchButtonPressed,
               ),

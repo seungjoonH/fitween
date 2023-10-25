@@ -45,6 +45,7 @@ class _PartyApplicantsPageState extends FPageState<PartyApplicantsPage> {
             FButton(
               text: cont.rejectButtonText,
               shrinkWrap: true,
+              textColor: FTheme.achro95,
               backgroundColor: FTheme.error,
               onPressed: () => cont.rejectButtonPressed(applicant),
             ),

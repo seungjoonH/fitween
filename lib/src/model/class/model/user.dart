@@ -163,6 +163,16 @@ class FUser extends Model {
     record = user.record ?? record;
   }
 
+  void construct() {
+    battle ??= FUserBattle(key);
+    collection ??= FUserCollection(key);
+    friend ??= FUserFriend(key);
+    notification ??= FUserNotification(key);
+    party ??= FUserParty(key);
+    point ??= FUserPoint(key);
+    record ??= FUserRecord(key);
+  }
+
   @override
   String get key => uid;
 
@@ -243,15 +253,6 @@ class FUserLoadCont {
     cont.record = true;
     return cont;
   }
-
-  FUserLoadCont.prevAll()
-      : battle = true,
-        collection = true,
-        friend = true,
-        info = true,
-        notification = true,
-        party = true,
-        record = true;
 
   FUserLoadCont.all()
       : battle = true,
