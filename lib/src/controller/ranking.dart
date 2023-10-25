@@ -197,10 +197,12 @@ class RankingCont extends GetxController {
 
   List<num> getAmounts(FType type, DateTime date) {
     List<num> amounts = [];
+
     for (String uid in _friendsWithMe.keys) {
-      if (!isAvailableFriend(uid, date)) continue;
+      // if (!isAvailableFriend(uid, date)) continue;
       amounts.add(getAmountOf(period, type, uid, date));
     }
+
     return amounts..sort((a, b) => b.compareTo(a));
   }
 

@@ -30,14 +30,8 @@ class _RankingPageState extends FPageState<RankingPage> {
     FType type = homeCont.activeType;
     bool isMe = user.uid == AuthCont.uid;
 
-    List<num> amounts = rankingCont.getAmounts(type, date);
-    int rank = 1 + amounts.indexWhere((a) {
-      return a == rankingCont.getAmountOf(rankingCont.period, type, user.uid, date);
-    });
-
-    String centerText = rankingCont
-        .getAmountTextOf(type, user.uid, date, scaling: false);
-
+    int rank = 1 + rankingCont.getRankOf(rankingCont.period, type, user.uid, date);
+    String centerText = rankingCont.getAmountTextOf(type, user.uid, date, scaling: false);
     double percent = rankingCont.getPercentOf(type, user.uid, date);
     bool finished = rankingCont.getLeftTime(date) == Duration.zero;
 
