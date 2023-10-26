@@ -19,8 +19,8 @@ class CalendarCont extends GetxController {
   Future init() async {
     await HealthDataCont.fetchAllStepData();
     await HealthDataCont.fetchAllFlightsData();
+    await HealthDataCont.setTodayRecord();
     _user = AuthCont.logged!;
-    // AuthCont.updateUser((await FUserRecordDAO().loadOne(_user!.key))!);
     await AuthCont.load(FUserLoadCont.onlyRecord());
     await loadRecord();
     _events = _user!.events;

@@ -43,9 +43,9 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
           ),
           FTexts(
             cont.getGoalTextOf(type),
-            style: FTheme.bodyMedium,
+            style: FTheme.bodySmall,
             textColor: type.color,
-            highlightStyle: FTheme.titleMedium
+            highlightStyle: FTheme.titleSmall
                 ?.apply(color: type.color),
           ),
         ],

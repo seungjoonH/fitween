@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
-import 'package:fitween/src/view/widget/function/dialog.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:get/get.dart';
 
@@ -36,7 +35,7 @@ class FPointCont extends GetxController {
   }
 
   Future<bool> spend(int fp, String content) async {
-    if (_logged.point!.fPoint < fp) {
+    if (_logged.point!.fPoint.abs() < fp) {
       _showInsufficientPointDialog();
       return false;
     }

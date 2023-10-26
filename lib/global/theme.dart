@@ -111,8 +111,8 @@ class FTheme {
     displayLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700,
-      fontSize: 50.0,
-      height: (60 / 50),
+      fontSize: 48.0,
+      height: (60 / 48),
     ),
     displayMedium: TextStyle(
       fontFamily: fontFamily,
