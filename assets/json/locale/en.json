@@ -308,6 +308,9 @@
     "party": "Party (leader/title)"
   },
   "see-more": {
+    "fpoint": {
+      "title": "FPoints"
+    },
     "badge": {
       "title": "My Badges",
       "main": "Main",
@@ -322,6 +325,7 @@
   },
   "contents": {
     "card-title": {
+      "adventure": "Adventure",
       "challenge": "Challenge",
       "weight": "Weight",
       "battle": "Battle"

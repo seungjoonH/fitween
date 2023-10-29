@@ -5,6 +5,7 @@ import 'package:fitween/src/controller/user/auth.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 
 abstract class Amount {
+  num get main;
   num value = 0;
 
   String _p(String key, num value) {
@@ -13,6 +14,9 @@ abstract class Amount {
 }
 
 class LengthAmount extends Amount {
+  @override
+  num get main => m;
+
   num get mm => m * 1000;
   num get cm => m * 100;
   num get m => value;
@@ -49,6 +53,9 @@ class LengthAmount extends Amount {
 }
 
 class DistanceAmount extends LengthAmount {
+  @override
+  num get main => step;
+
   static const num stride = .74; // [m/step]
   static const num vel = 82.288; // [m/minute]
 
@@ -77,6 +84,9 @@ class DistanceAmount extends LengthAmount {
 }
 
 class HeightAmount extends LengthAmount {
+  @override
+  num get main => floor;
+
   num get floor => m / 3;
   num get lTime => floor * 100;
 
@@ -105,6 +115,9 @@ class HeightAmount extends LengthAmount {
 class WeightAmount extends Amount {
   static num get w => AuthCont.logged?.weight
       ?? RegisterPageCont.to.weight;
+
+  @override
+  num get main => cnt;
 
   num get mg => g * 1000;
   num get g => value;

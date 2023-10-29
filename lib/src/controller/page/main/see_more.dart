@@ -8,6 +8,7 @@ class SeeMorePageCont extends MainPageCont {
   static SeeMorePageCont get to => Get.find<SeeMorePageCont>();
 
   String get appBarTitle => LangCont.tr('appbar.see-more');
+  String get fPointCardTitle => LangCont.tr('see-more.fpoint.title');
   String get myBadgeCardTitle => LangCont.tr('see-more.badge.title');
   String get goalSettingCardTitle => LangCont.tr('see-more.goal-setting.title');
   String get infoSettingCardTitle => LangCont.tr('see-more.info-setting.title');
@@ -25,5 +26,6 @@ class SeeMorePageCont extends MainPageCont {
     return type.withUnit(goal, scaling: false, txs: true);
   }
 
+  void fPointCardPressed() => FRoute.toFPoint();
   void notificationButtonPressed() => FRoute.toNotification();
 }

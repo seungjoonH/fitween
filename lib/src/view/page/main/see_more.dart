@@ -20,6 +20,34 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
   @override
   SeeMorePageCont get cont => SeeMorePageCont.to;
   NotificationCont get notificationCont => NotificationCont.to;
+  FPointCont get fPointCont => FPointCont.to;
+
+  Widget _buildFPointCardWidget(BuildContext context) {
+    return FCard(
+      title: FText(
+        cont.fPointCardTitle,
+        color: FTheme.achro95,
+        style: FTheme.commentStyle,
+        bold: true,
+      ),
+      iconColor: FTheme.achro95,
+      pressMode: FCardPressMode.icon,
+      onPressed: cont.fPointCardPressed,
+      backgroundColor: FTheme.point,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          FPointIcon(size: 35.0.r, isWhite: true),
+          SizedBox(width: 5.0.w),
+          FText(
+            '${fPointCont.fPoint.thouSep} FP',
+            style: FTheme.displaySmall,
+            color: FTheme.achro95,
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildMyBadgeCardWidget(BuildContext context) {
     return FCard(
@@ -103,10 +131,10 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
       ),
       body: Column(
         children: [
+          _buildFPointCardWidget(context),
           _buildMyBadgeCardWidget(context),
-          SizedBox(height: 20.0.h),
           _buildGoalSettingCardWidget(context),
-        ],
+        ].separateH(height: 20.0.h),
       ),
     );
   }

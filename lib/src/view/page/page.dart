@@ -11,6 +11,8 @@ export 'main/home/ranking.dart';
 export 'main/home.dart';
 export 'main/friend/search.dart';
 export 'main/friend.dart';
+export 'main/contents/adventure/level_detail.dart';
+export 'main/contents/adventure.dart';
 export 'main/contents/challenge/party/create.dart';
 export 'main/contents/challenge/party/member_setting.dart';
 export 'main/contents/challenge/party/search.dart';

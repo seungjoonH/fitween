@@ -67,3 +67,13 @@ class _FProfileWidgetState extends State<FProfileWidget> with DarkPressable {
     return () => widget.onPressed!(user);
   }
 }
+
+class FProfilePinWidget extends StatelessWidget {
+  const FProfilePinWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+

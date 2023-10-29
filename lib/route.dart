@@ -16,6 +16,8 @@ class FRoute {
     '/friend': const FriendPage(),
     '/friend/search': const FriendSearchPage(),
     '/contents': const ContentsPage(),
+    '/contents/adventure': const AdventurePage(),
+    '/contents/adventure/level-detail': const LevelDetailPage(),
     '/contents/challenge/party': const PartyPage(),
     '/contents/challenge/party/create': const PartyCreatePage(),
     '/contents/challenge/party/member-setting': const PartyMemberSettingPage(),
@@ -37,7 +39,7 @@ class FRoute {
       name: page.key,
       page: () => page.value,
       transition: Transition.fadeIn,
-      transitionDuration: 100.ms,
+      transitionDuration: getTransitionDuration(page.key),
     );
   }).toList();
 
@@ -57,6 +59,11 @@ class FRoute {
     return previous.isNotEmpty ? previous : null;
   }
 
+  static Duration getTransitionDuration(String key) {
+    if (key.contains('detail')) return 500.ms;
+    return 100.ms;
+  }
+
   static void toLogin() => Get.offAllNamed('/');
   static void toOnboarding() => Get.toNamed('/onboarding');
   static void toRegister() => Get.toNamed('/register');
@@ -67,6 +74,8 @@ class FRoute {
   static void toFriend({bool reload = false}) => Get.offAllNamed('/friend', arguments: reload);
   static void toFriendSearch() => Get.toNamed('/friend/search');
   static void toContents() => Get.offAllNamed('/contents');
+  static void toAdventure() => Get.toNamed('/contents/adventure');
+  static void toLevelDetail() => Get.toNamed('/contents/adventure/level-detail');
   static void toParty({Party? party}) => Get.toNamed('/contents/challenge/party', arguments: party);
   static void toPartyCreate({Challenge? challenge}) => Get.toNamed('/contents/challenge/party/create', arguments: challenge);
   static void toPartyMemberSetting({Party? party}) => Get.toNamed('/contents/challenge/party/member-setting', arguments: party);

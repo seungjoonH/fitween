@@ -1,40 +1,57 @@
+import 'dart:math';
+
 import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
+import 'package:fitween/src/model/enum/enum.dart';
 
 abstract class LevelLocal extends LocalModel<Level> {
+  static LevelLocal? byType(FType type) {
+    switch (type) {
+      case FType.distance: return DistanceLevelLocal();
+      case FType.height: return HeightLevelLocal();
+      case FType.weight: return WeightLevelLocal();
+      default: return null;
+    }
+  }
+
   @override
   String get assetPath => 'assets/json/data/level/';
 
-  List<Level> get _activeList => list.where((l) => l.activate).toList();
+  List<Level> get activeList => list.where((l) => l.activate).toList();
+  List<Level> get reversedList => activeList.reversed.toList();
 
   @override
   Level fromJson(Map<String, dynamic> json) {
     return Level.fromJson(json);
   }
 
-  int _getCurrent(Amount amount) {
-    return _activeList.lastIndexWhere((l) {
-      return l.activate && amount.value >= l.amount.value;
-    });
+  List<Level> getAchievedList(Amount amount) {
+    return activeList
+        .sublist(0, getCurrent(amount) + 2)
+        .reversed.toList();
   }
 
-  Level getCurrentLevel(Amount amount) {
-    return _activeList[_getCurrent(amount)];
+  int getBefore(Amount amount) {
+    return max(getCurrent(amount) - 1, 0);
   }
 
-  Level getNextLevel(Amount amount) {
-    int curIndex = _getCurrent(amount);
-    if (_activeList.length == curIndex) return _activeList[curIndex];
-    return _activeList[curIndex + 1];
+  int getCurrent(Amount amount) {
+    for (int i = 0; i < activeList.length - 1; i++) {
+      if (activeList[i].amount.main > amount.main) continue;
+      if (activeList[i + 1].amount.main <= amount.main) continue;
+      return i;
+    }
+    return -1;
   }
 
-  double getPercent(Amount amount) {
-    Level cur = getCurrentLevel(amount);
-    Level nex = getNextLevel(amount);
-    num range = nex.amount.value - cur.amount.value;
-    return amount.value / range;
+  int getNext(Amount amount) {
+    return min(getCurrent(amount) + 1, activeList.length - 1);
   }
+
+  Level getBeforeLevel(Amount amount) => activeList[getBefore(amount)];
+  Level getCurrentLevel(Amount amount) => activeList[getCurrent(amount)];
+  Level getNextLevel(Amount amount) => activeList[getNext(amount)];
 }
 
 class DistanceLevelLocal extends LevelLocal {

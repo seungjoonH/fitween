@@ -19,6 +19,8 @@ class FTheme {
   static const Color silver = Color(0xFFD7D7D7);
   static const Color bronze = Color(0xFFB78250);
 
+  static const Color sea = Color(0xFF6BD4EB);
+
   // static const Color black = Color(0xFF1F1F1F);
   // static const Color darkGrey = Color(0xFF494D45);
   // static const Color grey = Color(0xFF73796E);

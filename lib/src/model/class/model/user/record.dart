@@ -85,6 +85,8 @@ class FUserRecord extends FUser {
   @override
   Map<FType, num> get allRecord => getRecord(regDate, today);
 
+  Map<FType, Amount> get allAmount => getAmount(regDate, today);
+
   Map<FType, Amount> getAmount(DateTime from, DateTime to) {
     return getRecord(from, to).map<FType, Amount>((type, value) {
       late Amount amount;

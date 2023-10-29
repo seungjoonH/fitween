@@ -100,9 +100,11 @@ flutter:
     - assets/image/level/distance/
     - assets/image/level/height/
     - assets/image/level/weight/
+    - assets/image/level/
     - assets/image/logo/
     - assets/image/page/challenge/
     - assets/image/page/contents/
+    - assets/image/page/contents/adventure/
     - assets/image/page/contents/workout/
     - assets/image/page/home/
     - assets/image/page/home/rotation/

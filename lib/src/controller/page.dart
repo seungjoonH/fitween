@@ -7,6 +7,8 @@ export 'page/main/home/ranking.dart';
 export 'page/main/home.dart';
 export 'page/main/friend/search.dart';
 export 'page/main/friend.dart';
+export 'page/main/contents/adventure/level_detail.dart';
+export 'page/main/contents/adventure.dart';
 export 'page/main/contents/challenge/party/create.dart';
 export 'page/main/contents/challenge/party/member_setting.dart';
 export 'page/main/contents/challenge/party/search.dart';

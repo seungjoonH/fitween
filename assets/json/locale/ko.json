@@ -266,6 +266,9 @@
     "party": "파티 검색 (파티장/제목)"
   },
   "see-more": {
+    "fpoint": {
+      "title": "FPoints"
+    },
     "badge": {
       "title": "내 뱃지",
       "main": "대표",
@@ -280,6 +283,7 @@
   },
   "contents": {
     "card-title": {
+      "adventure": "모험",
       "challenge": "챌린지",
       "weight": "웨이트",
       "battle": "배틀"

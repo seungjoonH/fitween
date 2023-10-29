@@ -22,6 +22,7 @@ export './widget/drawer.dart';
 export './widget/icon.dart';
 export './widget/image.dart';
 export './widget/indicator.dart';
+export './widget/island.dart';
 export './widget/list_tile.dart';
 export './widget/logo.dart';
 export './widget/party.dart';
