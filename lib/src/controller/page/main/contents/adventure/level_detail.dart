@@ -18,7 +18,7 @@ class LevelDetailPageCont extends PageCont {
   String get centerText {
     FType type = adventureCont.activeType;
     String currentAmountText = level!.getCurrentValue(amount).thouSep;
-    String goalText = type.withUnit(level!.goal);
+    String goalText = type.withUnit(level!.goal, scaling: false);
     return '$currentAmountText / $goalText';
   }
 
