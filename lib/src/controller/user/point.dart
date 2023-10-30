@@ -29,12 +29,14 @@ class FPointCont extends GetxController {
   }
 
   void earn(int fp, String content) async {
+    if (fp == 0) return;
     _logged.point!.earn(fp, content);
     _syncFP();
     await FUserPointDAO().saveOne(_logged.point!);
   }
 
   Future<bool> spend(int fp, String content) async {
+    if (fp == 0) return true;
     if (_logged.point!.fPoint.abs() < fp) {
       _showInsufficientPointDialog();
       return false;

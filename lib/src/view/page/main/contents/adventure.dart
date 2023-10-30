@@ -133,7 +133,9 @@ class _AdventurePageState extends FPageState<AdventurePage> {
     return FScaffold(
       appBar: FAppBar(),
       extendBodyBehindAppBar: true,
-      backgroundColor: FTheme.sea,
+      backgroundColor: FTheme.isLightMode
+          ? FTheme.sea
+          : FTheme.darkSea,
       autoPadding: false,
       body: _buildBody(context),
     );

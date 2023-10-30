@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:connectivity/connectivity.dart';
 
-const version = 'ver 1.0.2';
+const version = 'ver 2.0.0b1';
 String get versionNumber => version.replaceAll('ver ', '');
 
 late ConnectivityResult networkResult;

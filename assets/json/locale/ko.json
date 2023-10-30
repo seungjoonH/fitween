@@ -61,7 +61,8 @@
     "ranking-daily": "일일 랭킹 보상",
     "ranking-weekly": "주간 랭킹 보상",
     "ranking-monthly": "월간 랭킹 보상",
-    "fetch-data-all": "건강 데이터 연동 (거리, 높이)",
+    "fetch-data-all": "모든 건강 데이터 연동",
+    "fetch-data-two-types": "건강 데이터 연동 (거리, 높이)",
     "fetch-data-distance": "건강 데이터 연동 (거리)",
     "fetch-data-height": "건강 데이터 연동 (높이)"
   },
@@ -236,6 +237,8 @@
         "info-text": "지난 건강 데이터를 연동하고 싶나요? FP를 소모하여 연동해보세요. 하루 전 데이터까지는 @{무료}이지만, 더 늦춰질수록 더 많은 FP가 필요합니다. 더 늦게 전에 연동하여 보세요.",
         "really-title": "데이터 연동",
         "really-text": "정말 @{{fpoint} FP}를 소모하여 건강 데이터 ({amount}) 를 연동하시겠습니까?",
+        "all-title": "모든 데이터 연동",
+        "all-text": "정말 @{{fpoint} FP}를 소모하여 모든 건강 데이터를 연동하시겠습니까?",
         "complete-title": "데이터 연동됨",
         "complete-text": "데이터가 연동되었습니다"
       }

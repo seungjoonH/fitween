@@ -66,7 +66,7 @@ class FPointAmountWidget extends StatelessWidget {
             children: [
               const FPointIcon(),
               FText(
-                '$amount FP',
+                '${amount.thouSep} FP',
                 style: FTheme.bodyLarge,
                 color: FTheme.point,
                 bold: true,

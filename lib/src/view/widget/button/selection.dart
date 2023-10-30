@@ -105,11 +105,11 @@ class _FTypeSelectionButtonState extends State<FTypeSelectionButton> {
         clipper: BookmarkClipper(),
         child: AnimatedContainer(
           duration: 200.ms,
-          width: isSelected ? 60.0.w : 50.0.w,
+          width: isSelected ? 65.0.w : 55.0.w,
           color: color,
           padding: EdgeInsets.fromLTRB(.0, 5.0.h, 15.0.w, 5.0.h),
           child: FText(
-            type.locale,
+            type.locale.toUpperCase().substring(0, 3),
             bold: true,
             color: FTheme.achro95,
             align: TextAlign.center,

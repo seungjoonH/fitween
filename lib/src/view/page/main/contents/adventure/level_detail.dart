@@ -94,7 +94,9 @@ class _LevelDetailPageState extends FPageState<LevelDetailPage> {
       child: FScaffold(
         appBar: FAppBar(),
         extendBodyBehindAppBar: true,
-        backgroundColor: FTheme.sea,
+        backgroundColor: FTheme.isLightMode
+            ? FTheme.sea
+            : FTheme.darkSea,
         body: _buildBody(context),
       ),
     );

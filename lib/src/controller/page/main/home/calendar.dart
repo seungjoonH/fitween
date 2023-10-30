@@ -4,9 +4,11 @@ import 'dart:ui';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/controller/health/health.dart';
+import 'package:fitween/src/model/class/date_range.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
 import 'package:fitween/src/view/widget/widget.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CalendarEvent {
@@ -68,6 +70,12 @@ class CalendarPageCont extends PageCont {
   String get fetchedTitle => LangCont.tr('$_dialogTr.fetch.complete-title');
   String get fetchedText => LangCont.tr('$_dialogTr.fetch.complete-text');
 
+  String get fetchAllTitle => LangCont.tr('$_dialogTr.fetch.all-title');
+  String get fetchAllText => LangCont.tr(
+    '$_dialogTr.fetch.all-text',
+    namedArgs: {'fpoint': getAllSpendingFPoint().thouSep},
+  );
+
   void reflectInformationButtonPressed() {
     showFDialog(
       title: fetchInfoTitle,
@@ -103,6 +111,8 @@ class CalendarPageCont extends PageCont {
         wordWrap: true,
       ),
       type: DialogType.bi,
+      rightText: fetchButtonText,
+      rightBackgroundColor: FTheme.point,
       rightPressed: () => _fetchData(type),
     );
   }
@@ -124,13 +134,30 @@ class CalendarPageCont extends PageCont {
         wordWrap: true,
       ),
       type: DialogType.bi,
+      rightText: fetchButtonText,
+      rightBackgroundColor: FTheme.point,
       rightPressed: _fetchAllTypeOfData,
+    );
+  }
+
+  void refreshButtonPressed() {
+    showFDialog(
+      title: fetchAllTitle,
+      content: FTexts(
+        fetchAllText,
+        highlightColor: FTheme.point,
+        wordWrap: true,
+      ),
+      type: DialogType.bi,
+      rightText: fetchButtonText,
+      rightBackgroundColor: FTheme.point,
+      rightPressed: _fetchAllData,
     );
   }
 
   DateTime get _selectedDay => calendarCont.selectedDay;
 
-  Future _showReflectedDialog() async {
+  Future _showFetchedDialog() async {
     await showFDialog(
       title: fetchedTitle,
       content: FText(fetchedText, maxLines: 0),
@@ -139,37 +166,55 @@ class CalendarPageCont extends PageCont {
   }
 
   void _fetchData(FType type) async {
-    if (getSpendingFPoint(type) == 0) return;
     bool spent = await FPointCont.to.spend(getSpendingFPoint(type), 'fetch-data-${type.name}');
-
     if (!spent) return;
 
-    await _showReflectedDialog();
+    await _showFetchedDialog();
     await HealthDataCont.setOneDayRecordByType(type, _selectedDay);
     await onRefresh();
   }
 
   void _fetchAllTypeOfData() async {
-    if (getSpendingFPoint() == 0) return;
-    bool spent = await FPointCont.to.spend(getSpendingFPoint(), 'fetch-data-all');
-
+    bool spent = await FPointCont.to.spend(getSpendingFPoint(), 'fetch-data-two-types');
     if (!spent) return;
 
-    await _showReflectedDialog();
+    await _showFetchedDialog();
     await HealthDataCont.setOneDayRecordByType(FType.distance, _selectedDay);
     await HealthDataCont.setOneDayRecordByType(FType.height, _selectedDay);
     await onRefresh();
   }
 
-  int getSpendingFPoint([FType? type]) {
-    int diff = today.difference(_selectedDay).inDays;
-    bool dis = calendarCont.typeHasUnreflectedAmount(FType.distance);
-    bool hei = calendarCont.typeHasUnreflectedAmount(FType.height);
+  void _fetchAllData() async {
+    bool spent = await FPointCont.to.spend(getAllSpendingFPoint(), 'fetch-data-all');
+    if (!spent) return;
+
+    await _showFetchedDialog();
+    await HealthDataCont.setAllRecordByType(FType.distance);
+    await HealthDataCont.setAllRecordByType(FType.height);
+    await onRefresh();
+  }
+
+  int getSpendingFPoint([FType? type, DateTime? date]) {
+    int diff = today.difference(date ?? _selectedDay).inDays;
+    bool dis = calendarCont.typeHasUnreflectedAmount(FType.distance, date);
+    bool hei = calendarCont.typeHasUnreflectedAmount(FType.height, date);
+
+    if (!dis && !hei || diff < 2) return 0;
 
     int w = type == null && dis && hei ? 2 : 1;
-    if (diff < 2) return 0;
-    return w * min(100 + 50 * (max(diff - 1, 0)), 10000);
+    return w * min(100 + 50 * (max(diff - 1, 0)), 1000);
   }
+
+  int getAllSpendingFPoint() {
+    DateRange range = DateRange(_logged.regDate.ignoreTime, today);
+    int fp = 0;
+    for (DateTime date in range.dates) {
+      fp += getSpendingFPoint(null, date);
+    }
+    return min(fp, 20000);
+  }
+
+  FUser get _logged => AuthCont.logged!;
 
   @override
   String get loadKey => 'calendar';

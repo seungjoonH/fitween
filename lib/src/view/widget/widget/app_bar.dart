@@ -48,6 +48,9 @@ class FAppBar extends AppBar {
   }
 
   @override
+  bool? get centerTitle => true;
+
+  @override
   Color? get backgroundColor => Colors.transparent;
 }
 

@@ -95,6 +95,10 @@ class HealthDataCont extends GetxController {
     await FUserRecordDAO().saveOne(_logged.record!);
   }
 
+  static Future setAllRecordByType(FType type) async {
+    await setRecordByType(type, _logged.regDate.ignoreTime, today);
+  }
+
   static Future setOneDayRecordByType(FType type, DateTime date) async {
     await setRecordByType(type, date, date);
   }

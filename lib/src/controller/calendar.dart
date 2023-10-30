@@ -5,6 +5,7 @@ import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/controller/health/health.dart';
 import 'package:fitween/src/model/class/dao.dart';
+import 'package:fitween/src/model/class/date_range.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:get/get.dart';
@@ -42,14 +43,22 @@ class CalendarCont extends GetxController {
     return max(real - reflected, 0);
   }
 
-  bool typeHasUnreflectedAmount(FType type) {
-    return getUnreflectedAmount(type, selectedDay) > 0;
+  bool typeHasUnreflectedAmount(FType type, [DateTime? date]) {
+    return getUnreflectedAmount(type, date ?? selectedDay) > 0;
   }
 
   bool dateHasUnreflectedAmount(DateTime date) {
     num dis = getUnreflectedAmount(FType.distance, date);
     num hei = getUnreflectedAmount(FType.height, date);
     return dis + hei > 0;
+  }
+
+  bool get entirelyReflected {
+    DateRange range = DateRange(_logged.regDate, today);
+    for (DateTime date in range.dates) {
+      if (dateHasUnreflectedAmount(date)) return false;
+    }
+    return true;
   }
 
   String getInsufficientAmountText(FType type) {
@@ -151,4 +160,6 @@ class CalendarCont extends GetxController {
     String withUnit = type.withUnit(getGoal(type), scaling: false);
     return '$amountText / $withUnit';
   }
+
+  FUser get _logged => AuthCont.logged!;
 }
