@@ -29,7 +29,7 @@ class DarkPressableWidget extends StatefulWidget {
   const DarkPressableWidget({
     super.key,
     required this.child,
-    this.rounded = false,
+    this.rounded = true,
     this.onPressed,
   });
 
