@@ -7,6 +7,8 @@ enum FType {
   calorie, distance, height, weight;
 
   String get locale => LangCont.tr('type.$name');
+  String get localeShort => LangCont.isEnglish 
+      ? locale.toUpperCase().substring(0, 3) : locale;
   String get _unitKey => ['', 'step', 'floor', 'count'][index];
   String get _altUnitKey => ['', 'step', 'floor', 'kg'][index];
   Color get color => [FTheme.colorA, FTheme.colorB, FTheme.colorC, FTheme.colorD][index];

@@ -1,3 +1,4 @@
+import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:get/get.dart';
@@ -5,7 +6,11 @@ import 'package:get/get.dart';
 enum Content {
   adventure, challenge, weight, battle;
   String get _asset => 'assets/image/page/contents';
-  String get path => '$_asset/$name.svg';
+  String get path {
+    String dayOrNight = FTheme.isLightMode ? 'day' : 'night';
+    if (index == 0) return '$_asset/${name}_$dayOrNight.svg';
+    return '$_asset/$name.svg';
+  }
   String get _tr => 'contents.card-title';
   String get cardTitle => LangCont.tr('$_tr.$name');
 }

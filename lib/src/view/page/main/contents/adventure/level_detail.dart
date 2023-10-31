@@ -39,15 +39,24 @@ class _LevelDetailPageState extends FPageState<LevelDetailPage> {
             Expanded(
               child: FText(
                 cont.level!.title,
-                style: FTheme.displaySmall,
+                style: FTheme.headlineMedium,
                 maxLines: 2,
               ),
             ),
             SizedBox(width: 10.0.w),
-            FText(
-              'LV ${cont.level!.lv}',
-              bold: true,
-              color: cont.level!.type.color,
+            Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 5.0.w, vertical: 2.0.h,
+              ),
+              decoration: BoxDecoration(
+                color: FTheme.achro95.withOpacity(.3),
+                borderRadius: BorderRadius.circular(8.0.r),
+              ),
+              child: FText(
+                'LV ${cont.level!.lv}',
+                bold: true,
+                color: cont.level!.type.color,
+              ),
             ),
           ],
         ),

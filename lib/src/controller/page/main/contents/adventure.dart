@@ -12,7 +12,10 @@ import 'package:get/get.dart';
 
 class AdventurePageCont extends PageCont {
   static AdventurePageCont get to => Get.find<AdventurePageCont>();
-  static const String topCloudAsset = 'assets/image/page/contents/adventure/top_cloud.png';
+  static String get topCloudAsset {
+    String dayOrNight = FTheme.isLightMode ? 'day' : 'night';
+    return 'assets/image/page/contents/adventure/top_cloud_$dayOrNight.png';
+  }
 
   final scrollCont = ScrollController();
 

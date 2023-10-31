@@ -32,7 +32,7 @@ class _PartySearchPageState extends FPageState<PartySearchPage> {
           Padding(
             padding: EdgeInsets.only(right: 10.0.w),
             child: FText(
-              type.locale,
+              type.locale.toUpperCase().substring(0, 3),
               color: type.color,
               bold: true,
             ),

@@ -20,7 +20,7 @@ class FTheme {
   static const Color bronze = Color(0xFFB78250);
 
   static const Color sea = Color(0xFF6BD4EB);
-  static const Color darkSea = Color(0xFF212160);
+  static const Color darkSea = Color(0xFF35359E);
 
   // static const Color black = Color(0xFF1F1F1F);
   // static const Color darkGrey = Color(0xFF494D45);

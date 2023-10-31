@@ -109,7 +109,7 @@ class _FTypeSelectionButtonState extends State<FTypeSelectionButton> {
           color: color,
           padding: EdgeInsets.fromLTRB(.0, 5.0.h, 15.0.w, 5.0.h),
           child: FText(
-            type.locale.toUpperCase().substring(0, 3),
+            type.localeShort,
             bold: true,
             color: FTheme.achro95,
             align: TextAlign.center,

@@ -62,36 +62,71 @@ class _FIslandWidgetState extends State<FIslandWidget> {
   double get height => imageWidth * 2.2;
   double get imageWidth => widget.width ?? 100.0.r;
 
+  String get darkSideUrl => 'assets/image/page/contents/adventure/dark_side.png';
+
   String get imageUrl {
     return widget.hide
         ? Level.voidUrl
         : widget.level.imageUrl;
   }
 
+  bool get _isNight => FTheme.isDarkMode;
+
   @override
   Widget build(BuildContext context) {
     return ScalePressableWidget(
       onPressed: widget.onPressed,
-      child: SizedBox(
-        width: width,
-        height: height,
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            AnimatedPositioned(
-              duration: 1.s,
-              bottom: _y,
-              curve: Curves.easeInOut,
-              child: Hero(
-                tag: widget.level.key,
-                child: Image.asset(
-                  imageUrl,
-                  width: imageWidth,
-                ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          if (_isNight)
+          Container(
+            width: 140.0.r,
+            height: 140.0.r,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: RadialGradient(
+                colors: [
+                  Color.alphaBlend(
+                    Colors.yellow.withOpacity(.5),
+                    FTheme.darkSea,
+                  ),
+                  FTheme.darkSea.withOpacity(.0),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+          SizedBox(
+            width: width,
+            height: height,
+            child: Stack(
+              children: [
+                AnimatedPositioned(
+                  duration: 1.s,
+                  bottom: _y,
+                  curve: Curves.easeInOut,
+                  child: Hero(
+                    tag: widget.level.key,
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        Image.asset(
+                          imageUrl,
+                          width: imageWidth,
+                        ),
+                        if (_isNight)
+                        Image.asset(
+                          darkSideUrl,
+                          width: imageWidth,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
