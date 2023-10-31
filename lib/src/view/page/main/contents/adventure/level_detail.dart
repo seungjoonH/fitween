@@ -46,7 +46,7 @@ class _LevelDetailPageState extends FPageState<LevelDetailPage> {
             SizedBox(width: 10.0.w),
             Container(
               padding: EdgeInsets.symmetric(
-                horizontal: 5.0.w, vertical: 2.0.h,
+                horizontal: 7.0.w, vertical: 1.0.h,
               ),
               decoration: BoxDecoration(
                 color: FTheme.achro95.withOpacity(.3),

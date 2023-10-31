@@ -234,6 +234,7 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
                   SizedBox(height: 20.0.h),
                   FButton(
                     text: cont.createPartyText,
+                    textColor: FTheme.achro95,
                     backgroundColor: cont.challenge!.type.color,
                     onPressed: cont.createPartyButtonPressed,
                     stretch: true,

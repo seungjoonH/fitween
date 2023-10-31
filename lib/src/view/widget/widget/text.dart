@@ -202,7 +202,7 @@ class FTextField extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       cursorColor: FTheme.text,
-      style: FTheme.titleMedium,
+      style: FTheme.titleMedium?.copyWith(color: FTheme.text),
       autofocus: true,
       decoration: InputDecoration(
         hintText: hintText,

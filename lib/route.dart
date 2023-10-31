@@ -60,7 +60,7 @@ class FRoute {
   }
 
   static Duration getTransitionDuration(String key) {
-    if (key.contains('detail')) return 500.ms;
+    if (key == '/contents/adventure/level-detail') return 500.ms;
     return 100.ms;
   }
 
