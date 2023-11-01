@@ -127,8 +127,96 @@ class PartyPageCont extends PageCont {
     });
   }
 
-  String get giveUpText => LangCont.tr('button.give-up');
   String get _dialogTr => 'party.dialog';
+
+  String get completeText => LangCont.tr('button.complete');
+  String get reallyCompleteTitle => LangCont.tr(
+    '$_dialogTr.complete.really-title',
+    namedArgs: {'fpoint': '$point'},
+  );
+  String get reallyCompleteText => LangCont.tr('$_dialogTr.complete.really-text');
+  String get completedTitle => LangCont.tr('$_dialogTr.complete.complete-title');
+  String get completedText => LangCont.tr(
+    '$_dialogTr.complete.complete-text',
+    namedArgs: {'fpoint': '$point'},
+  );
+
+  void completeButtonPressed() {
+    showFDialog(
+      title: reallyCompleteTitle,
+      content: FTexts(
+        reallyCompleteTitle,
+        style: FTheme.bodyLarge,
+        textColor: FTheme.text,
+        highlightStyles: [
+          FTheme.bodyLarge!.copyWith(color: FTheme.point),
+          FTheme.commentStyle!.copyWith(color: FTheme.comment),
+        ],
+        wordWrap: true,
+      ),
+      type: DialogType.bi,
+      rightText: '${point.thouSep} FP',
+      rightPressed: _completeParty,
+    );
+  }
+
+  void _completeParty() async {
+    await showFDialog(
+      title: completedTitle,
+      content: FTexts(
+        completedTitle,
+        highlightColor: FTheme.point,
+        wordWrap: true,
+      ),
+      type: DialogType.mono,
+    );
+
+    FPointCont.to.earn(point, 'party-complete');
+
+    await party!.finish();
+    await PartyDAO().saveOne(party!);
+
+    Get.back();
+    await onRefresh();
+  }
+
+  String get finishText => LangCont.tr('button.finish');
+  String get reallyFinishTitle => LangCont.tr('$_dialogTr.finish.really-title');
+  String get reallyFinishText => LangCont.tr('$_dialogTr.finish.really-text');
+  String get finishedTitle => LangCont.tr('$_dialogTr.finish.complete-title');
+  String get finishedText => LangCont.tr('$_dialogTr.finish.complete-text');
+
+  void finishButtonPressed() {
+    showFDialog(
+      title: reallyFinishTitle,
+      content: FTexts(
+        reallyFinishText,
+        style: FTheme.bodyLarge,
+        textColor: FTheme.text,
+        highlightStyle: FTheme.bodyMedium
+            ?.copyWith(color: FTheme.comment),
+        wordWrap: true,
+      ),
+      type: DialogType.bi,
+      rightText: finishText,
+      rightPressed: _finishParty,
+    );
+  }
+
+  void _finishParty() async {
+    await showFDialog(
+      title: finishedTitle,
+      content: FText(finishedText, maxLines: 0),
+      type: DialogType.mono,
+    );
+
+    await party!.finish();
+    await PartyDAO().saveOne(party!);
+
+    await onRefresh();
+  }
+
+  String get giveUpText => LangCont.tr('button.give-up');
   String get reallyGiveUpTitle => LangCont.tr('$_dialogTr.give-up.really-title');
   String get reallyGiveUpOnlyText => LangCont.tr('$_dialogTr.give-up.really-only-text');
   String get reallyGiveUpLeaderText => LangCont.tr('$_dialogTr.give-up.really-leader-text');
@@ -190,9 +278,9 @@ class PartyPageCont extends PageCont {
     else {
       if (isLeader) { party!.delegateLeaderToBestMember(); }
       await party!.removeMember(_logged.key);
+      await PartyDAO().saveOne(party!);
     }
 
-    await PartyDAO().saveOne(party!);
     await FUserPartyDAO().saveOne(_logged.party!);
 
     FRoute.toContents();
@@ -215,9 +303,9 @@ class PartyPageCont extends PageCont {
   String get disabledTitle => LangCont.tr('$_dialogTr.apply.disabled-title');
   String get disabledText => LangCont.tr('$_dialogTr.apply.disabled-text');
 
-  bool get hasSameTypeOfAppliedParty {
-    return _logged.party!.hasAppliedPartyOf(party!.type);
-  }
+
+  bool get hasSameTypeOfAppliedParty => _logged.party!.hasAppliedPartyOf(party!.type);
+  bool get hasSameTypeOfProgressingParty => _logged.party!.hasProgressingPartyOf(party!.type);
 
   void applyButtonPressed() {
     showFDialog(
@@ -247,6 +335,11 @@ class PartyPageCont extends PageCont {
 
     _logged.party!.addToAppliedParties(party!);
     await FUserPartyDAO().saveOne(_logged.party!);
+
+    await party!.loadMembers();
+    FUserNotification notification = party!.leader.notification!;
+    notification.applyParty(party!);
+    await FUserNotificationDAO().saveOne(notification);
 
     await onRefresh();
   }
@@ -360,7 +453,48 @@ class PartyPageCont extends PageCont {
     );
   }
 
-  void pokeButtonPressed(FUser member) {}
+  String get reallyPokeTitle => LangCont.tr('$_dialogTr.poke.really-title');
+  String getReallyPokeText(FUser user) => LangCont.tr('$_dialogTr.poke.really-text', namedArgs: {'nickname': user.nickname});
+  String get pokedTitle => LangCont.tr('$_dialogTr.poke.complete-title');
+  String getPokedText(FUser user) => LangCont.tr('$_dialogTr.poke.complete-text', namedArgs: {'nickname': user.nickname});
+
+  void pokeButtonPressed(FUser member) async {
+    showFDialog(
+      title: reallyPokeTitle,
+      content: FTexts(
+        getReallyPokeText(member),
+        style: FTheme.bodyLarge,
+        highlightStyle: FTheme.bodyLarge?.copyWith(
+          color: party!.type.color,
+          fontWeight: FontWeight.bold,
+        ),
+        wordWrap: true,
+      ),
+      type: DialogType.bi,
+      rightPressed: () => _poke(member),
+    );
+  }
+
+  void _poke(FUser member) async {
+    member.notification = await FUserNotificationDAO().loadOne(member.key);
+
+    await showFDialog(
+      title: pokedTitle,
+      content: FTexts(
+        getPokedText(member),
+        style: FTheme.bodyLarge,
+        highlightStyle: FTheme.bodyLarge?.copyWith(
+          color: party!.type.color,
+          fontWeight: FontWeight.bold,
+        ),
+        wordWrap: true,
+      ),
+      type: DialogType.mono,
+    );
+
+    member.notification!.poke(_logged);
+    await FUserNotificationDAO().saveOne(member.notification!);
+  }
 
   int get point {
     return (getMemberPercent(_logged.key) * party!.point).round();

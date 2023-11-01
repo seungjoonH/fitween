@@ -82,12 +82,14 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
 
   Widget _buildChallengeButtonWidget(BuildContext context) {
     return Obx(() {
+      Color textColor = FTheme.achro95;
       Color leftButtonColor = FTheme.text;
       Color rightButtonColor = cont.challenge!.type.color;
 
       if (cont.isBookmarkedChallenge) {
         return FButton(
           text: cont.goToMyPartyText,
+          textColor: FTheme.achro95,
           backgroundColor: rightButtonColor,
           onPressed: cont.goToMyPartyButtonPressed,
           stretch: true,
@@ -97,6 +99,7 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
       if (cont.isAppliedChallenge) {
         return FButton(
           text: cont.goToAppliedPartyText,
+          textColor: FTheme.achro95,
           backgroundColor: rightButtonColor,
           onPressed: cont.goToAppliedPartyButtonPressed,
           stretch: true,
@@ -107,6 +110,7 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
           || cont.isAppliedTypeOfChallenge) {
         leftButtonColor = FTheme.unselected;
         rightButtonColor = FTheme.unselected;
+        textColor = FTheme.text;
       }
 
       return Row(
@@ -124,6 +128,7 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
           Expanded(
             child: FButton(
               text: cont.createPartyText,
+              textColor: textColor,
               backgroundColor: rightButtonColor,
               stretch: true,
               onPressed: cont.createPartyButtonPressed,

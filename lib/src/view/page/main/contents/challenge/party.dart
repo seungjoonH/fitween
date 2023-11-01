@@ -180,7 +180,7 @@ class _PartyPageState extends FPageState<PartyPage> {
         ),
         SizedBox(height: 20.0.h),
         _buildMembersProgressIndicatorWidget(context),
-        if (!cont.party!.isFull)
+        if (!cont.party!.isFull && !cont.party!.finished)
         _buildCopyButtonWidget(context),
       ],
     ));
@@ -190,7 +190,15 @@ class _PartyPageState extends FPageState<PartyPage> {
     return FPointButton(
       amount: cont.point,
       finished: cont.party!.completed,
-      onPressed: () {}//cont.completeButtonPressed,
+      onPressed: cont.completeButtonPressed,
+    );
+  }
+
+  Widget _buildFinishButtonWidget(BuildContext context) {
+    return FButton(
+      text: cont.finishText,
+      stretch: true,
+      onPressed: cont.finishButtonPressed,
     );
   }
 
@@ -234,19 +242,31 @@ class _PartyPageState extends FPageState<PartyPage> {
   Widget _buildButtonWidget(BuildContext context) {
     return Obx(() {
       String myUid = AuthCont.logged!.key;
+
+      if (cont.party!.finished) return Container();
+
       if (cont.party!.isMember(myUid)) {
-        return cont.party!.completed
-            ? _buildCompleteButtonWidget(context)
-            : _buildGiveUpButtonWidget(context);
+        if (cont.party!.completed) {
+          return _buildCompleteButtonWidget(context);
+        }
+
+        if (cont.party!.over) {
+          return _buildFinishButtonWidget(context);
+        }
+
+        return _buildGiveUpButtonWidget(context);
       }
 
       if (cont.party!.isApplied(myUid)) {
         return _buildCancelButtonWidget(context);
       }
 
-      return cont.hasSameTypeOfAppliedParty
-          ? _buildDisabledButtonWidget(context)
-          : _buildApplyButtonWidget(context);
+      if (cont.hasSameTypeOfAppliedParty
+          || cont.hasSameTypeOfProgressingParty) {
+        return _buildDisabledButtonWidget(context);
+      }
+
+      return _buildApplyButtonWidget(context);
     });
   }
 

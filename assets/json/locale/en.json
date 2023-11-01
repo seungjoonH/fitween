@@ -12,7 +12,9 @@
     "reject": "Reject",
     "apply": "Apply",
     "cancel": "Cancel Application",
-    "fetch": "Fetch"
+    "fetch": "Fetch",
+    "finish": "Finish",
+    "complete": "Complete"
   },
   "appbar": {
     "register": "Register",
@@ -67,7 +69,8 @@
     "fetch-data-all": "All Data Fetched",
     "fetch-data-two-types": "Data Fetched (Distance, Height)",
     "fetch-data-distance": "Data Fetched (Distance)",
-    "fetch-data-height": "Data Fetched (Height)"
+    "fetch-data-height": "Data Fetched (Height)",
+    "party-complete": "Party Completion Rewarded"
   },
   "period": {
     "daily": "daily",
@@ -365,6 +368,24 @@
         "canceled-text": "Party application has been canceled",
         "disabled-title": "Failed to Apply",
         "disabled-text": "It can only be applied for one party of the same type"
+      },
+      "poke": {
+        "really-title": "Poke",
+        "really-text": "Are you sure to poke @{{nickname}}?",
+        "complete-title": "Poked",
+        "complete-text": "You poked @{{nickname}}"
+      },
+      "finish": {
+        "really-title": "Finishing Party",
+        "really-text": "Are you sure to finish this party?\n@{The finished party will be moved to my party history}",
+        "complete-title": "Party finished",
+        "complete-text": "The party successfully finished"
+      },
+      "complete": {
+        "really-title": "Completing Party",
+        "really-text": "Are you sure to complete this party and get @{{fpoint} FP}?\n@{The completed party will be moved to my party history}",
+        "complete-title": "Party completed",
+        "complete-text": "The party successfully completed and you received @{{fpoint} FP}"
       }
     }
   },
@@ -431,6 +452,7 @@
   "notification": {
     "followed": "@{{object}} follows you",
     "party-applied": "There is a new applicant for the party @{{object}}",
-    "poke": "@{{object}} poked you"
+    "poke": "@{{object}} poked you",
+    "party-banished": "Banished from the party @{{object}}"
   }
 }

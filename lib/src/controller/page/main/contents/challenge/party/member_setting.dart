@@ -33,6 +33,8 @@ class PartyMemberSettingPageCont extends PageCont {
     return LangCont.tr('$_dialogTr.delegate.complete-text', namedArgs: {'nickname': nickname});
   }
 
+  void pokeButtonPressed(FUser member) => partyCont.pokeButtonPressed(member);
+
   void delegateButtonPressed(FUser member) async {
     await showFDialog(
       title: delegateReallyTitle,
@@ -99,24 +101,30 @@ class PartyMemberSettingPageCont extends PageCont {
 
   void banishMember(FUser member) async {
     member.party = await FUserPartyDAO().loadOne(member.key);
+    member.notification = await FUserNotificationDAO().loadOne(member.key);
 
     await showFDialog(
-    title: banishCompleteTitle,
-    content: FTexts(
-      getBanishCompleteText(member.nickname),
-      highlightStyle: FTheme.titleSmall?.copyWith(
-        color: party!.type.color,
-        fontWeight: FontWeight.bold,
+      title: banishCompleteTitle,
+      content: FTexts(
+        getBanishCompleteText(member.nickname),
+        highlightStyle: FTheme.titleSmall?.copyWith(
+          color: party!.type.color,
+          fontWeight: FontWeight.bold,
+        ),
+        wordWrap: true,
       ),
-      wordWrap: true,
-    ),
-    type: DialogType.mono,
+      type: DialogType.mono,
     );
 
     member.party!.removeParty(party!.key);
     await FUserPartyDAO().saveOne(member.party!);
 
+    member.notification!.banishMember(party!);
+    await FUserNotificationDAO().saveOne(member.notification!);
+
     party!.removeMember(member.key);
+    await PartyDAO().saveOne(party!);
+
     partyCont.setParty(party!);
 
     Get.back();

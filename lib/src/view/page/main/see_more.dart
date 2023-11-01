@@ -122,11 +122,11 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
       appBar: FAppBar(
         text: cont.appBarTitle,
         actions: [
-          FIconButton(
+          Obx(() => FIconButton(
             icon: const Icon(Icons.notifications),
             notifications: notificationCont.uncheckedCount,
             onPressed: cont.notificationButtonPressed,
-          ),
+          )),
         ],
       ),
       body: Column(

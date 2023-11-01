@@ -47,6 +47,7 @@ class _PartyMemberSettingPageState extends FPageState<PartyMemberSettingPage> {
             child: buildButton(
               text: cont.pokeButtonText,
               backgroundColor: FTheme.unselected,
+              onPressed: () => cont.pokeButtonPressed(member),
             ),
           ),
           Expanded(

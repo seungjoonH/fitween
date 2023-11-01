@@ -47,8 +47,8 @@ class FUserParty extends FUser {
   Future loadFinishedParties() async {
     for (String id in _finishedPartyIds) {
       Party? loaded = await PartyDAO().loadOne(id);
-
       if (loaded == null) throw Exception('[ERROR] Finished Party($id) load failed');
+      await loaded.loadMembers();
       finishedParties[id] = loaded;
     }
   }
@@ -75,9 +75,21 @@ class FUserParty extends FUser {
     appliedParties.remove(partyId);
   }
 
+  bool hasProgressingPartyOf(FType type) {
+    List<Party> list = parties.values.toList();
+    return list.indexWhere((party) => party.type == type) >= 0;
+  }
+
   bool hasAppliedPartyOf(FType type) {
     List<Party> list = appliedParties.values.toList();
     return list.indexWhere((party) => party.type == type) >= 0;
+  }
+
+  void finishParty(Party party) {
+    _partyIds.remove(party.key);
+    parties.remove(party.key);
+    _finishedPartyIds.add(party.key);
+    finishedParties[party.key] = party;
   }
 
   FUserParty(super.key) : super();

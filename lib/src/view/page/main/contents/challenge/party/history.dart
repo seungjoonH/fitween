@@ -57,9 +57,11 @@ class _PartyHistoryPageState extends FPageState<PartyHistoryPage> {
         _buildTypeFilterWidget(context),
         SizedBox(height: 20.0.h),
         Column(
-          children: cont.parties
-              .map((party) => PartyListTile(party: party))
-              .separateH(height: 20.0.h),
+          children: cont.parties.map((party) => PartyListTile(
+            party: party,
+            onPressed: () => cont.partyListPressed(party),
+            showPercent: true,
+          )).separateH(height: 20.0.h),
         ),
       ],
     ));

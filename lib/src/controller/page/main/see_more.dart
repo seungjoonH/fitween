@@ -17,7 +17,9 @@ class SeeMorePageCont extends MainPageCont {
   String get loadKey => 'see-more';
 
   @override
-  Future load() async {}
+  Future load() async {
+    await NotificationCont.to.init();
+  }
 
   FUser get _logged => AuthCont.logged!;
 

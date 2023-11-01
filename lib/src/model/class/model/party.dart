@@ -60,7 +60,7 @@ class Party extends Model {
   List<String> _memberUids = [];
   late String _leaderUid;
   String? _leaderNickname;
-  bool _complete = false;
+  bool _finished = false;
   Timestamp? _startDate;
   Timestamp? _endDate;
   Map<String, ApplicantData> _applicantsData = {};
@@ -97,6 +97,9 @@ class Party extends Model {
   String get deadline => 'D${withSign(leftDays)}';
   bool get completed => allAmounts >= goal;
   bool get over => endDate!.isBefore(now);
+  bool get finished => completed || over;
+
+  String get finishState => completed ? 'PASS' : 'FAIL';
 
   int get memberCount => members.length;
   int get maxMemberCount => challenge!.getMaxMemberCount(_difficulty);
@@ -112,7 +115,11 @@ class Party extends Model {
   bool isApplied(String uid) => applicants.keys.contains(uid);
 
   Future loadMembers() async {
-    FUserLoadCont cont = FUserLoadCont(collection: true, record: true);
+    FUserLoadCont cont = FUserLoadCont(
+      record: true,
+      collection: true,
+      notification: true,
+    );
     for (String uid in memberUids) {
       if (uid == AuthCont.uid) { members[uid] = AuthCont.logged!; continue; }
       FUser? loaded = await FUserDAO().loadOne(uid, cont: cont);
@@ -136,6 +143,7 @@ class Party extends Model {
   num getAmounts(String uid) {
     FUser? member = members[uid];
     if (member == null) return .0;
+    if (member.record == null) return .0;
     num value = member.getRecord(startDate!, endDate!)[type]!;
     if (type != FType.weight) return value;
     return (WeightAmount()..cnt = value).kg;
@@ -172,6 +180,7 @@ class Party extends Model {
   void delegateLeaderTo(String uid) {
     _leaderUid = uid;
     leader = members[uid]!;
+    _leaderNickname = leader.nickname;
   }
 
   void delegateLeaderToBestMember() => delegateLeaderTo(bestMemberWithoutLeader!.key);
@@ -202,7 +211,11 @@ class Party extends Model {
   }
 
   Future loadApplicants() async {
-    FUserLoadCont cont = FUserLoadCont(collection: true, party: true);
+    FUserLoadCont cont = FUserLoadCont(
+      party: true,
+      collection: true,
+      notification: true,
+    );
     for (var uid in _applicantsData.keys) {
       FUser? loaded = await FUserDAO().loadOne(uid, cont: cont);
       if (loaded == null) throw Exception('[ERROR] User($uid) load failed');
@@ -213,6 +226,16 @@ class Party extends Model {
   void removeApplicant(String uid) async {
     _applicantsData.remove(uid);
     applicants.remove(uid);
+  }
+
+  Future finish() async {
+    _finished = true;
+    if (members.isEmpty) await loadMembers();
+    for (FUser member in members.values) {
+      member.party = await FUserPartyDAO().loadOne(member.key);
+      member.party!.finishParty(this);
+      await FUserPartyDAO().saveOne(member.party!);
+    }
   }
 
   Party({
@@ -244,7 +267,7 @@ class Party extends Model {
     _memberUids = json['memberUids'].cast<String>();
     _leaderUid = json['leaderUid'];
     _leaderNickname = json['leaderNickname'];
-    _complete = json['complete'];
+    _finished = json['finished'] ?? false;
     _startDate = json['startDate'];
     _endDate = json['endDate'];
     _applicantsData = Map.fromIterables(
@@ -264,7 +287,7 @@ class Party extends Model {
     json['memberUids'] = _memberUids;
     json['leaderUid'] = _leaderUid;
     json['leaderNickname'] = _leaderNickname;
-    json['complete'] = _complete;
+    json['finished'] = _finished;
     json['startDate'] = _startDate;
     json['endDate'] = _endDate;
     json['applicantsData'] = Map.fromIterables(

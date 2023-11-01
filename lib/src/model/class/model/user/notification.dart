@@ -74,6 +74,17 @@ class NotificationData extends Model {
     _checked = false;
   }
 
+  NotificationData.poke({
+    required DateTime date,
+    required FUser user,
+  }) {
+    this.date = date;
+    _content = 'poke';
+    _objectCode = 'user-${user.key}';
+    _checked = false;
+  }
+
+
   NotificationData.partyApplied({
     required DateTime date,
     required Party party,
@@ -84,13 +95,33 @@ class NotificationData extends Model {
     _checked = false;
   }
 
-  NotificationData.poke({
+  NotificationData.partyAccepted({
     required DateTime date,
-    required FUser user,
+    required Party party,
   }) {
     this.date = date;
-    _content = 'poke';
-    _objectCode = 'user-${user.key}';
+    _content = 'party-accepted';
+    _objectCode = 'party-${party.key}';
+    _checked = false;
+  }
+
+  NotificationData.partyRejected({
+    required DateTime date,
+    required Party party,
+  }) {
+    this.date = date;
+    _content = 'party-rejected';
+    _objectCode = 'party-${party.key}';
+    _checked = false;
+  }
+
+  NotificationData.partyBanished({
+    required DateTime date,
+    required Party party,
+  }) {
+    this.date = date;
+    _content = 'party-banished';
+    _objectCode = 'party-${party.key}';
     _checked = false;
   }
 
@@ -127,16 +158,32 @@ class FUserNotification extends FUser {
 
   List<NotificationData> get data => _data;
 
+  Future loadAll() async {
+    for (NotificationData notification in data) { await notification.load(); }
+  }
+
   void follow(FUser user) {
     _data.add(NotificationData.followed(date: now, user: user));
+  }
+
+  void poke(FUser user) {
+    _data.add(NotificationData.poke(date: now, user: user));
   }
 
   void applyParty(Party party) {
     _data.add(NotificationData.partyApplied(date: now, party: party));
   }
 
-  void poke(FUser user) {
-    _data.add(NotificationData.poke(date: now, user: user));
+  void acceptApplicant(Party party) {
+    _data.add(NotificationData.partyAccepted(date: now, party: party));
+  }
+
+  void rejectApplicant(Party party) {
+    _data.add(NotificationData.partyRejected(date: now, party: party));
+  }
+
+  void banishMember(Party party) {
+    _data.add(NotificationData.partyBanished(date: now, party: party));
   }
 
   FUserNotification(super.key) : super();

@@ -12,7 +12,9 @@
     "reject": "거절",
     "apply": "신청하기",
     "cancel": "신청취소",
-    "fetch": "연동하기"
+    "fetch": "연동하기",
+    "finish": "끝내기",
+    "complete": "완료하기"
   },
   "appbar": {
     "register": "회원가입",
@@ -64,7 +66,8 @@
     "fetch-data-all": "모든 건강 데이터 연동",
     "fetch-data-two-types": "건강 데이터 연동 (거리, 높이)",
     "fetch-data-distance": "건강 데이터 연동 (거리)",
-    "fetch-data-height": "건강 데이터 연동 (높이)"
+    "fetch-data-height": "건강 데이터 연동 (높이)",
+    "party-complete": "파티 완료 보상"
   },
   "period": {
     "daily": "일일",
@@ -323,6 +326,24 @@
         "canceled-text": "파티 참가 신청이 취소되었습니다",
         "disabled-title": "파티 참가 신청 실패",
         "disabled-text": "동일한 종류의 파티는 하나만 신청할 수 있습니다"
+      },
+      "poke": {
+        "really-title": "콕 찌르기",
+        "really-text": "정말 @{{nickname}} 님을 콕 찌르시겠습니까?",
+        "complete-title": "콕 찌르기 완료",
+        "complete-text": "@{{nickname}} 님을 콕 찔렀습니다"
+      },
+      "finish": {
+        "really-title": "파티 끝내기",
+        "really-text": "정말 해당 파티를 끝내시겠습니까?\n@{끝난 파티는 나의 파티 히스토리로 이동됩니다}",
+        "complete-title": "파티 끝내기 완료",
+        "complete-text": "파티를 끝냈습니다"
+      },
+      "complete": {
+        "really-title": "파티 완료",
+        "really-text": "정말 해당 파티를 완료하고 @{{fpoint} FP}를 받으시겠습니까?\n@{끝난 파티는 나의 파티 히스토리로 이동됩니다}",
+        "complete-title": "파티 완료됨",
+        "complete-text": "파티가 완료되었고, @{{fpoint} FP}를 획득하였습니다."
       }
     }
   },
@@ -389,6 +410,7 @@
   "notification": {
     "followed": "@{{object}}님이 팔로우 했습니다",
     "party-applied": "@{{object}} 파티에 지원자가 있습니다",
-    "poke": "@{{object}}님이 콕 찔렀습니다"
+    "poke": "@{{object}}님이 콕 찔렀습니다",
+    "party-banished": "@{{object}} 파티에서 추방되었습니다"
   }
 }

@@ -107,11 +107,14 @@ class PartyApplicantsPageCont extends PageCont {
 
     _removeApplicant(applicant.key);
     await party!.addMember(applicant);
+    await PartyDAO().saveOne(party!);
+
     applicant.party!.removeFromAppliedParties(party!.key);
     applicant.party!.addParty(party!);
-
-    await PartyDAO().saveOne(party!);
     await FUserPartyDAO().saveOne(applicant.party!);
+
+    applicant.notification!.acceptApplicant(party!);
+    await FUserNotificationDAO().saveOne(applicant.notification!);
 
     await PartyPageCont.to.onRefresh();
   }
@@ -132,10 +135,13 @@ class PartyApplicantsPageCont extends PageCont {
     );
 
     _removeApplicant(applicant.key);
-    applicant.party!.removeFromAppliedParties(party!.key);
-
     await PartyDAO().saveOne(party!);
+
+    applicant.party!.removeFromAppliedParties(party!.key);
     await FUserPartyDAO().saveOne(applicant.party!);
+
+    applicant.notification!.rejectApplicant(party!);
+    await FUserNotificationDAO().saveOne(applicant.notification!);
 
     await PartyPageCont.to.onRefresh();
   }

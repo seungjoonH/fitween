@@ -41,17 +41,53 @@ class PartyListTile extends StatelessWidget {
     );
   }
 
+  Color get stampColor => party!.completed
+      ? FTheme.colorA
+      : FTheme.colorB;
+
   @override
   Widget build(BuildContext context) {
     return FListTile(
       onPressed: onPressed,
-      leading: SizedBox(
-        width: 80.0.w,
-        height: double.infinity,
-        child: Image.asset(
-          party!.challenge!.defaultImageUrl,
-          fit: BoxFit.cover,
-        ),
+      leading: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox(
+            width: 80.0.w,
+            height: double.infinity,
+            child: Image.asset(
+              party!.challenge!.defaultImageUrl,
+              fit: BoxFit.cover,
+            ),
+          ),
+          Positioned.fill(
+            child: Container(
+              alignment: Alignment.center,
+              color: FTheme.achro5.withOpacity(.3),
+              child: Transform.rotate(
+                angle: -pi * .25,
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 10.0.w,
+                    vertical: 2.0.h,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: stampColor,
+                      width: 3.0,
+                    ),
+                  ),
+                  child: FText(
+                    party!.finishState,
+                    color: stampColor,
+                    style: FTheme.titleLarge,
+                    bold: true,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       padding: EdgeInsets.fromLTRB(.0, .0, 10.0.r, .0),
       titleWidget: titleWidget,

@@ -14,9 +14,11 @@ class NotificationPageCont extends PageCont {
 
   String get appBarTitle => LangCont.tr('appbar.notification');
 
-  void notificationPressed(NotificationData data) async {
-    data.check();
-    await data.route();
+  List<NotificationData> get notifications => notificationCont.notifications;
+
+  void notificationPressed(NotificationData notification) async {
+    notification.check();
+    await notification.route();
     await FUserNotificationDAO().saveOne(_logged.notification!);
   }
 
@@ -37,7 +39,10 @@ class NotificationPageCont extends PageCont {
   }
 
   @override
-  Future load() async => await notificationCont.init();
+  Future load() async {
+    await notificationCont.init();
+    startTimer();
+  }
 
   @override
   String get loadKey => 'notification';

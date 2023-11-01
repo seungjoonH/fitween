@@ -1,3 +1,4 @@
+import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
@@ -21,6 +22,8 @@ class PartyHistoryPageCont extends PageCont {
 
   bool isActive(FType type) => activeTypes[type] ?? true;
   void updateTypeState(FType type) => activeTypes[type] = !isActive(type);
+
+  void partyListPressed(Party party) => FRoute.toParty(party: party);
 
   @override
   Future load() async {
