@@ -81,10 +81,10 @@ class CalendarPageCont extends PageCont {
       title: fetchInfoTitle,
       content: FTexts(
         fetchInfoText,
-        style: FTheme.bodyLarge,
-        textColor: FTheme.comment,
-        highlightStyle: FTheme.bodyLarge?.copyWith(
-          color: FTheme.point,
+        style: ThemeCont.to.bodyLarge,
+        textColor: ThemeCont.to.comment,
+        highlightStyle: ThemeCont.to.bodyLarge?.copyWith(
+          color: ThemeCont.to.point,
           fontWeight: FontWeight.bold,
         ),
         wordWrap: true,
@@ -101,18 +101,18 @@ class CalendarPageCont extends PageCont {
       title: fetchReallyTitle,
       content: FTexts(
         getFetchReallyText(type),
-        style: FTheme.bodyLarge,
-        textColor: FTheme.comment,
+        style: ThemeCont.to.bodyLarge,
+        textColor: ThemeCont.to.comment,
         highlightStyles: [
-          FTheme.bodyLarge!.copyWith(color: FTheme.point),
-          FTheme.bodyLarge!.copyWith(color: FType.distance.color),
-          FTheme.bodyLarge!.copyWith(color: FType.height.color),
+          ThemeCont.to.bodyLarge!.copyWith(color: ThemeCont.to.point),
+          ThemeCont.to.bodyLarge!.copyWith(color: FType.distance.color),
+          ThemeCont.to.bodyLarge!.copyWith(color: FType.height.color),
         ],
         wordWrap: true,
       ),
       type: DialogType.bi,
       rightText: fetchButtonText,
-      rightBackgroundColor: FTheme.point,
+      rightBackgroundColor: ThemeCont.to.point,
       rightPressed: () => _fetchData(type),
     );
   }
@@ -124,18 +124,18 @@ class CalendarPageCont extends PageCont {
       title: fetchReallyTitle,
       content: FTexts(
         getFetchReallyText(),
-        style: FTheme.bodyLarge,
-        textColor: FTheme.comment,
+        style: ThemeCont.to.bodyLarge,
+        textColor: ThemeCont.to.comment,
         highlightStyles: [
-          FTheme.bodyLarge!.copyWith(color: FTheme.point),
-          FTheme.bodyLarge!.copyWith(color: FType.distance.color),
-          FTheme.bodyLarge!.copyWith(color: FType.height.color),
+          ThemeCont.to.bodyLarge!.copyWith(color: ThemeCont.to.point),
+          ThemeCont.to.bodyLarge!.copyWith(color: FType.distance.color),
+          ThemeCont.to.bodyLarge!.copyWith(color: FType.height.color),
         ],
         wordWrap: true,
       ),
       type: DialogType.bi,
       rightText: fetchButtonText,
-      rightBackgroundColor: FTheme.point,
+      rightBackgroundColor: ThemeCont.to.point,
       rightPressed: _fetchAllTypeOfData,
     );
   }
@@ -145,12 +145,12 @@ class CalendarPageCont extends PageCont {
       title: fetchAllTitle,
       content: FTexts(
         fetchAllText,
-        highlightColor: FTheme.point,
+        highlightColor: ThemeCont.to.point,
         wordWrap: true,
       ),
       type: DialogType.bi,
       rightText: fetchButtonText,
-      rightBackgroundColor: FTheme.point,
+      rightBackgroundColor: ThemeCont.to.point,
       rightPressed: _fetchAllData,
     );
   }

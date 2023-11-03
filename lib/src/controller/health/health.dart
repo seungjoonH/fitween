@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 import 'package:health/health.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class HealthDataCont extends GetxController {
+class HealthDataCont {
   static final _health = HealthFactory();
   static const _stepType = [HealthDataType.STEPS];
   static const _flightType = [HealthDataType.FLIGHTS_CLIMBED];

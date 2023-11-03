@@ -39,9 +39,9 @@ class Challenge extends Model {
 
   late String _id;
   bool _locked = false;
-  late String _title;
+  late Map<String, String> _titles;
   late FType _type;
-  late String _word;
+  late Map<String, String> _words;
   late int _period;
 
   Map<String, dynamic> _descriptions = {};
@@ -53,17 +53,18 @@ class Challenge extends Model {
     'focus': '${_assetDir}focus/$_id.png',
   };
 
-  String get title => _title;
+  String get _locale => LangCont.to.language.code;
+  String get title => _titles[_locale]!;
   FType get type => _type;
-  String get word => _word;
+  String get word => _words[_locale]!;
   int get period => _period;
 
-  String get subDescription => _descriptions['sub'].replaceAll('##', word);
+  String get subDescription => _descriptions[_locale]['sub'].replaceAll('##', word);
   String getDetailDescription({Difficulty? difficulty, bool txs = false}) {
     _ChallengeLevel? level = _levels[difficulty];
     String replace = level == null ? word : level._word;
     if (txs) replace = '@{$replace}';
-    return _descriptions['detail']
+    return _descriptions[_locale]['detail']
         .replaceAll('##', replace)
         .replaceAll('  ', ' ').trim();
   }
@@ -71,7 +72,7 @@ class Challenge extends Model {
     _ChallengeLevel? level = _levels[difficulty];
     String replace = level == null ? word : level._word;
     if (txs) replace = '@{$replace}';
-    return _descriptions['complete']
+    return _descriptions[_locale]['complete']
         .replaceAll('##', replace)
         .replaceAll('  ', ' ').trim();
   }
@@ -93,15 +94,24 @@ class Challenge extends Model {
   void fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _locked = json['locked'];
-    _title = json['title'][LangCont.locale];
+    _titles = Map.fromIterables(
+      json['title']?.keys.toList(),
+      json['title']?.values.map<String>((e) => e.toString()),
+    );
     _type = FType.toEnum(json['type'])!;
-    _word = json['word'][LangCont.locale];
+    _words = Map.fromIterables(
+      json['word']?.keys.toList(),
+      json['word']?.values.map<String>((e) => e.toString()),
+    );
     _levels = Map.fromIterables(
       json['levels']?.keys.map<Difficulty>((string) => Difficulty.toEnum(string)),
       json['levels']?.values.map<_ChallengeLevel>((v) => _ChallengeLevel.fromJson(v)),
     );
     _period = json['period'];
-    _descriptions = json['descriptions'][LangCont.locale];
+    _descriptions = Map.fromIterables(
+      json['descriptions']?.keys,
+      json['descriptions']?.values,
+    );
   }
 
   @override

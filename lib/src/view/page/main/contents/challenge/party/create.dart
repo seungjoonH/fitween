@@ -26,20 +26,10 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
     ));
   }
 
-  Widget _buildHeaderWidget(BuildContext context, String text) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        FText(text, style: FTheme.commentStyle, color: FTheme.bar, bold: true),
-        Divider(thickness: .5, color: FTheme.comment),
-      ],
-    );
-  }
-
   Widget _buildPartyTitleFieldWidget(BuildContext context) {
     return Column(
       children: [
-        _buildHeaderWidget(context, cont.partyTitleHeaderText),
+        HeaderWidget(text: cont.partyTitleHeaderText),
         FTextField(
           controller: cont.partyTitleCont,
           hintText: cont.hintTitle,
@@ -53,18 +43,18 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
   Widget _buildDifficultySelectionWidget(BuildContext context) {
     return Obx(() => Column(
       children: [
-        _buildHeaderWidget(context, cont.difficultyHeaderText),
+        HeaderWidget(text: cont.difficultyHeaderText),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: Difficulty.values.map((d) {
             bool selected = cont.difficulty == d;
             Color color = selected
                 ? cont.challenge!.type.color
-                : FTheme.comment;
+                : ThemeCont.to.comment;
             return FTextButton(
               text: d.locale.capitalize,
               textColor: color,
-              style: FTheme.titleMedium,
+              style: ThemeCont.to.titleMedium,
               bold: selected,
               onPressed: () => cont.setDifficulty(d),
             );
@@ -77,13 +67,13 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
   Widget _buildDescriptionWidget(BuildContext context) {
     return Obx(() => Column(
       children: [
-        _buildHeaderWidget(context, cont.descriptionHeaderText),
+        HeaderWidget(text: cont.descriptionHeaderText),
         FTexts(
           cont.challenge!.getDetailDescription(
             difficulty: cont.difficulty,
             txs: true,
           ),
-          textColor: FTheme.outline,
+          textColor: ThemeCont.to.outline,
           highlightColor: cont.challenge!.type.color,
           wordWrap: true,
         ),
@@ -96,34 +86,34 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
       children: [
         Row(
           children: [
-            Icon(Icons.flag, color: FTheme.comment),
+            Icon(Icons.flag, color: ThemeCont.to.comment),
             SizedBox(width: 5.0.w),
             FText(
               cont.goalTitle,
-              style: FTheme.titleMedium,
-              color: FTheme.comment,
+              style: ThemeCont.to.titleMedium,
+              color: ThemeCont.to.comment,
             ),
           ],
         ),
         Row(
           children: [
-            Icon(Icons.people_alt, color: FTheme.comment),
+            Icon(Icons.people_alt, color: ThemeCont.to.comment),
             SizedBox(width: 5.0.w),
             FText(
               cont.maxMemberTitle,
-              style: FTheme.titleMedium,
-              color: FTheme.comment,
+              style: ThemeCont.to.titleMedium,
+              color: ThemeCont.to.comment,
             ),
           ],
         ),
         Row(
           children: [
-            Icon(Icons.date_range, color: FTheme.comment),
+            Icon(Icons.date_range, color: ThemeCont.to.comment),
             SizedBox(width: 5.0.w),
             FText(
               cont.periodTitle,
-              style: FTheme.titleMedium,
-              color: FTheme.comment,
+              style: ThemeCont.to.titleMedium,
+              color: ThemeCont.to.comment,
             ),
           ],
         ),
@@ -133,8 +123,8 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
             SizedBox(width: 5.0.w),
             FText(
               cont.pointTitle,
-              style: FTheme.titleMedium,
-              color: FTheme.comment,
+              style: ThemeCont.to.titleMedium,
+              color: ThemeCont.to.comment,
             ),
           ],
         ),
@@ -143,14 +133,14 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
   }
 
   Widget _buildValueColumnWidget(BuildContext context) {
-    Color color = FTheme.outline;
+    Color color = ThemeCont.to.outline;
     return Column(
       children: [
         Row(
           children: [
             FText(
               cont.goalValueText,
-              style: FTheme.titleMedium,
+              style: ThemeCont.to.titleMedium,
               color: color,
             ),
           ],
@@ -159,7 +149,7 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
           children: [
             FText(
               cont.maxMemberValueText,
-              style: FTheme.titleMedium,
+              style: ThemeCont.to.titleMedium,
               color: color,
             ),
           ],
@@ -168,7 +158,7 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
           children: [
             FText(
               cont.periodValueText,
-              style: FTheme.titleMedium,
+              style: ThemeCont.to.titleMedium,
               color: color,
             ),
           ],
@@ -177,7 +167,7 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
           children: [
             FText(
               cont.pointValueText,
-              style: FTheme.titleMedium,
+              style: ThemeCont.to.titleMedium,
               color: color,
             ),
           ],
@@ -189,7 +179,7 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
   Widget _buildInfoWidget(BuildContext context) {
     return Obx(() => Column(
       children: [
-        _buildHeaderWidget(context, cont.infoHeaderText),
+        HeaderWidget(text: cont.infoHeaderText),
         IntrinsicHeight(
           child: Row(
             children: [
@@ -200,7 +190,7 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
               VerticalDivider(
                 width: 30.0.w,
                 thickness: .3,
-                color: FTheme.comment,
+                color: ThemeCont.to.comment,
               ),
               Expanded(
                 flex: 3,
@@ -234,7 +224,7 @@ class _PartyCreatePageState extends FPageState<PartyCreatePage> {
                   SizedBox(height: 20.0.h),
                   FButton(
                     text: cont.createPartyText,
-                    textColor: FTheme.achro95,
+                    textColor: ThemeCont.achro95,
                     backgroundColor: cont.challenge!.type.color,
                     onPressed: cont.createPartyButtonPressed,
                     stretch: true,

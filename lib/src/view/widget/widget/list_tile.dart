@@ -1,4 +1,4 @@
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/controller/loading.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
@@ -72,14 +72,14 @@ class _FListTileState extends State<FListTile> with DarkPressable<FListTile> {
                 children: [
                   widget.titleWidget ?? FText(
                     widget.title ?? '',
-                    color: FTheme.text,
+                    color: ThemeCont.to.text,
                     bold: true,
                     maxLines: 2,
                   ),
                   widget.subtitleWidget ?? FText(
                     widget.subtitle ?? '',
-                    color: FTheme.comment,
-                    style: FTheme.bodyMedium,
+                    color: ThemeCont.to.comment,
+                    style: ThemeCont.to.bodyMedium,
                     maxLines: 3,
                   ),
                   if (widget.tags != null)

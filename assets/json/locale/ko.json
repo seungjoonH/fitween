@@ -31,7 +31,15 @@
     "applicants": "지원자",
     "history": "히스토리",
     "fpoint": "FPoints",
-    "notification": "알림"
+    "notification": "알림",
+    "settings": "설정",
+    "general": "일반 설정",
+    "oss-license": "오픈소스 라이선스",
+    "terms-of-use": "이용약관",
+    "privacy-policy": "개인정보 처리방침",
+    "report": "오류 제보 / 개선 요청",
+    "version": "버전",
+    "support": "고객지원"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -412,5 +420,32 @@
     "party-applied": "@{{object}} 파티에 지원자가 있습니다",
     "poke": "@{{object}}님이 콕 찔렀습니다",
     "party-banished": "@{{object}} 파티에서 추방되었습니다"
+  },
+  "settings": {
+    "general": "일반 설정",
+    "general-menu": {
+      "display": "디스플레이 설정",
+      "language": "언어 설정",
+      "display-type": {
+        "system": "시스템",
+        "light": "라이트모드",
+        "dark": "다크모드"
+      },
+      "language-type": {
+        "system": "시스템",
+        "english": "English",
+        "korean": "한국어"
+      }
+    },
+    "app-info": "앱 정보",
+    "app-info-menu": {
+      "fitween": "@{피트윈}이 뭔가요?",
+      "oss-license": "오픈소스 라이선스",
+      "terms-of-use": "이용약관",
+      "privacy-policy": "개인정보 처리방침",
+      "report": "오류 제보 / 개선 요청",
+      "version": "버전",
+      "support": "고객지원"
+    }
   }
 }

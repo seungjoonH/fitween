@@ -29,5 +29,7 @@ class SeeMorePageCont extends MainPageCont {
   }
 
   void fPointCardPressed() => FRoute.toFPoint();
+  void goalSettingCardPressed() => FRoute.toGoalSetting();
   void notificationButtonPressed() => FRoute.toNotification();
+  void settingsButtonPressed() => FRoute.toSettings();
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class FAppIcon extends StatelessWidget {
@@ -29,7 +29,7 @@ class FAppIcon extends StatelessWidget {
                 width: size.r,
                 height: size.r,
                 decoration: BoxDecoration(
-                  color: FTheme.backgroundAlt,
+                  color: ThemeCont.to.backgroundAlt,
                   borderRadius: BorderRadius.circular((size / 7).r),
                 ),
               ),
@@ -37,7 +37,7 @@ class FAppIcon extends StatelessWidget {
                 width: size.r * .95,
                 height: size.r * .95,
                 decoration: BoxDecoration(
-                  color: FTheme.colorA,
+                  color: ThemeCont.colorA,
                   borderRadius: BorderRadius.circular((size * .95 / 7).r),
                 ),
               ),

@@ -46,8 +46,8 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
                     colors: [
-                      FTheme.achro95,
-                      FTheme.achro5.withOpacity(.4),
+                      ThemeCont.achro95,
+                      ThemeCont.achro5.withOpacity(.4),
                     ],
                     stops: const [.0, .6],
                   ),
@@ -66,14 +66,14 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
       children: [
         FText(
           cont.challenge!.title,
-          style: FTheme.headlineMedium,
+          style: ThemeCont.to.headlineMedium,
           maxLines: 0,
         ),
         SizedBox(height: 10.0.h),
         FText(
           cont.challenge!.getDetailDescription(),
-          style: FTheme.titleSmall,
-          color: FTheme.outline,
+          style: ThemeCont.to.titleSmall,
+          color: ThemeCont.to.outline,
           maxLines: 0,
         ),
       ],
@@ -82,14 +82,14 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
 
   Widget _buildChallengeButtonWidget(BuildContext context) {
     return Obx(() {
-      Color textColor = FTheme.achro95;
-      Color leftButtonColor = FTheme.text;
+      Color textColor = ThemeCont.achro95;
+      Color leftButtonColor = ThemeCont.to.text;
       Color rightButtonColor = cont.challenge!.type.color;
 
       if (cont.isBookmarkedChallenge) {
         return FButton(
           text: cont.goToMyPartyText,
-          textColor: FTheme.achro95,
+          textColor: ThemeCont.achro95,
           backgroundColor: rightButtonColor,
           onPressed: cont.goToMyPartyButtonPressed,
           stretch: true,
@@ -99,7 +99,7 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
       if (cont.isAppliedChallenge) {
         return FButton(
           text: cont.goToAppliedPartyText,
-          textColor: FTheme.achro95,
+          textColor: ThemeCont.achro95,
           backgroundColor: rightButtonColor,
           onPressed: cont.goToAppliedPartyButtonPressed,
           stretch: true,
@@ -108,9 +108,9 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
 
       if (cont.isBookmarkedTypeOfChallenge
           || cont.isAppliedTypeOfChallenge) {
-        leftButtonColor = FTheme.unselected;
-        rightButtonColor = FTheme.unselected;
-        textColor = FTheme.text;
+        leftButtonColor = ThemeCont.to.unselected;
+        rightButtonColor = ThemeCont.to.unselected;
+        textColor = ThemeCont.to.text;
       }
 
       return Row(
@@ -145,7 +145,7 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
         Positioned.fill(
           child: Container(
             decoration: BoxDecoration(
-              border: Border.all(color: FTheme.outline),
+              border: Border.all(color: ThemeCont.to.outline),
               borderRadius: BorderRadius.vertical(top: Radius.circular(20.0.r)),
             ),
             child: Stack(
@@ -156,7 +156,7 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
                     borderRadius: BorderRadius.vertical(top: Radius.circular(20.0.r)),
                     child: ColorFiltered(
                       colorFilter: ColorFilter.mode(
-                        FTheme.backgroundAlt.withOpacity(.9),
+                        ThemeCont.to.backgroundAlt.withOpacity(.9),
                         BlendMode.modulate,
                       ),
                       child: Stack(
@@ -165,7 +165,7 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
                           Positioned.fill(
                             child: Container(
                               decoration: BoxDecoration(
-                                color: FTheme.backgroundAlt.withOpacity(.9),
+                                color: ThemeCont.to.backgroundAlt.withOpacity(.9),
                               ),
                             ),
                           ),
@@ -187,7 +187,7 @@ class _ChallengeDetailPageState extends FPageState<ChallengeDetailPage> {
                   margin: EdgeInsets.symmetric(vertical: 20.0.h),
                   width: 100.0.w, height: 10.0.h,
                   decoration: BoxDecoration(
-                    border: Border.all(color: FTheme.outline),
+                    border: Border.all(color: ThemeCont.to.outline),
                     borderRadius: BorderRadius.circular(10.0.r),
                   ),
                 ),

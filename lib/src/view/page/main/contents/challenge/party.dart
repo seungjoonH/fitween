@@ -41,7 +41,7 @@ class _PartyPageState extends FPageState<PartyPage> {
     return FCard(
       title: FText(
         cont.progressCardTitle,
-        style: FTheme.cardTitleStyle,
+        style: ThemeCont.to.cardTitleStyle,
       ),
       child: Column(
         children: [
@@ -59,8 +59,8 @@ class _PartyPageState extends FPageState<PartyPage> {
       children: [
         FText(
           cont.entireProgressText,
-          style: FTheme.titleSmall,
-          color: FTheme.comment,
+          style: ThemeCont.to.titleSmall,
+          color: ThemeCont.to.comment,
         ),
         SizedBox(height: 10.0.h),
         FLinearPercentIndicator(
@@ -68,16 +68,16 @@ class _PartyPageState extends FPageState<PartyPage> {
           height: 100.0.h,
           radius: 20.0.r,
           progressColor: cont.partyColor,
-          backgroundColor: FTheme.background,
+          backgroundColor: ThemeCont.to.background,
           animation: true,
         ),
         FText(
           cont.progressText,
-          style: FTheme.titleMedium,
+          style: ThemeCont.to.titleMedium,
           bold: cont.party!.completed,
           color: cont.party!.completed
               ? cont.partyColor
-              : FTheme.text,
+              : ThemeCont.to.text,
         ),
       ],
     ));
@@ -105,7 +105,7 @@ class _PartyPageState extends FPageState<PartyPage> {
                           backgroundColor: cont.party!.type.color,
                           child: Icon(
                             Icons.flag,
-                            color: FTheme.achro95,
+                            color: ThemeCont.achro95,
                             size: 16.0.r,
                           ),
                         ),
@@ -124,8 +124,8 @@ class _PartyPageState extends FPageState<PartyPage> {
                     duration: 300.ms,
                     child: FTexts(
                       cont.getMemberProgressText(member.key, mode),
-                      style: FTheme.bodySmall,
-                      highlightStyle: FTheme.titleSmall,
+                      style: ThemeCont.to.bodySmall,
+                      highlightStyle: ThemeCont.to.titleSmall,
                     ),
                   )).toList(),
                 ),
@@ -142,16 +142,16 @@ class _PartyPageState extends FPageState<PartyPage> {
       children: [
         Divider(
           thickness: 2,
-          color: FTheme.comment,
+          color: ThemeCont.to.comment,
           height: 20.0.h,
         ),
         FCopyButton(text: cont.party!.key),
         SizedBox(height: 10.0.h),
         FText(
           cont.shareText,
-          style: FTheme.bodyLarge,
+          style: ThemeCont.to.bodyLarge,
           align: TextAlign.center,
-          color: FTheme.outline,
+          color: ThemeCont.to.outline,
           maxLines: 0,
         ),
       ],
@@ -166,14 +166,14 @@ class _PartyPageState extends FPageState<PartyPage> {
           children: [
             FText(
               cont.memberCountText,
-              style: FTheme.titleSmall,
-              color: FTheme.comment,
+              style: ThemeCont.to.titleSmall,
+              color: ThemeCont.to.comment,
             ),
             if ( cont.isLeader && !cont.isOnly)
             FIconButton(
               icon: const Icon(Icons.settings),
               size: 35.0.r,
-              iconColor: FTheme.comment,
+              iconColor: ThemeCont.to.comment,
               onPressed: cont.memberSettingButtonPressed,
             ),
           ].separateW(width: 5.0.r),
@@ -206,8 +206,8 @@ class _PartyPageState extends FPageState<PartyPage> {
     return FButton(
       text: cont.giveUpText,
       stretch: true,
-      textColor: FTheme.achro95,
-      backgroundColor: FTheme.error,
+      textColor: ThemeCont.achro95,
+      backgroundColor: ThemeCont.error,
       onPressed: cont.giveUpButtonPressed,
     );
   }
@@ -216,7 +216,7 @@ class _PartyPageState extends FPageState<PartyPage> {
     return FButton(
       text: cont.applyButtonText,
       stretch: true,
-      backgroundColor: FTheme.selected,
+      backgroundColor: ThemeCont.to.selected,
       onPressed: cont.applyButtonPressed,
     );
   }
@@ -225,7 +225,7 @@ class _PartyPageState extends FPageState<PartyPage> {
     return FButton(
       text: cont.cancelButtonText,
       stretch: true,
-      backgroundColor: FTheme.selected,
+      backgroundColor: ThemeCont.to.selected,
       onPressed: cont.cancelButtonPressed,
     );
   }
@@ -234,7 +234,7 @@ class _PartyPageState extends FPageState<PartyPage> {
     return FButton(
       text: cont.applyButtonText,
       stretch: true,
-      backgroundColor: FTheme.unselected,
+      backgroundColor: ThemeCont.to.unselected,
       onPressed: cont.disabledButtonPressed,
     );
   }
@@ -282,12 +282,12 @@ class _PartyPageState extends FPageState<PartyPage> {
             children: [
               Icon(
                 Icons.remove_red_eye,
-                color: FTheme.comment,
+                color: ThemeCont.to.comment,
               ),
               SizedBox(width: 5.0.r),
               FText(
                 cont.party!.views.localizing(),
-                color: FTheme.comment,
+                color: ThemeCont.to.comment,
               ),
             ],
           ),

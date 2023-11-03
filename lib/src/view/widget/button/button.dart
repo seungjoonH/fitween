@@ -66,12 +66,12 @@ class _FButtonState extends State<FButton> with ScalePressable<FButton> {
 
   @override
   Widget buildContent(BuildContext context) {
-    Color textColorAlt = widget.textColor ?? FTheme.backgroundAlt;
-    Color backgroundColorAlt = widget.backgroundColor ?? FTheme.text;
-    Color borderColorAlt = widget.borderColor ?? FTheme.stroke;
+    Color textColorAlt = widget.textColor ?? ThemeCont.to.backgroundAlt;
+    Color backgroundColorAlt = widget.backgroundColor ?? ThemeCont.to.text;
+    Color borderColorAlt = widget.borderColor ?? ThemeCont.to.stroke;
 
     final style = widget.style
-        ?? FTheme.bodyLarge;
+        ?? ThemeCont.to.bodyLarge;
     final border = widget.border
         ? Border.all(color: borderColorAlt, width: 1.0)
         : const Border();
@@ -133,14 +133,14 @@ class _FCopyButtonState extends State<FCopyButton> {
       children: [
         FText(
           widget.text,
-          style: FTheme.titleLarge,
-          color: FTheme.backgroundAlt,
+          style: ThemeCont.to.titleLarge,
+          color: ThemeCont.to.backgroundAlt,
           bold: true,
         ),
         SizedBox(width: 10.0.w),
         Icon(
           Icons.copy,
-          color: FTheme.backgroundAlt,
+          color: ThemeCont.to.backgroundAlt,
         ),
       ],
     );
@@ -151,14 +151,14 @@ class _FCopyButtonState extends State<FCopyButton> {
       children: [
         FText(
           LangCont.tr('word.copied').capitalize!,
-          style: FTheme.titleLarge,
-          color: FTheme.backgroundAlt,
+          style: ThemeCont.to.titleLarge,
+          color: ThemeCont.to.backgroundAlt,
           bold: true,
         ),
         SizedBox(width: 10.0.w),
         Icon(
           Icons.check,
-          color: FTheme.backgroundAlt,
+          color: ThemeCont.to.backgroundAlt,
         ),
       ],
     );
@@ -170,7 +170,7 @@ class _FCopyButtonState extends State<FCopyButton> {
       onPressed: _copy,
       stretch: true,
       shrinkWrap: true,
-      backgroundColor: FTheme.outline,
+      backgroundColor: ThemeCont.to.outline,
       child: _copied
           ? _buildCopiedWidget(context)
           : _buildBeforeCopyWidget(context),

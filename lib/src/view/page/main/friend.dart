@@ -1,5 +1,5 @@
 import 'package:fitween/global/global.dart';
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/page/page.dart';
@@ -46,7 +46,7 @@ class _FriendPageState extends FPageState<FriendPage> {
           padding: EdgeInsets.symmetric(vertical: 20.0.h),
           child: FText(
             cont.noFriendsText,
-            color: FTheme.comment,
+            color: ThemeCont.to.comment,
             align: TextAlign.center,
             maxLines: 2,
           ),
@@ -71,8 +71,8 @@ class _FriendPageState extends FPageState<FriendPage> {
         return FCard(
         title: FText(
           cont.friendsCountText,
-          color: FTheme.comment,
-          style: FTheme.commentStyle,
+          color: ThemeCont.to.comment,
+          style: ThemeCont.to.commentStyle,
         ),
         icon: Icon(iconData),
         onPressed: cont.toggleMode,
@@ -92,7 +92,7 @@ class _FriendPageState extends FPageState<FriendPage> {
         actions: [
           FIconButton(
             icon: const Icon(Icons.search),
-            iconColor: FTheme.text,
+            iconColor: ThemeCont.to.text,
             onPressed: cont.friendSearchButtonPressed,
           ),
         ],

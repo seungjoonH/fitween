@@ -30,6 +30,9 @@ class FRoute {
     '/contents/battle': const BattlePage(),
     '/see-more': const SeeMorePage(),
     '/see-more/notification': const NotificationPage(),
+    '/see-more/settings/general': const GeneralSettingPage(),
+    '/see-more/settings/app-info': const AppInfoPage(),
+    '/see-more/settings': const SettingsPage(),
     '/fpoint': const FPointPage(),
     '/fpoint/history': const FPointHistoryPage(),
   };
@@ -88,6 +91,9 @@ class FRoute {
   static void toBattle() => Get.toNamed('/contents/battle');
   static void toSeeMore() => Get.offAllNamed('/see-more');
   static void toNotification() => Get.toNamed('/see-more/notification');
+  static void toSettings() => Get.toNamed('/see-more/settings');
+  static void toGeneralSetting() => Get.toNamed('/see-more/settings/general');
+  static void toAppInfo() => Get.toNamed('/see-more/settings/app-info');
   static void toFPoint() => Get.toNamed('/fpoint');
   static void toFPointHistory() => Get.toNamed('/fpoint/history');
 }

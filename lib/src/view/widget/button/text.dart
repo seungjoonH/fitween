@@ -1,4 +1,4 @@
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +41,7 @@ class _FTextButtonState extends State<FTextButton> with DarkPressable<FTextButto
       text: widget.text,
       style: widget.style,
       bold: widget.bold,
-      textColor: widget.textColor ?? FTheme.text,
+      textColor: widget.textColor ?? ThemeCont.to.text,
       backgroundColor: Colors.transparent,
       border: widget.border,
       onPressed: widget.onPressed,

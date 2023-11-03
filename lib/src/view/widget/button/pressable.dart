@@ -1,4 +1,4 @@
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -178,7 +178,7 @@ mixin DarkPressable<T extends StatefulWidget> on State<T> {
         if (allowPressEffect) {
           _scale = pressedScale;
           _opacity = .1;
-          _tintColor = FTheme.text;
+          _tintColor = ThemeCont.to.text;
         }
       });
     };

@@ -1,5 +1,5 @@
 import 'package:basic_utils/basic_utils.dart';
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,7 +19,7 @@ enum FIcons {
   static String filePath = 'assets/image/icon/';
   String get fileName => '${StringUtils.camelCaseToLowerUnderscore(name)}.svg';
   String assetPath(bool selected) {
-    String theme = FTheme.isLightMode ? 'light' : 'dark';
+    String theme = ThemeCont.to.isLightMode ? 'light' : 'dark';
     if (!selected) return '${filePath}unselected/$fileName';
     return '${filePath}selected/$theme/$fileName';
   }
@@ -48,7 +48,7 @@ class FIcon extends StatelessWidget {
         Container(
           width: 8.0.r, height: 8.0.r,
           decoration: const BoxDecoration(
-            color: FTheme.error,
+            color: ThemeCont.error,
             shape: BoxShape.circle,
           ),
         ),

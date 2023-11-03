@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 class AdventurePageCont extends PageCont {
   static AdventurePageCont get to => Get.find<AdventurePageCont>();
   static String get topCloudAsset {
-    String dayOrNight = FTheme.isLightMode ? 'day' : 'night';
+    String dayOrNight = ThemeCont.to.isLightMode ? 'day' : 'night';
     return 'assets/image/page/contents/adventure/top_cloud_$dayOrNight.png';
   }
 

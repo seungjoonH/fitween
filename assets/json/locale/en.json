@@ -31,7 +31,15 @@
     "applicants": "Applicants",
     "history": "History",
     "fpoint": "FPoints",
-    "notification": "Notification"
+    "notification": "Notification",
+    "settings": "Settings",
+    "general": "General Settings",
+    "oss-license": "Open-source Licenses",
+    "terms-of-use": "Term of Use",
+    "privacy-policy": "Privacy Policy",
+    "report": "Report",
+    "version": "Version",
+    "support": "Support"
   },
   "hint": {
     "your-nickname": "Input your nickname",
@@ -454,5 +462,32 @@
     "party-applied": "There is a new applicant for the party @{{object}}",
     "poke": "@{{object}} poked you",
     "party-banished": "Banished from the party @{{object}}"
+  },
+  "settings": {
+    "general": "General Settings",
+    "general-menu": {
+      "display": "Display Setting",
+      "language": "Language Setting",
+      "display-type": {
+        "system": "System",
+        "light": "Light",
+        "dark": "Dark"
+      },
+      "language-type": {
+        "system": "System",
+        "english": "English",
+        "korean": "한국어"
+      }
+    },
+    "app-info": "App Info",
+    "app-info-menu": {
+      "fitween": "What is @{Fitween}?",
+      "oss-license": "Open-source License",
+      "terms-of-use": "Terms of Use",
+      "privacy-policy": "Privacy Policy",
+      "report": "Report",
+      "version": "Version",
+      "support": "Support"
+    }
   }
 }

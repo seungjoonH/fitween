@@ -60,6 +60,8 @@ class AuthCont {
       FRoute.toOnboarding(); return;
     }
 
+    ThemeCont.to.init();
+    LangCont.to.init();
     loginPageCont.startLoading('fetch');
     await HealthDataCont.fetchDataAfterLogin();
     await loginPageCont.endLoading();

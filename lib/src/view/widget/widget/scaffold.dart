@@ -1,10 +1,11 @@
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FScaffold extends Scaffold {
@@ -37,6 +38,9 @@ class FScaffold extends Scaffold {
   EdgeInsets get _bottomWidgetPadding => _padding.copyWith(
     bottom: bottomPadding ?? 80.0.h,
   );
+
+  @override
+  Color? get backgroundColor => super.backgroundColor ?? ThemeCont.to.background;
 
   Widget get _portraitBody => Stack(
     alignment: Alignment.bottomCenter,
@@ -111,6 +115,7 @@ class FRefreshScaffold extends FScaffold {
     super.bottomNavigationBar,
     super.width,
     super.height,
+    super.backgroundColor,
     required this.refreshController,
     required this.onRefresh,
     this.scrollController,
@@ -132,8 +137,8 @@ class FRefreshScaffold extends FScaffold {
       refreshController.loadComplete();
     },
     header: MaterialClassicHeader(
-      color: FTheme.textAlt,
-      backgroundColor: FTheme.surface,
+      color: ThemeCont.to.textAlt,
+      backgroundColor: ThemeCont.to.surface,
       offset: 40.0.h,
     ),
     child: SingleChildScrollView(
@@ -155,6 +160,7 @@ class FMainScaffold extends FRefreshScaffold {
     super.bottomPadding,
     super.width,
     super.height,
+    super.backgroundColor,
     required super.refreshController,
     required super.onRefresh,
   });

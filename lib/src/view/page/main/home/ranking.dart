@@ -35,11 +35,11 @@ class _RankingPageState extends FPageState<RankingPage> {
     double percent = rankingCont.getPercentOf(type, user.uid, date);
     bool finished = rankingCont.getLeftTime(date) == Duration.zero;
 
-    Color progressColor = FTheme.unselected;
+    Color progressColor = ThemeCont.to.unselected;
 
     if (isMe) {
       progressColor = finished
-          ? FTheme.selected
+          ? ThemeCont.to.selected
           : homeCont.activeType.color;
     }
 
@@ -50,7 +50,7 @@ class _RankingPageState extends FPageState<RankingPage> {
           children: [
             RankIcon(rank: rank),
             SizedBox(width: 10.0.w),
-            FText(user.nickname, style: FTheme.bodyLarge),
+            FText(user.nickname, style: ThemeCont.to.bodyLarge),
           ],
         ),
         SizedBox(height: 5.0.h),
@@ -79,10 +79,10 @@ class _RankingPageState extends FPageState<RankingPage> {
               return FTextButton(
                 text: period.locale.capitalize!,
                 bold: isSelected,
-                style: FTheme.bodyLarge,
+                style: ThemeCont.to.bodyLarge,
                 textColor: isSelected
                     ? homeCont.activeType.color
-                    : FTheme.comment,
+                    : ThemeCont.to.comment,
                 onPressed: () => rankingCont.changePeriod(period),
               );
             }).toList(),
@@ -103,23 +103,23 @@ class _RankingPageState extends FPageState<RankingPage> {
           children: [
             FText(
               dateToString('yyyy.MM.dd', rankingCont.getStartTime(ranking.date))!,
-              color: FTheme.comment,
-              style: FTheme.commentStyle,
+              color: ThemeCont.to.comment,
+              style: ThemeCont.to.commentStyle,
             ),
             FText(
               rankingCont.getLeftTime(ranking.date).left,
-              color: FTheme.comment,
-              style: FTheme.commentStyle,
+              color: ThemeCont.to.comment,
+              style: ThemeCont.to.commentStyle,
             ),
           ],
         ),
         SizedBox(height: 5.0.h),
         FLinearPercentIndicator(
           percent: percent,
-          backgroundColor: FTheme.background,
+          backgroundColor: ThemeCont.to.background,
           progressColor: finished
-              ? FTheme.unselected
-              : FTheme.colorA,
+              ? ThemeCont.to.unselected
+              : ThemeCont.colorA,
           height: 10.0.h,
         ),
         SizedBox(height: 30.0.h),

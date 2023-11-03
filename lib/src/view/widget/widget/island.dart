@@ -70,7 +70,7 @@ class _FIslandWidgetState extends State<FIslandWidget> {
         : widget.level.imageUrl;
   }
 
-  bool get _isNight => FTheme.isDarkMode;
+  bool get _isNight => ThemeCont.to.isDarkMode;
 
   @override
   Widget build(BuildContext context) {
@@ -89,9 +89,9 @@ class _FIslandWidgetState extends State<FIslandWidget> {
                 colors: [
                   Color.alphaBlend(
                     Colors.yellow.withOpacity(.5),
-                    FTheme.darkSea,
+                    ThemeCont.darkSea,
                   ),
-                  FTheme.darkSea.withOpacity(.0),
+                  ThemeCont.darkSea.withOpacity(.0),
                 ],
               ),
             ),

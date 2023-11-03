@@ -70,12 +70,12 @@ class _AdventurePageState extends FPageState<AdventurePage> {
               vertical: 2.0.r,
             ),
             decoration: BoxDecoration(
-              color: FTheme.achro95.withOpacity(.3),
+              color: ThemeCont.achro95.withOpacity(.3),
               borderRadius: BorderRadius.circular(5.0.r),
             ),
             child: FText(
               cont.activeType.withUnit(level.amount.main),
-              style: FTheme.bodySmall,
+              style: ThemeCont.to.bodySmall,
               align: TextAlign.end,
               color: cont.activeType.color
             ),
@@ -133,9 +133,9 @@ class _AdventurePageState extends FPageState<AdventurePage> {
     return FScaffold(
       appBar: FAppBar(),
       extendBodyBehindAppBar: true,
-      backgroundColor: FTheme.isLightMode
-          ? FTheme.sea
-          : FTheme.darkSea,
+      backgroundColor: ThemeCont.to.isLightMode
+          ? ThemeCont.sea
+          : ThemeCont.darkSea,
       autoPadding: false,
       body: _buildBody(context),
     );

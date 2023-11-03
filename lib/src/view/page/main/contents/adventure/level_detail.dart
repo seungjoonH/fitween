@@ -23,7 +23,7 @@ class _LevelDetailPageState extends FPageState<LevelDetailPage> {
     return FLinearPercentIndicator(
       percent: cont.level!.getPercent(cont.amount),
       progressColor: adventureCont.activeType.color,
-      backgroundColor: FTheme.achro95.withOpacity(.5),
+      backgroundColor: ThemeCont.achro95.withOpacity(.5),
       centerText: cont.centerText,
       animation: true,
       animateFromLastPercent: true,
@@ -39,7 +39,7 @@ class _LevelDetailPageState extends FPageState<LevelDetailPage> {
             Expanded(
               child: FText(
                 cont.level!.title,
-                style: FTheme.headlineMedium,
+                style: ThemeCont.to.headlineMedium,
                 maxLines: 2,
               ),
             ),
@@ -49,7 +49,7 @@ class _LevelDetailPageState extends FPageState<LevelDetailPage> {
                 horizontal: 7.0.w, vertical: 1.0.h,
               ),
               decoration: BoxDecoration(
-                color: FTheme.achro95.withOpacity(.3),
+                color: ThemeCont.achro95.withOpacity(.3),
                 borderRadius: BorderRadius.circular(8.0.r),
               ),
               child: FText(
@@ -63,7 +63,7 @@ class _LevelDetailPageState extends FPageState<LevelDetailPage> {
         SizedBox(height: 20.0.h),
         FText(
           cont.level!.description,
-          style: FTheme.titleSmall,
+          style: ThemeCont.to.titleSmall,
           maxLines: 0,
         ),
         SizedBox(height: 40.0.h),
@@ -103,9 +103,9 @@ class _LevelDetailPageState extends FPageState<LevelDetailPage> {
       child: FScaffold(
         appBar: FAppBar(),
         extendBodyBehindAppBar: true,
-        backgroundColor: FTheme.isLightMode
-            ? FTheme.sea
-            : FTheme.darkSea,
+        backgroundColor: ThemeCont.to.isLightMode
+            ? ThemeCont.sea
+            : ThemeCont.darkSea,
         body: _buildBody(context),
       ),
     );

@@ -12,13 +12,14 @@ class Level extends Model {
   static const String voidUrl = '$_asset/void.png';
 
   late String _id;
-  late String _title;
-  String? _description;
+  late Map<String, String> _titles;
+  Map<String, String>? _descriptions;
   late num _amount;
   late bool _activate;
 
-  String get title => _title;
-  String get description => _description ?? '';
+  String get _locale => LangCont.to.language.code;
+  String get title => _titles[_locale]!;
+  String get description => _descriptions![_locale]!;
   bool get activate => _activate;
   Amount get amount => [
     DistanceAmount()..km = _amount,
@@ -57,9 +58,15 @@ class Level extends Model {
   @override
   void fromJson(Map<String, dynamic> json) {
     _id = json['id'].toString();
-    _title = json['title'][LangCont.locale];
+    _titles = Map.fromIterables(
+      json['title'].keys,
+      json['title'].values.map<String>((e) => e.toString()),
+    );
     _amount = json['amount'];
-    _description = json['description'][LangCont.locale];
+    _descriptions = Map.fromIterables(
+      json['description'].keys,
+      json['description'].values.map<String>((e) => e.toString()),
+    );
     _activate = json['activate'];
   }
 

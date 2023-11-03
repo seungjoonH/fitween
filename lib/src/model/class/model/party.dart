@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 enum Difficulty {
   easy, normal, hard;
   String get locale => LangCont.tr('difficulty.$name');
-  Color get color => [FTheme.bronze, FTheme.silver, FTheme.gold][index];
+  Color get color => [ThemeCont.bronze, ThemeCont.silver, ThemeCont.gold][index];
   bool get active => activeValues.contains(this);
 
   static Difficulty toEnum(String string) =>

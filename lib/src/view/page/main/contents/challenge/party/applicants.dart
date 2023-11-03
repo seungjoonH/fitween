@@ -23,8 +23,8 @@ class _PartyApplicantsPageState extends FPageState<PartyApplicantsPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        FText(text, style: FTheme.commentStyle, color: FTheme.bar, bold: true),
-        Divider(thickness: .5, color: FTheme.comment),
+        FText(text, style: ThemeCont.to.commentStyle, color: ThemeCont.to.bar, bold: true),
+        Divider(thickness: .5, color: ThemeCont.to.comment),
       ],
     );
   }
@@ -45,8 +45,8 @@ class _PartyApplicantsPageState extends FPageState<PartyApplicantsPage> {
             FButton(
               text: cont.rejectButtonText,
               shrinkWrap: true,
-              textColor: FTheme.achro95,
-              backgroundColor: FTheme.error,
+              textColor: ThemeCont.achro95,
+              backgroundColor: ThemeCont.error,
               onPressed: () => cont.rejectButtonPressed(applicant),
             ),
           ],
@@ -60,7 +60,7 @@ class _PartyApplicantsPageState extends FPageState<PartyApplicantsPage> {
       return Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          border: Border.all(color: FTheme.bar, width: 1.0.r),
+          border: Border.all(color: ThemeCont.to.bar, width: 1.0.r),
           borderRadius: BorderRadius.circular(10.0.r),
         ),
         padding: EdgeInsets.all(30.0.r),
@@ -68,8 +68,8 @@ class _PartyApplicantsPageState extends FPageState<PartyApplicantsPage> {
         alignment: Alignment.center,
         child: FText(
           cont.noApplicantsText,
-          color: FTheme.bar,
-          style: FTheme.titleMedium,
+          color: ThemeCont.to.bar,
+          style: ThemeCont.to.titleMedium,
         ),
       );
     }

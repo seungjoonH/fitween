@@ -3,7 +3,7 @@ import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 
 enum DialogType { none, mono, bi }
 
@@ -20,8 +20,8 @@ class DialogButtonData {
     Color? backgroundColor,
     required this.text,
     required this.onPressed,
-  }) : textColor = textColor ?? FTheme.backgroundAlt,
-        backgroundColor = backgroundColor ?? FTheme.textAlt;
+  }) : textColor = textColor ?? ThemeCont.to.backgroundAlt,
+        backgroundColor = backgroundColor ?? ThemeCont.to.textAlt;
 }
 
 Future<bool> showFDialog({
@@ -99,7 +99,7 @@ Future<bool> showFDialog({
   }
 
   if (content is FText) {
-    content = content.copy(style: FTheme.textTheme.bodyLarge);
+    content = content.copy(style: ThemeCont.to.textTheme.bodyLarge);
   }
 
   return await Get.dialog<bool>(
@@ -185,7 +185,7 @@ class _FAlertDialogState extends State<FAlertDialog> {
           DialogButtonData(
             widget.type,
             text: widget.buttonText ?? _ok,
-            backgroundColor: widget.color ?? FTheme.text,
+            backgroundColor: widget.color ?? ThemeCont.to.text,
             onPressed: widget.onPressed!,
           ),
         ];
@@ -195,15 +195,15 @@ class _FAlertDialogState extends State<FAlertDialog> {
           DialogButtonData(
             widget.type,
             text: widget.leftText ?? _cancel,
-            textColor: widget.leftTextColor ?? FTheme.backgroundAlt,
-            backgroundColor: widget.leftBackgroundColor ?? FTheme.unselected,
+            textColor: widget.leftTextColor ?? ThemeCont.to.backgroundAlt,
+            backgroundColor: widget.leftBackgroundColor ?? ThemeCont.to.unselected,
             onPressed: widget.leftPressed!,
           ),
           DialogButtonData(
             widget.type,
             text: widget.rightText ?? _ok,
-            textColor: widget.rightTextColor ?? FTheme.backgroundAlt,
-            backgroundColor: widget.rightBackgroundColor ?? FTheme.text,
+            textColor: widget.rightTextColor ?? ThemeCont.to.backgroundAlt,
+            backgroundColor: widget.rightBackgroundColor ?? ThemeCont.to.text,
             onPressed: widget.rightPressed!,
           ),
         ];
@@ -216,13 +216,13 @@ class _FAlertDialogState extends State<FAlertDialog> {
 
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: radius),
-      backgroundColor: FTheme.backgroundAlt,
+      backgroundColor: ThemeCont.to.backgroundAlt,
       title: Container(
         padding: widget.titlePadding,
         child: FText(
           widget.title ?? '',
           bold: true,
-          style: FTheme.titleLarge,
+          style: ThemeCont.to.titleLarge,
         ),
       ),
       titlePadding: EdgeInsets.zero,
@@ -258,7 +258,7 @@ class _FAlertDialogState extends State<FAlertDialog> {
                           child: FText(
                             datum.text,
                             color: datum.textColor,
-                            style: FTheme.labelLarge,
+                            style: ThemeCont.to.labelLarge,
                           ),
                         ),
                       ),

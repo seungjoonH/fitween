@@ -11,3 +11,4 @@ export './loading.dart';
 export './notification.dart';
 export './point.dart';
 export './ranking.dart';
+export './theme.dart';

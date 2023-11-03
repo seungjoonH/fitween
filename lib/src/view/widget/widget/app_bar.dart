@@ -1,7 +1,7 @@
 import 'package:fitween/route.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -30,8 +30,8 @@ class FAppBar extends AppBar {
     if (text != null) {
       return FText(
         text!,
-        style: FTheme.headlineMedium,
-        color: textColor ?? FTheme.text,
+        style: ThemeCont.to.headlineMedium,
+        color: textColor ?? ThemeCont.to.text,
       );
     }
     return child ?? Container();
@@ -80,7 +80,7 @@ class FPointAppBar extends FAppBar {
 //     this.textColor,
 //     this.leading,
 //     this.actions,
-//     this.backColor = FTheme.grey,
+//     this.backColor = ThemeCont.to.grey,
 //   }) : super(key: key);
 //
 //   final String? title;
@@ -99,7 +99,7 @@ class FPointAppBar extends FAppBar {
 //         elevation: 0.0,
 //         title: FText(
 //           title ?? '',
-//           style: FTheme.headlineSmall,
+//           style: ThemeCont.to.headlineSmall,
 //           bold: true,
 //           color: textColor,
 //         ),
@@ -131,9 +131,9 @@ class FPointAppBar extends FAppBar {
 //   Widget build(BuildContext context) {
 //     return AppBar(
 //       elevation: 0.0,
-//       iconTheme: IconThemeData(color: FTheme.black),
+//       iconTheme: IconThemeData(color: ThemeCont.to.black),
 //       backgroundColor: color,
-//       title: FText(title ?? '', style: FTheme.headlineMedium),
+//       title: FText(title ?? '', style: ThemeCont.to.headlineMedium),
 //       leading: leading,
 //       actions: actions,
 //     );

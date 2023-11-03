@@ -28,8 +28,8 @@ class _FPointPageState extends FPageState<FPointPage> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            FTheme.point.withOpacity(.0),
-            FTheme.background,
+            ThemeCont.to.point.withOpacity(.0),
+            ThemeCont.to.background,
           ],
         ),
       ),
@@ -51,8 +51,8 @@ class _FPointPageState extends FPageState<FPointPage> {
               suffix: ' FP',
               thousandSeparator: ',',
               duration: 1.s,
-              textStyle: FTheme.headlineMedium
-                  ?.copyWith(color: FTheme.point),
+              textStyle: ThemeCont.to.headlineMedium
+                  ?.copyWith(color: ThemeCont.to.point),
             )),
           ),
         ],
@@ -77,8 +77,8 @@ class _FPointPageState extends FPageState<FPointPage> {
   }
 
   Widget _buildLeadingCircleWidget(BuildContext context, PointHistoryData data) {
-    Color color = data.earned ? FTheme.colorB : FTheme.colorC;
-    Color blended = Color.alphaBlend(color, FTheme.background);
+    Color color = data.earned ? ThemeCont.colorB : ThemeCont.colorC;
+    Color blended = Color.alphaBlend(color, ThemeCont.to.background);
 
     return Container(
       width: 45.0.r,
@@ -90,8 +90,8 @@ class _FPointPageState extends FPageState<FPointPage> {
       alignment: Alignment.center,
       child: FText(
         data.amountWithSign,
-        color: FTheme.achro95,
-        style: FTheme.bodySmall,
+        color: ThemeCont.achro95,
+        style: ThemeCont.to.bodySmall,
         bold: true,
       ),
     );
@@ -108,8 +108,8 @@ class _FPointPageState extends FPageState<FPointPage> {
               width: 60.0.w,
               child: Obx(() => FText(
                 cont.now.difference(h.date).ago,
-                style: FTheme.bodyMedium,
-                color: FTheme.comment,
+                style: ThemeCont.to.bodyMedium,
+                color: ThemeCont.to.comment,
               )),
             ),
             SizedBox(width: 15.0.w),
@@ -117,7 +117,7 @@ class _FPointPageState extends FPageState<FPointPage> {
               child: FText(
                 h.content,
                 bold: true,
-                style: FTheme.bodyLarge,
+                style: ThemeCont.to.bodyLarge,
                 maxLines: 0,
               ),
             ),

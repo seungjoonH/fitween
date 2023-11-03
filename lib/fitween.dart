@@ -1,13 +1,11 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/local.dart';
 import 'package:flutter/material.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/route.dart';
-import 'package:fitween/src/controller/get.dart';
-import 'package:fitween/global/theme.dart';
-import 'package:fitween/src/controller/page.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -46,6 +44,9 @@ class _FitweenState extends State<Fitween> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ThemeCont());
+    Get.put(LangCont());
+
     if (Platform.isIOS) setTimeError();
     return ScreenUtilInit(
       designSize: const Size(360, 800),
@@ -60,14 +61,14 @@ class _FitweenState extends State<Fitween> {
           debugShowCheckedModeBanner: false,
           localizationsDelegates: context.localizationDelegates,
           supportedLocales: context.supportedLocales,
-          locale: context.locale,
+          locale: LangCont.to.getLocale ?? context.locale,
           theme: ThemeData(
-            textTheme: FTheme.textTheme,
-            scaffoldBackgroundColor: FTheme.background,
+            textTheme: ThemeCont.to.textTheme,
+            scaffoldBackgroundColor: ThemeCont.to.background,
             appBarTheme: AppBarTheme(
               backgroundColor: Colors.transparent,
               iconTheme: IconThemeData(
-                color: FTheme.text,
+                color: ThemeCont.to.text,
                 size: 25.0.r,
               ),
             ),

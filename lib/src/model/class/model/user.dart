@@ -53,6 +53,8 @@ class FUser extends Model {
   num get height => info!.height;
   bool get isAmin => info!.isAdmin;
   bool get isAppleInspector => info!.isAppleInspector;
+  Language get language => info!.language;
+  ThemeMode get themeMode => info!.themeMode;
 
   int get age => dateOfBirth.age;
   int get generation => dateOfBirth.generation;

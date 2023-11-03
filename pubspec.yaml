@@ -110,7 +110,8 @@ flutter:
     - assets/image/page/home/rotation/
     - assets/image/page/onboarding/
     - assets/image/page/goal_setting/
-    - assets/image/page/see_more/goal_edit/
+    - assets/image/page/see_more/settings/selected/
+    - assets/image/page/see_more/settings/unselected/
     - assets/image/widget/dialog/
     - assets/image/widget/ranking/
     - assets/json/locale/

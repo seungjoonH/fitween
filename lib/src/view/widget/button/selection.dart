@@ -19,13 +19,13 @@ class FSelectionButton<T> extends StatelessWidget {
   final ButtonFieldValidatorCont<T> validator;
   final double? interval;
 
-  Color get _backgroundColor => FTheme.background;
-  Color get _textColor => validator.coloring ? FTheme.error : FTheme.stroke;
-  Color get _borderColor => validator.coloring ? FTheme.error : FTheme.stroke;
+  Color get _backgroundColor => ThemeCont.to.background;
+  Color get _textColor => validator.coloring ? ThemeCont.error : ThemeCont.to.stroke;
+  Color get _borderColor => validator.coloring ? ThemeCont.error : ThemeCont.to.stroke;
 
   Widget _buildButton(BuildContext context, T t) {
     bool selected = validator.value == t;
-    Color backgroundColor = selected ? FTheme.text : _backgroundColor;
+    Color backgroundColor = selected ? ThemeCont.to.text : _backgroundColor;
     Color textColor = selected ? _backgroundColor : _textColor;
     Color borderColor = _borderColor;
 
@@ -94,7 +94,7 @@ class _FTypeSelectionButtonState extends State<FTypeSelectionButton> {
   Widget _buildSelectionButtonWidget(BuildContext context, FType type) {
     bool isSelected = _selected == type;
     Color color = isSelected ? type.color
-        : Color.alphaBlend(FTheme.backgroundAlt.withOpacity(.3), type.color);
+        : Color.alphaBlend(ThemeCont.to.backgroundAlt.withOpacity(.3), type.color);
 
     return ScalePressableWidget(
       onPressed: () {
@@ -111,7 +111,7 @@ class _FTypeSelectionButtonState extends State<FTypeSelectionButton> {
           child: FText(
             type.localeShort,
             bold: true,
-            color: FTheme.achro95,
+            color: ThemeCont.achro95,
             align: TextAlign.center,
           ),
         ),

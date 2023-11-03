@@ -27,10 +27,10 @@ class _ContentsPageState extends FPageState<ContentsPage> {
       height: 150.0.h,
       title: FText(
         content.cardTitle,
-        style: FTheme.cardTitleStyle,
-        color: FTheme.achro95,
+        style: ThemeCont.to.cardTitleStyle,
+        color: ThemeCont.achro95,
       ),
-      iconColor: FTheme.achro95,
+      iconColor: ThemeCont.achro95,
       onPressed: () => cont.contentCardPressed(content),
     );
   }

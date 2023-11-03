@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitween/global/string.dart';
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/controller/lang.dart';
 import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/controller/validator/validator.dart';
@@ -46,8 +46,8 @@ class _RegisterPageState extends FPageState {
         children: [
           FText(
             type.locale.capitalize!,
-            style: FTheme.titleLarge,
-            color: FTheme.text,
+            style: ThemeCont.to.titleLarge,
+            color: ThemeCont.to.text,
           ),
           SizedBox(height: 10.0.h),
           FInputField(validator: validator),
@@ -76,8 +76,8 @@ class _RegisterPageState extends FPageState {
         children: [
           FText(
             RegisterFieldType.sex.locale.capitalize!,
-            style: FTheme.titleLarge,
-            color: FTheme.text,
+            style: ThemeCont.to.titleLarge,
+            color: ThemeCont.to.text,
           ),
           SizedBox(height: 10.0.h),
           FSelectionButton<Sex>(
@@ -147,8 +147,8 @@ class _RegisterPageState extends FPageState {
   }
 
   Widget _buildNumberPickerField(BuildContext context, RegisterFieldType type) {
-    TextStyle? style = FTheme.bodyMedium?.copyWith(color: FTheme.comment);
-    TextStyle? selectedStyle = FTheme.headlineSmall?.copyWith(color: FTheme.text);
+    TextStyle? style = ThemeCont.to.bodyMedium?.copyWith(color: ThemeCont.to.comment);
+    TextStyle? selectedStyle = ThemeCont.to.headlineSmall?.copyWith(color: ThemeCont.to.text);
 
     late Function(int) onChanged;
     late Amount amount;
@@ -190,8 +190,8 @@ class _RegisterPageState extends FPageState {
         children: [
           FText(
             type.locale.capitalize!,
-            style: FTheme.titleLarge,
-            color: FTheme.text,
+            style: ThemeCont.to.titleLarge,
+            color: ThemeCont.to.text,
           ),
           SizedBox(height: 10.0.h),
           Stack(
@@ -215,8 +215,8 @@ class _RegisterPageState extends FPageState {
                 right: 15.0.w,
                 child: FText(
                   '= $altAmount',
-                  style: FTheme.bodyLarge,
-                  color: FTheme.text,
+                  style: ThemeCont.to.bodyLarge,
+                  color: ThemeCont.to.text,
                 ),
               ),
             ],
@@ -287,7 +287,7 @@ class _RegisterPageState extends FPageState {
   Widget buildPage(BuildContext context) {
     return FKeyboardUsableScaffold(
       autoPadding: false,
-      backgroundColor: FTheme.backgroundAlt,
+      backgroundColor: ThemeCont.to.backgroundAlt,
       appBar: FAppBar(
         text: cont.appBarTitle,
         backPressed: cont.backButtonPressed,

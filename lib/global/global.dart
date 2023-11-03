@@ -4,5 +4,5 @@ export './list.dart';
 export './number.dart';
 export './operator.dart';
 export './string.dart';
-export './theme.dart';
+export '../src/controller/theme.dart';
 export './widget.dart';

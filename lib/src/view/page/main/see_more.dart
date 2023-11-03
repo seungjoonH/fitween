@@ -26,14 +26,14 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
     return FCard(
       title: FText(
         cont.fPointCardTitle,
-        color: FTheme.achro95,
-        style: FTheme.commentStyle,
+        color: ThemeCont.achro95,
+        style: ThemeCont.to.commentStyle,
         bold: true,
       ),
-      iconColor: FTheme.achro95,
+      iconColor: ThemeCont.achro95,
       pressMode: FCardPressMode.icon,
       onPressed: cont.fPointCardPressed,
-      backgroundColor: FTheme.point,
+      backgroundColor: ThemeCont.to.point,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -41,8 +41,8 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
           SizedBox(width: 5.0.w),
           FText(
             '${fPointCont.fPoint.thouSep} FP',
-            style: FTheme.displaySmall,
-            color: FTheme.achro95,
+            style: ThemeCont.to.displaySmall,
+            color: ThemeCont.achro95,
           ),
         ],
       ),
@@ -53,8 +53,8 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
     return FCard(
       title: FText(
         cont.myBadgeCardTitle,
-        color: FTheme.comment,
-        style: FTheme.commentStyle,
+        color: ThemeCont.to.comment,
+        style: ThemeCont.to.commentStyle,
         bold: true,
       ),
       child: Container(),
@@ -67,13 +67,13 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
         children: [
           FText(
             type.locale.capitalize!,
-            style: FTheme.titleSmall,
+            style: ThemeCont.to.titleSmall,
           ),
           FTexts(
             cont.getGoalTextOf(type),
-            style: FTheme.bodySmall,
+            style: ThemeCont.to.bodySmall,
             textColor: type.color,
-            highlightStyle: FTheme.titleSmall
+            highlightStyle: ThemeCont.to.titleSmall
                 ?.apply(color: type.color),
           ),
         ],
@@ -87,7 +87,7 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
       child: VerticalDivider(
         width: 10.0.w,
         thickness: .5,
-        color: FTheme.stroke,
+        color: ThemeCont.to.stroke,
       ),
     );
 
@@ -103,11 +103,11 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
     return FCard(
       title: FText(
         cont.goalSettingCardTitle,
-        color: FTheme.comment,
-        style: FTheme.commentStyle,
+        color: ThemeCont.to.comment,
+        style: ThemeCont.to.commentStyle,
         bold: true,
       ),
-      onPressed: FRoute.toGoalSetting,
+      onPressed: cont.goalSettingCardPressed,
       icon: const Icon(Icons.edit),
       pressMode: FCardPressMode.icon,
       child: _buildGoalsWidget(context),
@@ -116,27 +116,32 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    return FMainScaffold(
+    return Obx(() => FMainScaffold(
+      backgroundColor: ThemeCont.to.background,
       refreshController: RefreshController(),
       onRefresh: cont.onRefresh,
       appBar: FAppBar(
         text: cont.appBarTitle,
         actions: [
-          Obx(() => FIconButton(
+          FIconButton(
             icon: const Icon(Icons.notifications),
             notifications: notificationCont.uncheckedCount,
             onPressed: cont.notificationButtonPressed,
-          )),
+          ),
+          FIconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: cont.settingsButtonPressed,
+          ),
         ],
       ),
       body: Column(
         children: [
           _buildFPointCardWidget(context),
-          _buildMyBadgeCardWidget(context),
+          // _buildMyBadgeCardWidget(context),
           _buildGoalSettingCardWidget(context),
         ].separateH(height: 20.0.h),
       ),
-    );
+    ));
   }
 
 }

@@ -24,7 +24,7 @@ class PartyListTile extends StatelessWidget {
 
   Widget get titleWidget => FText(
     party!.title,
-    color: FTheme.text,
+    color: ThemeCont.to.text,
     maxLines: 2,
     bold: true,
   );
@@ -35,15 +35,15 @@ class PartyListTile extends StatelessWidget {
 
     return FText(
       '$leader: $nickname',
-      color: FTheme.comment,
-      style: FTheme.bodyMedium,
+      color: ThemeCont.to.comment,
+      style: ThemeCont.to.bodyMedium,
       maxLines: 3,
     );
   }
 
   Color get stampColor => party!.completed
-      ? FTheme.colorA
-      : FTheme.colorB;
+      ? ThemeCont.colorA
+      : ThemeCont.colorB;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class PartyListTile extends StatelessWidget {
           Positioned.fill(
             child: Container(
               alignment: Alignment.center,
-              color: FTheme.achro5.withOpacity(.3),
+              color: ThemeCont.achro5.withOpacity(.3),
               child: Transform.rotate(
                 angle: -pi * .25,
                 child: Container(
@@ -80,7 +80,7 @@ class PartyListTile extends StatelessWidget {
                   child: FText(
                     party!.finishState,
                     color: stampColor,
-                    style: FTheme.titleLarge,
+                    style: ThemeCont.to.titleLarge,
                     bold: true,
                   ),
                 ),
@@ -96,11 +96,11 @@ class PartyListTile extends StatelessWidget {
         FTypeTag(type: party!.type),
         FTextTag(
           party!.deadline,
-          backgroundColor: party!.over ? null : FTheme.text,
+          backgroundColor: party!.over ? null : ThemeCont.to.text,
         ),
         DifficultyTag(difficulty: party!.difficulty),
       ],
-      backgroundColor: FTheme.backgroundAlt,
+      backgroundColor: ThemeCont.to.backgroundAlt,
       trailing: [
         if (showPercent)
         FCircularPercentIndicator(
@@ -140,10 +140,10 @@ class PartySearchedListTile extends PartyListTile {
   @override
   Widget get titleWidget => FTexts(
     titleTxs,
-    style: FTheme.titleMedium
+    style: ThemeCont.to.titleMedium
         ?.copyWith(fontWeight: FontWeight.bold),
-    highlightStyle: FTheme.titleMedium?.copyWith(
-      color: FTheme.colorA,
+    highlightStyle: ThemeCont.to.titleMedium?.copyWith(
+      color: ThemeCont.colorA,
       fontWeight: FontWeight.bold,
     ),
     wordWrap: true,
@@ -154,10 +154,10 @@ class PartySearchedListTile extends PartyListTile {
     String leader = LangCont.tr('word.leader').capitalize!;
       return FTexts(
       '$leader: $leaderNicknameTxs',
-      style: FTheme.bodyMedium,
-      textColor: FTheme.comment,
-      highlightStyle: FTheme.bodyMedium?.copyWith(
-        color: FTheme.colorA,
+      style: ThemeCont.to.bodyMedium,
+      textColor: ThemeCont.to.comment,
+      highlightStyle: ThemeCont.to.bodyMedium?.copyWith(
+        color: ThemeCont.colorA,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -199,7 +199,7 @@ class PartyCard extends ChallengeCard {
             icon: const Icon(Icons.save),
             size: 18.0.r,
             iconSize: 17.0.r,
-            iconColor: FTheme.comment,
+            iconColor: ThemeCont.to.comment,
             onPressed: toggleTitleMode,
           ),
           hintText: party!.title,
@@ -210,7 +210,7 @@ class PartyCard extends ChallengeCard {
           Expanded(
             child: FText(
               party!.title,
-              style: FTheme.cardTitleStyle,
+              style: ThemeCont.to.cardTitleStyle,
               maxLines: 0,
             ),
           ),
@@ -219,7 +219,7 @@ class PartyCard extends ChallengeCard {
             icon: const Icon(Icons.edit),
             size: 28.0.r,
             iconSize: 18.0.r,
-            iconColor: FTheme.comment,
+            iconColor: ThemeCont.to.comment,
             onPressed: toggleTitleMode,
           ),
         ],
@@ -238,13 +238,13 @@ class PartyCard extends ChallengeCard {
   Widget _buildPartyInfoWidget(BuildContext context) {
     FText buildText(String text) => FText(
       text,
-      color: FTheme.comment,
-      style: FTheme.commentStyle,
+      color: ThemeCont.to.comment,
+      style: ThemeCont.to.commentStyle,
     );
 
     return Column(
       children: [
-        Divider(thickness: 1, color: FTheme.comment),
+        Divider(thickness: 1, color: ThemeCont.to.comment),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.0.w),
           child: Row(
@@ -279,7 +279,7 @@ class PartyCard extends ChallengeCard {
             ],
           ),
         ),
-        Divider(thickness: 1, color: FTheme.comment),
+        Divider(thickness: 1, color: ThemeCont.to.comment),
       ],
     );
   }
@@ -287,8 +287,8 @@ class PartyCard extends ChallengeCard {
   Widget _buildPartyTitleWidget(BuildContext context) {
     return FText(
       party!.challenge!.title,
-      style: FTheme.titleSmall,
-      color: FTheme.comment,
+      style: ThemeCont.to.titleSmall,
+      color: ThemeCont.to.comment,
       maxLines: 2,
       bold: true,
     );
@@ -322,8 +322,8 @@ class PartyWidget extends StatefulWidget {
   final VoidCallback? onPressed;
 
   Color get defaultColor => Color.alphaBlend(
-    type?.color.withOpacity(.35) ?? FTheme.bar,
-    FTheme.backgroundAlt,
+    type?.color.withOpacity(.35) ?? ThemeCont.to.bar,
+    ThemeCont.to.backgroundAlt,
   );
   IconData? get iconData => Icons.add;
 
@@ -349,7 +349,7 @@ class _PartyWidgetState extends State<PartyWidget> with ScalePressable {
       child: Icon(
         widget.iconData,
         size: 35.0.r,
-        color: FTheme.background,
+        color: ThemeCont.to.background,
       ),
     ) : Image.asset(
       widget.party!.challenge!.defaultImageUrl,
@@ -392,6 +392,6 @@ class PartyHistoryWidget extends PartyWidget {
   IconData? get iconData => Icons.history;
 
   @override
-  Color get defaultColor => FTheme.bar;
+  Color get defaultColor => ThemeCont.to.bar;
 
 }

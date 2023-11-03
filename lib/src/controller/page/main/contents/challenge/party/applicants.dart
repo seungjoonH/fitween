@@ -58,8 +58,8 @@ class PartyApplicantsPageCont extends PageCont {
       title: reallyAcceptTitle,
       content: FTexts(
         getReallyAcceptText(applicant),
-        style: FTheme.bodyLarge,
-        highlightStyle: FTheme.bodyLarge?.copyWith(
+        style: ThemeCont.to.bodyLarge,
+        highlightStyle: ThemeCont.to.bodyLarge?.copyWith(
           color: party!.type.color,
           fontWeight: FontWeight.bold,
         ),
@@ -76,8 +76,8 @@ class PartyApplicantsPageCont extends PageCont {
       title: reallyRejectTitle,
       content: FTexts(
         getReallyRejectText(applicant),
-        style: FTheme.bodyLarge,
-        highlightStyle: FTheme.bodyLarge?.copyWith(
+        style: ThemeCont.to.bodyLarge,
+        highlightStyle: ThemeCont.to.bodyLarge?.copyWith(
           color: party!.type.color,
           fontWeight: FontWeight.bold,
         ),
@@ -85,7 +85,7 @@ class PartyApplicantsPageCont extends PageCont {
       ),
       type: DialogType.bi,
       rightText: rejectButtonText,
-      rightBackgroundColor: FTheme.error,
+      rightBackgroundColor: ThemeCont.error,
       rightPressed: () => _reject(applicant),
     );
   }
@@ -95,8 +95,8 @@ class PartyApplicantsPageCont extends PageCont {
       title: acceptedTitle,
       content: FTexts(
         getAcceptedText(applicant),
-        style: FTheme.bodyLarge,
-        highlightStyle: FTheme.bodyLarge?.copyWith(
+        style: ThemeCont.to.bodyLarge,
+        highlightStyle: ThemeCont.to.bodyLarge?.copyWith(
           color: party!.type.color,
           fontWeight: FontWeight.bold,
         ),
@@ -124,8 +124,8 @@ class PartyApplicantsPageCont extends PageCont {
       title: rejectedTitle,
       content: FTexts(
         getRejectedText(applicant),
-        style: FTheme.bodyLarge,
-        highlightStyle: FTheme.bodyLarge?.copyWith(
+        style: ThemeCont.to.bodyLarge,
+        highlightStyle: ThemeCont.to.bodyLarge?.copyWith(
           color: party!.type.color,
           fontWeight: FontWeight.bold,
         ),

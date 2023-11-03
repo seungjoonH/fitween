@@ -1,6 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
@@ -20,7 +20,7 @@ class _OnboardingPageState extends FPageState {
   @override
   OnboardingPageCont get cont => OnboardingPageCont.to;
 
-  TextStyle? get titleStyle => FTheme.headlineMedium;
+  TextStyle? get titleStyle => ThemeCont.to.headlineMedium;
 
   CarouselOptions get _options => CarouselOptions(
     height: double.infinity,
@@ -32,8 +32,8 @@ class _OnboardingPageState extends FPageState {
   );
 
   DotsDecorator get _decorator => DotsDecorator(
-    color: FTheme.bar,
-    activeColor: FTheme.text,
+    color: ThemeCont.to.bar,
+    activeColor: ThemeCont.to.text,
     size: Size(10.0.r, 10.0.r),
     activeSize: Size(150.0.r, 10.0.r),
     activeShape: RoundedRectangleBorder(
@@ -57,7 +57,7 @@ class _OnboardingPageState extends FPageState {
           maxLines: 3,
           style: titleStyle,
           align: TextAlign.center,
-          color: FTheme.text,
+          color: ThemeCont.to.text,
         ),
         if (index == 3)
         Padding(
@@ -141,7 +141,7 @@ class _OnboardingPageState extends FPageState {
   @override
   Widget buildPage(BuildContext context) {
     return FScaffold(
-      backgroundColor: FTheme.backgroundAlt,
+      backgroundColor: ThemeCont.to.backgroundAlt,
       autoPadding: false,
       body: _buildCarouselWidget(context),
       bottomWidget: Stack(

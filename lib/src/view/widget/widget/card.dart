@@ -2,7 +2,7 @@ import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:get/get.dart';
 
 enum FCardPressMode { entire, icon }
@@ -62,7 +62,7 @@ class _FCardState extends State<FCard> with ScalePressable {
   Widget get icon {
     if (!widget.autoIcon) return Container();
 
-    final Color color = widget.iconColor ?? FTheme.comment;
+    final Color color = widget.iconColor ?? ThemeCont.to.comment;
     final double size = 20.0.r;
 
     Icon rightArrowIcon = Icon(
@@ -109,7 +109,7 @@ class _FCardState extends State<FCard> with ScalePressable {
 
   Color get backgroundColor {
     if (widget.backgroundWidget != null) return Colors.transparent;
-    return widget.backgroundColor ?? FTheme.card;
+    return widget.backgroundColor ?? ThemeCont.to.card;
   }
 
   LoadingCont get cont => LoadingCont.to;
@@ -256,7 +256,7 @@ class FImageCard extends FCard {
           Icons.bookmark_outline,
           size: 35.0.r,
           color: Color.alphaBlend(
-            FTheme.achro95.withOpacity(.6),
+            ThemeCont.achro95.withOpacity(.6),
             iconColor!,
           ),
         ),
@@ -274,7 +274,7 @@ class FImageCard extends FCard {
             double width = constraints.maxWidth;
             if (imageUrl == null) {
               return Container(
-                color: FTheme.bar,
+                color: ThemeCont.to.bar,
                 width: width,
                 height: width * .6,
               );

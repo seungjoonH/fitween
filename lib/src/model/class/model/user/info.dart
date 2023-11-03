@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween/global/date.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model/user.dart';
+import 'package:flutter/material.dart';
 
 
 class FUserInfo extends FUser {
@@ -18,6 +20,9 @@ class FUserInfo extends FUser {
   late num _weight;
   late bool _heightVisibility;
   late bool _weightVisibility;
+
+  Language? _language;
+  ThemeMode? _themeMode;
 
   @override
   String? get name => _name;
@@ -44,6 +49,14 @@ class FUserInfo extends FUser {
   @override
   bool get isAppleInspector => _AdminInfo.isAppleInspector(email);
 
+  @override
+  Language get language => _language ?? Language.system;
+  @override
+  ThemeMode get themeMode => _themeMode ?? ThemeMode.system;
+
+  void setThemeMode(ThemeMode mode) => _themeMode = mode;
+  void setLanguage(Language lang) => _language = lang;
+
   FUserInfo(super.key) : super();
   FUserInfo.fromJson(super.json) : super.fromJson();
 
@@ -59,6 +72,8 @@ class FUserInfo extends FUser {
     _weight = builder.weight!;
     _heightVisibility = builder.heightVisibility!;
     _weightVisibility = builder.weightVisibility!;
+    _language = builder.language!;
+    _themeMode = builder.themeMode!;
     return this;
   }
 
@@ -75,6 +90,8 @@ class FUserInfo extends FUser {
     _sex = Sex.toEnum(json['sex'])!;
     _regDate = json['regDate'];
     _dateOfBirth = json['dateOfBirth'];
+    _language = Language.toEnum(json['language']) ?? Language.system;
+    _themeMode = ThemeModeExtension.toEnum(json['themeMode']) ?? ThemeMode.system;
   }
 
   @override
@@ -91,6 +108,8 @@ class FUserInfo extends FUser {
     json['sex'] = _sex.name;
     json['regDate'] = _regDate;
     json['dateOfBirth'] = _dateOfBirth;
+    json['language'] = (_language ?? Language.system).name;
+    json['themeMode'] = (_themeMode ?? ThemeMode.system).name;
     return json;
   }
 
@@ -105,7 +124,9 @@ class FUserInfo extends FUser {
     ..heightVisibility = _heightVisibility
     ..sex = _sex
     ..regDate = regDate
-    ..dateOfBirth = dateOfBirth;
+    ..dateOfBirth = dateOfBirth
+    ..language = _language
+    ..themeMode = _themeMode;
 }
 
 class _AdminInfo {
@@ -146,6 +167,8 @@ class FUserInfoBuilder {
   num? weight;
   bool? heightVisibility;
   bool? weightVisibility;
+  Language? language;
+  ThemeMode? themeMode;
 
   DateTime? get regDate => _regDate?.toDate();
   set regDate(DateTime? d) => _regDate = d?.toTimestamp;
@@ -165,6 +188,8 @@ class FUserInfoBuilder {
     json['sex'] = sex!.name;
     json['regDate'] = _regDate ?? now.toTimestamp;
     json['dateOfBirth'] = _dateOfBirth!;
+    json['language'] = (language ?? Language.system).name;
+    json['dateOfBirth'] = (themeMode ?? ThemeMode.system).name;
 
     return FUserInfo.fromJson(json);
   }

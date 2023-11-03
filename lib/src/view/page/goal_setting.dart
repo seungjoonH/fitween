@@ -21,7 +21,7 @@ class _GoalSettingPageState extends FPageState {
   @override
   GoalSettingPageCont get cont => GoalSettingPageCont.to;
 
-  TextStyle? get mainStyle => FTheme.displaySmall;
+  TextStyle? get mainStyle => ThemeCont.to.displaySmall;
 
   Widget _buildBackgroundImageWidget(BuildContext context, int index) {
     return SvgPicture.asset(
@@ -37,7 +37,7 @@ class _GoalSettingPageState extends FPageState {
       child: FTexts(
         cont.getText(0),
         style: mainStyle,
-        highlightColor: FTheme.colorA,
+        highlightColor: ThemeCont.colorA,
       ),
     );
   }
@@ -47,8 +47,8 @@ class _GoalSettingPageState extends FPageState {
       cont.getText(1),
       style: mainStyle,
       highlightColors: [
-        FTheme.colorA,
-        FTheme.colorA,
+        ThemeCont.colorA,
+        ThemeCont.colorA,
         FType.distance.color,
       ],
     );
@@ -96,7 +96,7 @@ class _GoalSettingPageState extends FPageState {
           ? () => cont.onChanged(value + 1, type)
           : () => cont.onChanged(value - 1, type),
       iconColor: type == FType.height
-          ? FTheme.achro20 : FTheme.text,
+          ? ThemeCont.achro20 : ThemeCont.to.text,
       icon: Icon(isUp ? Icons.arrow_drop_down : Icons.arrow_drop_up),
     );
   }
@@ -112,13 +112,13 @@ class _GoalSettingPageState extends FPageState {
 
       void onChanged(int v) => cont.onChanged(v, type);
 
-      TextStyle? style = FTheme
+      TextStyle? style = ThemeCont.to
           .displayLarge?.copyWith(
         color: type == FType.height
-            ? FTheme.achro60
-            : FTheme.comment,
+            ? ThemeCont.achro60
+            : ThemeCont.to.comment,
       );
-      TextStyle? selectedStyle = FTheme
+      TextStyle? selectedStyle = ThemeCont.to
           .largeText.copyWith(color: type.color);
 
       return Padding(
@@ -162,14 +162,14 @@ class _GoalSettingPageState extends FPageState {
 
   Widget _buildDistanceGoalTextWidget(BuildContext context) {
     FType type = FType.distance;
-    TextStyle style = mainStyle!.copyWith(color: FTheme.text);
+    TextStyle style = mainStyle!.copyWith(color: ThemeCont.to.text);
     return Obx(() => FTexts(
       cont.getText(2),
       style: mainStyle,
       highlightStyles: [
-        style.copyWith(color: FTheme.colorA),
+        style.copyWith(color: ThemeCont.colorA),
         mainStyle!.copyWith(color: type.color),
-        FTheme.titleSmall!.copyWith(color: style.color),
+        ThemeCont.to.titleSmall!.copyWith(color: style.color),
       ],
       align: TextAlign.end,
     ));
@@ -178,8 +178,8 @@ class _GoalSettingPageState extends FPageState {
   Widget _buildDistanceGoalCommentWidget(BuildContext context) {
     return Obx(() => FTexts(
       '* ${cont.getComment(2)}',
-      style: FTheme.commentStyle,
-      textColor: FTheme.comment,
+      style: ThemeCont.to.commentStyle,
+      textColor: ThemeCont.to.comment,
       highlightColor: FType.distance.color,
       mainAxisAlignment: MainAxisAlignment.end,
     ));
@@ -204,7 +204,7 @@ class _GoalSettingPageState extends FPageState {
       cont.getText(3),
       style: mainStyle,
       highlightColors: [
-        FTheme.colorA,
+        ThemeCont.colorA,
         FType.height.color,
       ],
     );
@@ -219,14 +219,14 @@ class _GoalSettingPageState extends FPageState {
 
   Widget _buildHeightGoalTextWidget(BuildContext context) {
     FType type = FType.height;
-    TextStyle style = mainStyle!.copyWith(color: FTheme.text);
+    TextStyle style = mainStyle!.copyWith(color: ThemeCont.to.text);
     return Obx(() => FTexts(
       cont.getText(4),
       style: mainStyle,
       highlightStyles: [
-        style.copyWith(color: FTheme.colorA),
+        style.copyWith(color: ThemeCont.colorA),
         mainStyle!.copyWith(color: type.color),
-        FTheme.titleSmall!.copyWith(color: style.color),
+        ThemeCont.to.titleSmall!.copyWith(color: style.color),
       ],
       align: TextAlign.start,
     ));
@@ -235,8 +235,8 @@ class _GoalSettingPageState extends FPageState {
   Widget _buildHeightGoalCommentWidget(BuildContext context) {
     return Obx(() => FTexts(
       '* ${cont.getComment(4)}',
-      style: FTheme.commentStyle,
-      textColor: FTheme.comment,
+      style: ThemeCont.to.commentStyle,
+      textColor: ThemeCont.to.comment,
       highlightColor: FType.height.color,
       mainAxisAlignment: MainAxisAlignment.end,
     ));
@@ -262,7 +262,7 @@ class _GoalSettingPageState extends FPageState {
       cont.getText(5),
       style: mainStyle,
       highlightColors: [
-        FTheme.colorA,
+        ThemeCont.colorA,
         FType.weight.color,
       ],
     );
@@ -277,14 +277,14 @@ class _GoalSettingPageState extends FPageState {
 
   Widget _buildWeightGoalTextWidget(BuildContext context) {
     FType type = FType.weight;
-    TextStyle style = mainStyle!.copyWith(color: FTheme.text);
+    TextStyle style = mainStyle!.copyWith(color: ThemeCont.to.text);
     return Obx(() => FTexts(
       cont.getText(6),
       style: mainStyle,
       highlightStyles: [
-        style.copyWith(color: FTheme.colorA),
+        style.copyWith(color: ThemeCont.colorA),
         mainStyle!.copyWith(color: type.color),
-        FTheme.titleSmall!.copyWith(color: style.color),
+        ThemeCont.to.titleSmall!.copyWith(color: style.color),
       ],
       align: TextAlign.end,
     ));
@@ -293,8 +293,8 @@ class _GoalSettingPageState extends FPageState {
   Widget _buildWeightGoalCommentWidget(context) {
     return Obx(() => FTexts(
       '* ${cont.getComment(6)}',
-      style: FTheme.commentStyle,
-      textColor: FTheme.comment,
+      style: ThemeCont.to.commentStyle,
+      textColor: ThemeCont.to.comment,
       highlightColor: FType.weight.color,
       mainAxisAlignment: MainAxisAlignment.end,
     ));
@@ -319,7 +319,7 @@ class _GoalSettingPageState extends FPageState {
       cont.getText(7).split('\n\n').first,
       style: mainStyle,
       highlightColors: [
-        FTheme.colorA,
+        ThemeCont.colorA,
         FType.distance.color,
         FType.height.color,
         FType.weight.color,
@@ -424,7 +424,7 @@ class _GoalSettingPageState extends FPageState {
   Widget buildPage(BuildContext context) {
     return FScaffold(
       autoPadding: false,
-      backgroundColor: FTheme.backgroundAlt,
+      backgroundColor: ThemeCont.to.backgroundAlt,
       appBar: FAppBar(backPressed: cont.backButtonPressed),
       extendBodyBehindAppBar: true,
       body: _buildBody(context),

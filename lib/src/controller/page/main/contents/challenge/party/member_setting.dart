@@ -40,7 +40,7 @@ class PartyMemberSettingPageCont extends PageCont {
       title: delegateReallyTitle,
       content: FTexts(
         getDelegateReallyText(member.nickname),
-        highlightStyle: FTheme.titleSmall?.copyWith(
+        highlightStyle: ThemeCont.to.titleSmall?.copyWith(
           color: party!.type.color,
           fontWeight: FontWeight.bold,
         ),
@@ -57,7 +57,7 @@ class PartyMemberSettingPageCont extends PageCont {
       title: delegateCompleteTitle,
       content: FTexts(
         getDelegateCompleteText(member.nickname),
-        highlightStyle: FTheme.titleSmall?.copyWith(
+        highlightStyle: ThemeCont.to.titleSmall?.copyWith(
           color: party!.type.color,
           fontWeight: FontWeight.bold,
         ),
@@ -86,7 +86,7 @@ class PartyMemberSettingPageCont extends PageCont {
     title: banishReallyTitle,
     content: FTexts(
       getBanishReallyText(member.nickname),
-      highlightStyle: FTheme.titleSmall?.copyWith(
+      highlightStyle: ThemeCont.to.titleSmall?.copyWith(
         color: party!.type.color,
         fontWeight: FontWeight.bold,
       ),
@@ -94,7 +94,7 @@ class PartyMemberSettingPageCont extends PageCont {
     ),
     type: DialogType.bi,
     rightText: banishButtonText,
-    rightBackgroundColor: FTheme.error,
+    rightBackgroundColor: ThemeCont.error,
     rightPressed: () => banishMember(member),
     );
   }
@@ -107,7 +107,7 @@ class PartyMemberSettingPageCont extends PageCont {
       title: banishCompleteTitle,
       content: FTexts(
         getBanishCompleteText(member.nickname),
-        highlightStyle: FTheme.titleSmall?.copyWith(
+        highlightStyle: ThemeCont.to.titleSmall?.copyWith(
           color: party!.type.color,
           fontWeight: FontWeight.bold,
         ),

@@ -23,7 +23,7 @@ class FBottomNavigationBarState extends FWidgetState<FWidget> {
       ),
       child: Obx(() => BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: FTheme.card,
+        backgroundColor: ThemeCont.to.card,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         currentIndex: cont.pageIndex,

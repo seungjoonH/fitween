@@ -28,13 +28,13 @@ class _RankIconState extends FWidgetState<RankIcon> {
       height: 20.0.r,
       alignment: Alignment.topCenter,
       decoration: BoxDecoration(
-        color: FTheme.text,
+        color: ThemeCont.to.text,
         shape: BoxShape.circle,
       ),
       child: FText(
         '${widget.rank}',
-        color: FTheme.background,
-        style: FTheme.bodyLarge,
+        color: ThemeCont.to.background,
+        style: ThemeCont.to.bodyLarge,
       ),
     ) : SvgPicture.asset(
       '$asset${widget.rank}.svg',

@@ -1,4 +1,4 @@
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +17,7 @@ class FDrawer extends Drawer {
     children: [
       Container(
         height: 200.0.h,
-        color: FTheme.colorA,
+        color: ThemeCont.colorA,
         alignment: Alignment.center,
         child: const FAppIcon(size: 80.0),
       ),

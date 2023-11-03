@@ -26,7 +26,7 @@ class FPointIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return ColorFiltered(
       colorFilter: grey ? ColorFilter.mode(
-        FTheme.comment,
+        ThemeCont.to.comment,
         BlendMode.saturation,
       ) : const ColorFilter.mode(
         Colors.transparent,
@@ -59,7 +59,7 @@ class FPointAmountWidget extends StatelessWidget {
       children: [
         FButton(
           onPressed: onPressed,
-          backgroundColor: FTheme.backgroundAlt,
+          backgroundColor: ThemeCont.to.backgroundAlt,
           shrinkWrap: true,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -67,8 +67,8 @@ class FPointAmountWidget extends StatelessWidget {
               const FPointIcon(),
               FText(
                 '${amount.thouSep} FP',
-                style: FTheme.bodyLarge,
-                color: FTheme.point,
+                style: ThemeCont.to.bodyLarge,
+                color: ThemeCont.to.point,
                 bold: true,
               ),
             ],
@@ -104,16 +104,16 @@ class FPointButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color textColor = finished
-        ? FTheme.achro90
-        : FTheme.point;
+        ? ThemeCont.achro90
+        : ThemeCont.to.point;
     Color? borderColor;
     Color backgroundColor = _receivable
-        ? FTheme.point
-        : FTheme.unselected;
+        ? ThemeCont.to.point
+        : ThemeCont.to.unselected;
 
     if (!finished) {
-      borderColor = FTheme.point;
-      backgroundColor = FTheme.backgroundAlt;
+      borderColor = ThemeCont.to.point;
+      backgroundColor = ThemeCont.to.backgroundAlt;
     }
 
     return FButton(
@@ -127,7 +127,7 @@ class FPointButton extends StatelessWidget {
           SizedBox(width: 2.0.w),
           FText(
             '${amount.thouSep} FP',
-            style: FTheme.titleSmall,
+            style: ThemeCont.to.titleSmall,
             color: textColor,
             bold: true,
           ),

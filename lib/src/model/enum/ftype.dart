@@ -11,7 +11,7 @@ enum FType {
       ? locale.toUpperCase().substring(0, 3) : locale;
   String get _unitKey => ['', 'step', 'floor', 'count'][index];
   String get _altUnitKey => ['', 'step', 'floor', 'kg'][index];
-  Color get color => [FTheme.colorA, FTheme.colorB, FTheme.colorC, FTheme.colorD][index];
+  Color get color => [ThemeCont.colorA, ThemeCont.colorB, ThemeCont.colorC, ThemeCont.colorD][index];
   bool get active => activeValues.contains(this);
 
   String withUnit(num value, {bool thouSep = true, bool scaling = true, bool txs = false}) {

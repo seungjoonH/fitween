@@ -1,13 +1,37 @@
-import 'package:fitween/src/controller/page.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+extension ThemeModeExtension on ThemeMode {
+  String get _tr => 'settings.general-menu.display-type';
+  String get locale => LangCont.tr('$_tr.$name');
+  static ThemeMode? toEnum(String? string) =>
+      ThemeMode.values.firstWhereOrNull((mode) => mode.name == string);
+}
 
 TextTheme textTheme(BuildContext context) => Theme.of(context).textTheme;
 ColorScheme colorScheme(BuildContext context) => Theme.of(context).colorScheme;
 
-class FTheme {
-  static Brightness get brightness => PageCont.mediaQuery.platformBrightness;
-  static bool get isLightMode => brightness == Brightness.light;
-  static bool get isDarkMode => brightness == Brightness.dark;
+class ThemeCont extends GetxController {
+  static ThemeCont get to => Get.find<ThemeCont>();
+
+  final _mode = ThemeMode.system.obs;
+  ThemeMode get themeMode => _mode.value;
+
+  void setThemeMode(ThemeMode mode) => _mode(mode);
+  void init() => _mode(AuthCont.logged!.themeMode);
+
+  Brightness get brightness {
+    Brightness system = PageCont.mediaQuery.platformBrightness;
+    if (!AuthCont.isLogged) return system;
+    switch (themeMode) {
+      case ThemeMode.system: return system;
+      case ThemeMode.light: return Brightness.light;
+      case ThemeMode.dark: return Brightness.dark;
+    }
+  }
+  bool get isLightMode => brightness == Brightness.light;
+  bool get isDarkMode => brightness == Brightness.dark;
 
   static const Color colorA = Color(0xFF50CDC4);
   static const Color colorB = Color(0xFFFB656A);
@@ -56,61 +80,61 @@ class FTheme {
   static const Color achro95 = Color(0xFFFDFDFD);
   static const Color achro100 = Colors.white;
 
-  static Color get text => isLightMode ? achro30 : achro70;
-  static Color get textAlt => isLightMode ? achro10 : achro90;
-  static Color get hintText => isLightMode ? achro60 : achro40;
-  static Color get comment => isLightMode ? achro50 : achro50;
-  static Color get card => isLightMode ? achro95 : achro20;
-  static Color get background => isLightMode ? achro90 : achro10;
-  static Color get backgroundAlt => isLightMode ? achro95 : achro5;
-  static Color get stroke => isLightMode ? achro60 : achro40;
-  static Color get selected => isLightMode ? achro30 : achro70;
-  static Color get unselected => achro50;
-  static Color get shimmer => achro50;
-  static Color get bar => isLightMode ? achro70 : achro30;
-  static Color get surface => isLightMode ? achro90 : achro10;
-  static Color get outline => isLightMode ? achro40 : achro60;
+  Color get text => isLightMode ? achro30 : achro70;
+  Color get textAlt => isLightMode ? achro10 : achro90;
+  Color get hintText => isLightMode ? achro60 : achro40;
+  Color get comment => isLightMode ? achro50 : achro50;
+  Color get card => isLightMode ? achro95 : achro20;
+  Color get background => isLightMode ? achro90 : achro10;
+  Color get backgroundAlt => isLightMode ? achro95 : achro5;
+  Color get stroke => isLightMode ? achro60 : achro40;
+  Color get selected => isLightMode ? achro30 : achro70;
+  Color get unselected => achro50;
+  Color get shimmer => achro50;
+  Color get bar => isLightMode ? achro70 : achro30;
+  Color get surface => isLightMode ? achro90 : achro10;
+  Color get outline => isLightMode ? achro40 : achro60;
 
-  static Color get point => colorE;
+  Color get point => colorE;
   static const Color error = Color(0xFFBA1A1A);
 
   /// typography
   static const fontFamily = 'Pretendard';
 
-  static TextStyle? get cardTitleStyle => headlineSmall;
-  static TextStyle? get commentStyle => bodyLarge;
+  TextStyle? get cardTitleStyle => headlineSmall;
+  TextStyle? get commentStyle => bodyLarge;
 
-  static TextStyle? get displayLarge => textTheme.displayLarge;
-  static TextStyle? get displayMedium => textTheme.displayMedium;
-  static TextStyle? get displaySmall => textTheme.displaySmall;
-  static TextStyle? get headlineLarge => textTheme.headlineLarge;
-  static TextStyle? get headlineMedium => textTheme.headlineMedium;
-  static TextStyle? get headlineSmall => textTheme.headlineSmall;
-  static TextStyle? get titleLarge => textTheme.titleLarge;
-  static TextStyle? get titleMedium => textTheme.titleMedium;
-  static TextStyle? get titleSmall => textTheme.titleSmall;
-  static TextStyle? get bodyLarge => textTheme.bodyLarge;
-  static TextStyle? get bodyMedium => textTheme.bodyMedium;
-  static TextStyle? get bodySmall => textTheme.bodySmall;
-  static TextStyle? get labelLarge => textTheme.labelLarge;
-  static TextStyle? get labelMedium => textTheme.labelMedium;
-  static TextStyle? get labelSmall => textTheme.labelSmall;
+  TextStyle? get displayLarge => textTheme.displayLarge;
+  TextStyle? get displayMedium => textTheme.displayMedium;
+  TextStyle? get displaySmall => textTheme.displaySmall;
+  TextStyle? get headlineLarge => textTheme.headlineLarge;
+  TextStyle? get headlineMedium => textTheme.headlineMedium;
+  TextStyle? get headlineSmall => textTheme.headlineSmall;
+  TextStyle? get titleLarge => textTheme.titleLarge;
+  TextStyle? get titleMedium => textTheme.titleMedium;
+  TextStyle? get titleSmall => textTheme.titleSmall;
+  TextStyle? get bodyLarge => textTheme.bodyLarge;
+  TextStyle? get bodyMedium => textTheme.bodyMedium;
+  TextStyle? get bodySmall => textTheme.bodySmall;
+  TextStyle? get labelLarge => textTheme.labelLarge;
+  TextStyle? get labelMedium => textTheme.labelMedium;
+  TextStyle? get labelSmall => textTheme.labelSmall;
 
-  static TextStyle get veryLargeText => const TextStyle(
+  TextStyle get veryLargeText => const TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w700,
     fontSize: 250.0,
     height: (270 / 250),
   );
 
-  static TextStyle get largeText => const TextStyle(
+  TextStyle get largeText => const TextStyle(
     fontFamily: fontFamily,
     fontWeight: FontWeight.w700,
     fontSize: 58.0,
     height: (66 / 58),
   );
 
-  static TextTheme get textTheme => const TextTheme(
+  TextTheme get textTheme => const TextTheme(
     displayLarge: TextStyle(
       fontFamily: fontFamily,
       fontWeight: FontWeight.w700,

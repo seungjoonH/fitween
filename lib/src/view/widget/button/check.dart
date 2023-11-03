@@ -1,4 +1,4 @@
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +9,7 @@ class FCheckButton extends StatefulWidget {
     required this.value,
     required this.onChanged,
     this.text,
-    this.activeColor = FTheme.colorA,
+    this.activeColor = ThemeCont.colorA,
     this.color,
   });
 
@@ -32,7 +32,7 @@ class _FCheckButtonState extends State<FCheckButton> with DarkPressable<FCheckBu
 
   @override
   Widget buildContent(BuildContext context) {
-    Color colorAlt = widget.color ?? FTheme.bar;
+    Color colorAlt = widget.color ?? ThemeCont.to.bar;
     return Padding(
       padding: EdgeInsets.fromLTRB(.0, 2.0.h, 10.0.w, 2.0.h),
       child: Row(

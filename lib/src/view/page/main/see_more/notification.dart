@@ -38,15 +38,15 @@ class _NotificationPageState extends FPageState<NotificationPage> {
                     children: [
                       FTexts(
                         notification.content,
-                        style: FTheme.bodyLarge,
-                        highlightStyle: FTheme.bodyLarge
+                        style: ThemeCont.to.bodyLarge,
+                        highlightStyle: ThemeCont.to.bodyLarge
                             ?.copyWith(fontWeight: FontWeight.bold),
                         wordWrap: true,
                       ),
                       FText(
                         cont.now.difference(notification.date).ago,
-                        style: FTheme.bodyMedium,
-                        color: FTheme.comment,
+                        style: ThemeCont.to.bodyMedium,
+                        color: ThemeCont.to.comment,
                       ),
                     ],
                   ),
@@ -56,7 +56,7 @@ class _NotificationPageState extends FPageState<NotificationPage> {
           ),
           if (!notification.checked)
           Positioned.fill(
-            child: Container(color: FTheme.colorA.withOpacity(.15)),
+            child: Container(color: ThemeCont.colorA.withOpacity(.15)),
           ),
         ],
       ),

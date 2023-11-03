@@ -1,27 +1,45 @@
+import 'dart:core';
+
+import 'package:fitween/src/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' as get_lib;
 import 'package:easy_localization/easy_localization.dart' as local_lib;
+import 'package:get/get.dart';
 
-class LangCont {
-  static const List<String> _supports = ['en', 'ko'];
+enum Language {
+  system, english, korean;
+  List<Language> get langs => [english, korean];
+  String get code => name.substring(0, 2);
+
+  String get _tr => 'settings.general-menu.language-type';
+  String get locale => LangCont.tr('$_tr.$name');
+
+  static Language? toEnum(String? string) =>
+      values.firstWhereOrNull((lang) => lang.name == string);
+}
+
+class LangCont extends GetxController {
+  static LangCont get to => Get.find<LangCont>();
+
+  static final List<String> _supports = Language.values.map((l) => l.code).toList();
   static const String _asset = 'assets/json/locale';
-  static const String _fallback = 'en';
+  static final String _fallback = Language.korean.code;
 
   static Widget equipLocalization(Widget child) {
     return local_lib.EasyLocalization(
       supportedLocales: _supports.map((s) => Locale(s)).toList(),
       path: _asset,
-      fallbackLocale: const Locale(_fallback),
+      fallbackLocale: Locale(_fallback),
       child: child,
     );
   }
 
-  static bool get isKorean => locale == 'ko';
-  static bool get isEnglish => locale == 'en';
+  static bool get isKorean => locale == Language.korean.code;
+  static bool get isEnglish => locale == Language.english.code;
 
   static String get locale {
     String locale = get_lib.Get.locale!.languageCode;
-    if (locale != 'ko') return 'en';
+    if (locale != Language.korean.code) return Language.english.code;
     return locale;
   }
 
@@ -51,4 +69,15 @@ class LangCont {
     name: name,
     format: format,
   );
+
+  final _language = Language.system.obs;
+  Language get language => _language.value;
+
+  void setLanguage(Language lang) => _language(lang);
+  void init() => setLanguage(AuthCont.logged!.language);
+
+  Locale? get getLocale {
+    if (language == Language.system) return null;
+    return Locale(language.code);
+  }
 }

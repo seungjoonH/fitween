@@ -1,3 +1,4 @@
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:get/get.dart';
 
@@ -30,6 +31,9 @@ class GetCont {
     Get.put(ContentsPageCont());
     Get.put(SeeMorePageCont());
     Get.put(NotificationPageCont());
+    Get.put(SettingsPageCont());
+    Get.put(GeneralSettingPageCont());
+    Get.put(AppInfoPageCont());
   }
 
   static void _userConts() {

@@ -40,10 +40,10 @@ class _HomePageState extends FPageState {
           type: type,
           center: isActive ? FTexts(
             cont.getMarbleCenterText(type),
-            textColor: FTheme.achro90,
-            style: FTheme.bodyLarge,
-            highlightStyle: FTheme.displayLarge
-                ?.copyWith(color: FTheme.achro90),
+            textColor: ThemeCont.achro90,
+            style: ThemeCont.to.bodyLarge,
+            highlightStyle: ThemeCont.to.displayLarge
+                ?.copyWith(color: ThemeCont.achro90),
           ) : null,
           smile: isActive,
           tagVisible: isActive,
@@ -64,8 +64,8 @@ class _HomePageState extends FPageState {
       if (date.day == 1) dayText = '${date.month}/$dayText';
 
       Color textColor = Colors.transparent;
-      if (passed) textColor = FTheme.comment;
-      if (selected) textColor = FTheme.background;
+      if (passed) textColor = ThemeCont.to.comment;
+      if (selected) textColor = ThemeCont.to.background;
 
       return GestureDetector(
         onTap: onTap,
@@ -75,12 +75,12 @@ class _HomePageState extends FPageState {
           padding: EdgeInsets.all(1.0.r),
           decoration: BoxDecoration(
             color: selected
-                ? FTheme.selected
+                ? ThemeCont.to.selected
                 : Colors.transparent,
             shape: BoxShape.circle,
             border: Border.all(
               color: isToday
-                  ? FTheme.selected
+                  ? ThemeCont.to.selected
                   : Colors.transparent,
               width: 3.0.r,
             ),
@@ -90,7 +90,7 @@ class _HomePageState extends FPageState {
             children: [
               FText(
                 dayText,
-                style: FTheme.bodyMedium,
+                style: ThemeCont.to.bodyMedium,
                 color: textColor,
               ),
               CalendarDots(
@@ -111,8 +111,8 @@ class _HomePageState extends FPageState {
         width: 37.0.r,
         child: FText(
           wd.short,
-          style: FTheme.bodyMedium,
-          color: FTheme.comment,
+          style: ThemeCont.to.bodyMedium,
+          color: ThemeCont.to.comment,
           align: TextAlign.center,
         ),
       )).toList(),
@@ -152,8 +152,8 @@ class _HomePageState extends FPageState {
         child: FTextButton(
           text: cont.viewTodayText,
           shrinkWrap: true,
-          style: FTheme.bodyMedium,
-          textColor: FTheme.comment,
+          style: ThemeCont.to.bodyMedium,
+          textColor: ThemeCont.to.comment,
           onPressed: cont.selectToday,
         ),
       );
@@ -164,7 +164,7 @@ class _HomePageState extends FPageState {
     return FCard(
       title: Row(
         children: [
-          FText(cont.recordCardTitle, style: FTheme.cardTitleStyle),
+          FText(cont.recordCardTitle, style: ThemeCont.to.cardTitleStyle),
           _buildViewTodayButtonWidget(context),
         ],
       ),
@@ -191,7 +191,7 @@ class _HomePageState extends FPageState {
           children: [
             RankIcon(rank: rank),
             SizedBox(width: 10.0.w),
-            FText(user.nickname, style: FTheme.bodyLarge),
+            FText(user.nickname, style: ThemeCont.to.bodyLarge),
           ],
         ),
         SizedBox(height: 5.0.h),
@@ -203,7 +203,7 @@ class _HomePageState extends FPageState {
           animateFromLastPercent: true,
           progressColor: isMe
               ? cont.activeType.color
-              : FTheme.unselected,
+              : ThemeCont.to.unselected,
         ),
       ],
     );
@@ -221,10 +221,10 @@ class _HomePageState extends FPageState {
               text: period.locale.capitalize!,
               bold: isSelected,
               shrinkWrap: true,
-              style: FTheme.bodyLarge,
+              style: ThemeCont.to.bodyLarge,
               textColor: isSelected
                   ? cont.activeType.color
-                  : FTheme.comment,
+                  : ThemeCont.to.comment,
               onPressed: () => rankingCont.changePeriod(period),
             );
           }).toList(),
@@ -255,8 +255,8 @@ class _HomePageState extends FPageState {
           padding: EdgeInsets.symmetric(vertical: 20.0.h),
           child: FText(
             cont.noFriendsText,
-            color: FTheme.comment,
-            style: FTheme.titleSmall,
+            color: ThemeCont.to.comment,
+            style: ThemeCont.to.titleSmall,
             align: TextAlign.center,
             maxLines: 2,
           ),
@@ -270,12 +270,12 @@ class _HomePageState extends FPageState {
       title: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          FText(cont.rankingCardTitle, style: FTheme.cardTitleStyle),
+          FText(cont.rankingCardTitle, style: ThemeCont.to.cardTitleStyle),
           SizedBox(width: 10.0.w),
           Obx(() => FText(
             rankingCont.getLeftTime(rankingCont.getStartTime(today)).left,
-            style: FTheme.bodyMedium,
-            color: FTheme.comment,
+            style: ThemeCont.to.bodyMedium,
+            color: ThemeCont.to.comment,
           )),
         ],
       ),
@@ -351,10 +351,10 @@ class _MarbleState extends FWidgetState<Marble> {
         ? cont.color
         : widget.type.color;
 
-    final tintColor = FTheme.achro95.withOpacity(.15);
+    final tintColor = ThemeCont.achro95.withOpacity(.15);
 
     if (widget.met) {
-      color = FTheme.colorA;
+      color = ThemeCont.colorA;
       if (!widget.selected) color = Color.alphaBlend(tintColor, color);
       return color;
     }
@@ -363,7 +363,7 @@ class _MarbleState extends FWidgetState<Marble> {
 
   Color get _tagColor => widget.met
       ? widget.type.color
-      : FTheme.achro90.withOpacity(.3);
+      : ThemeCont.achro90.withOpacity(.3);
 
   @override
   Widget buildWidget(BuildContext context) {

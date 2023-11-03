@@ -41,8 +41,8 @@ class TopImage extends StatelessWidget {
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
               colors: [
-                FTheme.background.withOpacity(1.0),
-                FTheme.background.withOpacity(.0),
+                ThemeCont.to.background.withOpacity(1.0),
+                ThemeCont.to.background.withOpacity(.0),
               ],
             ),
           ),
@@ -52,7 +52,7 @@ class TopImage extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 28.0.w),
           child: FText(
             title!,
-            style: FTheme.headlineMedium,
+            style: ThemeCont.to.headlineMedium,
             maxLines: 0,
           ),
         ),

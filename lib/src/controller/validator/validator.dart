@@ -35,7 +35,7 @@ abstract class InputFieldValidatorCont extends ValidatorCont {
   String get emptyHintText;
 
   String? get hintText => _hintText.value ?? emptyHintText;
-  Color get hintColor => _hintText.value == null ? FTheme.hintText : FTheme.error;
+  Color get hintColor => _hintText.value == null ? ThemeCont.to.hintText : ThemeCont.error;
 
   bool lessThanTwo(String text) => text.length < 2;
   bool greaterThanEight(String text) => text.length > 8;

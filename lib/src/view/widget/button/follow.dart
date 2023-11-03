@@ -21,10 +21,10 @@ class FollowButton extends StatelessWidget {
   FollowCont get cont => FollowCont.to;
 
   Color get backgroundColor => cont.getFollowed(user.key)
-      ? FTheme.background : FTheme.text;
+      ? ThemeCont.to.background : ThemeCont.to.text;
 
   Color get textColor => cont.getFollowed(user.key)
-      ? FTheme.text : FTheme.background;
+      ? ThemeCont.to.text : ThemeCont.to.background;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class FollowButton extends StatelessWidget {
         horizontal: 8.0.r,
         vertical: 4.0.r,
       ),
-      style: FTheme.bodySmall,
+      style: ThemeCont.to.bodySmall,
       textColor: textColor,
       backgroundColor: backgroundColor,
       onPressed: () {

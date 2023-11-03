@@ -19,6 +19,7 @@ export './widget/card.dart';
 export './widget/carousel.dart';
 export './widget/challenge.dart';
 export './widget/drawer.dart';
+export './widget/header.dart';
 export './widget/icon.dart';
 export './widget/image.dart';
 export './widget/indicator.dart';

@@ -7,7 +7,7 @@ enum Content {
   adventure, challenge, weight, battle;
   String get _asset => 'assets/image/page/contents';
   String get path {
-    String dayOrNight = FTheme.isLightMode ? 'day' : 'night';
+    String dayOrNight = ThemeCont.to.isLightMode ? 'day' : 'night';
     if (index == 0) return '$_asset/${name}_$dayOrNight.svg';
     return '$_asset/$name.svg';
   }

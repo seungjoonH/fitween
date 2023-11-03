@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/main.dart';
 import 'package:fitween/src/controller/lang.dart';
 import 'package:fitween/src/controller/page.dart';
@@ -32,8 +32,8 @@ class _LoginPageState extends FPageState {
   Widget _buildProgramLoadingIndicatorWidget(BuildContext context) {
     return Obx(() => FLinearPercentIndicator(
       percent: cont.p,
-      backgroundColor: FTheme.background,
-      progressColor: FTheme.colorA,
+      backgroundColor: ThemeCont.to.background,
+      progressColor: ThemeCont.colorA,
       centerText: cont.loadingText,
     ));
   }
@@ -74,10 +74,10 @@ class _LoginPageState extends FPageState {
 
   @override
   Widget buildPage(BuildContext context) {
-    return FScaffold(
-      backgroundColor: FTheme.backgroundAlt,
+    return Obx(() => FScaffold(
+      backgroundColor: ThemeCont.to.backgroundAlt,
       body: _buildBody(context),
-      bottomWidget: Obx(() => Column(
+      bottomWidget: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           const Expanded(child: SizedBox()),
@@ -87,9 +87,9 @@ class _LoginPageState extends FPageState {
           SizedBox(height: 50.0.h),
           const FTextTag(version),
         ],
-      )),
+      ),
       bottomPadding: 30.0.h,
-    );
+    ));
   }
 }
 
@@ -107,13 +107,13 @@ class SignInButton extends StatelessWidget {
   String get _logoAsset => 'assets/image/logo/${type.name}.svg';
 
   Color get _backgroundColor => {
-    LoginType.google: FTheme.achro95,
-    LoginType.apple: FTheme.achro5,
+    LoginType.google: ThemeCont.achro95,
+    LoginType.apple: ThemeCont.achro5,
   }[type]!;
 
   Color get _textColor => {
-    LoginType.google: FTheme.achro5,
-    LoginType.apple: FTheme.achro95,
+    LoginType.google: ThemeCont.achro5,
+    LoginType.apple: ThemeCont.achro95,
   }[type]!;
 
   void _onPressed() => cont.onPressed(type);
@@ -139,7 +139,7 @@ class SignInButton extends StatelessWidget {
             SizedBox(width: 10.0.w),
             FText(
               type.signIn,
-              style: FTheme.titleSmall,
+              style: ThemeCont.to.titleSmall,
               color: _textColor,
             ),
           ],

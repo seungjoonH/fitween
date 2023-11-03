@@ -1,4 +1,4 @@
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
 import 'package:fitween/src/view/widget/widget.dart';
@@ -18,8 +18,8 @@ class FTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color backgroundColorAlt = backgroundColor ?? FTheme.unselected;
-    Widget childAlt = child ?? FText('', style: FTheme.labelMedium);
+    Color backgroundColorAlt = backgroundColor ?? ThemeCont.to.unselected;
+    Widget childAlt = child ?? FText('', style: ThemeCont.to.labelMedium);
 
     return Container(
       padding: EdgeInsets.symmetric(
@@ -45,13 +45,13 @@ class FTextTag extends FTag {
   final String text;
   final Color? textColor;
 
-  Color get textColorAlt => textColor ?? FTheme.backgroundAlt;
+  Color get textColorAlt => textColor ?? ThemeCont.to.backgroundAlt;
 
   @override
   Widget get child {
 
     return FText(text,
-      style: FTheme.labelMedium,
+      style: ThemeCont.to.labelMedium,
       color: textColorAlt,
     );
   }
@@ -64,8 +64,8 @@ class MeTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FTextTag('ME',
-      textColor: FTheme.backgroundAlt,
-      backgroundColor: FTheme.text,
+      textColor: ThemeCont.to.backgroundAlt,
+      backgroundColor: ThemeCont.to.text,
     );
   }
 }
@@ -84,7 +84,7 @@ class FTypeTag extends StatelessWidget {
   Widget build(BuildContext context) {
     return FTextTag(
       type.locale.capitalize!,
-      textColor: FTheme.achro95,
+      textColor: ThemeCont.achro95,
       backgroundColor: color ?? type.color,
     );
   }
@@ -106,8 +106,8 @@ class DifficultyTag extends StatelessWidget {
     return FTextTag(
       difficulty.locale.capitalize!,
       textColor: normal
-          ? FTheme.achro5
-          : FTheme.achro95,
+          ? ThemeCont.achro5
+          : ThemeCont.achro95,
       backgroundColor: difficulty.color,
     );
   }

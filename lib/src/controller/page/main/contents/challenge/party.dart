@@ -146,11 +146,11 @@ class PartyPageCont extends PageCont {
       title: reallyCompleteTitle,
       content: FTexts(
         reallyCompleteTitle,
-        style: FTheme.bodyLarge,
-        textColor: FTheme.text,
+        style: ThemeCont.to.bodyLarge,
+        textColor: ThemeCont.to.text,
         highlightStyles: [
-          FTheme.bodyLarge!.copyWith(color: FTheme.point),
-          FTheme.commentStyle!.copyWith(color: FTheme.comment),
+          ThemeCont.to.bodyLarge!.copyWith(color: ThemeCont.to.point),
+          ThemeCont.to.commentStyle!.copyWith(color: ThemeCont.to.comment),
         ],
         wordWrap: true,
       ),
@@ -165,7 +165,7 @@ class PartyPageCont extends PageCont {
       title: completedTitle,
       content: FTexts(
         completedTitle,
-        highlightColor: FTheme.point,
+        highlightColor: ThemeCont.to.point,
         wordWrap: true,
       ),
       type: DialogType.mono,
@@ -191,10 +191,10 @@ class PartyPageCont extends PageCont {
       title: reallyFinishTitle,
       content: FTexts(
         reallyFinishText,
-        style: FTheme.bodyLarge,
-        textColor: FTheme.text,
-        highlightStyle: FTheme.bodyMedium
-            ?.copyWith(color: FTheme.comment),
+        style: ThemeCont.to.bodyLarge,
+        textColor: ThemeCont.to.text,
+        highlightStyle: ThemeCont.to.bodyMedium
+            ?.copyWith(color: ThemeCont.to.comment),
         wordWrap: true,
       ),
       type: DialogType.bi,
@@ -238,15 +238,15 @@ class PartyPageCont extends PageCont {
       title: reallyGiveUpTitle,
       content: FTexts(
         text,
-        style: FTheme.titleSmall,
-        highlightStyle: FTheme.bodyLarge
-            ?.copyWith(color: FTheme.comment),
+        style: ThemeCont.to.titleSmall,
+        highlightStyle: ThemeCont.to.bodyLarge
+            ?.copyWith(color: ThemeCont.to.comment),
         wordWrap: true,
       ),
       type: DialogType.bi,
       rightText: giveUpText,
-      rightTextColor: FTheme.achro95,
-      rightBackgroundColor: FTheme.error,
+      rightTextColor: ThemeCont.achro95,
+      rightBackgroundColor: ThemeCont.error,
       rightPressed: _giveUpParty,
     );
   }
@@ -312,8 +312,8 @@ class PartyPageCont extends PageCont {
       title: reallyApplyTitle,
       content: FTexts(
         reallyApplyText,
-        style: FTheme.titleSmall,
-        highlightStyle: FTheme.titleSmall
+        style: ThemeCont.to.titleSmall,
+        highlightStyle: ThemeCont.to.titleSmall
             ?.copyWith(color: partyColor),
         wordWrap: true,
       ),
@@ -428,11 +428,11 @@ class PartyPageCont extends PageCont {
         child: SfCartesianChart(
           primaryXAxis: CategoryAxis(
             majorGridLines: const MajorGridLines(width: 0),
-            labelStyle: FTheme.bodyMedium?.copyWith(color: FTheme.comment),
+            labelStyle: ThemeCont.to.bodyMedium?.copyWith(color: ThemeCont.to.comment),
             interval: 2,
           ),
           primaryYAxis: NumericAxis(
-            labelStyle: FTheme.bodyMedium?.copyWith(color: FTheme.comment),
+            labelStyle: ThemeCont.to.bodyMedium?.copyWith(color: ThemeCont.to.comment),
             labelFormat: format,
           ),
           series: <ChartSeries>[
@@ -463,8 +463,8 @@ class PartyPageCont extends PageCont {
       title: reallyPokeTitle,
       content: FTexts(
         getReallyPokeText(member),
-        style: FTheme.bodyLarge,
-        highlightStyle: FTheme.bodyLarge?.copyWith(
+        style: ThemeCont.to.bodyLarge,
+        highlightStyle: ThemeCont.to.bodyLarge?.copyWith(
           color: party!.type.color,
           fontWeight: FontWeight.bold,
         ),
@@ -482,8 +482,8 @@ class PartyPageCont extends PageCont {
       title: pokedTitle,
       content: FTexts(
         getPokedText(member),
-        style: FTheme.bodyLarge,
-        highlightStyle: FTheme.bodyLarge?.copyWith(
+        style: ThemeCont.to.bodyLarge,
+        highlightStyle: ThemeCont.to.bodyLarge?.copyWith(
           color: party!.type.color,
           fontWeight: FontWeight.bold,
         ),

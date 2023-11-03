@@ -68,14 +68,14 @@ class _PartySearchPageState extends FPageState<PartySearchPage> {
         width: double.infinity,
         height: 110.0.h,
         decoration: BoxDecoration(
-          border: Border.all(color: FTheme.bar, width: 1.0.r),
+          border: Border.all(color: ThemeCont.to.bar, width: 1.0.r),
           borderRadius: BorderRadius.circular(10.0.r),
         ),
         alignment: Alignment.center,
         child: FText(
           cont.notFoundText,
-          color: FTheme.bar,
-          style: FTheme.titleMedium,
+          color: ThemeCont.to.bar,
+          style: ThemeCont.to.titleMedium,
         ),
       );
     }

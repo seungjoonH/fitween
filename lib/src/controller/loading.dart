@@ -10,8 +10,8 @@ class LoadingCont extends GetxController {
   static LoadingCont get to => Get.find<LoadingCont>();
 
   static bool _delayActive = false;
-  final Color _mainColor = FTheme.shimmer;
-  final _color = FTheme.shimmer.obs;
+  final Color _mainColor = ThemeCont.to.shimmer;
+  final _color = ThemeCont.to.shimmer.obs;
   final _count = 0.obs;
   final _opacity = .2.obs;
   Timer? _timer;
@@ -49,7 +49,7 @@ class LoadingCont extends GetxController {
       _opacity(((_opacity.value * 1000 + 3) % 200) / 1000);
       _color(Color.alphaBlend(
         _mainColor.withOpacity(.2 + _opacity.value),
-        FTheme.background,
+        ThemeCont.to.background,
       ));
       update();
     });

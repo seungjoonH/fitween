@@ -1,4 +1,4 @@
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -44,7 +44,7 @@ class _FIconButtonState extends State<FIconButton> with DarkPressable {
 
   @override
   Widget buildContent(BuildContext context) {
-    Color iconColorAlt = widget.iconColor ?? FTheme.text;
+    Color iconColorAlt = widget.iconColor ?? ThemeCont.to.text;
     double size = widget.size ?? 60.0.r;
 
     return Stack(
@@ -67,8 +67,8 @@ class _FIconButtonState extends State<FIconButton> with DarkPressable {
           top: 5.r, right: 5.r,
           child: FTextTag(
             notifications!,
-            textColor: FTheme.achro95,
-            backgroundColor: FTheme.error,
+            textColor: ThemeCont.achro95,
+            backgroundColor: ThemeCont.error,
           ),
         ),
       ],

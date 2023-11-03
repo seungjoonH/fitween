@@ -2,7 +2,7 @@ import 'package:fitween/src/controller/validator/validator.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_shake_animated/flutter_shake_animated.dart';
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,13 +45,13 @@ class FText extends StatelessWidget {
     );
   }
 
-  TextStyle? get defaultStyle => FTheme.titleSmall;
+  TextStyle? get defaultStyle => ThemeCont.to.titleSmall;
 
   bool get textWrap => maxLines == 0;
 
   @override
   Widget build(BuildContext context) {
-    Color colorAlt = color ?? FTheme.text;
+    Color colorAlt = color ?? ThemeCont.to.text;
     TextStyle? textStyle = style ?? defaultStyle;
     TextStyle mergeStyle = TextStyle(
       fontWeight: bold
@@ -92,10 +92,10 @@ class FCommentText extends FText {
   }
 
   @override
-  Color? get color => FTheme.comment;
+  Color? get color => ThemeCont.to.comment;
 
   @override
-  TextStyle? get defaultStyle => FTheme.commentStyle;
+  TextStyle? get defaultStyle => ThemeCont.to.commentStyle;
 }
 
 class FTexts extends StatelessWidget {
@@ -126,7 +126,7 @@ class FTexts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle? styleAlt = style ?? textTheme(context).titleSmall?.copyWith(color: textColor);
-    Color textColorAlt = textColor ?? FTheme.text;
+    Color textColorAlt = textColor ?? ThemeCont.to.text;
     List<String> texts = text.split(RegExp(r'@{|}'));
     List<TextStyle> hStyles = [];
 
@@ -201,19 +201,19 @@ class FTextField extends StatelessWidget {
     return TextField(
       controller: controller,
       onChanged: onChanged,
-      cursorColor: FTheme.text,
-      style: FTheme.titleMedium?.copyWith(color: FTheme.text),
+      cursorColor: ThemeCont.to.text,
+      style: ThemeCont.to.titleMedium?.copyWith(color: ThemeCont.to.text),
       autofocus: true,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: FTheme.titleMedium?.apply(color: FTheme.comment),
+        hintStyle: ThemeCont.to.titleMedium?.apply(color: ThemeCont.to.comment),
         prefixIcon: prefixIcon ?? Icon(Icons.edit, size: 18.0.r),
-        prefixIconColor: FTheme.comment,
+        prefixIconColor: ThemeCont.to.comment,
         suffixIcon: FIconButton(
           icon: const Icon(Icons.cancel),
           size: 18.0.r,
           iconSize: 17.0.r,
-          iconColor: FTheme.comment,
+          iconColor: ThemeCont.to.comment,
           onPressed: clearPressed,
         ),
         isDense: true,
@@ -226,8 +226,8 @@ class FTextField extends StatelessWidget {
           borderSide: BorderSide.none,
         ),
         filled: true,
-        fillColor: FTheme.bar,
-        focusColor: FTheme.bar,
+        fillColor: ThemeCont.to.bar,
+        focusColor: ThemeCont.to.bar,
       ),
     );
   }
@@ -244,11 +244,11 @@ class FInputField extends StatelessWidget {
   final InputFieldValidatorCont validator;
   final TextInputType keyboardType;
 
-  Color get _hintColor => validator.coloring ? FTheme.error : validator.hintColor;
+  Color get _hintColor => validator.coloring ? ThemeCont.error : validator.hintColor;
 
   @override
   Widget build(BuildContext context) {
-    final style = FTheme.bodyLarge?.copyWith(color: FTheme.text);
+    final style = ThemeCont.to.bodyLarge?.copyWith(color: ThemeCont.to.text);
     final radius = BorderRadius.circular(10.0.r);
 
     return Obx(() => ShakeWidget(
@@ -257,7 +257,7 @@ class FInputField extends StatelessWidget {
       child: TextField(
         style: style,
         controller: validator.controller,
-        cursorColor: FTheme.text,
+        cursorColor: ThemeCont.to.text,
         keyboardType: keyboardType,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
@@ -271,11 +271,11 @@ class FInputField extends StatelessWidget {
             borderRadius: radius,
             borderSide: BorderSide(
               width: 2.0.r,
-              color: FTheme.text,
+              color: ThemeCont.to.text,
             ),
           ),
           hintText: validator.hintText,
-          hintStyle: FTheme.bodyLarge?.apply(
+          hintStyle: ThemeCont.to.bodyLarge?.apply(
             color: _hintColor,
           ),
           isDense: true,
@@ -304,26 +304,26 @@ class FSearchField extends StatelessWidget {
         horizontal: 10.0.w, vertical: 5.0.h,
       ),
       decoration: BoxDecoration(
-        color: FTheme.bar,
+        color: ThemeCont.to.bar,
         borderRadius: BorderRadius.circular(10.0.r),
       ),
       child: Row(
         children: [
-          Icon(Icons.search, color: FTheme.comment),
+          Icon(Icons.search, color: ThemeCont.to.comment),
           SizedBox(width: 10.0.w),
           Expanded(
             child: TextField(
               controller: controller,
               onChanged: onChanged,
-              cursorColor: FTheme.text,
-              style: FTheme.titleMedium
-                  ?.apply(color: FTheme.text),
+              cursorColor: ThemeCont.to.text,
+              style: ThemeCont.to.titleMedium
+                  ?.apply(color: ThemeCont.to.text),
               decoration: InputDecoration(
                 isCollapsed: true,
                 border: InputBorder.none,
                 hintText: hintText,
-                hintStyle: FTheme.titleMedium
-                    ?.apply(color: FTheme.comment),
+                hintStyle: ThemeCont.to.titleMedium
+                    ?.apply(color: ThemeCont.to.comment),
               ),
             ),
           ),

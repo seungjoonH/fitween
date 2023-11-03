@@ -5,7 +5,7 @@ import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:fitween/global/theme.dart';
+import 'package:fitween/src/controller/theme.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 class FCircularPercentIndicator extends StatelessWidget {
@@ -35,13 +35,13 @@ class FCircularPercentIndicator extends StatelessWidget {
   String get _centerText => enableCenter
       ? '@{${(percent * 100).round()}} %' : '';
 
-  Color get _progressColor => progressColor ?? FTheme.colorA;
+  Color get _progressColor => progressColor ?? ThemeCont.colorA;
 
   Widget? get _center => enableCenter ? FTexts(
     _centerText,
     textColor: centerColor ?? _progressColor,
-    style: FTheme.bodySmall,
-    highlightStyle: FTheme.titleLarge,
+    style: ThemeCont.to.bodySmall,
+    highlightStyle: ThemeCont.to.titleLarge,
   ) : null;
 
   @override
@@ -50,7 +50,7 @@ class FCircularPercentIndicator extends StatelessWidget {
       percent: percent,
       radius: radius ?? 35.0.r,
       lineWidth: lineWidth ?? 8.0.r,
-      backgroundColor: backgroundColor ?? FTheme.background,
+      backgroundColor: backgroundColor ?? ThemeCont.to.background,
       progressColor: _progressColor,
       animation: animation ?? true,
       animationDuration: animationDuration ?? 500,
@@ -93,9 +93,9 @@ class FCircularPercentIndicator extends StatelessWidget {
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     Color textColorAlt = textColor ?? FTheme.text;
-//     Color borderColorAlt = borderColor ?? FTheme.text;
-//     Color backgroundColorAlt = backgroundColor ?? FTheme.background;
+//     Color textColorAlt = textColor ?? ThemeCont.to.text;
+//     Color borderColorAlt = borderColor ?? ThemeCont.to.text;
+//     Color backgroundColorAlt = backgroundColor ?? ThemeCont.to.background;
 //
 //     final border = Border.all(
 //       color: borderColorAlt,
@@ -124,7 +124,7 @@ class FCircularPercentIndicator extends StatelessWidget {
 //             center: FText(
 //               centerText,
 //               color: textColorAlt,
-//               style: FTheme.titleLarge,
+//               style: ThemeCont.to.titleLarge,
 //               maxLines: 2,
 //               align: TextAlign.center
 //             ),
@@ -159,7 +159,7 @@ class FCircularProgressIndicator extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         child ?? Container(),
-        if (cont.loading) const CircularProgressIndicator(color: FTheme.colorA),
+        if (cont.loading) const CircularProgressIndicator(color: ThemeCont.colorA),
       ],
     ));
   }
@@ -208,10 +208,10 @@ class FLinearPercentIndicator extends LinearPercentIndicator {
   @override
   Widget? get center => super.center ?? FText(
     centerText ?? '',
-    style: FTheme.labelLarge,
+    style: ThemeCont.to.labelLarge,
     color: _completed
-        ? FTheme.achro95
-        : FTheme.text,
+        ? ThemeCont.achro95
+        : ThemeCont.to.text,
     bold: _completed,
   );
 

@@ -30,7 +30,7 @@ class _PartyMemberSettingPageState extends FPageState<PartyMemberSettingPage> {
       if (isMe) return const SizedBox();
       return FButton(
         text: text,
-        style: FTheme.bodyMedium,
+        style: ThemeCont.to.bodyMedium,
         backgroundColor: backgroundColor,
         textColor: textColor,
         stretch: true,
@@ -40,13 +40,13 @@ class _PartyMemberSettingPageState extends FPageState<PartyMemberSettingPage> {
     }
 
     return FCard(
-      title: FText(member.nickname, style: FTheme.cardTitleStyle),
+      title: FText(member.nickname, style: ThemeCont.to.cardTitleStyle),
       child: Row(
         children: [
           Expanded(
             child: buildButton(
               text: cont.pokeButtonText,
-              backgroundColor: FTheme.unselected,
+              backgroundColor: ThemeCont.to.unselected,
               onPressed: () => cont.pokeButtonPressed(member),
             ),
           ),
@@ -59,7 +59,7 @@ class _PartyMemberSettingPageState extends FPageState<PartyMemberSettingPage> {
           Expanded(
             child: buildButton(
               text: cont.banishButtonText,
-              backgroundColor: FTheme.error,
+              backgroundColor: ThemeCont.error,
               onPressed: () => cont.banishButtonPressed(member),
             ),
           ),

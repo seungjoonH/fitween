@@ -27,7 +27,7 @@ class ChallengeListTile extends StatelessWidget {
       padding: EdgeInsets.fromLTRB(.0, .0, 10.0.r, .0),
       title: challenge.title,
       subtitle: challenge.subDescription,
-      backgroundColor: FTheme.backgroundAlt,
+      backgroundColor: ThemeCont.to.backgroundAlt,
     );
   }
 }
@@ -48,17 +48,17 @@ class ChallengeCard extends StatelessWidget {
 
   Widget _buildEmptyCard(BuildContext context) {
     return FImageCard(
-      backgroundColor: FTheme.card,
+      backgroundColor: ThemeCont.to.card,
       title: FText(
         cont.emptyTitle,
-        style: FTheme.cardTitleStyle,
-        color: FTheme.comment,
+        style: ThemeCont.to.cardTitleStyle,
+        color: ThemeCont.to.comment,
         maxLines: 2,
       ),
       child: FText(
         cont.emptyDescription,
-        style: FTheme.commentStyle,
-        color: FTheme.comment,
+        style: ThemeCont.to.commentStyle,
+        color: ThemeCont.to.comment,
         maxLines: 0,
       ),
     );
@@ -67,8 +67,8 @@ class ChallengeCard extends StatelessWidget {
   Widget buildCardContent(BuildContext context) {
     return FText(
       description,
-      style: FTheme.commentStyle,
-      color: FTheme.comment,
+      style: ThemeCont.to.commentStyle,
+      color: ThemeCont.to.comment,
       maxLines: 0,
     );
   }
@@ -76,7 +76,7 @@ class ChallengeCard extends StatelessWidget {
   String get imageUrl => challenge!.defaultImageUrl;
   Widget get title => FText(
     challenge!.title,
-    style: FTheme.cardTitleStyle,
+    style: ThemeCont.to.cardTitleStyle,
     maxLines: 2,
   );
   String get description => challenge!.subDescription;

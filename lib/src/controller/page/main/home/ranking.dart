@@ -83,7 +83,7 @@ class RankingPageCont extends PageCont {
 
     if (rankingCont.receivable) {
       rightText = '${rankingCont.estimatedFPoint} FP';
-      rightColor = FTheme.point;
+      rightColor = ThemeCont.to.point;
     }
 
     showFDialog(
@@ -94,8 +94,8 @@ class RankingPageCont extends PageCont {
           FText(
             rankingCont.calculator.pointText,
             maxLines: 0,
-            color: FTheme.outline,
-            style: FTheme.bodyLarge,
+            color: ThemeCont.to.outline,
+            style: ThemeCont.to.bodyLarge,
           ),
           Obx(() {
             String? contentText;
@@ -107,8 +107,8 @@ class RankingPageCont extends PageCont {
 
             return FText(
               contentText,
-              color: FTheme.comment,
-              style: FTheme.bodyMedium,
+              color: ThemeCont.to.comment,
+              style: ThemeCont.to.bodyMedium,
               maxLines: 0,
             );
           }),
@@ -130,9 +130,9 @@ class RankingPageCont extends PageCont {
       title: earnedTitle,
       content: FTexts(
         earnedText,
-        style: FTheme.bodyLarge,
-        textColor: FTheme.outline,
-        highlightColor: FTheme.point,
+        style: ThemeCont.to.bodyLarge,
+        textColor: ThemeCont.to.outline,
+        highlightColor: ThemeCont.to.point,
         wordWrap: true,
       ),
       type: DialogType.mono,

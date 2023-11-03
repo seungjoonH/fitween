@@ -38,11 +38,11 @@ class FTabWidget extends StatefulWidget {
 class _FTabWidgetState extends State<FTabWidget> with ScalePressable {
   Color get _tabColor => widget.selected
       ? widget.data.color
-      : FTheme.bar;
+      : ThemeCont.to.bar;
 
   Color get _textColor => widget.selected
-      ? FTheme.achro95
-      : FTheme.comment;
+      ? ThemeCont.achro95
+      : ThemeCont.to.comment;
 
   @override
   Widget buildContent(BuildContext context) {
@@ -54,7 +54,7 @@ class _FTabWidgetState extends State<FTabWidget> with ScalePressable {
         alignment: Alignment.center,
         child: FText(
           widget.data.text,
-          style: FTheme.titleSmall,
+          style: ThemeCont.to.titleSmall,
           align: TextAlign.center,
           bold: widget.selected,
           color: _textColor,
@@ -114,7 +114,7 @@ class FTabViewWidget extends StatelessWidget {
   Widget _buildContentWidget(BuildContext context) {
     final contentBackgroundColor = Color.alphaBlend(
       _selectedTab.color.withOpacity(.05),
-      FTheme.background,
+      ThemeCont.to.background,
     );
     final borderRadius = BorderRadius.only(
       bottomRight: Radius.circular(20.0.r),

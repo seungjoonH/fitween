@@ -58,7 +58,7 @@ class _CalendarPageState extends FPageState<CalendarPage> {
           width: 5.0.r, height: 5.0.r,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: FTheme.point,
+            color: ThemeCont.to.point,
           ),
         ),
       ],
@@ -67,43 +67,43 @@ class _CalendarPageState extends FPageState<CalendarPage> {
 
   Widget? _defaultBuilder(BuildContext context, DateTime date, DateTime event) {
     Color textColor = calendarCont.isAllFinished(date)
-        ? FTheme.colorA : FTheme.text;
+        ? ThemeCont.colorA : ThemeCont.to.text;
     return _buildBuilder(
       context,
       date: date,
       color: textColor,
-      style: FTheme.bodyMedium,
+      style: ThemeCont.to.bodyMedium,
     );
   }
 
   Widget? _todayBuilder(BuildContext context, DateTime date, DateTime event) {
     Color textColor = calendarCont.isAllFinished(today)
-        ? FTheme.colorA : FTheme.textAlt;
+        ? ThemeCont.colorA : ThemeCont.to.textAlt;
     BoxDecoration decoration = BoxDecoration(
       shape: BoxShape.circle,
-      border: Border.all(color: FTheme.text, width: 3.0.r),
+      border: Border.all(color: ThemeCont.to.text, width: 3.0.r),
     );
     return _buildBuilder(
       context,
       date: date,
       color: textColor,
-      style: FTheme.bodyLarge,
+      style: ThemeCont.to.bodyLarge,
       decoration: decoration,
     );
   }
 
   Widget? _selectedBuilder(BuildContext context, DateTime date, DateTime event) {
     Color textColor = calendarCont.isAllFinished(calendarCont.selectedDay)
-        ? FTheme.colorA : FTheme.backgroundAlt;
+        ? ThemeCont.colorA : ThemeCont.to.backgroundAlt;
     BoxDecoration decoration = BoxDecoration(
-      color: FTheme.text,
+      color: ThemeCont.to.text,
       shape: BoxShape.circle,
     );
     return _buildBuilder(
       context,
       date: date,
       color: textColor,
-      style: FTheme.bodyLarge,
+      style: ThemeCont.to.bodyLarge,
       decoration: decoration,
     );
   }
@@ -122,15 +122,15 @@ class _CalendarPageState extends FPageState<CalendarPage> {
     formatButtonVisible: false,
     headerPadding: EdgeInsets.zero,
     titleCentered: true,
-    titleTextStyle: FTheme.titleSmall!
-        .copyWith(color: FTheme.text),
+    titleTextStyle: ThemeCont.to.titleSmall!
+        .copyWith(color: ThemeCont.to.text),
     leftChevronIcon: Icon(
       Icons.chevron_left,
-      color: FTheme.textAlt,
+      color: ThemeCont.to.textAlt,
     ),
     rightChevronIcon: Icon(
       Icons.chevron_right,
-      color: FTheme.textAlt,
+      color: ThemeCont.to.textAlt,
     ),
   );
 
@@ -171,8 +171,8 @@ class _CalendarPageState extends FPageState<CalendarPage> {
       num amount = calendarCont.getAmount(type);
       num goal = calendarCont.getGoal(type);
 
-      Color color = forePercent == 1.0 ? type.color : FTheme.unselected;
-      if (calendarCont.allCompleted) color = FTheme.colorA;
+      Color color = forePercent == 1.0 ? type.color : ThemeCont.to.unselected;
+      if (calendarCont.allCompleted) color = ThemeCont.colorA;
 
       DateTime date = calendarCont.selectedDay;
       num unreflected = calendarCont.getUnreflectedAmount(type, date);
@@ -190,16 +190,16 @@ class _CalendarPageState extends FPageState<CalendarPage> {
               backPercent: backPercent,
               backgroundColor: Colors.transparent,
               foreProgressColor: color,
-              backProgressColor: FTheme.point.withOpacity(.7),
+              backProgressColor: ThemeCont.to.point.withOpacity(.7),
               animation: true,
               animateFromLastPercent: true,
             ),
             FTexts(
               calendarCont.getDayRecordGraphTextByType(type),
-              style: FTheme.bodyMedium,
+              style: ThemeCont.to.bodyMedium,
               textColor: color,
-              highlightStyle: FTheme.bodyMedium?.copyWith(
-                color: FTheme.point,
+              highlightStyle: ThemeCont.to.bodyMedium?.copyWith(
+                color: ThemeCont.to.point,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -225,7 +225,7 @@ class _CalendarPageState extends FPageState<CalendarPage> {
       if (calendarCont.dateHasUnreflectedAmount(calendarCont.selectedDay)) {
         return FCard(
           icon: const Icon(Icons.info_outline),
-          iconColor: FTheme.point,
+          iconColor: ThemeCont.to.point,
           pressMode: FCardPressMode.icon,
           onPressed: cont.reflectInformationButtonPressed,
           title: title,
@@ -236,8 +236,8 @@ class _CalendarPageState extends FPageState<CalendarPage> {
               FButton(
                 text: cont.fetchButtonText,
                 stretch: true,
-                textColor: FTheme.achro95,
-                backgroundColor: FTheme.point,
+                textColor: ThemeCont.achro95,
+                backgroundColor: ThemeCont.to.point,
                 onPressed: cont.fetchButtonPressed,
               ),
             ],
@@ -278,7 +278,7 @@ class CalendarPageAppBar extends FPointAppBar {
   Widget get action => calendarCont.entirelyReflected
       ? Container() : FIconButton(
     icon: const Icon(Icons.refresh),
-    iconColor: FTheme.point,
+    iconColor: ThemeCont.to.point,
     onPressed: cont.refreshButtonPressed,
   );
 
