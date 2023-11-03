@@ -26,6 +26,7 @@ class FCard extends StatefulWidget {
     this.borderColor,
     this.borderWidth,
     this.padding,
+    this.locked = false,
   }) : assert(icon == null
       || rightTopWidget == null), super(key: key);
 
@@ -45,6 +46,7 @@ class FCard extends StatefulWidget {
   final EdgeInsets? padding;
   final Color? borderColor;
   final double? borderWidth;
+  final bool locked;
 
   @override
   State<FCard> createState() => _FCardState();
@@ -163,6 +165,15 @@ class _FCardState extends State<FCard> with ScalePressable {
               if (!cont.loading) _buildRightTopWidget(context),
             ],
           ),
+          if (widget.locked)
+          Positioned.fill(child: Container(
+            color: ThemeCont.achro5.withOpacity(.5),
+            child: Icon(
+              Icons.lock,
+              size: 35.0.r,
+              color: ThemeCont.achro95,
+            ),
+          )),
         ],
       ),
     ));

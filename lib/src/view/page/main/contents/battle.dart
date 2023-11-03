@@ -1,5 +1,6 @@
 import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/view/page/page.dart';
+import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 
 class BattlePage extends FPage {
@@ -15,6 +16,6 @@ class _BattlePageState extends FPageState<BattlePage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    return Container();
+    return FScaffold();
   }
 }

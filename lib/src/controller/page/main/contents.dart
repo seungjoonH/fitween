@@ -1,4 +1,3 @@
-import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:get/get.dart';
@@ -13,6 +12,7 @@ enum Content {
   }
   String get _tr => 'contents.card-title';
   String get cardTitle => LangCont.tr('$_tr.$name');
+  bool get isLocked => [false, false, false, true][index];
 }
 
 class ContentsPageCont extends MainPageCont {

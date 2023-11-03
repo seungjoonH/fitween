@@ -30,7 +30,9 @@ class _ContentsPageState extends FPageState<ContentsPage> {
         style: ThemeCont.to.cardTitleStyle,
         color: ThemeCont.achro95,
       ),
+      pressMode: FCardPressMode.icon,
       iconColor: ThemeCont.achro95,
+      locked: content.isLocked,
       onPressed: () => cont.contentCardPressed(content),
     );
   }
