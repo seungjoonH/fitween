@@ -14,7 +14,8 @@
     "cancel": "Cancel Application",
     "fetch": "Fetch",
     "finish": "Finish",
-    "complete": "Complete"
+    "complete": "Complete",
+    "patch-note": "Check Patch Notes"
   },
   "appbar": {
     "register": "Register",
@@ -34,12 +35,13 @@
     "notification": "Notification",
     "settings": "Settings",
     "general": "General Settings",
-    "oss-license": "Open-source Licenses",
-    "terms-of-use": "Term of Use",
+    "app-info": "App Information",
+    "oss-licenses": "Open-Source Licenses",
+    "terms-of-use": "Terms of Use",
     "privacy-policy": "Privacy Policy",
     "report": "Report",
-    "version": "Version",
-    "support": "Support"
+    "support": "Support",
+    "patch-note": "Patch Notes"
   },
   "hint": {
     "your-nickname": "Input your nickname",
@@ -482,12 +484,19 @@
     "app-info": "App Info",
     "app-info-menu": {
       "fitween": "What is @{Fitween}?",
-      "oss-license": "Open-source License",
+      "oss-license": "Open-source Licenses",
       "terms-of-use": "Terms of Use",
       "privacy-policy": "Privacy Policy",
       "report": "Report",
       "version": "Version",
       "support": "Support"
+    }
+  },
+  "version": {
+    "message": {
+      "unavailable": "Unavailable Version",
+      "latest": "Latest Version",
+      "old": "The Latest Version is available"
     }
   }
 }

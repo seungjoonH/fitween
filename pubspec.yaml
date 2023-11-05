@@ -44,7 +44,7 @@ dependencies:
   flutter_shake_animated: ^0.0.5
   animated_text_kit: ^4.2.2
   text_scroll: ^0.2.0
-  webview_flutter: ^4.2.2
+  webview_flutter: ^4.4.1
   syncfusion_flutter_charts: ^23.1.40
 
   # back-end

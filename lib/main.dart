@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:connectivity/connectivity.dart';
 
-const version = 'ver 2.0.0b1';
+const version = 'ver 2.0.0a1';
 String get versionNumber => version.replaceAll('ver ', '');
+const supportEmail = 'fitween.corp@gmail.com';
 
 late ConnectivityResult networkResult;
 

@@ -34,6 +34,14 @@ class GetCont {
     Get.put(SettingsPageCont());
     Get.put(GeneralSettingPageCont());
     Get.put(AppInfoPageCont());
+    Get.put(TermsInUsePageCont());
+    Get.put(PrivacyPolicyPageCont());
+    Get.put(SupportPageCont());
+    Get.put(VersionPageCont());
+    Get.put(PatchNotePageCont());
+    Get.put(OSSLicensesPageCont());
+    Get.put(LicenseDetailPageCont());
+    Get.put(FitweenPageCont());
   }
 
   static void _userConts() {

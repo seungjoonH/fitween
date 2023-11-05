@@ -8,12 +8,14 @@ class FAppIcon extends StatelessWidget {
     Key? key,
     this.size = 210.0,
     this.border = false,
+    this.backgroundColor,
   }) : super(key: key);
 
   static const String asset = 'assets/image/logo/app_icon.svg';
 
   final double size;
   final bool border;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +46,15 @@ class FAppIcon extends StatelessWidget {
             ],
           ),
           ClipRRect(
-            borderRadius: BorderRadius.circular(20.0.r),
-            child: SvgPicture.asset(
-              asset,
-              width: size.r * (border ? .9 : 1),
-              height: size.r * (border ? .9 : 1),
-              fit: BoxFit.cover,
+            borderRadius: BorderRadius.circular((size * .75 / 7).r),
+            child: Container(
+              color: backgroundColor,
+              child: SvgPicture.asset(
+                asset,
+                width: size.r * (border ? .9 : 1),
+                height: size.r * (border ? .9 : 1),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ],

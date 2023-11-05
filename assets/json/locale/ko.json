@@ -14,7 +14,8 @@
     "cancel": "신청취소",
     "fetch": "연동하기",
     "finish": "끝내기",
-    "complete": "완료하기"
+    "complete": "완료하기",
+    "patch-note": "패치노트 확인하기"
   },
   "appbar": {
     "register": "회원가입",
@@ -34,12 +35,14 @@
     "notification": "알림",
     "settings": "설정",
     "general": "일반 설정",
-    "oss-license": "오픈소스 라이선스",
+    "app-info": "앱 정보",
+    "oss-licenses": "오픈소스 라이선스",
     "terms-of-use": "이용약관",
     "privacy-policy": "개인정보 처리방침",
     "report": "오류 제보 / 개선 요청",
     "version": "버전",
-    "support": "고객지원"
+    "support": "고객지원",
+    "patch-note": "패치노트"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -446,6 +449,13 @@
       "report": "오류 제보 / 개선 요청",
       "version": "버전",
       "support": "고객지원"
+    }
+  },
+  "version": {
+    "message": {
+      "unavailable": "사용할 수 없는 버전입니다",
+      "latest": "최신버전을 사용 중입니다",
+      "old": "최신버전을 사용할 수 있습니다"
     }
   }
 }

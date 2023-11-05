@@ -1,4 +1,5 @@
 import 'package:fitween/global/global.dart';
+import 'package:fitween/oss_licenses.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,14 @@ class FRoute {
     '/see-more/notification': const NotificationPage(),
     '/see-more/settings/general': const GeneralSettingPage(),
     '/see-more/settings/app-info': const AppInfoPage(),
+    '/see-more/settings/app-info/terms-of-use': const TermsInUsePage(),
+    '/see-more/settings/app-info/privacy-policy': const PrivacyPolicyPage(),
+    '/see-more/settings/app-info/support': const SupportPage(),
+    '/see-more/settings/app-info/version': const VersionPage(),
+    '/see-more/settings/app-info/patch-note': const PatchNotePage(),
+    '/see-more/settings/app-info/oss-licenses': const OSSLicensesPage(),
+    '/see-more/settings/app-info/license-detail': const LicenseDetailPage(),
+    '/see-more/settings/app-info/fitween': const FitweenPage(),
     '/see-more/settings': const SettingsPage(),
     '/fpoint': const FPointPage(),
     '/fpoint/history': const FPointHistoryPage(),
@@ -94,6 +103,14 @@ class FRoute {
   static void toSettings() => Get.toNamed('/see-more/settings');
   static void toGeneralSetting() => Get.toNamed('/see-more/settings/general');
   static void toAppInfo() => Get.toNamed('/see-more/settings/app-info');
+  static void toTermsInUse() => Get.toNamed('/see-more/settings/app-info/terms-of-use');
+  static void toPrivacyPolicy() => Get.toNamed('/see-more/settings/app-info/privacy-policy');
+  static void toSupport() => Get.toNamed('/see-more/settings/app-info/support');
+  static void toVersion() => Get.toNamed('/see-more/settings/app-info/version');
+  static void toPatchNote() => Get.toNamed('/see-more/settings/app-info/patch-note');
+  static void toOSSLicenses() => Get.toNamed('/see-more/settings/app-info/oss-licenses');
+  static void toLicenseDetail({Package? license}) => Get.toNamed('/see-more/settings/app-info/license-detail', arguments: license);
+  static void toFitween() => Get.toNamed('/see-more/settings/app-info/fitween');
   static void toFPoint() => Get.toNamed('/fpoint');
   static void toFPointHistory() => Get.toNamed('/fpoint/history');
 }
