@@ -29,7 +29,8 @@ class _LicenseDetailPageState extends FPageState<LicenseDetailPage> {
     return Obx(() {
       if (cont.license == null) return const FScaffold();
 
-      return Scaffold(
+      return FScaffold(
+        autoPadding: false,
         appBar: FAppBar(text: cont.license!.name ?? ''),
         body: Padding(
           padding: EdgeInsets.symmetric(
@@ -47,9 +48,18 @@ class _LicenseDetailPageState extends FPageState<LicenseDetailPage> {
                 SizedBox(height: 20.0.h),
                 FTextTag(cont.license!.version),
                 SizedBox(height: 20.0.h),
-                FText(cont.license!.description, color: ThemeCont.to.comment, maxLines: 10),
+                FText(
+                  cont.license!.description,
+                  color: ThemeCont.to.comment,
+                  maxLines: 10,
+                ),
                 SizedBox(height: 20.0.h),
-                Text(cont.license!.license ?? ''),
+                FText(
+                  cont.license!.license ?? '',
+                  color: ThemeCont.to.textAlt,
+                  style: ThemeCont.to.bodySmall,
+                  maxLines: 0,
+                ),
               ],
             ),
           ),

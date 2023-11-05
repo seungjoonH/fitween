@@ -30,7 +30,7 @@ class FAppBar extends AppBar {
     if (text != null) {
       return FText(
         text!,
-        style: ThemeCont.to.headlineMedium,
+        style: ThemeCont.to.headlineSmall,
         color: textColor ?? ThemeCont.to.text,
       );
     }
