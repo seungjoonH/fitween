@@ -31,7 +31,7 @@ class FAppIcon extends StatelessWidget {
                 width: size.r,
                 height: size.r,
                 decoration: BoxDecoration(
-                  color: ThemeCont.to.backgroundAlt,
+                  color: backgroundColor,
                   borderRadius: BorderRadius.circular((size / 7).r),
                 ),
               ),

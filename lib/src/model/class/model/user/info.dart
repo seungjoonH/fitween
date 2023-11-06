@@ -31,8 +31,12 @@ class FUserInfo extends FUser {
     if (isAdmin) return _nickname;
     return _nickname;
   }
+
   @override
-  DateTime get regDate => _regDate.toDate();
+  DateTime get regTime => _regDate.toDate();
+
+  @override
+  DateTime get regDate => regTime.ignoreTime;
 
   @override
   String get email => _email;

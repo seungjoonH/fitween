@@ -45,6 +45,7 @@ class FUser extends Model {
   // info
   String? get name => info!.name;
   String get nickname => info!.nickname;
+  DateTime get regTime => info!.regTime;
   DateTime get regDate => info!.regDate;
   String get email => info!.email;
   DateTime get dateOfBirth => info!.dateOfBirth;

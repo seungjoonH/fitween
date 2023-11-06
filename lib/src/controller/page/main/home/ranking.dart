@@ -79,11 +79,13 @@ class RankingPageCont extends PageCont {
 
   void fPointButtonPressed() {
     String? rightText;
-    Color? rightColor;
+    Color? rightTextColor;
+    Color? rightBackgroundColor;
 
     if (rankingCont.receivable) {
       rightText = '${rankingCont.estimatedFPoint} FP';
-      rightColor = ThemeCont.to.point;
+      rightTextColor = ThemeCont.achro95;
+      rightBackgroundColor = ThemeCont.to.point;
     }
 
     showFDialog(
@@ -118,7 +120,8 @@ class RankingPageCont extends PageCont {
           ? DialogType.bi
           : DialogType.mono,
       rightText: rightText,
-      rightBackgroundColor: rightColor,
+      rightTextColor: rightTextColor,
+      rightBackgroundColor: rightBackgroundColor,
       rightPressed: earnFPoints,
     );
   }

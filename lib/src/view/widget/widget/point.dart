@@ -80,7 +80,7 @@ class FPointAmountWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (amount != null) _buildWidget(context, amount!);
+    if (amount != null) return _buildWidget(context, amount!);
     return Obx(() => _buildWidget(context, cont.fPoint));
   }
 }

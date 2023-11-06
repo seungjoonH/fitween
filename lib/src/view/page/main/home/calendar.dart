@@ -160,7 +160,18 @@ class _CalendarPageState extends FPageState<CalendarPage> {
   }
 
   Widget _buildCalendarCardWidget(BuildContext context) {
-    return FCard(child: _buildTableCalendarWidget(context));
+    return Obx(() {
+      if (calendarCont.entirelyReflected) {
+        return FCard(child: _buildTableCalendarWidget(context));
+      }
+      return FCard(
+        icon: const Icon(Icons.refresh),
+        iconColor: ThemeCont.to.point,
+        pressMode: FCardPressMode.icon,
+        onPressed: cont.refreshButtonPressed,
+        child: _buildTableCalendarWidget(context),
+      );
+    });
   }
 
 
@@ -254,7 +265,7 @@ class _CalendarPageState extends FPageState<CalendarPage> {
       refreshController: RefreshController(),
       onRefresh: calendarCont.init,
       height: PageCont.size.height * 1.2,
-      appBar: CalendarPageAppBar(),
+      appBar: FPointAppBar(text: cont.appBarTitle),
       body: Column(
         children: [
           _buildCalendarCardWidget(context),
@@ -263,27 +274,5 @@ class _CalendarPageState extends FPageState<CalendarPage> {
         ],
       ),
     );
-  }
-}
-
-class CalendarPageAppBar extends FPointAppBar {
-  CalendarPageAppBar({super.key});
-
-  CalendarPageCont get cont => CalendarPageCont.to;
-  CalendarCont get calendarCont => CalendarCont.to;
-
-  @override
-  String? get text => cont.appBarTitle;
-
-  Widget get action => calendarCont.entirelyReflected
-      ? Container() : FIconButton(
-    icon: const Icon(Icons.refresh),
-    iconColor: ThemeCont.to.point,
-    onPressed: cont.refreshButtonPressed,
-  );
-
-  @override
-  List<Widget>? get actions {
-    return [action, ...super.actions ?? []];
   }
 }

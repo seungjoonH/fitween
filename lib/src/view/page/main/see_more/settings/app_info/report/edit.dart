@@ -27,11 +27,11 @@ class _ReportEditPageState extends FPageState<ReportEditPage> {
         border: true,
         stretch: true,
         backgroundColor: isSelected
-            ? ThemeCont.achro30
-            : ThemeCont.achro90,
+            ? ThemeCont.to.text
+            : ThemeCont.to.background,
         textColor: isSelected
-            ? ThemeCont.achro90
-            : ThemeCont.achro30,
+            ? ThemeCont.to.background
+            : ThemeCont.to.text,
         onPressed: () => cont.selectType(type),
       );
     });
@@ -65,6 +65,7 @@ class _ReportEditPageState extends FPageState<ReportEditPage> {
             ),
             child: DropdownButton<BugReportType>(
               value: cont.selectedBugType,
+              dropdownColor: ThemeCont.to.background,
               items: BugReportType.values.map((type) => DropdownMenuItem<BugReportType>(
                 value: type,
                 child: FText(type.category),
@@ -120,13 +121,14 @@ class _ReportEditPageState extends FPageState<ReportEditPage> {
               _buildButtonWidget(context),
               _buildCategoryWidget(context),
               _buildInputFieldWidget(context),
+              SizedBox(height: 50.0.h),
+              FButton(
+                text: cont.submitButtonText,
+                stretch: true,
+                onPressed: cont.submitButtonPressed,
+              ),
             ],
           ),
-        ),
-        bottomWidget: FButton(
-          text: cont.submitButtonText,
-          stretch: true,
-          onPressed: cont.submitButtonPressed,
         ),
       );
     });

@@ -41,7 +41,7 @@ class LangCont extends GetxController {
   static bool get isEnglish => locale == Language.english.code;
 
   static String get locale {
-    String locale = get_lib.Get.locale!.languageCode;
+    String locale = get_lib.Get.locale?.languageCode ?? 'en';
     if (locale != Language.korean.code) return Language.english.code;
     return locale;
   }

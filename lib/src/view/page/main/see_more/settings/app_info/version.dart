@@ -40,10 +40,10 @@ class _VersionPageState extends FPageState<VersionPage> {
               bold: true,
             ),
             SizedBox(height: 10.0.h),
-            FTextTag(
+            const FTextTag(
               version,
               backgroundColor: ThemeCont.achro95,
-              textColor: ThemeCont.to.outline,
+              textColor: ThemeCont.achro40,
             ),
             SizedBox(height: 10.0.h),
             FText(
@@ -55,6 +55,7 @@ class _VersionPageState extends FPageState<VersionPage> {
             SizedBox(height: 40.0.h),
             FButton(
               text: cont.patchNoteButtonText,
+              textColor: ThemeCont.achro95,
               backgroundColor: ThemeCont.achro40,
               onPressed: cont.patchNoteButtonPressed,
             ),
