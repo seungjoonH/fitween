@@ -41,6 +41,9 @@ class FRoute {
     '/see-more/settings/app-info/oss-licenses': const OSSLicensesPage(),
     '/see-more/settings/app-info/license-detail': const LicenseDetailPage(),
     '/see-more/settings/app-info/fitween': const FitweenPage(),
+    '/see-more/settings/app-info/report': const ReportPage(),
+    '/see-more/settings/app-info/report/edit': const ReportEditPage(),
+    '/see-more/settings/app-info/report/detail': const ReportDetailPage(),
     '/see-more/settings': const SettingsPage(),
     '/fpoint': const FPointPage(),
     '/fpoint/history': const FPointHistoryPage(),
@@ -111,6 +114,9 @@ class FRoute {
   static void toOSSLicenses() => Get.toNamed('/see-more/settings/app-info/oss-licenses');
   static void toLicenseDetail({Package? license}) => Get.toNamed('/see-more/settings/app-info/license-detail', arguments: license);
   static void toFitween() => Get.toNamed('/see-more/settings/app-info/fitween');
+  static void toReport() => Get.toNamed('/see-more/settings/app-info/report');
+  static void toReportEdit({Report? report}) => Get.toNamed('/see-more/settings/app-info/report/edit', arguments: report);
+  static void toReportDetail({Report? report}) => Get.toNamed('/see-more/settings/app-info/report/detail', arguments: report);
   static void toFPoint() => Get.toNamed('/fpoint');
   static void toFPointHistory() => Get.toNamed('/fpoint/history');
 }

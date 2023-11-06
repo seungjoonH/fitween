@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 export './nickname.dart';
 export './date_of_birth.dart';
 export './sex.dart';
+export './report_title.dart';
+export './report_content.dart';
 
 abstract class ValidatorCont extends GetxController {
   final _shaking = false.obs;
@@ -29,7 +31,7 @@ abstract class InputFieldValidatorCont extends ValidatorCont {
   TextEditingController get controller;
   final _text = ''.obs;
 
-  final _hintText = RxnString();
+  final _hintText = Rx<String?>(null);
 
   String get text => _text.value;
   String get emptyHintText;
@@ -50,6 +52,8 @@ abstract class InputFieldValidatorCont extends ValidatorCont {
 
   @override
   void init() => controller.clear();
+
+  void setText(String text) => controller.text = text;
 
   @override
   String? validate();

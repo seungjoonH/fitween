@@ -45,7 +45,7 @@ class _FIconButtonState extends State<FIconButton> with DarkPressable {
   @override
   Widget buildContent(BuildContext context) {
     Color iconColorAlt = widget.iconColor ?? ThemeCont.to.text;
-    double size = widget.size ?? 60.0.r;
+    double size = widget.size ?? 50.0.r;
 
     return Stack(
       alignment: Alignment.center,

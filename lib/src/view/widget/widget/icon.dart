@@ -1,4 +1,5 @@
 import 'package:basic_utils/basic_utils.dart';
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,7 +18,7 @@ enum FIcons {
   visibility;
 
   static String filePath = 'assets/image/icon/';
-  String get fileName => '${StringUtils.camelCaseToLowerUnderscore(name)}.svg';
+  String get fileName => '${name.toSnakeCase}.svg';
   String assetPath(bool selected) {
     String theme = ThemeCont.to.isLightMode ? 'light' : 'dark';
     if (!selected) return '${filePath}unselected/$fileName';

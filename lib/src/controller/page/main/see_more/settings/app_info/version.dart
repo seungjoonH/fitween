@@ -25,9 +25,9 @@ class VersionPageCont extends PageCont {
     _versions.clear();
     var cols = await f.collection('versions').get();
 
-    for (var data in cols.docs) {
-      Map<String, dynamic> json = data.data();
-      _versions[data.id] = json['available'];
+    for (var doc in cols.docs) {
+      Map<String, dynamic> json = doc.data();
+      _versions[doc.id] = json['available'];
     }
   }
 

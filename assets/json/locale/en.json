@@ -15,7 +15,9 @@
     "fetch": "Fetch",
     "finish": "Finish",
     "complete": "Complete",
-    "patch-note": "Check Patch Notes"
+    "patch-note": "Check Patch Notes",
+    "submit": "Submit",
+    "delete": "Delete"
   },
   "appbar": {
     "register": "Register",
@@ -39,14 +41,18 @@
     "oss-licenses": "Open-Source Licenses",
     "terms-of-use": "Terms of Use",
     "privacy-policy": "Privacy Policy",
-    "report": "Report",
     "support": "Support",
-    "patch-note": "Patch Notes"
+    "patch-note": "Patch Notes",
+    "report": "Report",
+    "report-edit": "Report",
+    "report-detail": "Report"
   },
   "hint": {
     "your-nickname": "Input your nickname",
     "friends-nickname": "Input friend's nickname",
-    "date-of-birth": "YYYYMMDD"
+    "date-of-birth": "YYYYMMDD",
+    "report-title": "Report Title",
+    "report-content": "If there is anything you want to improve, please write them here."
   },
   "validate": {
     "is-duplicated": "Nickname duplicates",
@@ -65,7 +71,9 @@
     "has-no-number": "Please enter only numbers",
     "empty": {
       "your-nickname": "@:hint.your-nickname",
-      "date-of-birth": "@:hint.date-of-birth"
+      "date-of-birth": "@:hint.date-of-birth",
+      "report-title": "Input the report title",
+      "report-content": "Input the report contents"
     }
   },
   "time": {
@@ -118,7 +126,10 @@
     "info": "info",
     "leader": "leader",
     "party-title": "party title",
-    "list": "list"
+    "list": "list",
+    "category": "category",
+    "writer": "writer",
+    "write-date": "date"
   },
   "unit": {
     "step": {
@@ -497,6 +508,63 @@
       "unavailable": "Unavailable Version",
       "latest": "Latest Version",
       "old": "The Latest Version is available"
+    }
+  },
+  "report": {
+    "no-reports": "Create a Report",
+    "type": {
+      "bug-report": "Bug Report",
+      "request": "Request"
+    },
+    "stage": {
+      "editing": "Editing",
+      "draft":  "Draft",
+      "requested": "Requested",
+      "accepted": "Accepted",
+      "answered": "Answered"
+    },
+    "bug": {
+      "category": {
+        "uiux": "Design flaws",
+        "auth": "Account linking errors",
+        "contents": "Contents",
+        "etc": "Other errors",
+        "qna": "QNA"
+      },
+      "guide": {
+        "uiux": "1. The layout of the widget looks broken\n2. The size of the widget is unnatural\n3. The buttons are invisible\n\nIf you have a report similar to the above, please write it here.",
+        "auth": "1. There's something wrong with my account\n2. I'm having trouble linking my information\n\nIf you have a report similar to the above, please write it here.",
+        "contents": "1. I'm having trouble progressing through the challenge content.\n2. I'm having trouble recognizing joints in the Time Attack content.\n\nIf you have a similar report to the above, please write it here.",
+        "etc": "If you find an error and it doesn't fit into any category, please write about it here.",
+        "qna": "If you have any questions than errors, please write them here."
+      }
+    },
+    "dialog": {
+      "save": {
+        "title": "Report Drafted",
+        "text": "The report has been drafted"
+      },
+      "submit": {
+        "really-title": "Report Submission",
+        "really-text": "Are you sure to submit the report?\nReport modification and deletion are not possible after submission.",
+        "complete-title": "Report Submitted",
+        "complete-text": "The report has been submitted.\nThank you for your valuable opinion."
+      }
+    }
+  },
+  "report-detail": {
+    "developer-answer": "Developer Answer",
+    "stage": {
+      "requested": "Report is pending.",
+      "accepted": "Your report has been received.\nWe will reply as soon as possible."
+    },
+    "dialog": {
+      "delete": {
+        "really-title": "Report Deletion",
+        "really-text": "Are you sure to delete this report?",
+        "complete-title": "Report Deleted",
+        "complete-text": "The report has been deleted."
+      }
     }
   }
 }

@@ -42,6 +42,9 @@ class GetCont {
     Get.put(OSSLicensesPageCont());
     Get.put(LicenseDetailPageCont());
     Get.put(FitweenPageCont());
+    Get.put(ReportPageCont());
+    Get.put(ReportEditPageCont());
+    Get.put(ReportDetailPageCont());
   }
 
   static void _userConts() {
@@ -52,6 +55,8 @@ class GetCont {
   static void _initValidatorConts() {
     Get.put(NicknameValidatorCont());
     Get.put(DateOfBirthValidatorCont());
+    Get.put(ReportTitleValidatorCont());
+    Get.put(ReportContentValidatorCont());
   }
 
   static void _etcConts() {
@@ -63,9 +68,9 @@ class GetCont {
   }
 
   static void initConts() {
+    _initValidatorConts();
     _initPageConts();
     _userConts();
-    _initValidatorConts();
     _etcConts();
   }
 }

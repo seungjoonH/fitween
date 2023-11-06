@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:basic_utils/basic_utils.dart';
+
 bool hasBottomConsonant(String input) {
   return (input.runes.last - 0xAC00) % 28 != 0;
 }
@@ -90,4 +92,7 @@ extension StringExtension on String {
     final exp = RegExp('(?<=[a-z])[A-Z]');
     return replaceAllMapped(exp, (m) => '-${m.group(0)}').toLowerCase();
   }
+
+  String get toSnakeCase => StringUtils.camelCaseToLowerUnderscore(this);
+  String get toSkewerCase => toSnakeCase.replaceAll('_', '-');
 }

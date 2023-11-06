@@ -1,4 +1,5 @@
 import 'package:basic_utils/basic_utils.dart';
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
@@ -10,7 +11,7 @@ enum GeneralSettingMenu {
 
   String get _tr => 'settings.general-menu';
   String get locale => LangCont
-      .tr('$_tr.${StringUtils.camelCaseToLowerUnderscore(name).replaceAll('_', '-')}');
+      .tr('$_tr.${name.toSkewerCase}');
 }
 
 class GeneralSettingPageCont extends PageCont {

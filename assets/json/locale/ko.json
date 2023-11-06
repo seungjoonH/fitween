@@ -15,7 +15,9 @@
     "fetch": "연동하기",
     "finish": "끝내기",
     "complete": "완료하기",
-    "patch-note": "패치노트 확인하기"
+    "patch-note": "패치노트 확인하기",
+    "submit": "제출",
+    "delete": "삭제"
   },
   "appbar": {
     "register": "회원가입",
@@ -39,15 +41,19 @@
     "oss-licenses": "오픈소스 라이선스",
     "terms-of-use": "이용약관",
     "privacy-policy": "개인정보 처리방침",
-    "report": "오류 제보 / 개선 요청",
     "version": "버전",
     "support": "고객지원",
-    "patch-note": "패치노트"
+    "patch-note": "패치노트",
+    "report": "오류 제보 및 개선 요청",
+    "report-edit": "리포트",
+    "report-detail": "리포트"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
     "friends-nickname": "별명을 입력하세요",
-    "date-of-birth": "YYYYMMDD"
+    "date-of-birth": "YYYYMMDD",
+    "report-title": "리포트 제목",
+    "report-content": "개선을 원하는 사항이 있으면 여기에 적어주세요."
   },
   "validate": {
     "is-duplicated": "별명이 중복됩니다",
@@ -67,7 +73,9 @@
     "": "없는 날짜 입니다",
     "empty": {
       "your-nickname": "@:hint.your-nickname",
-      "date-of-birth": "@:hint.date-of-birth"
+      "date-of-birth": "@:hint.date-of-birth",
+      "report-title": "리포트 제목을 입력하세요",
+      "report-content": "리포트 내용을 입력하세요"
     }
   },
   "point-history": {
@@ -120,7 +128,10 @@
     "info": "정보",
     "leader": "파티장",
     "party-title": "파티명",
-    "list": "리스트"
+    "list": "리스트",
+    "category": "카테고리",
+    "writer": "작성자",
+    "write-date": "작성일시"
   },
   "unit": {
     "step": "[]보",
@@ -456,6 +467,63 @@
       "unavailable": "사용할 수 없는 버전입니다",
       "latest": "최신버전을 사용 중입니다",
       "old": "최신버전을 사용할 수 있습니다"
+    }
+  },
+  "report": {
+    "no-reports": "리포트 작성하기",
+    "type": {
+      "bug-report": "오류 제보",
+      "request": "개선 요청"
+    },
+    "stage": {
+      "editing": "작성 중",
+      "draft":  "임시저장",
+      "requested": "접수대기",
+      "accepted": "접수완료",
+      "answered": "답변완료"
+    },
+    "bug": {
+      "category": {
+        "uiux": "디자인 결함",
+        "auth": "계정정보 연동 오류",
+        "contents": "컨텐츠",
+        "etc": "기타 오류",
+        "qna": "문의"
+      },
+      "guide": {
+        "uiux": "1. 위젯의 레이아웃이 깨져 보여요.\n2. 위젯의 크기가 부자연스러워요.\n3. 버튼이 보이지 않아요.\n\n위와 유사한 제보사항이 있을 경우 여기에 적어주세요.",
+        "auth": "1. 계정에 문제가 생겼어요.\n2. 정보 연동에 실패했어요.\n\n위와 유사한 제보사항이 있을 경우 여기에 적어주세요.",
+        "contents": "1. 챌린지 컨텐츠를 진행하는데 문제가 있어요.\n2. 타임어택 컨텐츠에서 관절 인식이 잘 되지 않아요.\n\n위와 유사한 제보사항이 있을 경우 여기에 적어주세요.",
+        "etc": "오류를 발견했지만 어떤 카테고리에도 속하지 않는다면 이곳에 적어주세요.",
+        "qna": "오류 이외에 기타 문의사항이 있으면 이곳에 적어주세요."
+      }
+    },
+    "dialog": {
+      "save": {
+        "title": "임시저장",
+        "text": "리포트가 임시저장 되었습니다"
+      },
+      "submit": {
+        "really-title": "리포트 제출",
+        "really-text": "정말 리포트를 제출하시겠습니까?\n제출 후에는 리포트 수정 및 삭제가 불가능 합니다.",
+        "complete-title": "리포트 제출됨",
+        "complete-text": "리포트가 제출되었습니다.\n소중한 의견 감사합니다."
+      }
+    }
+  },
+  "report-detail": {
+    "developer-answer": "개발자 답변",
+    "stage": {
+      "requested": "문의가 접수 대기 중입니다.",
+      "accepted": "문의가 접수되었습니다.\n빠른 시일 내 답장해드리겠습니다."
+    },
+    "dialog": {
+      "delete": {
+        "really-title": "리포트 삭제",
+        "really-text": "정말 해당 리포트를 삭제하시겠습니까?",
+        "complete-title": "리포트 삭제됨",
+        "complete-text": "리포트가 삭제되었습니다"
+      }
     }
   }
 }

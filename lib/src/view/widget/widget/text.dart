@@ -239,16 +239,21 @@ class FInputField extends StatelessWidget {
     super.key,
     required this.validator,
     this.keyboardType = TextInputType.text,
+    this.maxLines,
   });
 
   final InputFieldValidatorCont validator;
   final TextInputType keyboardType;
+  final int? maxLines;
 
-  Color get _hintColor => validator.coloring ? ThemeCont.error : validator.hintColor;
+  Color get _hintColor => validator.coloring
+      ? ThemeCont.error
+      : validator.hintColor;
 
   @override
   Widget build(BuildContext context) {
-    final style = ThemeCont.to.bodyLarge?.copyWith(color: ThemeCont.to.text);
+    final style = ThemeCont.to.bodyLarge
+        ?.copyWith(color: ThemeCont.to.text);
     final radius = BorderRadius.circular(10.0.r);
 
     return Obx(() => ShakeWidget(
@@ -259,6 +264,7 @@ class FInputField extends StatelessWidget {
         controller: validator.controller,
         cursorColor: ThemeCont.to.text,
         keyboardType: keyboardType,
+        maxLines: maxLines,
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
             borderRadius: radius,

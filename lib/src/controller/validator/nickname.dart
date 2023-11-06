@@ -13,7 +13,7 @@ enum NewNicknameValidationType {
   String get hintText {
     const tr = 'validate';
     if (this == empty) return LangCont.tr('$tr.empty.your-nickname');
-    return LangCont.tr('$tr.${name.toDashed}');
+    return LangCont.tr('$tr.${name.toSkewerCase}');
   }
 
   static NewNicknameValidationType? validate(String text) {

@@ -1,4 +1,5 @@
 import 'package:basic_utils/basic_utils.dart';
+import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,7 @@ enum SettingsMenu {
 
   String get _tr => 'settings';
   String get locale => LangCont
-      .tr('$_tr.${StringUtils.camelCaseToLowerUnderscore(name).replaceAll('_', '-')}');
+      .tr('$_tr.${name.toSkewerCase}');
 }
 
 class SettingsPageCont extends PageCont {
