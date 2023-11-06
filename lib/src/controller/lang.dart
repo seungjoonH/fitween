@@ -9,7 +9,10 @@ import 'package:get/get.dart';
 enum Language {
   system, english, korean;
   List<Language> get langs => [english, korean];
-  String get code => name.substring(0, 2);
+  String get code {
+    if (this == system) return LangCont.locale;
+    return name.substring(0, 2);
+  }
 
   String get _tr => 'settings.general-menu.language-type';
   String get locale => LangCont.tr('$_tr.$name');

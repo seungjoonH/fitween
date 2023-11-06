@@ -15,14 +15,6 @@ class FPointPageCont extends PageCont {
   final _fPoint = 0.obs;
   int get fPoint => _fPoint.value;
 
-  void animateFPoint(int fp) async {
-    _fPoint(0);
-    await delay(20.ms, () => _fPoint(fp ~/ 1000 * 1000));
-    await delay(20.ms, () => _fPoint(fp ~/ 100 * 100));
-    await delay(20.ms, () => _fPoint(fp ~/ 10 * 10));
-    await delay(20.ms, () => _fPoint(fp));
-  }
-
   Timer? _timer;
   final _now = date.now.obs;
   DateTime get now => _now.value;
@@ -40,7 +32,7 @@ class FPointPageCont extends PageCont {
   @override
   Future load() async {
     await pointCont.load();
-    animateFPoint(pointCont.fPoint);
+    _fPoint(pointCont.fPoint);
     _startTimer();
   }
 

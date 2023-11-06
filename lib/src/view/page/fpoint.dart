@@ -1,3 +1,4 @@
+import 'package:animated_digit/animated_digit.dart';
 import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
@@ -46,11 +47,11 @@ class _FPointPageState extends FPageState<FPointPage> {
           SizedBox(width: 5.0.w),
           SizedBox(
             height: 80.0.h,
-            child: Obx(() => AnimatedFlipCounter(
+            child: Obx(() => AnimatedDigitWidget(
               value: cont.fPoint,
               suffix: ' FP',
-              thousandSeparator: ',',
               duration: 1.s,
+              enableSeparator: true,
               textStyle: ThemeCont.to.headlineMedium
                   ?.copyWith(color: ThemeCont.to.point),
             )),
