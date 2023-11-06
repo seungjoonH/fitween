@@ -109,7 +109,7 @@ class _ReportEditPageState extends FPageState<ReportEditPage> {
         appBar: FAppBar(
           text: cont.appBarTitle,
           actions: [
-            IconButton(
+            FIconButton(
               onPressed: cont.saveButtonPressed,
               icon: const Icon(Icons.save_rounded),
             ),

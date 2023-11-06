@@ -474,7 +474,9 @@
     "followed": "@{{object}} follows you",
     "party-applied": "There is a new applicant for the party @{{object}}",
     "poke": "@{{object}} poked you",
-    "party-banished": "Banished from the party @{{object}}"
+    "party-banished": "Banished from the party @{{object}}",
+    "party-accepted": "@{{object}} party application accepted",
+    "party-rejected": "@{{object}} party application rejected"
   },
   "settings": {
     "general": "General Settings",

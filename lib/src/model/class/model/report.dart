@@ -25,8 +25,8 @@ enum ReportStage {
     return LangCont.tr('report-detail.stage.$name');
   }
   Color get color => [
-    ThemeCont.achro70, ThemeCont.achro50,
-    ThemeCont.achro10, ThemeCont.colorC,
+    ThemeCont.to.bar, ThemeCont.to.outline,
+    ThemeCont.to.text, ThemeCont.colorC,
     ThemeCont.colorA
   ][index];
 

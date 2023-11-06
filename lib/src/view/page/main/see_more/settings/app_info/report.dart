@@ -86,7 +86,7 @@ class _ReportPageState extends FPageState<ReportPage> {
       appBar: FAppBar(
         text: cont.appBarTitle,
         actions: [
-          IconButton(
+          FIconButton(
             onPressed: cont.createReportButtonPressed,
             icon: const Icon(Icons.add),
           ),

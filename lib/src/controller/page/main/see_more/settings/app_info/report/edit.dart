@@ -68,11 +68,11 @@ class ReportEditPageCont extends PageCont {
       content: FText(reallySubmitText, maxLines: 0),
       type: DialogType.bi,
       rightText: submitButtonText,
-      rightPressed: submitReport,
+      rightPressed: _submitReport,
     );
   }
 
-  void submitReport() async {
+  void _submitReport() async {
     await showFDialog(
       title: submittedTitle,
       content: FText(submittedText, maxLines: 0),

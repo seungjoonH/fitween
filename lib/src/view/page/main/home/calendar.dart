@@ -160,18 +160,16 @@ class _CalendarPageState extends FPageState<CalendarPage> {
   }
 
   Widget _buildCalendarCardWidget(BuildContext context) {
-    return Obx(() {
-      if (calendarCont.entirelyReflected) {
-        return FCard(child: _buildTableCalendarWidget(context));
-      }
-      return FCard(
-        icon: const Icon(Icons.refresh),
-        iconColor: ThemeCont.to.point,
-        pressMode: FCardPressMode.icon,
-        onPressed: cont.refreshButtonPressed,
-        child: _buildTableCalendarWidget(context),
-      );
-    });
+    if (calendarCont.entirelyReflected) {
+      return FCard(child: _buildTableCalendarWidget(context));
+    }
+    return FCard(
+      icon: const Icon(Icons.refresh),
+      iconColor: ThemeCont.to.point,
+      pressMode: FCardPressMode.icon,
+      onPressed: cont.refreshButtonPressed,
+      child: _buildTableCalendarWidget(context),
+    );
   }
 
 
