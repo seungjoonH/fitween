@@ -1,9 +1,7 @@
 import 'package:fitween/oss_licenses.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/controller/page/main/see_more/settings/app_info/web_view.dart';
 import 'package:get/get.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class OSSLicensesPageCont extends PageCont {
   static OSSLicensesPageCont get to => Get.find<OSSLicensesPageCont>();

@@ -5,7 +5,6 @@ import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FScaffold extends Scaffold {

@@ -1,7 +1,6 @@
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/controller/page/main/see_more/settings/app_info/web_view.dart';
 import 'package:get/get.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class PrivacyPolicyPageCont extends WebViewPageCont {
   static PrivacyPolicyPageCont get to => Get.find<PrivacyPolicyPageCont>();

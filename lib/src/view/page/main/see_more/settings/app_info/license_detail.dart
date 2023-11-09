@@ -31,7 +31,7 @@ class _LicenseDetailPageState extends FPageState<LicenseDetailPage> {
 
       return FScaffold(
         autoPadding: false,
-        appBar: FAppBar(text: cont.license!.name ?? ''),
+        appBar: FAppBar(text: cont.license!.name),
         body: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 15.0.w, vertical: 15.0.h,

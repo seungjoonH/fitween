@@ -83,7 +83,7 @@ class _ReportDetailPageState extends FPageState<ReportDetailPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     FText(
-                      cont.report!.title ?? '',
+                      cont.report!.title,
                       bold: true,
                       style: ThemeCont.to.titleLarge,
                     ),

@@ -2,7 +2,6 @@ import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fitween/src/controller/theme.dart';
 import 'package:get/get.dart';
 
 enum FCardPressMode { entire, icon }

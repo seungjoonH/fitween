@@ -7,7 +7,6 @@ import 'package:fitween/src/model/class/date_range.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:health/health.dart';
 import 'package:permission_handler/permission_handler.dart';
 

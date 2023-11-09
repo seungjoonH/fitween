@@ -3,7 +3,6 @@ import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:fitween/src/controller/theme.dart';
 
 enum DialogType { none, mono, bi }
 

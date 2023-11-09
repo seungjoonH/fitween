@@ -1,5 +1,4 @@
 import 'package:fitween/global/string.dart';
-import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/main.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
