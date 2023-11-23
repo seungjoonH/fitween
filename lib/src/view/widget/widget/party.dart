@@ -196,8 +196,8 @@ class PartyCard extends ChallengeCard {
           controller: titleController,
           prefixIcon: FIconButton(
             icon: const Icon(Icons.save),
-            size: 18.0.r,
-            iconSize: 17.0.r,
+            size: 18.0,
+            iconSize: 17.0,
             iconColor: ThemeCont.to.comment,
             onPressed: toggleTitleMode,
           ),
@@ -216,8 +216,8 @@ class PartyCard extends ChallengeCard {
           SizedBox(width: 3.0.r),
           FIconButton(
             icon: const Icon(Icons.edit),
-            size: 28.0.r,
-            iconSize: 18.0.r,
+            size: 28.0,
+            iconSize: 18.0,
             iconColor: ThemeCont.to.comment,
             onPressed: toggleTitleMode,
           ),

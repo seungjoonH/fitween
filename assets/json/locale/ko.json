@@ -46,7 +46,8 @@
     "patch-note": "패치노트",
     "report": "오류 제보 및 개선 요청",
     "report-edit": "리포트",
-    "report-detail": "리포트"
+    "report-detail": "리포트",
+    "weight-complete": "운동결과"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -131,7 +132,8 @@
     "list": "리스트",
     "category": "카테고리",
     "writer": "작성자",
-    "write-date": "작성일시"
+    "write-date": "작성일시",
+    "exercise": "운동"
   },
   "unit": {
     "step": "[]보",
@@ -207,6 +209,37 @@
     "dialog": {
       "insufficient-title": "FPoint 부족",
       "insufficient-text": "FPoint 가 부족합니다."
+    }
+  },
+  "exercise": {
+    "squat": "스쿼트",
+    "shoulder-press": "숄더 프레스",
+    "stage": {
+      "stop": "디바이스를 거치하고\n시작버튼을 눌러주세요",
+      "detecting": "자세를 인식할게요\n인식 중",
+      "pause": "운동을 완료하려면\n횟수 버튼을 클릭하세요.",
+      "exercise": "",
+      "complete": "완료! 수고하셨어요"
+    },
+    "posture": {
+      "unbent": "",
+      "correct": "잘하고 있어요!",
+      "wrong": "자세를 바르게 해주세요!",
+      "fast": "조금만 천천히 해주세요"
+    },
+    "human-distance": {
+      "undetected": "사람이 인식되지 않습니다",
+      "middle": "",
+      "near": "너무 가까워요",
+      "far": "조금 더 가까이 와주세요"
+    },
+    "bent": {
+      "squat": "올라오세요",
+      "shoulder-press": "쭉 펴세요"
+    },
+    "unbent": {
+      "squat": "내려가세요",
+      "shoulder-press": "구부리세요"
     }
   },
   "login": {
@@ -527,5 +560,9 @@
         "complete-text": "리포트가 삭제되었습니다"
       }
     }
+  },
+  "weight-complete": {
+    "my-record": "나의 기록",
+    "record-increased": "무게 기록 상승!"
   }
 }

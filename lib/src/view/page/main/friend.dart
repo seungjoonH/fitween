@@ -18,9 +18,6 @@ class _FriendPageState extends FPageState<FriendPage> {
   @override
   FriendPageCont get cont => FriendPageCont.to;
 
-  @override
-  bool get unconditionallyRefresh => Get.arguments as bool;
-
   Widget _buildEachFriendListTileWidget(BuildContext context, FUser friend) {
     return Obx(() => Stack(
       alignment: Alignment.centerRight,

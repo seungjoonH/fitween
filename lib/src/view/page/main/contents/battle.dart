@@ -16,6 +16,6 @@ class _BattlePageState extends FPageState<BattlePage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    return FScaffold();
+    return const FScaffold();
   }
 }

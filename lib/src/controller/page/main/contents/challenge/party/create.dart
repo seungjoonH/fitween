@@ -85,7 +85,7 @@ class PartyCreatePageCont extends PageCont {
     await PartyDAO().saveOne(newParty);
     await FUserPartyDAO().saveOne(_logged.party!);
 
-    FRoute.toContents();
+    BottomBarCont.to.navigate(2);
     FRoute.toChallenge();
   }
 

@@ -1,5 +1,5 @@
-import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/model/class/exercise.dart';
 import 'package:get/get.dart';
 
 class GetCont {
@@ -27,6 +27,9 @@ class GetCont {
     Get.put(FPointPageCont());
     Get.put(FPointHistoryPageCont());
     Get.put(WeightPageCont());
+    Get.put(WeightGuidePageCont());
+    Get.put(WeightCameraPageCont());
+    Get.put(WeightCompletePageCont());
     Get.put(BattlePageCont());
     Get.put(ContentsPageCont());
     Get.put(SeeMorePageCont());
@@ -65,6 +68,7 @@ class GetCont {
     Get.put(NotificationCont());
     Get.put(RankingCont());
     Get.put(BottomBarCont());
+    Get.put(CameraCont());
   }
 
   static void initConts() {

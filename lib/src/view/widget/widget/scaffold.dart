@@ -53,7 +53,7 @@ class FScaffold extends Scaffold {
       ),
       if (bottomWidget != null)
       SizedBox(
-        height: PageCont.size.height * .35,
+        height: PageCont.size.height * .4,
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [

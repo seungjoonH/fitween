@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/controller/lang.dart';
 import 'package:fitween/src/controller/page/carousel.dart';
 import 'package:fitween/src/controller/user/auth.dart';
@@ -254,7 +255,7 @@ class GoalSettingPageCont extends CarouselPageCont {
       await FUserRecordDAO().saveOne(_user.record!);
     }
 
-    FRoute.toHome();
+    BottomBarCont.to.navigate(0);
     pageIndex = 0;
   }
 

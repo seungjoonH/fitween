@@ -21,6 +21,10 @@ export 'main/contents/challenge/party/history.dart';
 export 'main/contents/challenge/party.dart';
 export 'main/contents/challenge/detail.dart';
 export 'main/contents/challenge.dart';
+export 'main/contents/camera/camera.dart';
+export 'main/contents/weight/guide.dart';
+export 'main/contents/weight/camera.dart';
+export 'main/contents/weight/complete.dart';
 export 'main/contents/weight.dart';
 export 'main/contents/battle.dart';
 export 'main/contents.dart';
@@ -49,14 +53,6 @@ abstract class FPage extends FWidget {
 
 abstract class FPageState<T extends FPage> extends FWidgetState<T> {
   PageCont get cont;
-
-  bool get unconditionallyRefresh => false;
-
-  @override
-  void initState() {
-    super.initState();
-    cont.initState(reload: unconditionallyRefresh);
-  }
 
   Widget buildPage(BuildContext context);
 

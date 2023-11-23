@@ -91,6 +91,8 @@ class FUser extends Model {
   void setRecordByValue(FType type, num value, DateTime date) => record!.setRecordByValue(type, value, date);
   void setTodayRecord(FType type, Amount amount) => record!.setTodayRecord(type, amount);
   void setTodayRecordByValue(FType type, num value) => record!.setTodayRecordByValue(type, value);
+  void addRecord(FType type, Amount amount, DateTime date) => record!.addRecord(type, amount, date);
+  void addTodayRecord(FType type, Amount amount) => record!.addTodayRecord(type, amount);
 
   void setRankedData(Period period, RankingData data) => record!.setRankedData(period, data);
 

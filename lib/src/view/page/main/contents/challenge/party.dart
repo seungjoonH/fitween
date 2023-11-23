@@ -172,7 +172,7 @@ class _PartyPageState extends FPageState<PartyPage> {
             if ( cont.isLeader && !cont.isOnly)
             FIconButton(
               icon: const Icon(Icons.settings),
-              size: 35.0.r,
+              size: 35.0,
               iconColor: ThemeCont.to.comment,
               onPressed: cont.memberSettingButtonPressed,
             ),

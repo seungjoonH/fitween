@@ -126,6 +126,25 @@ class FUserRecord extends FUser {
     setRecordByValue(type, value, today);
   }
 
+
+  @override
+  void addRecord(FType type, Amount amount, DateTime date) {
+    num value = getRecord(date, date.lastTimeOfDay)[type]!;
+
+    switch (type) {
+      case FType.distance: value += (amount as DistanceAmount).step; break;
+      case FType.height: value += (amount as HeightAmount).floor; break;
+      case FType.weight: value += (amount as WeightAmount).cnt; break;
+      default: break;
+    }
+    setRecordByValue(type, value, date);
+  }
+  @override
+  void addTodayRecord(FType type, Amount amount) {
+    addRecord(type, amount, today);
+  }
+
+
   @override
   Map<DateTime, List<CalendarEvent>> get events {
     DateTime startDate = regDate;

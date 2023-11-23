@@ -211,8 +211,8 @@ class FTextField extends StatelessWidget {
         prefixIconColor: ThemeCont.to.comment,
         suffixIcon: FIconButton(
           icon: const Icon(Icons.cancel),
-          size: 18.0.r,
-          iconSize: 17.0.r,
+          size: 18.0,
+          iconSize: 17.0,
           iconColor: ThemeCont.to.comment,
           onPressed: clearPressed,
         ),

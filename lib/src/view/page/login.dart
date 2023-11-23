@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/main.dart';
 import 'package:fitween/src/controller/lang.dart';
@@ -40,7 +41,7 @@ class _LoginPageState extends FPageState {
 
   Widget _buildSignInButtonWidget(BuildContext context) {
     return AnimatedOpacity(
-      duration: const Duration(milliseconds: 500),
+      duration: 500.ms,
       curve: Curves.easeInOut,
       opacity: cont.buttonsOpacity,
       child: Column(

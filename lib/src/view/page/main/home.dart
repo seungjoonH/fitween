@@ -25,6 +25,8 @@ class _HomePageState extends FPageState {
   CalendarCont get calendarCont => cont.calendarCont;
   RankingCont get rankingCont => cont.rankingCont;
 
+  double get _size => PageCont.size.width * .1;
+
   Widget _buildMarbleCarouselWidget(BuildContext context) {
     return Obx(() => CircularCarousel(
       width: PageCont.size.width * (PageCont.isPortrait ? 1.2 : .6),
@@ -70,8 +72,8 @@ class _HomePageState extends FPageState {
       return GestureDetector(
         onTap: onTap,
         child: Container(
-          width: 37.0.r,
-          height: 37.0.r,
+          width: _size,
+          height: _size,
           padding: EdgeInsets.all(1.0.r),
           decoration: BoxDecoration(
             color: selected
@@ -108,7 +110,7 @@ class _HomePageState extends FPageState {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: Weekday.values.map((wd) => SizedBox(
-        width: 37.0.r,
+        width: _size,
         child: FText(
           wd.short,
           style: ThemeCont.to.bodyMedium,
@@ -139,7 +141,7 @@ class _HomePageState extends FPageState {
       ),
       options: CarouselOptions(
         viewportFraction: 1.0,
-        height: 58.0.h,
+        height: 68.0.h,
         enableInfiniteScroll: false,
       ),
     );

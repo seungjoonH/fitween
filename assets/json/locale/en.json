@@ -45,7 +45,8 @@
     "patch-note": "Patch Notes",
     "report": "Report",
     "report-edit": "Report",
-    "report-detail": "Report"
+    "report-detail": "Report",
+    "weight-complete": "Weight Result"
   },
   "hint": {
     "your-nickname": "Input your nickname",
@@ -129,7 +130,8 @@
     "list": "list",
     "category": "category",
     "writer": "writer",
-    "write-date": "date"
+    "write-date": "date",
+    "exercise": "exercise"
   },
   "unit": {
     "step": {
@@ -245,6 +247,37 @@
     "dialog": {
       "insufficient-title": "Lack of FPoints",
       "insufficient-text": "You don't have enough FPoints"
+    }
+  },
+  "exercise": {
+    "squat": "squat",
+    "shoulder-press": "Shoulder Press",
+    "stage": {
+      "stop": "Place the device and\npress the Start button",
+      "detecting": "Detecting your posture\nDetecting",
+      "pause": "Press yellow button\nto finish the exercise",
+      "exercise": "",
+      "complete": "Finished! You did a great job"
+    },
+    "posture": {
+      "unbent": "",
+      "correct": "Great!",
+      "wrong": "Correct your posture!",
+      "fast": "Too fast"
+    },
+    "human-distance": {
+      "undetected": "No human detected",
+      "middle": "",
+      "near": "Too close!",
+      "far": "Too far!"
+    },
+    "bent": {
+      "squat": "Go UP!",
+      "shoulder-press": "Stretch IT!"
+    },
+    "unbent": {
+      "squat": "Go DOWN!",
+      "shoulder-press": "Bend IT!"
     }
   },
   "login": {
@@ -568,5 +601,9 @@
         "complete-text": "The report has been deleted."
       }
     }
+  },
+  "weight-complete": {
+    "my-record": "My Record",
+    "record-increased": "Weight Record increased!"
   }
 }

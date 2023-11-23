@@ -18,7 +18,8 @@ class HomePageCont extends MainPageCont {
   FType get activeType => _activeType.value;
   int get activeIndex => activeType.index - 1;
 
-  void onChanged(int index) => _activeType(FType.activeValues[index]);
+  void setType(FType type) => _activeType(type);
+  void onChanged(int index) => setType(FType.activeValues[index]);
 
   String getMarbleCenterText(FType type) {
     num record = _logged.getOneDayRecord(CalendarCont.to.selectedDay)[type]!;

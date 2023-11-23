@@ -1,6 +1,8 @@
 import 'package:fitween/global/global.dart';
 import 'package:fitween/oss_licenses.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
+import 'package:fitween/src/model/enum/enum.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,6 +29,9 @@ class FRoute {
     '/contents/challenge/party/history': const PartyHistoryPage(),
     '/contents/challenge/detail': const ChallengeDetailPage(),
     '/contents/challenge': const ChallengePage(),
+    '/contents/weight/guide': const WeightGuidePage(),
+    '/contents/weight/camera': const WeightCameraPage(),
+    '/contents/weight/complete': const WeightCompletePage(),
     '/contents/weight': const WeightPage(),
     '/contents/battle': const BattlePage(),
     '/see-more': const SeeMorePage(),
@@ -83,10 +88,10 @@ class FRoute {
   static void toOnboarding() => Get.toNamed('/onboarding');
   static void toRegister() => Get.toNamed('/register');
   static void toGoalSetting() => Get.toNamed('/goal-setting');
-  static void toHome() => Get.offAllNamed('/home');
+  static void toHome() { Get.offAllNamed('/home'); }
   static void toCalendar() => Get.toNamed('/home/calendar');
   static void toRanking() => Get.toNamed('/home/ranking');
-  static void toFriend({bool reload = false}) => Get.offAllNamed('/friend', arguments: reload);
+  static void toFriend() => Get.offAllNamed('/friend');
   static void toFriendSearch() => Get.toNamed('/friend/search');
   static void toContents() => Get.offAllNamed('/contents');
   static void toAdventure() => Get.toNamed('/contents/adventure');
@@ -100,6 +105,9 @@ class FRoute {
   static void toChallengeDetail({Challenge? challenge}) => Get.toNamed('/contents/challenge/detail', arguments: challenge);
   static void toChallenge() => Get.toNamed('/contents/challenge');
   static void toWeight() => Get.toNamed('/contents/weight');
+  static void toWeightGuide() => Get.toNamed('/contents/weight/guide');
+  static void toWeightCamera({Exercise? exercise}) => Get.toNamed('/contents/weight/camera', arguments: exercise);
+  static void toWeightComplete({int? count}) => Get.toNamed('/contents/weight/complete', arguments: count);
   static void toBattle() => Get.toNamed('/contents/battle');
   static void toSeeMore() => Get.offAllNamed('/see-more');
   static void toNotification() => Get.toNamed('/see-more/notification');

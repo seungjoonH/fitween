@@ -45,7 +45,7 @@ class _FIconButtonState extends State<FIconButton> with DarkPressable {
   @override
   Widget buildContent(BuildContext context) {
     Color iconColorAlt = widget.iconColor ?? ThemeCont.to.text;
-    double size = widget.size ?? 50.0.r;
+    double size = widget.size ?? 50.0;
 
     return Stack(
       alignment: Alignment.center,
@@ -54,6 +54,9 @@ class _FIconButtonState extends State<FIconButton> with DarkPressable {
           width: size,
           height: size,
           decoration: BoxDecoration(
+            shape: isCircle
+                ? BoxShape.circle
+                : BoxShape.rectangle,
             color: widget.backgroundColor,
           ),
           child: Icon(
@@ -64,7 +67,7 @@ class _FIconButtonState extends State<FIconButton> with DarkPressable {
         ),
         if (notifications != null)
         Positioned(
-          top: 5.r, right: 5.r,
+          top: 5.0, right: 5.0,
           child: FTextTag(
             notifications!,
             textColor: ThemeCont.achro95,

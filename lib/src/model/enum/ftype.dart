@@ -28,6 +28,9 @@ enum FType {
     ));
   }
 
+  String onlyUnit(num value) => withUnit(value, thouSep: false, scaling: false).replaceAll(RegExp(r'\d+'), '');
+  String onlyAltUnit(num value) => withAltUnit(value, thouSep: false, scaling: false).replaceAll(RegExp(r'\d+'), '');
+
   static FType? toEnum(String? string) => FType
       .values.firstWhereOrNull((type) => type.name == string);
 

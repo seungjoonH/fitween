@@ -25,7 +25,7 @@ class SeeMorePageCont extends MainPageCont {
 
   String getGoalTextOf(FType type) {
     num goal = _logged.goal.byType(type);
-    return type.withUnit(goal, scaling: false, txs: true);
+    return type.withUnit(goal, txs: true);
   }
 
   void fPointCardPressed() => FRoute.toFPoint();

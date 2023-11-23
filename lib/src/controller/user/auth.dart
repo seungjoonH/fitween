@@ -68,7 +68,7 @@ class AuthCont {
 
     Timer.periodic(10.ms, (timer) {
       if (!loginPageCont.loading) {
-        FRoute.toHome();
+        BottomBarCont.to.navigate(0);
         timer.cancel(); return;
       }
     });

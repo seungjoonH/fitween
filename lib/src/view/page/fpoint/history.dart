@@ -1,5 +1,6 @@
 import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/view/page/page.dart';
+import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 
 class FPointHistoryPage extends FPage {
@@ -16,7 +17,7 @@ class _FPointHistoryPageState extends FPageState<FPointHistoryPage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    return Scaffold();
+    return const FScaffold();
   }
 
 }
