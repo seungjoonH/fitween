@@ -63,12 +63,32 @@ class _NotificationPageState extends FPageState<NotificationPage> {
     ));
   }
 
+  Widget _buildEmptyNotificationListWidget(BuildContext context) {
+    return Container(
+      color: ThemeCont.achro95.withOpacity(.15),
+      padding: EdgeInsets.symmetric(
+        horizontal: 28.0.w,
+        vertical: 28.0.h,
+      ),
+      child: FText(
+        cont.emptyNotificationText,
+        style: ThemeCont.to.bodyMedium,
+        color: ThemeCont.to.comment,
+      ),
+    );
+  }
+
   Widget _buildNotificationListWidget(BuildContext context) {
     return SingleChildScrollView(
-      child: Obx(() => Column(
-        children: notificationCont.notifications
-            .map((data) => _buildNotificationTileWidget(context, data)).toList(),
-      )),
+      child: Obx(() {
+        if (notificationCont.notifications.isEmpty) {
+          return _buildEmptyNotificationListWidget(context);
+        }
+        return Column(
+          children: notificationCont.notifications
+              .map((data) => _buildNotificationTileWidget(context, data)).toList(),
+        );
+      }),
     );
   }
 

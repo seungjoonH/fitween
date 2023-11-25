@@ -479,12 +479,13 @@
     "record-increased": "무게 기록 상승!"
   },
   "notification": {
+    "empty": "알림이 없습니다",
     "followed": "@{{object}}님이 팔로우 했습니다",
     "party-applied": "@{{object}} 파티에 지원자가 있습니다",
     "poke": "@{{object}}님이 콕 찔렀습니다",
     "party-banished": "@{{object}} 파티에서 추방되었습니다",
     "party-accepted": "@{{object}} 파티 신청이 승인되었습니다",
-    "party-rejected": "@{{object}} 파티 신청이 거부되었습니다"
+    "party-rejected": "@{{object}} 파티 신청이 거부되었습니다",
   },
   "settings": {
     "general": "일반 설정",

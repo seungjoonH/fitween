@@ -22,6 +22,8 @@ class NotificationPageCont extends PageCont {
     await FUserNotificationDAO().saveOne(_logged.notification!);
   }
 
+  String get emptyNotificationText => LangCont.tr('notification.empty');
+
   FUser get _logged => AuthCont.logged!;
 
   Timer? timer;

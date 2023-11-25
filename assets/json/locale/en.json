@@ -520,6 +520,7 @@
     "record-increased": "Weight Record increased!"
   },
   "notification": {
+    "empty": "There's no notification",
     "followed": "@{{object}} follows you",
     "party-applied": "There is a new applicant for the party @{{object}}",
     "poke": "@{{object}} poked you",
