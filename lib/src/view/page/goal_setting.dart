@@ -21,7 +21,7 @@ class _GoalSettingPageState extends FPageState {
   @override
   GoalSettingPageCont get cont => GoalSettingPageCont.to;
 
-  TextStyle? get mainStyle => ThemeCont.to.displaySmall;
+  TextStyle? get mainStyle => ThemeCont.to.headlineMedium;
 
   Widget _buildBackgroundImageWidget(BuildContext context, int index) {
     return SvgPicture.asset(

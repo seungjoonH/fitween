@@ -166,9 +166,19 @@ class GoalSettingPageCont extends CarouselPageCont {
     );
   }
 
-  final _distanceValue = Goal.defaultDis.min.toInt().obs;
-  final _heightValue = Goal.defaultHei.floor.toInt().obs;
-  final _weightValue = Goal.defaultWei.cnt.toInt().obs;
+  late final _distanceValue = (AuthCont.isLogged
+      ? (DistanceAmount()..step = _user.goal.distance).min.toInt()
+      : Goal.defaultDis.min.toInt()).obs;
+  late final _heightValue = (AuthCont.isLogged
+      ? (DistanceAmount()..step = _user.goal.distance).min.toInt()
+      : Goal.defaultHei.floor.toInt()).obs;
+  late final _weightValue = (AuthCont.isLogged
+      ? (DistanceAmount()..step = _user.goal.distance).min.toInt()
+      : Goal.defaultWei.cnt.toInt()).obs;
+
+  int get distanceValue => _distanceValue.value;
+  int get heightValue => _heightValue.value;
+  int get weightValue => _weightValue.value;
 
   static const _distanceMin = 10;
   static const _distanceMax = 200;
@@ -178,9 +188,9 @@ class GoalSettingPageCont extends CarouselPageCont {
   static const _weightMax = 300;
 
   int getValue(FType type) => [
-    _distanceValue.value, 
-    _heightValue.value, 
-    _weightValue.value,
+    distanceValue,
+    heightValue,
+    weightValue,
   ][type.index - 1];
   
   void setValue(int v, FType type) => [
