@@ -79,7 +79,7 @@ class PartyListTile extends StatelessWidget {
                   child: FText(
                     party!.finishState,
                     color: stampColor,
-                    style: ThemeCont.to.titleLarge,
+                    style: ThemeCont.to.titleMedium,
                     bold: true,
                   ),
                 ),

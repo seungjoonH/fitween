@@ -257,6 +257,16 @@ class _CalendarPageState extends FPageState<CalendarPage> {
     });
   }
 
+  Widget _buildBody(BuildContext context) {
+    return Column(
+      children: [
+        _buildCalendarCardWidget(context),
+        SizedBox(height: 20.0.h),
+        _buildDayRecordsWidget(context),
+      ],
+    );
+  }
+
   @override
   Widget buildPage(BuildContext context) {
     return FRefreshScaffold(
@@ -264,13 +274,7 @@ class _CalendarPageState extends FPageState<CalendarPage> {
       onRefresh: calendarCont.init,
       height: PageCont.size.height * 1.2,
       appBar: FPointAppBar(text: cont.appBarTitle),
-      body: Column(
-        children: [
-          _buildCalendarCardWidget(context),
-          SizedBox(height: 20.0.h),
-          _buildDayRecordsWidget(context),
-        ],
-      ),
+      body: _buildBody(context),
     );
   }
 }

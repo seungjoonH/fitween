@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:fitween/global/global.dart';
-import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/main.dart';
 import 'package:fitween/src/controller/lang.dart';
 import 'package:fitween/src/controller/page.dart';

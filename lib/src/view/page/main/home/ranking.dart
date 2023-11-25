@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
@@ -128,7 +129,7 @@ class _RankingPageState extends FPageState<RankingPage> {
   }
 
   CarouselOptions get _options => CarouselOptions(
-    height: PageCont.size.height * .55,
+    height: PageCont.size.height * .53,
     viewportFraction: 1.0,
     enableInfiniteScroll: false,
     initialPage: cont.count,
@@ -155,7 +156,7 @@ class _RankingPageState extends FPageState<RankingPage> {
             padding: EdgeInsets.symmetric(horizontal: 28.0.w),
             child: FCard(
               child: SizedBox(
-                height: PageCont.size.height * .5,
+                height: PageCont.size.height * .45,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [

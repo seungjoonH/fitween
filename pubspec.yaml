@@ -109,6 +109,8 @@ flutter:
     - assets/image/page/contents/workout/
     - assets/image/page/contents/weight/
     - assets/image/page/contents/weight/squat/
+    - assets/image/page/contents/weight/squat/guide/ko/
+    - assets/image/page/contents/weight/squat/guide/en/
     - assets/image/page/home/
     - assets/image/page/home/rotation/
     - assets/image/page/onboarding/

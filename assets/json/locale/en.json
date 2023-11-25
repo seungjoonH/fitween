@@ -17,7 +17,8 @@
     "complete": "Complete",
     "patch-note": "Check Patch Notes",
     "submit": "Submit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "ok": "Ok"
   },
   "appbar": {
     "register": "Register",
@@ -503,6 +504,21 @@
       }
     }
   },
+  "weight-guide": {
+    "squat": {
+      "0": "Place your device",
+      "1": "Press the start button",
+      "2": "Stand at a proper distance\nso that camera can see you well",
+      "3": "Wait three seconds\nuntil you are recognized",
+      "4": "Do squat with\nthe correct posture",
+      "5": "Without proper posture,\nthe count won't increase",
+      "6": "Press the pause button\nand the number button\nto complete the weight"
+    }
+  },
+  "weight-complete": {
+    "my-record": "My Record",
+    "record-increased": "Weight Record increased!"
+  },
   "notification": {
     "followed": "@{{object}} follows you",
     "party-applied": "There is a new applicant for the party @{{object}}",
@@ -601,9 +617,5 @@
         "complete-text": "The report has been deleted."
       }
     }
-  },
-  "weight-complete": {
-    "my-record": "My Record",
-    "record-increased": "Weight Record increased!"
   }
 }

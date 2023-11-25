@@ -4,13 +4,13 @@ import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 
 class _ChallengeLevel extends Model {
-  late String _word;
+  late Map<String, String> _word;
   late num _goal;
   late int _maxMemberCount;
   late String _badgeId;
   late int _point;
 
-  String get word => _word;
+  String get word => _word[LangCont.locale]!;
 
   FBadge? get badge => FBadgeLocal().get(_badgeId);
 
@@ -18,7 +18,10 @@ class _ChallengeLevel extends Model {
 
   @override
   void fromJson(Map<String, dynamic> json) {
-    _word = json['word'][LangCont.locale];
+    _word = Map.fromIterables(
+      json['word']?.keys.toList(),
+      json['word']?.values.map<String>((e) => e.toString()),
+    );
     _goal = json['goal'];
     _maxMemberCount = json['maxMember'];
     _badgeId = json['badgeId'];
@@ -62,7 +65,7 @@ class Challenge extends Model {
   String get subDescription => _descriptions[_locale]['sub'].replaceAll('##', word);
   String getDetailDescription({Difficulty? difficulty, bool txs = false}) {
     _ChallengeLevel? level = _levels[difficulty];
-    String replace = level == null ? word : level._word;
+    String replace = level == null ? word : level.word;
     if (txs) replace = '@{$replace}';
     return _descriptions[_locale]['detail']
         .replaceAll('##', replace)
@@ -70,7 +73,7 @@ class Challenge extends Model {
   }
   String getCompleteDescription({Difficulty? difficulty, bool txs = false}) {
     _ChallengeLevel? level = _levels[difficulty];
-    String replace = level == null ? word : level._word;
+    String replace = level == null ? word : level.word;
     if (txs) replace = '@{$replace}';
     return _descriptions[_locale]['complete']
         .replaceAll('##', replace)

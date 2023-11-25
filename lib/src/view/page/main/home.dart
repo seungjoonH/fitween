@@ -43,8 +43,8 @@ class _HomePageState extends FPageState {
           center: isActive ? FTexts(
             cont.getMarbleCenterText(type),
             textColor: ThemeCont.achro90,
-            style: ThemeCont.to.bodyLarge,
-            highlightStyle: ThemeCont.to.displayLarge
+            style: ThemeCont.to.bodyMedium,
+            highlightStyle: ThemeCont.to.displayMedium
                 ?.copyWith(color: ThemeCont.achro90),
           ) : null,
           smile: isActive,
@@ -143,13 +143,15 @@ class _HomePageState extends FPageState {
         viewportFraction: 1.0,
         height: 68.0.h,
         enableInfiniteScroll: false,
+        onPageChanged: cont.onPageChanged,
       ),
     );
   }
 
   Widget _buildViewTodayButtonWidget(BuildContext context) {
     return Obx(() {
-      return calendarCont.isToday ? Container() : Padding(
+      return calendarCont.isToday && cont.isLastPage
+          ? Container() : Padding(
         padding: EdgeInsets.only(left: 10.0.r),
         child: FTextButton(
           text: cont.viewTodayText,

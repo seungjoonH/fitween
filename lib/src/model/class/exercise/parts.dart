@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:fitween/src/model/class/exercise.dart';
-import 'package:fitween/src/model/class/exercise/handler.dart';
 import 'package:fitween/src/model/enum/enum.dart';
 
 enum Part {

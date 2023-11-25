@@ -1,6 +1,5 @@
 import 'package:fitween/global/global.dart';
 import 'package:fitween/oss_licenses.dart';
-import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
 import 'package:fitween/src/view/page/page.dart';
@@ -105,7 +104,7 @@ class FRoute {
   static void toChallengeDetail({Challenge? challenge}) => Get.toNamed('/contents/challenge/detail', arguments: challenge);
   static void toChallenge() => Get.toNamed('/contents/challenge');
   static void toWeight() => Get.toNamed('/contents/weight');
-  static void toWeightGuide() => Get.toNamed('/contents/weight/guide');
+  static void toWeightGuide({Exercise? exercise}) => Get.toNamed('/contents/weight/guide', arguments: exercise);
   static void toWeightCamera({Exercise? exercise}) => Get.toNamed('/contents/weight/camera', arguments: exercise);
   static void toWeightComplete({int? count}) => Get.toNamed('/contents/weight/complete', arguments: count);
   static void toBattle() => Get.toNamed('/contents/battle');

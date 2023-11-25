@@ -104,10 +104,10 @@ class CalendarCont extends GetxController {
     return FType.activeValues.where((type) => started(type, date)).toList();
   }
 
-  void selectDay(DateTime selectedDay, DateTime focusedDay) async {
+  void selectDay(DateTime selectedDay, [DateTime? focusedDay]) async {
     if (!_loadComplete) return;
     selectedDay = selectedDay.ignoreTime;
-    focusedDay = focusedDay.ignoreTime;
+    focusedDay = focusedDay?.ignoreTime;
     if (selectedDay.isBefore(_user!.regDate)) return;
     if (selectedDay.isAfter(today)) return;
     // if (focusedDay.isBefore(_user!.regDate)) return;

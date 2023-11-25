@@ -45,7 +45,7 @@ class FPointCalculator {
   num get _periodicalGoal => goal * period.days;
   bool get _met => _periodicalGoal <= does;
   num get _progressPoint => (2 * does / _adjustedValue).round();
-  num get _goalPoint => (_met ? (goal - _default) * 5 : .0).round();
+  num get _goalPoint => (_met ? (goal - _default) /_adjustedValue * 5 : .0).round();
   num get _metPoint => (_met ? 30.0 : .0).round();
   late int rank, entire;
   num get _rankPoint => 2 - (rank + 1) / entire;

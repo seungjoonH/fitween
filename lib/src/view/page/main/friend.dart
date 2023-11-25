@@ -84,6 +84,7 @@ class _FriendPageState extends FPageState<FriendPage> {
       onRefresh: cont.onRefresh,
       appBar: FAppBar(
         text: cont.appBarTitle,
+        allowLeading: false,
         actions: [
           FIconButton(
             icon: const Icon(Icons.search),

@@ -14,12 +14,14 @@ class FAppBar extends AppBar {
     super.actions,
     this.textColor,
     this.backPressed,
+    this.allowLeading = true,
   });
 
   final String? text;
   final Widget? child;
   final Color? textColor;
   final VoidCallback? backPressed;
+  final bool allowLeading;
 
   @override
   double? get elevation => .0;
@@ -39,6 +41,7 @@ class FAppBar extends AppBar {
 
   @override
   Widget? get leading {
+    if (!allowLeading) return null;
     if (FRoute.previousPage == null) return null;
     VoidCallback onPressed = backPressed ?? Get.back;
     return FIconButton(

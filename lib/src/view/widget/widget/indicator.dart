@@ -41,7 +41,7 @@ class FCircularPercentIndicator extends StatelessWidget {
     _centerText,
     textColor: centerColor ?? _progressColor,
     style: ThemeCont.to.bodySmall,
-    highlightStyle: ThemeCont.to.titleLarge,
+    highlightStyle: ThemeCont.to.titleMedium,
   ) : null;
 
   @override

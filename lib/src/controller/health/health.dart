@@ -137,16 +137,11 @@ class HealthDataCont {
 
     initStepsData(startTime, endTime);
 
-    num value = 0;
-
     if (!_approved) _fetchedSteps = {};
 
     DateRange dateRange = DateRange(startTime, endTime);
     for (DateTime date in dateRange.dates) {
-      num? fetchedValue = await _health.getTotalStepsInInterval(date, date.lastTimeOfDay);
-      if (fetchedValue == null || fetchedValue > 28796) fetchedValue = .0;
-      value = fetchedValue;
-      _fetchedSteps[date] = value;
+      _fetchedSteps[date] = await _fetchWithoutArtificialData(_stepType.first, date);
     }
   }
 
@@ -170,23 +165,54 @@ class HealthDataCont {
 
     initFlightsData(startTime, endTime);
 
-    List<HealthDataPoint> flightsData = [];
+    // List<HealthDataPoint> flightsData = [];
 
     if (!_approved) _fetchedFlights = {};
 
-    flightsData = await _health
-        .getHealthDataFromTypes(startTime, endTime, _flightType);
-
-    flightsData = HealthFactory.removeDuplicates(flightsData);
-
-    Map<DateTime, num> data = {};
-    for (var flight in flightsData) {
-      DateTime date = flight.dateFrom.ignoreTime;
-      num value = data[date] ?? .0;
-      value += double.parse(flight.value.toString());
-      data[date] = value;
+    DateRange dateRange = DateRange(startTime, endTime);
+    for (DateTime date in dateRange.dates) {
+      _fetchedFlights[date] = await _fetchWithoutArtificialData(_flightType.first, date);
     }
-    _fetchedFlights.addAll(data);
+
+    // flightsData = await _health
+    //     .getHealthDataFromTypes(startTime, endTime, _flightType);
+    //
+    // flightsData = HealthFactory.removeDuplicates(flightsData);
+    //
+    // Map<DateTime, num> data = {};
+    // for (var flight in flightsData) {
+    //   DateTime date = flight.dateFrom.ignoreTime;
+    //   num value = data[date] ?? .0;
+    //   value += double.parse(flight.value.toString());
+    //   data[date] = value;
+    // }
+    // _fetchedFlights.addAll(data);
+  }
+
+  static Future _fetchWithoutArtificialData(HealthDataType type, DateTime date) async {
+    List<HealthDataPoint> points = await _health
+        .getHealthDataFromTypes(date, date.lastTimeOfDay, [type]);
+
+    points = HealthFactory.removeDuplicates(points);
+
+    int fetchedValue = 0;
+
+    num getValue(HealthDataPoint p) => (p.value as NumericHealthValue).numericValue;
+
+    switch (type) {
+      case HealthDataType.STEPS:
+        fetchedValue = await _health.getTotalStepsInInterval(date, date.lastTimeOfDay) ?? 0;
+        break;
+      case HealthDataType.FLIGHTS_CLIMBED:
+        fetchedValue = sum(points.map(getValue)).toInt();
+        break;
+      default: break;
+    }
+
+    num artificialValue = sum(points.where((point) => point.sourceName == 'Health')
+        .map((point) => (point.value as NumericHealthValue).numericValue));
+
+    return fetchedValue - artificialValue;
   }
 
 }

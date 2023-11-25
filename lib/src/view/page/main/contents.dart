@@ -41,7 +41,7 @@ class _ContentsPageState extends FPageState<ContentsPage> {
   Widget buildPage(BuildContext context) {
     return FMainScaffold(
       refreshController: RefreshController(),
-      appBar: FAppBar(text: cont.appBarTitle),
+      appBar: FAppBar(text: cont.appBarTitle, allowLeading: false),
       onRefresh: cont.onRefresh,
       body: Column(
         children: Content.values

@@ -10,8 +10,12 @@ class PartyHistoryPageCont extends PageCont {
   String get appBarTitle => LangCont.tr('appbar.history');
 
   final _finishedParties = <Party>[].obs;
+  List<Party> get _sortedParties {
+    int compare(Party a, Party b) => b.startDate!.compareTo(a.startDate!);
+    return _finishedParties..sort(compare);
+  }
 
-  List<Party> get parties => _finishedParties
+  List<Party> get parties => _sortedParties
       .where((party) => isActive(party.type)).toList();
 
 

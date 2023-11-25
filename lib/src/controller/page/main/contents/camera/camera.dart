@@ -7,7 +7,6 @@ import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/exercise.dart';
 import 'package:fitween/src/model/enum/enum.dart';
-import 'package:fitween/src/view/widget/function/dialog.dart';
 import 'package:get/get.dart';
 
 abstract class CameraPageCont extends PageCont {

@@ -10,7 +10,7 @@ class WeightPageCont extends PageCont {
   String get exerciseText => LangCont.tr('word.exercise').capitalize!;
 
   void exerciseButtonPressed(Exercise exercise) {
-    FRoute.toWeightCamera(exercise: exercise);
+    FRoute.toWeightGuide(exercise: exercise);
   }
 
   @override

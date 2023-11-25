@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:carousel_slider/carousel_options.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
@@ -55,17 +56,33 @@ class HomePageCont extends MainPageCont {
   final carouselCont = CarouselController();
   int get carouselCount => _logged.weekCount + 1;
 
+  final _pageIndex = 0.obs;
+  int get pageIndex => _pageIndex.value;
+
+  final _isLastPage = false.obs;
+  bool get isLastPage => _isLastPage.value;
+
+  void _setIsLastPage() => _isLastPage(pageIndex == carouselCount - 1);
+
+  void onPageChanged(int index, CarouselPageChangedReason reason) {
+    _pageIndex(index); _setIsLastPage();
+  }
+
   int get selectedWeekIndex => 1 + calendarCont
       .selectedDay.firstDayOfWeek
       .difference(firstDay).inDays ~/ 7;
 
-  void gotoSelectedWeek() => carouselCont.animateToPage(
-    selectedWeekIndex,
-    curve: Curves.easeInOut,
-  );
+  void _animateTo(int index) {
+    carouselCont.animateToPage(index, curve: Curves.easeInOut);
+    _setIsLastPage();
+  }
+
+  void _animateToLast() => _animateTo(carouselCount - 1);
+
+  void gotoSelectedWeek() => _animateTo(selectedWeekIndex);
   void selectToday() {
-    calendarCont.selectDay(today, today);
-    carouselCont.animateToPage(carouselCount - 1);
+    calendarCont.selectDay(today);
+    _animateToLast();
   }
 
   void onRecordCardPressed() => FRoute.toCalendar();

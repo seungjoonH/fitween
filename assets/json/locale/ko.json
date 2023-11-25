@@ -17,7 +17,8 @@
     "complete": "완료하기",
     "patch-note": "패치노트 확인하기",
     "submit": "제출",
-    "delete": "삭제"
+    "delete": "삭제",
+    "ok": "확인"
   },
   "appbar": {
     "register": "회원가입",
@@ -462,6 +463,21 @@
       }
     }
   },
+  "weight-guide": {
+    "squat": {
+      "0": "디바이스를 거치하세요",
+      "1": "시작 버튼을 클릭하세요",
+      "2": "카메라에 잘 보이도록\n적당한 거리를 두고 서세요",
+      "3": "잘 인식할 때까지\n3초 동안 기다리세요",
+      "4": "올바른 자세로\n스쿼트를 진행하세요",
+      "5": "자세가 바르지 않으면\n개수가 늘지 않습니다",
+      "6": "운동을 완료하려면 일시정지 버튼과\n개수 버튼을 차례로 클릭하세요"
+    }
+  },
+  "weight-complete": {
+    "my-record": "나의 기록",
+    "record-increased": "무게 기록 상승!"
+  },
   "notification": {
     "followed": "@{{object}}님이 팔로우 했습니다",
     "party-applied": "@{{object}} 파티에 지원자가 있습니다",
@@ -560,9 +576,5 @@
         "complete-text": "리포트가 삭제되었습니다"
       }
     }
-  },
-  "weight-complete": {
-    "my-record": "나의 기록",
-    "record-increased": "무게 기록 상승!"
   }
 }

@@ -54,6 +54,12 @@ abstract class FPage extends FWidget {
 abstract class FPageState<T extends FPage> extends FWidgetState<T> {
   PageCont get cont;
 
+  @override
+  void initState() {
+    super.initState();
+    cont.initState();
+  }
+
   Widget buildPage(BuildContext context);
 
   @override

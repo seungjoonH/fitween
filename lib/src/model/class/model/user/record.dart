@@ -144,7 +144,6 @@ class FUserRecord extends FUser {
     addRecord(type, amount, today);
   }
 
-
   @override
   Map<DateTime, List<CalendarEvent>> get events {
     DateTime startDate = regDate;
@@ -167,7 +166,7 @@ class FUserRecord extends FUser {
   @override
   bool completed(FType type, DateTime date) {
     num value = getOneDayRecord(date)[type]!;
-    num goalValue = goal.byType(type);
+    num goalValue = goal.byDate(date, type);
     return value >= goalValue;
   }
 
@@ -301,7 +300,7 @@ class Goal {
   ][type.index];
 
   num byDate(DateTime date, FType type) {
-    return _data[type]![date.ignoreTime]!;
+    return _data[type]![date.ignoreTime] ?? byType(type);
   }
 
   Goal._fromRecordsData(_RecordsData data) {

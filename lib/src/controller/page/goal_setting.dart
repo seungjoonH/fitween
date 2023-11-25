@@ -1,10 +1,6 @@
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:fitween/global/global.dart';
-import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/controller/lang.dart';
-import 'package:fitween/src/controller/page/carousel.dart';
-import 'package:fitween/src/controller/user/auth.dart';
 import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/local.dart';

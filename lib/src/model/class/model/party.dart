@@ -97,7 +97,9 @@ class Party extends Model {
   String get deadline => 'D${withSign(leftDays)}';
   bool get completed => allAmounts >= goal;
   bool get over => endDate!.isBefore(now);
-  bool get finished => completed || over;
+  bool get isProgressing => !canBeFinished;
+  bool get canBeFinished => completed || over;
+  bool get finished => _finished;
 
   String get finishState => completed ? 'PASS' : 'FAIL';
 

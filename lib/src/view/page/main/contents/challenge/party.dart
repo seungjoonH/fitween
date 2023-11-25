@@ -169,7 +169,7 @@ class _PartyPageState extends FPageState<PartyPage> {
               style: ThemeCont.to.titleSmall,
               color: ThemeCont.to.comment,
             ),
-            if ( cont.isLeader && !cont.isOnly)
+            if ( cont.isLeader && !cont.isOnly && cont.party!.isProgressing)
             FIconButton(
               icon: const Icon(Icons.settings),
               size: 35.0,
@@ -180,7 +180,7 @@ class _PartyPageState extends FPageState<PartyPage> {
         ),
         SizedBox(height: 20.0.h),
         _buildMembersProgressIndicatorWidget(context),
-        if (!cont.party!.isFull && !cont.party!.finished)
+        if (!cont.party!.isFull && cont.party!.isProgressing)
         _buildCopyButtonWidget(context),
       ],
     ));
@@ -323,7 +323,7 @@ class _PartyPageState extends FPageState<PartyPage> {
       refreshController: RefreshController(),
       onRefresh: cont.onRefresh,
       appBar: _buildAppBar(context),
-      height: PageCont.size.height * 1.6,
+      height: PageCont.size.height * 1.8,
       body: _buildBody(context),
     );
   }

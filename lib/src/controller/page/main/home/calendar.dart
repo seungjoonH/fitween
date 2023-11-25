@@ -181,6 +181,10 @@ class CalendarPageCont extends PageCont {
     await _showFetchedDialog();
     await HealthDataCont.setOneDayRecordByType(FType.distance, _selectedDay);
     await HealthDataCont.setOneDayRecordByType(FType.height, _selectedDay);
+
+    calendarCont.selectDay(today);
+    await delay(10.ms, () => calendarCont.selectDay(_selectedDay));
+
     await onRefresh();
   }
 
@@ -191,6 +195,9 @@ class CalendarPageCont extends PageCont {
     await _showFetchedDialog();
     await HealthDataCont.setAllRecordByType(FType.distance);
     await HealthDataCont.setAllRecordByType(FType.height);
+
+    calendarCont.selectDay(today);
+
     await onRefresh();
   }
 
