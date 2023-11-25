@@ -65,7 +65,7 @@ class _NotificationPageState extends FPageState<NotificationPage> {
 
   Widget _buildEmptyNotificationListWidget(BuildContext context) {
     return Container(
-      color: ThemeCont.achro95.withOpacity(.15),
+      color: ThemeCont.to.text.withOpacity(.15),
       padding: EdgeInsets.symmetric(
         horizontal: 28.0.w,
         vertical: 28.0.h,

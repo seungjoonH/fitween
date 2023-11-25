@@ -23,7 +23,6 @@ class _WeightGuidePageState extends FPageState<WeightGuidePage> {
     height: PageCont.size.height * .65,
     viewportFraction: 1.0,
     enableInfiniteScroll: false,
-    initialPage: cont.pageCount,
     onPageChanged: cont.onPageChanged,
   );
 
