@@ -26,6 +26,7 @@ export './widget/indicator.dart';
 export './widget/island.dart';
 export './widget/list_tile.dart';
 export './widget/logo.dart';
+export './widget/notice.dart';
 export './widget/party.dart';
 export './widget/point.dart';
 export './widget/profile.dart';

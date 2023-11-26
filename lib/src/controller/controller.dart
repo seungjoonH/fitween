@@ -8,6 +8,7 @@ export './get.dart';
 export './image.dart';
 export './lang.dart';
 export './loading.dart';
+export './notice.dart';
 export './notification.dart';
 export './point.dart';
 export './ranking.dart';

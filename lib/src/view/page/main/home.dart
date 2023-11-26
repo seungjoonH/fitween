@@ -56,6 +56,10 @@ class _HomePageState extends FPageState {
     ));
   }
 
+  Widget _buildNoticeWidget(BuildContext context) {
+    return const NoticeWidget();
+  }
+
   Widget _buildDayCalendarWidget(BuildContext context, DateTime date) {
     return Obx(() {
       bool selected = date.isAtSameMomentAs(calendarCont.selectedDay);
@@ -289,9 +293,7 @@ class _HomePageState extends FPageState {
     );
   }
 
-  EdgeInsets get _padding => EdgeInsets.symmetric(
-    horizontal: 28.0.w, vertical: 28.0.h,
-  );
+  EdgeInsets get _padding => EdgeInsets.symmetric(horizontal: 28.0.w);
 
   @override
   Widget buildPage(BuildContext context) {
@@ -303,17 +305,23 @@ class _HomePageState extends FPageState {
       body: Stack(
         children: [
           Positioned.fill(
-            child: Padding(
-              padding: _padding,
-              child: Column(
-                children: [
-                  SizedBox(height: 220.0.h),
-                  _buildRecordCardWidget(context),
-                  SizedBox(height: 20.0.h),
-                  _buildRankingCardWidget(context),
-                  SizedBox(height: 20.0.h),
-                ],
-              ),
+            child: Column(
+              children: [
+                SizedBox(height: 250.0.h),
+                _buildNoticeWidget(context),
+                Padding(
+                  padding: _padding,
+                  child: Column(
+                    children: [
+                      SizedBox(height: 20.0.h),
+                      _buildRecordCardWidget(context),
+                      SizedBox(height: 20.0.h),
+                      _buildRankingCardWidget(context),
+                      SizedBox(height: 20.0.h),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
           _buildMarbleCarouselWidget(context),

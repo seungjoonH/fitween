@@ -70,6 +70,7 @@ class GetCont {
     Get.put(RankingCont());
     Get.put(BottomBarCont());
     Get.put(CameraCont());
+    Get.put(NoticeCont());
   }
 
   static void initConts() {
