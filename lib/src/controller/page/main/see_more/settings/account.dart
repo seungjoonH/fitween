@@ -12,13 +12,11 @@ class AccountPageCont extends PageCont {
 
   String get appBarTitle => LangCont.tr('appbar.account');
 
-  User get user => AuthCont.credential!.user!;
+  String? get imageUrl => AuthCont.imageUrl;
+  String get name => AuthCont.name;
+  String get email => AuthCont.email;
 
-  String? get imageUrl => user.photoURL;
-  String get name => user.displayName!;
-  String get email => user.email!;
-
-  LoginType get type => AuthCont.loginType;
+  LoginType get type => AuthCont.loginType!;
 
   String get autoLoginText => LangCont.tr('account.auto-login');
 

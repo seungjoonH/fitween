@@ -17,6 +17,9 @@ enum LoginType {
   String get signIn => LangCont.tr('button.sign-in', args: [locale.capitalize!]);
 
   Color get color => [ThemeCont.google, ThemeCont.apple][index];
+
+  static LoginType? toEnum(String? string) =>
+      values.firstWhereOrNull((type) => type.name == string);
 }
 
 class LoginPage extends FPage {
@@ -72,6 +75,12 @@ class _LoginPageState extends FPageState {
     return PageCont.isPortrait
         ? _buildPortraitBody(context)
         : _buildLandscapeBody(context);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    cont.initState(reload: true);
   }
 
   @override
