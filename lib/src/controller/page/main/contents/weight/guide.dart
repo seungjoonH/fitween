@@ -1,4 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:fitween/global/date.dart';
+import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/enum/enum.dart';
@@ -45,7 +47,10 @@ class WeightGuidePageCont extends CarouselPageCont {
   @override
   Future load() async {
     _exercise(Get.arguments as Exercise);
-    carouselCont.jumpToPage(0);
+    await delay(10.ms, () {
+      pageIndex = 0;
+      carouselCont.jumpToPage(pageIndex);
+    });
   }
 
   @override

@@ -32,7 +32,7 @@ class _NoticeWidgetState extends State<NoticeWidget> {
         return Container(
           width: double.infinity,
           height: 25.0.h,
-          color: ThemeCont.achro5.withOpacity(.05),
+          color: ThemeCont.to.textAlt.withOpacity(.05),
           alignment: Alignment.center,
           child: Marquee(
             text: cont.message!,

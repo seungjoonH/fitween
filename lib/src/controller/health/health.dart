@@ -112,8 +112,8 @@ class HealthDataCont {
   }
 
   static Future fetchAllData() async {
-    await fetchTodayStepData();
-    if (Platform.isIOS) await fetchTodayFlightsData();
+    await fetchAllStepData();
+    if (Platform.isIOS) await fetchAllFlightsData();
     await setTodayRecord();
   }
 
@@ -136,8 +136,6 @@ class HealthDataCont {
     endTime = earlier(endTime.lastTimeOfDay, now);
 
     initStepsData(startTime, endTime);
-
-    if (!_approved) _fetchedSteps = {};
 
     DateRange dateRange = DateRange(startTime, endTime);
     for (DateTime date in dateRange.dates) {
@@ -164,10 +162,6 @@ class HealthDataCont {
     endTime = earlier(endTime.lastTimeOfDay, now);
 
     initFlightsData(startTime, endTime);
-
-    // List<HealthDataPoint> flightsData = [];
-
-    if (!_approved) _fetchedFlights = {};
 
     DateRange dateRange = DateRange(startTime, endTime);
     for (DateTime date in dateRange.dates) {

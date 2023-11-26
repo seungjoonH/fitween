@@ -18,7 +18,7 @@ class CalendarCont extends GetxController {
   bool get _loadComplete => _user != null;
 
   Future init() async {
-    await HealthDataCont.fetchAllData();
+    HealthDataCont.fetchAllData();
     _user = AuthCont.logged!;
     await AuthCont.load(FUserLoadCont.onlyRecord());
     await loadRecord();
@@ -31,6 +31,8 @@ class CalendarCont extends GetxController {
   }
 
   num _getFetchedData(FType type, DateTime date) {
+    // if (date.isAtSameMomentAs(DateTime(2023, 11, 8).ignoreTime) && type == FType.distance)
+    //   print(HealthDataCont.getDataByType(type, date));
     return HealthDataCont.getDataByType(type, date);
   }
 
