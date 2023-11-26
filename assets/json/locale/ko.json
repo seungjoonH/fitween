@@ -18,7 +18,9 @@
     "patch-note": "패치노트 확인하기",
     "submit": "제출",
     "delete": "삭제",
-    "ok": "확인"
+    "ok": "확인",
+    "logout": "로그아웃",
+    "delete-account": "계정삭제"
   },
   "appbar": {
     "register": "회원가입",
@@ -48,7 +50,8 @@
     "report": "오류 제보 및 개선 요청",
     "report-edit": "리포트",
     "report-detail": "리포트",
-    "weight-complete": "운동결과"
+    "weight-complete": "운동결과",
+    "account": "계정 관리"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -512,7 +515,8 @@
       "report": "오류 제보 / 개선 요청",
       "version": "버전",
       "support": "고객지원"
-    }
+    },
+    "account": "나의 계정 관리"
   },
   "version": {
     "message": {
@@ -575,6 +579,23 @@
         "really-text": "정말 해당 리포트를 삭제하시겠습니까?",
         "complete-title": "리포트 삭제됨",
         "complete-text": "리포트가 삭제되었습니다"
+      }
+    }
+  },
+  "account": {
+    "auto-login": "자동 로그인",
+    "dialog": {
+      "logout": {
+        "really-title": "로그아웃",
+        "really-text": "정말 로그아웃 하시겠습니까?",
+        "complete-title": "로그아웃됨",
+        "complete-text": "로그아웃 되었습니다"
+      },
+      "delete-account": {
+        "really-title": "계정 삭제",
+        "really-text": "정말 계정을 삭제하시겠습니까?\n@{모든 기록이 사라집니다}",
+        "complete-title": "계정 삭제됨",
+        "complete-text": "계정이 정상적으로 삭제되었습니다"
       }
     }
   }

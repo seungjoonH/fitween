@@ -18,7 +18,9 @@
     "patch-note": "Check Patch Notes",
     "submit": "Submit",
     "delete": "Delete",
-    "ok": "Ok"
+    "ok": "Ok",
+    "logout": "Logout",
+    "delete-account": "Delete Account"
   },
   "appbar": {
     "register": "Register",
@@ -47,7 +49,8 @@
     "report": "Report",
     "report-edit": "Report",
     "report-detail": "Report",
-    "weight-complete": "Weight Result"
+    "weight-complete": "Weight Result",
+    "account": "Account Settings"
   },
   "hint": {
     "your-nickname": "Input your nickname",
@@ -520,7 +523,7 @@
     "record-increased": "Weight Record increased!"
   },
   "notification": {
-    "empty": "There's no notification",
+    "empty": "There's no notification yet",
     "followed": "@{{object}} follows you",
     "party-applied": "There is a new applicant for the party @{{object}}",
     "poke": "@{{object}} poked you",
@@ -553,7 +556,8 @@
       "report": "Report",
       "version": "Version",
       "support": "Support"
-    }
+    },
+    "account": "Account Settings"
   },
   "version": {
     "message": {
@@ -618,5 +622,8 @@
         "complete-text": "The report has been deleted."
       }
     }
+  },
+  "account": {
+    "auto-login": "Auto Login"
   }
 }

@@ -24,6 +24,8 @@ class FUserInfo extends FUser {
   Language? _language;
   ThemeMode? _themeMode;
 
+  bool? _autoLoginAllowed = true;
+
   @override
   String? get name => _name;
   @override
@@ -58,8 +60,13 @@ class FUserInfo extends FUser {
   @override
   ThemeMode get themeMode => _themeMode ?? ThemeMode.system;
 
+  @override
+  bool get autoLoginAllowed => _autoLoginAllowed ?? true;
+
   void setThemeMode(ThemeMode mode) => _themeMode = mode;
   void setLanguage(Language lang) => _language = lang;
+
+  void setAutoLoginState(bool value) => _autoLoginAllowed = value;
 
   FUserInfo(super.key) : super();
   FUserInfo.fromJson(super.json) : super.fromJson();
@@ -96,6 +103,7 @@ class FUserInfo extends FUser {
     _dateOfBirth = json['dateOfBirth'];
     _language = Language.toEnum(json['language']) ?? Language.system;
     _themeMode = ThemeModeExtension.toEnum(json['themeMode']) ?? ThemeMode.system;
+    _autoLoginAllowed = json['autoLoginAllowed'];
   }
 
   @override
@@ -114,6 +122,7 @@ class FUserInfo extends FUser {
     json['dateOfBirth'] = _dateOfBirth;
     json['language'] = (_language ?? Language.system).name;
     json['themeMode'] = (_themeMode ?? ThemeMode.system).name;
+    json['autoLoginAllowed'] = _autoLoginAllowed ?? true;
     return json;
   }
 

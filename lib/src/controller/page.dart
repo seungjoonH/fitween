@@ -38,6 +38,7 @@ export 'page/main/see_more/settings/app_info/fitween.dart';
 export 'page/main/see_more/settings/app_info/report/detail.dart';
 export 'page/main/see_more/settings/app_info/report/edit.dart';
 export 'page/main/see_more/settings/app_info/report.dart';
+export 'page/main/see_more/settings/account.dart';
 export 'page/main/see_more/settings.dart';
 export 'page/main/see_more.dart';
 export 'page/main.dart';

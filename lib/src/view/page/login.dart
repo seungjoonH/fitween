@@ -15,6 +15,8 @@ enum LoginType {
   google, apple;
   String get locale => LangCont.tr('word.$name');
   String get signIn => LangCont.tr('button.sign-in', args: [locale.capitalize!]);
+
+  Color get color => [ThemeCont.google, ThemeCont.apple][index];
 }
 
 class LoginPage extends FPage {

@@ -45,6 +45,7 @@ class GetCont {
     Get.put(OSSLicensesPageCont());
     Get.put(LicenseDetailPageCont());
     Get.put(FitweenPageCont());
+    Get.put(AccountPageCont());
     Get.put(ReportPageCont());
     Get.put(ReportEditPageCont());
     Get.put(ReportDetailPageCont());

@@ -1,6 +1,7 @@
 import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
+import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -83,7 +84,7 @@ class FTypeTag extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FTextTag(
-      type.locale.capitalize!,
+      type.localeShort,
       textColor: ThemeCont.achro95,
       backgroundColor: color ?? type.color,
     );
@@ -109,6 +110,24 @@ class DifficultyTag extends StatelessWidget {
           ? ThemeCont.achro5
           : ThemeCont.achro95,
       backgroundColor: difficulty.color,
+    );
+  }
+}
+
+class FLoginTypeTag extends StatelessWidget {
+  const FLoginTypeTag({
+    super.key,
+    required this.type,
+  });
+
+  final LoginType type;
+
+  @override
+  Widget build(BuildContext context) {
+    return FTextTag(
+      type.name.capitalize!,
+      textColor: ThemeCont.achro95,
+      backgroundColor: type.color,
     );
   }
 }

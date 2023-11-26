@@ -17,7 +17,11 @@ class AuthCont {
   static FUser? get logged => _logged;
   static String? get uid => _logged?.key;
 
+  static UserCredential? credential;
   static LoginPageCont get loginPageCont => LoginPageCont.to;
+
+  static late LoginType _loginType;
+  static LoginType get loginType => _loginType;
 
   // static void setInfoInRecord() => _logged!.record!.info = _logged!.info;
 
@@ -33,14 +37,14 @@ class AuthCont {
     late String email;
 
     if (loadedUid == null) {
-      UserCredential? credential = await SignCont.signIn(type);
+      credential = await SignCont.signIn(type);
 
       // 로그인 실패
       if (credential == null) return;
 
-      loadedUid = credential.user!.uid;
-      name = credential.user!.displayName;
-      email = credential.user!.email!;
+      loadedUid = credential!.user!.uid;
+      name = credential!.user!.displayName;
+      email = credential!.user!.email!;
     }
 
     HealthDataCont.requestPermission();
@@ -69,12 +73,17 @@ class AuthCont {
     Timer.periodic(10.ms, (timer) {
       if (!loginPageCont.loading) {
         BottomBarCont.to.navigate(0);
-        timer.cancel(); return;
+        _loginType = type;
+        timer.cancel();
+        return;
       }
     });
   }
 
   static fLogout() => _logged = null;
+  static fDeleteAccount() {
+
+  }
 
   static Future load(FUserLoadCont cont) async {
     FUser? loaded = await FUserDAO().loadOne(_logged!.key, cont: cont);

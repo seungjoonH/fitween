@@ -46,6 +46,9 @@ class ThemeCont extends GetxController {
   static const Color sea = Color(0xFF6BD4EB);
   static const Color darkSea = Color(0xFF35359E);
 
+  static const Color google = Color(0xFFEA4335);
+  static const Color apple = Color(0xFF000000);
+
   // static const Color black = Color(0xFF1F1F1F);
   // static const Color darkGrey = Color(0xFF494D45);
   // static const Color grey = Color(0xFF73796E);

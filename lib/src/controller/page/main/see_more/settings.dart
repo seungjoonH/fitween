@@ -4,7 +4,7 @@ import 'package:fitween/src/controller/controller.dart';
 import 'package:get/get.dart';
 
 enum SettingsMenu {
-  general, appInfo;
+  general, account, appInfo;
 
   String get _tr => 'settings';
   String get locale => LangCont
@@ -19,6 +19,7 @@ class SettingsPageCont extends PageCont {
   void menuPressed(SettingsMenu menu) {
     switch (menu) {
       case SettingsMenu.general: FRoute.toGeneralSetting(); return;
+      case SettingsMenu.account: FRoute.toAccount(); break;
       case SettingsMenu.appInfo: FRoute.toAppInfo(); return;
     }
   }
