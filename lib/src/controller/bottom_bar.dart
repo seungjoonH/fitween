@@ -20,6 +20,11 @@ class BottomBarCont extends GetxController {
       return;
     }
     _pageIndex(index);
-    [FRoute.toHome, FRoute.toFriend, FRoute.toContents, FRoute.toSeeMore][index]();
+    [
+      FRoute.toHome,
+      FRoute.toFriend,
+      FRoute.toContents,
+      FRoute.toSeeMore,
+    ][index]();
   }
 }

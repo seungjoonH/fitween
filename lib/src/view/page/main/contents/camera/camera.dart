@@ -1,7 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/exercise.dart';
-import 'package:fitween/src/model/enum/enum.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';

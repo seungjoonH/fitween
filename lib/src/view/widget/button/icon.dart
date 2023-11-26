@@ -1,7 +1,6 @@
 import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FIconButton extends StatefulWidget {
   const FIconButton({

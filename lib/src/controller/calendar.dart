@@ -18,9 +18,7 @@ class CalendarCont extends GetxController {
   bool get _loadComplete => _user != null;
 
   Future init() async {
-    await HealthDataCont.fetchAllStepData();
-    await HealthDataCont.fetchAllFlightsData();
-    await HealthDataCont.setTodayRecord();
+    await HealthDataCont.fetchAllData();
     _user = AuthCont.logged!;
     await AuthCont.load(FUserLoadCont.onlyRecord());
     await loadRecord();
@@ -30,7 +28,6 @@ class CalendarCont extends GetxController {
   Future loadRecord() async {
     FUserRecord? record = await FUserRecordDAO().loadOne(AuthCont.uid!);
     if (record == null) return;
-    // AuthCont.setUserRecord(record);
   }
 
   num _getFetchedData(FType type, DateTime date) {

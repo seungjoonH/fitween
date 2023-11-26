@@ -111,7 +111,7 @@ class HealthDataCont {
     await setTodayRecordByType(FType.height);
   }
 
-  static Future fetchDataAfterLogin() async {
+  static Future fetchAllData() async {
     await fetchTodayStepData();
     if (Platform.isIOS) await fetchTodayFlightsData();
     await setTodayRecord();

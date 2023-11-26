@@ -285,12 +285,10 @@
     }
   },
   "login": {
-    "loading": "Loading",
-    "complete": "Complete",
     "user-loading": "Loading user data",
     "user-complete": "User data load complete",
-    "fetch-loading": "Loading health data",
-    "fetch-complete": "Health data load complete",
+    "home-loading": "Loading health data",
+    "home-complete": "Health data load complete",
     "auto-login-loading": "Auto logging in",
     "auto-login-complete": "Automatically logged in"
   },

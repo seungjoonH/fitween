@@ -2,7 +2,6 @@ import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
 import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/controller/page.dart';
-import 'package:fitween/src/view/widget/widget.dart';
 import 'package:fitween/src/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

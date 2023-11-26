@@ -38,8 +38,8 @@ class AuthCont {
     ThemeCont.to.init();
     LangCont.to.init();
 
-    loginPageCont.startLoading('fetch');
-    await HealthDataCont.fetchDataAfterLogin();
+    loginPageCont.startLoading('home');
+    await HomePageCont.to.init();
     await loginPageCont.endLoading();
 
     Timer.periodic(10.ms, (timer) async {

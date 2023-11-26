@@ -73,8 +73,10 @@ class HomePageCont extends MainPageCont {
       .difference(firstDay).inDays ~/ 7;
 
   void _animateTo(int index) {
-    carouselCont.animateToPage(index, curve: Curves.easeInOut);
-    _setIsLastPage();
+    delay(500.ms, () {
+      carouselCont.animateToPage(index, curve: Curves.easeInOut);
+      _setIsLastPage();
+    });
   }
 
   void _animateToLast() => _animateTo(carouselCount - 1);
