@@ -9,11 +9,9 @@ enum FIcons {
   contents,
   seeMore,
   ///
-  homeHouse,
-  pencil,
-  star,
   swords,
-  visibility;
+  visibility,
+  coupon;
 
   static String filePath = 'assets/image/icon/';
   String get fileName => '${name.toSnakeCase}.svg';

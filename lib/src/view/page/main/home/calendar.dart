@@ -163,16 +163,26 @@ class _CalendarPageState extends FPageState<CalendarPage> {
     if (calendarCont.entirelyReflected) {
       return FCard(child: _buildTableCalendarWidget(context));
     }
+    if (calendarCont.hasReflectAllCoupon) {
+      return FCard(
+        rightTopWidget: const FIcon(FIcons.coupon),
+        iconColor: ThemeCont.to.point,
+        pressMode: FCardPressMode.icon,
+        onPressed: cont.useCouponButtonPressed,
+        child: _buildTableCalendarWidget(context),
+      );
+    }
     return FCard(
-      icon: const Icon(Icons.refresh),
+      rightTopWidget: Icon(
+        Icons.refresh,
+        color: ThemeCont.to.point,
+      ),
       iconColor: ThemeCont.to.point,
       pressMode: FCardPressMode.icon,
       onPressed: cont.refreshButtonPressed,
       child: _buildTableCalendarWidget(context),
     );
   }
-
-
 
   Widget _buildDayRecordGraphWidget(BuildContext context, FType type) {
     return Obx(() {

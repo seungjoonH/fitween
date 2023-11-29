@@ -5,15 +5,20 @@ import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
+import 'package:fitween/src/view/widget/function/dialog.dart';
+import 'package:fitween/src/view/widget/widget.dart';
+import 'package:fitween/src/view/widget/widget/gift.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class HomePageCont extends MainPageCont {
   static HomePageCont get to => Get.find<HomePageCont>();
 
-  static const _arrowAsset = 'assets/image/page/home/';
-  String get leftArrowAsset => '${_arrowAsset}left_arrow.svg';
-  String get rightArrowAsset => '${_arrowAsset}right_arrow.svg';
+  static const _homeAsset = 'assets/image/page/home/';
+  String get leftArrowAsset => '${_homeAsset}left_arrow.svg';
+  String get rightArrowAsset => '${_homeAsset}right_arrow.svg';
 
   final _activeType = FType.distance.obs;
   FType get activeType => _activeType.value;
@@ -27,6 +32,48 @@ class HomePageCont extends MainPageCont {
     return type.withUnit(record, txs: true);
   }
 
+
+  String get _couponAsset => '${_homeAsset}coupon.svg';
+
+  String get giftCardText => LangCont.tr('home.gift.text');
+
+  String get _giftDialogTr => 'home.dialog.gift';
+  String get _userClassification {
+    bool isNewcomer = _logged.info!.isNewcomer;
+    return isNewcomer ? 'newcomer' : 'existing';
+  }
+
+  String get giftDialogTitle {
+    return LangCont.tr('$_giftDialogTr.$_userClassification-title');
+  }
+  String get giftDialogText {
+    return LangCont.tr('$_giftDialogTr.$_userClassification-text');
+  }
+
+  void giftCardPressed() {
+    showFDialog(
+      title: giftDialogTitle,
+      content: Column(
+        children: [
+          FText(
+            giftDialogText,
+            style: ThemeCont.to.bodyMedium,
+            maxLines: 0,
+            align: TextAlign.center,
+          ),
+          SizedBox(height: 20.0.h),
+          GiftWidget(
+            size: 150.0.r,
+            pressable: true,
+            afterWidget: GlowEffectWidget(
+              child: SvgPicture.asset(_couponAsset),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   CalendarCont get calendarCont => CalendarCont.to;
   RankingCont get rankingCont => RankingCont.to;
 
@@ -35,13 +82,14 @@ class HomePageCont extends MainPageCont {
 
   @override
   Future load() async {
+    carouselCont = CarouselController();
     await calendarCont.init();
     await rankingCont.init();
   }
 
   @override
   Future afterRoute() async {
-    delay(500.ms, gotoSelectedWeek);
+    delay(2.s, gotoSelectedWeek);
   }
 
   FUser get _logged => AuthCont.logged!;
@@ -53,7 +101,7 @@ class HomePageCont extends MainPageCont {
 
   DateTime get firstDay => _logged.regDate;
 
-  final carouselCont = CarouselController();
+  late final CarouselController carouselCont;
   int get carouselCount => _logged.weekCount + 1;
 
   final _pageIndex = 0.obs;

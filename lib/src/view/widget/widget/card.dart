@@ -116,11 +116,14 @@ class _FCardState extends State<FCard> with ScalePressable {
   LoadingCont get cont => LoadingCont.to;
 
   Widget _buildRightTopWidget(BuildContext context) {
-    Widget rt = widget.rightTopWidget == null
+    Widget child = widget.rightTopWidget == null
         ? icon : widget.rightTopWidget!;
     return Positioned(
       top: 5.0, right: 5.0,
-      child: rt,
+      child: FIconButton(
+        onPressed: widget.onPressed,
+        child: child,
+      ),
     );
   }
 

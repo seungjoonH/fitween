@@ -288,6 +288,17 @@
     }
   },
   "home": {
+    "dialog": {
+      "gift": {
+        "newcomer-title": "환영 선물",
+        "existing-title": "감사 선물",
+        "newcomer-text": "피트윈에 오신걸 환영합니다!\n아래 선물을 확인해보세요!",
+        "existing-text": "피트윈에 다시 찾아주셔서 감사합니다!\n아래 선물을 확인해보세요!"
+      }
+    },
+    "gift": {
+      "text": "선물이 도착했어요!"
+    },
     "record": "기록",
     "record-card": {
       "view-today": "오늘 보기"
@@ -303,6 +314,8 @@
         "really-text": "정말 @{{fpoint} FP}를 소모하여 건강 데이터 ({amount}) 를 연동하시겠습니까?",
         "all-title": "모든 데이터 연동",
         "all-text": "정말 @{{fpoint} FP}를 소모하여 모든 건강 데이터를 연동하시겠습니까?",
+        "coupon-title": "데이터 연동 쿠폰 사용",
+        "coupon-text": "정말 쿠폰을 1개를 사용하여 모든 데이터를 연동하시겠습니까?\n@{쿠폰 수량: {count}개}",
         "complete-title": "데이터 연동됨",
         "complete-text": "데이터가 연동되었습니다"
       }

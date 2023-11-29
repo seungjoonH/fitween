@@ -5,6 +5,7 @@ import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class WeightPage extends FPage {
   const WeightPage({super.key});
@@ -57,10 +58,17 @@ class _WeightPageState extends FPageState<WeightPage> {
               ),
             ),
             SizedBox(height: 5.0.h),
-            FText(
-              exercise.locale,
-              style: ThemeCont.to.titleMedium,
-              bold: true,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                FText(
+                  exercise.locale.capitalize!,
+                  style: ThemeCont.to.titleMedium,
+                  bold: true,
+                ),
+                SizedBox(width: 5.0.w),
+                const FTextTag('Beta'),
+              ],
             ),
           ],
         ),

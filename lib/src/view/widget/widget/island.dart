@@ -1,8 +1,13 @@
 import 'dart:async';
 
 import 'package:fitween/global/global.dart';
+import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/model/class/amount/amount.dart';
+import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
+import 'package:fitween/src/model/enum/enum.dart';
 import 'package:fitween/src/view/widget/button/pressable.dart';
+import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -72,6 +77,28 @@ class _FIslandWidgetState extends State<FIslandWidget> {
 
   bool get _isNight => ThemeCont.to.isDarkMode;
 
+  FType get _type => widget.level.type;
+  num get _value => AuthCont.logged!.allRecord[_type]!;
+  String get _valueText => _value.thouSep;
+  bool get _isCurrent => widget.level.inRange(_value);
+
+  Widget _buildBubbleWidget(BuildContext context) {
+    if (!_isCurrent) return Container();
+    return SizedBox(
+      width: 90.0.w, height: 50.0.h,
+      child: SpeechBubbleWidget(
+        backgroundColor: _type.color,
+        child: FText(
+          _valueText,
+          style: ThemeCont.to.bodyLarge,
+          color: ThemeCont.achro95,
+          align: TextAlign.center,
+          bold: true,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScalePressableWidget(
@@ -104,23 +131,34 @@ class _FIslandWidgetState extends State<FIslandWidget> {
                 AnimatedPositioned(
                   duration: 1.s,
                   bottom: _y,
+                  width: width,
+                  height: height,
                   curve: Curves.easeInOut,
-                  child: Hero(
-                    tag: widget.level.key,
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        Image.asset(
-                          imageUrl,
-                          width: imageWidth,
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Hero(
+                        tag: widget.level.key,
+                        child: Stack(
+                          alignment: Alignment.bottomCenter,
+                          children: [
+                            Image.asset(
+                              imageUrl,
+                              width: imageWidth,
+                            ),
+                            if (_isNight)
+                            Image.asset(
+                              darkSideUrl,
+                              width: imageWidth,
+                            ),
+                          ],
                         ),
-                        if (_isNight)
-                        Image.asset(
-                          darkSideUrl,
-                          width: imageWidth,
-                        ),
-                      ],
-                    ),
+                      ),
+                      Positioned(
+                        top: 40.0.h,
+                        child: _buildBubbleWidget(context),
+                      ),
+                    ],
                   ),
                 ),
               ],

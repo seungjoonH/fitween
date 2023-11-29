@@ -45,7 +45,7 @@ class LoginPageCont extends PageCont {
 
   void _startTimer() {
     _timer = Timer.periodic(
-        const Duration(milliseconds: 500), (_) {
+      500.ms, (_) {
       _pointCount((_pointCount.value + 1) % 4);
     });
   }
@@ -69,7 +69,7 @@ class LoginPageCont extends PageCont {
     _loadingTimer = Timer.periodic(5.ms, (_) => p = min(1, p + .01));
     await delay(300.ms);
     _loadingTimer?.cancel();
-    delay(1.s, () => _loadingState(false));
+    await delay(300.ms, () => _loadingState(false));
   }
 
   String get loadingText {

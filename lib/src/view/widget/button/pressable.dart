@@ -1,3 +1,4 @@
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,17 +68,20 @@ mixin ScalePressable<T extends StatefulWidget> on State<T> {
   set withTapUp(VoidCallback? f) => _withTapUp = f;
   set withTapCancel(VoidCallback? f) => _withTapCancel = f;
 
-  final Duration _duration = const Duration(milliseconds: 100);
-  double _scale = 1.0;
+  final Duration _duration = 100.ms;
+  double scale = 1.0;
 
   bool get allowPressEffect => true;
   double get pressedScale => .97;
 
+  bool pressed = false;
+
   void _setOnTapDown() {
     _onTapDown = onPressed == null ? null : (_) {
       setState(() {
+        pressed = true;
         if (_withTapDown != null) _withTapDown!();
-        if (allowPressEffect) _scale = pressedScale;
+        if (allowPressEffect) scale = pressedScale;
       });
     };
   }
@@ -85,10 +89,11 @@ mixin ScalePressable<T extends StatefulWidget> on State<T> {
   void _setOnTapUp() {
     _onTapUp = onPressed == null ? null : (_) async {
       await Future.delayed(_duration, () {
+        pressed = false;
         if (!mounted) return;
         setState(() {
           if (_withTapUp != null) _withTapUp!();
-          if (allowPressEffect) _scale = 1.0;
+          if (allowPressEffect) scale = 1.0;
         });
       });
       onPressed!();
@@ -96,9 +101,11 @@ mixin ScalePressable<T extends StatefulWidget> on State<T> {
   }
 
   void _setOnTapCancel() {
+    setState(() => pressed = false);
     _onTapCancel = () => setState(() {
+      pressed = false;
       if (_withTapCancel != null) _withTapCancel!();
-      if (allowPressEffect) _scale = 1.0;
+      if (allowPressEffect) scale = 1.0;
     });
   }
 
@@ -131,7 +138,7 @@ mixin ScalePressable<T extends StatefulWidget> on State<T> {
       onTapUp: _onTapUp,
       onTapCancel: _onTapCancel,
       child: AnimatedScale(
-        scale: _scale,
+        scale: scale,
         duration: _duration,
         child: buildContent(context),
       ),

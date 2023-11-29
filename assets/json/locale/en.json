@@ -326,6 +326,17 @@
     }
   },
   "home": {
+    "dialog": {
+      "gift": {
+        "newcomer-title": "Welcome Gift",
+        "existing-title": "Thank-you Gift",
+        "newcomer-text": "Welcome to Fitween!\nCheck out the gifts below!",
+        "existing-text": "Thank you for coming back to Fitween!\nCheck out the gifts below!"
+      }
+    },
+    "gift": {
+      "text": "A gift has arrived!"
+    },
     "record": "Record",
     "record-card": {
       "view-today": "View Today"
@@ -341,6 +352,8 @@
         "really-text": "Are you sure to spend @{{fpoint} FP} to fetch health data ({amount})?",
         "all-title": "Fetching All Data",
         "all-text": "Are you sure to spend @{{fpoint} FP} to fetch all health data?",
+        "coupon-title": "Using Data Fetching Coupon",
+        "coupon-text": "Are you sure to spend one coupon to fetch all health data?\n@{{count} coupon(s) left}",
         "complete-title": "Data Fetched",
         "complete-text": "Data successfully fetched"
       }

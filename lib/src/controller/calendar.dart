@@ -60,6 +60,10 @@ class CalendarCont extends GetxController {
     return true;
   }
 
+  bool get hasReflectAllCoupon {
+    return _logged.record!.reflectAllCouponCount > 0;
+  }
+
   String getInsufficientAmountText(FType type) {
     return type.withUnit(getUnreflectedAmount(type, selectedDay));
   }

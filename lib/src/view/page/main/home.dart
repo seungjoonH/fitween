@@ -6,6 +6,7 @@ import 'package:fitween/src/model/enum/enum.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:fitween/src/view/widget/widget/calendar.dart';
+import 'package:fitween/src/view/widget/widget/gift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -58,6 +59,36 @@ class _HomePageState extends FPageState {
 
   Widget _buildNoticeWidget(BuildContext context) {
     return const NoticeWidget();
+  }
+
+
+  Widget _buildGiftCardContentWidget(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GiftWidget(),
+        SizedBox(width: 10.0.w),
+        FText(
+          cont.giftCardText,
+          color: ThemeCont.to.background,
+          bold: true,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildGiftCardWidget(BuildContext context) {
+    return PulseWidget(
+      onPressed: cont.giftCardPressed,
+      child: Container(
+        padding: EdgeInsets.all(20.0.r),
+        decoration: BoxDecoration(
+          color: ThemeCont.colorA,
+          borderRadius: BorderRadius.circular(10.0.r),
+        ),
+        child: _buildGiftCardContentWidget(context),
+      ),
+    );
   }
 
   Widget _buildDayCalendarWidget(BuildContext context, DateTime date) {
@@ -313,6 +344,8 @@ class _HomePageState extends FPageState {
                   padding: _padding,
                   child: Column(
                     children: [
+                      SizedBox(height: 20.0.h),
+                      _buildGiftCardWidget(context),
                       SizedBox(height: 20.0.h),
                       _buildRecordCardWidget(context),
                       SizedBox(height: 20.0.h),

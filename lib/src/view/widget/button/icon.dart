@@ -6,15 +6,17 @@ class FIconButton extends StatefulWidget {
   const FIconButton({
     super.key,
     this.icon,
+    this.child,
     this.onPressed,
     this.size,
     this.iconColor,
     this.iconSize,
     this.backgroundColor,
     this.notifications,
-  });
+  }) : assert(icon == null || child == null);
 
   final Icon? icon;
+  final Widget? child;
   final VoidCallback? onPressed;
   final double? size;
   final Color? iconColor;
@@ -41,9 +43,16 @@ class _FIconButtonState extends State<FIconButton> with DarkPressable {
     return ' $value ';
   }
 
+  Color get _iconColorAlt => widget.iconColor ?? ThemeCont.to.text;
+
+  Widget get _child => widget.child ?? Icon(
+    widget.icon?.icon,
+    size: widget.iconSize,
+    color: _iconColorAlt,
+  );
+
   @override
   Widget buildContent(BuildContext context) {
-    Color iconColorAlt = widget.iconColor ?? ThemeCont.to.text;
     double size = widget.size ?? 50.0;
 
     return Stack(
@@ -52,17 +61,14 @@ class _FIconButtonState extends State<FIconButton> with DarkPressable {
         Container(
           width: size,
           height: size,
+          alignment: Alignment.center,
           decoration: BoxDecoration(
             shape: isCircle
                 ? BoxShape.circle
                 : BoxShape.rectangle,
             color: widget.backgroundColor,
           ),
-          child: Icon(
-            widget.icon?.icon,
-            size: widget.iconSize,
-            color: iconColorAlt,
-          ),
+          child: _child,
         ),
         if (notifications != null)
         Positioned(

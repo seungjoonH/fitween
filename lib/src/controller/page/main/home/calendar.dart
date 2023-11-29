@@ -76,6 +76,12 @@ class CalendarPageCont extends PageCont {
     namedArgs: {'fpoint': getAllSpendingFPoint().thouSep},
   );
 
+  String get couponTitle => LangCont.tr('$_dialogTr.fetch.coupon-title');
+  String get couponText => LangCont.tr(
+    '$_dialogTr.fetch.coupon-text',
+    namedArgs: {'count': _logged.record!.reflectAllCouponCount.toString()},
+  );
+
   void reflectInformationButtonPressed() {
     showFDialog(
       title: fetchInfoTitle,
@@ -155,6 +161,21 @@ class CalendarPageCont extends PageCont {
     );
   }
 
+  void useCouponButtonPressed() {
+    showFDialog(
+      title: couponTitle,
+      content: FTexts(
+        couponText,
+        highlightColor: ThemeCont.to.point,
+        wordWrap: true,
+      ),
+      type: DialogType.bi,
+      rightText: fetchButtonText,
+      rightBackgroundColor: ThemeCont.to.point,
+      rightPressed: () => _fetchAllData(couponUsed: true),
+    );
+  }
+
   DateTime get _selectedDay => calendarCont.selectedDay;
 
   Future _showFetchedDialog() async {
@@ -188,9 +209,11 @@ class CalendarPageCont extends PageCont {
     await onRefresh();
   }
 
-  void _fetchAllData() async {
-    bool spent = await FPointCont.to.spend(getAllSpendingFPoint(), 'fetch-data-all');
-    if (!spent) return;
+  void _fetchAllData({bool couponUsed = false}) async {
+    if (couponUsed) {
+      bool spent = await FPointCont.to.spend(getAllSpendingFPoint(), 'fetch-data-all');
+      if (!spent) return;
+    }
 
     await _showFetchedDialog();
     await HealthDataCont.setAllRecordByType(FType.distance);
