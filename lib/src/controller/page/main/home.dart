@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:fitween/src/view/widget/function/dialog.dart';
@@ -32,22 +33,32 @@ class HomePageCont extends MainPageCont {
     return type.withUnit(record, txs: true);
   }
 
+  final _hasGiftReceived = false.obs;
+  bool get hasGiftReceived => _hasGiftReceived.value;
 
-  String get _couponAsset => '${_homeAsset}coupon.svg';
-
-  String get giftCardText => LangCont.tr('home.gift.text');
-
-  String get _giftDialogTr => 'home.dialog.gift';
-  String get _userClassification {
-    bool isNewcomer = _logged.info!.isNewcomer;
-    return isNewcomer ? 'newcomer' : 'existing';
+  void receiveGift() {
+    _hasGiftReceived(true);
+    _logged.collection!.receiveGift();
   }
+
+  String get _couponAsset => '${_homeAsset}for_$_userClassification.svg';
+  String get giftCardText => LangCont.tr('home.gift.text');
+  String get _giftDialogTr => 'home.dialog.gift';
+
+  bool get _isNewcomer => _logged.info!.isNewcomer;
+  String get _userClassification => _isNewcomer ? 'newcomer' : 'existing';
 
   String get giftDialogTitle {
     return LangCont.tr('$_giftDialogTr.$_userClassification-title');
   }
   String get giftDialogText {
     return LangCont.tr('$_giftDialogTr.$_userClassification-text');
+  }
+
+  Map<String, int> get _giftData {
+    return _isNewcomer
+        ? <String, int>{'4000006': 1}
+        : <String, int>{'4000100': 1, '4000005': 4};
   }
 
   void giftCardPressed() {
@@ -64,7 +75,10 @@ class HomePageCont extends MainPageCont {
           SizedBox(height: 20.0.h),
           GiftWidget(
             size: 150.0.r,
-            pressable: true,
+            onPressed: () {
+              Get.back();
+              inventoryCont.showAwardedItemInformationDialog(_giftData);
+            },
             afterWidget: GlowEffectWidget(
               child: SvgPicture.asset(_couponAsset),
             ),
@@ -76,20 +90,28 @@ class HomePageCont extends MainPageCont {
 
   CalendarCont get calendarCont => CalendarCont.to;
   RankingCont get rankingCont => RankingCont.to;
+  InventoryCont get inventoryCont => InventoryCont.to;
+
+  void _setGiftReceivedState() {
+    _hasGiftReceived(_logged.collection!.hasGiftReceived);
+  }
 
   @override
   String get loadKey => 'home';
 
   @override
   Future load() async {
-    carouselCont = CarouselController();
     await calendarCont.init();
     await rankingCont.init();
+    _setGiftReceivedState();
   }
 
   @override
   Future afterRoute() async {
-    delay(2.s, gotoSelectedWeek);
+    delay(2.s, () {
+      if (BottomBarCont.to.pageIndex != 0) return;
+      gotoSelectedWeek();
+    });
   }
 
   FUser get _logged => AuthCont.logged!;
@@ -101,7 +123,7 @@ class HomePageCont extends MainPageCont {
 
   DateTime get firstDay => _logged.regDate;
 
-  late final CarouselController carouselCont;
+  CarouselController carouselCont = CarouselController();
   int get carouselCount => _logged.weekCount + 1;
 
   final _pageIndex = 0.obs;

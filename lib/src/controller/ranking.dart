@@ -45,7 +45,7 @@ class RankingCont extends GetxController {
     await _saveRankingsData();
     rankingPageCont.setSelectedDateToLatest();
     calculateFPoints();
-    await FPointCont.to.load();
+    await FPointCont.to.init();
   }
 
   bool isAvailableFriend(String uid, DateTime date) {

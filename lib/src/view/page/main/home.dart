@@ -66,7 +66,7 @@ class _HomePageState extends FPageState {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        GiftWidget(),
+        const GiftWidget(),
         SizedBox(width: 10.0.w),
         FText(
           cont.giftCardText,
@@ -78,17 +78,20 @@ class _HomePageState extends FPageState {
   }
 
   Widget _buildGiftCardWidget(BuildContext context) {
-    return PulseWidget(
-      onPressed: cont.giftCardPressed,
-      child: Container(
-        padding: EdgeInsets.all(20.0.r),
-        decoration: BoxDecoration(
-          color: ThemeCont.colorA,
-          borderRadius: BorderRadius.circular(10.0.r),
+    return Obx(() {
+      if (cont.hasGiftReceived) return Container();
+      return PulseWidget(
+        onPressed: cont.giftCardPressed,
+        child: Container(
+          padding: EdgeInsets.all(20.0.r),
+          decoration: BoxDecoration(
+            color: ThemeCont.colorA,
+            borderRadius: BorderRadius.circular(10.0.r),
+          ),
+          child: _buildGiftCardContentWidget(context),
         ),
-        child: _buildGiftCardContentWidget(context),
-      ),
-    );
+      );
+    });
   }
 
   Widget _buildDayCalendarWidget(BuildContext context, DateTime date) {
@@ -344,7 +347,6 @@ class _HomePageState extends FPageState {
                   padding: _padding,
                   child: Column(
                     children: [
-                      SizedBox(height: 20.0.h),
                       _buildGiftCardWidget(context),
                       SizedBox(height: 20.0.h),
                       _buildRecordCardWidget(context),

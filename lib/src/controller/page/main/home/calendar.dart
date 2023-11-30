@@ -76,12 +76,6 @@ class CalendarPageCont extends PageCont {
     namedArgs: {'fpoint': getAllSpendingFPoint().thouSep},
   );
 
-  String get couponTitle => LangCont.tr('$_dialogTr.fetch.coupon-title');
-  String get couponText => LangCont.tr(
-    '$_dialogTr.fetch.coupon-text',
-    namedArgs: {'count': _logged.record!.reflectAllCouponCount.toString()},
-  );
-
   void reflectInformationButtonPressed() {
     showFDialog(
       title: fetchInfoTitle,
@@ -158,21 +152,6 @@ class CalendarPageCont extends PageCont {
       rightText: fetchButtonText,
       rightBackgroundColor: ThemeCont.to.point,
       rightPressed: _fetchAllData,
-    );
-  }
-
-  void useCouponButtonPressed() {
-    showFDialog(
-      title: couponTitle,
-      content: FTexts(
-        couponText,
-        highlightColor: ThemeCont.to.point,
-        wordWrap: true,
-      ),
-      type: DialogType.bi,
-      rightText: fetchButtonText,
-      rightBackgroundColor: ThemeCont.to.point,
-      rightPressed: () => _fetchAllData(couponUsed: true),
     );
   }
 

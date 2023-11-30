@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 export './local/badge.dart';
 export './local/challenge.dart';
 export './local/level.dart';
+export './local/item.dart';
 
 abstract class LocalModel<T extends Model> {
   static Future loadAll() async {
@@ -16,6 +17,7 @@ abstract class LocalModel<T extends Model> {
     await DistanceLevelLocal().load();
     await HeightLevelLocal().load();
     await WeightLevelLocal().load();
+    await ItemLocal().load();
   }
 
   List<T> list = [];

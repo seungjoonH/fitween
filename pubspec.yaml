@@ -27,7 +27,7 @@ dependencies:
   ## image
   lottie: ^2.1.0
   flutter_svg: ^2.0.4
-  flutter_gif: ^0.0.4
+  gif: ^2.3.0
 
   ## layout
   flutter_screenutil: ^5.5.3+2
@@ -39,6 +39,7 @@ dependencies:
   carousel_slider: ^4.1.1
   numberpicker: ^2.1.1
   animated_flip_counter: ^0.2.4
+  marquee: ^2.2.3
   animated_digit: ^3.2.3
   table_calendar: ^3.0.8
   bottom_sheet_bar: ^2.3.1
@@ -46,7 +47,7 @@ dependencies:
   animated_text_kit: ^4.2.2
   text_scroll: ^0.2.0
   webview_flutter: ^4.4.1
-  syncfusion_flutter_charts: ^23.1.40
+  syncfusion_flutter_charts: ^23.1.44
 
   # back-end
   ntp: ^2.0.0
@@ -73,7 +74,6 @@ dependencies:
   camera: ^0.9.4+5
   tflite_flutter: ^0.9.0
   tflite_flutter_helper: ^0.2.1
-  marquee: ^2.2.3
 
 
 
@@ -99,6 +99,7 @@ flutter:
     - assets/image/icon/selected/dark/
     - assets/image/icon/selected/light/
     - assets/image/icon/unselected/
+    - assets/image/item/
     - assets/image/level/distance/
     - assets/image/level/height/
     - assets/image/level/weight/

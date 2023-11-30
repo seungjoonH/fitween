@@ -1,22 +1,22 @@
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/view/widget/button/pressable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gif/flutter_gif.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gif/gif.dart';
 
 class GiftWidget extends StatefulWidget {
   const GiftWidget({
     super.key,
     this.size,
     this.openingMotion = false,
-    this.pressable = false,
+    this.onPressed,
     this.afterWidget,
   });
 
   final double? size;
   final bool openingMotion;
-  final bool pressable;
+  final VoidCallback? onPressed;
   final Widget? afterWidget;
 
   @override
@@ -37,9 +37,10 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
 
   double get _size => widget.size ?? 40.0.r;
 
+  bool get _pressable => widget.onPressed != null;
   bool _pressed = false;
 
-  late FlutterGifController _gifCont;
+  late GifController _gifCont;
   static const _frameCount = 12.0;
   Duration get _duration => 900.ms;
 
@@ -48,29 +49,42 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
   static const double _durationRatio = .9;
   Duration get _afterWidgetDuration => _duration * (1 - _durationRatio);
 
+  bool _activateAfterWidget = false;
+
   void _visualizeAfterWidget() {
     setState(() {
       _afterWidgetScale = 1.0;
       _afterWidgetOpacity = 1.0;
+      _activateAfterWidget = true;
     });
   }
 
   @override
   void initState() {
     super.initState();
-    _gifCont = FlutterGifController(vsync: this);
+    _gifCont = GifController(vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _gifCont.dispose();
+    super.dispose();
   }
 
   void _onPressed() async {
-    if (!widget.pressable || _pressed) return;
+    if (!_pressable) return;
+    if (_pressed) {
+      if (_activateAfterWidget) widget.onPressed!();
+      return;
+    }
     _gifCont.value = 0;
-    _gifCont.animateTo(_frameCount, duration: _duration);
+    _gifCont.animateTo(_frameCount, duration: _duration * _frameCount);
     setState(() => _pressed = true);
     await delay(_duration * _durationRatio, _visualizeAfterWidget);
   }
 
   Widget _buildOpeningGifWidget(BuildContext context) {
-    return GifImage(
+    return Gif(
       controller: _gifCont,
       image: AssetImage(_openingAsset),
       width: _size,
@@ -98,7 +112,7 @@ class _GiftWidgetState extends State<GiftWidget> with TickerProviderStateMixin {
 
   Widget _buildChild(BuildContext context) {
     late Widget child;
-    if (!widget.pressable) return _buildSvgWidget(context);
+    if (!_pressable) return _buildSvgWidget(context);
 
     child = _pressed
         ? _buildOpeningGifWidget(context)

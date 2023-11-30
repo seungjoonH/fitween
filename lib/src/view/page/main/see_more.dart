@@ -1,3 +1,4 @@
+import 'package:animated_digit/animated_digit.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
@@ -6,7 +7,6 @@ import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SeeMorePage extends FPage {
   const SeeMorePage({super.key});
@@ -20,6 +20,7 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
   SeeMorePageCont get cont => SeeMorePageCont.to;
   NotificationCont get notificationCont => NotificationCont.to;
   FPointCont get fPointCont => FPointCont.to;
+  InventoryCont get inventoryCont => InventoryCont.to;
 
   Widget _buildFPointCardWidget(BuildContext context) {
     return FCard(
@@ -36,13 +37,15 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          FPointIcon(size: 35.0.r, isWhite: true),
-          SizedBox(width: 5.0.w),
-          FText(
-            '${fPointCont.fPoint.thouSep} FP',
-            style: ThemeCont.to.displaySmall,
-            color: ThemeCont.achro95,
+          AnimatedDigitWidget(
+            value: fPointCont.fPoint,
+            enableSeparator: true,
+            separateSymbol: ',',
+            textStyle: ThemeCont.to.displaySmall
+                ?.copyWith(color: ThemeCont.achro95),
           ),
+          SizedBox(width: 10.0.w),
+          FPointIcon(size: 40.0.r, isWhite: true),
         ],
       ),
     );
@@ -98,6 +101,24 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
     );
   }
 
+  Widget _buildInventoryCardWidget(BuildContext context) {
+    return Obx(() => FCard(
+      title: FText(
+        cont.inventoryCardTitle,
+        color: ThemeCont.to.comment,
+        style: ThemeCont.to.commentStyle,
+        bold: true,
+      ),
+      onPressed: cont.inventoryCardPressed,
+      pressMode: FCardPressMode.icon,
+      child: ItemInventoryWidget(
+        itemList: inventoryCont.inventory,
+        rowCount: 1,
+        columnCount: 3,
+      ),
+    ));
+  }
+
   Widget _buildGoalSettingCardWidget(BuildContext context) {
     return FCard(
       title: FText(
@@ -117,7 +138,7 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
   Widget buildPage(BuildContext context) {
     return Obx(() => FMainScaffold(
       backgroundColor: ThemeCont.to.background,
-      refreshController: RefreshController(),
+      refreshController: cont.refreshCont,
       onRefresh: cont.onRefresh,
       appBar: FAppBar(
         text: cont.appBarTitle,
@@ -138,6 +159,7 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
         children: [
           _buildFPointCardWidget(context),
           // _buildMyBadgeCardWidget(context),
+          _buildInventoryCardWidget(context),
           _buildGoalSettingCardWidget(context),
         ].separateH(height: 20.0.h),
       ),

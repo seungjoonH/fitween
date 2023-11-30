@@ -2,6 +2,7 @@ export './model/badge.dart';
 export './model/battle.dart';
 export './model/challenge.dart';
 export './model/collection.dart';
+export './model/item.dart';
 export './model/party.dart';
 export './model/level.dart';
 export './model/notice.dart';

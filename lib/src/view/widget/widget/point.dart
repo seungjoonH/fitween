@@ -11,7 +11,7 @@ class FPointIcon extends StatelessWidget {
     super.key,
     this.isWhite = false,
     this.grey = false,
-    this.size = 18.0,
+    this.size = 30.0,
   });
 
   final bool isWhite;
@@ -64,13 +64,14 @@ class FPointAmountWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const FPointIcon(),
               FText(
-                '${amount.thouSep} FP',
+                amount.thouSep,
                 style: ThemeCont.to.bodyLarge,
                 color: ThemeCont.to.point,
                 bold: true,
               ),
+              SizedBox(width: 5.0.w),
+              const FPointIcon(),
             ],
           ),
         ),
@@ -123,14 +124,14 @@ class FPointButton extends StatelessWidget {
       onPressed: onPressed,
       child: Row(
         children: [
-          FPointIcon(isWhite: finished),
-          SizedBox(width: 2.0.w),
           FText(
-            '${amount.thouSep} FP',
+            amount.thouSep,
             style: ThemeCont.to.titleSmall,
             color: textColor,
             bold: true,
           ),
+          SizedBox(width: 2.0.w),
+          FPointIcon(isWhite: finished),
         ],
       ),
     );

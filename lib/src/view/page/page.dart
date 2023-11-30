@@ -29,6 +29,7 @@ export 'main/contents/weight.dart';
 export 'main/contents/battle.dart';
 export 'main/contents.dart';
 export 'main/see_more/notification.dart';
+export 'main/see_more/inventory.dart';
 export 'main/see_more/settings/general.dart';
 export 'main/see_more/settings/app_info/terms_in_use.dart';
 export 'main/see_more/settings/app_info/privacy_policy.dart';

@@ -216,6 +216,7 @@ class _FAlertDialogState extends State<FAlertDialog> {
     return AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: radius),
       backgroundColor: ThemeCont.to.backgroundAlt,
+      surfaceTintColor: ThemeCont.to.backgroundAlt,
       title: Container(
         padding: widget.titlePadding,
         child: FText(

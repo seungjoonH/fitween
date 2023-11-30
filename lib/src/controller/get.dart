@@ -34,6 +34,7 @@ class GetCont {
     Get.put(ContentsPageCont());
     Get.put(SeeMorePageCont());
     Get.put(NotificationPageCont());
+    Get.put(InventoryPageCont());
     Get.put(SettingsPageCont());
     Get.put(GeneralSettingPageCont());
     Get.put(AppInfoPageCont());
@@ -71,6 +72,7 @@ class GetCont {
     Get.put(BottomBarCont());
     Get.put(CameraCont());
     Get.put(NoticeCont());
+    Get.put(InventoryCont());
   }
 
   static void initConts() {

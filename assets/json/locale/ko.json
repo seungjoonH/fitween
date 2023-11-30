@@ -20,7 +20,8 @@
     "delete": "삭제",
     "ok": "확인",
     "logout": "로그아웃",
-    "delete-account": "계정삭제"
+    "delete-account": "계정삭제",
+    "use": "사용"
   },
   "appbar": {
     "register": "회원가입",
@@ -51,7 +52,8 @@
     "report-edit": "리포트",
     "report-detail": "리포트",
     "weight-complete": "운동결과",
-    "account": "계정 관리"
+    "account": "계정 관리",
+    "inventory": "인벤토리"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -91,7 +93,19 @@
     "fetch-data-two-types": "건강 데이터 연동 (거리, 높이)",
     "fetch-data-distance": "건강 데이터 연동 (거리)",
     "fetch-data-height": "건강 데이터 연동 (높이)",
-    "party-complete": "파티 완료 보상"
+    "party-complete": "파티 완료 보상",
+    "1-fp-coupon": "1 FP 교환권 사용",
+    "5-fp-coupon": "5 FP 교환권 사용",
+    "10-fp-coupon": "10 FP 교환권 사용",
+    "50-fp-coupon": "50 FP 교환권 사용",
+    "100-fp-coupon": "100 FP 교환권 사용",
+    "500-fp-coupon": "500 FP 교환권 사용",
+    "1000-fp-coupon": "1000 FP 교환권 사용",
+    "5000-fp-coupon": "5000 FP 교환권 사용",
+    "10000-fp-coupon": "10000 FP 교환권 사용",
+    "50000-fp-coupon": "50000 FP 교환권 사용",
+    "100000-fp-coupon": "100000 FP 교환권 사용",
+    "500000-fp-coupon": "500000 FP 교환권 사용"
   },
   "period": {
     "daily": "일일",
@@ -137,7 +151,8 @@
     "category": "카테고리",
     "writer": "작성자",
     "write-date": "작성일시",
-    "exercise": "운동"
+    "exercise": "운동",
+    "inventory": "인벤토리"
   },
   "unit": {
     "step": "[]보",
@@ -246,6 +261,16 @@
       "shoulder-press": "구부리세요"
     }
   },
+  "item": {
+    "dialog": {
+      "awarded-title": "아이템 획득",
+      "awarded-text": {
+        "other": "{} 종류의 아이템을 획득하였습니다"
+      },
+      "used-title": "아이템 사용",
+      "used-text": "\"{title}\" 아이템이 사용되었습니다"
+    }
+  },
   "login": {
     "user-loading": "사용자 데이터 불러오는 중",
     "user-complete": "사용자 데이터 불러오기 완료",
@@ -314,8 +339,6 @@
         "really-text": "정말 @{{fpoint} FP}를 소모하여 건강 데이터 ({amount}) 를 연동하시겠습니까?",
         "all-title": "모든 데이터 연동",
         "all-text": "정말 @{{fpoint} FP}를 소모하여 모든 건강 데이터를 연동하시겠습니까?",
-        "coupon-title": "데이터 연동 쿠폰 사용",
-        "coupon-text": "정말 쿠폰을 1개를 사용하여 모든 데이터를 연동하시겠습니까?\n@{쿠폰 수량: {count}개}",
         "complete-title": "데이터 연동됨",
         "complete-text": "데이터가 연동되었습니다"
       }
@@ -353,6 +376,9 @@
       "title": "내 뱃지",
       "main": "대표",
       "recent": "최근"
+    },
+    "inventory": {
+      "title": "인벤토리"
     },
     "goal-setting": {
       "title": "목표 수정"

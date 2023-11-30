@@ -58,8 +58,8 @@ class HealthDataCont {
 
   static FUser get _logged => AuthCont.logged!;
 
-  static Map<DateTime, num> _fetchedSteps = {};
-  static Map<DateTime, num> _fetchedFlights = {};
+  static final Map<DateTime, num> _fetchedSteps = {};
+  static final Map<DateTime, num> _fetchedFlights = {};
 
   static void initStepsData(DateTime startTime, DateTime endTime) {
     DateRange range = DateRange(startTime, endTime);
@@ -92,6 +92,11 @@ class HealthDataCont {
       _logged.setRecordByValue(type, _byType(type)![date]!, date);
     }
     await FUserRecordDAO().saveOne(_logged.record!);
+  }
+
+  static Future setAllRecords() async {
+    await setAllRecordByType(FType.distance);
+    if (Platform.isIOS) await setAllRecordByType(FType.height);
   }
 
   static Future setAllRecordByType(FType type) async {

@@ -6,6 +6,7 @@ export './calendar.dart';
 export './dialog.dart';
 export './get.dart';
 export './image.dart';
+export './inventory.dart';
 export './lang.dart';
 export './loading.dart';
 export './notice.dart';

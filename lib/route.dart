@@ -35,6 +35,7 @@ class FRoute {
     '/contents/battle': const BattlePage(),
     '/see-more': const SeeMorePage(),
     '/see-more/notification': const NotificationPage(),
+    '/see-more/inventory': const InventoryPage(),
     '/see-more/settings/general': const GeneralSettingPage(),
     '/see-more/settings/app-info': const AppInfoPage(),
     '/see-more/settings/app-info/terms-of-use': const TermsInUsePage(),
@@ -111,6 +112,7 @@ class FRoute {
   static void toBattle() => Get.toNamed('/contents/battle');
   static void toSeeMore() => Get.offAllNamed('/see-more');
   static void toNotification() => Get.toNamed('/see-more/notification');
+  static void toInventory() => Get.toNamed('/see-more/inventory');
   static void toSettings() => Get.toNamed('/see-more/settings');
   static void toGeneralSetting() => Get.toNamed('/see-more/settings/general');
   static void toAppInfo() => Get.toNamed('/see-more/settings/app-info');

@@ -163,15 +163,7 @@ class _CalendarPageState extends FPageState<CalendarPage> {
     if (calendarCont.entirelyReflected) {
       return FCard(child: _buildTableCalendarWidget(context));
     }
-    if (calendarCont.hasReflectAllCoupon) {
-      return FCard(
-        rightTopWidget: const FIcon(FIcons.coupon),
-        iconColor: ThemeCont.to.point,
-        pressMode: FCardPressMode.icon,
-        onPressed: cont.useCouponButtonPressed,
-        child: _buildTableCalendarWidget(context),
-      );
-    }
+
     return FCard(
       rightTopWidget: Icon(
         Icons.refresh,

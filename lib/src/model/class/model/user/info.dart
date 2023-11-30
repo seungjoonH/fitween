@@ -62,7 +62,7 @@ class FUserInfo extends FUser {
   @override
   bool get autoLoginAllowed => _autoLoginAllowed ?? true;
 
-  bool get isNewcomer => regDate.difference(today).inDays < 10;
+  bool get isNewcomer => today.difference(regDate).inDays < 10;
 
   void setThemeMode(ThemeMode mode) => _themeMode = mode;
   void setLanguage(Language lang) => _language = lang;

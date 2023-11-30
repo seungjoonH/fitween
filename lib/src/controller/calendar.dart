@@ -18,7 +18,7 @@ class CalendarCont extends GetxController {
   bool get _loadComplete => _user != null;
 
   Future init() async {
-    HealthDataCont.fetchAllData();
+    await HealthDataCont.fetchAllData();
     _user = AuthCont.logged!;
     await AuthCont.load(FUserLoadCont.onlyRecord());
     await loadRecord();
@@ -58,10 +58,6 @@ class CalendarCont extends GetxController {
       if (dateHasUnreflectedAmount(date)) return false;
     }
     return true;
-  }
-
-  bool get hasReflectAllCoupon {
-    return _logged.record!.reflectAllCouponCount > 0;
   }
 
   String getInsufficientAmountText(FType type) {

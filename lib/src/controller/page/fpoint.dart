@@ -31,7 +31,7 @@ class FPointPageCont extends PageCont {
 
   @override
   Future load() async {
-    await pointCont.load();
+    await pointCont.init();
     _fPoint(pointCont.fPoint);
     _startTimer();
   }

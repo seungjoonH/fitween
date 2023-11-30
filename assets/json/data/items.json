@@ -1,0 +1,123 @@
+[
+  {
+    "id": "4000000",
+    "title": {
+      "ko": "1 FP 교환권",
+      "en": "1 FP Coupon"
+    },
+    "description": {
+      "ko": "1 FP를 획득할 수 있습니다",
+      "en": "1 FP can be earned"
+    }
+  },
+  {
+    "id": "4000001",
+    "title": {
+      "ko": "5 FP 교환권",
+      "en": "5 FPs Coupon"
+    },
+    "description": {
+      "ko": "5 FP를 획득할 수 있습니다",
+      "en": "5 FPs can be earned"
+    }
+  },
+  {
+    "id": "4000002",
+    "title": {
+      "ko": "10 FP 교환권",
+      "en": "10 FPs Coupon"
+    },
+    "description": {
+      "ko": "10 FP를 획득할 수 있습니다",
+      "en": "10 FPs can be earned"
+    }
+  },
+  {
+    "id": "4000003",
+    "title": {
+      "ko": "50 FP 교환권",
+      "en": "50 FPs Coupon"
+    },
+    "description": {
+      "ko": "50 FP를 획득할 수 있습니다",
+      "en": "50 FPs can be earned"
+    }
+  },
+  {
+    "id": "4000004",
+    "title": {
+      "ko": "100 FP 교환권",
+      "en": "100 FPs Coupon"
+    },
+    "description": {
+      "ko": "100 FP를 획득할 수 있습니다",
+      "en": "100 FPs can be earned"
+    }
+  },
+  {
+    "id": "4000005",
+    "title": {
+      "ko": "500 FP 교환권",
+      "en": "500 FPs Coupon"
+    },
+    "description": {
+      "ko": "500 FP를 획득할 수 있습니다",
+      "en": "500 FPs can be earned"
+    }
+  },
+  {
+    "id": "4000006",
+    "title": {
+      "ko": "1,000 FP 교환권",
+      "en": "1K FP Coupon"
+    },
+    "description": {
+      "ko": "1,000 FP를 획득할 수 있습니다",
+      "en": "1,000 FPs can be earned"
+    }
+  },
+  {
+    "id": "4000007",
+    "title": {
+      "ko": "5,000 FP 교환권",
+      "en": "5K FPs Coupon"
+    },
+    "description": {
+      "ko": "5,000 FP를 획득할 수 있습니다",
+      "en": "5,000 FPs can be earned"
+    }
+  },
+  {
+    "id": "4000008",
+    "title": {
+      "ko": "10,000 FP 교환권",
+      "en": "10K FPs Coupon"
+    },
+    "description": {
+      "ko": "10,000 FP를 획득할 수 있습니다",
+      "en": "10,000 FPs can be earned"
+    }
+  },
+  {
+    "id": "4000009",
+    "title": {
+      "ko": "50,000 FP 교환권",
+      "en": "50K FPs Coupon"
+    },
+    "description": {
+      "ko": "50,000 FP를 획득할 수 있습니다",
+      "en": "50,000 FPs can be earned"
+    }
+  },
+  {
+    "id": "4000100",
+    "title": {
+      "ko": "전체 데이터 쿠폰",
+      "en": "All Data Coupon"
+    },
+    "description": {
+      "ko": "모든 건강 데이터를\n무료로 불러올 수 있습니다",
+      "en": "All health data\ncan be fetched complimentary"
+    }
+  }
+]

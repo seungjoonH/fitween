@@ -20,7 +20,8 @@
     "delete": "Delete",
     "ok": "Ok",
     "logout": "Logout",
-    "delete-account": "Delete Account"
+    "delete-account": "Delete Account",
+    "use": "Use"
   },
   "appbar": {
     "register": "Register",
@@ -50,7 +51,8 @@
     "report-edit": "Report",
     "report-detail": "Report",
     "weight-complete": "Weight Result",
-    "account": "Account Settings"
+    "account": "Account Settings",
+    "inventory": "Inventory"
   },
   "hint": {
     "your-nickname": "Input your nickname",
@@ -93,7 +95,17 @@
     "fetch-data-two-types": "Data Fetched (Distance, Height)",
     "fetch-data-distance": "Data Fetched (Distance)",
     "fetch-data-height": "Data Fetched (Height)",
-    "party-complete": "Party Completion Rewarded"
+    "party-complete": "Party Completion Rewarded",
+    "1-fp-coupon": "1 FP Coupon Used",
+    "5-fp-coupon": "5 FPs Coupon Used",
+    "10-fp-coupon": "10 FPs Coupon Used",
+    "50-fp-coupon": "50 FPs Coupon Used",
+    "100-fp-coupon": "100 FPs Coupon Used",
+    "500-fp-coupon": "500 FPs Coupon Used",
+    "1000-fp-coupon": "1000 FPs Coupon Used",
+    "5000-fp-coupon": "5000 FPs Coupon Used",
+    "10000-fp-coupon": "10000 FPs Coupon Used",
+    "50000-fp-coupon": "50000 FPs Coupon Used"
   },
   "period": {
     "daily": "daily",
@@ -135,7 +147,8 @@
     "category": "category",
     "writer": "writer",
     "write-date": "date",
-    "exercise": "exercise"
+    "exercise": "exercise",
+    "inventory": "inventory"
   },
   "unit": {
     "step": {
@@ -284,6 +297,17 @@
       "shoulder-press": "Bend IT!"
     }
   },
+  "item": {
+    "dialog": {
+      "awarded-title": "Item awarded",
+      "awarded-text": {
+        "one": "One type of item\nhas been awarded",
+        "other": "{} kinds of items\nhave been awarded"
+      },
+      "used-title": "Item used",
+      "used-text": "\"{title}\" item has been used"
+    }
+  },
   "login": {
     "user-loading": "Loading user data",
     "user-complete": "User data load complete",
@@ -352,8 +376,6 @@
         "really-text": "Are you sure to spend @{{fpoint} FP} to fetch health data ({amount})?",
         "all-title": "Fetching All Data",
         "all-text": "Are you sure to spend @{{fpoint} FP} to fetch all health data?",
-        "coupon-title": "Using Data Fetching Coupon",
-        "coupon-text": "Are you sure to spend one coupon to fetch all health data?\n@{{count} coupon(s) left}",
         "complete-title": "Data Fetched",
         "complete-text": "Data successfully fetched"
       }
@@ -392,6 +414,9 @@
       "title": "My Badges",
       "main": "Main",
       "recent": "Recently Acquired"
+    },
+    "inventory": {
+      "title": "Inventory"
     },
     "goal-setting": {
       "title": "Goal Settings"

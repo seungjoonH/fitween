@@ -21,15 +21,9 @@ class FUserRecord extends FUser {
   Map<Period, List<RankingData>> get rankings => _rankings;
 
   late bool _visible;
-  int _reflectAllCouponCount = 0;
-
 
   @override
   bool get visible => _visible;
-  int get reflectAllCouponCount => _reflectAllCouponCount;
-
-  void awardCoupon() => _reflectAllCouponCount++;
-  void useCoupon() => _reflectAllCouponCount--;
 
   @override
   void toggleVisibility() => _visible = !_visible;
@@ -260,7 +254,6 @@ class FUserRecord extends FUser {
           .map<RankingData>((e) => RankingData.fromJson((e as Map<String, dynamic>)))
           .toList()).toList() ?? Period.values.map((e) => []),
     );
-    _reflectAllCouponCount = json['reflectAllCouponCount'] ?? 0;
   }
 
   @override
@@ -275,7 +268,6 @@ class FUserRecord extends FUser {
       _rankings.keys.map((e) => e.name),
       _rankings.values.map((list) => list.map((e) => e.toJson())),
     );
-    json['reflectAllCouponCount'] = _reflectAllCouponCount;
     return json;
   }
 }

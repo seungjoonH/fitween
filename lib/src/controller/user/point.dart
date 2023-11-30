@@ -23,12 +23,13 @@ class FPointCont extends GetxController {
 
   void _syncFP() => _point(_logged.fPoint);
 
-  Future load() async {
+  Future init() async {
+    _point(0);
     await AuthCont.load(FUserLoadCont.onlyPoint());
     _syncFP();
   }
 
-  void earn(int fp, String content) async {
+  Future earn(int fp, String content) async {
     if (fp == 0) return;
     _logged.point!.earn(fp, content);
     _syncFP();

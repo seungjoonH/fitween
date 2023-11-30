@@ -36,25 +36,24 @@ class _FPointPageState extends FPageState<FPointPage> {
     );
   }
 
-  Widget _buildFPointButtonWidget(BuildContext context) {
+  Widget _buildFPointWidget(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 15.0.w),
+      padding: EdgeInsets.symmetric(horizontal: 10.0.w),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          FPointIcon(size: 25.0.r),
-          SizedBox(width: 5.0.w),
           SizedBox(
             height: 80.0.h,
             child: Obx(() => AnimatedDigitWidget(
               value: cont.fPoint,
-              suffix: ' FP',
               duration: 1.s,
               enableSeparator: true,
               textStyle: ThemeCont.to.headlineMedium
                   ?.copyWith(color: ThemeCont.to.point),
             )),
           ),
+          SizedBox(width: 5.0.w),
+          FPointIcon(size: 35.0.r),
         ],
       ),
     );
@@ -65,18 +64,14 @@ class _FPointPageState extends FPageState<FPointPage> {
       leading: Container(),
       expandedHeight: 120.0.h,
       flexibleSpace: FlexibleSpaceBar(
-        title: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            _buildBackgroundColorWidget(context),
-            _buildFPointButtonWidget(context),
-          ],
-        ),
+        title: _buildFPointWidget(context),
+        titlePadding: EdgeInsets.zero,
+        background: _buildBackgroundColorWidget(context),
       ),
     );
   }
 
-  Widget _buildLeadingCircleWidget(BuildContext context, PointHistoryData data) {
+  Widget _buildTrailingCircleWidget(BuildContext context, PointHistoryData data) {
     Color color = data.earned ? ThemeCont.colorB : ThemeCont.colorC;
     Color blended = Color.alphaBlend(color, ThemeCont.to.background);
 
@@ -122,7 +117,7 @@ class _FPointPageState extends FPageState<FPointPage> {
               ),
             ),
             SizedBox(width: 15.0.w),
-            _buildLeadingCircleWidget(context, h),
+            _buildTrailingCircleWidget(context, h),
           ],
         ),
       )).separateH(height: 10.0.h),
