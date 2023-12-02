@@ -268,7 +268,13 @@
         "other": "{} 종류의 아이템을 획득하였습니다"
       },
       "used-title": "아이템 사용",
-      "used-text": "\"{title}\" 아이템이 사용되었습니다"
+      "used-text": "{{title}} 아이템이 사용되었습니다"
+    }
+  },
+  "badge": {
+    "dialog": {
+      "earned-title": "뱃지 획득",
+      "earned-text": "@{{date}}\n@{{title}} 뱃지를 획득하였습니다."
     }
   },
   "login": {

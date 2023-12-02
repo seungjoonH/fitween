@@ -103,11 +103,11 @@ class HomePageCont extends MainPageCont {
   Future load() async {
     await calendarCont.init();
     await rankingCont.init();
-    _setGiftReceivedState();
   }
 
   @override
   Future afterRoute() async {
+    _setGiftReceivedState();
     delay(2.s, () {
       if (BottomBarCont.to.pageIndex != 0) return;
       gotoSelectedWeek();

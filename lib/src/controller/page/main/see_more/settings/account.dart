@@ -28,6 +28,11 @@ class AccountPageCont extends PageCont {
     _saveAutoLoginState();
   }
 
+  void _syncAutoLoginState() async {
+    await AuthCont.load(FUserLoadCont.lightest());
+    _autoLoginAllowed(_logged.autoLoginAllowed);
+  }
+
   void _saveAutoLoginState() async {
     _logged.info!.setAutoLoginState(autoLoginAllowed);
     await FUserInfoDAO().saveOne(_logged.info!);
@@ -95,7 +100,7 @@ class AccountPageCont extends PageCont {
 
   @override
   Future load() async {
-    _autoLoginAllowed(_logged.autoLoginAllowed);
+    _syncAutoLoginState();
   }
 
   @override

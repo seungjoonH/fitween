@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
+import 'package:fitween/src/controller/badge.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/controller/health/health.dart';
 import 'package:fitween/src/model/class/dao.dart';
@@ -44,14 +45,21 @@ class AuthCont {
 
     Timer.periodic(10.ms, (timer) async {
       if (!loginPageCont.loading) {
-        BottomBarCont.to.navigate(0);
         timer.cancel();
+        BottomBarCont.to.navigate(0);
+        await FBadgeCont.to.earnBadge('1000000');
         return;
       }
     });
+
   }
 
+  static bool _loggingIn = false;
+
   static void fAutoLogin() async {
+    if (_loggingIn) return;
+    _loggingIn = true;
+
     Map<String, dynamic>? data = await StorageCont.load();
     if (data == null) return;
 
@@ -71,9 +79,13 @@ class AuthCont {
     await loginPageCont.endLoading();
 
     await _initAfterLogin();
+    _loggingIn = true;
   }
 
   static fLogin(LoginType type) async {
+    if (_loggingIn) return;
+    _loggingIn = true;
+
     UserCredential? credential = await SignCont.signIn(type);
 
     // 로그인 실패
@@ -114,6 +126,7 @@ class AuthCont {
     });
 
     await _initAfterLogin();
+    _loggingIn = true;
   }
 
   static fLogout() { _logged = null; StorageCont.eliminate(); }

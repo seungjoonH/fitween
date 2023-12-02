@@ -73,6 +73,7 @@ class GetCont {
     Get.put(CameraCont());
     Get.put(NoticeCont());
     Get.put(InventoryCont());
+    Get.put(FBadgeCont());
   }
 
   static void initConts() {

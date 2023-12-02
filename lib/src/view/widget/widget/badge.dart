@@ -26,7 +26,7 @@ class FBadgeWidget extends StatefulWidget {
 class _FBadgeWidgetState extends State<FBadgeWidget> with ScalePressable {
   final String _asset = 'assets/image/badge/void.svg';
 
-  String get _imagePath => widget.badge?.imagePath ?? _asset;
+  String get _imageUrl => widget.badge?.imageUrl ?? _asset;
   Color get _backgroundColor => widget.backgroundColor ?? AuthCont.logged!.badgeColor;
 
   @override
@@ -39,7 +39,7 @@ class _FBadgeWidgetState extends State<FBadgeWidget> with ScalePressable {
         borderRadius: BorderRadius.circular(widget.size.r / 2.25),
       ),
       child: SvgPicture.asset(
-        _imagePath,
+        _imageUrl,
         fit: BoxFit.contain,
       ),
     );

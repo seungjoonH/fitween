@@ -8,7 +8,7 @@ class Collection extends Model {
   List<Timestamp> _dateList = [];
   late String _badgeId;
 
-  late FBadge _badge;
+  FBadge get badge => FBadge.fromId(_badgeId);
 
   Collection.fromJson(super.json) : super.fromJson();
 
@@ -19,7 +19,6 @@ class Collection extends Model {
   void fromJson(Map<String, dynamic> json) {
     _dateList = json['dates'].cast<Timestamp>();
     _badgeId = json['badgeId'];
-    _badge = FBadgeLocal().get(_badgeId)!;
   }
 
   @override

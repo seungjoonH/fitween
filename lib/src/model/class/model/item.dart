@@ -84,7 +84,10 @@ abstract class ItemUsingStrategy {
     String itemUsedText = LangCont.tr('item.dialog.used-text', namedArgs: {'title': item.title});
     showFDialog(
       title: itemUsedTitle,
-      content: FText(itemUsedText, maxLines: 0),
+      content: FTexts(
+        itemUsedText,
+        //??
+      ),
       type: DialogType.mono,
     );
   }

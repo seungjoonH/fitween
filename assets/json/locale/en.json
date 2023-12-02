@@ -305,7 +305,13 @@
         "other": "{} kinds of items\nhave been awarded"
       },
       "used-title": "Item used",
-      "used-text": "\"{title}\" item has been used"
+      "used-text": "@{{title}} item has been used"
+    }
+  },
+  "badge": {
+    "dialog": {
+      "earned-title": "Badge Earned",
+      "earned-text": "@{{date}}\n@{{title}} badge has been earned"
     }
   },
   "login": {

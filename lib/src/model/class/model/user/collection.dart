@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
@@ -25,9 +26,20 @@ class FUserCollection extends FUser {
   @override
   FBadge? get badge => FBadgeLocal().get(badgeId);
 
-  void syncItemsFrom(Map<String, Item> inv, Map<String, int> cts) {
-    _inventory.assignAll({...inv});
-    _inventoryData.assignAll({...cts});
+  List<String> get badgeIds => _collectionsData.keys.toList();
+
+  Map<String, List<DateTime>> get dates => {
+    for (String id in _collectionsData.keys) id: _collectionsData[id]!.dates,
+  };
+
+  void syncItemsFrom(Map<String, Item> inventory, Map<String, int> counts) {
+    _inventory.assignAll({...inventory});
+    _inventoryData.assignAll({...counts});
+  }
+
+  void syncBadgesFrom(Map<String, List<DateTime>> data) {
+     var colData = { for (String id in data.keys) id: _CollectionData(id, data[id]!) };
+    _collectionsData.assignAll({...colData});
   }
 
   void receiveGift() => _hasGiftReceived = true;
@@ -83,6 +95,12 @@ class _CollectionData extends Model {
   late String _badgeId;
   List<Timestamp> _dates = [];
 
+  List<DateTime> get dates => _dates.map((date) => date.toDate()).toList();
+
+  _CollectionData(String id, List<DateTime> dates) {
+    _badgeId = id;
+    _dates = dates.map((date) => date.toTimestamp!).toList();
+  }
   _CollectionData.fromJson(super.json) : super.fromJson();
 
   @override
