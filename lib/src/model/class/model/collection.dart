@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween/global/date.dart';
-import 'package:fitween/src/model/class/local.dart';
-import 'package:fitween/src/model/class/local/badge.dart';
 import 'package:fitween/src/model/class/model.dart';
 
 class Collection extends Model {

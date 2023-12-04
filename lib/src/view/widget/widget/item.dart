@@ -89,7 +89,7 @@ class _ItemCellWidgetState extends State<ItemCellWidget> {
         boxShadow: [
           BoxShadow(
             color: ThemeCont.to.bar,
-            offset: Offset(2.0.r, 2.0.r),
+            offset: Offset(1.0.r, 1.0.r),
           ),
         ],
       ),

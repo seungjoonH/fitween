@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:animated_digit/animated_digit.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
@@ -21,6 +24,7 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
   NotificationCont get notificationCont => NotificationCont.to;
   FPointCont get fPointCont => FPointCont.to;
   InventoryCont get inventoryCont => InventoryCont.to;
+  FBadgeCont get badgeCont => FBadgeCont.to;
 
   Widget _buildFPointCardWidget(BuildContext context) {
     return FCard(
@@ -51,6 +55,51 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
     );
   }
 
+  Widget _buildMainBadgeWidget(BuildContext context) {
+    return Column(
+      children: [
+        FBadgeDetailedWidget(
+          badge: badgeCont.mainBadge,
+          size: 60.0.r,
+          displayTitle: true,
+          displayDate: true,
+          pressable: true,
+          longPressable: true,
+        ),
+        SizedBox(height: 10.0.h),
+        FTextTag(
+          cont.mainText,
+          textColor: ThemeCont.to.background,
+          backgroundColor: ThemeCont.to.text,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildRecentBadgesWidget(BuildContext context) {
+    List<FBadge> badgeList = [...badgeCont.badgesWithOutMain];
+    badgeList = badgeList.sublist(0, min(2, badgeList.length));
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        FText(
+          cont.recentText,
+          color: ThemeCont.to.comment,
+          style: ThemeCont.to.commentStyle,
+        ),
+        SizedBox(height: 20.0.h),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: badgeList.map((badge) => FBadgeDetailedWidget(
+            badge: badge,
+            displayTitle: true,
+          )).separateW(width: 10.0.w),
+        ),
+      ],
+    );
+  }
+
   Widget _buildMyBadgeCardWidget(BuildContext context) {
     return FCard(
       title: FText(
@@ -59,7 +108,27 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
         style: ThemeCont.to.commentStyle,
         bold: true,
       ),
-      child: Container(),
+      pressMode: FCardPressMode.icon,
+      onPressed: cont.badgeCardPressed,
+      child: IntrinsicHeight(
+        child: Row(
+          children: [
+            Expanded(
+              flex: 2,
+              child: _buildMainBadgeWidget(context),
+            ),
+            VerticalDivider(
+              width: 40.0.w,
+              thickness: .5,
+              color: ThemeCont.to.stroke,
+            ),
+            Expanded(
+              flex: 3,
+              child: _buildRecentBadgesWidget(context),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -158,7 +227,7 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
       body: Column(
         children: [
           _buildFPointCardWidget(context),
-          // _buildMyBadgeCardWidget(context),
+          _buildMyBadgeCardWidget(context),
           _buildInventoryCardWidget(context),
           _buildGoalSettingCardWidget(context),
         ].separateH(height: 20.0.h),

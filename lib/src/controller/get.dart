@@ -35,6 +35,7 @@ class GetCont {
     Get.put(SeeMorePageCont());
     Get.put(NotificationPageCont());
     Get.put(InventoryPageCont());
+    Get.put(BadgePageCont());
     Get.put(SettingsPageCont());
     Get.put(GeneralSettingPageCont());
     Get.put(AppInfoPageCont());

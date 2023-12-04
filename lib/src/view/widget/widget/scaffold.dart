@@ -132,11 +132,8 @@ class FRefreshScaffold extends FScaffold {
       refreshController.refreshCompleted();
     },
     onLoading: () async {
-      print('####');
       await delay(100.ms);
-      print('#####');
       refreshController.loadComplete();
-      print('######');
     },
     header: MaterialClassicHeader(
       color: ThemeCont.to.textAlt,

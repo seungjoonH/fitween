@@ -23,9 +23,6 @@ class FUserCollection extends FUser {
   Map<String, Item> get inventory => _inventory;
   Map<String, int> get counts => _inventoryData;
 
-  @override
-  FBadge? get badge => FBadgeLocal().get(badgeId);
-
   List<String> get badgeIds => _collectionsData.keys.toList();
 
   Map<String, List<DateTime>> get dates => {
@@ -37,9 +34,10 @@ class FUserCollection extends FUser {
     _inventoryData.assignAll({...counts});
   }
 
-  void syncBadgesFrom(Map<String, List<DateTime>> data) {
+  void syncBadgesFrom(Map<String, List<DateTime>> data, String badgeId) {
      var colData = { for (String id in data.keys) id: _CollectionData(id, data[id]!) };
     _collectionsData.assignAll({...colData});
+    _badgeId = badgeId;
   }
 
   void receiveGift() => _hasGiftReceived = true;

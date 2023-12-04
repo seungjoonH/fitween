@@ -15,6 +15,7 @@ export './function/modal_bottom_sheet.dart';
 export './function/snack_bar.dart';
 
 export './widget/app_bar.dart';
+export './widget/badge.dart';
 export './widget/bubble.dart';
 export './widget/card.dart';
 export './widget/carousel.dart';

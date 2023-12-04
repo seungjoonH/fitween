@@ -15,6 +15,9 @@ class SeeMorePageCont extends MainPageCont {
   String get goalSettingCardTitle => LangCont.tr('see-more.goal-setting.title');
   String get infoSettingCardTitle => LangCont.tr('see-more.info-setting.title');
 
+  String get mainText => LangCont.tr('word.main');
+  String get recentText => LangCont.tr('word.recent');
+
   final refreshCont = RefreshController();
 
   @override
@@ -24,6 +27,7 @@ class SeeMorePageCont extends MainPageCont {
   Future load() async {
     await NotificationCont.to.init();
     await FPointCont.to.init();
+    await FBadgeCont.to.init();
     await InventoryCont.to.init();
   }
 
@@ -35,6 +39,7 @@ class SeeMorePageCont extends MainPageCont {
   }
 
   void fPointCardPressed() => FRoute.toFPoint();
+  void badgeCardPressed() => FRoute.toBadge();
   void inventoryCardPressed() => FRoute.toInventory();
   void goalSettingCardPressed() => FRoute.toGoalSetting();
   void notificationButtonPressed() => FRoute.toNotification();

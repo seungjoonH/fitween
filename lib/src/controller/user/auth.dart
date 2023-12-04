@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
-import 'package:fitween/src/controller/badge.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/controller/health/health.dart';
 import 'package:fitween/src/model/class/dao.dart';
@@ -42,6 +41,7 @@ class AuthCont {
     loginPageCont.startLoading('home');
     await HomePageCont.to.init();
     await loginPageCont.endLoading();
+    _loggingIn = false;
 
     Timer.periodic(10.ms, (timer) async {
       if (!loginPageCont.loading) {
@@ -79,10 +79,9 @@ class AuthCont {
     await loginPageCont.endLoading();
 
     await _initAfterLogin();
-    _loggingIn = true;
   }
 
-  static fLogin(LoginType type) async {
+  static void fLogin(LoginType type) async {
     if (_loggingIn) return;
     _loggingIn = true;
 
@@ -126,14 +125,16 @@ class AuthCont {
     });
 
     await _initAfterLogin();
-    _loggingIn = true;
   }
 
-  static fLogout() { _logged = null; StorageCont.eliminate(); }
-  static fDeleteAccount() {/* not-implemented */}
+  static void fLogout() {
+    _logged = null;
+    _loggingIn = false;
+    StorageCont.eliminate();
+  }
+  static void fDeleteAccount() {/* not-implemented */}
 
   static const storage = FlutterSecureStorage();
-
 
   static Future load(FUserLoadCont cont) async {
     FUser? loaded = await FUserDAO().loadOne(_logged!.key, cont: cont);

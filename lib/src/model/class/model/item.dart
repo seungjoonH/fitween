@@ -4,6 +4,7 @@ import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/widget/widget.dart';
+import 'package:flutter/material.dart';
 
 class Item extends Model {
   static const _asset = 'assets/image/item';
@@ -86,7 +87,11 @@ abstract class ItemUsingStrategy {
       title: itemUsedTitle,
       content: FTexts(
         itemUsedText,
-        //??
+        style: ThemeCont.to.bodyLarge,
+        highlightStyle: ThemeCont.to.bodyLarge?.copyWith(
+          fontWeight: FontWeight.bold,
+        ),
+        wordWrap: true,
       ),
       type: DialogType.mono,
     );

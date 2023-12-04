@@ -3,10 +3,8 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
-import 'package:fitween/src/view/widget/function/dialog.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:fitween/src/view/widget/widget/gift.dart';
 import 'package:flutter/material.dart';
@@ -103,6 +101,7 @@ class HomePageCont extends MainPageCont {
   Future load() async {
     await calendarCont.init();
     await rankingCont.init();
+    await FBadgeCont.to.init();
   }
 
   @override

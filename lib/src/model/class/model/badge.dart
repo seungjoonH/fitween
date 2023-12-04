@@ -3,13 +3,17 @@ import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/widget/widget.dart';
-import 'package:fitween/src/view/widget/widget/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 enum FBadgeType {
-  normal, distance, height, weight;
-  String get code => ['100', '101', '102', '103'][index];
+  normal, distance, height, weight, etc;
+  String get locale => LangCont.tr('badge.type.$name');
+  String? get code => ['100', '101', '102', '103', null][index];
+
+  static FBadgeType get(String id) => values
+      .firstWhereOrNull((type) => type.code == id.substring(0, 3)) ?? etc;
 }
 
 class FBadge extends Model {
@@ -27,9 +31,13 @@ class FBadge extends Model {
 
   String get title => _titles[_locale]!;
   String get description => _descriptions[_locale]!;
-  String get imageUrl => '$_assetDir$_id.svg';
+  String get imageUrl => '$_assetDir$_id.png';
+  bool get activate => _activate;
+
+  FBadgeType get type => FBadgeType.get(_id);
 
   bool get canBeEarned => _strategy?.canBeEarned ?? false;
+
   void earn() async {
     if (_strategy == null) throw UnimplementedError();
     _strategy!.earn();
@@ -93,19 +101,22 @@ abstract class FBadgeEarningStrategy {
       title: badgeEarnedTitle,
       content: Column(
         children: [
-          FBadgeWidget(badge: badge, size: 60.0.r),
+          GlowEffectWidget(
+            size: 200.0.r,
+            child: FBadgeWidget(badge: badge, size: 100.0.r),
+          ),
           SizedBox(height: 10.0.h),
           FTexts(
             getBadgeEarnedText(
               badge.title,
-              dateToString('yyyy-MM-dd mm:ss', now)!,
+              dateToString('yyyy-MM-dd hh:mm', now)!,
             ),
             style: ThemeCont.to.commentStyle,
             highlightStyles: [
-              ThemeCont.to.commentStyle!
-                  .copyWith(fontWeight: FontWeight.bold),
               ThemeCont.to.bodyMedium!
                   .copyWith(color: ThemeCont.to.comment),
+              ThemeCont.to.commentStyle!
+                  .copyWith(fontWeight: FontWeight.bold),
             ],
             wordWrap: true,
             align: TextAlign.center,

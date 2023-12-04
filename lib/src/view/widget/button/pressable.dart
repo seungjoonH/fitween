@@ -1,5 +1,6 @@
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,10 +9,12 @@ class ScalePressableWidget extends StatefulWidget {
     super.key,
     required this.child,
     this.onPressed,
+    this.onLongPressed,
   });
 
   final Widget child;
   final VoidCallback? onPressed;
+  final VoidCallback? onLongPressed;
 
   @override
   State<ScalePressableWidget> createState() => _ScalePressableWidgetState();
@@ -23,6 +26,8 @@ class _ScalePressableWidgetState extends State<ScalePressableWidget> with ScaleP
 
   @override
   VoidCallback? get onPressed => widget.onPressed;
+  @override
+  VoidCallback? get onLongPressed => widget.onLongPressed;
 }
 
 class DarkPressableWidget extends StatefulWidget {
@@ -75,6 +80,7 @@ mixin ScalePressable<T extends StatefulWidget> on State<T> {
   double get pressedScale => .97;
 
   bool pressed = false;
+  bool longPressed = false;
 
   void _setOnTapDown() {
     _onTapDown = onPressed == null ? null : (_) {
@@ -88,7 +94,7 @@ mixin ScalePressable<T extends StatefulWidget> on State<T> {
 
   void _setOnTapUp() {
     _onTapUp = onPressed == null ? null : (_) async {
-      await Future.delayed(_duration, () {
+      await delay(_duration, () {
         pressed = false;
         if (!mounted) return;
         setState(() {
@@ -129,7 +135,8 @@ mixin ScalePressable<T extends StatefulWidget> on State<T> {
     PageCont.removeContext(context);
   }
 
-  VoidCallback? get onPressed;
+  VoidCallback? onPressed;
+  VoidCallback? onLongPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -137,6 +144,7 @@ mixin ScalePressable<T extends StatefulWidget> on State<T> {
       onTapDown: _onTapDown,
       onTapUp: _onTapUp,
       onTapCancel: _onTapCancel,
+      onLongPress: onLongPressed,
       child: AnimatedScale(
         scale: scale,
         duration: _duration,

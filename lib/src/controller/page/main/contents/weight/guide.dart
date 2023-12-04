@@ -1,5 +1,4 @@
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:fitween/global/date.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';

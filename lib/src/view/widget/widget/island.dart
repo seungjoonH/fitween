@@ -2,11 +2,8 @@ import 'dart:async';
 
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/model/class/amount/amount.dart';
-import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
-import 'package:fitween/src/view/widget/button/pressable.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

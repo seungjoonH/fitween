@@ -43,10 +43,14 @@ class GlowEffectWidget extends StatelessWidget {
     super.key,
     this.effectOn = true,
     required this.child,
+    this.size,
   });
 
   final bool effectOn;
   final Widget child;
+  final double? size;
+
+  double get _size => size ?? 250.0.r;
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +64,8 @@ class GlowEffectWidget extends StatelessWidget {
           rps: .3,
           child: SvgPicture.asset(
             asset,
-            width: 250.0.r,
-            height: 250.0.r,
+            width: _size,
+            height: _size,
           ),
         ),
         child,

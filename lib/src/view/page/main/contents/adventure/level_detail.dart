@@ -98,16 +98,13 @@ class _LevelDetailPageState extends FPageState<LevelDetailPage> {
 
   @override
   Widget buildPage(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: FScaffold(
-        appBar: FAppBar(),
-        extendBodyBehindAppBar: true,
-        backgroundColor: ThemeCont.to.isLightMode
-            ? ThemeCont.sea
-            : ThemeCont.darkSea,
-        body: _buildBody(context),
-      ),
+    return FScaffold(
+      appBar: FAppBar(),
+      extendBodyBehindAppBar: true,
+      backgroundColor: ThemeCont.to.isLightMode
+          ? ThemeCont.sea
+          : ThemeCont.darkSea,
+      body: _buildBody(context),
     );
   }
 

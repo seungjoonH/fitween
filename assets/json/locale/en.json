@@ -52,7 +52,8 @@
     "report-detail": "Report",
     "weight-complete": "Weight Result",
     "account": "Account Settings",
-    "inventory": "Inventory"
+    "inventory": "Inventory",
+    "badge": "Badge"
   },
   "hint": {
     "your-nickname": "Input your nickname",
@@ -148,7 +149,10 @@
     "writer": "writer",
     "write-date": "date",
     "exercise": "exercise",
-    "inventory": "inventory"
+    "inventory": "inventory",
+    "main": "main",
+    "recent": "recent",
+    "acquired-date": "Acquired Dates"
   },
   "unit": {
     "step": {
@@ -309,10 +313,20 @@
     }
   },
   "badge": {
+    "type": {
+      "normal": "Normal",
+      "distance": "Distance",
+      "height": "Height",
+      "weight": "Weight",
+      "etc": "etc"
+    },
     "dialog": {
       "earned-title": "Badge Earned",
-      "earned-text": "@{{date}}\n@{{title}} badge has been earned"
-    }
+      "earned-text": "@{{date}}\n@{{title}} badge has been earned",
+      "set-main-title": "Setting Main Badge",
+      "set-main-text": "@{{title}} has been set as the main badge"
+    },
+    "set-as-main": "Set as Main"
   },
   "login": {
     "user-loading": "Loading user data",
@@ -417,9 +431,7 @@
       "title": "FPoints"
     },
     "badge": {
-      "title": "My Badges",
-      "main": "Main",
-      "recent": "Recently Acquired"
+      "title": "My Badges"
     },
     "inventory": {
       "title": "Inventory"

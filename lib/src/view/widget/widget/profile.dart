@@ -3,7 +3,6 @@ import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/widget/button/follow.dart';
 import 'package:fitween/src/view/widget/widget.dart';
-import 'package:fitween/src/view/widget/widget/badge.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
