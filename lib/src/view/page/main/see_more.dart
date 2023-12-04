@@ -4,7 +4,6 @@ import 'package:animated_digit/animated_digit.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
-import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
@@ -132,44 +131,6 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
     );
   }
 
-  Widget _buildGoalByTypeWidget(BuildContext context, FType type) {
-    return Expanded(
-      child: Column(
-        children: [
-          FText(
-            type.locale.capitalize!,
-            style: ThemeCont.to.titleSmall,
-          ),
-          FTexts(
-            cont.getGoalTextOf(type),
-            style: ThemeCont.to.bodySmall,
-            textColor: type.color,
-            highlightStyle: ThemeCont.to.titleSmall
-                ?.apply(color: type.color),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildGoalsWidget(BuildContext context) {
-    Widget divider = SizedBox(
-      height: 50.0.h,
-      child: VerticalDivider(
-        width: 10.0.w,
-        thickness: .5,
-        color: ThemeCont.to.stroke,
-      ),
-    );
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: FType.activeValues.map((type) {
-        return _buildGoalByTypeWidget(context, type);
-      }).separateW(separator: divider),
-    );
-  }
-
   Widget _buildInventoryCardWidget(BuildContext context) {
     return Obx(() => FCard(
       title: FText(
@@ -186,21 +147,6 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
         columnCount: 3,
       ),
     ));
-  }
-
-  Widget _buildGoalSettingCardWidget(BuildContext context) {
-    return FCard(
-      title: FText(
-        cont.goalSettingCardTitle,
-        color: ThemeCont.to.comment,
-        style: ThemeCont.to.commentStyle,
-        bold: true,
-      ),
-      onPressed: cont.goalSettingCardPressed,
-      icon: const Icon(Icons.edit),
-      pressMode: FCardPressMode.icon,
-      child: _buildGoalsWidget(context),
-    );
   }
 
   @override
@@ -229,7 +175,6 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
           _buildFPointCardWidget(context),
           _buildMyBadgeCardWidget(context),
           _buildInventoryCardWidget(context),
-          _buildGoalSettingCardWidget(context),
         ].separateH(height: 20.0.h),
       ),
     ));

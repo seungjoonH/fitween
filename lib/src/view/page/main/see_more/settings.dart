@@ -19,19 +19,22 @@ class _SettingsPageState extends FPageState<SettingsPage> {
   SettingsPageCont get cont => SettingsPageCont.to;
 
   Widget _buildMenuWidget(
-    BuildContext context, {
-    required String title,
-    VoidCallback? onPressed,
-  }) {
+    BuildContext context, {required SettingsMenu menu}) {
     return DarkPressableWidget(
-      onPressed: onPressed,
+      onPressed: () => cont.menuPressed(menu),
       child: Container(
         width: double.infinity,
         padding: EdgeInsets.symmetric(
           horizontal: 20.0.w,
           vertical: 10.0.h,
         ),
-        child: FText(title, color: ThemeCont.to.outline),
+        child: Row(
+          children: [
+            Icon(menu.icon, color: ThemeCont.to.outline),
+            SizedBox(width: 10.0.w),
+            FText(menu.locale, color: ThemeCont.to.outline),
+          ],
+        ),
       ),
     );
   }
@@ -43,11 +46,7 @@ class _SettingsPageState extends FPageState<SettingsPage> {
       appBar: FAppBar(text: cont.appBarTitle),
       body: Column(
         children: SettingsMenu.values.map((menu) =>
-          _buildMenuWidget(
-            context,
-            title: menu.locale,
-            onPressed: () => cont.menuPressed(menu),
-          ),
+          _buildMenuWidget(context, menu: menu),
         ).separateH(height: 10.0.h),
       ),
     ));

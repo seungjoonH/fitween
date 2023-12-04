@@ -12,7 +12,6 @@ class SeeMorePageCont extends MainPageCont {
   String get fPointCardTitle => LangCont.tr('see-more.fpoint.title');
   String get myBadgeCardTitle => LangCont.tr('see-more.badge.title');
   String get inventoryCardTitle => LangCont.tr('see-more.inventory.title');
-  String get goalSettingCardTitle => LangCont.tr('see-more.goal-setting.title');
   String get infoSettingCardTitle => LangCont.tr('see-more.info-setting.title');
 
   String get mainText => LangCont.tr('word.main');
@@ -31,17 +30,9 @@ class SeeMorePageCont extends MainPageCont {
     await InventoryCont.to.init();
   }
 
-  FUser get _logged => AuthCont.logged!;
-
-  String getGoalTextOf(FType type) {
-    num goal = _logged.goal.byType(type);
-    return type.withUnit(goal, txs: true);
-  }
-
   void fPointCardPressed() => FRoute.toFPoint();
   void badgeCardPressed() => FRoute.toBadge();
   void inventoryCardPressed() => FRoute.toInventory();
-  void goalSettingCardPressed() => FRoute.toGoalSetting();
   void notificationButtonPressed() => FRoute.toNotification();
   void settingsButtonPressed() => FRoute.toSettings();
 }

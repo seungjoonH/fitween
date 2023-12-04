@@ -54,7 +54,8 @@
     "weight-complete": "운동결과",
     "account": "계정 관리",
     "inventory": "인벤토리",
-    "badge": "뱃지"
+    "badge": "뱃지",
+    "my-info": "내 정보 관리"
   },
   "hint": {
     "your-nickname": "별명을 입력하세요",
@@ -575,7 +576,8 @@
       "version": "버전",
       "support": "고객지원"
     },
-    "account": "계정 관리"
+    "account": "계정 관리",
+    "my-info": "내 정보 관리"
   },
   "version": {
     "message": {

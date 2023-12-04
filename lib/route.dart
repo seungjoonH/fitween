@@ -51,6 +51,7 @@ class FRoute {
     '/see-more/settings/app-info/report/edit': const ReportEditPage(),
     '/see-more/settings/app-info/report/detail': const ReportDetailPage(),
     '/see-more/settings/account': const AccountPage(),
+    '/see-more/settings/my-info': const MyInfoPage(),
     '/see-more/settings': const SettingsPage(),
     '/fpoint': const FPointPage(),
     '/fpoint/history': const FPointHistoryPage(),
@@ -130,6 +131,7 @@ class FRoute {
   static void toReportEdit({Report? report}) => Get.toNamed('/see-more/settings/app-info/report/edit', arguments: report);
   static void toReportDetail({Report? report}) => Get.toNamed('/see-more/settings/app-info/report/detail', arguments: report);
   static void toAccount() => Get.toNamed('/see-more/settings/account');
+  static void toMyInfo() => Get.toNamed('/see-more/settings/my-info');
   static void toFPoint() => Get.toNamed('/fpoint');
   static void toFPointHistory() => Get.toNamed('/fpoint/history');
 }

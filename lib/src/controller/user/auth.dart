@@ -41,7 +41,7 @@ class AuthCont {
     loginPageCont.startLoading('home');
     await HomePageCont.to.init();
     await loginPageCont.endLoading();
-    _loggingIn = false;
+    init();
 
     Timer.periodic(10.ms, (timer) async {
       if (!loginPageCont.loading) {
@@ -56,6 +56,8 @@ class AuthCont {
 
   static bool _loggingIn = false;
 
+  static void init() => _loggingIn = false;
+
   static void fAutoLogin() async {
     if (_loggingIn) return;
     _loggingIn = true;
@@ -69,7 +71,7 @@ class AuthCont {
     _name = data['displayName'];
     _email = data['email'];
 
-    if (uid == null) return;
+    if (uid == null) { init(); return; }
     FUser? stranger = await FUserDAO().loadOne(data['uid']);
     if (stranger == null) return;
     if (!stranger.autoLoginAllowed) return;

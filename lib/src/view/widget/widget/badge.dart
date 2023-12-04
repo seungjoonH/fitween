@@ -157,9 +157,15 @@ class FBadgeDetailedWidget extends StatelessWidget {
 
   Widget _buildTitleWidget(BuildContext context) {
     if (!displayTitle) return Container();
-    return FText(
-      badge.title,
-      style: ThemeCont.to.titleSmall,
+    return SizedBox(
+      width: size,
+      child: FText(
+        badge.title,
+        align: TextAlign.center,
+        style: LangCont.isEnglish
+            ? ThemeCont.to.bodySmall
+            : ThemeCont.to.bodyLarge,
+      ),
     );
   }
 

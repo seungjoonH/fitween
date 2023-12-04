@@ -45,6 +45,7 @@ export 'main/see_more/settings/app_info/report/edit.dart';
 export 'main/see_more/settings/app_info/report.dart';
 export 'main/see_more/settings/app_info.dart';
 export 'main/see_more/settings/account.dart';
+export 'main/see_more/settings/my_info.dart';
 export 'main/see_more/settings.dart';
 export 'main/see_more.dart';
 export 'fpoint/history.dart';

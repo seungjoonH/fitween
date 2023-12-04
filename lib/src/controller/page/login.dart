@@ -35,6 +35,7 @@ class LoginPageCont extends PageCont {
     _visualize();
     _startTimer();
 
+    AuthCont.init();
     AuthCont.fAutoLogin();
   }
 

@@ -64,6 +64,9 @@ class FUserInfo extends FUser {
 
   bool get isNewcomer => today.difference(regDate).inDays < 10;
 
+  void setWeight(num weight) => _weight = weight;
+  void setHeight(num height) => _height = height;
+
   void setThemeMode(ThemeMode mode) => _themeMode = mode;
   void setLanguage(Language lang) => _language = lang;
 
