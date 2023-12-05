@@ -8,7 +8,7 @@ class BottomBarCont extends GetxController {
   final _pageIndex = (-1).obs;
   int get pageIndex => _pageIndex.value;
 
-  void navigate(int index) async {
+  Future navigate(int index) async {
     if (LoadingCont.to.loading) return;
     if (pageIndex == index) {
       await [

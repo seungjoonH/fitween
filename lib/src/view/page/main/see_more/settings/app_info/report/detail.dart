@@ -105,7 +105,7 @@ class _ReportDetailPageState extends FPageState<ReportDetailPage> {
                           style: ThemeCont.to.bodyMedium,
                         ),
                         FText(
-                          '${cont.dateText}: ${dateToString('yy.MM.dd hh:mm', cont.report!.date)}',
+                          '${cont.dateText}: ${dateToString('yy.MM.dd HH:mm', cont.report!.date)}',
                           color: ThemeCont.to.comment,
                           style: ThemeCont.to.bodyMedium,
                         ),

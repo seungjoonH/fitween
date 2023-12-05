@@ -32,6 +32,7 @@ class Level extends Model {
 
   bool lessThan(Level level) { return amount.value < level.amount.value; }
   bool moreThan(Level level) { return amount.value > level.amount.value; }
+  bool isEqualTo(Level level) { return !lessThan(level) && !moreThan(level); }
 
   LevelLocal get _local => LevelLocal.byType(type)!;
 
@@ -50,10 +51,7 @@ class Level extends Model {
   bool isAchievedAmount(Amount amount) => amount.main >= this.amount.main;
   double getPercent(Amount amount) => getCurrentValue(amount) / goal;
 
-  // num _convertAmount(num value) {
-  //   if (type != FType.weight) return value;
-  //   return (WeightAmount()..t = value).kg;
-  // }
+  String get badgeId => '10${type.index}${_id.substring(_id.length - 4, _id.length)}';
 
   Level.fromJson(super.json) : super.fromJson();
 
@@ -77,6 +75,4 @@ class Level extends Model {
 
   @override
   String get key => _id;
-
-
 }

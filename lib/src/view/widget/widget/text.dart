@@ -5,6 +5,7 @@ import 'package:flutter_shake_animated/flutter_shake_animated.dart';
 import 'package:fitween/src/controller/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:marquee/marquee.dart';
 
 class FText extends StatelessWidget {
   const FText(this.data, {
@@ -97,6 +98,56 @@ class FCommentText extends FText {
   @override
   TextStyle? get defaultStyle => ThemeCont.to.commentStyle;
 }
+
+class OverflowDetectingText extends StatelessWidget {
+  const OverflowDetectingText(this.data, {
+    super.key,
+    required this.width,
+    this.style,
+    this.color,
+  });
+
+  final String data;
+  final double width;
+  final TextStyle? style;
+  final Color? color;
+
+  @override
+  Widget build(BuildContext context) {
+    TextPainter painter = TextPainter(
+      text: TextSpan(text: data, style: style),
+      textDirection: TextDirection.ltr,
+      maxLines: 1,
+    );
+
+    return Container(
+      width: width,
+      alignment: Alignment.center,
+      child: LayoutBuilder(
+          builder: (context, constraints) {
+            painter.layout(maxWidth: constraints.maxWidth);
+            if (painter.didExceedMaxLines) {
+              return Marquee(
+                text: data,
+                style: style?.copyWith(color: color),
+                fadingEdgeStartFraction: .3,
+                fadingEdgeEndFraction: .3,
+                velocity: 15.0,
+                blankSpace: width,
+              );
+            }
+            return FText(
+              data,
+              style: style,
+              color: color,
+              align: TextAlign.center,
+            );
+          }
+      ),
+    );
+  }
+}
+
 
 class FTexts extends StatelessWidget {
   const FTexts(this.text, {

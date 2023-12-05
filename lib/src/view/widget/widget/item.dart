@@ -40,6 +40,11 @@ class _ItemCellWidgetState extends State<ItemCellWidget> {
   }
 
   Widget _buildEmptyCellWidget(BuildContext context) {
+    Color shadowColor = (ThemeCont.to.isLightMode
+        ? ThemeCont.achro70 : ThemeCont.achro5);
+    Color backgroundColor = (ThemeCont.to.isLightMode
+        ? ThemeCont.achro90 : ThemeCont.achro10).withOpacity(.5);
+
     return ClipRRect(
       borderRadius: BorderRadius.circular(_radius),
       child: Stack(
@@ -49,26 +54,18 @@ class _ItemCellWidgetState extends State<ItemCellWidget> {
             width: _size,
             height: _size,
             decoration: BoxDecoration(
-              color: ThemeCont.to.background,
-              borderRadius: BorderRadius.circular(_radius),
-            ),
-          ),
-          Container(
-            width: _size,
-            height: _size,
-            decoration: BoxDecoration(
-              color: ThemeCont.achro5.withOpacity(.1),
+              color: shadowColor,
               borderRadius: BorderRadius.circular(_radius),
             ),
           ),
           Positioned(
-            right: -_size * .03,
-            bottom: -_size * .03,
+            right: -_size * .05,
+            bottom: -_size * .05,
             child: Container(
               width: _size,
               height: _size,
               decoration: BoxDecoration(
-                color: ThemeCont.to.background.withOpacity(.7),
+                color: backgroundColor,
                 borderRadius: BorderRadius.circular(_radius * .9),
               ),
             ),

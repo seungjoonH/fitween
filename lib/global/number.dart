@@ -3,6 +3,7 @@ import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/lang.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:fitween/src/controller/controller.dart';
 
 bool similar(num n1, num n2) => (n1 - n2).abs() < .001;
 
@@ -110,4 +111,6 @@ extension IntExtension on int {
 
   String get zPad2 => '$this'.padLeft(2, '0');
   String get zPad3 => '$this'.padLeft(3, '0');
+  String get zPad4 => '$this'.padLeft(4, '0');
+  String get zPad8 => '$this'.padLeft(8, '0');
 }

@@ -55,11 +55,13 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
   }
 
   Widget _buildMainBadgeWidget(BuildContext context) {
+    if (badgeCont.mainBadge == null) return Container();
+
     return Column(
       children: [
         FBadgeDetailedWidget(
-          badge: badgeCont.mainBadge,
-          size: 60.0.r,
+          badge: badgeCont.mainBadge!,
+          size: 75.0.r,
           displayTitle: true,
           displayDate: true,
           pressable: true,
@@ -89,11 +91,12 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
         ),
         SizedBox(height: 20.0.h),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: badgeList.map((badge) => FBadgeDetailedWidget(
             badge: badge,
             displayTitle: true,
-          )).separateW(width: 10.0.w),
+            size: 55.0.r,
+          )).toList(),
         ),
       ],
     );

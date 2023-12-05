@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:fitween/global/date.dart';
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/widget/widget.dart';
@@ -18,6 +18,8 @@ class FBadgeWidget extends StatefulWidget {
     this.longPressable,
     this.displayCount,
     this.displayMain,
+    this.disable,
+    this.border,
   });
 
   final FBadge? badge;
@@ -27,6 +29,8 @@ class FBadgeWidget extends StatefulWidget {
   final bool? longPressable;
   final bool? displayCount;
   final bool? displayMain;
+  final bool? disable;
+  final bool? border;
 
   @override
   State<FBadgeWidget> createState() => _FBadgeWidgetState();
@@ -42,7 +46,12 @@ class _FBadgeWidgetState extends State<FBadgeWidget> with ScalePressable {
 
   double get _size => widget.size ?? 40.0.r;
 
-  int get _count => cont.getCounts(widget.badge!.key);
+  bool get _isVoid => widget.badge == null;
+
+  int get _count {
+    if (_isVoid) return 0;
+    return cont.getCounts(widget.badge!.key);
+  }
   bool get _displayCount {
     if (_count == 1) return false;
     return widget.displayCount ?? false;
@@ -53,20 +62,37 @@ class _FBadgeWidgetState extends State<FBadgeWidget> with ScalePressable {
   bool get _pressable => widget.pressable ?? true;
   bool get _longPressable => widget.longPressable ?? true;
 
+  bool get _disable => widget.disable ?? false;
+
+  Border? get _border => widget.border ?? true ? Border.all(
+    width: 1.5,
+    color: ThemeCont.to.outline,
+    strokeAlign: BorderSide.strokeAlignOutside,
+  ) : null;
+
   Widget _buildBadgeImageWidget(BuildContext context) {
-    return Container(
+    BorderRadius radius = BorderRadius.circular(_size / 2.4);
+    Widget child = Container(
       width: _size,
       height: _size,
-      margin: EdgeInsets.all(8.0.r),
+      margin: _displayMain
+          ? EdgeInsets.all(10.0.r)
+          : EdgeInsets.zero,
       decoration: BoxDecoration(
         color: _backgroundColor,
-        borderRadius: BorderRadius.circular(_size / 2.25),
+        border: _border,
+        borderRadius: radius,
       ),
       child: Image.asset(
         _imageUrl,
+        width: _size,
+        height: _size,
         fit: BoxFit.contain,
       ),
     );
+
+    if (!_disable) return child;
+    return GrayScaleWidget(child: child);
   }
 
   Widget _buildCountWidget(BuildContext context) {
@@ -95,8 +121,11 @@ class _FBadgeWidgetState extends State<FBadgeWidget> with ScalePressable {
   }
 
   Widget _buildMainWidget(BuildContext context) {
+    if (_isVoid) return Container();
     return Obx(() {
-      bool isMain = cont.mainBadge.key == widget.badge!.key;
+      if (cont.mainBadge == null) return Container();
+      bool isMain = cont.mainBadge!.key == widget.badge!.key;
+
       if (!_displayMain || !isMain) return Container();
       return Transform.rotate(
         angle: -pi / 4,
@@ -115,7 +144,7 @@ class _FBadgeWidgetState extends State<FBadgeWidget> with ScalePressable {
           child: _buildCountWidget(context),
         ),
         Positioned(
-          left: .0, top: .0,
+          left: 2.0.r, top: 2.0.r,
           child: _buildMainWidget(context),
         ),
       ],
@@ -143,6 +172,7 @@ class FBadgeDetailedWidget extends StatelessWidget {
     this.longPressable,
     this.displayCount,
     this.displayMain,
+    this.border,
   });
 
   final FBadge badge;
@@ -154,17 +184,22 @@ class FBadgeDetailedWidget extends StatelessWidget {
   final bool? longPressable;
   final bool? displayCount;
   final bool? displayMain;
+  final bool? border;
 
   Widget _buildTitleWidget(BuildContext context) {
     if (!displayTitle) return Container();
+
+    TextStyle? style = LangCont.isEnglish
+        ? ThemeCont.to.bodyMedium
+        : ThemeCont.to.bodyLarge;
+
     return SizedBox(
-      width: size,
-      child: FText(
+      height: 25.0.h,
+      child: OverflowDetectingText(
         badge.title,
-        align: TextAlign.center,
-        style: LangCont.isEnglish
-            ? ThemeCont.to.bodySmall
-            : ThemeCont.to.bodyLarge,
+        width: size ?? 40.0.r,
+        color: ThemeCont.to.text,
+        style: style,
       ),
     );
   }
@@ -191,6 +226,7 @@ class FBadgeDetailedWidget extends StatelessWidget {
           longPressable: longPressable,
           displayCount: displayCount,
           displayMain: displayMain,
+          border: border,
         ),
         SizedBox(height: 5.0.h),
         _buildTitleWidget(context),

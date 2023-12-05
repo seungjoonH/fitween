@@ -323,8 +323,8 @@
     },
     "dialog": {
       "earned-title": "Badge Earned",
-      "earned-text": "@{{date}}\n@{{title}} badge has been earned",
-      "set-main-title": "Setting Main Badge",
+      "earned-text": "@{{title}} badge has been earned",
+      "set-main-title": "Main Badge Changed",
       "set-main-text": "The main badge has been changed"
     },
     "set-as-main": "Set as Main"
@@ -615,7 +615,7 @@
       "support": "Support"
     },
     "account": "Account Settings",
-    "my-info": "My Info"
+    "my-info": "My Info Settings"
   },
   "version": {
     "message": {

@@ -73,18 +73,95 @@ class _LevelDetailPageState extends FPageState<LevelDetailPage> {
     );
   }
 
+  double get _defaultSize => 50.0.r;
+
+  Widget _buildBadgeWidget(BuildContext context) {
+    return Obx(() {
+      if (!cont.compensationBadgeAvailable) return Container();
+
+      if (cont.isCurrent) {
+        return FBadgeWidget(
+          badge: cont.compensationBadge,
+          size: _defaultSize,
+          disable: true,
+          border: true,
+          pressable: false,
+          longPressable: false,
+        );
+      }
+
+      else if (cont.badgeCanBeEarned) {
+        return PulseWidget(
+          onPressed: cont.badgePressed,
+          child: FBadgeWidget(
+            badge: cont.compensationBadge,
+            size: _defaultSize,
+            disable: false,
+            border: true,
+            pressable: false,
+            longPressable: false,
+          ),
+        );
+      }
+
+      return Stack(
+        alignment: Alignment.topRight,
+        children: [
+          FBadgeWidget(
+            badge: cont.compensationBadge,
+            size: _defaultSize,
+            disable: false,
+            border: true,
+            pressable: true,
+            longPressable: true,
+          ),
+          Positioned(
+            top: 5.0.r, right: 5.0.r,
+            child: Icon(
+              Icons.check_circle,
+              color: cont.compensationBadge!.ftype!.color,
+              size: 20.0.r,
+            ),
+          ),
+        ],
+      );
+    });
+  }
+
+  Widget _buildItemWidget(BuildContext context) {
+    return ItemCellWidget(size: _defaultSize);
+  }
+
+  Widget _buildCompensationsWidget(BuildContext context) {
+    return Row(
+      children: [
+        _buildBadgeWidget(context),
+        SizedBox(width: 10.0.w),
+        _buildItemWidget(context),
+      ],
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     return Obx(() {
       if (cont.level == null) return Container();
-      return Column(
+      return Stack(
         children: [
-          Expanded(
-            child: FIslandWidget(
-              level: cont.level!,
-              width: 170.0.r,
-            ),
+          Column(
+            children: [
+              Expanded(
+                child: FIslandWidget(
+                  level: cont.level!,
+                  width: 170.0.r,
+                ),
+              ),
+              _buildLevelInfoWidget(context),
+            ],
           ),
-          _buildLevelInfoWidget(context),
+          Positioned(
+            right: .0, top: 50.0.h,
+            child: _buildCompensationsWidget(context),
+          ),
         ],
       );
     });

@@ -55,6 +55,9 @@ class FAppBar extends AppBar {
 
   @override
   Color? get backgroundColor => Colors.transparent;
+
+  @override
+  bool get forceMaterialTransparency => true;
 }
 
 

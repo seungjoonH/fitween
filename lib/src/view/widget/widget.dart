@@ -8,8 +8,6 @@ export './button/pressable.dart';
 export './button/selection.dart';
 export './button/text.dart';
 
-export 'widget/effect.dart';
-
 export './function/dialog.dart';
 export './function/modal_bottom_sheet.dart';
 export './function/snack_bar.dart';
@@ -21,6 +19,9 @@ export './widget/card.dart';
 export './widget/carousel.dart';
 export './widget/challenge.dart';
 export './widget/drawer.dart';
+export './widget/effect.dart';
+export './widget/gift.dart';
+export './widget/grayscale.dart';
 export './widget/header.dart';
 export './widget/icon.dart';
 export './widget/image.dart';

@@ -47,10 +47,20 @@ class _PulseWidgetState extends State<PulseWidget> with ScalePressable {
 
   @override
   Widget buildContent(BuildContext context) {
-    return AnimatedScale(
-      duration: _duration,
-      scale: scale,
-      child: widget.child,
+    return Stack(
+      children: [
+        AnimatedScale(
+          duration: _duration,
+          scale: scale,
+          child: widget.child,
+        ),
+        Positioned.fill(
+          child: GestureDetector(
+            onTap: onPressed,
+            child: Container(color: Colors.transparent),
+          ),
+        ),
+      ],
     );
   }
 

@@ -1,6 +1,5 @@
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/controller/page.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
@@ -37,7 +36,7 @@ class _BadgePageState extends FPageState<BadgePage> {
               displayDate: true,
               displayCount: true,
               displayMain: true,
-            )).separateW(width: 20.0.w),
+            )).toList(),
           ),
         ),
       ],
@@ -49,7 +48,9 @@ class _BadgePageState extends FPageState<BadgePage> {
         .map((type) => _buildBadgesWidget(context, type)).toList();
     list.removeWhere((w) => w == null);
 
-    return Column(children: list.cast<Widget>().separateH(height: 20.0.h));
+    return SingleChildScrollView(
+      child: Column(children: list.cast<Widget>().separateH(height: 20.0.h)),
+    );
   }
   
   @override

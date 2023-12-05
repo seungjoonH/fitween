@@ -38,15 +38,14 @@ class AuthCont {
     ThemeCont.to.init();
     LangCont.to.init();
 
-    loginPageCont.startLoading('home');
-    await HomePageCont.to.init();
-    await loginPageCont.endLoading();
     init();
 
     Timer.periodic(10.ms, (timer) async {
       if (!loginPageCont.loading) {
         timer.cancel();
-        BottomBarCont.to.navigate(0);
+        loginPageCont.startLoading('home');
+        await BottomBarCont.to.navigate(0);
+        await loginPageCont.endLoading();
         await FBadgeCont.to.earnBadge('1000000');
         return;
       }

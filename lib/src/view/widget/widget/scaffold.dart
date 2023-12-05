@@ -30,6 +30,8 @@ class FScaffold extends Scaffold {
   final double? width;
   final double? height;
 
+
+
   EdgeInsets get _padding => EdgeInsets.symmetric(
     horizontal: 28.0.w, vertical: 28.0.h,
   );

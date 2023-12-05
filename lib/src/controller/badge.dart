@@ -1,6 +1,7 @@
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/dao.dart';
+import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
@@ -13,22 +14,27 @@ class FBadgeCont extends GetxController {
   final _data = <String, List<DateTime>>{};
   final _mainBadgeId = ''.obs;
 
-  FBadge get mainBadge => FBadge.fromId(_mainBadgeId.value);
+  FBadge? get mainBadge => FBadgeLocal().get(_mainBadgeId.value);
   bool isMain(String id) =>_mainBadgeId.value == id;
+
+
+  int _compareBadge(FBadge a, FBadge b) {
+    return getDates(b.key).first.compareTo(getDates(a.key).first);
+  }
 
   List<FBadge> get badges => [
     for (String id in _data.keys) FBadge.fromId(id),
-  ];
-
+  ]..sort(_compareBadge);
   List<FBadge> get badgesWithOutMain => [...badges]
-    ..removeWhere((badge) => isMain(badge.key));
+    ..removeWhere((badge) => isMain(badge.key))..sort(_compareBadge);
 
   List<FBadge> getBadgesByType(FBadgeType type) => [...badges]
-      .where((badge) => badge.type == type).toList();
+      .where((badge) => badge.type == type).toList()..sort(_compareBadge);
 
   bool hasBadgeOnType(FBadgeType type) => getBadgesByType(type).isNotEmpty;
 
   List<DateTime> getDates(String id) {
+    if (!hasBadge(id)) return [];
     int compare(DateTime a, DateTime b) => b.compareTo(a);
     return [..._data[id]!]..sort(compare);
   }
@@ -61,6 +67,7 @@ class FBadgeCont extends GetxController {
   }
 
   Future setMainBadge(String id) async {
+    if (!hasBadge(id)) return;
     if (isMain(id)) return;
 
     _mainBadgeId(id);
@@ -70,7 +77,7 @@ class FBadgeCont extends GetxController {
       content: Column(
         children: [
           FBadgeDetailedWidget(
-            badge: mainBadge,
+            badge: mainBadge!,
             displayTitle: true,
             displayMain: true,
             size: 80.0.r,
@@ -99,13 +106,12 @@ class FBadgeCont extends GetxController {
   String get acquiredDateText => LangCont.tr('word.acquired-date');
   String get setAsMainText => LangCont.tr('badge.set-as-main');
 
-  void onPressed(FBadge badge) {
-    bool has = hasBadge(badge.key);
+  void _myBadgePressed(FBadge badge) {
     DialogType type = DialogType.mono;
     String? leftText;
     VoidCallback? leftPressed;
 
-    if (has && !isMain(badge.key)) {
+    if (!isMain(badge.key)) {
       type = DialogType.bi;
       leftText = setAsMainText;
       leftPressed = () => setMainBadge(badge.key);
@@ -120,6 +126,9 @@ class FBadgeCont extends GetxController {
               FBadgeWidget(
                 badge: badge,
                 size: 90.0.r,
+                pressable: false,
+                longPressable: false,
+                displayMain: true,
               ),
               SizedBox(width: 10.0.w),
               Expanded(
@@ -135,7 +144,7 @@ class FBadgeCont extends GetxController {
                     SingleChildScrollView(
                       child: Column(
                         children: getDates(badge.key).map((date) => FText(
-                          dateToString('yyyy-MM-dd hh:mm', date)!,
+                          dateToString('yyyy-MM-dd HH:mm', date)!,
                           color: ThemeCont.to.comment,
                           style: ThemeCont.to.bodySmall,
                         )).separateW(width: 10.0.w),
@@ -158,6 +167,35 @@ class FBadgeCont extends GetxController {
       leftText: leftText,
       leftPressed: leftPressed,
     );
+  }
+
+  void _unknownBadgePressed(FBadge badge) {
+    showFDialog(
+      title: badge.title,
+      content: Column(
+        children: [
+          FBadgeWidget(
+            badge: badge,
+            size: 100.0.r,
+          ),
+          FText(
+            badge.title,
+            style: ThemeCont.to.bodyLarge,
+          ),
+          SizedBox(height: 10.0.h),
+          FText(
+            badge.unknownDescription,
+            style: ThemeCont.to.bodyMedium,
+            color: ThemeCont.to.comment,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void onPressed(FBadge badge) {
+    if (hasBadge(badge.key)) { _myBadgePressed(badge); }
+    else { _unknownBadgePressed(badge); }
   }
 
   void onLongPressed(FBadge badge) {

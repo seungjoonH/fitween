@@ -6,7 +6,6 @@ import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:fitween/src/view/widget/widget.dart';
-import 'package:fitween/src/view/widget/widget/gift.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -31,7 +30,7 @@ class HomePageCont extends MainPageCont {
     return type.withUnit(record, txs: true);
   }
 
-  final _hasGiftReceived = false.obs;
+  final _hasGiftReceived = true.obs;
   bool get hasGiftReceived => _hasGiftReceived.value;
 
   void receiveGift() {

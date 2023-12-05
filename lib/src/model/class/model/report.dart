@@ -58,7 +58,7 @@ class Report extends Model {
   String get docId => _id;
 
   int get id => int.parse(_id);
-  set id(int id) => _id = '$id'.padLeft(8, '0');
+  set id(int id) => _id = id.zPad8;
 
   DateTime get date => _date.toDate();
   set date(DateTime date) => _date = date.toTimestamp!;

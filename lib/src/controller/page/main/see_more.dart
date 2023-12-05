@@ -1,7 +1,5 @@
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/model/class/model.dart';
-import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -14,8 +12,8 @@ class SeeMorePageCont extends MainPageCont {
   String get inventoryCardTitle => LangCont.tr('see-more.inventory.title');
   String get infoSettingCardTitle => LangCont.tr('see-more.info-setting.title');
 
-  String get mainText => LangCont.tr('word.main');
-  String get recentText => LangCont.tr('word.recent');
+  String get mainText => LangCont.tr('word.main').capitalize!;
+  String get recentText => LangCont.tr('word.recent').capitalize!;
 
   final refreshCont = RefreshController();
 

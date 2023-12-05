@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
@@ -14,6 +15,8 @@ abstract class LevelLocal extends LocalModel<Level> {
       default: return null;
     }
   }
+
+  FType get type;
 
   @override
   String get assetPath => 'assets/json/data/level/';
@@ -32,26 +35,39 @@ abstract class LevelLocal extends LocalModel<Level> {
         .reversed.toList();
   }
 
-  int getBefore(Amount amount) {
+  int getBefore([Amount? amount]) {
     return max(getCurrent(amount) - 1, 0);
   }
 
-  int getCurrent(Amount amount) {
+  int getCurrent([Amount? amount]) {
+    FUser logged = AuthCont.logged!;
+    num value = logged.allRecord[type]!;
+
+    switch (type) {
+      case FType.distance:
+        amount ??= DistanceAmount()..step = value; break;
+      case FType.height:
+        amount ??= HeightAmount()..floor = value; break;
+      case FType.weight:
+        amount ??= WeightAmount()..kg = value; break;
+      default: break;
+    }
+
     for (int i = 0; i < activeList.length - 1; i++) {
-      if (activeList[i].amount.main > amount.main) continue;
+      if (activeList[i].amount.main > amount!.main) continue;
       if (activeList[i + 1].amount.main <= amount.main) continue;
       return i;
     }
     return -1;
   }
 
-  int getNext(Amount amount) {
+  int getNext([Amount? amount]) {
     return min(getCurrent(amount) + 1, activeList.length - 1);
   }
 
-  Level getBeforeLevel(Amount amount) => activeList[getBefore(amount)];
-  Level getCurrentLevel(Amount amount) => activeList[getCurrent(amount)];
-  Level getNextLevel(Amount amount) => activeList[getNext(amount)];
+  Level getBeforeLevel([Amount? amount]) => activeList[getBefore(amount)];
+  Level getCurrentLevel([Amount? amount]) => activeList[getCurrent(amount)];
+  Level getNextLevel([Amount? amount]) => activeList[getNext(amount)];
 }
 
 class DistanceLevelLocal extends LevelLocal {
@@ -59,6 +75,9 @@ class DistanceLevelLocal extends LevelLocal {
   DistanceLevelLocal._privateConstructor();
 
   factory DistanceLevelLocal() => _instance;
+
+  @override
+  FType get type => FType.distance;
 
   @override
   String get assetPath => '${super.assetPath}distance.json';
@@ -71,6 +90,9 @@ class HeightLevelLocal extends LevelLocal {
   factory HeightLevelLocal() => _instance;
 
   @override
+  FType get type => FType.height;
+
+  @override
   String get assetPath => '${super.assetPath}height.json';
 }
 
@@ -79,6 +101,9 @@ class WeightLevelLocal extends LevelLocal {
   WeightLevelLocal._privateConstructor();
 
   factory WeightLevelLocal() => _instance;
+
+  @override
+  FType get type => FType.weight;
 
   @override
   String get assetPath => '${super.assetPath}weight.json';
