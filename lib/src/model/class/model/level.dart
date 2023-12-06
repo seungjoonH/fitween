@@ -16,6 +16,9 @@ class Level extends Model {
   Map<String, String>? _descriptions;
   late num _amount;
   late bool _activate;
+  late int _point;
+
+  int get index => int.parse(_id.substring(2, 3));
 
   String get _locale => LangCont.to.language.code;
   String get title => _titles[_locale]!;
@@ -51,7 +54,27 @@ class Level extends Model {
   bool isAchievedAmount(Amount amount) => amount.main >= this.amount.main;
   double getPercent(Amount amount) => getCurrentValue(amount) / goal;
 
-  String get badgeId => '10${type.index}${_id.substring(_id.length - 4, _id.length)}';
+  String get _badgeId => '10${type.index}${_id.substring(_id.length - 4, _id.length)}';
+  FBadge get badge => FBadge.fromId(_badgeId);
+
+  List<num> get pointDivided {
+    String p = '$_point';
+    List<int> list = [];
+    for (int i = 0; i < min(p.length, 5); i++) {
+      list.add(int.parse(p[p.length - i - 1]));
+    }
+    return list;
+  }
+
+  List<Item> get _itemList => List.generate(4, (i) => Item.fromId('400000${i * 2}'));
+
+  List<Item> get items {
+    List<Item> list = [];
+    for (int i = 0; i < pointDivided.length; i++) {
+      if (pointDivided[i] > 0) list.add(_itemList[i]);
+    }
+    return list;
+  }
 
   Level.fromJson(super.json) : super.fromJson();
 
@@ -68,6 +91,7 @@ class Level extends Model {
       json['description'].values.map<String>((e) => e.toString()),
     );
     _activate = json['activate'];
+    _point = json['point'];
   }
 
   @override

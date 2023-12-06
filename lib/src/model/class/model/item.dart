@@ -73,8 +73,8 @@ abstract class ItemUsingStrategy {
   String get id;
   FUser get logged => AuthCont.logged!;
   Future use() async {
-    await save();
     showItemUsedDialog();
+    await save();
   }
   Future save() async {
     await FUserDAO().saveOne(logged);

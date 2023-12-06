@@ -24,19 +24,12 @@ class FPointIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColorFiltered(
-      colorFilter: grey ? ColorFilter.mode(
-        ThemeCont.to.comment,
-        BlendMode.saturation,
-      ) : const ColorFilter.mode(
-        Colors.transparent,
-        BlendMode.multiply,
-      ),
-      child: SvgPicture.asset(
-        isWhite ? _white : _purple,
-        width: size,
-      ),
+    Widget child = SvgPicture.asset(
+      isWhite ? _white : _purple,
+      width: size,
     );
+    if (!grey) return child;
+    return GrayScaleWidget(child: child);
   }
 }
 

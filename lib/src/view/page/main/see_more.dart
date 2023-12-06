@@ -55,26 +55,28 @@ class _SeeMorePageState extends FPageState<SeeMorePage> {
   }
 
   Widget _buildMainBadgeWidget(BuildContext context) {
-    if (badgeCont.mainBadge == null) return Container();
+    return Obx(() {
+      if (badgeCont.mainBadge == null) return Container();
 
-    return Column(
-      children: [
-        FBadgeDetailedWidget(
-          badge: badgeCont.mainBadge!,
-          size: 75.0.r,
-          displayTitle: true,
-          displayDate: true,
-          pressable: true,
-          longPressable: true,
-        ),
-        SizedBox(height: 10.0.h),
-        FTextTag(
-          cont.mainText,
-          textColor: ThemeCont.to.background,
-          backgroundColor: ThemeCont.to.text,
-        ),
-      ],
-    );
+      return Column(
+        children: [
+          FBadgeDetailedWidget(
+            badge: badgeCont.mainBadge!,
+            size: 75.0.r,
+            displayTitle: true,
+            displayDate: true,
+            pressable: true,
+            longPressable: true,
+          ),
+          SizedBox(height: 10.0.h),
+          FTextTag(
+            cont.mainText,
+            textColor: ThemeCont.to.background,
+            backgroundColor: ThemeCont.to.text,
+          ),
+        ],
+      );
+    });
   }
 
   Widget _buildRecentBadgesWidget(BuildContext context) {

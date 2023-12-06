@@ -127,9 +127,7 @@ abstract class FBadgeEarningStrategy {
   }
 
   String get badgeEarnedTitle => LangCont.tr('badge.dialog.earned-title');
-  String getBadgeEarnedText(String title) => LangCont.tr(
-    'badge.dialog.earned-text', namedArgs: {'title': title},
-  );
+  String get badgeEarnedText => LangCont.tr('badge.dialog.earned-text');
 
   void _showBadgeEarnedDialog() {
     showFDialog(
@@ -140,24 +138,19 @@ abstract class FBadgeEarningStrategy {
             size: 200.0.r,
             child: FBadgeWidget(badge: badge, size: 100.0.r),
           ),
-          SizedBox(height: 20.0.h),
+          SizedBox(height: 5.0.h),
+          FText(badge.title, style: ThemeCont.to.titleSmall, bold: true),
+          SizedBox(height: 5.0.h),
           FText(
             dateToString('yyyy-MM-dd HH:mm', now)!,
             style: ThemeCont.to.bodyMedium!,
             color: ThemeCont.to.comment,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.0.w),
-            child: FTexts(
-              getBadgeEarnedText(badge.title),
-              style: ThemeCont.to.commentStyle,
-              highlightStyles: [
-                ThemeCont.to.commentStyle!
-                    .copyWith(fontWeight: FontWeight.bold),
-              ],
-              wordWrap: true,
-              align: TextAlign.left,
-            ),
+          SizedBox(height: 10.0.h),
+          FText(
+            badgeEarnedText,
+            style: ThemeCont.to.commentStyle,
+            maxLines: 0,
           ),
         ],
       ),

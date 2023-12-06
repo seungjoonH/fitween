@@ -15,6 +15,7 @@ class FUserCollection extends FUser {
 
   Map<String, _CollectionData> _collectionsData = {};
   Map<String, Item> _inventory = {};
+  Map<String, List<bool>> _levelReceivedData = {};
 
   bool _hasGiftReceived = false;
   bool get hasGiftReceived => _hasGiftReceived;
@@ -54,8 +55,14 @@ class FUserCollection extends FUser {
   void _buildInventory() {
     _inventory = {
       for (String id in _inventoryData.keys)
-        id : ItemLocal().get(id)!
+        id: ItemLocal().get(id)!
     };
+  }
+
+  Map<String, List<bool>> get levelReceived => _levelReceivedData;
+
+  void syncItemReceivedFrom(String levelId, List<bool> itemReceived) {
+    _levelReceivedData[levelId] = [...itemReceived];
   }
 
   FUserCollection(super.key) : super();
@@ -63,17 +70,23 @@ class FUserCollection extends FUser {
 
   @override
   void fromJson(Map<String, dynamic> json) {
-    _collectionsData = {};
     uid = json['uid'];
     _badgeId = json['badgeId'];
     _inventoryData = Map.fromIterables(
       json['inventoryData']?.keys.cast<String>() ?? <String>[],
       json['inventoryData']?.values.cast<int>() ?? <int>[],
     );
-    for (var data in json['collectionsData'] ?? json['collections']) {
-      _collectionsData[data['badgeId']] = _CollectionData.fromJson(data);
-    }
+    _collectionsData = {
+      for (var data in json['collectionsData'] ?? [])
+        data['badgeId']: _CollectionData.fromJson(data)
+    };
     _hasGiftReceived = json['hasGiftReceived'] ?? false;
+    _levelReceivedData = Map.fromIterables(
+      json['levelReceivedData']?.keys ?? [], [
+        for (var value in json['levelReceivedData']?.values ?? [])
+          value.cast<bool>(),
+      ],
+    );
     _buildInventory();
   }
 
@@ -85,6 +98,7 @@ class FUserCollection extends FUser {
     json['collectionsData'] = _collectionsData.values.map((c) => c.toJson());
     json['inventoryData'] = _inventoryData;
     json['hasGiftReceived'] = _hasGiftReceived;
+    json['levelReceivedData'] = _levelReceivedData;
     return json;
   }
 }

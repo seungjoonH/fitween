@@ -219,15 +219,19 @@ class _FAlertDialogState extends State<FAlertDialog> {
       surfaceTintColor: ThemeCont.to.backgroundAlt,
       title: Container(
         padding: widget.titlePadding,
-        child: FText(
+        height: 50.0.h,
+        alignment: Alignment.centerLeft,
+        child: OverflowDetectingText(
           widget.title ?? '',
-          bold: true,
+          width: PageCont.size.width * .6,
           style: ThemeCont.to.titleLarge,
+          velocity: 50.0,
+          bold: true,
         ),
       ),
       titlePadding: EdgeInsets.zero,
       content: Container(
-        width: MediaQuery.of(context).size.width * .5,
+        width: PageCont.size.width * .5,
         constraints: BoxConstraints(maxWidth: 500.0.w),
         child: ClipRRect(
           borderRadius: radius,

@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 class FBadgeCont extends GetxController {
   static FBadgeCont get to => Get.find<FBadgeCont>();
 
-  final _data = <String, List<DateTime>>{};
+  final _data = <String, List<DateTime>>{}.obs;
   final _mainBadgeId = ''.obs;
 
   FBadge? get mainBadge => FBadgeLocal().get(_mainBadgeId.value);
@@ -43,6 +43,7 @@ class FBadgeCont extends GetxController {
   Future init() async => await _syncFrom();
 
   Future _syncFrom() async {
+    _data.clear();
     await AuthCont.load(FUserLoadCont.onlyCollection());
     _data.assignAll({..._logged.collection!.dates});
     _mainBadgeId(_logged.collection!.badgeId);

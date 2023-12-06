@@ -72,9 +72,9 @@ class HomePageCont extends MainPageCont {
           SizedBox(height: 20.0.h),
           GiftWidget(
             size: 150.0.r,
-            onPressed: () {
+            onPressed: () async {
               Get.back();
-              inventoryCont.showAwardedItemInformationDialog(_giftData);
+              await inventoryCont.awardItems(_giftData);
             },
             afterWidget: GlowEffectWidget(
               child: SvgPicture.asset(_couponAsset),

@@ -19,6 +19,8 @@ class FBadgeWidget extends StatefulWidget {
     this.displayCount,
     this.displayMain,
     this.disable,
+    this.received,
+    this.receivedColor,
     this.border,
   });
 
@@ -30,6 +32,8 @@ class FBadgeWidget extends StatefulWidget {
   final bool? displayCount;
   final bool? displayMain;
   final bool? disable;
+  final bool? received;
+  final Color? receivedColor;
   final bool? border;
 
   @override
@@ -45,7 +49,6 @@ class _FBadgeWidgetState extends State<FBadgeWidget> with ScalePressable {
   Color get _backgroundColor => widget.backgroundColor ?? AuthCont.logged!.badgeColor;
 
   double get _size => widget.size ?? 40.0.r;
-
   bool get _isVoid => widget.badge == null;
 
   int get _count {
@@ -58,11 +61,11 @@ class _FBadgeWidgetState extends State<FBadgeWidget> with ScalePressable {
   }
 
   bool get _displayMain => widget.displayMain ?? false;
-
   bool get _pressable => widget.pressable ?? true;
   bool get _longPressable => widget.longPressable ?? true;
-
   bool get _disable => widget.disable ?? false;
+  bool get _received => widget.received ?? false;
+  Color get _receivedColor => widget.receivedColor ?? ThemeCont.to.outline;
 
   Border? get _border => widget.border ?? true ? Border.all(
     width: 1.5,
@@ -70,8 +73,15 @@ class _FBadgeWidgetState extends State<FBadgeWidget> with ScalePressable {
     strokeAlign: BorderSide.strokeAlignOutside,
   ) : null;
 
+  Border? get _receivedBorder => _received ? Border.all(
+    width: 3.0,
+    color: _receivedColor,
+    strokeAlign: BorderSide.strokeAlignOutside,
+  ) : null;
+
   Widget _buildBadgeImageWidget(BuildContext context) {
     BorderRadius radius = BorderRadius.circular(_size / 2.4);
+
     Widget child = Container(
       width: _size,
       height: _size,
@@ -91,8 +101,27 @@ class _FBadgeWidgetState extends State<FBadgeWidget> with ScalePressable {
       ),
     );
 
-    if (!_disable) return child;
-    return GrayScaleWidget(child: child);
+    if (_disable) return GrayScaleWidget(child: child);
+    return Stack(
+      children: [
+        child,
+        if (_received)
+        Positioned.fill(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: radius,
+              color: ThemeCont.to.seaByMode.withOpacity(.7),
+              border: _receivedBorder,
+            ),
+            child: Icon(
+              Icons.check,
+              color: _receivedColor,
+              size: 40.0.r,
+            ),
+          ),
+        ),
+      ],
+    );
   }
 
   Widget _buildCountWidget(BuildContext context) {

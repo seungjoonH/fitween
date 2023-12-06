@@ -68,7 +68,7 @@ class InventoryCont extends GetxController {
       title: item.title,
       content: Column(
         children: [
-          ItemCellWidget(
+          MyItemCellWidget(
             item: item,
             size: 100.0.r,
             pressable: false,
@@ -97,18 +97,20 @@ class InventoryCont extends GetxController {
     for (String id in data.keys) id : Item.fromId(id)
   };
 
-  void _awardItems(Map<String, int> itemData) async {
+  Future awardItems(Map<String, int> itemData) async {
     Map<String, Item> items = _dataToItems(itemData);
+    _showAwardedItemInformationDialog(itemData);
+
     for (String id in itemData.keys) {
       await awardItem(items[id]!, count: itemData[id]!);
     }
+
     HomePageCont.to.receiveGift();
-    _syncTo();
+    await _syncTo();
   }
 
-  void showAwardedItemInformationDialog(Map<String, int> itemData) {
+  void _showAwardedItemInformationDialog(Map<String, int> itemData) {
     Map<String, Item> items = _dataToItems(itemData);
-    _awardItems(itemData);
 
     showFDialog(
       title: itemAwardedTitle,

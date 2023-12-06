@@ -323,7 +323,7 @@
     },
     "dialog": {
       "earned-title": "Badge Earned",
-      "earned-text": "@{{title}} badge has been earned",
+      "earned-text": "Badge has been earned",
       "set-main-title": "Main Badge Changed",
       "set-main-text": "The main badge has been changed"
     },

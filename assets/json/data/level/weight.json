@@ -1,496 +1,534 @@
 [
   {
-    "id": 3030000,
-    "title": {
-      "ko": "조상님",
-      "en": "Ancestor"
+    "id":3030000,
+    "title":{
+      "ko":"조상님",
+      "en":"Ancestor"
     },
-    "amount": 0,
-    "description": {
-      "ko": "당신은 조상님께서 들어주시나요? 지금 바로 맨몸운동을 시작해보세요!",
-      "en": "Would ancestor carry up your weight? Start calisthenics right now!"
+    "amount":0,
+    "description":{
+      "ko":"당신은 조상님께서 들어주시나요? 지금 바로 맨몸운동을 시작해보세요!",
+      "en":"Would ancestor carry up your weight? Start calisthenics right now!"
     },
-    "activate": true
+    "activate":true,
+    "point":0
   },
   {
-    "id": 3030001,
-    "title": {
-      "ko": "모아이 석상",
-      "en": "Moai Statue"
+    "id":3030001,
+    "title":{
+      "ko":"모아이 석상",
+      "en":"Moai Statue"
     },
-    "amount": 2,
-    "description": {
-      "ko": "모아이 석상은 라파누이족에 의해 조각된 사람 얼굴 모양의 석상인데 1250년부터 1500년 사이 폴리네시아 동부 칠레 이스터섬에서 만들어졌습니다.",
-      "en": "The Moai Statue is a human face-shaped stone statue carved by the Rapanui people on Easter Island in eastern Chile, Polynesia, between 1250 and 1500."
+    "amount":2,
+    "description":{
+      "ko":"모아이 석상은 라파누이족에 의해 조각된 사람 얼굴 모양의 석상인데 1250년부터 1500년 사이 폴리네시아 동부 칠레 이스터섬에서 만들어졌습니다.",
+      "en":"The Moai Statue is a human face-shaped stone statue carved by the Rapanui people on Easter Island in eastern Chile, Polynesia, between 1250 and 1500."
     },
-    "activate": true
+    "activate":true,
+    "point":300
   },
   {
-    "id": 3030002,
-    "title": {
-      "ko": "코끼리",
-      "en": "Elephant"
+    "id":3030002,
+    "title":{
+      "ko":"코끼리",
+      "en":"Elephant"
     },
-    "amount": 12,
-    "description": {
-      "ko": "코끼리는 가장 몸집이 크고 긴 코를 가지고 있으며 열대 및 일부 온대 기후를 보이는 지역에 서식하는 육상 동물입니다.",
-      "en": "Elephants are the largest land animals and have a long nose."
+    "amount":12,
+    "description":{
+      "ko":"코끼리는 가장 몸집이 크고 긴 코를 가지고 있으며 열대 및 일부 온대 기후를 보이는 지역에 서식하는 육상 동물입니다.",
+      "en":"Elephants are the largest land animals and have a long nose."
     },
-    "activate": true
+    "activate":true,
+    "point":1100
   },
   {
-    "id": 3030003,
-    "title": {
-      "ko": "혹등고래",
-      "en": "Humpback Whale"
+    "id":3030003,
+    "title":{
+      "ko":"혹등고래",
+      "en":"Humpback Whale"
     },
-    "amount": 25,
-    "description": {
-      "ko": "혹등고래는 고래뛰기와 긴 가슴지느러미, 그리고 복잡한 노래소리로 잘 알려져 있고 성체는 몸길이가 12-16m에 달하는 수염고랫과의 고래입니다.",
-      "en": "Humpback whales are a member of the bearded whale family, known for their whale jumping, long pectoral fins, and complex songs, with adults reaching 12-16 meters in length."
+    "amount":25,
+    "description":{
+      "ko":"혹등고래는 고래뛰기와 긴 가슴지느러미, 그리고 복잡한 노래소리로 잘 알려져 있고 성체는 몸길이가 12-16m에 달하는 수염고랫과의 고래입니다.",
+      "en":"Humpback whales are a member of the bearded whale family, known for their whale jumping, long pectoral fins, and complex songs, with adults reaching 12-16 meters in length."
     },
-    "activate": true
+    "activate":true,
+    "point":1400
   },
   {
-    "id": 3030004,
-    "title": {
-      "ko": "티라노사우르스",
-      "en": "Tyrannosaurus"
+    "id":3030004,
+    "title":{
+      "ko":"티라노사우르스",
+      "en":"Tyrannosaurus"
     },
-    "amount": 40,
-    "description": {
-      "ko": "티라노사우르스는 육식 공룡으로 모든 공룡들을 대표하며 중생대 백악기 후기의 끝무렵까지 서식햇다가 대멸종으로 멸종한 것으로 추정되는 가장 유명한 공룡입니다.",
-      "en": "Tyrannosaurus is the most famous of the carnivorous dinosaurs, representing all dinosaurs and living until the end of the Late Cretaceous Period of the Mesozoic Era, when it is believed to have died out in the Great Extinction."
+    "amount":40,
+    "description":{
+      "ko":"티라노사우르스는 육식 공룡으로 모든 공룡들을 대표하며 중생대 백악기 후기의 끝무렵까지 서식햇다가 대멸종으로 멸종한 것으로 추정되는 가장 유명한 공룡입니다.",
+      "en":"Tyrannosaurus is the most famous of the carnivorous dinosaurs, representing all dinosaurs and living until the end of the Late Cretaceous Period of the Mesozoic Era, when it is believed to have died out in the Great Extinction."
     },
-    "activate": true
+    "activate":true,
+    "point":1600
   },
   {
-    "id": 3030005,
-    "title": {
-      "ko": "크레인",
-      "en": "Crane"
+    "id":3030005,
+    "title":{
+      "ko":"크레인",
+      "en":"Crane"
     },
-    "amount": 60,
-    "description": {
-      "ko": "크레인은 주로 화물의 적재 및 하역, 건설 재료 이동, 중장비 조립에 사용되는 물체를 들어올려서 운반하는 기계입니다.",
-      "en": "Cranes are machines that lift and transport objects, primarily used for loading and unloading cargo, moving construction materials, and assembling heavy equipment."
+    "amount":60,
+    "description":{
+      "ko":"크레인은 주로 화물의 적재 및 하역, 건설 재료 이동, 중장비 조립에 사용되는 물체를 들어올려서 운반하는 기계입니다.",
+      "en":"Cranes are machines that lift and transport objects, primarily used for loading and unloading cargo, moving construction materials, and assembling heavy equipment."
     },
-    "activate": true
+    "activate":true,
+    "point":1800
   },
   {
-    "id": 3030006,
-    "title": {
-      "ko": "남산 자물쇠 총 무게",
-      "en": "Namsan Lock Total Weight"
+    "id":3030006,
+    "title":{
+      "ko":"남산 자물쇠 총 무게",
+      "en":"Namsan Lock Total Weight"
     },
-    "amount": 82,
-    "description": {
-      "ko": "서울 중구 남산공원 산책길을 오르다 보면 양옆 난간에 사람들이 지키고 싶었던 약속을 맹새하는 징표로 약속 자물쇠가 빽빽하게 매달려 있습니다.",
-      "en": "As you walk up the promenade in Namsan Park in Jung-gu, Seoul, you'll see promise locks hanging from the railings on either side of you as a reminder of the promises people have made that they wanted to keep."
+    "amount":82,
+    "description":{
+      "ko":"서울 중구 남산공원 산책길을 오르다 보면 양옆 난간에 사람들이 지키고 싶었던 약속을 맹새하는 징표로 약속 자물쇠가 빽빽하게 매달려 있습니다.",
+      "en":"As you walk up the promenade in Namsan Park in Jung-gu, Seoul, you'll see promise locks hanging from the railings on either side of you as a reminder of the promises people have made that they wanted to keep."
     },
-    "activate": true
+    "activate":true,
+    "point":1900
   },
   {
-    "id": 3030007,
-    "title": {
-      "ko": "우주 안테나 반사판",
-      "en": "Space Antenna Reflector"
+    "id":3030007,
+    "title":{
+      "ko":"우주 안테나 반사판",
+      "en":"Space Antenna Reflector"
     },
-    "amount": 100,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":100,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": true
+    "activate":true,
+    "point":2000
   },
   {
-    "id": 3030008,
-    "title": {
-      "ko": "1인당 10년간 CO2 배출량",
-      "en": "10-year CO2 emissions per capita"
+    "id":3030008,
+    "title":{
+      "ko":"1인당 10년간 CO2 배출량",
+      "en":"10-year CO2 emissions per capita"
     },
-    "amount": 124,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":124,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": true
+    "activate":true,
+    "point":2100
   },
   {
-    "id": 3030009,
-    "title": {
-      "ko": "대왕고래",
-      "en": "Blue Whale"
+    "id":3030009,
+    "title":{
+      "ko":"대왕고래",
+      "en":"Blue Whale"
     },
-    "amount": 150,
-    "description": {
-      "ko": "대왕 고래는 수염고랫과의 포유류이며 흰긴수염고래가 정확한 명칭이고 크릴새우를 주 먹이로 먹는 지구 역사상 가장 거대한 동물입니다.",
-      "en": "The blue whale is a mammal of the bearded whale family, white whale is its correct name, and it is the largest animal in the history of the planet, feeding primarily on krill shrimp."
+    "amount":150,
+    "description":{
+      "ko":"대왕 고래는 수염고랫과의 포유류이며 흰긴수염고래가 정확한 명칭이고 크릴새우를 주 먹이로 먹는 지구 역사상 가장 거대한 동물입니다.",
+      "en":"The blue whale is a mammal of the bearded whale family, white whale is its correct name, and it is the largest animal in the history of the planet, feeding primarily on krill shrimp."
     },
-    "activate": true
+    "activate":true,
+    "point":2200
   },
   {
-    "id": 3030010,
-    "title": {
-      "ko": "3030010",
-      "en": ""
+    "id":3030010,
+    "title":{
+      "ko":"3030010",
+      "en":""
     },
-    "amount": 165,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":165,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":2200
   },
   {
-    "id": 3030011,
-    "title": {
-      "ko": "보잉 747",
-      "en": "Boeing 747"
+    "id":3030011,
+    "title":{
+      "ko":"보잉 747",
+      "en":"Boeing 747"
     },
-    "amount": 180,
-    "description": {
-      "ko": "보잉 747 여객기는 점보 제트기라고 불리며 동체 길이 70.6m, 날개 폭 64.4m, 꼬리높이 19.4m, 그리고 최대 이륙 중량 397톤의 장거리노선 전용 대형 항공기입니다.",
-      "en": "The Boeing 747 is called the Jumbo Jet and is a large aircraft dedicated to long-haul routes with a fuselage length of 70.6 meters, a wingspan of 64.4 meters, a tail height of 19.4 meters, and a maximum takeoff weight of 397 tons."
+    "amount":180,
+    "description":{
+      "ko":"보잉 747 여객기는 점보 제트기라고 불리며 동체 길이 70.6m, 날개 폭 64.4m, 꼬리높이 19.4m, 그리고 최대 이륙 중량 397톤의 장거리노선 전용 대형 항공기입니다.",
+      "en":"The Boeing 747 is called the Jumbo Jet and is a large aircraft dedicated to long-haul routes with a fuselage length of 70.6 meters, a wingspan of 64.4 meters, a tail height of 19.4 meters, and a maximum takeoff weight of 397 tons."
     },
-    "activate": false
+    "activate":false,
+    "point":2300
   },
   {
-    "id": 3030012,
-    "title": {
-      "ko": "누리호",
-      "en": "KSLV-II TLV"
+    "id":3030012,
+    "title":{
+      "ko":"누리호",
+      "en":"KSLV-II TLV"
     },
-    "amount": 200,
-    "description": {
-      "ko": "누리호는 대한민국의 로켓으로 2021년 6월 개발되었고, 10월 21에 발사했지만 궤도 안착에는 실패했고 2022년 6월 21일에 나로우주센터에서 2차발사에 성공했습니다. 그 이후로 2023년 5월 25일에 3차 발사에 성공했으며 2027년에 6차 발사까지 예정되어 있습니다.",
-      "en": "KSLV-II TLV (Nuriho) is a South Korean rocket developed in June 2021, launched on October 21, but failed to land in orbit, and successfully launched a second time on June 21, 2022, from the Narrow Sea Center. Since then, a third launch was successful on May 25, 2023, and a sixth launch is planned for 2027."
+    "amount":200,
+    "description":{
+      "ko":"누리호는 대한민국의 로켓으로 2021년 6월 개발되었고, 10월 21에 발사했지만 궤도 안착에는 실패했고 2022년 6월 21일에 나로우주센터에서 2차발사에 성공했습니다. 그 이후로 2023년 5월 25일에 3차 발사에 성공했으며 2027년에 6차 발사까지 예정되어 있습니다.",
+      "en":"KSLV-II TLV (Nuriho) is a South Korean rocket developed in June 2021, launched on October 21, but failed to land in orbit, and successfully launched a second time on June 21, 2022, from the Narrow Sea Center. Since then, a third launch was successful on May 25, 2023, and a sixth launch is planned for 2027."
     },
-    "activate": true
+    "activate":true,
+    "point":2300
   },
   {
-    "id": 3030013,
-    "title": {
-      "ko": "자유의 여신상",
-      "en": "Statue of Liberty"
+    "id":3030013,
+    "title":{
+      "ko":"자유의 여신상",
+      "en":"Statue of Liberty"
     },
-    "amount": 225,
-    "description": {
-      "ko": "자유의 여신상은 미국 독립전쟁 승리 100주년 기념으로 프랑스의 미국진출을 위해 미국의 독립을 지원했던 프랑스가 만들어서 선물했고 정식명칭은 세계를 밝히는 자유입니다.",
-      "en": "The Statue of Liberty was built and presented to the United States by France to commemorate the 100th anniversary of the American Revolutionary War victory, and is officially known as the Freedom to Light the World."
+    "amount":225,
+    "description":{
+      "ko":"자유의 여신상은 미국 독립전쟁 승리 100주년 기념으로 프랑스의 미국진출을 위해 미국의 독립을 지원했던 프랑스가 만들어서 선물했고 정식명칭은 세계를 밝히는 자유입니다.",
+      "en":"The Statue of Liberty was built and presented to the United States by France to commemorate the 100th anniversary of the American Revolutionary War victory, and is officially known as the Freedom to Light the World."
     },
-    "activate": false
+    "activate":false,
+    "point":2400
   },
   {
-    "id": 3030014,
-    "title": {
-      "ko": "첨성대",
-      "en": ""
+    "id":3030014,
+    "title":{
+      "ko":"첨성대",
+      "en":""
     },
-    "amount": 264,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":264,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":2400
   },
   {
-    "id": 3030015,
-    "title": {
-      "ko": "고인돌(전남 화순)",
-      "en": ""
+    "id":3030015,
+    "title":{
+      "ko":"고인돌(전남 화순)",
+      "en":""
     },
-    "amount": 280,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":280,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":2400
   },
   {
-    "id": 3030016,
-    "title": {
-      "ko": "3030016",
-      "en": ""
+    "id":3030016,
+    "title":{
+      "ko":"3030016",
+      "en":""
     },
-    "amount": 300,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":300,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":2500
   },
   {
-    "id": 3030017,
-    "title": {
-      "ko": "3030017",
-      "en": ""
+    "id":3030017,
+    "title":{
+      "ko":"3030017",
+      "en":""
     },
-    "amount": 325,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":325,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":2500
   },
   {
-    "id": 3030018,
-    "title": {
-      "ko": "비행기",
-      "en": ""
+    "id":3030018,
+    "title":{
+      "ko":"비행기",
+      "en":""
     },
-    "amount": 340,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":340,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":2500
   },
   {
-    "id": 3030019,
-    "title": {
-      "ko": "3030019",
-      "en": ""
+    "id":3030019,
+    "title":{
+      "ko":"3030019",
+      "en":""
     },
-    "amount": 500,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":500,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":2700
   },
   {
-    "id": 3030020,
-    "title": {
-      "ko": "KTX",
-      "en": ""
+    "id":3030020,
+    "title":{
+      "ko":"KTX",
+      "en":""
     },
-    "amount": 700,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":700,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":2800
   },
   {
-    "id": 3030021,
-    "title": {
-      "ko": "일반열차",
-      "en": ""
+    "id":3030021,
+    "title":{
+      "ko":"일반열차",
+      "en":""
     },
-    "amount": 1000,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":1000,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":3000
   },
   {
-    "id": 3030022,
-    "title": {
-      "ko": "3030022",
-      "en": ""
+    "id":3030022,
+    "title":{
+      "ko":"3030022",
+      "en":""
     },
-    "amount": 1400,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":1400,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":3100
   },
   {
-    "id": 3030023,
-    "title": {
-      "ko": "제너럴 셔먼 나무",
-      "en": ""
+    "id":3030023,
+    "title":{
+      "ko":"제너럴 셔먼 나무",
+      "en":""
     },
-    "amount": 1900,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":1900,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":3300
   },
   {
-    "id": 3030024,
-    "title": {
-      "ko": "3030024",
-      "en": ""
+    "id":3030024,
+    "title":{
+      "ko":"3030024",
+      "en":""
     },
-    "amount": 2500,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":2500,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":3400
   },
   {
-    "id": 3030025,
-    "title": {
-      "ko": "3030025",
-      "en": ""
+    "id":3030025,
+    "title":{
+      "ko":"3030025",
+      "en":""
     },
-    "amount": 3600,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":3600,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":3600
   },
   {
-    "id": 3030026,
-    "title": {
-      "ko": "1인당 50년간 물 사용량",
-      "en": ""
+    "id":3030026,
+    "title":{
+      "ko":"1인당 50년간 물 사용량",
+      "en":""
     },
-    "amount": 5000,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":5000,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":3700
   },
   {
-    "id": 3030027,
-    "title": {
-      "ko": "3030027",
-      "en": ""
+    "id":3030027,
+    "title":{
+      "ko":"3030027",
+      "en":""
     },
-    "amount": 6500,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":6500,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":3800
   },
   {
-    "id": 3030028,
-    "title": {
-      "ko": "정조대왕함",
-      "en": ""
+    "id":3030028,
+    "title":{
+      "ko":"정조대왕함",
+      "en":""
     },
-    "amount": 8200,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":8200,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":3900
   },
   {
-    "id": 3030029,
-    "title": {
-      "ko": "피사의 사탑",
-      "en": ""
+    "id":3030029,
+    "title":{
+      "ko":"피사의 사탑",
+      "en":""
     },
-    "amount": 14453,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":14453,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":4200
   },
   {
-    "id": 3030030,
-    "title": {
-      "ko": "3030030",
-      "en": ""
+    "id":3030030,
+    "title":{
+      "ko":"3030030",
+      "en":""
     },
-    "amount": 28000,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":28000,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":4400
   },
   {
-    "id": 3030031,
-    "title": {
-      "ko": "타이타닉",
-      "en": ""
+    "id":3030031,
+    "title":{
+      "ko":"타이타닉",
+      "en":""
     },
-    "amount": 46300,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":46300,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":4700
   },
   {
-    "id": 3030032,
-    "title": {
-      "ko": "전국 초등학생 무게 총합",
-      "en": ""
+    "id":3030032,
+    "title":{
+      "ko":"전국 초등학생 무게 총합",
+      "en":""
     },
-    "amount": 87500,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":87500,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":4900
   },
   {
-    "id": 3030033,
-    "title": {
-      "ko": "항공모함",
-      "en": ""
+    "id":3030033,
+    "title":{
+      "ko":"항공모함",
+      "en":""
     },
-    "amount": 150000,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":150000,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":5200
   },
   {
-    "id": 3030034,
-    "title": {
-      "ko": "원더 오브 더 시즈호",
-      "en": ""
+    "id":3030034,
+    "title":{
+      "ko":"원더 오브 더 시즈호",
+      "en":""
     },
-    "amount": 236857,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":236857,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":5400
   },
   {
-    "id": 3030035,
-    "title": {
-      "ko": "엠파이어 스테이트 빌딩",
-      "en": ""
+    "id":3030035,
+    "title":{
+      "ko":"엠파이어 스테이트 빌딩",
+      "en":""
     },
-    "amount": 331122,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":331122,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":5500
   },
   {
-    "id": 3030036,
-    "title": {
-      "ko": "3030036",
-      "en": ""
+    "id":3030036,
+    "title":{
+      "ko":"3030036",
+      "en":""
     },
-    "amount": 500000,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":500000,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": false
+    "activate":false,
+    "point":5700
   },
   {
-    "id": 3030037,
-    "title": {
-      "ko": "롯데타워",
-      "en": "Lotte Tower"
+    "id":3030037,
+    "title":{
+      "ko":"롯데타워",
+      "en":"Lotte Tower"
     },
-    "amount": 750000,
-    "description": {
-      "ko": "",
-      "en": ""
+    "amount":750000,
+    "description":{
+      "ko":"",
+      "en":""
     },
-    "activate": true
+    "activate":true,
+    "point":5900
   }
 ]

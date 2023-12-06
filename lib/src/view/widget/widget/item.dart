@@ -6,27 +6,25 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class ItemCellWidget extends StatefulWidget {
+abstract class ItemCellWidget extends StatefulWidget {
   const ItemCellWidget({
     super.key,
     this.item,
     this.size,
-    this.pressable = true,
+    this.onPressed,
+    this.margin = false,
   });
 
   final Item? item;
   final double? size;
-  final bool pressable;
-
-  @override
-  State<ItemCellWidget> createState() => _ItemCellWidgetState();
+  final VoidCallback? onPressed;
+  final bool margin;
 }
 
-class _ItemCellWidgetState extends State<ItemCellWidget> {
+abstract class ItemCellWidgetState<T extends ItemCellWidget> extends State<T> {
   InventoryCont get cont => InventoryCont.to;
 
   bool get _doesItemExist => widget.item != null;
-
   double get _size => widget.size ?? 80.0.r;
   double get _radius => _size * .2;
 
@@ -75,11 +73,14 @@ class _ItemCellWidgetState extends State<ItemCellWidget> {
     );
   }
 
+  int get _count;
+  void _onPressed();
+
   Widget _buildCountWidget(BuildContext context) {
     return Obx(() => Container(
       width: 20.0.r,
       height: 20.0.r,
-      margin: EdgeInsets.all(7.0.r),
+      margin: EdgeInsets.all(5.0.r),
       decoration: BoxDecoration(
         color: ThemeCont.to.backgroundAlt,
         shape: BoxShape.circle,
@@ -92,43 +93,141 @@ class _ItemCellWidgetState extends State<ItemCellWidget> {
       ),
       alignment: Alignment.center,
       child: FText(
-        '${cont.countOfItem(widget.item!.key)}',
+        '$_count',
         style: ThemeCont.to.bodySmall,
         bold: true,
       ),
     ));
   }
 
+  Widget _buildCoveredWidget(BuildContext context) => Container();
+
+  Widget _buildChildWidget(BuildContext context) {
+    Widget? child = _buildItemImageWidget(context);
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        _buildEmptyCellWidget(context),
+        if (child != null)
+        Stack(
+          alignment: Alignment.bottomRight,
+          children: [ child, _buildCountWidget(context) ],
+        ),
+        Positioned.fill(
+          child: _buildCoveredWidget(context),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPressableWidget(BuildContext context) {
+    return DarkPressableWidget(
+      onPressed: _onPressed,
+      child: _buildChildWidget(context),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget? child = _buildItemImageWidget(context);
-
     return Container(
-      margin: EdgeInsets.all(_size * .05),
+      margin: widget.margin
+          ? EdgeInsets.all(_size * .05)
+          : EdgeInsets.zero,
       width: _size,
       height: _size,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          _buildEmptyCellWidget(context),
-          if (child != null)
-          Stack(
-            alignment: Alignment.bottomRight,
-            children: [
-              DarkPressableWidget(
-                onPressed: () {
-                  if (!_doesItemExist) return;
-                  if (!widget.pressable) return;
-                  cont.showDetailedInformationDialog(widget.item!);
-                },
-                child: child,
-              ),
-              _buildCountWidget(context),
-            ],
-          ),
-        ],
+      child: _buildPressableWidget(context),
+    );
+  }
+}
+
+
+class ItemToEarnCellWidget extends ItemCellWidget {
+  const ItemToEarnCellWidget({
+    super.key,
+    super.item,
+    super.size,
+    super.onPressed,
+    super.margin,
+    this.received,
+    this.receivedColor,
+    required this.count,
+  });
+
+  final bool? received;
+  final Color? receivedColor;
+  final int count;
+
+  @override
+  State<ItemToEarnCellWidget> createState() => _ItemToEarnCellWidgetState();
+}
+
+class _ItemToEarnCellWidgetState extends ItemCellWidgetState<ItemToEarnCellWidget> {
+  @override
+  int get _count => widget.count;
+  bool get _received => widget.received ?? false;
+  Color get _receivedColor => widget.receivedColor ?? ThemeCont.to.outline;
+
+  @override
+  void _onPressed() {
+    if (widget.onPressed == null) return;
+    widget.onPressed!();
+  }
+
+  @override
+  Widget _buildPressableWidget(BuildContext context) {
+    if (_received) return _buildChildWidget(context);
+    return PulseWidget(
+      onPressed: _onPressed,
+      child: _buildChildWidget(context),
+    );
+  }
+
+  @override
+  Widget _buildCoveredWidget(BuildContext context) {
+    if (!_received) return Container();
+    return Container(
+      decoration: BoxDecoration(
+        color: ThemeCont.to.seaByMode.withOpacity(.7),
+        borderRadius: BorderRadius.circular(_radius),
+        border: Border.all(
+          width: 2.5,
+          color: _receivedColor,
+          strokeAlign: BorderSide.strokeAlignOutside,
+        ),
+      ),
+      child: Icon(
+        Icons.check,
+        size: 40.0.r,
+        color: _receivedColor,
       ),
     );
+  }
+}
+
+class MyItemCellWidget extends ItemCellWidget {
+  const MyItemCellWidget({
+    super.key,
+    super.item,
+    super.size,
+    super.margin,
+    this.pressable = true,
+  });
+
+  final bool pressable;
+
+  @override
+  State<MyItemCellWidget> createState() => _MyItemCellWidgetState();
+}
+
+class _MyItemCellWidgetState extends ItemCellWidgetState<MyItemCellWidget> {
+
+  @override
+  int get _count => cont.countOfItem(widget.item!.key);
+
+  @override
+  void _onPressed() {
+    if (!widget.pressable) return;
+    cont.showDetailedInformationDialog(widget.item!);
   }
 }
 
@@ -158,9 +257,10 @@ class ItemInventoryWidget extends StatelessWidget {
                 int index = i + j * columnCount;
                 Item? item;
                 if (index < itemList.length) item = itemList[index];
-                return ItemCellWidget(
+                return MyItemCellWidget(
                   item: item,
                   size: size,
+                  margin: true,
                 );
               },
             ),

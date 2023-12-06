@@ -112,32 +112,50 @@ class _LevelDetailPageState extends FPageState<LevelDetailPage> {
             size: _defaultSize,
             disable: false,
             border: true,
-            pressable: true,
-            longPressable: true,
-          ),
-          Positioned(
-            top: 5.0.r, right: 5.0.r,
-            child: Icon(
-              Icons.check_circle,
-              color: cont.compensationBadge!.ftype!.color,
-              size: 20.0.r,
-            ),
+            received: true,
+            receivedColor: cont.compensationBadge!.ftype!.color,
           ),
         ],
       );
     });
   }
 
-  Widget _buildItemWidget(BuildContext context) {
-    return ItemCellWidget(size: _defaultSize);
+  Widget _buildItemsWidget(BuildContext context) {
+    return Obx(() {
+      if (cont.isCurrent) {
+        return Column(
+          children: List.generate(
+            cont.items.length, (i) => GrayScaleWidget(
+              child: ItemToEarnCellWidget(
+                item: cont.items[i],
+                size: _defaultSize,
+                count: cont.pointDivided[i],
+              )),
+          ).separateH(height: 10.0.h),
+        );
+      }
+
+      return Column(
+        children: List.generate(
+            cont.items.length, (i) => ItemToEarnCellWidget(
+          item: cont.items[i],
+          size: _defaultSize,
+          count: cont.pointDivided[i],
+          received: cont.isItemReceived(i),
+          receivedColor: cont.level!.type.color,
+          onPressed: () => cont.itemPressedByIndex(i),
+        )).separateH(height: 10.0.h),
+      );
+    });
   }
 
   Widget _buildCompensationsWidget(BuildContext context) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _buildBadgeWidget(context),
-        SizedBox(width: 10.0.w),
-        _buildItemWidget(context),
+        SizedBox(width: 15.0.w),
+        _buildItemsWidget(context),
       ],
     );
   }

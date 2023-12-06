@@ -20,6 +20,7 @@ class LoadingCont extends GetxController {
 
   static bool start([String? id, int? sec]) => to.loadStart(id, sec);
   static void end() => to.loadEnd();
+  static void clearQueue() => _refreshQueue.clear();
 
   bool get loading => _count.value > 0;
   Color get color => _color.value;
@@ -44,7 +45,7 @@ class LoadingCont extends GetxController {
       _decreaseCount();
     });
 
-    _timer = Timer.periodic(const Duration(milliseconds: 10), (timer) {
+    _timer = Timer.periodic(10.ms, (timer) {
       if (countHistory == _count.value) { timer.cancel(); update(); return; }
       _opacity(((_opacity.value * 1000 + 3) % 200) / 1000);
       _color(Color.alphaBlend(

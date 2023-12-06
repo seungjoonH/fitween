@@ -51,6 +51,7 @@ class AuthCont {
       }
     });
 
+    print(_loggingIn);
   }
 
   static bool _loggingIn = false;
@@ -83,13 +84,13 @@ class AuthCont {
   }
 
   static void fLogin(LoginType type) async {
-    if (_loggingIn) return;
-    _loggingIn = true;
+    // if (_loggingIn) return;
+    // _loggingIn = true;
 
     UserCredential? credential = await SignCont.signIn(type);
 
     // 로그인 실패
-    if (credential == null) return;
+    if (credential == null) { init(); return; }
 
     _credentialUser = credential.user!;
 
@@ -112,7 +113,9 @@ class AuthCont {
         ..name = name
         ..email = email;
 
-      FRoute.toOnboarding(); return;
+      FRoute.toOnboarding();
+      init();
+      return;
     }
 
     _loginType = type;
@@ -129,17 +132,20 @@ class AuthCont {
   }
 
   static void fLogout() {
+    stranger = null;
     _logged = null;
-    _loggingIn = false;
+    _credentialUser = null;
+    init();
     StorageCont.eliminate();
+    LoadingCont.clearQueue();
   }
   static void fDeleteAccount() {/* not-implemented */}
 
   static const storage = FlutterSecureStorage();
 
   static Future load(FUserLoadCont cont) async {
-    FUser? loaded = await FUserDAO().loadOne(_logged!.key, cont: cont);
+    FUser? loaded = await FUserDAO().loadOne(uid!, cont: cont);
     if (loaded == null) throw Exception('User load failed');
-    _logged!.merge(loaded);
+    updateUser(loaded);
   }
 }

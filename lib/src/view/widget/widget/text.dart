@@ -105,15 +105,23 @@ class OverflowDetectingText extends StatelessWidget {
     required this.width,
     this.style,
     this.color,
+    this.bold,
+    this.velocity,
   });
 
   final String data;
   final double width;
   final TextStyle? style;
   final Color? color;
+  final bool? bold;
+  final double? velocity;
 
   @override
   Widget build(BuildContext context) {
+    Color colorAlt = color ?? ThemeCont.to.text;
+    bool boldAlt = bold ?? false;
+    double velocityAlt = velocity ?? 15.0;
+
     TextPainter painter = TextPainter(
       text: TextSpan(text: data, style: style),
       textDirection: TextDirection.ltr,
@@ -129,17 +137,22 @@ class OverflowDetectingText extends StatelessWidget {
             if (painter.didExceedMaxLines) {
               return Marquee(
                 text: data,
-                style: style?.copyWith(color: color),
+                style: style?.copyWith(
+                  color: colorAlt,
+                  fontWeight: boldAlt
+                      ? FontWeight.bold : null,
+                ),
                 fadingEdgeStartFraction: .3,
                 fadingEdgeEndFraction: .3,
-                velocity: 15.0,
+                velocity: velocityAlt,
                 blankSpace: width,
               );
             }
             return FText(
               data,
               style: style,
-              color: color,
+              color: colorAlt,
+              bold: boldAlt,
               align: TextAlign.center,
             );
           }

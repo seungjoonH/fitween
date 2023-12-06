@@ -12,12 +12,12 @@ export './local/item.dart';
 
 abstract class LocalModel<T extends Model> {
   static Future loadAll() async {
+    await ItemLocal().load();
     await FBadgeLocal().load();
     await ChallengeLocal().load();
     await DistanceLevelLocal().load();
     await HeightLevelLocal().load();
     await WeightLevelLocal().load();
-    await ItemLocal().load();
   }
 
   List<T> list = [];
