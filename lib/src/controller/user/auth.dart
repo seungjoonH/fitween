@@ -50,8 +50,6 @@ class AuthCont {
         return;
       }
     });
-
-    print(_loggingIn);
   }
 
   static bool _loggingIn = false;

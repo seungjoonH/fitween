@@ -71,8 +71,6 @@ class CameraCont extends GetxController {
     await loadCamera(direction);
   }
 
-  void toggleDirection() => _direction(direction.inverse);
-
   Future loadCamera(CameraDirection direction) async {
     LoadingCont.to.loadStart();
 
@@ -97,6 +95,6 @@ class CameraCont extends GetxController {
 
   void convertCamera() async {
     _direction(direction.inverse);
-    await init();
+    if (Platform.isIOS) await init();
   }
 }

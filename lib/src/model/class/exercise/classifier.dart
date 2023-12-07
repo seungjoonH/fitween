@@ -71,6 +71,13 @@ class Classifier {
 
     image_lib.Image image = image_lib.Image(width, height);
 
+    // if (Platform.isAndroid) {
+    //   image = image_lib.Image(height, width);
+    // }
+    // else if (Platform.isIOS) {
+    //   image = image_lib.Image(width, height);
+    // }
+
     if (Platform.isAndroid) {
       final int uvRowStride = cameraImage.planes[1].bytesPerRow;
       final int? uvPixelStride = cameraImage.planes[1].bytesPerPixel;
@@ -88,8 +95,9 @@ class Classifier {
         }
       }
 
-      image = image_lib.copyRotate(image, isPortrait ? 90.0 : 180.0);
-      // image = image_lib.flipHorizontal(image);
+      // image = image_lib.copyRotate(image, 90.0);
+      // image = image_lib.copyRotate(image, isPortrait ? 90.0 : 180.0);
+      image = image_lib.flipHorizontal(image);
     }
 
     else if (Platform.isIOS) {

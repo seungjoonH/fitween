@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/model/class/exercise.dart';
 import 'package:fitween/src/model/enum/enum.dart';
 
