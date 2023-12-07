@@ -3,6 +3,8 @@ import 'package:carousel_slider/carousel_options.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/model/class/amount/amount.dart';
+import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:fitween/src/view/widget/widget.dart';
@@ -23,11 +25,68 @@ class HomePageCont extends MainPageCont {
   int get activeIndex => activeType.index - 1;
 
   void setType(FType type) => _activeType(type);
-  void onChanged(int index) => setType(FType.activeValues[index]);
+  void onChanged(int index) {
+    setType(FType.activeValues[index]);
+    _syncMarbleCenterRecords();
+  }
 
-  String getMarbleCenterText(FType type) {
-    num record = _logged.getOneDayRecord(CalendarCont.to.selectedDay)[type]!;
-    return type.withUnit(record, txs: true);
+  final _record = Rx<num>(0);
+  HeightAmount get heightAmount => HeightAmount()..floor = _record.value;
+  String get marbleCenterText => activeType.withUnit(_record.value, txs: true);
+
+  static const int _maxLog = 10;
+  final _androidLog = <DateTime>[].obs;
+
+  void _syncMarbleCenterRecords() {
+    _record(_logged.getOneDayRecord(CalendarCont.to.selectedDay)[activeType]!);
+    _androidLog(_logged.record!.androidLog);
+  }
+
+  void countHeightUpButtonPressed() async {
+    if (activeType != FType.height) return;
+    bool cond = false;
+    if (_androidLog.length < _maxLog) { cond = true; }
+    else if (_androidLog.first.add(3.h).isBefore(now)) {
+      _androidLog.removeAt(0); cond = true;
+    }
+
+    if (!cond) return;
+
+    _androidLog.add(now);
+    await _saveHeightRecord();
+    _record(_record.value + 1);
+
+  }
+  void countHeightDownButtonPressed() async {
+    if (activeType != FType.height) return;
+    if (_androidLog.isEmpty) return;
+    _androidLog.removeLast();
+    _record(_record.value - 1);
+    await _saveHeightRecord();
+  }
+
+  Future _saveHeightRecord() async {
+    _logged.setTodayRecord(FType.height, heightAmount);
+    _logged.record!.syncAndroidLogFrom(_androidLog);
+    await FUserRecordDAO().saveOne(_logged.record!);
+  }
+
+  String get _infoDialogTr => 'home.dialog.info';
+  String get androidTitle => LangCont.tr('$_infoDialogTr.android-title');
+  String get androidText => LangCont.tr('$_infoDialogTr.android-text');
+
+  void heightInfoButtonPressed() {
+    showFDialog(
+      title: androidTitle,
+      content: FTexts(
+        androidText,
+        style: ThemeCont.to.bodyLarge,
+        highlightStyle: ThemeCont.to.bodyMedium
+            ?.copyWith(color: ThemeCont.to.comment),
+        wordWrap: true,
+      ),
+      type: DialogType.mono,
+    );
   }
 
   final _hasGiftReceived = true.obs;
@@ -100,6 +159,7 @@ class HomePageCont extends MainPageCont {
   Future load() async {
     await calendarCont.init();
     await rankingCont.init();
+    _syncMarbleCenterRecords();
     await FBadgeCont.to.init();
   }
 

@@ -15,6 +15,8 @@ class FUserRecord extends FUser {
   late _RecordsData _inputRecords;
   late _RecordsData _records;
 
+  List<Timestamp> _androidLog = [];
+
   Map<Period, List<RankingData>> _rankings = {};
 
   @override
@@ -37,6 +39,9 @@ class FUserRecord extends FUser {
     _goals = other._goals;
     _goal = Goal._fromRecordsData(_goals);
   }
+
+  List<DateTime> get androidLog => _androidLog.map((d) => d.toDate()).toList();
+  void syncAndroidLogFrom(List<DateTime> log) => _androidLog = log.map((d) => d.toTimestamp!).toList();
 
   @override
   Map<FType, num> getOneDayRecord(DateTime date) => getRecord(date, date);
@@ -254,6 +259,7 @@ class FUserRecord extends FUser {
           .map<RankingData>((e) => RankingData.fromJson((e as Map<String, dynamic>)))
           .toList()).toList() ?? Period.values.map((e) => []),
     );
+    _androidLog = json['androidLog'] ?? <Timestamp>[];
   }
 
   @override
@@ -268,6 +274,7 @@ class FUserRecord extends FUser {
       _rankings.keys.map((e) => e.name),
       _rankings.values.map((list) => list.map((e) => e.toJson())),
     );
+    json['_androidLog'] = _androidLog;
     return json;
   }
 }

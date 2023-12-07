@@ -88,7 +88,7 @@ class LimbPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    // if (!handler.humanDetected) return;
+    if (!handler.humanDetected) return;
     renderEdges(canvas);
     renderPoints(canvas);
   }
@@ -109,8 +109,7 @@ class LimbPainter extends CustomPainter {
       for (Limb limb in handler.limbs) {
         contain |= limb.containsPart(part);
       }
-      refinedPoints.add(points[part.index]);
-      // if (contain) refinedPoints.add(points[part.index]);
+      if (contain) refinedPoints.add(points[part.index]);
     }
     canvas.drawPoints(
       PointMode.points,
@@ -131,7 +130,7 @@ class LimbPainter extends CustomPainter {
         contain |= limb.containsEdge(edge);
       }
 
-      // if (!contain) continue;
+      if (!contain) continue;
       canvas.drawLine(p1, p2, handler.posture.paint);
     }
   }

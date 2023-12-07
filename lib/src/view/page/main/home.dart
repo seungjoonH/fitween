@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
@@ -27,6 +29,24 @@ class _HomePageState extends FPageState {
 
   double get _size => PageCont.size.width * .1;
 
+  Widget _buildHeightUpDownButtonWidget(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        FIconButton(
+          icon: const Icon(Icons.arrow_drop_up),
+          onPressed: cont.countHeightUpButtonPressed,
+          iconColor: ThemeCont.achro95,
+        ),
+        FIconButton(
+          icon: const Icon(Icons.arrow_drop_down),
+          onPressed: cont.countHeightDownButtonPressed,
+          iconColor: ThemeCont.achro95,
+        ),
+      ],
+    );
+  }
+
   Widget _buildMarbleCarouselWidget(BuildContext context) {
     return Obx(() => CircularCarousel(
       width: PageCont.size.width * (PageCont.isPortrait ? 1.2 : .6),
@@ -38,19 +58,40 @@ class _HomePageState extends FPageState {
       rightWidget: SvgPicture.asset(cont.rightArrowAsset),
       children: FType.activeValues.map((type) {
         bool isActive = type == cont.activeType;
-        return Marble(
-          type: type,
-          center: isActive ? FTexts(
-            cont.getMarbleCenterText(type),
-            textColor: ThemeCont.achro90,
-            style: ThemeCont.to.bodyMedium,
-            highlightStyle: ThemeCont.to.displayMedium
-                ?.copyWith(color: ThemeCont.achro90),
-          ) : null,
-          smile: isActive,
-          tagVisible: isActive,
-          met: calendarCont.allCompleted,
-          selected: cont.activeType == type,
+        return Stack(
+          alignment: Alignment.center,
+          children: [
+            Marble(
+              type: type,
+              center: isActive ? FTexts(
+                cont.marbleCenterText,
+                textColor: ThemeCont.achro90,
+                style: ThemeCont.to.bodyMedium,
+                highlightStyle: ThemeCont.to.displayMedium
+                    ?.copyWith(color: ThemeCont.achro90),
+              ) : null,
+              smile: isActive,
+              tagVisible: isActive,
+              met: calendarCont.allCompleted,
+              selected: cont.activeType == type,
+            ),
+            if (!LoadingCont.to.loading && isActive && type == FType.height && Platform.isAndroid)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHeightUpDownButtonWidget(context),
+                Padding(
+                  padding: EdgeInsets.only(top: 20.0.r, right: 20.0.r),
+                  child: FIconButton(
+                    icon: const Icon(Icons.info_outline),
+                    iconColor: ThemeCont.achro95,
+                    onPressed: cont.heightInfoButtonPressed,
+                  ),
+                ),
+              ],
+            ),
+          ],
         );
       }).toList(),
     ));

@@ -377,6 +377,10 @@
         "existing-title": "Thank-you Gift",
         "newcomer-text": "Welcome to Fitween!\nCheck out the gifts below!",
         "existing-text": "Thank you for coming back to Fitween!\nCheck out the gifts below!"
+      },
+      "info": {
+        "android-title": "Android Height Fetching",
+        "android-text": "Since height (number of right layers) data cannot be interlocked on Android, height data can be manipulated manually. @{\n\nHowever, data cannot be uploaded more than 10 floors at a time, and a cool time of 3 hours is applied.}"
       }
     },
     "gift": {
@@ -682,6 +686,20 @@
     }
   },
   "account": {
-    "auto-login": "Auto Login"
+    "auto-login": "Auto Login",
+    "dialog": {
+      "logout": {
+        "really-title": "Logout",
+        "really-text": "Are you sure to logout?",
+        "complete-title": "Logged out",
+        "complete-text": "Successfully logged out"
+      },
+      "delete-account": {
+        "really-title": "Account Deletion",
+        "really-text": "Are you sure to delete your account?\n@{All records will be lost}",
+        "complete-title": "Account Deleted",
+        "complete-text": "Account successfully deleted"
+      }
+    }
   }
 }
