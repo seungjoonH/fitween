@@ -23,11 +23,13 @@ class CameraCont extends GetxController {
 
   bool get isCameraAvailable => cameraController != null && isInitialized;
 
-  static ResolutionPreset preset = ResolutionPreset.medium;
+  static ResolutionPreset get preset => Platform.isIOS
+      ? ResolutionPreset.medium
+      : ResolutionPreset.high;
 
   static Size get presetSize => Platform.isIOS
       ? const Size(480, 640)
-      : const Size(480, 720);
+      : const Size(720, 1280);
 
   late Classifier classifier;
   late IsolateUtils isolate;

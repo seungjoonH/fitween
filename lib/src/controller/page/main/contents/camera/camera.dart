@@ -7,6 +7,7 @@ import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/exercise.dart';
 import 'package:fitween/src/model/enum/enum.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 abstract class CameraPageCont extends PageCont {
@@ -78,8 +79,20 @@ abstract class CameraPageCont extends PageCont {
       size.height - 2 * cameraCont.top,
     );
 
-    double widthRatio = canvasSize.width / imageStream.width;
-    double heightRatio = canvasSize.height / imageStream.height;
+    late double widthRatio;
+    late double heightRatio;
+
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        widthRatio = canvasSize.width / imageStream.height;
+        heightRatio = canvasSize.height / imageStream.width;
+        break;
+      case TargetPlatform.iOS:
+        widthRatio = canvasSize.width / imageStream.width;
+        heightRatio = canvasSize.height / imageStream.height;
+        break;
+      default: break;
+    }
 
     _inferences.assignAll({
       for (int i = 0; i < inferenceList.length; i++)
