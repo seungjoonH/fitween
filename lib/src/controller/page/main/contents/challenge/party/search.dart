@@ -48,10 +48,8 @@ class PartySearchPageCont extends PageCont {
   }
 
   void partyListTilePressed(Party party) {
-    FRoute.toParty(party: party); party.view(_logged.key);
+    FRoute.toParty(party: party); party.view(logged.key);
   }
-
-  FUser get _logged => AuthCont.logged!;
 
   @override
   Future load() async {

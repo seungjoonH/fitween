@@ -11,12 +11,12 @@ class ChallengeDetailPageCont extends PageCont {
   Challenge? get challenge => _challenge.value;
 
   Party getPartyFromChallenge() {
-    return _logged.parties.values
+    return logged.parties.values
         .firstWhere((party) => challenge!.key == party.challenge!.key);
   }
 
   Party getAppliedPartyFromChallenge() {
-    return _logged.appliedParties.values
+    return logged.appliedParties.values
         .firstWhere((party) => challenge!.key == party.challenge!.key);
   }
 
@@ -27,25 +27,25 @@ class ChallengeDetailPageCont extends PageCont {
   String get createPartyText => LangCont.tr('$_tr.create-party');
 
   bool get isBookmarkedChallenge {
-    return _logged.parties.values
+    return logged.parties.values
         .map((party) => party.challenge!.key)
         .contains(challenge!.key);
   }
 
   bool get isBookmarkedTypeOfChallenge {
-    return _logged.parties.values
+    return logged.parties.values
         .map((party) => party.challenge!.type)
         .contains(challenge!.type);
   }
 
   bool get isAppliedChallenge {
-    return _logged.appliedParties.values
+    return logged.appliedParties.values
         .map((party) => party.challenge!.key)
         .contains(challenge!.key);
   }
   
   bool get isAppliedTypeOfChallenge {
-    return _logged.appliedParties.values
+    return logged.appliedParties.values
         .map((party) => party.challenge!.type)
         .contains(challenge!.type);
   }
@@ -92,8 +92,6 @@ class ChallengeDetailPageCont extends PageCont {
     if (isAppliedTypeOfChallenge) { _showCancelDialog(); return; }
     FRoute.toPartyCreate(challenge: challenge);
   }
-
-  FUser get _logged => AuthCont.logged!;
 
   @override
   Future load() async {

@@ -1,4 +1,5 @@
 import 'package:fitween/src/controller/controller.dart';
+import 'package:fitween/src/model/class/model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -98,4 +99,7 @@ abstract class PageCont extends GetxController {
 
   Future load();
   Future afterRoute() async {}
+
+
+  FUser get logged => AuthCont.logged!;
 }

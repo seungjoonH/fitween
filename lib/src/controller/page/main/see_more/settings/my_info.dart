@@ -42,26 +42,24 @@ class MyInfoPageCont extends PageCont {
   int get weightMin => registerCont.weightMin;
   int get weightMax => registerCont.weightMax;
 
-  FUser get _logged => AuthCont.logged!;
-
   void onHeightChanged(int v) => _height(v);
   void onWeightChanged(int v) => _weight(v);
 
   String getGoalTextOf(FType type) {
-    num goal = _logged.goal.byType(type);
+    num goal = logged.goal.byType(type);
     return type.withUnit(goal, txs: true);
   }
 
   Future _syncFrom() async {
     await AuthCont.load(FUserLoadCont.lightest());
-    _height(_logged.height.toInt());
-    _weight(_logged.weight.toInt());
+    _height(logged.height.toInt());
+    _weight(logged.weight.toInt());
   }
 
   Future _syncTo() async {
-    _logged.info!.setHeight(height!);
-    _logged.info!.setWeight(weight!);
-    await FUserInfoDAO().saveOne(_logged.info!);
+    logged.info!.setHeight(height!);
+    logged.info!.setWeight(weight!);
+    await FUserInfoDAO().saveOne(logged.info!);
   }
 
   @override

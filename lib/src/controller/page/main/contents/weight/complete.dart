@@ -19,9 +19,8 @@ class WeightCompletePageCont extends PageCont {
   String get increasedText => LangCont.tr('weight-complete.record-increased');
   String get completeButtonText => LangCont.tr('button.complete');
 
-  FUser get _logged => AuthCont.logged!;
-  num get goalAmount => _logged.goal.weight;
-  num get beforeAmount => _logged.getOneDayRecord(today)[FType.weight]!;
+  num get goalAmount => logged.goal.weight;
+  num get beforeAmount => logged.getOneDayRecord(today)[FType.weight]!;
   num get afterAmount => beforeAmount + count;
 
   double get beforePercent => max(min(beforeAmount / goalAmount, .95), .0);
@@ -35,7 +34,7 @@ class WeightCompletePageCont extends PageCont {
   int get addedRightFlex => (95 - _avg).round();
 
   void completeButtonPressed() {
-    _logged.record!.addTodayRecord(FType.weight, WeightAmount()..cnt = count);
+    logged.record!.addTodayRecord(FType.weight, WeightAmount()..cnt = count);
     HomePageCont.to.setType(FType.weight);
     BottomBarCont.to.navigate(0);
   }

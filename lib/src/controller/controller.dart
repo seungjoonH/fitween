@@ -5,6 +5,8 @@ export './badge.dart';
 export './bottom_bar.dart';
 export './calendar.dart';
 export './dialog.dart';
+export './file.dart';
+export './friend.dart';
 export './get.dart';
 export './image.dart';
 export './inventory.dart';

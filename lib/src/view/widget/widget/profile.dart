@@ -13,13 +13,15 @@ class FProfileWidget extends StatefulWidget {
     this.showFollowButton = false,
     this.showMeTag = false,
     this.onPressed,
+    this.followed,
     this.followButtonPressed,
   });
 
   final FUser? user;
-  final Function(FUser)? onPressed;
   final bool showFollowButton;
   final bool showMeTag;
+  final bool? followed;
+  final Function(FUser)? onPressed;
   final Function(FUser)? followButtonPressed;
 
   @override
@@ -53,6 +55,7 @@ class _FProfileWidgetState extends State<FProfileWidget> with DarkPressable {
           if (widget.showFollowButton)
           FollowButton(
             user: user,
+            followed: widget.followed,
             onPressed: widget.followButtonPressed,
           ),
         ],

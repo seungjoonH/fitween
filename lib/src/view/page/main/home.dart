@@ -375,7 +375,7 @@ class _HomePageState extends FPageState {
       autoPadding: false,
       refreshController: RefreshController(),
       onRefresh: cont.onRefresh,
-      height: PageCont.size.height * 1.1,
+      height: PageCont.size.height * 1.2,
       body: Stack(
         children: [
           Positioned.fill(

@@ -1,37 +1,53 @@
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:get/get.dart';
 
 class FriendPageCont extends MainPageCont {
   static FriendPageCont get to => Get.find<FriendPageCont>();
 
+  FollowCont get followCont => FollowCont.to;
+  FriendCont get friendCont => FriendCont.to;
+
   String get appBarTitle => LangCont.tr('appbar.friend');
-  String get friendsCountText => LangCont.plural('friend.count', friends.length);
+  String get friendsCountText => LangCont.plural('friend.count', friendCont.friends.length);
   String get noFriendsText => LangCont.tr('friend.no-friends');
-
-  FUser get _logged => AuthCont.logged!;
-
-  final _friends = <FUser>[].obs;
-  List<FUser> get friends => _friends;
-
-  List<String> get _friendUids => _friends.map((f) => f.key).toList();
 
   final _changed = false.obs;
   bool get changed => _changed.value;
 
-  FollowCont get _followCont => FollowCont.to;
+  final _followersData = <String, bool>{}.obs;
+  List<FUser> get friends => friendCont
+      .friends.values.toList()
+      .where((user) => _followersData.keys.contains(user.key)).toList();
 
-  void _setChanged() {
-    _changed(!_followCont.hasSameMembers(_friendUids));
+  Future _syncDataFrom() async {
+    await followCont.init();
+    _followersData.clear();
+
+    for (String uid in followCont.followersData.keys) {
+      if (!followCont.followersData[uid]!) continue;
+      _followersData[uid] = followCont.followersData[uid]!;
+    }
   }
 
-  Future _syncFriends() async {
-    _followCont.saveFollowingState();
-    _friends.assignAll(_logged.friends.values);
-    await FUserFriendDAO().saveOne(_logged.friend!);
-    await RankingCont.to.init();
+  Future _syncDataTo() async {
+    followCont.syncDataFrom(_followersData);
+
+    for (String uid in followCont.followersData.keys) {
+      if (!_followersData[uid]!) _followersData.remove(uid);
+    }
+
+    await followCont.save();
+  }
+
+  void follow(String uid) { _followersData[uid] = true; _setChanged(); }
+  void unfollow(String uid) { _followersData[uid] = false; _setChanged(); }
+
+  void _setChanged() {
+    if (!editMode) return;
+    bool exist = !followCont.hasSameData(_followersData);
+    _changed(exist);
   }
 
   @override
@@ -41,17 +57,18 @@ class FriendPageCont extends MainPageCont {
   Future load() async {
     _changed(false);
     _editMode(false);
-    FUserLoadCont cont = FUserLoadCont.onlyCollection();
-    await _logged.friend!.loadFriends(cont: cont);
-    FollowCont.to.init();
-    await _syncFriends();
+    await friendCont.init();
+    await followCont.init();
+    await _syncDataFrom();
   }
+
+  Future save() async => await _syncDataTo();
 
   final _editMode = false.obs;
   bool get editMode => _editMode.value;
 
-  void toggleMode() async {
-    if (editMode && changed) _syncFriends();
+  void toggleButtonPressed() async {
+    if (editMode && changed) await save();
     _editMode(!_editMode.value);
   }
 
@@ -61,9 +78,10 @@ class FriendPageCont extends MainPageCont {
 
   }
 
-  void followButtonPressed(FUser friend) async {
-    if (_followCont.getFollowed(friend.key)) return;
-    await _followCont.followAndNotifyFollowing(friend.key);
-    _setChanged();
+  bool getFollowed(String uid) => _followersData[uid] ?? false;
+
+  void followButtonPressed(FUser user) {
+    if (_followersData[user.key]!) { unfollow(user.key); }
+    else { follow(user.key); }
   }
 }

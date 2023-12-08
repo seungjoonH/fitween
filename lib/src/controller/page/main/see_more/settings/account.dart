@@ -29,12 +29,12 @@ class AccountPageCont extends PageCont {
 
   void _syncAutoLoginState() async {
     await AuthCont.load(FUserLoadCont.lightest());
-    _autoLoginAllowed(_logged.autoLoginAllowed);
+    _autoLoginAllowed(logged.autoLoginAllowed);
   }
 
   void _saveAutoLoginState() async {
-    _logged.info!.setAutoLoginState(autoLoginAllowed);
-    await FUserInfoDAO().saveOne(_logged.info!);
+    logged.info!.setAutoLoginState(autoLoginAllowed);
+    await FUserInfoDAO().saveOne(logged.info!);
   }
 
   String get logoutButtonText => LangCont.tr('button.logout');
@@ -95,12 +95,8 @@ class AccountPageCont extends PageCont {
 
   }
 
-  FUser get _logged => AuthCont.logged!;
-
   @override
-  Future load() async {
-    _syncAutoLoginState();
-  }
+  Future load() async => _syncAutoLoginState();
 
   @override
   String get loadKey => 'account';

@@ -44,13 +44,11 @@ class GeneralSettingPageCont extends PageCont {
   void setLang(Language lang) { LangCont.to.setLanguage(lang); _save(); }
 
   void _save() async {
-    _logged.info!.setThemeMode(themeMode);
-    _logged.info!.setLanguage(language);
-    await FUserInfoDAO().saveOne(_logged.info!);
+    logged.info!.setThemeMode(themeMode);
+    logged.info!.setLanguage(language);
+    await FUserInfoDAO().saveOne(logged.info!);
     await onRefresh();
   }
-
-  FUser get _logged => AuthCont.logged!;
 
   @override
   Future load() async {}

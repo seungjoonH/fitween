@@ -49,7 +49,7 @@ class FUserCollection extends FUser {
   }
 
   @override
-  FBadge? get badge => FBadgeLocal().get(_badgeId);
+  FBadge get badge => FBadgeLocal().get(_badgeId ?? '1000000')!;
 
   @override
   Color get badgeColor => FType.values[uid.codeUnitAt(1) % 4].color;
@@ -73,7 +73,7 @@ class FUserCollection extends FUser {
   @override
   void fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
-    _badgeId = json['badgeId'];
+    _badgeId = json['badgeId'] ?? '1000000';
     _inventoryData = Map.fromIterables(
       json['inventoryData']?.keys.cast<String>() ?? <String>[],
       json['inventoryData']?.values.cast<int>() ?? <int>[],

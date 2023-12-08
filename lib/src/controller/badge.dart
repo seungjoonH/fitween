@@ -12,7 +12,7 @@ class FBadgeCont extends GetxController {
   static FBadgeCont get to => Get.find<FBadgeCont>();
 
   final _data = <String, List<DateTime>>{}.obs;
-  final _mainBadgeId = ''.obs;
+  final _mainBadgeId = '1000000'.obs;
 
   FBadge? get mainBadge => FBadgeLocal().get(_mainBadgeId.value);
   bool isMain(String id) =>_mainBadgeId.value == id;
@@ -46,7 +46,7 @@ class FBadgeCont extends GetxController {
     _data.clear();
     await AuthCont.load(FUserLoadCont.onlyCollection());
     _data.assignAll({..._logged.collection!.dates});
-    _mainBadgeId(_logged.collection!.badge!.key);
+    _mainBadgeId(_logged.collection!.badge.key);
   }
 
   Future _syncTo() async {

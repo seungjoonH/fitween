@@ -3,62 +3,17 @@ import 'package:fitween/global/date.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
+import 'package:get/get.dart';
 
 class FUserFriend extends FUser {
   @override
   FUserFriend? get friend => this;
 
   Map<String, FriendData> _friendsData = {};
+  Map<String, FriendData> get friendsData => _friendsData;
 
-  @override
-  Map<String, FUser> allFriends = {};
-
-  @override
-  Map<String, FUser> friends = {};
-
-  @override
-  DateTime followedDate(String uid) => _friendsData[uid]!.time;
-
-  Future loadFriends({FUserLoadCont? cont}) async {
-    for (String uid in _friendsData.keys) {
-      if (!_friendsData[uid]!._followed) continue;
-      FUser? loaded = await FUserDAO().loadOne(uid, cont: cont);
-
-      if (loaded == null) throw Exception('[ERROR] User($uid) load failed');
-
-      allFriends[uid] = FUser.combine(allFriends[uid], loaded);
-      if (_friendsData[uid]!._followed) friends[uid] = FUser.combine(friends[uid], loaded);
-    }
-  }
-
-  bool isFollowing(String uid) => friends.keys.any((e) => e == uid);
-  bool isFollowingOrMe(String uid) => key == uid || isFollowing(uid);
-
-  Future follow(String uid) async {
-    if (friends[uid] != null) {
-      _friendsData[uid]!.follow();
-      return;
-    }
-
-    FUser? toFollow = await FUserDAO().loadOne(uid);
-    if (toFollow == null) throw Exception('User ($uid) load failed');
-
-    _friendsData[uid] = FriendData();
-    allFriends[uid] = toFollow;
-
-    await FUserFriendDAO().saveOne(this);
-
-    await RankingCont.to.init();
-  }
-
-  Future unfollow(String uid) async {
-    if (friends[uid] == null) return;
-
-    _friendsData[uid]!.unfollow();
-    friends.remove(uid);
-
-    await FUserFriendDAO().saveOne(this);
-    await RankingCont.to.init();
+  void syncFriendDataFrom(Map<String, FriendData> data) {
+    _friendsData.assignAll({...data});
   }
 
   // Future deleteFriend(String uid) async {
@@ -97,38 +52,38 @@ class FUserFriend extends FUser {
   }
 }
 
-class _TimeAttack extends Model {
-  int _win = 0;
-  int _lose = 0;
-  int _draw = 0;
-
-  _TimeAttack();
-  _TimeAttack.fromJson(super.json) : super.fromJson();
-
-  @override
-  void fromJson(Map<String, dynamic> json) {
-    _win = json['win'] ?? 0;
-    _lose = json['lose'] ?? 0;
-    _draw = json['draw'] ?? 0;
-  }
-
-  @override
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    json['win'] = _win;
-    json['lose'] = _lose;
-    json['draw'] = _draw;
-    return json;
-  }
-
-  @override
-  String get key => '';
-}
+// class _TimeAttack extends Model {
+//   int _win = 0;
+//   int _lose = 0;
+//   int _draw = 0;
+//
+//   _TimeAttack();
+//   _TimeAttack.fromJson(super.json) : super.fromJson();
+//
+//   @override
+//   void fromJson(Map<String, dynamic> json) {
+//     _win = json['win'] ?? 0;
+//     _lose = json['lose'] ?? 0;
+//     _draw = json['draw'] ?? 0;
+//   }
+//
+//   @override
+//   Map<String, dynamic> toJson() {
+//     Map<String, dynamic> json = {};
+//     json['win'] = _win;
+//     json['lose'] = _lose;
+//     json['draw'] = _draw;
+//     return json;
+//   }
+//
+//   @override
+//   String get key => '';
+// }
 
 class FriendData extends Model {
   late Timestamp _time;
   bool _followed = true;
-  _TimeAttack? _timeAttack;
+  // _TimeAttack? _timeAttack;
 
   FriendData() : _time = now.toTimestamp!, _followed = true;
   FriendData.fromJson(super.json) : super.fromJson();
@@ -136,14 +91,19 @@ class FriendData extends Model {
   DateTime get time => _time.toDate();
   set date(DateTime time) => _time = time.toTimestamp!;
 
-  void follow() => _followed = true;
+  bool get followed => _followed;
+
+  void follow() {
+    _time = now.toTimestamp!;
+    _followed = true;
+  }
   void unfollow() => _followed = false;
 
   @override
   void fromJson(Map<String, dynamic> json) {
     _time = json['time'] ?? now.toTimestamp;
     _followed = json['followed'] ?? false;
-    _timeAttack = _TimeAttack.fromJson(json['timeAttack'] ?? {});
+    // _timeAttack = _TimeAttack.fromJson(json['timeAttack'] ?? {});
   }
 
   @override
@@ -151,7 +111,7 @@ class FriendData extends Model {
     Map<String, dynamic> json = {};
     json['time'] = _time;
     json['followed'] = _followed;
-    json['timeAttack'] = _timeAttack?.toJson() ?? _TimeAttack().toJson();
+    // json['timeAttack'] = _timeAttack?.toJson() ?? _TimeAttack().toJson();
     return json;
   }
 

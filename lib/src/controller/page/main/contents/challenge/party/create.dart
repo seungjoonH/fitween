@@ -80,10 +80,10 @@ class PartyCreatePageCont extends PageCont {
       type: DialogType.mono,
       onPressed: Get.back,
     );
-    _logged.party!.addParty(newParty);
+    logged.party!.addParty(newParty);
 
     await PartyDAO().saveOne(newParty);
-    await FUserPartyDAO().saveOne(_logged.party!);
+    await FUserPartyDAO().saveOne(logged.party!);
 
     BottomBarCont.to.navigate(2);
     FRoute.toChallenge();
@@ -94,8 +94,6 @@ class PartyCreatePageCont extends PageCont {
     partyTitleCont.clear();
   }
   void clearTitleField() => partyTitleCont.clear();
-
-  FUser get _logged => AuthCont.logged!;
 
   @override
   Future load() async {

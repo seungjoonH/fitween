@@ -76,6 +76,7 @@ class GetCont {
     Get.put(NoticeCont());
     Get.put(InventoryCont());
     Get.put(FBadgeCont());
+    Get.put(FriendCont());
   }
 
   static void initConts() {

@@ -6,55 +6,58 @@ import 'package:get/get.dart';
 class FollowCont extends GetxController {
   static FollowCont get to => Get.find<FollowCont>();
 
-  FUser get _logged => AuthCont.logged!;
+  FriendCont get friendCont => FriendCont.to;
 
-  final _friendUids = <String>[].obs;
+  FUser get logged => AuthCont.logged!;
+  final _followersData = <String, bool>{}.obs;
 
-  void init() => _friendUids.assignAll(_logged.friends.keys);
+  Map<String, bool> get followersData => _followersData;
+  void syncDataFrom(Map<String, bool> data) => _followersData.assignAll({...data});
 
-  bool hasSameMembers(List<String> uids) {
-    if (uids.length != _friendUids.length) return false;
-    return _friendUids.every((uid) => uids.contains(uid));
+  Future init() async => await _syncFollowingsFrom();
+  Future save() async => await _syncFollowingsTo();
+
+  Future _syncFollowingsFrom() async {
+    await friendCont.syncFriendsFrom();
+    Map<String, bool> map = {};
+    for (String uid in friendCont.friends.keys) {
+      map[uid] = friendCont.followers.keys.contains(uid);
+    }
+    _followersData.assignAll(map);
   }
 
-  bool getFollowed(String uid) => _friendUids.contains(uid);
-
-  String getButtonText(String uid) {
-    return LangCont.tr('word.${getFollowed(uid) ? 'un' : ''}follow');
+  Future _syncFollowingsTo() async {
+    friendCont.syncFollowersFrom(_followersData);
+    await friendCont.syncFriendsTo();
   }
 
-  void followButtonPressed(String uid) {
-    getFollowed(uid)
-        ? _friendUids.remove(uid)
-        : _friendUids.add(uid);
+  bool hasSameData(Map<String, bool> data) {
+    return data.keys.every((uid) => data[uid] == _followersData[uid]);
   }
 
-  Future follow(String uid) async {
-    await _logged.friend!.follow(uid);
+  bool getFollowed(String uid) => _followersData[uid] ?? false;
+
+  String getButtonText(bool followed) {
+    return LangCont.tr('word.${followed ? 'un' : ''}follow');
   }
 
-  Future unfollow(String uid) async {
-    await _logged.friend!.unfollow(uid);
+  void follow(String uid) => _followersData[uid] = true;
+  void unfollow(String uid) => _followersData[uid] = false;
+
+  void followButtonPressed(String uid) async {
+    bool followed = getFollowed(uid);
+    _followersData[uid] = !followed;
+    await _syncFollowingsTo();
   }
 
   Future followAndNotifyFollowing(String uid) async {
-    await follow(uid);
+    follow(uid);
+    await _syncFollowingsTo();
     FUserLoadCont cont = FUserLoadCont.onlyNotification();
     FUser? loaded = await FUserDAO().loadOne(uid, cont: cont);
     if (loaded == null) throw Exception('User ($loaded) load failed');
 
-    loaded.notification!.follow(_logged);
+    loaded.notification!.follow(logged);
     await FUserNotificationDAO().saveOne(loaded.notification!);
-  }
-
-  void saveFollowingState() async {
-    for (String uid in _friendUids) {
-      if (getFollowed(uid)) { follow(uid); }
-    }
-
-    List<String> loggedFriends = [..._logged.friends.keys];
-    for (String uid in loggedFriends) {
-      if (!getFollowed(uid)) await unfollow(uid);
-    }
   }
 }

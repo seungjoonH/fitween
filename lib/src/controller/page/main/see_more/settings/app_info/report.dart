@@ -12,12 +12,10 @@ class ReportPageCont extends PageCont {
   final _reports = <Report>[].obs;
   List<Report> get reports => _reports;
 
-  FUser get _logged => AuthCont.logged!;
-
   Future _loadMyReports() async {
     _reports.clear();
     var cols = await f.collection('reports')
-        .where('uid', isEqualTo: _logged.key).get();
+        .where('uid', isEqualTo: logged.key).get();
 
     for (var doc in cols.docs) {
       Map<String, dynamic> json = doc.data();

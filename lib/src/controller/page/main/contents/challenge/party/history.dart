@@ -19,8 +19,6 @@ class PartyHistoryPageCont extends PageCont {
       .where((party) => isActive(party.type)).toList();
 
 
-  FUser get _logged => AuthCont.logged!;
-
   final _activeTypes = <FType, bool>{}.obs;
   Map<FType, bool> get activeTypes => _activeTypes;
 
@@ -32,8 +30,8 @@ class PartyHistoryPageCont extends PageCont {
   @override
   Future load() async {
     _activeTypes.assignAll({for (var type in FType.values) type : true});
-    await _logged.party!.loadFinishedParties();
-    _finishedParties.assignAll(_logged.finishedParties.values);
+    await logged.party!.loadFinishedParties();
+    _finishedParties.assignAll(logged.finishedParties.values);
   }
 
   @override

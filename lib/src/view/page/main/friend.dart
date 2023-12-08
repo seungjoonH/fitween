@@ -17,6 +17,8 @@ class FriendPage extends FPage {
 class _FriendPageState extends FPageState<FriendPage> {
   @override
   FriendPageCont get cont => FriendPageCont.to;
+  FriendCont get friendCont => FriendCont.to;
+  FollowCont get followCont => FollowCont.to;
 
   Widget _buildEachFriendListTileWidget(BuildContext context, FUser friend) {
     return Obx(() => Stack(
@@ -26,6 +28,7 @@ class _FriendPageState extends FPageState<FriendPage> {
           user: friend,
           showFollowButton: cont.editMode,
           onPressed: cont.profileWidgetPressed,
+          followed: cont.getFollowed(friend.key),
           followButtonPressed: cont.followButtonPressed,
         ),
       ],
@@ -47,7 +50,7 @@ class _FriendPageState extends FPageState<FriendPage> {
           ),
         ),
       ) : Column(
-        children: cont.friends.map((f) {
+        children: friends.map((f) {
           return _buildEachFriendListTileWidget(context, f);
         }).toList(),
       );
@@ -70,7 +73,7 @@ class _FriendPageState extends FPageState<FriendPage> {
           style: ThemeCont.to.commentStyle,
         ),
         icon: Icon(iconData),
-        onPressed: cont.toggleMode,
+        onPressed: cont.toggleButtonPressed,
         pressMode: FCardPressMode.icon,
         child: _buildFriendsCardContentWidget(context),
       );

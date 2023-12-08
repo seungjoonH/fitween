@@ -10,25 +10,31 @@ class FollowButton extends StatelessWidget {
     super.key,
     required this.user,
     this.onPressed,
+    this.followed,
     this.autoSave = true,
   });
 
   final FUser user;
   final Function(FUser)? onPressed;
+  final bool? followed;
   final bool autoSave;
 
   FollowCont get cont => FollowCont.to;
 
-  Color get backgroundColor => cont.getFollowed(user.key)
-      ? ThemeCont.to.background : ThemeCont.to.text;
+  bool get _followed => followed ?? cont.getFollowed(user.key);
 
-  Color get textColor => cont.getFollowed(user.key)
-      ? ThemeCont.to.text : ThemeCont.to.background;
+  Color get backgroundColor => _followed
+      ? ThemeCont.to.background
+      : ThemeCont.to.text;
+
+  Color get textColor => _followed
+      ? ThemeCont.to.text
+      : ThemeCont.to.background;
 
   @override
   Widget build(BuildContext context) {
     return Obx(() => FButton(
-      text: cont.getButtonText(user.key),
+      text: cont.getButtonText(_followed),
       padding: EdgeInsets.symmetric(
         horizontal: 8.0.r,
         vertical: 4.0.r,
@@ -37,9 +43,11 @@ class FollowButton extends StatelessWidget {
       textColor: textColor,
       backgroundColor: backgroundColor,
       onPressed: () {
-        cont.followButtonPressed(user.key);
-        if (autoSave) cont.saveFollowingState();
-        if (onPressed != null) onPressed!(user);
+        if (onPressed == null) {
+          cont.followButtonPressed(user.key);
+          return;
+        }
+        onPressed!(user);
       },
     ));
   }

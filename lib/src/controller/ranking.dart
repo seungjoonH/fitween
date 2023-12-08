@@ -11,8 +11,9 @@ import 'package:get/get.dart';
 class RankingCont extends GetxController {
   static RankingCont get to => Get.find<RankingCont>();
 
-  static HomePageCont get homePageCont => HomePageCont.to;
-  static RankingPageCont get rankingPageCont => RankingPageCont.to;
+  HomePageCont get homePageCont => HomePageCont.to;
+  RankingPageCont get rankingPageCont => RankingPageCont.to;
+  FriendCont get friendCont => FriendCont.to;
 
   List<RankingData> getRankings(Period period) {
     int compare(RankingData a, RankingData b) => a.date.compareTo(b.date);
@@ -34,7 +35,7 @@ class RankingCont extends GetxController {
   FUser getUser(String uid) => _friendsWithMe[uid]!;
 
   FUser get _logged => AuthCont.logged!;
-  bool get hasFriend => _logged.friends.isNotEmpty;
+  bool get hasFriend => friendCont.friends.isNotEmpty;
 
   final _period = Period.daily.obs;
   Period get period => _period.value;
@@ -50,7 +51,9 @@ class RankingCont extends GetxController {
 
   bool isAvailableFriend(String uid, DateTime date) {
     if (_logged.key == uid) return true;
-    return !_logged.followedDate(uid).ignoreTime.isAfter(getStartTime(date));
+    DateTime followedDate = friendCont.followedDate(uid).ignoreTime;
+    DateTime startTime = getStartTime(date);
+    return !followedDate.isAfter(startTime);
   }
 
   void _loadFriendDataByDate(Period p, DateTime date) {
@@ -82,12 +85,12 @@ class RankingCont extends GetxController {
   }
 
   Future loadFriendData() async {
-    FUserLoadCont cont = FUserLoadCont.onlyRecord();
-    await _logged.friend!.loadFriends(cont: cont);
+    await friendCont.init();
+
     _friendsWithMe.clear();
     _recordAmountsOfFriendsWithMe.clear();
     _friendsWithMe[_logged.uid] = _logged;
-    _friendsWithMe.addAll(_logged.friends);
+    _friendsWithMe.addAll(friendCont.friends);
 
     for (Period p in Period.values) {
       _recordAmountsOfFriendsWithMe[p] = {};
@@ -216,7 +219,7 @@ class RankingCont extends GetxController {
     num getNum(String uid) => _recordAmountsOfFriendsWithMe[p]![date]![uid]!.byType(type);
     int compare(String a, String b) => getNum(b).compareTo(getNum(a));
     List<String> uids = [..._recordAmountsOfFriendsWithMe[p]![date]!.keys];
-    uids.removeWhere((uid) => !_logged.friend!.isFollowingOrMe(uid));
+    uids.removeWhere((uid) => !friendCont.isFollowingOrMe(uid));
     return uids..sort(compare);
   }
 
