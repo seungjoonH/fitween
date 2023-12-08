@@ -38,15 +38,14 @@ class AuthCont {
     ThemeCont.to.init();
     LangCont.to.init();
 
-    init();
-
     Timer.periodic(10.ms, (timer) async {
       if (!loginPageCont.loading) {
         timer.cancel();
         loginPageCont.startLoading('home');
         await BottomBarCont.to.navigate(0);
         await loginPageCont.endLoading();
-        await FBadgeCont.to.earnBadge('1000000');
+        init();
+
         return;
       }
     });
@@ -61,7 +60,7 @@ class AuthCont {
     _loggingIn = true;
 
     Map<String, dynamic>? data = await StorageCont.load();
-    if (data == null) return;
+    if (data == null) { init(); return; }
 
     String? uid = data['uid'];
     _loginType = LoginType.toEnum(data['loginType']);
@@ -71,8 +70,8 @@ class AuthCont {
 
     if (uid == null) { init(); return; }
     FUser? stranger = await FUserDAO().loadOne(data['uid']);
-    if (stranger == null) return;
-    if (!stranger.autoLoginAllowed) return;
+    if (stranger == null) { init(); return; }
+    if (!stranger.autoLoginAllowed) { init(); return; }
 
     loginPageCont.startLoading('auto-login');
     _logged = await FUserDAO().loadOneAll(data['uid']);
@@ -82,8 +81,8 @@ class AuthCont {
   }
 
   static void fLogin(LoginType type) async {
-    // if (_loggingIn) return;
-    // _loggingIn = true;
+    if (_loggingIn) return;
+    _loggingIn = true;
 
     UserCredential? credential = await SignCont.signIn(type);
 

@@ -48,6 +48,13 @@ class FUserCollection extends FUser {
     return cols;
   }
 
+  bool badgeAlreadyEarned(String badgeId) => badgeIds.contains(badgeId);
+  bool badgeAlreadyEarnedToday(String badgeId) {
+    _CollectionData? data = _collectionsData[badgeId];
+    if (data == null) return false;
+    return data.dates.map((d) => d.ignoreTime).last.isAtSameMomentAs(today);
+  }
+
   @override
   FBadge get badge => FBadgeLocal().get(_badgeId ?? '1000000')!;
 

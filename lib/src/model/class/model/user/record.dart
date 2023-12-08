@@ -169,6 +169,11 @@ class FUserRecord extends FUser {
   }
 
   @override
+  bool allCompleted(DateTime date) => FType.activeValues
+      .map((type) => completed(type, date))
+      .every((c) => c);
+
+  @override
   bool completed(FType type, DateTime date) {
     num value = getOneDayRecord(date)[type]!;
     num goalValue = goal.byDate(date, type);

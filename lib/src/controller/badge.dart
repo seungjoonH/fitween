@@ -63,7 +63,7 @@ class FBadgeCont extends GetxController {
     if (hasBadge(id)) dates = _data[id]!..add(now);
     dates ??= [now];
     _data[id] = dates;
-    badge.earn();
+    await badge.earn();
     await _syncTo();
   }
 

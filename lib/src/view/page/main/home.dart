@@ -139,7 +139,7 @@ class _HomePageState extends FPageState {
       bool selected = date.isAtSameMomentAs(calendarCont.selectedDay);
       bool passed = !date.isAfter(today);
       bool isToday = date.isAtSameMomentAs(today);
-      void onTap() => calendarCont.selectDay(date, date);
+      void onTap() => cont.selectDay(date);
       String dayText = '${date.day}';
       if (date.day == 1) dayText = '${date.month}/$dayText';
 

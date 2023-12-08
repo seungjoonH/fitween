@@ -27,7 +27,7 @@ class HomePageCont extends MainPageCont {
   void setType(FType type) => _activeType(type);
   void onChanged(int index) {
     setType(FType.activeValues[index]);
-    _syncMarbleCenterRecords();
+    syncMarbleCenterRecords();
   }
 
   final _record = Rx<num>(0);
@@ -37,8 +37,9 @@ class HomePageCont extends MainPageCont {
   static const int _maxLog = 10;
   final _androidLog = <DateTime>[].obs;
 
-  void _syncMarbleCenterRecords() {
-    _record(_logged.getOneDayRecord(CalendarCont.to.selectedDay)[activeType]!);
+  void syncMarbleCenterRecords([DateTime? date]) {
+    date ??= calendarCont.selectedDay;
+    _record(_logged.getOneDayRecord(date)[activeType]!);
     _androidLog(_logged.record!.androidLog);
   }
 
@@ -159,17 +160,26 @@ class HomePageCont extends MainPageCont {
   Future load() async {
     await calendarCont.init();
     await rankingCont.init();
-    _syncMarbleCenterRecords();
-    await FBadgeCont.to.init();
+    syncMarbleCenterRecords();
   }
 
   @override
   Future afterRoute() async {
+    _earnBadges();
     _setGiftReceivedState();
     delay(2.s, () {
       if (BottomBarCont.to.pageIndex != 0) return;
       gotoSelectedWeek();
     });
+  }
+
+  Future _earnBadges() async {
+    await FBadgeCont.to.init();
+    await FBadgeCont.to.earnBadge('1000000');
+    await FBadgeCont.to.earnBadge('1000001');
+    await FBadgeCont.to.earnBadge('1000002');
+    await FBadgeCont.to.earnBadge('1000003');
+    await FBadgeCont.to.earnBadge('1000004');
   }
 
   FUser get _logged => AuthCont.logged!;
@@ -208,8 +218,13 @@ class HomePageCont extends MainPageCont {
   void _animateToLast() => _animateTo(carouselCount - 1);
 
   void gotoSelectedWeek() => _animateTo(selectedWeekIndex);
+
+  void selectDay(DateTime date) {
+    calendarCont.selectDay(date);
+    syncMarbleCenterRecords(date);
+  }
   void selectToday() {
-    calendarCont.selectDay(today);
+    selectDay(today);
     _animateToLast();
   }
 

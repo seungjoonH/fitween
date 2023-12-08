@@ -93,6 +93,7 @@ class FUser extends Model {
 
   Map<DateTime, List<CalendarEvent>> get events => record!.events;
 
+  bool allCompleted(DateTime date) => record!.allCompleted(date);
   bool completed(FType type, DateTime date) => record!.completed(type, date);
   bool started(FType type, DateTime date) => record!.started(type, date);
 
