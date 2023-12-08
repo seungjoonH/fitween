@@ -148,11 +148,13 @@ class ItemToEarnCellWidget extends ItemCellWidget {
     super.size,
     super.onPressed,
     super.margin,
+    this.disabled,
     this.received,
     this.receivedColor,
     required this.count,
   });
 
+  final bool? disabled;
   final bool? received;
   final Color? receivedColor;
   final int count;
@@ -164,17 +166,20 @@ class ItemToEarnCellWidget extends ItemCellWidget {
 class _ItemToEarnCellWidgetState extends ItemCellWidgetState<ItemToEarnCellWidget> {
   @override
   int get _count => widget.count;
+  bool get _disabled => widget.disabled ?? false;
   bool get _received => widget.received ?? false;
   Color get _receivedColor => widget.receivedColor ?? ThemeCont.to.outline;
 
   @override
   void _onPressed() {
+    if (_disabled) return;
     if (widget.onPressed == null) return;
     widget.onPressed!();
   }
 
   @override
   Widget _buildPressableWidget(BuildContext context) {
+    if (_disabled) return GrayScaleWidget(child: _buildChildWidget(context));
     if (_received) return _buildChildWidget(context);
     return PulseWidget(
       onPressed: _onPressed,

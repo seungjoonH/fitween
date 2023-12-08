@@ -29,7 +29,7 @@ class FUser extends Model {
   Map<String, Battle> get battles => battle!.battles;
 
   // collection
-  Collection? get profileCollection => collections[collection!.badgeId];
+  Collection? get profileCollection => collections[collection!.badge!.key];
   Map<String, Collection> get collections => collection!.collections;
   List<Collection> get orderedCollections => collection!.ordered;
 

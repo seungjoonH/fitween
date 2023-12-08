@@ -182,10 +182,10 @@ class _FBadgeWidgetState extends State<FBadgeWidget> with ScalePressable {
 
   @override
   VoidCallback? get onPressed => _pressable
-      ? () => FBadgeCont.to.onPressed(widget.badge!) : null;
+      ? () => FBadgeCont.to.onPressed(widget.badge) : null;
   @override
   VoidCallback? get onLongPressed => _longPressable
-      ? () => FBadgeCont.to.onLongPressed(widget.badge!): null;
+      ? () => FBadgeCont.to.onLongPressed(widget.badge): null;
 }
 
 

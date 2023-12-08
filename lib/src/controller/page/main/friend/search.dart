@@ -31,7 +31,7 @@ class FriendSearchPageCont extends PageCont {
   void backPressed() {
     textEditingCont.clear();
     _keyword('');
-    BottomBarCont.to.navigate(1);
+    Get.back();
   }
 
   void onChanged(String text) async {

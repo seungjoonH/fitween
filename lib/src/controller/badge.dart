@@ -46,7 +46,7 @@ class FBadgeCont extends GetxController {
     _data.clear();
     await AuthCont.load(FUserLoadCont.onlyCollection());
     _data.assignAll({..._logged.collection!.dates});
-    _mainBadgeId(_logged.collection!.badgeId);
+    _mainBadgeId(_logged.collection!.badge!.key);
   }
 
   Future _syncTo() async {
@@ -178,7 +178,10 @@ class FBadgeCont extends GetxController {
           FBadgeWidget(
             badge: badge,
             size: 100.0.r,
+            pressable: false,
+            longPressable: false,
           ),
+          SizedBox(height: 10.0.h),
           FText(
             badge.title,
             style: ThemeCont.to.bodyLarge,
@@ -191,15 +194,18 @@ class FBadgeCont extends GetxController {
           ),
         ],
       ),
+      type: DialogType.mono,
     );
   }
 
-  void onPressed(FBadge badge) {
+  void onPressed(FBadge? badge) {
+    if (badge == null) return;
     if (hasBadge(badge.key)) { _myBadgePressed(badge); }
     else { _unknownBadgePressed(badge); }
   }
 
-  void onLongPressed(FBadge badge) {
+  void onLongPressed(FBadge? badge) {
+    if (badge == null) return;
     setMainBadge(badge.key);
   }
 }

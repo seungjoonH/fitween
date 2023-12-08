@@ -121,32 +121,19 @@ class _LevelDetailPageState extends FPageState<LevelDetailPage> {
   }
 
   Widget _buildItemsWidget(BuildContext context) {
-    return Obx(() {
-      if (cont.isCurrent) {
-        return Column(
-          children: List.generate(
-            cont.items.length, (i) => GrayScaleWidget(
-              child: ItemToEarnCellWidget(
-                item: cont.items[i],
-                size: _defaultSize,
-                count: cont.pointDivided[i],
-              )),
-          ).separateH(height: 10.0.h),
-        );
-      }
-
-      return Column(
-        children: List.generate(
-            cont.items.length, (i) => ItemToEarnCellWidget(
+    return Obx(() => Column(
+      children: List.generate(
+        cont.items.length, (i) => ItemToEarnCellWidget(
           item: cont.items[i],
           size: _defaultSize,
           count: cont.pointDivided[i],
+          disabled: cont.isCurrent,
           received: cont.isItemReceived(i),
           receivedColor: cont.level!.type.color,
           onPressed: () => cont.itemPressedByIndex(i),
-        )).separateH(height: 10.0.h),
-      );
-    });
+        ),
+      ).separateH(height: 10.0.h),
+    ));
   }
 
   Widget _buildCompensationsWidget(BuildContext context) {

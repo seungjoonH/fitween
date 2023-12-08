@@ -20,7 +20,6 @@ class FUserCollection extends FUser {
   bool _hasGiftReceived = false;
   bool get hasGiftReceived => _hasGiftReceived;
 
-  String? get badgeId => _badgeId;
   Map<String, Item> get inventory => _inventory;
   Map<String, int> get counts => _inventoryData;
 
@@ -48,6 +47,9 @@ class FUserCollection extends FUser {
     cols.sort((a, b) => a.dates.last!.isBefore(b.dates.last!) ? 1 : -1);
     return cols;
   }
+
+  @override
+  FBadge? get badge => FBadgeLocal().get(_badgeId);
 
   @override
   Color get badgeColor => FType.values[uid.codeUnitAt(1) % 4].color;

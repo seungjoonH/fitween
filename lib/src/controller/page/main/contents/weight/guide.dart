@@ -46,7 +46,7 @@ class WeightGuidePageCont extends CarouselPageCont {
   @override
   Future load() async {
     _exercise(Get.arguments as Exercise);
-    await delay(10.ms, () {
+    await delay(100.ms, () {
       pageIndex = 0;
       carouselCont.jumpToPage(pageIndex);
     });
