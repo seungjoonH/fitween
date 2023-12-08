@@ -49,7 +49,7 @@ class Level extends Model {
     return min(max(value, 0), goal);
   }
 
-  bool inRange(num value) => amount.value <= value && next.amount.value > value;
+  bool inRange(num value) => amount.main <= value && next.amount.main > value;
 
   bool isAchievedAmount(Amount amount) => amount.main >= this.amount.main;
   double getPercent(Amount amount) => getCurrentValue(amount) / goal;

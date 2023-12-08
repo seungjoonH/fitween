@@ -10,7 +10,7 @@ class FriendPageCont extends MainPageCont {
   FriendCont get friendCont => FriendCont.to;
 
   String get appBarTitle => LangCont.tr('appbar.friend');
-  String get friendsCountText => LangCont.plural('friend.count', friendCont.friends.length);
+  String get friendsCountText => LangCont.plural('friend.count', _followersData.length);
   String get noFriendsText => LangCont.tr('friend.no-friends');
 
   final _changed = false.obs;
@@ -75,7 +75,7 @@ class FriendPageCont extends MainPageCont {
   void friendSearchButtonPressed() => FRoute.toFriendSearch();
 
   void profileWidgetPressed(FUser user) {
-
+    friendCont.showFriendInfoDialog(user);
   }
 
   bool getFollowed(String uid) => _followersData[uid] ?? false;

@@ -133,8 +133,8 @@ class InventoryCont extends GetxController {
         ],
       ),
       type: DialogType.bi,
-      rightText: goToInventoryButtonText,
-      rightPressed: () => FRoute.toInventory(),
+      leftText: goToInventoryButtonText,
+      leftPressed: () => FRoute.toInventory(),
     );
   }
 }

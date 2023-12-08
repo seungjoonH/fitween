@@ -79,8 +79,8 @@ Future<bool> showFDialog({
       break;
   }
 
-  titlePadding = EdgeInsets.only(top: 20.0.r, left: 20.0.r);
-  contentPadding = EdgeInsets.all(20.0.r);
+  titlePadding ??= EdgeInsets.only(top: 20.0.r, left: 20.0.r);
+  contentPadding ??= EdgeInsets.all(20.0.r);
 
   void leftPressedWithClosingDialog() {
     Get.back();

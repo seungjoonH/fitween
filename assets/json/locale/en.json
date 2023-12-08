@@ -310,7 +310,7 @@
         "other": "{} kinds of items\nhave been awarded"
       },
       "used-title": "Item used",
-      "used-text": "@{{title}} item has been used"
+      "used-text": "Item has been used"
     }
   },
   "badge": {

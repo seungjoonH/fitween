@@ -5,6 +5,7 @@ import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Item extends Model {
   static const _asset = 'assets/image/item';
@@ -82,16 +83,23 @@ abstract class ItemUsingStrategy {
   void showItemUsedDialog() {
     Item item = Item.fromId(id);
     String itemUsedTitle = LangCont.tr('item.dialog.used-title');
-    String itemUsedText = LangCont.tr('item.dialog.used-text', namedArgs: {'title': item.title});
+    String itemUsedText = LangCont.tr('item.dialog.used-text');
     showFDialog(
       title: itemUsedTitle,
-      content: FTexts(
-        itemUsedText,
-        style: ThemeCont.to.bodyLarge,
-        highlightStyle: ThemeCont.to.bodyLarge?.copyWith(
-          fontWeight: FontWeight.bold,
-        ),
-        wordWrap: true,
+      content: Column(
+        children: [
+          FText(
+            item.title,
+            style:ThemeCont.to.bodyLarge,
+            bold: true,
+          ),
+          SizedBox(height: 10.0.h),
+          FText(
+            itemUsedText,
+            style: ThemeCont.to.bodyLarge,
+            maxLines: 0,
+          ),
+        ],
       ),
       type: DialogType.mono,
     );
