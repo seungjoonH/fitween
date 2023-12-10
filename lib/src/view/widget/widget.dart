@@ -41,6 +41,7 @@ export './widget/slider.dart';
 export './widget/tab.dart';
 export './widget/tag.dart';
 export './widget/text.dart';
+export './widget/water_drop.dart';
 
 abstract class FWidget extends StatefulWidget {
   const FWidget({super.key});

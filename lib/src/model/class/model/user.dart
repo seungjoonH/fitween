@@ -1,4 +1,5 @@
 import 'package:fitween/global/date.dart';
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/class/model.dart';
@@ -29,7 +30,7 @@ class FUser extends Model {
   Map<String, Battle> get battles => battle!.battles;
 
   // collection
-  Collection? get profileCollection => collections[collection!.badge!.key];
+  Collection? get profileCollection => collections[collection!.badge.key];
   Map<String, Collection> get collections => collection!.collections;
   List<Collection> get orderedCollections => collection!.ordered;
 
@@ -57,7 +58,7 @@ class FUser extends Model {
   bool get isMale => sex == Sex.male;
   bool get isFemale => sex == Sex.female;
 
-  int get weekCount => tomorrow.difference(regDate.firstDayOfWeek).inDays ~/ 7;
+  int get weekCount => today.difference(regDate.firstDayOfWeek).inDays ~/ 7;
 
   // party
   Map<String, Party> get parties => party!.parties;

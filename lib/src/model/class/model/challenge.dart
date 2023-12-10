@@ -61,6 +61,7 @@ class Challenge extends Model {
   FType get type => _type;
   String get word => _words[_locale]!;
   int get period => _period;
+  bool get locked => _locked;
 
   String get subDescription => _descriptions[_locale]['sub'].replaceAll('##', word);
   String getDetailDescription({Difficulty? difficulty, bool txs = false}) {

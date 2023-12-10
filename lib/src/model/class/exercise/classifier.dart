@@ -67,7 +67,7 @@ class Classifier {
     final cameraImage = data.cameraImage;
     int width = cameraImage.width;
     int height = cameraImage.height;
-    bool isPortrait = data.orientation == Orientation.portrait;
+    // bool isPortrait = data.orientation == Orientation.portrait;
 
     image_lib.Image image = image_lib.Image(width, height);
 
@@ -96,10 +96,6 @@ class Classifier {
       }
 
       image = image_lib.copyRotate(image, 90.0);
-      print([width, height]);
-      print([image.width, image.height]);
-      print([cameraImage.width, cameraImage.height]);
-      print('');
 
       // image = image_lib.copyRotate(image, isPortrait ? 90.0 : 180.0);
       // image = image_lib.flipHorizontal(image);

@@ -133,7 +133,7 @@ class OverflowDetectingText extends StatelessWidget {
       alignment: Alignment.center,
       child: LayoutBuilder(
           builder: (context, constraints) {
-            painter.layout(maxWidth: constraints.maxWidth);
+            painter.layout(maxWidth: constraints.maxWidth * .95);
             if (painter.didExceedMaxLines) {
               return Marquee(
                 text: data,

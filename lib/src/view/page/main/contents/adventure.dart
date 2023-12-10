@@ -1,5 +1,5 @@
 import 'package:fitween/global/global.dart';
-import 'package:fitween/src/controller/page.dart';
+import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
 import 'package:fitween/src/view/page/page.dart';
@@ -18,6 +18,7 @@ class AdventurePage extends FPage {
 class _AdventurePageState extends FPageState<AdventurePage> {
   @override
   AdventurePageCont get cont => AdventurePageCont.to;
+  FriendCont get friendCont => FriendCont.to;
 
   Widget _buildIslandListWidget(BuildContext context, FType type) {
     return Obx(() => Stack(
@@ -60,7 +61,7 @@ class _AdventurePageState extends FPageState<AdventurePage> {
     ));
   }
 
-  Widget _buildProgressWidget(BuildContext context) {
+  Widget _buildMyProgressWidget(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(right: 5.0.w),
       child: Obx(() => Column(
@@ -90,6 +91,36 @@ class _AdventurePageState extends FPageState<AdventurePage> {
     );
   }
 
+  Widget _buildUserPositionedWidget(BuildContext context, FUser user) {
+    return FUserWaterDropWidget(
+      user: user,
+      color: cont.activeType.color,
+    );
+  }
+
+  Widget _buildFriendProgressWidget(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(right: 5.0.w),
+      child: Obx(() => Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: List.generate(cont.list.length, (i) {
+          Level level = cont.list[i];
+          return Container(
+            height: i == 0 ? 80.0.r : 200.0.r,
+            margin: EdgeInsets.only(bottom: 20.0.r),
+            alignment: Alignment.centerRight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: friendCont.getFollowersInLevel(level)
+                  .map((user) => _buildUserPositionedWidget(context, user)).toList(),
+            ),
+          );
+        }).separateH(height: 40.0.h),
+      )),
+    );
+  }
+
   Widget _buildTopCloudImage(BuildContext context) {
     return Image.asset(
       AdventurePageCont.topCloudAsset,
@@ -110,7 +141,8 @@ class _AdventurePageState extends FPageState<AdventurePage> {
               alignment: Alignment.bottomRight,
               children: [
                 _buildIslandListWidget(context, FType.distance),
-                _buildProgressWidget(context),
+                _buildMyProgressWidget(context),
+                _buildFriendProgressWidget(context),
               ],
             ),
           ),

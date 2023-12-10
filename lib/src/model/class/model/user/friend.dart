@@ -1,7 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween/global/date.dart';
-import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:get/get.dart';
 

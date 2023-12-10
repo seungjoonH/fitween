@@ -15,6 +15,18 @@ abstract class LevelLocal extends LocalModel<Level> {
       default: return null;
     }
   }
+  static int getLv(FType type, num value) {
+    LevelLocal local = byType(type)!;
+    switch (type) {
+      case FType.distance:
+        return local.getCurrent(DistanceAmount()..step = value);
+      case FType.height:
+        return local.getCurrent(HeightAmount()..floor = value);
+      case FType.weight:
+        return local.getCurrent(WeightAmount()..cnt = value);
+      default: return 0;
+    }
+  }
 
   FType get type;
 

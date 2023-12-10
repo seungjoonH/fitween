@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/amount/amount.dart';
-import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
 import 'package:get/get.dart';
 

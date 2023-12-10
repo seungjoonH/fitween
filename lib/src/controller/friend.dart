@@ -1,12 +1,11 @@
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/dao.dart';
+import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
-import 'package:fitween/src/view/widget/function/dialog.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/basic.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
@@ -42,6 +41,7 @@ class FriendCont extends GetxController {
 
   void syncFollowersFrom(Map<String, bool> data) {
     for (String uid in data.keys) {
+      _data[uid] ??= FriendData();
       if (data[uid]!) { _data[uid]!.follow(); }
       else { _data[uid]!.unfollow(); }
     }
@@ -93,47 +93,74 @@ class FriendCont extends GetxController {
       content: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: FType.activeValues.map((type) {
-            num friendValue = friendRecord[type]!;
-            num myValue = myRecord[type]!;
-            num difference = friendValue - myValue;
-            num sign = difference.sign;
+          children: [
+            Center(child: FBadgeWidget(
+              badge: user.badge,
+              backgroundColor: user.badgeColor,
+              size: 80.0.r,
+            )),
+            SizedBox(height: 30.0.h),
+            ...FType.activeValues.map((type) {
+              num friendValue = friendRecord[type]!;
+              num myValue = myRecord[type]!;
+              num difference = friendValue - myValue;
+              num sign = difference.sign;
+              int lv = LevelLocal.getLv(type, friendValue);
 
-            IconData icon = Icons.flutter_dash;
-            Color color = ThemeCont.to.outline;
-            if (sign > 0) { icon = Icons.arrow_drop_up;  color = ThemeCont.colorB; }
-            else if (sign < 0) { icon = Icons.arrow_drop_down; color = ThemeCont.colorC; }
+              Widget icon = FText('-', color: ThemeCont.to.comment);
+              Color color = ThemeCont.to.outline;
+              if (sign > 0) {
+                color = ThemeCont.colorB;
+                icon = Icon(Icons.arrow_drop_up, color: color);
+              }
+              else if (sign < 0) {
+                color = ThemeCont.colorC;
+                icon = Icon(Icons.arrow_drop_down, color: color);
+              }
 
-            return Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                FText(
-                  '${type.locale}: ',
-                  color: ThemeCont.to.comment,
-                  style: ThemeCont.to.commentStyle,
-                ),
-                SizedBox(width: 10.0.w),
-                FTexts(
-                  type.withUnit(friendValue, txs: true),
-                  style: ThemeCont.to.bodyMedium,
-                  highlightStyle: ThemeCont.to.titleMedium,
-                ),
-                SizedBox(width: 5.0.w),
-                Row(
-                  children: [
-                    Icon(icon, color: color),
-                    FText(
-                      '(${type.withUnit(difference.abs())})',
-                      style: ThemeCont.to.bodyMedium,
-                      color: color,
-                    ),
-                  ],
-                ),
-              ],
-            );
-          }).separateH(height: 10.0.h),
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FText(
+                    '${type.locale} (LV $lv): ',
+                    color: ThemeCont.to.comment,
+                    style: ThemeCont.to.bodyMedium,
+                  ),
+                  SizedBox(width: 10.0.w),
+                  FTexts(
+                    type.withUnit(friendValue, txs: true),
+                    style: ThemeCont.to.bodyMedium,
+                    highlightStyle: ThemeCont.to.titleSmall,
+                  ),
+                  SizedBox(width: 5.0.w),
+                  Row(
+                    children: [
+                      icon,
+                      FText(
+                        '(${type.withUnit(difference.abs())})',
+                        style: ThemeCont.to.bodySmall,
+                        color: color,
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            }).separateH(height: 10.0.h)
+          ],
         ),
       ),
     );
+  }
+
+  List<FUser> getFollowersInLevel(Level level) {
+    List<FUser> list = [];
+    num value(FUser user) => user.allRecord[level.type]!;
+
+    for (FUser user in followers.values) {
+      if (level.inRange(value(user))) list.add(user);
+    }
+    int compare(FUser a, FUser b) => value(b).compareTo(value(a));
+    return list..sort(compare);
   }
 }

@@ -1,6 +1,5 @@
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/controller/file.dart';
 import 'package:fitween/src/model/class/date_range.dart';
 import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
@@ -44,7 +43,7 @@ class FBadge extends Model {
   }
 
   Future<bool> get activate async {
-    return await FileCont.isLocalAsset(imageUrl);
+    return _activate && await FileCont.isLocalAsset(imageUrl);
   }
 
   FBadgeType get type => FBadgeType.get(_id);

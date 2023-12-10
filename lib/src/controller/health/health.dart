@@ -144,7 +144,9 @@ class HealthDataCont {
 
     DateRange dateRange = DateRange(startTime, endTime);
     for (DateTime date in dateRange.dates) {
-      _fetchedSteps[date] = await _fetchWithoutArtificialData(_stepType.first, date);
+      num? value = await _fetchWithoutArtificialData(_stepType.first, date);
+      if (value == null) continue;
+      _fetchedSteps[date] = value;
     }
   }
 
@@ -170,7 +172,9 @@ class HealthDataCont {
 
     DateRange dateRange = DateRange(startTime, endTime);
     for (DateTime date in dateRange.dates) {
-      _fetchedFlights[date] = await _fetchWithoutArtificialData(_flightType.first, date);
+      num? value = await _fetchWithoutArtificialData(_flightType.first, date);
+      if (value == null) continue;
+      _fetchedFlights[date] = value;
     }
 
     // flightsData = await _health
@@ -189,6 +193,8 @@ class HealthDataCont {
   }
 
   static Future _fetchWithoutArtificialData(HealthDataType type, DateTime date) async {
+    if (!_approved) return;
+
     List<HealthDataPoint> points = await _health
         .getHealthDataFromTypes(date, date.lastTimeOfDay, [type]);
 
