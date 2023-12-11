@@ -2,6 +2,8 @@ import 'package:fitween/global/date.dart';
 import 'package:fitween/global/number.dart';
 import 'package:fitween/src/controller/theme.dart';
 import 'package:fitween/src/controller/page.dart';
+import 'package:fitween/src/model/class/local.dart';
+import 'package:fitween/src/view/widget/widget.dart';
 import 'package:fitween/src/view/widget/widget/bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -94,12 +96,18 @@ class FScaffold extends Scaffold {
   double get pageHeight => height ?? PageCont.size.height;
 
   @override
-  Widget? get body => SizedBox(
-    width: pageWidth,
-    height: pageHeight,
-    child: PageCont.isPortrait
-        ? _portraitBody
-        : _landscapeBody,
+  Widget? get body => Stack(
+    children: [
+      if (today.isChristmas)
+      const Positioned.fill(child: SnowyBackground()),
+      SizedBox(
+        width: pageWidth,
+        height: pageHeight,
+        child: PageCont.isPortrait
+            ? _portraitBody
+            : _landscapeBody,
+      ),
+    ],
   );
 }
 

@@ -95,6 +95,8 @@ extension DateTimeExtension on DateTime {
   int get generation => age ~/ 10 * 10;
 
   Weekday get wd => Weekday.values[weekday - 1];
+
+  bool get isChristmas => month == 12 && day == 25;
 }
 
 extension DurationExtension on Duration {

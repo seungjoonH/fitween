@@ -180,6 +180,8 @@ class HomePageCont extends MainPageCont {
     await FBadgeCont.to.earnBadge('1000002');
     await FBadgeCont.to.earnBadge('1000003');
     await FBadgeCont.to.earnBadge('1000004');
+
+    await FBadgeCont.to.earnBadge('1060000');
   }
 
   FUser get _logged => AuthCont.logged!;

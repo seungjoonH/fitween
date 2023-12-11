@@ -88,6 +88,8 @@ class FBadge extends Model {
       case '1000002': return badge..strategy = GoodDayBadgeEarningStrategy();
       case '1000003': return badge..strategy = BetterDaysBadgeEarningStrategy();
       case '1000004': return badge..strategy = PerfectWeekBadgeEarningStrategy();
+
+      case '1060000': return badge..strategy = ChristmasBadgeEarningStrategy();
       default: return badge;
     }
   }
@@ -290,4 +292,19 @@ class WeightBadgeEarningStrategy extends LevelBadgeEarningStrategy {
 
   @override
   FType get type => FType.weight;
+}
+
+
+class ChristmasBadgeEarningStrategy extends FBadgeEarningStrategy {
+  @override
+  String get badgeId => '1060000';
+
+  @override
+  FBadgeDuplication get duplication => FBadgeDuplication.onceInADay;
+
+  @override
+  bool get canBeEarned {
+    if (alreadyEarnedToday) return false;
+    return today.isChristmas;
+  }
 }

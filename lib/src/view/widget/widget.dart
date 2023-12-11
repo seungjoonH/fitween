@@ -38,6 +38,7 @@ export './widget/pulse.dart';
 export './widget/rank.dart';
 export './widget/scaffold.dart';
 export './widget/slider.dart';
+export './widget/snowy.dart';
 export './widget/tab.dart';
 export './widget/tag.dart';
 export './widget/text.dart';

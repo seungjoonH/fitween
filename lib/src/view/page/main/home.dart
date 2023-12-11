@@ -101,7 +101,6 @@ class _HomePageState extends FPageState {
     return const NoticeWidget();
   }
 
-
   Widget _buildGiftCardContentWidget(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,

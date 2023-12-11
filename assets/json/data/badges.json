@@ -2472,6 +2472,18 @@
     "activate":false
   },
   {
+    "id":1060000,
+    "title":{
+      "ko":"크리스마스",
+      "en":"Christmas"
+    },
+    "description":{
+      "ko":"크리스마스를 피트윈과 함께했습니다.",
+      "en":"Spent Christmas with Fitween."
+    },
+    "activate":true
+  },
+  {
     "id":1999999,
     "title":{
       "ko":"운영자",
