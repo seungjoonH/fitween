@@ -292,6 +292,20 @@
     },
     "set-as-main": "대표 뱃지로 설정"
   },
+  "error": {
+    "no-network": {
+      "title": "네트워크 에러",
+      "text": "네트워크가 연결되어 있지 않습니다.\nWifi 혹은 셀룰러 데이터를 연결한 후 앱을 이용해주세요."
+    },
+    "version-invalid": {
+      "title": "버전 미호환",
+      "text": "ver {version} 은 지원되지 않는 버전 입니다. 최신 버전을 사용해주세요."
+    },
+    "time-out": {
+      "title": "응답시간 초과",
+      "text": "응답시간이 초과되었습니다.\n네트워크를 확인해주세요."
+    }
+  },
   "login": {
     "user-loading": "사용자 데이터 불러오는 중",
     "user-complete": "사용자 데이터 불러오기 완료",

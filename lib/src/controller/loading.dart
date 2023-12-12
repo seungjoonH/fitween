@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 class LoadingCont extends GetxController {
   static LoadingCont get to => Get.find<LoadingCont>();
 
-  static bool _delayActive = false;
   final Color _mainColor = ThemeCont.to.shimmer;
   final _color = ThemeCont.to.shimmer.obs;
   final _count = 0.obs;
@@ -26,7 +25,9 @@ class LoadingCont extends GetxController {
   Color get color => _color.value;
 
   void _increaseCount() { _count(_count.value + 1); update(); }
-  void _decreaseCount() { _count(max(_count.value + 1, 0)); update(); }
+  void _decreaseCount() { _count(max(_count.value - 1, 0)); update(); }
+
+  late DateTime _loadTime;
 
   bool loadStart([String? id, int? sec]) {
     _count(0);
@@ -35,15 +36,9 @@ class LoadingCont extends GetxController {
 
     final int countHistory = _count.value;
     _increaseCount();
-    _delayActive = true;
     _opacity(.2);
 
-    delay(5.s, () async {
-      if (_delayActive) return;
-      await DialogCont.showResponseTimeoutErrorDialog();
-      _delayActive = false;
-      _decreaseCount();
-    });
+    _loadTime = now;
 
     _timer = Timer.periodic(10.ms, (timer) {
       if (countHistory == _count.value) { timer.cancel(); update(); return; }
@@ -52,14 +47,16 @@ class LoadingCont extends GetxController {
         _mainColor.withOpacity(.2 + _opacity.value),
         ThemeCont.to.background,
       ));
+      if (_loadTime.add(20.s).isBefore(now)) {
+        DialogCont.showNetworkErrorDialog();
+        timer.cancel();
+        _decreaseCount();
+        return;
+      }
       update();
     });
 
     delay((sec ?? 0 * 1).s, () => _refreshQueue.remove(id));
-
-    // delay((sec ?? 0 * 1).s, () {
-    //   if (id != null) _refreshQueue.remove(id); // Remove id if it's not null
-    // });
 
     return true;
   }

@@ -1,7 +1,9 @@
 import 'dart:async';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fitween/global/global.dart';
+import 'package:fitween/main.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/controller/health/health.dart';
@@ -41,9 +43,7 @@ class AuthCont {
     Timer.periodic(10.ms, (timer) async {
       if (!loginPageCont.loading) {
         timer.cancel();
-        loginPageCont.startLoading('home');
         await BottomBarCont.to.navigate(0);
-        await loginPageCont.endLoading();
         init();
 
         return;
@@ -55,7 +55,34 @@ class AuthCont {
 
   static void init() => _loggingIn = false;
 
+  static Future<bool> get _versionAvailable async {
+    var json = (await f.collection('versions').doc(versionNumber).get()).data();
+    return json != null && json['available'];
+  }
+
+  static Future<bool> get _canBeLoggedIn async {
+    bool result = true;
+
+    ConnectivityResult networkResult = await Connectivity().checkConnectivity();
+
+    await delay(500.ms, () async {
+      if (networkResult == ConnectivityResult.none) {
+        DialogCont.showNetworkErrorDialog();
+        result = false;
+        return;
+      }
+      if (!await _versionAvailable) {
+        DialogCont.showVersionInvalidDialog();
+        result = false;
+        return;
+      }
+    });
+
+    return result;
+  }
+
   static void fAutoLogin() async {
+    if (!(await _canBeLoggedIn)) return;
     if (_loggingIn) return;
     _loggingIn = true;
 
@@ -81,12 +108,12 @@ class AuthCont {
   }
 
   static void fLogin(LoginType type) async {
+    if (!(await _canBeLoggedIn)) return;
     if (_loggingIn) return;
     _loggingIn = true;
 
     UserCredential? credential = await SignCont.signIn(type);
 
-    // 로그인 실패
     if (credential == null) { init(); return; }
 
     _credentialUser = credential.user!;

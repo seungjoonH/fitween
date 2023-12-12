@@ -329,6 +329,20 @@
     },
     "set-as-main": "Set as Main"
   },
+  "error": {
+    "no-network": {
+      "title": "Network Error",
+      "text": "The network is not connected.\nPlease use the app after connecting Wi-Fi or cellular data."
+    },
+    "version-invalid": {
+      "title": "Version Invalid",
+      "text": "ver {version} is invalid. Please use the latest version."
+    },
+    "time-out": {
+      "title": "Response time out",
+      "text": "Response time exceeded.\nPlease check the network."
+    }
+  },
   "login": {
     "user-loading": "Loading user data",
     "user-complete": "User data load complete",

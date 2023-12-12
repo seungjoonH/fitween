@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:fitween/global/global.dart';
+import 'package:fitween/main.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:get/get.dart';
@@ -80,16 +82,5 @@ class LoginPageCont extends PageCont {
     return '${LangCont.tr(key)} ($percent)';
   }
 
-  void onPressed(LoginType type) {
-    // if (await Inspection.load()) return;
-    // if (networkResult == ConnectivityResult.none) {
-    //   DialogCont.showNetworkErrorDialog();
-    //   return;
-    // }
-    // if (!await AuthP.versionCheck()) {
-    //   DialogCont.showVersionInvalidDialog();
-    //   return;
-    // }
-    AuthCont.fLogin(type);
-  }
+  void onPressed(LoginType type) => AuthCont.fLogin(type);
 }

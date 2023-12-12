@@ -142,13 +142,16 @@ class FBadgeCont extends GetxController {
                       bold: true,
                     ),
                     SizedBox(height: 5.0.h),
-                    SingleChildScrollView(
-                      child: Column(
-                        children: getDates(badge.key).map((date) => FText(
-                          dateToString('yyyy-MM-dd HH:mm', date)!,
-                          color: ThemeCont.to.comment,
-                          style: ThemeCont.to.bodySmall,
-                        )).separateW(width: 10.0.w),
+                    SizedBox(
+                      height: 50.0.h,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: getDates(badge.key).map((date) => FText(
+                            dateToString('yyyy-MM-dd HH:mm', date)!,
+                            color: ThemeCont.to.comment,
+                            style: ThemeCont.to.bodySmall,
+                          )).separateW(width: 10.0.w),
+                        ),
                       ),
                     ),
                   ],
