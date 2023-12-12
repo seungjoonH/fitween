@@ -47,7 +47,7 @@ class LoadingCont extends GetxController {
         _mainColor.withOpacity(.2 + _opacity.value),
         ThemeCont.to.background,
       ));
-      if (_loadTime.add(20.s).isBefore(now)) {
+      if (loading && _loadTime.add(20.s).isBefore(now)) {
         DialogCont.showNetworkErrorDialog();
         timer.cancel();
         _decreaseCount();
@@ -56,7 +56,10 @@ class LoadingCont extends GetxController {
       update();
     });
 
-    delay((sec ?? 0 * 1).s, () => _refreshQueue.remove(id));
+    delay(((sec ?? 1) * 1000).ms, () {
+      _refreshQueue.remove(id);
+      _decreaseCount();
+    });
 
     return true;
   }
