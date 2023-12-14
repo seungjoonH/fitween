@@ -107,7 +107,10 @@ class FriendCont extends GetxController {
               num sign = difference.sign;
               int lv = LevelLocal.getLv(type, friendValue);
 
-              Widget icon = FText('-', color: ThemeCont.to.comment);
+              Widget icon = Padding(
+                padding: EdgeInsets.all(5.0.r),
+                child: FText('-', color: ThemeCont.to.comment),
+              );
               Color color = ThemeCont.to.outline;
               if (sign > 0) {
                 color = ThemeCont.colorB;
@@ -123,7 +126,7 @@ class FriendCont extends GetxController {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   FText(
-                    '${type.locale} (LV $lv): ',
+                    '${type.localeShort} (LV $lv): ',
                     color: ThemeCont.to.comment,
                     style: ThemeCont.to.bodyMedium,
                   ),
