@@ -106,14 +106,19 @@ class _AdventurePageState extends FPageState<AdventurePage> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: List.generate(cont.list.length, (i) {
           Level level = cont.list[i];
+          List<FUser> users = friendCont.getFollowersInLevel(level);
           return Container(
             height: i == 0 ? 80.0.r : 200.0.r,
             margin: EdgeInsets.only(bottom: 20.0.r),
             alignment: Alignment.centerRight,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: friendCont.getFollowersInLevel(level)
-                  .map((user) => _buildUserPositionedWidget(context, user)).toList(),
+            child: Stack(
+              alignment: Alignment.centerRight,
+              children: List.generate(
+                users.length, (i) => Positioned(
+                  top: i * 20.0,
+                  child: _buildUserPositionedWidget(context, users[i]),
+                ),
+              ),
             ),
           );
         }).separateH(height: 40.0.h),

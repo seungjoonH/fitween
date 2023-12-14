@@ -157,9 +157,16 @@ class FriendCont extends GetxController {
     List<FUser> list = [];
     num value(FUser user) => user.allRecord[level.type]!;
 
+    Level myNextLevel = LevelLocal.byType(level.type)!.getNextLevel();
+
     for (FUser user in followers.values) {
-      if (level.inRange(value(user))) list.add(user);
+      if (myNextLevel.isEqualTo(level)) {
+        if (!level.satisfies(value(user))) continue;
+      }
+      else if (!level.inRange(value(user))) { continue; }
+      list.add(user);
     }
+
     int compare(FUser a, FUser b) => value(b).compareTo(value(a));
     return list..sort(compare);
   }

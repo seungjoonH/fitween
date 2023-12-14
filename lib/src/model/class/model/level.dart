@@ -33,9 +33,9 @@ class Level extends Model {
 
   String get imageUrl => '$_asset/${type.name}/$_id.png';
 
-  bool lessThan(Level level) { return amount.value < level.amount.value; }
-  bool moreThan(Level level) { return amount.value > level.amount.value; }
-  bool isEqualTo(Level level) { return !lessThan(level) && !moreThan(level); }
+  bool isLessThan(Level level) { return amount.value < level.amount.value; }
+  bool isMoreThan(Level level) { return amount.value > level.amount.value; }
+  bool isEqualTo(Level level) { return !isLessThan(level) && !isMoreThan(level); }
 
   LevelLocal get _local => LevelLocal.byType(type)!;
 
@@ -49,6 +49,7 @@ class Level extends Model {
     return min(max(value, 0), goal);
   }
 
+  bool satisfies(num value) => amount.main <= value;
   bool inRange(num value) => amount.main <= value && next.amount.main > value;
 
   bool isAchievedAmount(Amount amount) => amount.main >= this.amount.main;
