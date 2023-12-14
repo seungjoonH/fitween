@@ -16,6 +16,12 @@ class _FriendSearchPageState extends FPageState<FriendSearchPage> {
   FriendSearchPageCont get cont => FriendSearchPageCont.to;
 
   @override
+  void initState() {
+    super.initState();
+    cont.initState(reload: true);
+  }
+
+  @override
   Widget buildPage(BuildContext context) {
     return FScaffold(
       appBar: FAppBar(

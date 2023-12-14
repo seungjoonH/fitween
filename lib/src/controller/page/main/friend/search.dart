@@ -24,8 +24,10 @@ class FriendSearchPageCont extends PageCont {
 
   @override
   Future load() async {
+    String keyword = (Get.arguments as String?) ?? '';
     textEditingCont.clear();
-    _keyword('');
+    textEditingCont.text = keyword;
+    onChanged(keyword);
   }
 
   void backPressed() {

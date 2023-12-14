@@ -67,20 +67,20 @@ class FriendCont extends GetxController {
   bool isFollowing(String uid) => _data.keys.any((e) => e == uid);
   bool isFollowingOrMe(String uid) => logged.key == uid || isFollowing(uid);
 
-  Future follow(String uid) async {
-    if (_data[uid] == null) _data[uid] = FriendData();
+  // Future follow(String uid) async {
+  //   if (_data[uid] == null) _data[uid] = FriendData();
+  //
+  //   _data[uid]!.follow();
+  //   await _loadFriend(uid, cont: FUserLoadCont(collection: true, record: true));
+  //   await syncFriendsTo();
+  // }
 
-    _data[uid]!.follow();
-    await _loadFriend(uid, cont: FUserLoadCont(collection: true, record: true));
-    await syncFriendsTo();
-  }
-
-  Future unfollow(String uid) async {
-    if (_data[uid] == null) return;
-
-    _data[uid]!.unfollow();
-    await syncFriendsTo();
-  }
+  // Future unfollow(String uid) async {
+  //   if (_data[uid] == null) return;
+  //
+  //   _data[uid]!.unfollow();
+  //   await syncFriendsTo();
+  // }
 
   DateTime followedDate(String uid) => _data[uid]!.time;
 

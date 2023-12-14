@@ -4,6 +4,7 @@ import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
+import 'package:get/get.dart';
 
 class NotificationData extends Model {
   late Timestamp _date;
@@ -16,6 +17,14 @@ class NotificationData extends Model {
 
   DateTime get date => _date.toDate();
   set date(DateTime d) => _date = d.toTimestamp!;
+
+  @override
+  String toString() => '{'
+      '\n  date: $date,'
+      '\n  content: $_content,'
+      '\n  checked: $_checked'
+      '\n  objectCode: $_objectCode'
+      '\n}';
 
   bool get checked => _checked;
 
@@ -39,6 +48,10 @@ class NotificationData extends Model {
   FUser? get user => _user;
   Party? get party => _party;
 
+  bool equalTo(String content, String key) {
+    return content == _content && key == objectKey;
+  }
+
   Future load() async { await loadUser(); await loadParty(); }
 
   Future loadUser() async {
@@ -53,7 +66,10 @@ class NotificationData extends Model {
 
   Future route() async {
     switch (_content) {
-      case 'followed': return;
+      case 'followed':
+        if (user == null) return;
+        FRoute.toFriendSearch(keyword: user!.nickname);
+        return;
       case 'party-applied':
         if (party == null) await loadParty();
         FRoute.toParty(party: party);
@@ -162,7 +178,12 @@ class FUserNotification extends FUser {
     for (NotificationData notification in data) { await notification.load(); }
   }
 
+  bool _alreadyFollowed(FUser user) {
+    return _data.firstWhereOrNull((d) => d.equalTo('followed', user.uid)) != null;
+  }
+
   void follow(FUser user) {
+    if (_alreadyFollowed(user)) return;
     _data.add(NotificationData.followed(date: now, user: user));
   }
 

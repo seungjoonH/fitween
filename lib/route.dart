@@ -95,7 +95,7 @@ class FRoute {
   static void toCalendar() => Get.toNamed('/home/calendar');
   static void toRanking() => Get.toNamed('/home/ranking');
   static void toFriend() => Get.offAllNamed('/friend');
-  static void toFriendSearch() => Get.toNamed('/friend/search');
+  static void toFriendSearch({String? keyword}) => Get.toNamed('/friend/search', arguments: keyword);
   static void toContents() => Get.offAllNamed('/contents');
   static void toAdventure() => Get.toNamed('/contents/adventure');
   static void toLevelDetail() => Get.toNamed('/contents/adventure/level-detail');

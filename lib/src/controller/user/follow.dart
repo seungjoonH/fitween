@@ -46,13 +46,17 @@ class FollowCont extends GetxController {
 
   void followButtonPressed(String uid) async {
     bool followed = getFollowed(uid);
-    _followersData[uid] = !followed;
+
+    if (followed) { unfollow(uid); }
+    else {
+      follow(uid);
+      notifyFollowing(uid);
+    }
+
     await _syncFollowingsTo();
   }
 
-  Future followAndNotifyFollowing(String uid) async {
-    follow(uid);
-    await _syncFollowingsTo();
+  Future notifyFollowing(String uid) async {
     FUserLoadCont cont = FUserLoadCont.onlyNotification();
     FUser? loaded = await FUserDAO().loadOne(uid, cont: cont);
     if (loaded == null) throw Exception('User ($loaded) load failed');
