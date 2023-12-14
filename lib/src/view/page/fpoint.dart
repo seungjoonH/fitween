@@ -64,6 +64,7 @@ class _FPointPageState extends FPageState<FPointPage> {
       leading: Container(),
       expandedHeight: 120.0.h,
       flexibleSpace: FlexibleSpaceBar(
+        centerTitle: true,
         title: _buildFPointWidget(context),
         titlePadding: EdgeInsets.zero,
         background: _buildBackgroundColorWidget(context),

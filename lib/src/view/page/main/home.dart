@@ -13,6 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 
 class HomePage extends FPage {
   const HomePage({super.key});
@@ -27,7 +28,25 @@ class _HomePageState extends FPageState {
   CalendarCont get calendarCont => cont.calendarCont;
   RankingCont get rankingCont => cont.rankingCont;
 
-  double get _size => PageCont.size.width * .1;
+  Future<bool> get _isTablet async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo info = await deviceInfo.androidInfo;
+      return info.displayMetrics.sizeInches > 7.0;
+    }
+    else if (Platform.isIOS) {
+      IosDeviceInfo ios = await deviceInfo.iosInfo;
+      return ios.model.toLowerCase().contains('ipad');
+    }
+    return false;
+  }
+
+  double? _size;
+
+  Future _setSize() async {
+    _size = PageCont.size.height * (await _isTablet ? .05 : .045);
+    setState(() {});
+  }
 
   Widget _buildHeightUpDownButtonWidget(BuildContext context) {
     return Column(
@@ -367,6 +386,12 @@ class _HomePageState extends FPageState {
   }
 
   EdgeInsets get _padding => EdgeInsets.symmetric(horizontal: 28.0.w);
+
+  @override
+  void initState() {
+    super.initState();
+    _setSize();
+  }
 
   @override
   Widget buildPage(BuildContext context) {
