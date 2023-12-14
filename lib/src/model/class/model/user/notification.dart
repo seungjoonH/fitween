@@ -7,6 +7,7 @@ import 'package:fitween/src/model/class/model.dart';
 import 'package:get/get.dart';
 
 class NotificationData extends Model {
+  late String _id;
   late Timestamp _date;
   late String _content;
   late bool _checked;
@@ -19,7 +20,7 @@ class NotificationData extends Model {
   set date(DateTime d) => _date = d.toTimestamp!;
 
   @override
-  String toString() => '{'
+  String toString() => '$_id: {'
       '\n  date: $date,'
       '\n  content: $_content,'
       '\n  checked: $_checked'
@@ -48,7 +49,7 @@ class NotificationData extends Model {
   FUser? get user => _user;
   Party? get party => _party;
 
-  bool equalTo(String content, String key) {
+  bool isEqualTo(String content, String key) {
     return content == _content && key == objectKey;
   }
 
@@ -74,6 +75,14 @@ class NotificationData extends Model {
         if (party == null) await loadParty();
         FRoute.toParty(party: party);
         return;
+      case 'party-accepted':
+        if (party == null) await loadParty();
+        FRoute.toParty(party: party);
+        return;
+      case 'party-rejected':
+        if (party == null) await loadParty();
+        FRoute.toParty(party: party);
+        return;
       case 'poke': return;
     }
   }
@@ -84,6 +93,7 @@ class NotificationData extends Model {
     required DateTime date,
     required FUser user,
   }) {
+    _id = NotificationCont.to.nextKey;
     this.date = date;
     _content = 'followed';
     _objectCode = 'user-${user.key}';
@@ -94,6 +104,7 @@ class NotificationData extends Model {
     required DateTime date,
     required FUser user,
   }) {
+    _id = NotificationCont.to.nextKey;
     this.date = date;
     _content = 'poke';
     _objectCode = 'user-${user.key}';
@@ -105,6 +116,7 @@ class NotificationData extends Model {
     required DateTime date,
     required Party party,
   }) {
+    _id = NotificationCont.to.nextKey;
     this.date = date;
     _content = 'party-applied';
     _objectCode = 'party-${party.key}';
@@ -115,6 +127,7 @@ class NotificationData extends Model {
     required DateTime date,
     required Party party,
   }) {
+    _id = NotificationCont.to.nextKey;
     this.date = date;
     _content = 'party-accepted';
     _objectCode = 'party-${party.key}';
@@ -125,6 +138,7 @@ class NotificationData extends Model {
     required DateTime date,
     required Party party,
   }) {
+    _id = NotificationCont.to.nextKey;
     this.date = date;
     _content = 'party-rejected';
     _objectCode = 'party-${party.key}';
@@ -135,6 +149,7 @@ class NotificationData extends Model {
     required DateTime date,
     required Party party,
   }) {
+    _id = NotificationCont.to.nextKey;
     this.date = date;
     _content = 'party-banished';
     _objectCode = 'party-${party.key}';
@@ -145,6 +160,7 @@ class NotificationData extends Model {
 
   @override
   void fromJson(Map<String, dynamic> json) {
+    _id = json['id'];
     _date = json['date'];
     _content = json['content'];
     _checked = json['checked'];
@@ -154,6 +170,7 @@ class NotificationData extends Model {
   @override
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
+    json['id'] = _id;
     json['date'] = _date;
     json['content'] = _content;
     json['checked'] = _checked;
@@ -162,7 +179,7 @@ class NotificationData extends Model {
   }
 
   @override
-  String get key => throw UnimplementedError();
+  String get key => _id;
 
 }
 
@@ -174,12 +191,16 @@ class FUserNotification extends FUser {
 
   List<NotificationData> get data => _data;
 
+  void syncNotificationsFrom(List<NotificationData> list) {
+    _data.assignAll([...list]);
+  }
+
   Future loadAll() async {
     for (NotificationData notification in data) { await notification.load(); }
   }
 
   bool _alreadyFollowed(FUser user) {
-    return _data.firstWhereOrNull((d) => d.equalTo('followed', user.uid)) != null;
+    return _data.firstWhereOrNull((d) => d.isEqualTo('followed', user.uid)) != null;
   }
 
   void follow(FUser user) {

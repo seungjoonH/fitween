@@ -22,6 +22,10 @@ class NotificationPageCont extends PageCont {
     await FUserNotificationDAO().saveOne(_logged.notification!);
   }
 
+  Future onDismissed(NotificationData notification) async {
+    await notificationCont.remove(notification.key);
+  }
+
   String get emptyNotificationText => LangCont.tr('notification.empty');
 
   FUser get _logged => AuthCont.logged!;
