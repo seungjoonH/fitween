@@ -339,14 +339,14 @@
     "id":3010024,
     "title":{
       "ko":"한강",
-      "en":""
+      "en":"Han River"
     },
     "amount":508,
     "description":{
-      "ko":"",
-      "en":""
+      "ko":"한강은 대한민국을 대표하는 강들 중 하나로, 수도인 서울을 가로지르고 있습니다. 강원도 태백시에서부터 서해까지 강의 총 길이는 약 500km 에 이릅니다.",
+      "en":"The Han River is one of the representative rivers of Korea, which runs through the capital city of Seoul. The total length of the river from Taebaek City in Gangwon Province to the West Sea is about 500 km."
     },
-    "activate":false,
+    "activate":true,
     "point":2700
   },
   {

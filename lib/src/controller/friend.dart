@@ -141,7 +141,7 @@ class FriendCont extends GetxController {
                     children: [
                       icon,
                       FText(
-                        '(${difference.localizing()})',
+                        '(${difference.localizing(scaling: true)})',
                         style: ThemeCont.to.bodySmall,
                         color: color,
                       ),

@@ -45,7 +45,8 @@ extension NumExtension on num {
   String get round2 => ((this * 100).round() / 100).toStringAsFixed(2);
 
   String localizing({bool thouSep = true, bool scaling = true, bool txs = false}) {
-    num number = this;
+    num number = abs();
+    num sign = this.sign;
     String scale = '';
     String? numberString;
 
@@ -67,8 +68,8 @@ extension NumExtension on num {
     }
 
     numberString ??= thouSep
-        ? number.round().thouSep
-        : '${number.round()}';
+        ? (sign * number).round().thouSep
+        : '${(sign * number).round()}';
 
     numberString += scale;
 

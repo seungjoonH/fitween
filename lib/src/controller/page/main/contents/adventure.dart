@@ -83,10 +83,11 @@ class AdventurePageCont extends PageCont {
   @override
   Future load() async {
     setType(FType.distance);
+    _gotoBottom();
     _setRandomRatios();
     _setRandomPeriods();
-    _gotoBottom();
     _scrollUpToTop();
+    await FriendCont.to.init();
   }
 
   int getLeftRatio(int index) => _ratios[index];
