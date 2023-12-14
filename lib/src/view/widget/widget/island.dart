@@ -7,6 +7,7 @@ import 'package:fitween/src/model/enum/enum.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class FIslandWidget extends StatefulWidget {
   const FIslandWidget({
@@ -17,6 +18,7 @@ class FIslandWidget extends StatefulWidget {
     this.period = 1000,
     this.onPressed,
     this.hide = false,
+    this.noticeUnreceived = false,
   });
 
   final Level level;
@@ -25,6 +27,7 @@ class FIslandWidget extends StatefulWidget {
   final int period;
   final VoidCallback? onPressed;
   final bool hide;
+  final bool noticeUnreceived;
 
   @override
   State<FIslandWidget> createState() => _FIslandWidgetState();
@@ -58,7 +61,7 @@ class _FIslandWidgetState extends State<FIslandWidget> {
   }
 
   double get width {
-    if (!widget.hide) return imageWidth;
+    if (!widget.hide) return imageWidth * 1.5;
     return imageWidth * 3.0;
   }
   double get height => imageWidth * 2.2;
@@ -79,7 +82,20 @@ class _FIslandWidgetState extends State<FIslandWidget> {
   String get _valueText => _value.thouSep;
   bool get _isCurrent => widget.level.inRange(_value);
 
-  Widget _buildBubbleWidget(BuildContext context) {
+  static const String _noticeAsset = 'assets/image/page/contents/adventure/notice.svg';
+
+  Widget _buildExclamationMarkBubbleWidget(BuildContext context) {
+    if (!widget.noticeUnreceived) return Container();
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        Container(width: 20.0.r, height: 25.0.r, color: _type.color),
+        SvgPicture.asset(_noticeAsset, width: 50.0.r, height: 50.0.r),
+      ],
+    );
+  }
+
+  Widget _buildValueBubbleWidget(BuildContext context) {
     if (!_isCurrent) return Container();
     return SizedBox(
       width: 90.0.w, height: 50.0.h,
@@ -153,7 +169,12 @@ class _FIslandWidgetState extends State<FIslandWidget> {
                       ),
                       Positioned(
                         top: 40.0.h,
-                        child: _buildBubbleWidget(context),
+                        child: _buildValueBubbleWidget(context),
+                      ),
+                      Positioned(
+                        left: .0,
+                        top: 60.0.h,
+                        child: _buildExclamationMarkBubbleWidget(context),
                       ),
                     ],
                   ),

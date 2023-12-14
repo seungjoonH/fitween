@@ -36,13 +36,14 @@ class _AdventurePageState extends FPageState<AdventurePage> {
                   children: [
                     Expanded(flex: cont.getLeftRatio(index), child: const SizedBox()),
                     Stack(
-                      alignment: Alignment.topCenter,
+                      alignment: Alignment.centerLeft,
                       children: [
                         FIslandWidget(
                           level: level,
                           period: cont.getPeriod(index),
                           onPressed: () => cont.islandWidgetPressed(level),
                           hide: !level.isAchievedAmount(cont.amount),
+                          noticeUnreceived: cont.levelFinished(level) && cont.hasToReceived(level),
                         ),
                       ],
                     ),

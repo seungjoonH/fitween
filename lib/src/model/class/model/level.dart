@@ -58,6 +58,7 @@ class Level extends Model {
   String get _badgeId => '10${type.index}${_id.substring(_id.length - 4, _id.length)}';
   FBadge get badge => FBadge.fromId(_badgeId);
 
+  num get point => _point;
   List<num> get pointDivided {
     String p = '$_point';
     List<int> list = [];

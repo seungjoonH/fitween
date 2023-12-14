@@ -46,6 +46,8 @@ class FBadge extends Model {
     return _activate && await FileCont.isLocalAsset(imageUrl);
   }
 
+  bool get activeSync => _activate;
+
   FBadgeType get type => FBadgeType.get(_id);
 
   bool get alreadyEarned => _strategy?.alreadyEarned ?? false;

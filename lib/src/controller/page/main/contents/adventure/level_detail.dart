@@ -51,7 +51,7 @@ class LevelDetailPageCont extends PageCont {
   void _setItems() {
     _items.assignAll([...level!.items.reversed]);
     _pointDivided.assignAll([...level!.pointDivided.reversed.cast<int>()]);
-    _itemReceived.assignAll([..._logged.collection!.levelReceived[level!.key] ?? []]);
+    _itemReceived.assignAll([...logged.collection!.levelReceived[level!.key] ?? []]);
   }
 
   void _receiveItem(int index) {
@@ -67,8 +67,6 @@ class LevelDetailPageCont extends PageCont {
   bool isItemReceived(int index) => index < _itemReceived.length
       ? _itemReceived[index]
       : false;
-
-  FUser get _logged => AuthCont.logged!;
 
   @override
   Future load() async {
@@ -93,7 +91,8 @@ class LevelDetailPageCont extends PageCont {
 
     _receiveItem(index);
     await InventoryCont.to.awardItems({id: count});
-    _logged.collection!.syncItemReceivedFrom(level!.key, itemReceived);
-    await FUserCollectionDAO().saveOne(_logged.collection!);
+    logged.collection!.syncItemReceivedFrom(level!.key, itemReceived);
+    adventureCont.setLevelReceived(logged.collection!.levelReceived);
+    await FUserCollectionDAO().saveOne(logged.collection!);
   }
 }

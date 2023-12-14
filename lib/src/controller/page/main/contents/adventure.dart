@@ -4,6 +4,7 @@ import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/amount/amount.dart';
+import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
@@ -32,7 +33,7 @@ class AdventurePageCont extends PageCont {
   static const int _maxNumber = 1000;
 
   Amount get amount {
-    return _logged.record!.allAmount[activeType]!;
+    return logged.record!.allAmount[activeType]!;
   }
 
   double get percent => selectedLevel!.getPercent(amount);
@@ -46,7 +47,7 @@ class AdventurePageCont extends PageCont {
     _setRandomRatios();
     _setRandomPeriods();
   }
-  
+
   void _setRandomRatios() {
     Random random = Random();
     List<int> randList = List.generate(list.length, (i) {
@@ -78,8 +79,6 @@ class AdventurePageCont extends PageCont {
     );
   }
 
-  FUser get _logged => AuthCont.logged!;
-  
   @override
   Future load() async {
     setType(FType.distance);
@@ -88,6 +87,7 @@ class AdventurePageCont extends PageCont {
     _setRandomPeriods();
     _scrollUpToTop();
     await FriendCont.to.init();
+    await syncLevelReceivedFrom();
   }
 
   int getLeftRatio(int index) => _ratios[index];
@@ -103,6 +103,36 @@ class AdventurePageCont extends PageCont {
     FRoute.toLevelDetail();
   }
 
+  final _levelReceived = <String, List<bool>>{}.obs;
+
+  void setLevelReceived(Map<String, List<bool>> data) {
+    _levelReceived.assignAll({...data});
+  }
+
+  Future syncLevelReceivedFrom() async {
+    await AuthCont.load(FUserLoadCont.onlyCollection());
+    setLevelReceived(logged.collection!.levelReceived);
+  }
+
+  bool levelFinished(Level level) {
+    return level.isLessThan(LevelLocal.byType(level.type)!.getCurrentLevel());
+  }
+
+  bool hasBadgeToReceive(Level level) {
+    bool badgeExists = FBadge.fromId(level.badge.key).activeSync;
+    bool hasBadge = logged.collection!.badgeAlreadyEarned(level.badge.key);
+    return badgeExists && !hasBadge;
+  }
+
+  bool hasItemToReceive(Level level) {
+    List<bool> list = _levelReceived[level.key] ?? [];
+    int maxLength = level.pointDivided.where((e) => e != 0).length;
+    return list.length < maxLength || list.contains(false);
+  }
+
+  bool hasToReceived(Level level) {
+    return hasBadgeToReceive(level) || hasItemToReceive(level);
+  }
 
   @override
   String get loadKey => 'adventure';
