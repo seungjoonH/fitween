@@ -16,6 +16,7 @@ class FUserRecord extends FUser {
   late _RecordsData _records;
 
   List<Timestamp> _androidLog = [];
+  List<Timestamp> _weightLog = [];
 
   Map<Period, List<RankingData>> _rankings = {};
 
@@ -42,6 +43,9 @@ class FUserRecord extends FUser {
 
   List<DateTime> get androidLog => _androidLog.map((d) => d.toDate()).toList();
   void syncAndroidLogFrom(List<DateTime> log) => _androidLog = log.map((d) => d.toTimestamp!).toList();
+
+  List<DateTime> get weightLog => _weightLog.map((d) => d.toDate()).toList();
+  void syncWeightLogFrom(List<DateTime> log) => _androidLog = log.map((d) => d.toTimestamp!).toList();
 
   @override
   Map<FType, num> getOneDayRecord(DateTime date) => getRecord(date, date);
@@ -264,7 +268,8 @@ class FUserRecord extends FUser {
           .map<RankingData>((e) => RankingData.fromJson((e as Map<String, dynamic>)))
           .toList()).toList() ?? Period.values.map((e) => []),
     );
-    _androidLog = json['androidLog'] ?? <Timestamp>[];
+    _androidLog = json['androidLog']?.cast<Timestamp>() ?? <Timestamp>[];
+    _weightLog = json['weightLog']?.cast<Timestamp>() ?? <Timestamp>[];
   }
 
   @override
@@ -279,7 +284,8 @@ class FUserRecord extends FUser {
       _rankings.keys.map((e) => e.name),
       _rankings.values.map((list) => list.map((e) => e.toJson())),
     );
-    json['_androidLog'] = _androidLog;
+    json['androidLog'] = _androidLog;
+    json['weightLog'] = _weightLog;
     return json;
   }
 }

@@ -7,13 +7,10 @@ import 'package:fitween/firebase_options.dart';
 import 'package:fitween/src/model/class/exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:connectivity/connectivity.dart';
 
-const version = 'ver 2.0.0';
+const version = 'ver 2.0.1';
 String get versionNumber => version.replaceAll('ver ', '');
 const supportEmail = 'fitween.corp@gmail.com';
-
-late ConnectivityResult networkResult;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

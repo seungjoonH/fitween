@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:connectivity/connectivity.dart';
 import 'package:fitween/global/global.dart';
-import 'package:fitween/main.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:get/get.dart';

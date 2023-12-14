@@ -48,18 +48,18 @@ class _HomePageState extends FPageState {
     setState(() {});
   }
 
-  Widget _buildHeightUpDownButtonWidget(BuildContext context) {
+  Widget _buildUpDownButtonWidget(BuildContext context, FType type) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         FIconButton(
           icon: const Icon(Icons.arrow_drop_up),
-          onPressed: cont.countHeightUpButtonPressed,
+          onPressed: () => cont.countUpButtonPressed(type),
           iconColor: ThemeCont.achro95,
         ),
         FIconButton(
           icon: const Icon(Icons.arrow_drop_down),
-          onPressed: cont.countHeightDownButtonPressed,
+          onPressed: () => cont.countDownButtonPressed(type),
           iconColor: ThemeCont.achro95,
         ),
       ],
@@ -77,6 +77,8 @@ class _HomePageState extends FPageState {
       rightWidget: SvgPicture.asset(cont.rightArrowAsset),
       children: FType.activeValues.map((type) {
         bool isActive = type == cont.activeType;
+        bool isHeightForAndroid = !LoadingCont.to.loading && isActive && type == FType.height && Platform.isAndroid;
+        bool isWeight =!LoadingCont.to.loading && isActive && type == FType.weight;
         return Stack(
           alignment: Alignment.center,
           children: [
@@ -94,18 +96,18 @@ class _HomePageState extends FPageState {
               met: calendarCont.allCompleted,
               selected: cont.activeType == type,
             ),
-            if (!LoadingCont.to.loading && isActive && type == FType.height && Platform.isAndroid)
+            if (isHeightForAndroid || isWeight)
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildHeightUpDownButtonWidget(context),
+                _buildUpDownButtonWidget(context, type),
                 Padding(
                   padding: EdgeInsets.only(top: 20.0.r, right: 20.0.r),
                   child: FIconButton(
                     icon: const Icon(Icons.info_outline),
                     iconColor: ThemeCont.achro95,
-                    onPressed: cont.heightInfoButtonPressed,
+                    onPressed: () => cont.infoButtonPressed(type),
                   ),
                 ),
               ],

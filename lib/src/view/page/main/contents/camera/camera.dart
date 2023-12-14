@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/exercise.dart';
 import 'package:fitween/src/view/page/page.dart';
@@ -20,6 +21,8 @@ abstract class CameraPageState<T extends CameraPage> extends FPageState<CameraPa
   @override
   void initState() {
     super.initState();
+    if (mounted) setState(() => _opacity = .0);
+    delay(2.s, () { _opacity = 1.0; if (mounted) setState(() {}); });
     cont.initState();
     cont.initAsync();
   }
@@ -161,9 +164,54 @@ abstract class CameraPageState<T extends CameraPage> extends FPageState<CameraPa
     });
   }
 
+  double _opacity = .0;
+
+  Widget _buildEmptyCameraWidget(BuildContext context) {
+    return Container(
+      color: Colors.black,
+      alignment: Alignment.center,
+      child: AnimatedOpacity(
+        opacity: _opacity,
+        duration: 500.ms,
+        child: Stack(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  Icons.no_photography,
+                  size: 60.0.r,
+                  color: ThemeCont.achro95,
+                ),
+                SizedBox(height: 20.0.h),
+                FText(
+                  cameraCont.cameraDisabledText,
+                  maxLines: 0,
+                  align: TextAlign.center,
+                  color: ThemeCont.achro95,
+                ),
+              ],
+            ),
+            Positioned(
+              top: 10.0.r,
+              right: 10.0.r,
+              child: FIconButton(
+                icon: const Icon(Icons.error),
+                iconColor: Colors.black,
+                onPressed: cameraCont.showErrorDialog,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget buildCameraView(BuildContext context) {
     return Obx(() {
-      if (!cameraCont.isCameraAvailable) return Container(color: Colors.black);
+      if (!cameraCont.isCameraAvailable) {
+        return _buildEmptyCameraWidget(context);
+      }
       return Stack(
         alignment: Alignment.center,
         children: [

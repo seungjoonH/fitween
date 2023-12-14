@@ -32,19 +32,37 @@ class HomePageCont extends MainPageCont {
 
   final _record = Rx<num>(0);
   HeightAmount get heightAmount => HeightAmount()..floor = _record.value;
+  WeightAmount get weightAmount => WeightAmount()..cnt = _record.value;
   String get marbleCenterText => activeType.withUnit(_record.value, txs: true);
 
   static const int _maxLog = 10;
   final _androidLog = <DateTime>[].obs;
+  final _weightLog = <DateTime>[].obs;
 
   void syncMarbleCenterRecords([DateTime? date]) {
     date ??= calendarCont.selectedDay;
     _record(_logged.getOneDayRecord(date)[activeType]!);
     _androidLog(_logged.record!.androidLog);
+    _weightLog(_logged.record!.weightLog);
+  }
+
+  void countUpButtonPressed(FType type) async {
+    switch (type) {
+      case FType.height: countHeightUpButtonPressed(); break;
+      case FType.weight: countWeightUpButtonPressed(); break;
+      default: break;
+    }
+  }
+
+  void countDownButtonPressed(FType type) async {
+    switch (type) {
+      case FType.height: countHeightDownButtonPressed(); break;
+      case FType.weight: countWeightDownButtonPressed(); break;
+      default: break;
+    }
   }
 
   void countHeightUpButtonPressed() async {
-    if (activeType != FType.height) return;
     bool cond = false;
     if (_androidLog.length < _maxLog) { cond = true; }
     else if (_androidLog.first.add(3.h).isBefore(now)) {
@@ -56,8 +74,8 @@ class HomePageCont extends MainPageCont {
     _androidLog.add(now);
     await _saveHeightRecord();
     _record(_record.value + 1);
-
   }
+
   void countHeightDownButtonPressed() async {
     if (activeType != FType.height) return;
     if (_androidLog.isEmpty) return;
@@ -66,21 +84,74 @@ class HomePageCont extends MainPageCont {
     await _saveHeightRecord();
   }
 
+  void countWeightUpButtonPressed() async {
+    bool cond = false;
+    if (_weightLog.length < _maxLog) { cond = true; }
+    else if (_weightLog.first.add(3.h).isBefore(now)) {
+      _weightLog.removeAt(0); cond = true;
+    }
+
+    if (!cond) return;
+
+    _weightLog.add(now);
+    await _saveWeightRecord();
+    _record(_record.value + 10);
+  }
+
+  void countWeightDownButtonPressed() async {
+    if (activeType != FType.weight) return;
+    if (_weightLog.isEmpty) return;
+    if (_record.value < 10) return;
+    _weightLog.removeLast();
+    _record(_record.value - 10);
+    await _saveWeightRecord();
+  }
+
   Future _saveHeightRecord() async {
     _logged.setTodayRecord(FType.height, heightAmount);
     _logged.record!.syncAndroidLogFrom(_androidLog);
     await FUserRecordDAO().saveOne(_logged.record!);
   }
 
+  Future _saveWeightRecord() async {
+    _logged.setTodayRecord(FType.weight, weightAmount);
+    _logged.record!.syncWeightLogFrom(_weightLog);
+    await FUserRecordDAO().saveOne(_logged.record!);
+  }
+
   String get _infoDialogTr => 'home.dialog.info';
   String get androidTitle => LangCont.tr('$_infoDialogTr.android-title');
   String get androidText => LangCont.tr('$_infoDialogTr.android-text');
+  String get weightTitle => LangCont.tr('$_infoDialogTr.weight-title');
+  String get weightText => LangCont.tr('$_infoDialogTr.weight-text');
+
+  void infoButtonPressed(FType type) {
+    switch (type) {
+      case FType.height: heightInfoButtonPressed(); break;
+      case FType.weight: weightInfoButtonPressed(); break;
+      default: break;
+    }
+  }
 
   void heightInfoButtonPressed() {
     showFDialog(
       title: androidTitle,
       content: FTexts(
         androidText,
+        style: ThemeCont.to.bodyLarge,
+        highlightStyle: ThemeCont.to.bodyMedium
+            ?.copyWith(color: ThemeCont.to.comment),
+        wordWrap: true,
+      ),
+      type: DialogType.mono,
+    );
+  }
+
+  void weightInfoButtonPressed() {
+    showFDialog(
+      title: weightTitle,
+      content: FTexts(
+        weightText,
         style: ThemeCont.to.bodyLarge,
         highlightStyle: ThemeCont.to.bodyMedium
             ?.copyWith(color: ThemeCont.to.comment),

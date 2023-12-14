@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/exercise.dart';
+import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 enum CameraDirection {
@@ -13,6 +15,8 @@ enum CameraDirection {
 
 class CameraCont extends GetxController {
   static CameraCont get to => Get.find<CameraCont>();
+
+  String get cameraDisabledText => LangCont.tr('error.camera-disabled.text');
 
   static late List<CameraDescription> descriptions;
   final _cameraController = Rx<CameraController?>(null);
@@ -62,7 +66,7 @@ class CameraCont extends GetxController {
 
   Future init() async {
     _isInitialized(false);
-    assert(descriptions.isNotEmpty);
+    // assert(descriptions.isNotEmpty);
 
     isolate = IsolateUtils();
     await isolate.start();
@@ -98,5 +102,40 @@ class CameraCont extends GetxController {
   void convertCamera() async {
     _direction(direction.inverse);
     if (Platform.isIOS) await init();
+  }
+
+  void showErrorDialog() {
+    TextStyle? boldStyle = ThemeCont.to.bodySmall?.copyWith(fontWeight: FontWeight.bold);
+
+    showFDialog(
+      title: 'ERROR Debugging',
+      content: ConstrainedBox(
+        constraints: BoxConstraints(maxHeight: 500.0.h),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              FTexts('@{isInitialized}: $isInitialized', style: ThemeCont.to.bodySmall, highlightStyle: boldStyle),
+              FTexts('@{isCameraAvailable}: $isCameraAvailable', style: ThemeCont.to.bodySmall, highlightStyle: boldStyle),
+              FTexts('@{cameraController}: $cameraController', style: ThemeCont.to.bodySmall, highlightStyle: boldStyle, wordWrap: true),
+              FTexts('@{cameraCont.description}: ${cameraController?.description}', style: ThemeCont.to.bodySmall, highlightStyle: boldStyle, wordWrap: true),
+              FTexts('@{preset}: $preset', style: ThemeCont.to.bodySmall, highlightStyle: boldStyle),
+              FTexts('@{cameraDirection}: ${direction.name}', style: ThemeCont.to.bodySmall, highlightStyle: boldStyle),
+              Obx(() {
+                String inferenceText = WeightCameraPageCont.to.inferences.toString();
+                if (inferenceText != '{}') inferenceText = inferenceText.replaceAll(', P', ',\n  P').replaceAll('Part.', '').replaceAll('{', '{\n  ').replaceAll('}', ',\n}');
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    FText('inference:', style: ThemeCont.to.bodySmall, bold: true),
+                    FText(inferenceText, style: ThemeCont.to.bodySmall, maxLines: 0),
+                  ],
+                );
+              }),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
