@@ -8,7 +8,7 @@ import 'package:fitween/src/model/class/exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-const version = 'ver 2.0.1';
+const version =  'ver 2.0.1';
 String get versionNumber => version.replaceAll('ver ', '');
 const supportEmail = 'fitween.corp@gmail.com';
 
