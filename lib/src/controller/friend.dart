@@ -128,7 +128,7 @@ class FriendCont extends GetxController {
                   FText(
                     '${type.localeShort} (LV $lv): ',
                     color: ThemeCont.to.comment,
-                    style: ThemeCont.to.bodyMedium,
+                    style: ThemeCont.to.bodySmall,
                   ),
                   SizedBox(width: 10.0.w),
                   FTexts(
@@ -141,7 +141,7 @@ class FriendCont extends GetxController {
                     children: [
                       icon,
                       FText(
-                        '(${type.withUnit(difference.abs())})',
+                        '(${difference.localizing()})',
                         style: ThemeCont.to.bodySmall,
                         color: color,
                       ),
