@@ -27,7 +27,7 @@ class AuthCont {
   static String? _name;
   static String? _email;
   static String get imageUrl => _imageUrl!;
-  static String get name => _name!;
+  static String get name => _name ?? 'unnamed';
   static String get email => _email!;
 
   static LoginType? _loginType;
