@@ -119,6 +119,7 @@ class CameraCont extends GetxController {
               FTexts('@{isCameraAvailable}: $isCameraAvailable', style: ThemeCont.to.bodySmall, highlightStyle: boldStyle),
               FTexts('@{cameraController}: $cameraController', style: ThemeCont.to.bodySmall, highlightStyle: boldStyle, wordWrap: true),
               FTexts('@{cameraCont.description}: ${cameraController?.description}', style: ThemeCont.to.bodySmall, highlightStyle: boldStyle, wordWrap: true),
+              FTexts('@{descriptions}: $descriptions', style: ThemeCont.to.bodySmall, highlightStyle: boldStyle, wordWrap: true),
               FTexts('@{preset}: $preset', style: ThemeCont.to.bodySmall, highlightStyle: boldStyle),
               FTexts('@{cameraDirection}: ${direction.name}', style: ThemeCont.to.bodySmall, highlightStyle: boldStyle),
               Obx(() {
