@@ -17,4 +17,5 @@ export './notification.dart';
 export './point.dart';
 export './ranking.dart';
 export './record.dart';
+export './snowy.dart';
 export './theme.dart';

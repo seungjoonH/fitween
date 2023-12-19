@@ -119,7 +119,7 @@ class FUserInfo extends FUser {
     _themeMode = ThemeModeExtension.toEnum(json['themeMode']) ?? ThemeMode.system;
     _autoLoginAllowed = json['autoLoginAllowed'];
     _units = Map.fromIterables(
-      json['units']?.keys.map<String>((key) => FType.toEnum(key)) ?? [],
+      json['units']?.keys.map<FType>((String key) => FType.toEnum(key)!) ?? [],
       json['units']?.values.cast<String>() ?? [],
     );
   }

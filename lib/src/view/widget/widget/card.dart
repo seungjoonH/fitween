@@ -1,7 +1,9 @@
+import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 enum FCardPressMode { entire, icon }
@@ -177,6 +179,17 @@ class _FCardState extends State<FCard> with ScalePressable {
               color: ThemeCont.achro95,
             ),
           )),
+          if (today.isChristmas)
+          Positioned(
+            top: .0, left: .0, right: .0,
+            child: Container(
+              height: 5.0.h,
+              decoration: BoxDecoration(
+                color: ThemeCont.achro95.withOpacity(.5),
+                borderRadius: BorderRadius.circular(10.0.r),
+              ),
+            ),
+          ),
         ],
       ),
     ));

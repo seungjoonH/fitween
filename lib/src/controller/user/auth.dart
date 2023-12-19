@@ -43,6 +43,8 @@ class AuthCont {
     await HealthDataCont.checkAndRequestPermission();
     await HealthDataCont.fetchAllData();
 
+    SnowyBackgroundCont.to.generate();
+
     Timer.periodic(10.ms, (timer) async {
       if (!loginPageCont.loading) {
         timer.cancel();

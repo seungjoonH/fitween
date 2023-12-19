@@ -31,8 +31,6 @@ class FScaffold extends Scaffold {
   final double? width;
   final double? height;
 
-
-
   EdgeInsets get _padding => EdgeInsets.symmetric(
     horizontal: 28.0.w, vertical: 28.0.h,
   );
@@ -98,7 +96,7 @@ class FScaffold extends Scaffold {
   Widget? get body => Stack(
     children: [
       if (today.isChristmas)
-      const Positioned.fill(child: SnowyBackground()),
+      Positioned.fill(child: SnowyBackground()),
       SizedBox(
         width: pageWidth,
         height: pageHeight,

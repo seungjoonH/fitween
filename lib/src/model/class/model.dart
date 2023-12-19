@@ -7,6 +7,7 @@ export './model/party.dart';
 export './model/level.dart';
 export './model/notice.dart';
 export './model/report.dart';
+export './model/snow.dart';
 export './model/user.dart';
 export './model/user/battle.dart';
 export './model/user/collection.dart';

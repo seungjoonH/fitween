@@ -77,6 +77,7 @@ class GetCont {
     Get.put(InventoryCont());
     Get.put(FBadgeCont());
     Get.put(FriendCont());
+    Get.put(SnowyBackgroundCont());
   }
 
   static void initConts() {
