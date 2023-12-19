@@ -56,10 +56,10 @@ class LoadingCont extends GetxController {
       update();
     });
 
-    delay(((sec ?? 1) * 1000).ms, () {
-      _refreshQueue.remove(id);
-      _decreaseCount();
-    });
+    // delay(((sec ?? 1) * 1000).ms, () {
+    //   _refreshQueue.remove(id);
+    //   _decreaseCount();
+    // });
 
     return true;
   }

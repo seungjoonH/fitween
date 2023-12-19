@@ -389,8 +389,8 @@ class PartyPageCont extends PageCont {
     DateRange range = DateRange(startDate, endDate);
 
     for (DateTime date in range.dates) {
-      num amount = member.getOneDayRecord(date)[party!.type]!;
-      list.add(ChartData(date, amount));
+      num value = RecordCont(member).getOneDayValue(party!.type, date);
+      list.add(ChartData(date, value));
     }
 
     if (_chartDataOfMembers[member.key] == null) {

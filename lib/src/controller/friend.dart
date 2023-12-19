@@ -85,8 +85,10 @@ class FriendCont extends GetxController {
   DateTime followedDate(String uid) => _data[uid]!.time;
 
   void showFriendInfoDialog(FUser user) {
-    Map<FType, num> friendRecord = user.allRecord;
-    Map<FType, num> myRecord = logged.allRecord;
+    var friendCont = RecordCont(user)..syncFromUser();
+    var loggedCont = RecordCont.logged()..syncFromUser();
+    Map<FType, num> friendRecord = friendCont.allValues;
+    Map<FType, num> myRecord = loggedCont.allValues;
 
     showFDialog(
       title: user.nickname,
@@ -158,7 +160,10 @@ class FriendCont extends GetxController {
 
   List<FUser> getFollowersInLevel(Level level) {
     List<FUser> list = [];
-    num value(FUser user) => user.allRecord[level.type]!;
+    num value(FUser user) {
+      var cont = RecordCont(user)..syncFromUser();
+      return cont.getAllValue(level.type);
+    }
 
     Level myNextLevel = LevelLocal.byType(level.type)!.getNextLevel();
 

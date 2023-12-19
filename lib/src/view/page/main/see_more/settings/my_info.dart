@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:numberpicker/numberpicker.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class MyInfoPage extends FPage {
   const MyInfoPage({super.key});
@@ -232,7 +231,7 @@ class _MyInfoPageState extends FPageState<MyInfoPage> {
   @override
   Widget buildPage(BuildContext context) {
     return FRefreshScaffold(
-      refreshController: RefreshController(),
+      refreshController: cont.refreshCont,
       onRefresh: cont.onRefresh,
       appBar: FAppBar(text: cont.appBarTitle),
       body: _buildBody(context),

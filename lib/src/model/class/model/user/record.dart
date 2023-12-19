@@ -11,9 +11,12 @@ class FUserRecord extends FUser {
   @override
   FUserRecord? get record => this;
 
-  late _RecordsData _goals;
-  late _RecordsData _inputRecords;
-  late _RecordsData _records;
+  late RecordsData _goals;
+  late RecordsData _inputRecords;
+  late RecordsData _records;
+
+  RecordsData get inputRecords => _inputRecords;
+  RecordsData get records => _records;
 
   List<Timestamp> _androidLog = [];
   List<Timestamp> _weightLog = [];
@@ -47,110 +50,9 @@ class FUserRecord extends FUser {
   List<DateTime> get weightLog => _weightLog.map((d) => d.toDate()).toList();
   void syncWeightLogFrom(List<DateTime> log) => _weightLog = log.map((d) => d.toTimestamp!).toList();
 
-  @override
-  Map<FType, num> getOneDayRecord(DateTime date) => getRecord(date, date);
-
-  @override
-  Map<FType, num> getOneWeekRecord(DateTime date) {
-    DateTime from = date;
-    DateTime to = from.add(1.w).subtract(1.d);
-    return getRecord(from, to);
-  }
-
-  @override
-  Map<FType, num> getOneMonthRecord(DateTime date, {int days = 30}) {
-    DateTime from = date;
-    late DateTime to;
-    if (date.day == 1) { to = from.lastDayOfMonth; }
-    else { to = from.add(days.d).subtract(1.d); }
-    return getRecord(from, to);
-  }
-
-  @override
-  Map<FType, num> getFromRecord(DateTime from) => getRecord(from, today);
-
-  @override
-  Map<FType, num> getToRecord(DateTime to) => getRecord(regDate, to);
-
-  @override
-  Map<FType, num> getRecord(DateTime from, DateTime to) {
-    DateTime fromDate = later(regDate, from);
-    DateTime toDate = earlier(to.lastTimeOfDay, now);
-
-    Map<FType, num> records = Map.fromEntries(
-      FType.activeValues.map((type) => MapEntry(type, .0)),
-    );
-
-    for (FType type in FType.activeValues) {
-      num amount = records[type]!;
-      amount += _inputRecords.getAmounts(type, DateRange(fromDate, toDate));
-      amount += _records.getAmounts(type, DateRange(fromDate, toDate));
-      records[type] = amount;
-    }
-
-    return records;
-  }
-
-  @override
-  Map<FType, num> get allRecord => getRecord(regDate, today);
-
-  Map<FType, Amount> get allAmount => getAmount(regDate, today);
-
-  Map<FType, Amount> getAmount(DateTime from, DateTime to) {
-    return getRecord(from, to).map<FType, Amount>((type, value) {
-      late Amount amount;
-      switch (type) {
-        case FType.distance: amount = DistanceAmount()..step = value; break;
-        case FType.height: amount = HeightAmount()..floor = value; break;
-        case FType.weight: amount = WeightAmount()..cnt = value; break;
-        default: break;
-      }
-      return MapEntry(type, amount);
-    });
-  }
-
-  @override
-  void setRecord(FType type, Amount amount, DateTime date) {
-    num value = .0;
-
-    switch (type) {
-      case FType.distance: value = (amount as DistanceAmount).step; break;
-      case FType.height: value = (amount as HeightAmount).floor; break;
-      case FType.weight: value = (amount as WeightAmount).cnt; break;
-      default: break;
-    }
-    setRecordByValue(type, value, date);
-  }
-  @override
-  void setRecordByValue(FType type, num value, DateTime date) {
-    _RecordData data = _RecordData(value, date);
-    _records.setRecordData(type, data);
-  }
-  @override
-  void setTodayRecord(FType type, Amount amount) {
-    setRecord(type, amount, today);
-  }
-  @override
-  void setTodayRecordByValue(FType type, num value) {
-    setRecordByValue(type, value, today);
-  }
-
-
-  @override
-  void addRecord(FType type, Amount amount, DateTime date) {
-    num value = getRecord(date, date.lastTimeOfDay)[type]!;
-
-    switch (type) {
-      case FType.distance: value += (amount as DistanceAmount).step; break;
-      case FType.height: value += (amount as HeightAmount).floor; break;
-      case FType.weight: value += (amount as WeightAmount).cnt; break;
-      default: break;
-    }
-    setRecordByValue(type, value, date);
-  }
-  @override
-  void addTodayRecord(FType type, Amount amount) {
-    addRecord(type, amount, today);
+  void syncRecordsData(RecordsData data, [RecordsData? inputData]) {
+    if (inputData != null) _inputRecords = inputData;
+    _records = data;
   }
 
   @override
@@ -164,7 +66,8 @@ class FUserRecord extends FUser {
       date = date.ignoreTime;
       eventMap[date] = FType.activeValues.map((type) {
         num goalValue = goal.byDate(date, type);
-        num record = getOneDayRecord(date)[type]!;
+        var cont = RecordCont(this)..syncFromUser();
+        num record = cont.getOneDayValue(type, date);
         return CalendarEvent(goalValue, record);
       }).toList();
     }
@@ -179,14 +82,16 @@ class FUserRecord extends FUser {
 
   @override
   bool completed(FType type, DateTime date) {
-    num value = getOneDayRecord(date)[type]!;
+    var cont = RecordCont(this)..syncFromUser();
+    num value = cont.getOneDayValue(type, date);
     num goalValue = goal.byDate(date, type);
     return value >= goalValue;
   }
 
   @override
   bool started(FType type, DateTime date) {
-    num value = getOneDayRecord(date)[type]!;
+    var cont = RecordCont(this)..syncFromUser();
+    num value = cont.getOneDayValue(type, date);
     return value > 0;
   }
 
@@ -245,9 +150,9 @@ class FUserRecord extends FUser {
   FUserRecord(super.key, {FUserInfo? info}) {
     this.info = info;
     _visible = true;
-    _goals = _RecordsData.initGoal(regDate.ignoreTime);
-    _inputRecords = _RecordsData();
-    _records = _RecordsData();
+    _goals = RecordsData.initGoal(regDate.ignoreTime);
+    _inputRecords = RecordsData();
+    _records = RecordsData();
     _initRanking();
   }
   FUserRecord.fromJson(super.json) : super.fromJson();
@@ -256,9 +161,9 @@ class FUserRecord extends FUser {
   void fromJson(Map<String, dynamic> json) {
     uid = json['uid'];
     _visible = json['visible'] ?? true;
-    _goals = _RecordsData.fromJson(json['goals']);
-    _inputRecords = _RecordsData.fromJson(json['inputRecords']);
-    _records = _RecordsData.fromJson(json['records']);
+    _goals = RecordsData.fromJson(json['goals']);
+    _inputRecords = RecordsData.fromJson(json['inputRecords']);
+    _records = RecordsData.fromJson(json['records']);
     _goal = Goal._fromRecordsData(_goals);
     _rankings = Map.fromIterables(
       json['rankings']?.keys
@@ -295,10 +200,10 @@ class Goal {
   static final HeightAmount defaultHei = HeightAmount()..floor = 10;
   static final WeightAmount defaultWei = WeightAmount()..cnt = 50;
 
-  late List<_RecordData> _calorieData;
-  late List<_RecordData> _distanceData;
-  late List<_RecordData> _heightData;
-  late List<_RecordData> _weightData;
+  late List<RecordData> _calorieData;
+  late List<RecordData> _distanceData;
+  late List<RecordData> _heightData;
+  late List<RecordData> _weightData;
 
   late num _calorie;
   late num _distance;
@@ -320,17 +225,17 @@ class Goal {
     return _data[type]![date.ignoreTime] ?? byType(type);
   }
 
-  Goal._fromRecordsData(_RecordsData data) {
+  Goal._fromRecordsData(RecordsData data) {
     _fromRecordsData(data);
   }
 
-  void _fromRecordsData(_RecordsData data) {
+  void _fromRecordsData(RecordsData data) {
     _calorieData = [...data._calories];
     _distanceData = [...data._distances];
     _heightData = [...data._heights];
     _weightData = [...data._weights];
 
-    int compare(_RecordData a, _RecordData b) {
+    int compare(RecordData a, RecordData b) {
       return a.date.difference(b.date).inSeconds;
     }
 
@@ -350,7 +255,7 @@ class Goal {
     _data[FType.weight] = _convertToMap(_weightData);
   }
 
-  Map<DateTime, num> _convertToMap(List<_RecordData> data) {
+  Map<DateTime, num> _convertToMap(List<RecordData> data) {
     Map<DateTime, num> map = Map.fromEntries(data.map((d) => MapEntry(d.date.ignoreTime, d._amount)));
     if (data.isEmpty) return {};
 
@@ -369,44 +274,44 @@ class Goal {
   }
 }
 
-class _RecordsData extends Model {
-  final Map<FType, List<_RecordData>> _data = {};
+class RecordsData extends Model {
+  final Map<FType, List<RecordData>> _data = {};
 
-  List<_RecordData> get _calories => _data[FType.calorie] ?? [];
-  List<_RecordData> get _distances => _data[FType.distance] ?? [];
-  List<_RecordData> get _heights => _data[FType.height] ?? [];
-  List<_RecordData> get _weights => _data[FType.weight] ?? [];
+  List<RecordData> get _calories => _data[FType.calorie] ?? [];
+  List<RecordData> get _distances => _data[FType.distance] ?? [];
+  List<RecordData> get _heights => _data[FType.height] ?? [];
+  List<RecordData> get _weights => _data[FType.weight] ?? [];
 
-  set _calories(List<_RecordData> data) => _data[FType.calorie] = data;
-  set _distances(List<_RecordData> data) => _data[FType.distance] = data;
-  set _heights(List<_RecordData> data) => _data[FType.height] = data;
-  set _weights(List<_RecordData> data) => _data[FType.weight] = data;
+  set _calories(List<RecordData> data) => _data[FType.calorie] = data;
+  set _distances(List<RecordData> data) => _data[FType.distance] = data;
+  set _heights(List<RecordData> data) => _data[FType.height] = data;
+  set _weights(List<RecordData> data) => _data[FType.weight] = data;
 
-  // set _calorie(_RecordData data) {
+  // set _calorie(RecordData data) {
   //   if (_data[FType.calorie] == null) _data[FType.calorie] = [];
   //   _data[FType.calorie]!.add(data);
   // }
-  // set _distance(_RecordData data) {
+  // set _distance(RecordData data) {
   //   if (_data[FType.distance] == null) _data[FType.distance] = [];
   //   _data[FType.distance]!.add(data);
   // }
-  // set _height(_RecordData data) {
+  // set _height(RecordData data) {
   //   if (_data[FType.height] == null) _data[FType.height] = [];
   //   _data[FType.height]!.add(data);
   // }
-  // set _weight(_RecordData data) {
+  // set _weight(RecordData data) {
   //   if (_data[FType.weight] == null) _data[FType.weight] = [];
   //   _data[FType.weight]!.add(data);
   // }
 
   void setInitGoalData(DateTime regDate) {
-    setGoalData(FType.distance, _RecordData(Goal.defaultDis.step, regDate));
-    setGoalData(FType.height, _RecordData(Goal.defaultHei.floor, regDate));
-    setGoalData(FType.weight, _RecordData(Goal.defaultWei.cnt, regDate));
+    setGoalData(FType.distance, RecordData(Goal.defaultDis.step, regDate));
+    setGoalData(FType.height, RecordData(Goal.defaultHei.floor, regDate));
+    setGoalData(FType.weight, RecordData(Goal.defaultWei.cnt, regDate));
   }
 
-  void setGoalData(FType type, _RecordData data) {
-    List<_RecordData> dataList = _data[type] ?? <_RecordData>[];
+  void setGoalData(FType type, RecordData data) {
+    List<RecordData> dataList = _data[type] ?? <RecordData>[];
 
     for (int i = 0; i < dataList.length; i++) {
       if (dataList[i].date.isAtSameMomentAs(data.date)) {
@@ -429,29 +334,29 @@ class _RecordsData extends Model {
     return dates.toList(growable: true);
   }
 
-  void setRecordData(FType type, _RecordData data) {
-    List<_RecordData> dataList = _data[type]!;
+  void setRecordData(FType type, RecordData data) {
+    List<RecordData> dataList = _data[type]!;
     int i = dataList.indexWhere((d) => d.date.isAtSameMomentAs(data.date));
     if (i < 0) { _data[type] = dataList..add(data); return; }
     _data[type]![i] = data;
   }
 
   num getAmounts(FType type, DateRange range) {
-    List<_RecordData>? dataList = _data[type];
+    List<RecordData>? dataList = _data[type];
     if (dataList == null) return .0;
-    Iterable<_RecordData> filtered = dataList.where((c) {
+    Iterable<RecordData> filtered = dataList.where((c) {
       return range.inRange(c.date);
     });
     return sum(filtered.map((a) => a._amount));
   }
 
   void init() {
-    for (FType type in FType.values) { _data[type] = <_RecordData>[]; }
+    for (FType type in FType.values) { _data[type] = <RecordData>[]; }
   }
 
-  _RecordsData() { init(); }
-  _RecordsData.initGoal(DateTime regDate) { init(); setInitGoalData(regDate); }
-  _RecordsData.fromJson(super.json) : super.fromJson();
+  RecordsData() { init(); }
+  RecordsData.initGoal(DateTime regDate) { init(); setInitGoalData(regDate); }
+  RecordsData.fromJson(super.json) : super.fromJson();
 
   @override
   void fromJson(Map<String, dynamic> json) {
@@ -459,10 +364,10 @@ class _RecordsData extends Model {
     final dis = json['distance'];
     final hei = json['height'];
     final wei = json['weight'];
-    if (cal != null) _calories = cal.map<_RecordData>((data) => _RecordData.fromJson(data)).toList();
-    if (dis != null) _distances = dis.map<_RecordData>((data) => _RecordData.fromJson(data)).toList();
-    if (hei != null) _heights = hei.map<_RecordData>((data) => _RecordData.fromJson(data)).toList();
-    if (wei != null) _weights = wei.map<_RecordData>((data) => _RecordData.fromJson(data)).toList();
+    if (cal != null) _calories = cal.map<RecordData>((data) => RecordData.fromJson(data)).toList();
+    if (dis != null) _distances = dis.map<RecordData>((data) => RecordData.fromJson(data)).toList();
+    if (hei != null) _heights = hei.map<RecordData>((data) => RecordData.fromJson(data)).toList();
+    if (wei != null) _weights = wei.map<RecordData>((data) => RecordData.fromJson(data)).toList();
   }
 
   @override
@@ -472,7 +377,7 @@ class _RecordsData extends Model {
     _distances.removeWhere((data) => data._amount == 0);
     _heights.removeWhere((data) => data._amount == 0);
     _weights.removeWhere((data) => data._amount == 0);
-    int compare(_RecordData a, _RecordData b) => a.date.compareTo(b.date);
+    int compare(RecordData a, RecordData b) => a.date.compareTo(b.date);
     _calories.sort(compare); _distances.sort(compare);
     _heights.sort(compare); _weights.sort(compare);
     json['calorie'] = _calories.isNotEmpty ? _calories.map((data) => data.toJson()).toList() : [];
@@ -486,15 +391,15 @@ class _RecordsData extends Model {
   String get key => '';
 }
 
-class _RecordData extends Model {
+class RecordData extends Model {
   late num _amount;
   late Timestamp _date;
 
   DateTime get date => _date.toDate();
   set date(DateTime date) => date.toTimestamp;
 
-  _RecordData(this._amount, DateTime d) { _date = d.toTimestamp!; }
-  _RecordData.fromJson(super.json) : super.fromJson();
+  RecordData(this._amount, DateTime d) { _date = d.toTimestamp!; }
+  RecordData.fromJson(super.json) : super.fromJson();
 
   @override
   void fromJson(Map<String, dynamic> json) {
@@ -655,12 +560,12 @@ class RankingPersonalData extends Model {
 class FUserRecordBuilder {
   late String uid;
 
-  _RecordsData _goals = _RecordsData();
-  _RecordsData _inputRecords = _RecordsData();
-  _RecordsData _records = _RecordsData();
+  RecordsData _goals = RecordsData();
+  RecordsData _inputRecords = RecordsData();
+  RecordsData _records = RecordsData();
 
   void setGoal(FType type, num value) {
-    _RecordData data = _RecordData(value, today);
+    RecordData data = RecordData(value, today);
     _goals.setGoalData(type, data);
   }
 

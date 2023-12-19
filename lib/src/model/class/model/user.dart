@@ -1,7 +1,6 @@
 import 'package:fitween/global/date.dart';
 import 'package:fitween/global/global.dart';
 import 'package:fitween/src/controller/controller.dart';
-import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';
 import 'package:flutter/material.dart';
@@ -75,20 +74,6 @@ class FUser extends Model {
   void toggleVisibility() => record!.toggleVisibility();
 
   Goal get goal => record!.goal;
-  Map<FType, num> getOneDayRecord(DateTime date) => record!.getOneDayRecord(date);
-  Map<FType, num> getOneWeekRecord(DateTime date) => record!.getOneWeekRecord(date);
-  Map<FType, num> getOneMonthRecord(DateTime date) => record!.getOneMonthRecord(date);
-  Map<FType, num> getFromRecord(DateTime from) => record!.getFromRecord(from);
-  Map<FType, num> getToRecord(DateTime to) => record!.getToRecord(to);
-  Map<FType, num> getRecord(DateTime from, DateTime to) => record!.getRecord(from, to);
-  Map<FType, num> get allRecord => record!.allRecord;
-
-  void setRecord(FType type, Amount amount, DateTime date) => record!.setRecord(type, amount, date);
-  void setRecordByValue(FType type, num value, DateTime date) => record!.setRecordByValue(type, value, date);
-  void setTodayRecord(FType type, Amount amount) => record!.setTodayRecord(type, amount);
-  void setTodayRecordByValue(FType type, num value) => record!.setTodayRecordByValue(type, value);
-  void addRecord(FType type, Amount amount, DateTime date) => record!.addRecord(type, amount, date);
-  void addTodayRecord(FType type, Amount amount) => record!.addTodayRecord(type, amount);
 
   void setRankedData(Period period, RankingData data) => record!.setRankedData(period, data);
 

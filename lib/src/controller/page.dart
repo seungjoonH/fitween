@@ -2,6 +2,7 @@ import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 export 'page/main/home/calendar.dart';
 export 'page/main/home/ranking.dart';
@@ -84,17 +85,19 @@ abstract class PageCont extends GetxController {
   Future init() async {
     if (LoadingCont.start(loadKey, 180)) {
       await load();
+      await afterRoute();
       LoadingCont.end();
     }
-    afterRoute();
   }
+
+  final refreshCont = RefreshController();
 
   Future onRefresh() async {
     if (LoadingCont.start()) {
       await load();
+      await afterRoute();
       LoadingCont.end();
     }
-    afterRoute();
   }
 
   Future load();

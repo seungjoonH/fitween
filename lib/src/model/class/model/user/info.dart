@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fitween/global/date.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/model/user.dart';
+import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:flutter/material.dart';
 
 class FUserInfo extends FUser {
@@ -24,6 +25,8 @@ class FUserInfo extends FUser {
   ThemeMode? _themeMode;
 
   bool? _autoLoginAllowed = true;
+
+  Map<FType, String> _units = {};
 
   @override
   String? get name => _name;
@@ -72,6 +75,11 @@ class FUserInfo extends FUser {
 
   void setAutoLoginState(bool value) => _autoLoginAllowed = value;
 
+  String getUnitOf(FType type) {
+    assert(type != FType.calorie);
+    return _units[type] ?? ['step', 'floor', 'cnt'][type.index - 1];
+  }
+
   FUserInfo(super.key) : super();
   FUserInfo.fromJson(super.json) : super.fromJson();
 
@@ -89,6 +97,8 @@ class FUserInfo extends FUser {
     _weightVisibility = builder.weightVisibility!;
     _language = builder.language!;
     _themeMode = builder.themeMode!;
+    _autoLoginAllowed = builder.autoLoginAllowed!;
+    _units = builder.units!;
     return this;
   }
 
@@ -108,6 +118,10 @@ class FUserInfo extends FUser {
     _language = Language.toEnum(json['language']) ?? Language.system;
     _themeMode = ThemeModeExtension.toEnum(json['themeMode']) ?? ThemeMode.system;
     _autoLoginAllowed = json['autoLoginAllowed'];
+    _units = Map.fromIterables(
+      json['units']?.keys.map<String>((key) => FType.toEnum(key)) ?? [],
+      json['units']?.values.cast<String>() ?? [],
+    );
   }
 
   @override
@@ -127,6 +141,7 @@ class FUserInfo extends FUser {
     json['language'] = (_language ?? Language.system).name;
     json['themeMode'] = (_themeMode ?? ThemeMode.system).name;
     json['autoLoginAllowed'] = _autoLoginAllowed ?? true;
+    json['units'] = Map.fromIterables(_units.keys.map((type) => type.name), _units.values);
     return json;
   }
 
@@ -143,7 +158,9 @@ class FUserInfo extends FUser {
     ..regDate = regDate
     ..dateOfBirth = dateOfBirth
     ..language = _language
-    ..themeMode = _themeMode;
+    ..themeMode = _themeMode
+    ..autoLoginAllowed = _autoLoginAllowed
+    ..units = _units;
 }
 
 class _AdminInfo {
@@ -186,6 +203,8 @@ class FUserInfoBuilder {
   bool? weightVisibility;
   Language? language;
   ThemeMode? themeMode;
+  bool? autoLoginAllowed;
+  Map<FType, String>? units;
 
   DateTime? get regDate => _regDate?.toDate();
   set regDate(DateTime? d) => _regDate = d?.toTimestamp;
@@ -206,7 +225,9 @@ class FUserInfoBuilder {
     json['regDate'] = _regDate ?? now.toTimestamp;
     json['dateOfBirth'] = _dateOfBirth!;
     json['language'] = (language ?? Language.system).name;
-    json['dateOfBirth'] = (themeMode ?? ThemeMode.system).name;
+    json['themeMode'] = (themeMode ?? ThemeMode.system).name;
+    json['autoLoginAllowed'] = autoLoginAllowed ?? true;
+    json['units'] = units ?? <FType, String>{};
 
     return FUserInfo.fromJson(json);
   }

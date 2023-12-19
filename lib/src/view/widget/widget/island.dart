@@ -78,7 +78,7 @@ class _FIslandWidgetState extends State<FIslandWidget> {
   bool get _isNight => ThemeCont.to.isDarkMode;
 
   FType get _type => widget.level.type;
-  num get _value => AuthCont.logged!.allRecord[_type]!;
+  num get _value => (RecordCont.logged()..syncFromUser()).getAllValue(_type);
   String get _valueText => _value.thouSep;
   bool get _isCurrent => widget.level.inRange(_value);
 

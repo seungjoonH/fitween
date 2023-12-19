@@ -4,7 +4,6 @@ import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:fitween/src/view/widget/widget/calendar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:fitween/src/view/widget/widget.dart';
@@ -272,7 +271,7 @@ class _CalendarPageState extends FPageState<CalendarPage> {
   @override
   Widget buildPage(BuildContext context) {
     return FRefreshScaffold(
-      refreshController: RefreshController(),
+      refreshController: cont.refreshCont,
       onRefresh: calendarCont.init,
       height: PageCont.size.height * 1.2,
       appBar: FPointAppBar(text: cont.appBarTitle),

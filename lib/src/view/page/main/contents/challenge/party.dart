@@ -7,7 +7,6 @@ import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class PartyPage extends FPage {
   const PartyPage({super.key});
@@ -320,7 +319,7 @@ class _PartyPageState extends FPageState<PartyPage> {
   @override
   Widget buildPage(BuildContext context) {
     return FRefreshScaffold(
-      refreshController: RefreshController(),
+      refreshController: cont.refreshCont,
       onRefresh: cont.onRefresh,
       appBar: _buildAppBar(context),
       height: PageCont.size.height * 1.8,

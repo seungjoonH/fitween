@@ -52,8 +52,8 @@ abstract class LevelLocal extends LocalModel<Level> {
   }
 
   int getCurrent([Amount? amount]) {
-    FUser logged = AuthCont.logged!;
-    num value = logged.allRecord[type]!;
+    var cont = RecordCont.logged()..syncFromUser();
+    num value = cont.getAllValue(type);
 
     switch (type) {
       case FType.distance:

@@ -16,4 +16,5 @@ export './notice.dart';
 export './notification.dart';
 export './point.dart';
 export './ranking.dart';
+export './record.dart';
 export './theme.dart';

@@ -41,6 +41,7 @@ class AuthCont {
     LangCont.to.init();
 
     await HealthDataCont.checkAndRequestPermission();
+    await HealthDataCont.fetchAllData();
 
     Timer.periodic(10.ms, (timer) async {
       if (!loginPageCont.loading) {

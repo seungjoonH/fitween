@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 
 class HomePage extends FPage {
@@ -399,7 +398,7 @@ class _HomePageState extends FPageState {
   Widget buildPage(BuildContext context) {
     return FMainScaffold(
       autoPadding: false,
-      refreshController: RefreshController(),
+      refreshController: cont.refreshCont,
       onRefresh: cont.onRefresh,
       height: PageCont.size.height * 1.2,
       body: Stack(

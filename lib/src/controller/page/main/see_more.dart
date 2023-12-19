@@ -1,7 +1,6 @@
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class SeeMorePageCont extends MainPageCont {
   static SeeMorePageCont get to => Get.find<SeeMorePageCont>();
@@ -14,8 +13,6 @@ class SeeMorePageCont extends MainPageCont {
 
   String get mainText => LangCont.tr('word.main').capitalize!;
   String get recentText => LangCont.tr('word.recent').capitalize!;
-
-  final refreshCont = RefreshController();
 
   @override
   String get loadKey => 'see-more';

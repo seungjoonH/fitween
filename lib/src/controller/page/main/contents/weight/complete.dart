@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:fitween/global/date.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/amount/amount.dart';
 import 'package:fitween/src/model/enum/enum.dart';
@@ -19,7 +18,7 @@ class WeightCompletePageCont extends PageCont {
   String get completeButtonText => LangCont.tr('button.complete');
 
   num get goalAmount => logged.goal.weight;
-  num get beforeAmount => logged.getOneDayRecord(today)[FType.weight]!;
+  num get beforeAmount => RecordCont.logged().getTodayValue(FType.weight);
   num get afterAmount => beforeAmount + count;
 
   double get beforePercent => max(min(beforeAmount / goalAmount, .95), .0);
@@ -32,10 +31,12 @@ class WeightCompletePageCont extends PageCont {
   int get addedLeftFlex => (_avg - 5).round();
   int get addedRightFlex => (95 - _avg).round();
 
-  void completeButtonPressed() {
-    logged.record!.addTodayRecord(FType.weight, WeightAmount()..cnt = count);
+  void completeButtonPressed() async {
+    var cont = RecordCont.logged()..syncFromUser();
+    cont.addTodayAmount(FType.weight, WeightAmount()..cnt = count);
     HomePageCont.to.setType(FType.weight);
     BottomBarCont.to.navigate(0);
+    await cont.syncRecordsDataTo();
   }
 
   @override

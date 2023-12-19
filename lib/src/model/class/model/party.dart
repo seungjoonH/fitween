@@ -146,7 +146,7 @@ class Party extends Model {
     FUser? member = members[uid];
     if (member == null) return .0;
     if (member.record == null) return .0;
-    num value = member.getRecord(startDate!, endDate!)[type]!;
+    num value = RecordCont(member).getValue(type, startDate!, endDate!);
     if (type != FType.weight) return value;
     return (WeightAmount()..cnt = value).kg;
   }

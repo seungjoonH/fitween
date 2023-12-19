@@ -398,7 +398,7 @@
       "info": {
         "android-title": "Android Height Fetching",
         "android-text": "Since height (number of right layers) data cannot be interlocked on Android, height data can be manipulated manually. @{\n\nHowever, data cannot be uploaded more than 10 floors at a time, and a cool time of 3 hours is applied.}",
-        "weight-title": "Android Height Fetching",
+        "weight-title": "Weight Fetching",
         "weight-text": "The camera is currently not available in the release version due to an unknown error, so we are checking it.\nTherefore, the weight data has been changed to allow manual manipulation.@{\n\nHowever, it can be increased or decreased 10 times at a time, and data cannot be increased more than 100 times at a time. It also has a cool time of 1 hours.}"
       }
     },

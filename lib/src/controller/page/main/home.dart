@@ -8,6 +8,7 @@ import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/ftype.dart';
 import 'package:fitween/src/view/widget/widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -41,7 +42,8 @@ class HomePageCont extends MainPageCont {
 
   void syncMarbleCenterRecords([DateTime? date]) {
     date ??= calendarCont.selectedDay;
-    _record(_logged.getOneDayRecord(date)[activeType]!);
+    var cont = RecordCont.logged()..syncFromUser();
+    _record(cont.getOneDayValue(activeType, date));
     _androidLog(_logged.record!.androidLog);
     _weightLog(_logged.record!.weightLog);
   }
@@ -72,8 +74,8 @@ class HomePageCont extends MainPageCont {
     if (!cond) return;
 
     _androidLog.add(now);
-    await _saveHeightRecord();
     _record(_record.value + 1);
+    await _saveHeightRecord();
   }
 
   void countHeightDownButtonPressed() async {
@@ -94,8 +96,8 @@ class HomePageCont extends MainPageCont {
     if (!cond) return;
 
     _weightLog.add(now);
-    await _saveWeightRecord();
     _record(_record.value + 10);
+    await _saveWeightRecord();
   }
 
   void countWeightDownButtonPressed() async {
@@ -108,13 +110,15 @@ class HomePageCont extends MainPageCont {
   }
 
   Future _saveHeightRecord() async {
-    _logged.setTodayRecord(FType.height, heightAmount);
+    var cont = RecordCont.logged()..syncFromUser();
+    cont.setTodayAmount(FType.height, heightAmount);
     _logged.record!.syncAndroidLogFrom(_androidLog);
     await FUserRecordDAO().saveOne(_logged.record!);
   }
 
   Future _saveWeightRecord() async {
-    _logged.setTodayRecord(FType.weight, weightAmount);
+    var cont = RecordCont.logged()..syncFromUser();
+    cont.setTodayAmount(FType.weight, weightAmount);
     _logged.record!.syncWeightLogFrom(_weightLog);
     await FUserRecordDAO().saveOne(_logged.record!);
   }

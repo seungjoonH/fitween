@@ -31,14 +31,24 @@ class AdventurePageCont extends PageCont {
   static const int _defaultPeriod = 1000;
   static const int _maxNumber = 1000;
 
-  Amount get amount {
-    return logged.record!.allAmount[activeType]!;
+  final _amount = Rx<Amount?>(null);
+  Amount get amount => _amount.value!;
+
+  Future _syncAmountFrom() async {
+    await AuthCont.load(FUserLoadCont.onlyRecord());
+    _setAmount();
+  }
+
+  void _setAmount() {
+    var cont = RecordCont.logged()..syncFromUser();
+    _amount(cont.getAllAmount(activeType));
   }
 
   double get percent => selectedLevel!.getPercent(amount);
 
   void setType(FType type) {
     _activeType(type);
+    _setAmount();
     LevelLocal levelLocal = LevelLocal.byType(type)!;
     List<Level> list = levelLocal.getAchievedList(amount);
     _list.assignAll(list);
@@ -81,6 +91,7 @@ class AdventurePageCont extends PageCont {
   @override
   Future load() async {
     setType(FType.distance);
+    _syncAmountFrom();
     _gotoBottom();
     _setRandomRatios();
     _setRandomPeriods();

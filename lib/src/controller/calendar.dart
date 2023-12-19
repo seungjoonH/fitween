@@ -18,7 +18,7 @@ class CalendarCont extends GetxController {
   bool get _loadComplete => _user != null;
 
   Future init() async {
-    await HealthDataCont.fetchAllData();
+    await HealthDataCont.fetchTodayData();
     _user = AuthCont.logged!;
     await AuthCont.load(FUserLoadCont.onlyRecord());
     await loadRecord();
@@ -37,7 +37,8 @@ class CalendarCont extends GetxController {
   }
 
   num getUnreflectedAmount(FType type, DateTime date) {
-    num reflected = _user!.getOneDayRecord(date)[type]!;
+    var cont = RecordCont(_user!)..syncFromUser();
+    num reflected = cont.getOneDayValue(type, date);
     num real = _getFetchedData(type, date);
     return max(real - reflected, 0);
   }

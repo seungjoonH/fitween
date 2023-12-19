@@ -52,7 +52,7 @@ class HealthDataCont {
     _approved = await _health.requestAuthorization(_types, permissions: _read);
   }
 
-  static FUser get _logged => AuthCont.logged!;
+  static FUser get logged => AuthCont.logged!;
 
   static final Map<DateTime, num> _fetchedSteps = {};
   static final Map<DateTime, num> _fetchedFlights = {};
@@ -79,15 +79,17 @@ class HealthDataCont {
   }
 
   static Future setRecordByType(FType type, DateTime startTime, DateTime endTime) async {
-    startTime = later(startTime, _logged.regDate);
+    startTime = later(startTime, logged.regDate);
     endTime = earlier(endTime.lastTimeOfDay, now);
     DateRange range = DateRange(startTime, endTime);
 
+    var cont = RecordCont.logged()..syncFromUser();
+
     for (DateTime date in range.dates) {
       if (!(_byType(type)?.keys.contains(date) ?? false)) continue;
-      _logged.setRecordByValue(type, _byType(type)![date]!, date);
+      cont.setValue(type, _byType(type)![date]!, date);
     }
-    await FUserRecordDAO().saveOne(_logged.record!);
+    await FUserRecordDAO().saveOne(logged.record!);
   }
 
   static Future setAllRecords() async {
@@ -96,7 +98,7 @@ class HealthDataCont {
   }
 
   static Future setAllRecordByType(FType type) async {
-    await setRecordByType(type, _logged.regDate.ignoreTime, today);
+    await setRecordByType(type, logged.regDate.ignoreTime, today);
   }
 
   static Future setOneDayRecordByType(FType type, DateTime date) async {
@@ -118,8 +120,14 @@ class HealthDataCont {
     await setTodayRecord();
   }
 
+  static fetchTodayData() async {
+    await fetchTodayStepData();
+    if (Platform.isIOS) await fetchTodayFlightsData();
+    await setTodayRecord();
+  }
+
   static Future fetchAllStepData() async {
-    DateTime startTime = _logged.regDate;
+    DateTime startTime = logged.regDate;
     DateTime endTime = now;
     await fetchStepData(startTime, endTime);
   }
@@ -133,7 +141,7 @@ class HealthDataCont {
   }
   
   static Future fetchStepData(DateTime startTime, DateTime endTime) async {
-    startTime = later(startTime, _logged.regDate);
+    startTime = later(startTime, logged.regDate);
     endTime = earlier(endTime.lastTimeOfDay, now);
 
     initStepsData(startTime, endTime);
@@ -147,7 +155,7 @@ class HealthDataCont {
   }
 
   static Future fetchAllFlightsData() async {
-    DateTime startTime = _logged.regDate;
+    DateTime startTime = logged.regDate;
     DateTime endTime = now;
     await fetchFlightsData(startTime, endTime);
   }
@@ -161,7 +169,7 @@ class HealthDataCont {
   }
 
   static Future fetchFlightsData(DateTime startTime, DateTime endTime) async {
-    startTime = later(startTime, _logged.regDate);
+    startTime = later(startTime, logged.regDate);
     endTime = earlier(endTime.lastTimeOfDay, now);
 
     initFlightsData(startTime, endTime);

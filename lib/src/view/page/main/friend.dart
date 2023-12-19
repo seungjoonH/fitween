@@ -5,7 +5,6 @@ import 'package:fitween/src/view/widget/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FriendPage extends FPage {
   const FriendPage({super.key});
@@ -83,7 +82,7 @@ class _FriendPageState extends FPageState<FriendPage> {
   @override
   Widget buildPage(BuildContext context) {
     return FMainScaffold(
-      refreshController: RefreshController(),
+      refreshController: cont.refreshCont,
       onRefresh: cont.onRefresh,
       appBar: FAppBar(
         text: cont.appBarTitle,

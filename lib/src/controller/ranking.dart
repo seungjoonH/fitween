@@ -66,14 +66,12 @@ class RankingCont extends GetxController {
 
       FUser user = _friendsWithMe[uid]!;
       late Map<FType, num> amounts;
+      var cont = RecordCont(user)..syncFromUser();
 
       switch (p) {
-        case Period.daily:
-          amounts = user.getOneDayRecord(date); break;
-        case Period.weekly:
-          amounts = user.getOneWeekRecord(date); break;
-        case Period.monthly:
-          amounts = user.getOneMonthRecord(date); break;
+        case Period.daily: amounts = cont.getOneDayValues(date); break;
+        case Period.weekly: amounts = cont.getOneWeekValues(date); break;
+        case Period.monthly: amounts = cont.getOneMonthValues(date); break;
       }
 
       _recordAmountsOfFriendsWithMe[p]![date]![uid] = FriendRecord(uid,
