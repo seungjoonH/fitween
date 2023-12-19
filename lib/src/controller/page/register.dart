@@ -5,6 +5,7 @@ import 'package:fitween/src/controller/lang.dart';
 import 'package:fitween/src/controller/page/carousel.dart';
 import 'package:fitween/src/controller/page/goal_setting.dart';
 import 'package:fitween/src/controller/validator/validator.dart';
+import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/view/page/page.dart';
 import 'package:get/get.dart';
@@ -79,10 +80,18 @@ class RegisterPageCont extends CarouselPageCont {
       if (cont.invalid) continue;
       cont.submit();
     }
+    _setInit();
   }
 
   final _weight = 60.obs;
   final _height = 170.obs;
+
+  void _setInit() {
+    int weight = WeightDataLocal().getAverage(_dateOfBirth.age, _sex);
+    int height = HeightDataLocal().getAverage(_dateOfBirth.age, _sex);
+    onWeightChanged(weight);
+    onHeightChanged(height);
+  }
 
   void onWeightChanged(int v) => _weight(v);
   void onHeightChanged(int v) => _height(v);
@@ -95,10 +104,7 @@ class RegisterPageCont extends CarouselPageCont {
   int get heightMax => 220;
 
   @override
-  void secondPageInit() {
-    _weight(weightMin); _height(heightMin);
-    delay(500.ms, () { _weight(60); _height(170); });
-  }
+  void secondPageInit() {}
 
   @override
   void secondPageSubmit() {

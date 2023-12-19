@@ -45,7 +45,7 @@ class FUserRecord extends FUser {
   void syncAndroidLogFrom(List<DateTime> log) => _androidLog = log.map((d) => d.toTimestamp!).toList();
 
   List<DateTime> get weightLog => _weightLog.map((d) => d.toDate()).toList();
-  void syncWeightLogFrom(List<DateTime> log) => _androidLog = log.map((d) => d.toTimestamp!).toList();
+  void syncWeightLogFrom(List<DateTime> log) => _weightLog = log.map((d) => d.toTimestamp!).toList();
 
   @override
   Map<FType, num> getOneDayRecord(DateTime date) => getRecord(date, date);

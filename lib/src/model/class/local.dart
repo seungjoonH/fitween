@@ -7,11 +7,14 @@ import 'package:get/get.dart';
 
 export './local/badge.dart';
 export './local/challenge.dart';
+export './local/data.dart';
 export './local/level.dart';
 export './local/item.dart';
 
 abstract class LocalModel<T extends Model> {
   static Future loadAll() async {
+    await WeightDataLocal().load();
+    await HeightDataLocal().load();
     await ItemLocal().load();
     await FBadgeLocal().load();
     await ChallengeLocal().load();

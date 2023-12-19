@@ -8,8 +8,8 @@ import 'package:fitween/src/model/class/exercise.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
-const version = 'ver 2.0.1';
-String get versionNumber => version.replaceAll('ver ', '');
+const version = 'ver 2.0.2a';
+String get versionNumber => version.replaceAll(RegExp('ver |a|b'), '');
 const supportEmail = 'fitween.corp@gmail.com';
 
 void main() async {

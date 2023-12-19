@@ -30,7 +30,7 @@ class HealthDataCont {
 
   static bool _approved = false;
 
-  static Future requestPermission() async {
+  static Future checkAndRequestPermission() async {
     bool hasPermission = false;
 
     switch (defaultTargetPlatform) {
@@ -43,17 +43,13 @@ class HealthDataCont {
         // await HealthFactory.revokePermissions();
         break;
       case TargetPlatform.iOS:
-        hasPermission = await _health.hasPermissions(
-          _types, permissions: _read,
-        ) ?? false;
+        hasPermission = await _health.hasPermissions(_types, permissions: _read) ?? false;
         break;
       default: break;
     }
 
     if (hasPermission) { _approved = true; return; }
-    _approved = await _health.requestAuthorization(
-      _types, permissions: _read,
-    );
+    _approved = await _health.requestAuthorization(_types, permissions: _read);
   }
 
   static FUser get _logged => AuthCont.logged!;

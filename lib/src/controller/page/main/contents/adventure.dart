@@ -4,7 +4,6 @@ import 'package:fitween/global/global.dart';
 import 'package:fitween/route.dart';
 import 'package:fitween/src/controller/controller.dart';
 import 'package:fitween/src/model/class/amount/amount.dart';
-import 'package:fitween/src/model/class/dao.dart';
 import 'package:fitween/src/model/class/local.dart';
 import 'package:fitween/src/model/class/model.dart';
 import 'package:fitween/src/model/enum/enum.dart';

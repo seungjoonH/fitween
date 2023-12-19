@@ -34,7 +34,7 @@ class _RankIconState extends FWidgetState<RankIcon> {
       child: FText(
         '${widget.rank}',
         color: ThemeCont.to.background,
-        style: ThemeCont.to.bodyLarge,
+        style: ThemeCont.to.bodyMedium,
       ),
     ) : SvgPicture.asset(
       '$asset${widget.rank}.svg',

@@ -40,12 +40,13 @@ class AuthCont {
     ThemeCont.to.init();
     LangCont.to.init();
 
+    await HealthDataCont.checkAndRequestPermission();
+
     Timer.periodic(10.ms, (timer) async {
       if (!loginPageCont.loading) {
         timer.cancel();
         await BottomBarCont.to.navigate(0);
         init();
-
         return;
       }
     });
@@ -122,8 +123,6 @@ class AuthCont {
     _imageUrl = _credentialUser!.photoURL;
     _name = _credentialUser!.displayName;
     _email = _credentialUser!.email!;
-
-    HealthDataCont.requestPermission();
 
     loginPageCont.startLoading('user');
     _logged = await FUserDAO().loadOneAll(uid);
