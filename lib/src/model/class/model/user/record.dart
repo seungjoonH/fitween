@@ -12,8 +12,8 @@ class FUserRecord extends FUser {
   FUserRecord? get record => this;
 
   late RecordsData _goals;
-  late RecordsData _inputRecords;
-  late RecordsData _records;
+  RecordsData _inputRecords = RecordsData();
+  RecordsData _records = RecordsData();
 
   RecordsData get inputRecords => _inputRecords;
   RecordsData get records => _records;

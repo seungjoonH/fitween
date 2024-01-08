@@ -12,8 +12,8 @@ class RecordCont {
 
   late FUser _user;
 
-  late RecordsData _inputRecords;
-  late RecordsData _records;
+  RecordsData _inputRecords = RecordsData();
+  RecordsData _records = RecordsData();
 
   Future syncRecordsDataFrom() async {
     _user.record = await FUserRecordDAO().loadOne(_user.key);
