@@ -108,8 +108,8 @@ class FUserInfo extends FUser {
     _name = json['name'];
     _nickname = json['nickname'];
     _email = json['email'];
-    _weight = json['weight'];
-    _height = json['height'];
+    _weight = double.parse(EncryptionCont.decode(uid, '${json['weight']}'));
+    _height = double.parse(EncryptionCont.decode(uid, '${json['height']}'));
     _weightVisibility = json['weightVisibility'] ?? false;
     _heightVisibility = json['heightVisibility'] ?? false;
     _sex = Sex.toEnum(json['sex'])!;
@@ -131,8 +131,8 @@ class FUserInfo extends FUser {
     json['name'] = _name;
     json['nickname'] = _nickname;
     json['email'] = _email;
-    json['weight'] = _weight;
-    json['height'] = _height;
+    json['weight'] = EncryptionCont.encode(uid, '$_weight');
+    json['height'] = EncryptionCont.encode(uid, '$_height');
     json['weightVisibility'] = _weightVisibility;
     json['heightVisibility'] = _heightVisibility;
     json['sex'] = _sex.name;
@@ -217,8 +217,8 @@ class FUserInfoBuilder {
     json['name'] = name;
     json['nickname'] = nickname!;
     json['email'] = email!;
-    json['weight'] = weight!;
-    json['height'] = height!;
+    json['weight'] = double.parse(EncryptionCont.encode(uid, '$weight'));
+    json['height'] = double.parse(EncryptionCont.encode(uid, '$height'));
     json['weightVisibility'] = weightVisibility ?? false;
     json['heightVisibility'] = heightVisibility ?? false;
     json['sex'] = sex!.name;
