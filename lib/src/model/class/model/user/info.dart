@@ -26,7 +26,7 @@ class FUserInfo extends FUser {
 
   bool? _autoLoginAllowed = true;
 
-  Map<FType, String> _units = {};
+  // Map<FType, String> _units = {};
 
   @override
   String? get name => _name;
@@ -75,10 +75,10 @@ class FUserInfo extends FUser {
 
   void setAutoLoginState(bool value) => _autoLoginAllowed = value;
 
-  String getUnitOf(FType type) {
-    assert(type != FType.calorie);
-    return _units[type] ?? ['step', 'floor', 'cnt'][type.index - 1];
-  }
+  // String getUnitOf(FType type) {
+  //   assert(type != FType.calorie);
+  //   return _units[type] ?? ['step', 'floor', 'cnt'][type.index - 1];
+  // }
 
   FUserInfo(super.key) : super();
   FUserInfo.fromJson(super.json) : super.fromJson();
@@ -98,7 +98,7 @@ class FUserInfo extends FUser {
     _language = builder.language!;
     _themeMode = builder.themeMode!;
     _autoLoginAllowed = builder.autoLoginAllowed!;
-    _units = builder.units!;
+    // _units = builder.units!;
     return this;
   }
 
@@ -118,10 +118,10 @@ class FUserInfo extends FUser {
     _language = Language.toEnum(json['language']) ?? Language.system;
     _themeMode = ThemeModeExtension.toEnum(json['themeMode']) ?? ThemeMode.system;
     _autoLoginAllowed = json['autoLoginAllowed'];
-    _units = Map.fromIterables(
-      json['units']?.keys.map<FType>((String key) => FType.toEnum(key)!) ?? [],
-      json['units']?.values.cast<String>() ?? [],
-    );
+    // _units = Map.fromIterables(
+    //   json['units']?.keys.map<FType>((String key) => FType.toEnum(key)!) ?? [],
+    //   json['units']?.values.cast<String>() ?? [],
+    // );
   }
 
   @override
@@ -141,7 +141,7 @@ class FUserInfo extends FUser {
     json['language'] = (_language ?? Language.system).name;
     json['themeMode'] = (_themeMode ?? ThemeMode.system).name;
     json['autoLoginAllowed'] = _autoLoginAllowed ?? true;
-    json['units'] = Map.fromIterables(_units.keys.map((type) => type.name), _units.values);
+    // json['units'] = Map.fromIterables(_units.keys.map((type) => type.name), _units.values);
     return json;
   }
 
@@ -159,8 +159,8 @@ class FUserInfo extends FUser {
     ..dateOfBirth = dateOfBirth
     ..language = _language
     ..themeMode = _themeMode
-    ..autoLoginAllowed = _autoLoginAllowed
-    ..units = _units;
+    ..autoLoginAllowed = _autoLoginAllowed;
+    // ..units = _units;
 }
 
 class _AdminInfo {
@@ -204,7 +204,7 @@ class FUserInfoBuilder {
   Language? language;
   ThemeMode? themeMode;
   bool? autoLoginAllowed;
-  Map<FType, String>? units;
+  // Map<FType, String>? units;
 
   DateTime? get regDate => _regDate?.toDate();
   set regDate(DateTime? d) => _regDate = d?.toTimestamp;
@@ -217,8 +217,8 @@ class FUserInfoBuilder {
     json['name'] = name;
     json['nickname'] = nickname!;
     json['email'] = email!;
-    json['weight'] = double.parse(EncryptionCont.encode(uid, '$weight'));
-    json['height'] = double.parse(EncryptionCont.encode(uid, '$height'));
+    json['weight'] = double.parse(EncryptionCont.decode(uid, '$weight'));
+    json['height'] = double.parse(EncryptionCont.decode(uid, '$height'));
     json['weightVisibility'] = weightVisibility ?? false;
     json['heightVisibility'] = heightVisibility ?? false;
     json['sex'] = sex!.name;
@@ -227,7 +227,7 @@ class FUserInfoBuilder {
     json['language'] = (language ?? Language.system).name;
     json['themeMode'] = (themeMode ?? ThemeMode.system).name;
     json['autoLoginAllowed'] = autoLoginAllowed ?? true;
-    json['units'] = units ?? <FType, String>{};
+    // json['units'] = units ?? <FType, String>{};
 
     return FUserInfo.fromJson(json);
   }

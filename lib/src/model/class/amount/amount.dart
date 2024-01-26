@@ -9,13 +9,13 @@ abstract class Amount {
   FUserInfo? get logged => AuthCont.logged?.info;
 
   num get main;
-  num get my;
+  // num get my;
   set main(num v);
-  set my(num v);
+  // set my(num v);
   num value = 0;
 
   String localizing(bool thouSep, bool scaling, bool txs) {
-    return my.localizing(thouSep: thouSep, scaling: scaling, txs: txs);
+    return main.localizing(thouSep: thouSep, scaling: scaling, txs: txs);
   }
 
   String _p(String key, num value) {
@@ -78,31 +78,31 @@ class DistanceAmount extends LengthAmount {
   @override
   set main(num v) => step = v;
 
-  String get unit => logged!.getUnitOf(FType.height);
+  // String get unit => logged!.getUnitOf(FType.height);
 
-  @override
-  num get my {
-    switch (unit) {
-      case 'step': return step;
-      case 'min': return min;
-      case 'km': return km;
-      case 'ft': return ft;
-      case 'inch': return inch;
-      default: return main;
-    }
-  }
+  // @override
+  // num get my {
+  //   switch (unit) {
+  //     case 'step': return step;
+  //     case 'min': return min;
+  //     case 'km': return km;
+  //     case 'ft': return ft;
+  //     case 'inch': return inch;
+  //     default: return main;
+  //   }
+  // }
 
-  @override
-  set my(num v) {
-    switch (unit) {
-      case 'step': step = v; return;
-      case 'min': min = v; return;
-      case 'km': km = v; return;
-      case 'ft': ft = v; return;
-      case 'inch': inch = v; return;
-      default: main = v; return;
-    }
-  }
+  // @override
+  // set my(num v) {
+  //   switch (unit) {
+  //     case 'step': step = v; return;
+  //     case 'min': min = v; return;
+  //     case 'km': km = v; return;
+  //     case 'ft': ft = v; return;
+  //     case 'inch': inch = v; return;
+  //     default: main = v; return;
+  //   }
+  // }
 
   static const num stride = .74; // [m/step]
   static const num vel = 82.288; // [m/minute]
@@ -138,31 +138,31 @@ class HeightAmount extends LengthAmount {
   @override
   set main(num v) => floor = v;
 
-  String get unit => logged!.getUnitOf(FType.height);
+  // String get unit => logged!.getUnitOf(FType.height);
 
-  @override
-  num get my {
-    switch (unit) {
-      case 'floor': return floor;
-      case 'm': return m;
-      case 'km': return km;
-      case 'ft': return ft;
-      case 'inch': return inch;
-      default: return main;
-    }
-  }
+  // @override
+  // num get my {
+  //   switch (unit) {
+  //     case 'floor': return floor;
+  //     case 'm': return m;
+  //     case 'km': return km;
+  //     case 'ft': return ft;
+  //     case 'inch': return inch;
+  //     default: return main;
+  //   }
+  // }
 
-  @override
-  set my(num v) {
-    switch (unit) {
-      case 'floor': floor = v; return;
-      case 'm': m = v; return;
-      case 'km': km = v; return;
-      case 'ft': ft = v; return;
-      case 'inch': inch = v; return;
-      default: main = v; return;
-    }
-  }
+  // @override
+  // set my(num v) {
+  //   switch (unit) {
+  //     case 'floor': floor = v; return;
+  //     case 'm': m = v; return;
+  //     case 'km': km = v; return;
+  //     case 'ft': ft = v; return;
+  //     case 'inch': inch = v; return;
+  //     default: main = v; return;
+  //   }
+  // }
 
   num get floor => m / 3;
   num get lTime => floor * 100;
@@ -198,29 +198,29 @@ class WeightAmount extends Amount {
   @override
   set main(num v) => cnt = v;
 
-  String get unit => logged!.getUnitOf(FType.height);
+  // String get unit => logged!.getUnitOf(FType.height);
+  //
+  // @override
+  // num get my {
+  //   switch (unit) {
+  //     case 'cnt': return cnt;
+  //     case 'kg': return kg;
+  //     case 't': return t;
+  //     case 'lb': return lb;
+  //     default: return main;
+  //   }
+  // }
 
-  @override
-  num get my {
-    switch (unit) {
-      case 'cnt': return cnt;
-      case 'kg': return kg;
-      case 't': return t;
-      case 'lb': return lb;
-      default: return main;
-    }
-  }
-
-  @override
-  set my(num v) {
-    switch (unit) {
-      case 'cnt': cnt = v; return;
-      case 'kg': kg = v; return;
-      case 't': t = v; return;
-      case 'lb': lb = v; return;
-      default: main = v; return;
-    }
-  }
+  // @override
+  // set my(num v) {
+  //   switch (unit) {
+  //     case 'cnt': cnt = v; return;
+  //     case 'kg': kg = v; return;
+  //     case 't': t = v; return;
+  //     case 'lb': lb = v; return;
+  //     default: main = v; return;
+  //   }
+  // }
 
   num get mg => g * 1000;
   num get g => value;
