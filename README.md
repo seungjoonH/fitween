@@ -34,7 +34,7 @@
 
 ## 화면
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/2edca7d8-9932-44c8-ae02-b218445006d2" alt="main">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/2edca7d8-9932-44c8-ae02-b218445006d2" alt="main">
 
 ### 메인화면
 
@@ -63,7 +63,7 @@
 
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/63cd075e-5cf8-4a32-a370-8556be062970" alt="record">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/63cd075e-5cf8-4a32-a370-8556be062970" alt="record">
 
 ### 기록화면
 
@@ -89,7 +89,7 @@
 
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/64457333-daac-4166-92e6-64632db3d33e" alt="friend">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/64457333-daac-4166-92e6-64632db3d33e" alt="friend">
 
 ### 친구화면
 
@@ -116,7 +116,7 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/91313df6-b36a-4e10-9e8e-993b2cb7ef44" alt="content">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/91313df6-b36a-4e10-9e8e-993b2cb7ef44" alt="content">
 
 ### 컨텐츠화면
 
@@ -143,8 +143,8 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/3f8775fb-7cd6-4dca-bb6a-c65f473d586f" alt="adventure-height">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/98a4b7f9-cb2f-4f06-88eb-c322d58f950a" alt="adventure-distance">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/3f8775fb-7cd6-4dca-bb6a-c65f473d586f" alt="adventure-height">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/98a4b7f9-cb2f-4f06-88eb-c322d58f950a" alt="adventure-distance">
 
 ### 모험화면
 
@@ -173,8 +173,8 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/5c64f816-4ee9-4012-b3e8-90b920ed21b3" alt="adventure-height">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/6c5f2381-a1a3-411a-975d-1557a1d6343d" alt="adventure-distance">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/5c64f816-4ee9-4012-b3e8-90b920ed21b3" alt="adventure-height">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/6c5f2381-a1a3-411a-975d-1557a1d6343d" alt="adventure-distance">
 
 ### 섬 정보화면
 
@@ -203,8 +203,8 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/a1eab6e4-f1fc-4396-a38e-35bc962ca32d" alt="challenge-height">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/e91bb367-4f35-4ec7-95db-f383a569305f" alt="challenge-distance">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/a1eab6e4-f1fc-4396-a38e-35bc962ca32d" alt="challenge-height">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/e91bb367-4f35-4ec7-95db-f383a569305f" alt="challenge-distance">
 
 ### 챌린지화면
 
@@ -229,8 +229,8 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/d7ecf2ea-093f-4396-9920-1bad78828e7e" alt="challenge-detail-height">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/9ac133a4-c8a7-4fe4-874f-ebb5a6bd0f16" alt="challenge-detail-distance">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/d7ecf2ea-093f-4396-9920-1bad78828e7e" alt="challenge-detail-height">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/9ac133a4-c8a7-4fe4-874f-ebb5a6bd0f16" alt="challenge-detail-distance">
 
 ### 챌린지 상세화면
 
@@ -256,8 +256,8 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/c5d64a8d-004c-4153-8cfc-461da23f3e69" alt="party-top">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/c0e2dfc4-6d61-4d87-a101-e79b62169353" alt="party-bottom">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/c5d64a8d-004c-4153-8cfc-461da23f3e69" alt="party-top">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/c0e2dfc4-6d61-4d87-a101-e79b62169353" alt="party-bottom">
 
 ### 파티화면
 
@@ -294,7 +294,7 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/c85d0ab2-fb76-4cbb-b6c4-2f27094575fd" alt="party-search">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/c85d0ab2-fb76-4cbb-b6c4-2f27094575fd" alt="party-search">
 
 ### 파티 검색화면
 
@@ -320,8 +320,8 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/f46b14a6-1412-4b72-b723-b0003a970175" alt="party-create-bottom">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/5ca0cd7d-e69b-4e9c-8e3a-3abcdd1d4857" alt="party-create-top">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/f46b14a6-1412-4b72-b723-b0003a970175" alt="party-create-bottom">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/5ca0cd7d-e69b-4e9c-8e3a-3abcdd1d4857" alt="party-create-top">
 
 ### 파티 생성화면
 
@@ -356,7 +356,7 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/c28fced5-9196-4892-a098-b10d5681d82d" alt="weight">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/c28fced5-9196-4892-a098-b10d5681d82d" alt="weight">
 
 ### 웨이트화면
 
@@ -381,7 +381,7 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/fefc9c00-bbd3-4cd3-90c0-ea0d222d97b0" alt="squat">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/fefc9c00-bbd3-4cd3-90c0-ea0d222d97b0" alt="squat">
 
 ### 스쿼트화면
 
@@ -405,7 +405,7 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/1703f056-e54c-4364-959b-9db20dee8008" alt="seemore">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/1703f056-e54c-4364-959b-9db20dee8008" alt="seemore">
 
 ### 더보기화면
 
@@ -439,7 +439,7 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/6e9b7c83-9d1d-40e9-847c-d19aa92ce281" alt="notification">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/6e9b7c83-9d1d-40e9-847c-d19aa92ce281" alt="notification">
 
 ### 알림화면
 
@@ -464,7 +464,7 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/0c1fe32c-c1d8-48ef-b27a-4417329381ac" alt="point">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/0c1fe32c-c1d8-48ef-b27a-4417329381ac" alt="point">
 
 ### 포인트화면
 
@@ -488,8 +488,8 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/2a8e0716-fa33-4358-b0f2-6bf5d3e7dbb0" alt="badge-info">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/3d57e27e-0064-4bed-be33-d64c06473ddf" alt="badge">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/2a8e0716-fa33-4358-b0f2-6bf5d3e7dbb0" alt="badge-info">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/3d57e27e-0064-4bed-be33-d64c06473ddf" alt="badge">
 
 ### 뱃지화면
 
@@ -513,8 +513,8 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/38c1be44-b1e8-4df9-8463-5b09d8566f34" alt="inventory-item">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/fc226e1f-8bc0-457c-87d2-5cb871f1616a" alt="inventory">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/38c1be44-b1e8-4df9-8463-5b09d8566f34" alt="inventory-item">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/fc226e1f-8bc0-457c-87d2-5cb871f1616a" alt="inventory">
 
 ### 인벤토리화면
 
@@ -539,7 +539,7 @@
 <br />
 
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/ba7a74c3-615c-440e-8f2f-3ee262bf9b56" alt="settings">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/ba7a74c3-615c-440e-8f2f-3ee262bf9b56" alt="settings">
 
 ### 설정화면
 
@@ -565,9 +565,9 @@
 <br />
 
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/0d9ed32c-8392-4816-af38-9f0f10e7a1d5" alt="general-settings-english">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/097f9827-f10a-49a6-b147-9f22c209657e" alt="general-settings-dark">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/e398901d-3636-4d95-acf3-a56d84a58401" alt="general-settings-default">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/0d9ed32c-8392-4816-af38-9f0f10e7a1d5" alt="general-settings-english">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/097f9827-f10a-49a6-b147-9f22c209657e" alt="general-settings-dark">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/e398901d-3636-4d95-acf3-a56d84a58401" alt="general-settings-default">
 
 
 ### 일반 설정화면
@@ -593,10 +593,10 @@
 
 #### 다크모드 및 영어 적용
 
-<img align="left" width="200px" src="https://github.com/user-attachments/assets/773e10d0-5191-4645-a44e-da60026ec710" alt="dark-seemore">
-<img align="left" width="200px" src="https://github.com/user-attachments/assets/a868f3e3-94b2-4950-adde-cee8047d4601" alt="dark-adventrue">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/e57f5516-5ae8-492a-b932-683df5d3e433" alt="english-seemore">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/e1b31d6f-95fe-44e4-85fc-30dba25df736" alt="english-island-detail">
+<img align="left" width="150px" src="https://github.com/user-attachments/assets/773e10d0-5191-4645-a44e-da60026ec710" alt="dark-seemore">
+<img align="left" width="150px" src="https://github.com/user-attachments/assets/a868f3e3-94b2-4950-adde-cee8047d4601" alt="dark-adventrue">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/e57f5516-5ae8-492a-b932-683df5d3e433" alt="english-seemore">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/e1b31d6f-95fe-44e4-85fc-30dba25df736" alt="english-island-detail">
 
 <br />
 <br />
@@ -622,7 +622,7 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/0673e209-c00e-4e37-9b8f-6114b73b1cd5" alt="account-settings">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/0673e209-c00e-4e37-9b8f-6114b73b1cd5" alt="account-settings">
 
 ### 계정 관리화면
 
@@ -650,8 +650,8 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/3899e870-cc88-438d-b69d-fbcaa0bb747c" alt="my-info-settings-editing">
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/c521f3df-82ce-48f2-aa04-eb5714f9ec6e" alt="my-info-settings">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/3899e870-cc88-438d-b69d-fbcaa0bb747c" alt="my-info-settings-editing">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/c521f3df-82ce-48f2-aa04-eb5714f9ec6e" alt="my-info-settings">
 
 ### 내 정보 관리화면
 
@@ -678,19 +678,19 @@
 #### 목표 설정화면 플로우
 
 <span>
-<img width="200px" height="400px" src="https://github.com/user-attachments/assets/85bf028e-610f-4b02-843c-ecc8ff39585c" alt="goal-edit-1">
-<img width="200px" height="400px" src="https://github.com/user-attachments/assets/a656e09f-809e-4a79-b4cf-1193f2695b71" alt="goal-edit-2">
-<img width="200px" height="400px" src="https://github.com/user-attachments/assets/884ba0c8-89a7-4951-be98-610cfff392ff" alt="goal-edit-3">
-<img width="200px" height="400px" src="https://github.com/user-attachments/assets/d9313cf5-8bca-470a-833b-e2c788f184a8" alt="goal-edit-4">
+<img width="150px" height="300px" src="https://github.com/user-attachments/assets/85bf028e-610f-4b02-843c-ecc8ff39585c" alt="goal-edit-1">
+<img width="150px" height="300px" src="https://github.com/user-attachments/assets/a656e09f-809e-4a79-b4cf-1193f2695b71" alt="goal-edit-2">
+<img width="150px" height="300px" src="https://github.com/user-attachments/assets/884ba0c8-89a7-4951-be98-610cfff392ff" alt="goal-edit-3">
+<img width="150px" height="300px" src="https://github.com/user-attachments/assets/d9313cf5-8bca-470a-833b-e2c788f184a8" alt="goal-edit-4">
 </span>
 
 <br />
 
 <span>
-<img width="200px" height="400px" src="https://github.com/user-attachments/assets/26fbc7f4-f87d-493b-a223-4c5f9c9c1820" alt="goal-edit-5">
-<img width="200px" height="400px" src="https://github.com/user-attachments/assets/b4b71ade-43ee-45e2-be74-ccb67a07633a" alt="goal-edit-6">
-<img width="200px" height="400px" src="https://github.com/user-attachments/assets/ae59748b-776f-4e23-a9d3-25e4a3e56d40" alt="goal-edit-7">
-<img width="200px" height="400px" src="https://github.com/user-attachments/assets/6d61b182-6956-4cbf-b4e1-da44deafee65" alt="goal-edit-8">
+<img width="150px" height="300px" src="https://github.com/user-attachments/assets/26fbc7f4-f87d-493b-a223-4c5f9c9c1820" alt="goal-edit-5">
+<img width="150px" height="300px" src="https://github.com/user-attachments/assets/b4b71ade-43ee-45e2-be74-ccb67a07633a" alt="goal-edit-6">
+<img width="150px" height="300px" src="https://github.com/user-attachments/assets/ae59748b-776f-4e23-a9d3-25e4a3e56d40" alt="goal-edit-7">
+<img width="150px" height="300px" src="https://github.com/user-attachments/assets/6d61b182-6956-4cbf-b4e1-da44deafee65" alt="goal-edit-8">
 </span>
 
 
@@ -699,7 +699,7 @@
 <br />
 <br />
 
-<img align="right" width="200px" src="https://github.com/user-attachments/assets/85176546-0ae9-49b2-a5bc-b7ed790eb3be" alt="app-info">
+<img align="right" width="150px" src="https://github.com/user-attachments/assets/85176546-0ae9-49b2-a5bc-b7ed790eb3be" alt="app-info">
 
 ### 앱 정보 화면
 
@@ -748,7 +748,7 @@
 
 <br />
 
-<img width="200px" src="https://github.com/user-attachments/assets/7d244b9f-6a35-421a-aab9-7923e3bc987c" alt="report-1">
-<img width="200px" src="https://github.com/user-attachments/assets/03b95044-9ef0-49c5-9e34-85a1e4c6440c" alt="report-2">
-<img width="200px" src="https://github.com/user-attachments/assets/0e2c6470-c8d9-4da8-8663-6063521a12ee" alt="report-3">
-<img width="200px" src="https://github.com/user-attachments/assets/e3ef269d-a656-42e5-b65d-e7a534b30534" alt="report-4">
+<img width="150px" src="https://github.com/user-attachments/assets/7d244b9f-6a35-421a-aab9-7923e3bc987c" alt="report-1">
+<img width="150px" src="https://github.com/user-attachments/assets/03b95044-9ef0-49c5-9e34-85a1e4c6440c" alt="report-2">
+<img width="150px" src="https://github.com/user-attachments/assets/0e2c6470-c8d9-4da8-8663-6063521a12ee" alt="report-3">
+<img width="150px" src="https://github.com/user-attachments/assets/e3ef269d-a656-42e5-b65d-e7a534b30534" alt="report-4">
